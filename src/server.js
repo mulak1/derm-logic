@@ -21,8 +21,8 @@ const {
 
 const app = express();
 const PORT = Number(process.env.PORT || 4104);
-const HOST = process.env.HOST || '127.0.0.1';
-const PUBLIC_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || `http://${HOST}:${PORT}`).replace(/\/$/, '');
+const HOST = process.env.HOST || '0.0.0.0';
+const PUBLIC_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || `http://127.0.0.1:${PORT}`).replace(/\/$/, '');
 
 app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json({ limit: '1mb' }));
