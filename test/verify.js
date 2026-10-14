@@ -148,6 +148,7 @@ async function runVerification() {
 
     await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' });
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-home-initial.png'), fullPage: false });
+    await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'home-desktop.png'), fullPage: false });
 
     // Click Preset 2 ("Copper Peptides + Vitamin C Oxidation Trap")
     await page.click('button[data-preset-id="copper-vitc-oxidation"]');
@@ -172,9 +173,11 @@ async function runVerification() {
     // Capture /lp (Cold Paid-Social Landing Page) & /seo/:slug
     await page.goto(`${BASE_URL}/lp?utm_source=meta&utm_medium=paid_social&utm_campaign=angle1`, { waitUntil: 'networkidle' });
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-lp-paid-social.png'), fullPage: false });
+    await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'lp-desktop.png'), fullPage: false });
 
     await page.goto(`${BASE_URL}/seo/can-you-mix-copper-peptides-and-vitamin-c`, { waitUntil: 'networkidle' });
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-seo-copper-vitc.png'), fullPage: false });
+    await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'seo-desktop.png'), fullPage: false });
     await desktopCtx.close();
 
     // Mobile Viewport (390x844)
@@ -191,6 +194,7 @@ async function runVerification() {
 
     await mPage.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' });
     await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'mobile-home.png'), fullPage: false });
+    await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'home-mobile.png'), fullPage: false });
 
     await mPage.goto(`${BASE_URL}/lp`, { waitUntil: 'networkidle' });
     await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'mobile-lp.png'), fullPage: false });

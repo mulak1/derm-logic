@@ -1,26 +1,74 @@
 {
-  "builder": "Builder-DermLogic",
-  "project": "DermLogic (#4) — Clinical INCI Skincare Active-Ingredient Conflict, pH-Inactivation (ΔpH), Comedogenic Load & Barrier-Safety Engine",
+  "ideaNumber": 4,
+  "name": "DermLogic",
+  "slug": "derm-logic",
   "port": 4104,
-  "url": "http://127.0.0.1:4104",
+  "baseUrl": "http://127.0.0.1:4104",
   "status": "COMPLETED",
-  "phase": "Phase 4 Complete (100% Verified & Live on Port 4104)",
-  "progressPercent": 100,
-  "metrics": {
-    "ingredientsSeeded": 65,
-    "cultProductsSeeded": 44,
-    "programmaticSeoPages": 60,
-    "engineLatencyMs": 0.59,
-    "consoleErrors": 0,
-    "pageErrors": 0,
-    "maxFileLines": 625
+  "designSystem": "Warm Silk & Botanical Clinical Luxury (Rhode Skin / Summer Fridays / Glossier / Merit Beauty / Aesop / Dieux Skin)",
+  "palette": {
+    "canvas": "#FAF6F0",
+    "oatSecondary": "#F4EDE4",
+    "surfacePorcelain": "#FFFFFF",
+    "borderHairline": "#E6DDD2",
+    "inkEspresso": "#1C1613",
+    "inkTaupe": "#6E6259",
+    "accentRoseTerracotta": "#C85A68",
+    "semanticSage": "#2D6A4F",
+    "semanticHoney": "#B4690E",
+    "semanticBerry": "#BE123C"
   },
-  "completedMilestones": [
-    "Phase 0: Loaded all 10 skills + glowindex_mvp patterns, scouted GitHub INCI/OpenBeautyFacts/CosIng repos, wrote GITHUB_SCOUT_REPORT.md & .agents/skills/derm-logic-clinical/SKILL.md",
-    "Phase 1: Built sub-5ms deterministic INCI & ΔpH Compatibility Engine (65 clinical ingredients, 44 cult skincare products, Henderson-Hasselbalch pKa math, Malassezia & comedogenicity breakdown, AM/PM + 4-Night Skin-Cycling Calendar, optional @google/genai gemini-3.8-flash integration) + 60 programmatic SEO pages (/seo/:slug, /sitemap.xml, /robots.txt, /api/og)",
-    "Phase 2: Shipped Anti-Slop Clinical Luxury Editorial UI (#090D12 slate, #14B8A6 teal, #F43F5E rose, #F59E0B amber), 1-click viral conflict presets, 9:16 Apple-Wallet Routine Safety Card, and Thompson-Sampling self-serve checkout ($4.99 / $19.99)",
-    "Phase 3: Shipped dedicated /lp cold paid-social landing page (zero nav leaks), Meta Pixel + CAPI server-side deduplication (POST /api/meta-capi), and GTM_VALIDATION_KIT.md",
-    "Phase 4: Verified all routes and interactive flows via isolated headless Playwright Chromium across Desktop (1440x900) and Mobile (390x844) with 0 console/page errors"
+  "phases": {
+    "phase1_brand_taste": "COMPLETED",
+    "phase2_core_engine_db": "COMPLETED",
+    "phase3_gtm_pseo_capi": "COMPLETED",
+    "phase4_playwright_verification": "COMPLETED",
+    "phase5_luxury_editorial_redesign": "COMPLETED"
+  },
+  "metrics": {
+    "seededIngredients": 65,
+    "seededProducts": 44,
+    "seededSeoPages": 60,
+    "seededRoutineScans": 38,
+    "seededMetaCapiEvents": 20,
+    "engineExecutionMs": 3.53,
+    "consoleErrors": 0,
+    "pageErrors": 0
+  },
+  "routesVerified": [
+    "/",
+    "/lp",
+    "/directory",
+    "/seo/can-you-mix-retinol-and-vitamin-c",
+    "/seo/can-you-mix-copper-peptides-and-vitamin-c",
+    "/seo/benzoyl-peroxide-and-tretinoin-conflict",
+    "/seo/niacinamide-and-glycolic-acid-ph-conflict",
+    "/seo/salicylic-acid-and-azelaic-acid-layering",
+    "/seo/skinceuticals-ce-ferulic-inci-and-routine-conflicts",
+    "/seo/paulas-choice-2-bha-layering-guide",
+    "/seo/the-ordinary-copper-peptides-conflicts",
+    "/privacy",
+    "/terms",
+    "/sitemap.xml",
+    "/robots.txt",
+    "/api/og",
+    "/api/health",
+    "/api/analyze-routine",
+    "/api/meta-capi",
+    "/api/checkout"
   ],
-  "updatedAt": "2026-10-14T06:04:00Z"
+  "screenshots": [
+    "screenshots/home-desktop.png",
+    "screenshots/lp-desktop.png",
+    "screenshots/seo-desktop.png",
+    "screenshots/home-mobile.png",
+    "screenshots/desktop-home-initial.png",
+    "screenshots/desktop-home-analyzed.png",
+    "screenshots/desktop-lp-paid-social.png",
+    "screenshots/desktop-seo-copper-vitc.png",
+    "screenshots/desktop-checkout-modal.png",
+    "screenshots/mobile-home.png",
+    "screenshots/mobile-lp.png"
+  ],
+  "updatedAt": "2026-10-14T07:28:30Z"
 }
