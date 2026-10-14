@@ -21,7 +21,8 @@ const {
 
 const app = express();
 const PORT = Number(process.env.PORT || 4104);
-const HOST = '127.0.0.1';
+const HOST = process.env.HOST || '127.0.0.1';
+const PUBLIC_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || `http://${HOST}:${PORT}`).replace(/\/$/, '');
 
 app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json({ limit: '1mb' }));
@@ -149,7 +150,7 @@ app.get('/terms', (req, res) => {
 // 6. XML Sitemap (/sitemap.xml) & Robots (/robots.txt)
 app.get('/sitemap.xml', (req, res) => {
   const seoPages = getAllSeoPages();
-  const baseUrl = `http://${HOST}:${PORT}`;
+  const baseUrl = PUBLIC_URL;
   const today = new Date().toISOString().split('T')[0];
   const staticUrls = ['/', '/lp', '/directory', '/privacy', '/terms'];
   const urlsXml = [
@@ -169,7 +170,7 @@ app.get('/robots.txt', (req, res) => {
 Allow: /
 Disallow: /api/
 
-Sitemap: http://${HOST}:${PORT}/sitemap.xml
+Sitemap: ${PUBLIC_URL}/sitemap.xml
 `;
   res.status(200).type('text/plain').send(txt);
 });
@@ -199,13 +200,19 @@ app.get('/api/affiliate', (req, res) => {
   const prod = CULT_PRODUCTS.find((p) => p.id === productId) || CULT_PRODUCTS[0];
   const queryTerm = encodeURIComponent(`${prod.brand} ${prod.name}`);
 
-  const partnerBase = partner === 'sephora'
-    ? `https://www.sephora.com/search?keyword=${queryTerm}`
+  const affTag = partner === 'sephora'
+    ? (process.env.SEPHORA_AFF_ID || 'dermlogic_sephora')
     : partner === 'amazon'
-      ? `https://www.amazon.com/s?k=${queryTerm}`
-      : `https://www.dermstore.com/elysium.search?search=${queryTerm}`;
+      ? (process.env.AMAZON_ASSOCIATE_TAG || 'dermlogic-20')
+      : (process.env.DERMSTORE_AFF_ID || 'dermlogic_dermstore');
 
-  const destinationUrl = `${partnerBase}&utm_source=dermlogic&utm_medium=affiliate&aff_id=dermlogic_clinical_4104`;
+  const partnerBase = partner === 'sephora'
+    ? `https://www.sephora.com/search?keyword=${queryTerm}&om_mmc=${affTag}`
+    : partner === 'amazon'
+      ? `https://www.amazon.com/s?k=${queryTerm}&tag=${affTag}`
+      : `https://www.dermstore.com/elysium.search?search=${queryTerm}&affil=${affTag}`;
+
+  const destinationUrl = `${partnerBase}&utm_source=dermlogic&utm_medium=affiliate`;
 
   recordMetaEvent({
     event_id: `dl_aff_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
