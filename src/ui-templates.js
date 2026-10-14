@@ -13,6 +13,28 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
+const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="36" height="36" role="img" aria-label="DermLogic Clinical Atelier Emblem" style="flex-shrink:0;display:block;">
+  <defs>
+    <linearGradient id="dlRoseGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97280"/>
+      <stop offset="50%" stop-color="#C85A68"/>
+      <stop offset="100%" stop-color="#9E3B49"/>
+    </linearGradient>
+    <linearGradient id="dlSilkBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDFB"/>
+      <stop offset="100%" stop-color="#FCEEF0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="20" cy="20" r="19" fill="url(#dlSilkBg)" stroke="url(#dlRoseGold)" stroke-width="1.5"/>
+  <circle cx="20" cy="20" r="15.5" fill="none" stroke="#E6DDD2" stroke-width="0.75" stroke-dasharray="2 1.5"/>
+  <polygon points="20,7.5 28.5,12.4 28.5,22.2 20,27.1 11.5,22.2 11.5,12.4" fill="none" stroke="#C85A68" stroke-width="1.15" stroke-opacity="0.55"/>
+  <path d="M20 9.5 C20 9.5 26.8 17.6 26.8 22.6 C26.8 26.4 23.8 29.5 20 29.5 C16.2 29.5 13.2 26.4 13.2 22.6 C13.2 17.6 20 9.5 20 9.5 Z" fill="url(#dlRoseGold)"/>
+  <path d="M16.5 21.2 C16.2 23.6 17.6 25.8 19.8 26.3" fill="none" stroke="#FFFDFB" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M20 29.5 C22.8 29.5 25.5 31.2 26.5 33.2 C23.6 33.6 21.2 32.1 20 29.5 Z" fill="#2D6A4F"/>
+  <path d="M20 29.5 C17.2 29.5 14.5 31.2 13.5 33.2 C16.4 33.6 18.8 32.1 20 29.5 Z" fill="#2D6A4F" opacity="0.85"/>
+  <circle cx="20" cy="17.2" r="1.3" fill="#FFFDFB"/>
+</svg>`;
+
 const SHARED_CSS = `
   :root {
     --bg-canvas: #FAF6F0;
@@ -74,30 +96,48 @@ const SHARED_CSS = `
   .container { max-width: 1360px; margin: 0 auto; padding: 0 24px; }
 
   .site-header {
-    height: 72px;
     border-bottom: 1px solid var(--border-hairline);
-    background: rgba(250, 246, 240, 0.88);
+    background: rgba(250, 246, 240, 0.94);
     backdrop-filter: blur(14px);
     position: sticky;
     top: 0;
     z-index: 40;
   }
-  .nav-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .brand-mark { display: flex; align-items: center; gap: 11px; font-size: 1.35rem; color: var(--text-primary); }
-  .brand-glyph {
-    width: 34px; height: 34px; border-radius: 50%;
-    background: var(--rose-pill-bg); border: 1px solid var(--rose-pill-border);
-    display: inline-flex; align-items: center; justify-content: center;
-    color: var(--rose-brand); font-weight: 700; font-size: 0.78rem;
+  .nav-inner {
+    min-height: 72px;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
   }
-  .nav-links { display: flex; align-items: center; gap: 28px; font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+  .brand-logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: opacity 180ms ease;
+  }
+  .brand-logo-link:hover { opacity: 0.88; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+  }
   .nav-links a { transition: color 180ms cubic-bezier(0.32, 0.72, 0, 1); }
   .nav-links a:hover { color: var(--rose-brand); }
 
   .btn-primary {
     display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    background: var(--rose-brand); color: #FFFFFF; font-weight: 600; font-size: 0.9rem;
-    padding: 10px 18px 10px 22px; border-radius: var(--radius-pill); border: 1px solid var(--rose-brand);
+    background: var(--rose-brand); color: #FFFFFF; font-weight: 600; font-size: 0.88rem;
+    padding: 9px 16px 9px 20px; border-radius: var(--radius-pill); border: 1px solid var(--rose-brand);
     cursor: pointer; white-space: nowrap;
     box-shadow: 0 8px 20px -6px rgba(200, 90, 104, 0.38);
     transition: transform 220ms cubic-bezier(0.32, 0.72, 0, 1), background-color 220ms cubic-bezier(0.32, 0.72, 0, 1);
@@ -105,23 +145,53 @@ const SHARED_CSS = `
   .btn-primary:hover { background: var(--rose-brand-hover); }
   .btn-primary:active { transform: scale(0.98); }
   .btn-icon-circle {
-    width: 24px; height: 24px; border-radius: 50%;
+    width: 22px; height: 22px; border-radius: 50%;
     background: rgba(255, 255, 255, 0.22);
-    display: inline-flex; align-items: center; justify-content: center; font-size: 0.78rem;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 0.76rem;
     transition: transform 220ms cubic-bezier(0.32, 0.72, 0, 1);
   }
   .btn-primary:hover .btn-icon-circle { transform: translate(2px, -1px); }
   .btn-secondary {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    background: var(--bg-surface); color: var(--text-primary); font-weight: 600; font-size: 0.85rem;
-    padding: 9px 18px; border-radius: var(--radius-pill); border: 1px solid var(--border-hairline);
+    background: var(--bg-surface); color: var(--text-primary); font-weight: 600; font-size: 0.84rem;
+    padding: 8px 16px; border-radius: var(--radius-pill); border: 1px solid var(--border-hairline);
     cursor: pointer; white-space: nowrap;
     transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1), border-color 200ms cubic-bezier(0.32, 0.72, 0, 1), background-color 200ms cubic-bezier(0.32, 0.72, 0, 1);
   }
   .btn-secondary:hover { border-color: var(--rose-pill-border); background: var(--rose-pill-bg); color: var(--rose-brand); }
   .btn-secondary:active { transform: scale(0.98); }
 
-  .hero-section { padding: 36px 0 64px; border-bottom: 1px solid var(--border-hairline); }
+  /* Affiliate Pill & Micro Links */
+  .affiliate-link-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 11px;
+    border-radius: var(--radius-pill);
+    background: #FFFFFF;
+    border: 1px solid var(--rose-pill-border);
+    color: var(--rose-brand);
+    font-size: 0.71rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+  .affiliate-link-pill:hover {
+    background: var(--rose-pill-bg);
+    border-color: var(--rose-brand);
+  }
+  .affiliate-micro-link {
+    display: inline-block;
+    margin-top: 3px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--sage-safe);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .affiliate-micro-link:hover { color: var(--rose-brand); }
+
+  .hero-section { padding: 32px 0 60px; border-bottom: 1px solid var(--border-hairline); }
   .editorial-top-banner { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 28px; align-items: center; margin-bottom: 28px; }
   .editorial-photo-shell {
     background: var(--bg-oat); border: 1px solid var(--border-hairline);
@@ -138,8 +208,31 @@ const SHARED_CSS = `
   .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 28px; align-items: start; }
   @media (max-width: 1024px) {
     .editorial-top-banner, .hero-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
+    .nav-links {
+      width: 100%;
+      order: 3;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-hairline);
+      font-size: 0.72rem;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+    .hide-mobile { display: none !important; }
   }
+  @media (max-width: 640px) {
+    .container { padding: 0 16px; }
+    .grader-card, .results-panel { padding: 16px; }
+    .filter-profile-grid { grid-template-columns: 1fr !important; }
+    .brand-logo-link { font-size: 1.12rem; gap: 8px; }
+    .brand-logo-link svg { width: 30px; height: 30px; }
+    .brand-atelier-word { display: none; }
+    .site-header .btn-primary { padding: 7px 11px 7px 13px; font-size: 0.76rem; gap: 6px; }
+    .site-header .btn-icon-circle { width: 18px; height: 18px; font-size: 0.68rem; }
+    .nav-links { font-size: 0.66rem; gap: 4px; }
+  }
+
   .eyebrow-pill {
     display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px;
     border-radius: var(--radius-pill); background: var(--rose-pill-bg); border: 1px solid var(--rose-pill-border);
@@ -147,7 +240,7 @@ const SHARED_CSS = `
   }
   .hero-h1 {
     font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
-    font-size: clamp(2.25rem, 3.8vw, 3.45rem); line-height: 1.06; letter-spacing: -0.025em;
+    font-size: clamp(2.15rem, 3.8vw, 3.45rem); line-height: 1.06; letter-spacing: -0.025em;
     font-weight: 600; color: var(--text-primary); margin-bottom: 12px;
   }
   .hero-sub { color: var(--text-secondary); font-size: 1rem; max-width: 58ch; margin-bottom: 8px; }
@@ -170,7 +263,7 @@ const SHARED_CSS = `
   .field-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
   .product-selector-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px;
-    max-height: 220px; overflow-y: auto; padding: 10px;
+    max-height: 225px; overflow-y: auto; padding: 10px;
     background: var(--bg-canvas); border: 1px solid var(--border-hairline); border-radius: var(--radius-input); margin-bottom: 14px;
   }
   .prod-check-item {
@@ -217,9 +310,7 @@ const SHARED_CSS = `
     background: #FFFFFF; border: 1.5px solid var(--rose-brand); transform: translateX(-50%);
     box-shadow: 0 2px 6px rgba(28, 22, 19, 0.18);
   }
-  .ph-chip-row {
-    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;
-  }
+  .ph-chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
   .ph-chip {
     display: inline-flex; align-items: center; gap: 5px;
     background: #FFFFFF; color: var(--text-primary);
@@ -249,13 +340,24 @@ const SHARED_CSS = `
   table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
   th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-hairline); }
   th { color: var(--text-secondary); font-weight: 600; background: var(--bg-oat); }
-  .site-footer { padding: 48px 0; background: var(--bg-oat); color: var(--text-secondary); font-size: 0.86rem; }
+  .site-footer { padding: 44px 0; background: var(--bg-oat); color: var(--text-secondary); font-size: 0.86rem; }
+
+  /* Non-Floating Docked Cookie Ribbon — Never obscures content on mobile or desktop */
   .cookie-banner {
-    position: fixed; bottom: 18px; right: 18px; left: 18px; max-width: 520px;
-    background: rgba(255, 252, 248, 0.97); border: 1px solid var(--border-hairline); border-radius: var(--radius-card);
-    padding: 14px 18px; display: none; align-items: center; justify-content: space-between; gap: 12px;
-    box-shadow: var(--shadow-luxury); z-index: 60;
+    width: 100%;
+    background: #EFE6DA;
+    border-top: 1px solid var(--border-hairline);
+    padding: 12px 0;
+    display: none;
   }
+  .cookie-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
   .modal-backdrop {
     position: fixed; inset: 0; background: rgba(28, 22, 19, 0.42); backdrop-filter: blur(8px);
     display: none; align-items: center; justify-content: center; padding: 20px; z-index: 80;
@@ -271,11 +373,17 @@ function renderHeader(hideNav = false) {
     return `
       <header class="site-header">
         <div class="container nav-inner">
-          <div class="brand-mark">
-            <span class="brand-glyph mono">ΔpH</span>
-            <span class="serif-display">dermlogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">atelier</span></span>
+          <a href="/" class="brand-logo-link" aria-label="DermLogic Home">
+            ${BRAND_LOGO_SVG}
+            <span class="serif-display" style="font-weight:700;">dermlogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">clinical <span class="brand-atelier-word">atelier</span></span></span>
+          </a>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="badge-safe mono hide-mobile">30-DAY SKINCARE HARMONY GUARANTEE</span>
+            <a href="/#analyzer" class="btn-primary">
+              <span>Audit My Shelf</span>
+              <span class="btn-icon-circle">↗</span>
+            </a>
           </div>
-          <div class="badge-safe mono">30-DAY SKINCARE HARMONY GUARANTEE</div>
         </div>
       </header>
     `;
@@ -283,17 +391,16 @@ function renderHeader(hideNav = false) {
   return `
     <header class="site-header">
       <div class="container nav-inner">
-        <a href="/" class="brand-mark">
-          <span class="brand-glyph mono">ΔpH</span>
-          <span class="serif-display">dermlogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">clinical</span></span>
+        <a href="/" class="brand-logo-link" aria-label="DermLogic Home">
+          ${BRAND_LOGO_SVG}
+          <span class="serif-display" style="font-weight:700;">dermlogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">clinical <span class="brand-atelier-word">atelier</span></span></span>
         </a>
         <nav class="nav-links" aria-label="Main Navigation">
-          <a href="/#checker">Routine Ritual Audit</a>
-          <a href="/#inci-table">Active &amp; pH Guide</a>
+          <a href="/#analyzer">Routine Ritual Audit</a>
+          <a href="/#actives-matrix">65 Clinical Actives &amp; pH Matrix</a>
           <a href="/directory">60+ Layering Guides</a>
-          <a href="/lp">5-Second Shelf Check</a>
         </nav>
-        <a href="/#checker" class="btn-primary">
+        <a href="/#analyzer" class="btn-primary">
           <span>Audit My Shelf</span>
           <span class="btn-icon-circle">↗</span>
         </a>
@@ -304,34 +411,39 @@ function renderHeader(hideNav = false) {
 
 function renderFooter() {
   return `
+    <div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie Consent">
+      <div class="container cookie-banner-inner">
+        <div style="font-size:0.8rem;color:var(--text-secondary);">
+          We use privacy-safe first-party telemetry &amp; CAPI deduplication to personalize your skincare ritual. See our <a href="/privacy" style="text-decoration:underline;color:var(--rose-brand);">Privacy Policy</a>.
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button type="button" id="cookie-reject" class="btn-secondary" style="padding:6px 14px;font-size:0.78rem;" onclick="setCookieConsent('rejected')">Reject</button>
+          <button type="button" id="cookie-accept" class="btn-primary" style="padding:6px 16px;font-size:0.78rem;" onclick="setCookieConsent('accepted')">Accept</button>
+        </div>
+      </div>
+    </div>
     <footer class="site-footer">
       <div class="container" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:center;">
         <div>
-          <div class="brand-mark" style="margin-bottom:6px;">
-            <span class="brand-glyph mono">ΔpH</span>
-            <span class="serif-display">dermlogic <span class="serif-italic" style="color:var(--rose-brand);">formulation atelier</span></span>
-          </div>
-          <p style="color:var(--text-secondary);font-size:0.82rem;">
+          <a href="/" class="brand-logo-link" aria-label="DermLogic Home" style="margin-bottom:6px;">
+            ${BRAND_LOGO_SVG}
+            <span class="serif-display" style="font-weight:700;">dermlogic <span class="serif-italic" style="color:var(--rose-brand);">clinical atelier</span></span>
+          </a>
+          <p style="color:var(--text-secondary);font-size:0.81rem;">
             Cosmetic-chemist verified pH windows, peptide &amp; Vitamin C compatibility, pore-safety, and AM/PM skin-cycling rituals.
+            <span class="mono" style="font-size:0.72rem;display:block;margin-top:2px;">Reader-supported formulation lab: verified links to Sephora &amp; Dermstore may earn an affiliate commission.</span>
           </p>
         </div>
-        <div style="display:flex;gap:22px;flex-wrap:wrap;font-weight:500;">
-          <a href="/directory">Layering Encyclopedia (60 Guides)</a>
+        <div style="display:flex;gap:22px;flex-wrap:wrap;font-weight:600;font-size:0.84rem;">
+          <a href="/#analyzer">Routine Ritual Audit</a>
+          <a href="/#actives-matrix">65 Clinical Actives</a>
+          <a href="/directory">60+ Layering Guides</a>
           <a href="/sitemap.xml">XML Sitemap</a>
           <a href="/privacy">Privacy Policy</a>
           <a href="/terms">Terms of Service</a>
         </div>
       </div>
     </footer>
-    <div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie Consent">
-      <div style="font-size:0.79rem;color:var(--text-secondary);">
-        We use privacy-safe first-party telemetry &amp; CAPI deduplication to personalize your skincare ritual.
-      </div>
-      <div style="display:flex;gap:8px;">
-        <button type="button" class="btn-secondary" style="padding:7px 14px;font-size:0.78rem;" onclick="setCookieConsent('rejected')">Reject</button>
-        <button type="button" class="btn-primary" style="padding:7px 16px;font-size:0.78rem;" onclick="setCookieConsent('accepted')">Accept</button>
-      </div>
-    </div>
   `;
 }
 
@@ -347,20 +459,24 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
   const productCheckboxesHtml = products.map((prod) => {
     const isChecked = selectedSet.has(prod.id);
+    const partner = prod.priceUsd >= 50 ? 'Dermstore' : 'Sephora';
+    const partnerSlug = partner.toLowerCase();
     return `
       <label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}">
         <input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" />
-        <span>
+        <span style="flex:1;">
           <strong style="display:block;color:var(--text-primary);">${escapeHtml(prod.brand)}</strong>
           <span style="color:var(--text-secondary);display:block;">${escapeHtml(prod.name)}</span>
-          <span class="mono" style="color:var(--rose-brand);font-size:0.7rem;font-weight:600;">pH ${prod.ph} · $${prod.priceUsd}</span>
+          <span class="mono" style="color:var(--rose-brand);font-size:0.7rem;font-weight:600;display:block;">pH ${prod.ph} · $${prod.priceUsd}</span>
+          <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partnerSlug}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" onclick="event.stopPropagation()">Shop at ${partner} ($${prod.priceUsd}) ↗</a>
         </span>
       </label>
     `;
   }).join('');
 
   return `
-    <div class="hero-grid" id="checker">
+    <div id="checker"></div>
+    <div class="hero-grid" id="analyzer">
       <div class="grader-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
           <span class="field-label" style="margin:0;">1. Tap a Curated Vanity Shelf Preset</span>
@@ -370,7 +486,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           ${presetButtonsHtml}
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 185px;gap:10px;margin-bottom:10px;">
+        <div class="filter-profile-grid" style="display:grid;grid-template-columns:1fr 185px;gap:10px;margin-bottom:10px;">
           <div>
             <label class="field-label" for="productFilterInput">2. Build Your Daily Vanity Shelf (${products.length} Cult Formulas)</label>
             <input id="productFilterInput" type="search" class="input-box" placeholder="Search Rhode, SkinCeuticals, Paula's Choice, Tretinoin, Snail..." oninput="filterProductList(this.value)" />
@@ -425,6 +541,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         </p>
         <form id="checkoutForm" onsubmit="submitSelfServeCheckout(event)">
           <input type="hidden" id="checkoutPlanId" value="onetime_499" />
+          <input type="text" name="website_hp" id="checkoutHoneypot" style="display:none !important" tabindex="-1" autocomplete="off" />
           <div style="margin-bottom:12px;">
             <label class="field-label" for="checkoutEmailInput">Where Should We Send Your Ritual Pass &amp; PDF?</label>
             <input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="patient@dermlogic.io" />
@@ -464,8 +581,11 @@ function renderSingleConflictCard(c) {
         <span class="mono" style="font-size:0.73rem;color:var(--text-secondary);">${escapeHtml(c.inciA)} (pH ${c.phA}) × ${escapeHtml(c.inciB)} (pH ${c.phB})</span>
       </div>
       <div class="serif-display" style="font-size:1.12rem;font-weight:700;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(c.title)}</div>
-      <p style="color:var(--text-secondary);font-size:0.81rem;margin-bottom:6px;">${escapeHtml(c.mechanism)}</p>
-      <div style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">Esthetician Fix: ${escapeHtml(c.resolution)}</div>
+      <p style="color:var(--text-secondary);font-size:0.81rem;margin-bottom:8px;">${escapeHtml(c.mechanism)}</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;flex:1;">Esthetician Fix: ${escapeHtml(c.resolution)}</div>
+        <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Alternative (Dermstore / Sephora) ↗</a>
+      </div>
     </div>
   `;
 }
@@ -572,6 +692,10 @@ function renderAnalysisResultHtml(res) {
         <div class="serif-display" style="font-size:1.15rem;font-weight:700;margin-bottom:6px;">AM Morning Glow &amp; PM 4-Night Barrier Ritual</div>
         <ul style="list-style:none;margin-bottom:10px;">${amListHtml}</ul>
         ${pmCyclingHtml}
+        <div style="margin-top:8px;padding:9px 12px;border-radius:10px;background:var(--rose-pill-bg);border:1px solid var(--rose-pill-border);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:0.75rem;color:var(--text-primary);font-weight:600;">Verified Barrier-Safe Finishers (3:1:1 Ceramide &amp; SPF 50+)</span>
+          <a href="/api/affiliate?product=dieux-instant-angel&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Verified Ritual Kit (Sephora / Dermstore) ↗</a>
+        </div>
       </div>
 
       <div>
@@ -728,13 +852,14 @@ const CLIENT_SCRIPT = `
     ev.preventDefault();
     const planId = (document.getElementById('checkoutPlanId') || {}).value || 'onetime_499';
     const email = (document.getElementById('checkoutEmailInput') || {}).value || 'patient@dermlogic.io';
+    const website_hp = (document.getElementById('checkoutHoneypot') || {}).value || '';
     const btn = document.getElementById('checkoutSubmitBtn');
     if (btn) { btn.disabled = true; btn.innerHTML = '<span>Preparing Ritual Pass...</span>'; }
     try {
       const resp = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planId, email, routineSummary: window.__DERMLOGIC_LAST_RESULT || {} })
+        body: JSON.stringify({ planId, email, website_hp, routineSummary: window.__DERMLOGIC_LAST_RESULT || {} })
       });
       const res = await resp.json();
       const box = document.getElementById('checkoutSuccessBox');
@@ -757,7 +882,7 @@ const CLIENT_SCRIPT = `
   window.addEventListener('DOMContentLoaded', () => {
     if (!localStorage.getItem('dermlogic_cookie_consent')) {
       const banner = document.getElementById('cookieBanner');
-      if (banner) banner.style.display = 'flex';
+      if (banner) banner.style.display = 'block';
     }
     fireMetaCapiEvent('ViewContent', 0, { path: window.location.pathname });
   });
@@ -765,6 +890,7 @@ const CLIENT_SCRIPT = `
 
 module.exports = {
   escapeHtml,
+  BRAND_LOGO_SVG,
   SHARED_CSS,
   CLIENT_SCRIPT,
   renderHeader,

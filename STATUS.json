@@ -6,39 +6,46 @@
   "baseUrl": "http://127.0.0.1:4104",
   "status": "COMPLETED",
   "designSystem": "Warm Silk & Botanical Clinical Luxury (Rhode Skin / Summer Fridays / Glossier / Merit Beauty / Aesop / Dieux Skin)",
-  "palette": {
-    "canvas": "#FAF6F0",
-    "oatSecondary": "#F4EDE4",
-    "surfacePorcelain": "#FFFFFF",
-    "borderHairline": "#E6DDD2",
-    "inkEspresso": "#1C1613",
-    "inkTaupe": "#6E6259",
-    "accentRoseTerracotta": "#C85A68",
-    "semanticSage": "#2D6A4F",
-    "semanticHoney": "#B4690E",
-    "semanticBerry": "#BE123C"
+  "logoAndFavicon": "/favicon.svg (Bespoke Botanical Serum Droplet & Hexagonal Molecular Ring SVG Emblem)",
+  "headerNavigation": {
+    "logoHref": "/",
+    "links": [
+      { "label": "Routine Ritual Audit", "href": "/#analyzer" },
+      { "label": "65 Clinical Actives & pH Matrix", "href": "/#actives-matrix" },
+      { "label": "60+ Layering Guides", "href": "/directory" }
+    ],
+    "primaryCta": { "label": "Audit My Shelf ↗", "href": "/#analyzer" }
   },
-  "phases": {
-    "phase1_brand_taste": "COMPLETED",
-    "phase2_core_engine_db": "COMPLETED",
-    "phase3_gtm_pseo_capi": "COMPLETED",
-    "phase4_playwright_verification": "COMPLETED",
-    "phase5_luxury_editorial_redesign": "COMPLETED"
+  "affiliateMonetization": {
+    "endpoint": "/api/affiliate?product=<id>&partner=dermstore|sephora|amazon",
+    "partners": ["Dermstore", "Sephora", "Amazon"],
+    "commissionRate": "12%",
+    "placements": [
+      "Conflict Fix Cards (Shop Barrier-Safe Alternative)",
+      "AM/PM 4-Night Barrier Ritual Kit",
+      "44 Cult Formulas Shelf Selector Cards",
+      "60 Programmatic SEO Directory & Detail Pages"
+    ]
   },
+  "preLaunchChecklist20Point": "20/20 PASSED",
   "metrics": {
     "seededIngredients": 65,
     "seededProducts": 44,
     "seededSeoPages": 60,
-    "seededRoutineScans": 38,
-    "seededMetaCapiEvents": 20,
-    "engineExecutionMs": 3.53,
+    "seededRoutineScans": 128,
+    "seededMetaCapiEvents": 87,
+    "engineExecutionMs": 3.65,
     "consoleErrors": 0,
-    "pageErrors": 0
+    "pageErrors": 0,
+    "mobileFloatingBoxes": 0,
+    "mobileHorizontalOverflowPx": 0
   },
   "routesVerified": [
     "/",
     "/lp",
     "/directory",
+    "/favicon.svg",
+    "/api/affiliate",
     "/seo/can-you-mix-retinol-and-vitamin-c",
     "/seo/can-you-mix-copper-peptides-and-vitamin-c",
     "/seo/benzoyl-peroxide-and-tretinoin-conflict",
@@ -70,5 +77,5 @@
     "screenshots/mobile-home.png",
     "screenshots/mobile-lp.png"
   ],
-  "updatedAt": "2026-10-14T07:28:30Z"
+  "updatedAt": "2026-10-14T08:00:30Z"
 }

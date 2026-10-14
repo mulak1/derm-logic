@@ -3,11 +3,12 @@
  */
 
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const { CLINICAL_INGREDIENTS, CULT_PRODUCTS, ROUTINE_PRESETS } = require('./clinical-data');
 const { db, sampleBetaArm, recordMetaEvent } = require('./db');
 const { analyzeRoutine, generateOptionalGeminiNote } = require('./engine');
-const { renderAnalysisResultHtml } = require('./ui-templates');
+const { BRAND_LOGO_SVG, renderAnalysisResultHtml } = require('./ui-templates');
 const {
   renderHomePage,
   renderPaidSocialLpPage,
@@ -26,11 +27,33 @@ app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Security headers (Pre-Launch Checklist #4)
+// Pre-Launch Checklist #4: Security Headers & Production HTTPS Redirect Support
 app.use((req, res, next) => {
+  if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] === 'http') {
+    return res.redirect(301, `https://${req.headers.host}${req.originalUrl}`);
+  }
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
+// Pre-Launch Checklist #18: Lightweight Rate Limiting on POST APIs
+const postRateWindow = new Map();
+app.use('/api', (req, res, next) => {
+  if (req.method !== 'POST') return next();
+  const ip = req.ip || '127.0.0.1';
+  const now = Date.now();
+  const bucket = postRateWindow.get(ip) || { count: 0, resetAt: now + 60000 };
+  if (now > bucket.resetAt) {
+    bucket.count = 0;
+    bucket.resetAt = now + 60000;
+  }
+  bucket.count += 1;
+  postRateWindow.set(ip, bucket);
+  if (bucket.count > 240) {
+    return res.status(429).json({ ok: false, error: 'Too many requests; please wait a moment.' });
+  }
   next();
 });
 
@@ -38,6 +61,15 @@ function getAllSeoPages() {
   const rows = db.prepare('SELECT payload_json FROM seo_pages ORDER BY slug ASC').all();
   return rows.map((r) => JSON.parse(r.payload_json));
 }
+
+// High-Class Bespoke Luxury SVG Favicon (/favicon.svg)
+app.get('/favicon.svg', (req, res) => {
+  const favPath = path.join(__dirname, '..', 'public', 'favicon.svg');
+  if (fs.existsSync(favPath)) {
+    return res.status(200).type('image/svg+xml').send(fs.readFileSync(favPath, 'utf8'));
+  }
+  return res.status(200).type('image/svg+xml').send(BRAND_LOGO_SVG);
+});
 
 // 1. Homepage (/)
 app.get('/', (req, res) => {
@@ -160,7 +192,50 @@ app.get('/api/og', (req, res) => {
   return res.status(200).type('image/svg+xml').send(svg);
 });
 
-// 8. Core Deterministic Clinical INCI & Routine Compatibility API (POST /api/analyze-routine)
+// 8. Skincare Affiliate Monetization & Attribution Endpoint (GET /api/affiliate)
+app.get('/api/affiliate', (req, res) => {
+  const productId = String(req.query.product || 'skinceuticals-ce-ferulic');
+  const partner = String(req.query.partner || 'dermstore').toLowerCase();
+  const prod = CULT_PRODUCTS.find((p) => p.id === productId) || CULT_PRODUCTS[0];
+  const queryTerm = encodeURIComponent(`${prod.brand} ${prod.name}`);
+
+  const partnerBase = partner === 'sephora'
+    ? `https://www.sephora.com/search?keyword=${queryTerm}`
+    : partner === 'amazon'
+      ? `https://www.amazon.com/s?k=${queryTerm}`
+      : `https://www.dermstore.com/elysium.search?search=${queryTerm}`;
+
+  const destinationUrl = `${partnerBase}&utm_source=dermlogic&utm_medium=affiliate&aff_id=dermlogic_clinical_4104`;
+
+  recordMetaEvent({
+    event_id: `dl_aff_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+    event_name: 'AffiliateClick',
+    source_url: req.headers.referer || `http://${HOST}:${PORT}/`,
+    value: Number((prod.priceUsd * 0.12).toFixed(2)),
+    currency: 'USD',
+    utm_source: partner,
+    utm_medium: 'affiliate',
+    utm_campaign: productId,
+    user_agent: req.headers['user-agent'] || '',
+    custom_data: { productId: prod.id, brand: prod.brand, name: prod.name, partner, priceUsd: prod.priceUsd }
+  });
+
+  if (req.query.format === 'json') {
+    return res.status(200).json({
+      ok: true,
+      productId: prod.id,
+      brand: prod.brand,
+      name: prod.name,
+      partner,
+      priceUsd: prod.priceUsd,
+      estimatedCommissionUsd: Number((prod.priceUsd * 0.12).toFixed(2)),
+      destinationUrl
+    });
+  }
+  return res.redirect(302, destinationUrl);
+});
+
+// 9. Core Deterministic Clinical INCI & Routine Compatibility API (POST /api/analyze-routine)
 app.post('/api/analyze-routine', async (req, res) => {
   const { skinType, productIds, rawInciText, includeAiNote, renderHtml } = req.body || {};
   const result = analyzeRoutine({ skinType, productIds, rawInciText });
@@ -174,7 +249,7 @@ app.post('/api/analyze-routine', async (req, res) => {
   res.status(200).json(result);
 });
 
-// 9. Reference Catalog Endpoints
+// 10. Reference Catalog Endpoints
 app.get('/api/ingredients', (req, res) => {
   res.status(200).json({ count: CLINICAL_INGREDIENTS.length, ingredients: CLINICAL_INGREDIENTS });
 });
@@ -183,7 +258,7 @@ app.get('/api/products', (req, res) => {
   res.status(200).json({ count: CULT_PRODUCTS.length, products: CULT_PRODUCTS });
 });
 
-// 10. Meta Pixel + Conversions API (CAPI) Server-Side Event Endpoint (POST /api/meta-capi)
+// 11. Meta Pixel + Conversions API (CAPI) Server-Side Event Endpoint (POST /api/meta-capi)
 app.post('/api/meta-capi', (req, res) => {
   const body = req.body || {};
   const recorded = recordMetaEvent({
@@ -197,9 +272,18 @@ app.post('/api/meta-capi', (req, res) => {
   });
 });
 
-// 11. Self-Serve Stripe / Thompson-Sampling Paywall Checkout (POST /api/checkout)
+// 12. Self-Serve Stripe / Thompson-Sampling Paywall Checkout (POST /api/checkout)
 app.post('/api/checkout', (req, res) => {
-  const { planId, email, routineSummary } = req.body || {};
+  const { planId, email, website_hp, routineSummary } = req.body || {};
+  // Pre-Launch Checklist #18: Honeypot Spam Protection
+  if (website_hp && String(website_hp).trim() !== '') {
+    return res.status(400).json({ ok: false, error: 'Automated spam submission rejected.' });
+  }
+  const cleanEmail = String(email || 'patient@dermlogic.io').trim();
+  if (!cleanEmail.includes('@')) {
+    return res.status(400).json({ ok: false, error: 'Please provide a valid email address.' });
+  }
+
   const selectedPlanId = planId === 'annual_1999' ? 'annual_1999' : 'onetime_499';
   const amountCents = selectedPlanId === 'annual_1999' ? 1999 : 499;
   const planName = selectedPlanId === 'annual_1999'
@@ -219,13 +303,12 @@ app.post('/api/checkout', (req, res) => {
     selectedPlanId,
     planName,
     amountCents,
-    email || 'patient@dermlogic.io',
+    cleanEmail,
     armId,
     JSON.stringify(routineSummary || {}),
     createdAt
   );
 
-  // Update Thompson-Sampling Beta posteriors (reward alpha + 1)
   db.prepare(`
     UPDATE bandit_arms
     SET alpha = alpha + 1, impressions = impressions + 1, conversions = conversions + 1
@@ -235,7 +318,7 @@ app.post('/api/checkout', (req, res) => {
   const bandit = sampleBetaArm();
   res.status(200).json({
     ok: true,
-    message: `Instant Clinical Protocol & 9:16 Apple-Wallet Pass generated for ${email || 'patient@dermlogic.io'}.`,
+    message: `Instant Clinical Protocol & 9:16 Apple-Wallet Pass generated for ${cleanEmail}.`,
     downloadUrl: `/api/og?slug=home&order=${orderId}`,
     order: {
       order_id: orderId,
@@ -250,7 +333,7 @@ app.post('/api/checkout', (req, res) => {
   });
 });
 
-// 12. Health & Telemetry Summary (/api/health)
+// 13. Health & Telemetry Summary (/api/health)
 app.get('/api/health', (req, res) => {
   const ingCount = db.prepare('SELECT COUNT(*) as c FROM ingredients').get().c;
   const prodCount = db.prepare('SELECT COUNT(*) as c FROM products').get().c;
@@ -273,7 +356,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 13. Custom 404 Handler
+// 14. Custom 404 Handler
 app.use((req, res) => {
   res.status(404).type('html').send(render404Page());
 });

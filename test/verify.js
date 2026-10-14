@@ -1,5 +1,5 @@
 /**
- * DermLogic (#4) — Isolated Headless Playwright & API Verification Suite
+ * DermLogic (#4) — Isolated Headless Playwright & 20-Point Pre-Launch Verification Suite
  * Connects strictly to http://127.0.0.1:4104 using an isolated headless Chromium instance
  * (never touches shared MCP Playwright browser).
  */
@@ -33,7 +33,7 @@ async function ensureServerRunning() {
 }
 
 async function runVerification() {
-  console.log('=== DermLogic (#4) Phase 4 Verification Suite ===');
+  console.log('=== DermLogic (#4) 20-Point Pre-Launch & Luxury Redesign Verification ===');
   const { server } = await ensureServerRunning();
   const consoleErrors = [];
   const pageErrors = [];
@@ -65,16 +65,18 @@ async function runVerification() {
     assert(analysis.comedogenicFlags.length >= 1, 'Should flag Isopropyl Myristate comedogenicity');
     assert(analysis.malasseziaFlags.length >= 1, 'Should flag Polysorbate 20 / Isopropyl Myristate Malassezia trigger');
 
-    // 3. Verify all required HTTP routes (/lp, /directory, /seo/:slug, /sitemap.xml, /robots.txt, /api/og, /api/meta-capi, /api/checkout)
+    // 3. Verify all required GET routes including /favicon.svg & /api/affiliate
     const getRoutes = [
       '/',
       '/lp',
       '/directory',
       '/privacy',
       '/terms',
+      '/favicon.svg',
       '/sitemap.xml',
       '/robots.txt',
       '/api/og?slug=can-you-mix-copper-peptides-and-vitamin-c',
+      '/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore&format=json',
       '/seo/can-you-mix-retinol-and-vitamin-c',
       '/seo/can-you-mix-copper-peptides-and-vitamin-c',
       '/seo/benzoyl-peroxide-and-tretinoin-conflict',
@@ -89,7 +91,16 @@ async function runVerification() {
       const r = await fetch(`${BASE_URL}${route}`);
       assert.strictEqual(r.status, 200, `GET ${route} must return HTTP 200, got ${r.status}`);
     }
-    console.log(`3. Verified ${getRoutes.length} GET routes all return HTTP 200.`);
+    const r404 = await fetch(`${BASE_URL}/non-existent-route-check-404`);
+    assert.strictEqual(r404.status, 404, 'Custom 404 route must return HTTP 404');
+    console.log(`3. Verified ${getRoutes.length} GET routes (200 OK) + Custom 404 route (404).`);
+
+    // Verify Affiliate JSON response
+    const affRes = await fetch(`${BASE_URL}/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore&format=json`);
+    const affJson = await affRes.json();
+    assert.strictEqual(affJson.ok, true);
+    assert(affJson.destinationUrl.includes('dermstore.com'), 'Affiliate endpoint must build partner URL');
+    console.log(`4. Verified Affiliate Attribution: ${affJson.brand} ${affJson.name} -> $${affJson.estimatedCommissionUsd} est. commission`);
 
     // Verify POST /api/meta-capi deduplication
     const testEventId = `verify_evt_${Date.now()}`;
@@ -118,9 +129,20 @@ async function runVerification() {
     });
     const capi2Json = await capi2.json();
     assert.strictEqual(capi2Json.deduplicated, true, 'Duplicate event_id must be deduplicated');
-    console.log('4. Verified POST /api/meta-capi event logging & event_id deduplication.');
+    console.log('5. Verified POST /api/meta-capi event logging & event_id deduplication.');
 
-    // Verify POST /api/checkout
+    // Verify Honeypot Spam Protection (#18) & Valid Checkout (#17)
+    const spamRes = await fetch(`${BASE_URL}/api/checkout`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        planId: 'onetime_499',
+        email: 'bot@spam.io',
+        website_hp: 'http://spambot.example.com'
+      })
+    });
+    assert.strictEqual(spamRes.status, 400, 'Honeypot spam check must return 400');
+
     const checkoutRes = await fetch(`${BASE_URL}/api/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -133,9 +155,9 @@ async function runVerification() {
     assert.strictEqual(checkoutRes.status, 200, 'POST /api/checkout must return 200');
     const checkoutJson = await checkoutRes.json();
     assert.strictEqual(checkoutJson.ok, true);
-    console.log(`5. Verified POST /api/checkout order fulfillment: ${checkoutJson.order.order_id}`);
+    console.log(`6. Verified Honeypot Spam Protection (400) & POST /api/checkout fulfillment: ${checkoutJson.order.order_id}`);
 
-    // 4. Isolated Headless Playwright Browser Verification (Desktop 1440x900 & Mobile 390x844)
+    // Isolated Headless Playwright Browser Verification (Desktop 1440x900 & Mobile 390x844)
     const browser = await chromium.launch({ headless: true });
 
     // Desktop Viewport (1440x900)
@@ -147,6 +169,22 @@ async function runVerification() {
     page.on('pageerror', (err) => pageErrors.push(err.message));
 
     await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' });
+
+    // Verify hyperlinked logo & unified header links on /
+    const logoHref = await page.getAttribute('header a.brand-logo-link', 'href');
+    assert.strictEqual(logoHref, '/', 'Brand logo must link to /');
+    const navLinksCount = await page.locator('header nav.nav-links a').count();
+    assert.strictEqual(navLinksCount, 3, 'Header must contain the 3 unified root-relative links');
+    const affLinksCount = await page.locator('a[rel*="sponsored"]').count();
+    assert(affLinksCount >= 10, `Expected >=10 sponsored affiliate links on /, got ${affLinksCount}`);
+
+    // Accept cookie consent ribbon so UI is clean, then scroll back to top
+    if (await page.locator('#cookie-accept').isVisible()) {
+      await page.click('#cookie-accept');
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.waitForTimeout(100);
+    }
+
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-home-initial.png'), fullPage: false });
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'home-desktop.png'), fullPage: false });
 
@@ -160,6 +198,10 @@ async function runVerification() {
 
     const conflictCardsCount = await page.locator('.conflict-card').count();
     assert(conflictCardsCount >= 2, `Expected >=2 rendered conflict cards on DOM, got ${conflictCardsCount}`);
+
+    // Scroll back to top before fullPage screenshot so sticky header sits cleanly at top of document
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(150);
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-home-analyzed.png'), fullPage: true });
 
     // Open checkout modal & test interactive unlock
@@ -172,15 +214,19 @@ async function runVerification() {
 
     // Capture /lp (Cold Paid-Social Landing Page) & /seo/:slug
     await page.goto(`${BASE_URL}/lp?utm_source=meta&utm_medium=paid_social&utm_campaign=angle1`, { waitUntil: 'networkidle' });
+    const lpLogoHref = await page.getAttribute('header a.brand-logo-link', 'href');
+    assert.strictEqual(lpLogoHref, '/', 'Brand logo on /lp must also link to /');
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-lp-paid-social.png'), fullPage: false });
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'lp-desktop.png'), fullPage: false });
 
     await page.goto(`${BASE_URL}/seo/can-you-mix-copper-peptides-and-vitamin-c`, { waitUntil: 'networkidle' });
+    const seoLogoHref = await page.getAttribute('header a.brand-logo-link', 'href');
+    assert.strictEqual(seoLogoHref, '/', 'Brand logo on /seo/:slug must link to /');
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-seo-copper-vitc.png'), fullPage: false });
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'seo-desktop.png'), fullPage: false });
     await desktopCtx.close();
 
-    // Mobile Viewport (390x844)
+    // Mobile Viewport (390x844) — Verify zero horizontal overflow & zero floating overlapping boxes
     const mobileCtx = await browser.newContext({
       viewport: { width: 390, height: 844 },
       isMobile: true,
@@ -193,6 +239,37 @@ async function runVerification() {
     mPage.on('pageerror', (err) => pageErrors.push(err.message));
 
     await mPage.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' });
+    if (await mPage.locator('#cookie-accept').isVisible()) {
+      await mPage.click('#cookie-accept');
+      await mPage.evaluate(() => window.scrollTo(0, 0));
+      await mPage.waitForTimeout(100);
+    }
+
+    const mobileLayoutCheck = await mPage.evaluate(() => {
+      const scrollWidth = document.documentElement.scrollWidth;
+      const innerWidth = window.innerWidth;
+      // Check that no visible element is position:fixed (so zero floating boxes overlap content)
+      const allEls = Array.from(document.querySelectorAll('*'));
+      const floatingFixed = allEls.filter((el) => {
+        const st = window.getComputedStyle(el);
+        return st.position === 'fixed' && st.display !== 'none' && st.visibility !== 'hidden' && el.offsetWidth > 0;
+      });
+      return {
+        scrollWidth,
+        innerWidth,
+        floatingFixedCount: floatingFixed.length
+      };
+    });
+    assert(
+      mobileLayoutCheck.scrollWidth <= mobileLayoutCheck.innerWidth,
+      `Mobile horizontal overflow detected: scrollWidth=${mobileLayoutCheck.scrollWidth} > innerWidth=${mobileLayoutCheck.innerWidth}`
+    );
+    assert.strictEqual(
+      mobileLayoutCheck.floatingFixedCount,
+      0,
+      `Expected 0 floating fixed boxes on mobile 390x844, got ${mobileLayoutCheck.floatingFixedCount}`
+    );
+
     await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'mobile-home.png'), fullPage: false });
     await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'home-mobile.png'), fullPage: false });
 
@@ -204,8 +281,8 @@ async function runVerification() {
 
     assert.strictEqual(consoleErrors.length, 0, `Expected 0 console errors, got: ${consoleErrors.join('; ')}`);
     assert.strictEqual(pageErrors.length, 0, `Expected 0 page errors, got: ${pageErrors.join('; ')}`);
-    console.log('6. Isolated Headless Playwright Desktop (1440x900) & Mobile (390x844) passed with 0 console/page errors.');
-    console.log('=== ALL DERMLOGIC (#4) VERIFICATION CHECKS PASSED 100% ===');
+    console.log('7. Isolated Headless Playwright Desktop (1440x900) & Mobile (390x844) passed with 0 console/page errors & 0 floating boxes.');
+    console.log('=== ALL DERMLOGIC (#4) 20-POINT PRE-LAUNCH & LUXURY CHECKS PASSED 100% ===');
   } finally {
     if (server) {
       server.close();

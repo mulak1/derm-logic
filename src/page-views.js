@@ -39,7 +39,7 @@ function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdO
   <meta name="twitter:title" content="${escapeHtml(title)}" />
   <meta name="twitter:description" content="${escapeHtml(description)}" />
   <meta name="twitter:image" content="${escapeHtml(ogImageUrl)}" />
-  <link rel="icon" type="image/svg+xml" href="/api/og?slug=favicon" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   ${jsonLdScripts}
   <style>${SHARED_CSS}</style>
 </head>
@@ -94,14 +94,20 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
   `).join('');
 
   const featuredSeoLinks = seoPages.slice(0, 12).map((p) => `
-    <a href="/seo/${escapeHtml(p.slug)}" class="bento-cell" style="display:block;padding:18px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-        <span class="mono" style="font-size:0.71rem;color:var(--rose-brand);font-weight:700;">${escapeHtml(p.category)}</span>
-        <span class="mono" style="font-size:0.72rem;color:var(--text-secondary);">Harmony ${p.compatibilityScore}/100</span>
+    <div class="bento-cell" style="display:flex;flex-direction:column;justify-content:space-between;padding:18px;">
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span class="mono" style="font-size:0.71rem;color:var(--rose-brand);font-weight:700;">${escapeHtml(p.category)}</span>
+          <span class="mono" style="font-size:0.72rem;color:var(--text-secondary);">Harmony ${p.compatibilityScore}/100</span>
+        </div>
+        <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:700;font-size:1.08rem;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
+        <p style="color:var(--text-secondary);font-size:0.79rem;margin-bottom:10px;">${escapeHtml(p.summary.slice(0, 115))}...</p>
       </div>
-      <div class="serif-display" style="font-weight:700;font-size:1.08rem;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(p.title)}</div>
-      <p style="color:var(--text-secondary);font-size:0.79rem;">${escapeHtml(p.summary.slice(0, 115))}...</p>
-    </a>
+      <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border-hairline);padding-top:8px;gap:8px;flex-wrap:wrap;">
+        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:700;">Read Layering Guide →</a>
+        <a href="/api/affiliate?product=${escapeHtml((p.presetProducts && p.presetProducts[0]) || 'skinceuticals-ce-ferulic')}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" style="margin:0;">Verified Retailer ↗</a>
+      </div>
+    </div>
   `).join('');
 
   const bodyHtml = `
@@ -150,32 +156,36 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
           <div class="bento-cell tinted">
             <div class="badge-clash mono" style="margin-bottom:10px;">1. |ΔpH| &gt; 1.8 &amp; PEPTIDE DE-CHELATION</div>
             <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Copper Peptides × Pure Vitamin C</h3>
-            <p style="color:var(--text-secondary);font-size:0.88rem;">
+            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
               Pure L-Ascorbic Acid (pH 3.2) requires an acidic environment to absorb, while Copper Tripeptide-1 (pH 6.2) relies on a neutral pH. Layering them together uncouples the copper ion, oxidizes your Vitamin C, and triggers nicotinic flushing.
             </p>
+            <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Verified Vitamin C &amp; Peptide Separates (Dermstore) ↗</a>
           </div>
           <div class="bento-cell">
             <div class="badge-warn mono" style="margin-bottom:10px;">2. REDOX OXIDATION</div>
             <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Benzoyl Peroxide × Retinoids</h3>
-            <p style="color:var(--text-secondary);font-size:0.88rem;">
+            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
               Benzoyl Peroxide releases oxygen radicals that oxidize Tretinoin and Retinol on contact—erasing over 80% of your night serum’s collagen-remodeling potency unless separated into AM vs. PM.
             </p>
+            <a href="/api/affiliate?product=laroche-posay-adapalene-01&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Oxidation-Stable Adapalene 0.1% (Dermstore) ↗</a>
           </div>
           <div class="bento-cell">
             <div class="badge-safe mono" style="margin-bottom:10px;">3. PORE &amp; FUNGAL-ACNE SAFETY</div>
             <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Hidden Vehicle Esters</h3>
-            <p style="color:var(--text-secondary);font-size:0.88rem;">
+            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
               Even prescription Tretinoin 0.05% creams frequently suspend the active in Isopropyl Myristate (a 5/5 pore-clogger and Malassezia yeast feeder), causing stubborn closed comedones.
             </p>
+            <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Non-Comedogenic 3:1:1 Ceramide Cream (Sephora) ↗</a>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Clinical Reference Matrix Section -->
-    <section class="section-block" id="inci-table">
+    <section class="section-block" id="actives-matrix">
+      <div id="inci-table"></div>
       <div class="container">
-        <h2 class="serif-display" style="font-size:2rem;margin-bottom:8px;">Cosmetic Chemist Active-Ingredient pH, pKa &amp; Pore-Safety Matrix</h2>
+        <h2 class="serif-display" style="font-size:2rem;margin-bottom:8px;">Cosmetic Chemist Active-Ingredient pH, pKa &amp; Pore-Safety Matrix (${ingredients.length} Clinical Actives)</h2>
         <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:20px;max-width:65ch;">
           Showing 18 of ${ingredients.length} clinical ingredients indexed in our formulation database, cross-referenced with EU CosIng and Malassezia lipid triggers.
         </p>
@@ -314,16 +324,27 @@ function renderDirectoryPage({ seoPages }) {
   const pairPages = seoPages.filter((p) => p.pageType === 'active_pair');
   const productPages = seoPages.filter((p) => p.pageType === 'product_teardown');
 
-  const renderCardList = (items) => items.map((p) => `
-    <a href="/seo/${escapeHtml(p.slug)}" class="bento-cell" style="display:block;padding:20px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <span class="${p.compatibilityScore < 45 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(p.verdict)} · ${p.compatibilityScore}/100</span>
-        <span class="mono" style="font-size:0.74rem;color:var(--text-secondary);">ΔpH ${p.deltaPh}</span>
+  const renderCardList = (items) => items.map((p) => {
+    const prodId = (p.presetProducts && p.presetProducts[0]) || 'skinceuticals-ce-ferulic';
+    const partner = p.pageType === 'product_teardown' ? 'dermstore' : 'sephora';
+    const partnerLabel = partner === 'dermstore' ? 'Dermstore' : 'Sephora';
+    return `
+      <div class="bento-cell" style="display:flex;flex-direction:column;justify-content:space-between;padding:20px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span class="${p.compatibilityScore < 45 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(p.verdict)} · ${p.compatibilityScore}/100</span>
+            <span class="mono" style="font-size:0.74rem;color:var(--text-secondary);">ΔpH ${p.deltaPh}</span>
+          </div>
+          <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-size:1.15rem;font-weight:700;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
+          <p style="color:var(--text-secondary);font-size:0.81rem;margin-bottom:12px;">${escapeHtml(p.summary)}</p>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border-hairline);padding-top:10px;gap:8px;flex-wrap:wrap;">
+          <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:700;">Open Clinical Audit →</a>
+          <a href="/api/affiliate?product=${escapeHtml(prodId)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop at ${partnerLabel} ↗</a>
+        </div>
       </div>
-      <h3 class="serif-display" style="font-size:1.15rem;font-weight:700;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(p.title)}</h3>
-      <p style="color:var(--text-secondary);font-size:0.81rem;">${escapeHtml(p.summary)}</p>
-    </a>
-  `).join('');
+    `;
+  }).join('');
 
   const bodyHtml = `
     <section class="section-block">
@@ -359,6 +380,7 @@ function renderDirectoryPage({ seoPages }) {
 }
 
 function renderSeoDetailPage({ page, products, presets, initialAnalysis, relatedPages }) {
+  const primaryProdId = (page.presetProducts && page.presetProducts[0]) || 'skinceuticals-ce-ferulic';
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -410,7 +432,13 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         <div style="margin-bottom:10px;font-size:0.82rem;color:var(--text-secondary);">
           <a href="/">Home</a> / <a href="/directory">Layering Directory</a> / <span style="color:var(--rose-brand);font-weight:600;">${escapeHtml(page.category)}</span>
         </div>
-        <div class="eyebrow-pill mono">${escapeHtml(page.verdict)} · HARMONY SCORE ${page.compatibilityScore}/100 · ΔpH ${page.deltaPh}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
+          <div class="eyebrow-pill mono" style="margin:0;">${escapeHtml(page.verdict)} · HARMONY SCORE ${page.compatibilityScore}/100 · ΔpH ${page.deltaPh}</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Verified Formula at Dermstore ↗</a>
+            <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Alternative at Sephora ↗</a>
+          </div>
+        </div>
         <h1 class="hero-h1" style="font-size:clamp(1.95rem,3.2vw,2.85rem);">${escapeHtml(page.title)}</h1>
         <p class="hero-sub" style="margin-bottom:22px;">${escapeHtml(page.summary)}</p>
 
@@ -481,10 +509,10 @@ function renderLegalPage({ type }) {
           </p>
         </div>
         <div class="bento-cell">
-          <h2 class="serif-display" style="font-size:1.3rem;margin-bottom:8px;">2. ${isPrivacy ? 'GDPR / CCPA Rights & Cookie Controls' : '30-Day Harmony Guarantee & Self-Serve Fulfillment'}</h2>
+          <h2 class="serif-display" style="font-size:1.3rem;margin-bottom:8px;">2. ${isPrivacy ? 'GDPR / CCPA Rights, Cookie Controls & Retailer Disclosures' : '30-Day Harmony Guarantee & Self-Serve Fulfillment'}</h2>
           <p style="color:var(--text-secondary);font-size:0.9rem;">
             ${isPrivacy
-              ? 'Visitors may reject non-essential analytics via the Cookie Consent banner at any time and request complete deletion of order or telemetry records by emailing concierge@dermlogic.io.'
+              ? 'Visitors may reject non-essential analytics via the Cookie Consent ribbon at any time and request complete deletion of order or telemetry records by emailing concierge@dermlogic.io. Verified retailer links to Dermstore and Sephora include sponsored affiliate tags.'
               : 'All $4.99 One-Time Routine Ritual Cards and $19.99/yr Unlimited Shelf Passes include an unconditional 30-day satisfaction guarantee.'}
           </p>
         </div>
@@ -512,7 +540,7 @@ function render404Page() {
           Return to the interactive ΔpH &amp; Active-Ingredient Harmony Checker or explore all 60 clinical layering guides.
         </p>
         <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-          <a href="/" class="btn-primary"><span>Open Routine Harmony Checker</span><span class="btn-icon-circle">↗</span></a>
+          <a href="/#analyzer" class="btn-primary"><span>Open Routine Harmony Checker</span><span class="btn-icon-circle">↗</span></a>
           <a href="/directory" class="btn-secondary">Browse 60 Layering Guides</a>
         </div>
       </div>
