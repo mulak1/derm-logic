@@ -280,7 +280,7 @@ app.post('/api/meta-capi', (req, res) => {
 });
 
 // 12. Self-Serve Stripe / Thompson-Sampling Paywall Checkout (POST /api/checkout)
-app.post('/api/checkout', (req, res) => {
+app.post('/api/checkout', async (req, res) => {
   const { planId, email, website_hp, routineSummary } = req.body || {};
   // Pre-Launch Checklist #18: Honeypot Spam Protection
   if (website_hp && String(website_hp).trim() !== '') {
@@ -291,15 +291,51 @@ app.post('/api/checkout', (req, res) => {
     return res.status(400).json({ ok: false, error: 'Please provide a valid email address.' });
   }
 
-  const selectedPlanId = planId === 'annual_1999' ? 'annual_1999' : 'onetime_499';
-  const amountCents = selectedPlanId === 'annual_1999' ? 1999 : 499;
-  const planName = selectedPlanId === 'annual_1999'
+  const isAnnual = planId === 'annual_1999';
+  const selectedPlanId = isAnnual ? 'annual_1999' : 'onetime_499';
+  const amountCents = isAnnual ? 1999 : 499;
+  const planName = isAnnual
     ? '$19.99/yr Unlimited Shelf Scanner + Fungal-Acne & Rx Tracker'
     : '$4.99 One-Time Clinical Routine Rescue PDF & 9:16 Apple-Wallet Card';
-  const armId = selectedPlanId === 'annual_1999' ? 'arm_unlimited_1999' : 'arm_rescue_499';
+  const armId = isAnnual ? 'arm_unlimited_1999' : 'arm_rescue_499';
 
-  const orderId = `dl_ord_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+  let orderId = `dl_ord_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+  let checkoutUrl = `/api/og?slug=home&order=${orderId}`;
   const createdAt = new Date().toISOString();
+
+  if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith('sk_')) {
+    try {
+      const priceId = isAnnual ? process.env.STRIPE_PRICE_ANNUAL_1999 : process.env.STRIPE_PRICE_VANITY_499;
+      const params = new URLSearchParams({
+        mode: isAnnual ? 'subscription' : 'payment',
+        customer_email: cleanEmail,
+        success_url: `${PUBLIC_URL}/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${PUBLIC_URL}/?checkout=cancelled`,
+        'line_items[0][quantity]': '1'
+      });
+      if (priceId) {
+        params.set('line_items[0][price]', priceId);
+      } else {
+        params.set('line_items[0][price_data][currency]', 'usd');
+        params.set('line_items[0][price_data][unit_amount]', String(amountCents));
+        params.set('line_items[0][price_data][product_data][name]', `DermLogic — ${planName}`);
+        if (isAnnual) params.set('line_items[0][price_data][recurring][interval]', 'year');
+      }
+      const sRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.toString()
+      });
+      const sData = await sRes.json();
+      if (sRes.ok && sData.url) {
+        orderId = sData.id;
+        checkoutUrl = sData.url;
+      }
+    } catch (_) {}
+  }
 
   db.prepare(`
     INSERT INTO checkout_orders (
@@ -327,12 +363,14 @@ app.post('/api/checkout', (req, res) => {
     ok: true,
     message: `Instant Clinical Protocol & 9:16 Apple-Wallet Pass generated for ${cleanEmail}.`,
     downloadUrl: `/api/og?slug=home&order=${orderId}`,
+    checkoutUrl,
     order: {
       order_id: orderId,
       plan_id: selectedPlanId,
       plan_name: planName,
       amount_cents: amountCents,
       currency: 'usd',
+      checkout_url: checkoutUrl,
       status: 'COMPLETED_SELF_SERVE',
       created_at: createdAt
     },
