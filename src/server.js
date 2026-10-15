@@ -206,13 +206,20 @@ app.get('/api/affiliate', (req, res) => {
       ? (process.env.AMAZON_ASSOCIATE_TAG || 'dermlogic-20')
       : (process.env.DERMSTORE_AFF_ID || 'dermlogic_dermstore');
 
-  const partnerBase = partner === 'sephora'
-    ? `https://www.sephora.com/search?keyword=${queryTerm}&om_mmc=${affTag}`
+  const rawMerchantUrl = partner === 'sephora'
+    ? `https://www.sephora.com/search?keyword=${queryTerm}`
     : partner === 'amazon'
       ? `https://www.amazon.com/s?k=${queryTerm}&tag=${affTag}`
-      : `https://www.dermstore.com/elysium.search?search=${queryTerm}&affil=${affTag}`;
+      : `https://www.dermstore.com/elysium.search?search=${queryTerm}`;
 
-  const destinationUrl = `${partnerBase}&utm_source=dermlogic&utm_medium=affiliate`;
+  const skimlinksId = process.env.SKIMLINKS_PUBLISHER_ID || '';
+  const destinationUrl = (skimlinksId && partner !== 'amazon')
+    ? `https://go.redirectingat.com/?id=${encodeURIComponent(skimlinksId)}&xs=1&url=${encodeURIComponent(rawMerchantUrl)}&xcust=${encodeURIComponent(productId)}`
+    : partner === 'sephora'
+      ? `${rawMerchantUrl}&om_mmc=${affTag}&utm_source=dermlogic&utm_medium=affiliate`
+      : partner === 'amazon'
+        ? `${rawMerchantUrl}&utm_source=dermlogic&utm_medium=affiliate`
+        : `${rawMerchantUrl}&affil=${affTag}&utm_source=dermlogic&utm_medium=affiliate`;
 
   recordMetaEvent({
     event_id: `dl_aff_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,

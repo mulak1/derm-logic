@@ -444,6 +444,7 @@ function renderFooter() {
         </div>
       </div>
     </footer>
+    ${process.env.SKIMLINKS_PUBLISHER_ID ? `<script type="text/javascript" src="https://s.skimresources.com/js/${process.env.SKIMLINKS_PUBLISHER_ID}.skimlinks.js"></script>` : ''}
   `;
 }
 
