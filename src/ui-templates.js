@@ -444,7 +444,15 @@ function renderFooter() {
         </div>
       </div>
     </footer>
-    ${process.env.SKIMLINKS_PUBLISHER_ID ? `<script type="text/javascript" src="https://s.skimresources.com/js/${process.env.SKIMLINKS_PUBLISHER_ID}.skimlinks.js"></script>` : ''}
+    <!-- Sovrn //Commerce Automated Affiliate Monetization -->
+    <script type="text/javascript">
+      var vglnk = { key: '${process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || 'ea3d7b74c5752fd817f896be27cd1a01'}' };
+      (function(d, t) {
+        var s = d.createElement(t); s.type = 'text/javascript'; s.async = true;
+        s.src = '//cdn.viglink.com/api/vglnk.js';
+        var r = d.getElementsByTagName(t)[0]; r.parentNode.insertBefore(s, r);
+      }(document, 'script'));
+    </script>
   `;
 }
 
