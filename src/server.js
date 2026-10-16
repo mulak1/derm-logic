@@ -24,7 +24,7 @@ const { attachExactBaselinePack } = require('./exact-baseline-api');
 const app = express();
 const PORT = Number(process.env.PORT || 4104);
 const HOST = process.env.HOST || '0.0.0.0';
-const PUBLIC_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || `http://127.0.0.1:${PORT}`).replace(/\/$/, '');
+const PUBLIC_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://www.dermlogic.io').replace(/\/$/, '');
 
 app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json({ limit: '1mb' }));
@@ -129,7 +129,44 @@ app.get('/seo/:slug', (req, res) => {
     rawInciText: page.product ? page.product.inciList : ''
   });
   const allPages = getAllSeoPages();
-  const relatedPages = allPages.filter((p) => p.slug !== slug && p.pageType === page.pageType).slice(0, 6);
+  const curIdx = Math.max(0, allPages.findIndex((p) => p.slug === slug));
+  const pageActiveIds = new Set(
+    [
+      page.ingredientA && page.ingredientA.id,
+      page.ingredientB && page.ingredientB.id,
+      ...(page.product && Array.isArray(page.product.primaryActives) ? page.product.primaryActives : [])
+    ].filter(Boolean)
+  );
+  const relatedPages = [];
+  const seenSlugs = new Set([slug]);
+  const addRelated = (candidate) => {
+    if (candidate && !seenSlugs.has(candidate.slug) && relatedPages.length < 8) {
+      seenSlugs.add(candidate.slug);
+      relatedPages.push(candidate);
+    }
+  };
+  for (let i = 1; i <= 4; i++) {
+    addRelated(allPages[(curIdx + i) % allPages.length]);
+  }
+  for (let i = 1; i < allPages.length && relatedPages.length < 7; i++) {
+    const cand = allPages[(curIdx + i) % allPages.length];
+    const candActives = [
+      cand.ingredientA && cand.ingredientA.id,
+      cand.ingredientB && cand.ingredientB.id,
+      ...(cand.product && Array.isArray(cand.product.primaryActives) ? cand.product.primaryActives : [])
+    ].filter(Boolean);
+    if (candActives.some((id) => pageActiveIds.has(id))) {
+      addRelated(cand);
+    }
+  }
+  const oppositeType = page.pageType === 'active_pair' ? 'product_teardown' : 'active_pair';
+  for (let i = 1; i < allPages.length && !relatedPages.some((r) => r.pageType === oppositeType); i++) {
+    const cand = allPages[(curIdx + i) % allPages.length];
+    if (cand.pageType === oppositeType) addRelated(cand);
+  }
+  for (let i = 1; i < allPages.length && relatedPages.length < 8; i++) {
+    addRelated(allPages[(curIdx + i) % allPages.length]);
+  }
 
   const html = renderSeoDetailPage({
     page,
@@ -150,7 +187,7 @@ app.get('/terms', (req, res) => {
   res.status(200).type('html').send(renderLegalPage({ type: 'terms' }));
 });
 
-// 6. XML Sitemap (/sitemap.xml) & Robots (/robots.txt)
+// 6. XML Sitemap (/sitemap.xml), Robots (/robots.txt), and LLM Discovery (/llms.txt, /llms-full.txt)
 app.get('/sitemap.xml', (req, res) => {
   const seoPages = getAllSeoPages();
   const baseUrl = PUBLIC_URL;
@@ -176,6 +213,89 @@ Disallow: /api/
 Sitemap: ${PUBLIC_URL}/sitemap.xml
 `;
   res.status(200).type('text/plain').send(txt);
+});
+
+app.get('/llms.txt', (req, res) => {
+  const seoPages = getAllSeoPages();
+  const ingLines = CLINICAL_INGREDIENTS.map(
+    (ing) => `- ${ing.commonName} (INCI: ${ing.inciName}) | pH: ${ing.phMin}–${ing.phMax} | pKa: ${ing.pka != null ? ing.pka : 'N/A'} | MW: ${ing.molecularWeightDa} Da | Comedogenicity: ${ing.comedogenicity}/5 | Malassezia Safe: ${ing.malasseziaTrigger ? 'No (Trigger)' : 'Yes'}`
+  ).join('\n');
+  const prodLines = CULT_PRODUCTS.map(
+    (p) => `- ${p.brand} ${p.name} (id: ${p.id}) | pH ${p.ph} | $${p.priceUsd} | Key Actives: ${(p.primaryActives || []).join(', ')}`
+  ).join('\n');
+  const seoLines = seoPages.map(
+    (p) => `- [${p.title}](${PUBLIC_URL}/seo/${p.slug}): ${p.verdict} (Harmony ${p.compatibilityScore}/100, ΔpH ${p.deltaPh}) — ${p.metaDescription}`
+  ).join('\n');
+
+  const content = `# DermLogic — Clinical Skincare Active-Ingredient Conflict, ΔpH & INCI Harmony Atelier
+> Sub-5ms Henderson-Hasselbalch pKa bioavailability, ΔpH > 1.8 peptide/acid inactivation checks, Cu2+/BPO redox conflict matrix, EU CosIng comedogenicity (0–5), Malassezia fungal-acne triggers, and 4-Night Skin Cycling schedules.
+
+## Canonical Endpoints
+- Homepage & Interactive Routine Checker: ${PUBLIC_URL}/
+- Programmatic SEO Layering Directory (${seoPages.length} Guides): ${PUBLIC_URL}/directory
+- Paid-Social Vanity Shelf Audit LP: ${PUBLIC_URL}/lp
+- Full LLM Clinical Corpus: ${PUBLIC_URL}/llms-full.txt
+- XML Sitemap: ${PUBLIC_URL}/sitemap.xml
+- Deterministic Routine Analysis API (POST): ${PUBLIC_URL}/api/analyze-routine
+- Clinical Ingredients Catalog API (GET): ${PUBLIC_URL}/api/ingredients
+- Cult Products Catalog API (GET): ${PUBLIC_URL}/api/products
+
+## Clinical Active-Ingredient Matrix (${CLINICAL_INGREDIENTS.length} INCI Compounds)
+${ingLines}
+
+## Cult Skincare Formulations (${CULT_PRODUCTS.length} Products)
+${prodLines}
+
+## All ${seoPages.length} Clinical Layering & Product INCI Teardown Guides (/seo/:slug)
+${seoLines}
+`;
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.status(200).send(content);
+});
+
+app.get('/llms-full.txt', (req, res) => {
+  const seoPages = getAllSeoPages();
+  const ingBlocks = CLINICAL_INGREDIENTS.map(
+    (ing) => `### ${ing.commonName} (${ing.inciName}) [id: ${ing.id}]
+- Category / Class: ${ing.category} / ${ing.activeClass}
+- Optimal pH Window: ${ing.phMin}–${ing.phMax} | pKa: ${ing.pka != null ? ing.pka : 'N/A'} | Molecular Weight: ${ing.molecularWeightDa} Da
+- Comedogenicity: ${ing.comedogenicity}/5 | Irritation Index: ${ing.irritationIndex}/5 | Malassezia Safe: ${ing.malasseziaTrigger ? 'No (Fungal-Acne Trigger)' : 'Yes'} | Pregnancy: ${ing.pregnancySafe}
+- Function: ${ing.functionRole}
+- Mechanism: ${ing.clinicalMechanism}`
+  ).join('\n\n');
+
+  const prodBlocks = CULT_PRODUCTS.map(
+    (p) => `### ${p.brand} — ${p.name} [id: ${p.id}]
+- Category: ${p.category} | Formulation pH: ${p.ph} | Price: $${p.priceUsd}
+- Primary Actives: ${(p.primaryActives || []).join(', ')}
+- Full INCI: ${p.inciList}
+- Clinical Summary: ${p.summary}`
+  ).join('\n\n');
+
+  const seoBlocks = seoPages.map(
+    (p) => `### ${p.title}
+- URL: ${PUBLIC_URL}/seo/${p.slug}
+- Type: ${p.pageType} | Verdict: ${p.verdict} | Harmony Score: ${p.compatibilityScore}/100 | ΔpH: ${p.deltaPh} | Wait Window: ${p.waitTimeMinutes} min
+- Conflict Mechanism: ${p.conflictType}
+- Meta Summary: ${p.metaDescription}
+- AM Morning Glow Rule: ${p.amRule}
+- PM Barrier Repair Rule: ${p.pmRule}`
+  ).join('\n\n');
+
+  const content = `# DermLogic — Complete Clinical Formulation, INCI, pKa & Layering Corpus (/llms-full.txt)
+> Exhaustive reference for AI agents, dermatological researchers, and cosmetic chemists covering ${CLINICAL_INGREDIENTS.length} INCI compounds, ${CULT_PRODUCTS.length} cult skincare products, and ${seoPages.length} clinical compatibility guides.
+
+## 1. Clinical Active-Ingredient Matrix (${CLINICAL_INGREDIENTS.length} INCI Compounds)
+${ingBlocks}
+
+## 2. Cult Skincare Products & Full INCI Profiles (${CULT_PRODUCTS.length} Products)
+${prodBlocks}
+
+## 3. Programmatic SEO Layering & INCI Teardown Guides (${seoPages.length} URLs)
+${seoBlocks}
+`;
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.status(200).send(content);
 });
 
 // 7. Dynamic SVG OpenGraph Card (/api/og)
@@ -221,7 +341,7 @@ app.get('/api/affiliate', (req, res) => {
   recordMetaEvent({
     event_id: `dl_aff_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
     event_name: 'AffiliateClick',
-    source_url: req.headers.referer || `http://${HOST}:${PORT}/`,
+    source_url: req.headers.referer || `${PUBLIC_URL}/`,
     value: Number((prod.priceUsd * 0.12).toFixed(2)),
     currency: 'USD',
     utm_source: partner,

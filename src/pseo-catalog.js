@@ -717,17 +717,31 @@ const PRODUCT_SEO_SEEDS = [
   }
 ];
 
+function formatMetaDescription(rawText, maxLen = 155) {
+  const clean = String(rawText || '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLen) return clean;
+  const sliced = clean.slice(0, maxLen - 1);
+  const lastSpace = sliced.lastIndexOf(' ');
+  const base = (lastSpace > 80 ? sliced.slice(0, lastSpace) : sliced).replace(/[,;:\s]+$/, '');
+  return base.endsWith('.') ? base : `${base}.`;
+}
+
 function buildSeoPagesCatalog(ingredientsMap, productsMap) {
   const pages = [];
 
   for (const item of PAIR_SEO_SEEDS) {
     const ingA = ingredientsMap.get(item.activeA);
     const ingB = ingredientsMap.get(item.activeB);
+    const baseSummary = item.summary.length < 115
+      ? `${item.summary} (ΔpH ${item.deltaPh}, Harmony ${item.compatibilityScore}/100).`
+      : item.summary;
+    const comparisonIngredients = [ingA, ingB].filter(Boolean);
+
     pages.push({
       slug: item.slug,
       pageType: 'active_pair',
       title: item.title,
-      metaDescription: `${item.summary} Instant deterministic ΔpH (${item.deltaPh}), pKa free-acid, and AM/PM skin-cycling schedule.`,
+      metaDescription: formatMetaDescription(baseSummary, 155),
       category: item.category,
       verdict: item.verdict,
       compatibilityScore: item.compatibilityScore,
@@ -739,6 +753,7 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       waitTimeMinutes: item.waitTimeMinutes,
       ingredientA: ingA || null,
       ingredientB: ingB || null,
+      comparisonIngredients,
       product: null,
       presetProducts: item.presetProducts,
       faqs: [
@@ -763,11 +778,28 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
   for (const item of PRODUCT_SEO_SEEDS) {
     const prod = productsMap.get(item.productId);
     const primaryIngs = (prod ? prod.primaryActives : []).map((id) => ingredientsMap.get(id)).filter(Boolean);
+    const companionIngs = (item.companionProductIds || [])
+      .map((pid) => productsMap.get(pid))
+      .filter(Boolean)
+      .flatMap((cp) => (cp.primaryActives || []).map((id) => ingredientsMap.get(id)))
+      .filter(Boolean);
+    const seenIds = new Set();
+    const comparisonIngredients = [];
+    for (const ing of [...primaryIngs, ...companionIngs]) {
+      if (ing && !seenIds.has(ing.id)) {
+        seenIds.add(ing.id);
+        comparisonIngredients.push(ing);
+      }
+      if (comparisonIngredients.length >= 4) break;
+    }
+
+    const rawProdMeta = `${prod ? `${prod.brand} ${prod.name} (pH ${prod.ph})` : item.title}: ${item.conflictHighlights}`;
+
     pages.push({
       slug: item.slug,
       pageType: 'product_teardown',
       title: item.title,
-      metaDescription: `Clinical INCI breakdown for ${prod ? `${prod.brand} ${prod.name}` : item.slug} (pH ${prod ? prod.ph : '5.5'}). ${item.conflictHighlights}`,
+      metaDescription: formatMetaDescription(rawProdMeta, 155),
       category: 'Product INCI Teardown',
       verdict: prod && prod.ph <= 3.8 ? 'LOW_PH_ACTIVE' : 'CLINICAL_TEARDOWN',
       compatibilityScore: prod && prod.ph <= 3.8 ? 64 : 86,
@@ -779,8 +811,9 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
         : 'Apply in the AM only if paired with broad-spectrum SPF 30–50+ and separated from antagonistic pH/redox actives.',
       pmRule: `In the PM, ${item.conflictHighlights}`,
       waitTimeMinutes: prod && prod.ph <= 3.8 ? 15 : 5,
-      ingredientA: primaryIngs[0] || null,
-      ingredientB: primaryIngs[1] || null,
+      ingredientA: comparisonIngredients[0] || null,
+      ingredientB: comparisonIngredients[1] || null,
+      comparisonIngredients,
       product: prod || null,
       presetProducts: [item.productId, ...item.companionProductIds.slice(0, 2)],
       faqs: [

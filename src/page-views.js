@@ -12,11 +12,14 @@ const {
   renderInteractiveCheckerWidget
 } = require('./ui-templates');
 
+const { CLINICAL_INGREDIENTS } = require('./clinical-data');
+
 function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdObjects, hideNav, bodyHtml }) {
-  const canonicalUrl = `http://127.0.0.1:4104${canonicalPath || '/'}`;
-  const ogImageUrl = `http://127.0.0.1:4104/api/og?slug=${encodeURIComponent(ogSlug || 'home')}`;
+  const baseUrl = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://www.dermlogic.io').replace(/\/$/, '');
+  const canonicalUrl = `${baseUrl}${canonicalPath || '/'}`;
+  const ogImageUrl = `${baseUrl}/api/og?slug=${encodeURIComponent(ogSlug || 'home')}`;
   const jsonLdScripts = (jsonLdObjects || [])
-    .map((obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`)
+    .map((obj) => `<script type="application/ld+json">${JSON.stringify(obj.url ? obj : { ...obj, url: canonicalUrl })}</script>`)
     .join('\n');
 
   return `<!DOCTYPE html>
@@ -93,7 +96,12 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
     </tr>
   `).join('');
 
-  const featuredSeoLinks = seoPages.slice(0, 12).map((p) => `
+  const featuredSeoPages = [
+    ...seoPages.filter((p) => p.pageType === 'active_pair').slice(0, 12),
+    ...seoPages.filter((p) => p.pageType === 'product_teardown').slice(0, 12)
+  ];
+
+  const featuredSeoLinks = featuredSeoPages.map((p) => `
     <div class="bento-cell" style="display:flex;flex-direction:column;justify-content:space-between;padding:18px;">
       <div>
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
@@ -379,8 +387,69 @@ function renderDirectoryPage({ seoPages }) {
   });
 }
 
+function getRoutineSlotRecommendation(ing) {
+  if (!ing) return 'AM or PM Ritual';
+  const id = String(ing.id || '');
+  const cls = String(ing.activeClass || '');
+  if (cls.includes('retinoid') || id.includes('tretinoin') || id.includes('retinol') || id.includes('adapalene') || id === 'hydroquinone') {
+    return 'PM Night Only (Photolabile / Keratolytic)';
+  }
+  if (id.includes('glycolic') || id.includes('lactic') || id.includes('mandelic')) {
+    return 'PM Exfoliation Night (SPF 50 Next AM)';
+  }
+  if (cls === 'vitamin_c_laa' || ing.category === 'uv_filter') {
+    return 'AM Morning Glow (Photoprotective)';
+  }
+  return 'AM or PM (Split from ΔpH Clashes)';
+}
+
+function resolveComparisonIngredients(page, products) {
+  const seen = new Set();
+  const list = [];
+  const pushIng = (ing) => {
+    if (ing && ing.id && !seen.has(ing.id)) {
+      seen.add(ing.id);
+      list.push(ing);
+    }
+  };
+  if (Array.isArray(page.comparisonIngredients)) {
+    page.comparisonIngredients.forEach(pushIng);
+  }
+  pushIng(page.ingredientA);
+  pushIng(page.ingredientB);
+  if (page.product && Array.isArray(page.product.primaryActives)) {
+    for (const actId of page.product.primaryActives) {
+      pushIng(CLINICAL_INGREDIENTS.find((i) => i.id === actId));
+    }
+  }
+  if (list.length < 2 && Array.isArray(page.presetProducts) && Array.isArray(products)) {
+    for (const pid of page.presetProducts) {
+      const pr = products.find((p) => p.id === pid);
+      if (pr && Array.isArray(pr.primaryActives)) {
+        for (const actId of pr.primaryActives) {
+          pushIng(CLINICAL_INGREDIENTS.find((i) => i.id === actId));
+        }
+      }
+    }
+  }
+  if (list.length < 2) {
+    pushIng(CLINICAL_INGREDIENTS[0]);
+    pushIng(CLINICAL_INGREDIENTS[1]);
+  }
+  return list.slice(0, 4);
+}
+
 function renderSeoDetailPage({ page, products, presets, initialAnalysis, relatedPages }) {
   const primaryProdId = (page.presetProducts && page.presetProducts[0]) || 'skinceuticals-ce-ferulic';
+  const comparedActives = resolveComparisonIngredients(page, products);
+  const searchIntentSubject = page.ingredientA && page.ingredientB
+    ? `${page.ingredientA.commonName} and ${page.ingredientB.commonName}`
+    : page.product
+      ? `${page.product.brand} ${page.product.name} and Active Serums`
+      : (comparedActives[0] && comparedActives[1]
+        ? `${comparedActives[0].commonName} and ${comparedActives[1].commonName}`
+        : page.title.split(':')[0]);
+
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -412,6 +481,18 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
     }
   ];
 
+  const comparisonRowsHtml = comparedActives.map((ing) => `
+    <tr>
+      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span class="mono" style="font-size:0.74rem;color:var(--text-secondary);">${escapeHtml(ing.inciName)}</span></td>
+      <td class="mono">${ing.phMin}–${ing.phMax}</td>
+      <td class="mono">${ing.pka != null ? ing.pka : '—'}</td>
+      <td class="mono">${ing.molecularWeightDa} Da</td>
+      <td><span class="${ing.comedogenicity >= 3 ? 'badge-clash' : 'badge-safe'} mono">${ing.comedogenicity}/5</span></td>
+      <td><span class="${ing.malasseziaTrigger ? 'badge-warn' : 'badge-safe'} mono">${ing.malasseziaTrigger ? 'No (Trigger)' : 'Yes (Safe)'}</span></td>
+      <td style="font-size:0.81rem;color:var(--text-secondary);">${escapeHtml(getRoutineSlotRecommendation(ing))}</td>
+    </tr>
+  `).join('');
+
   const faqHtml = (page.faqs || []).map((f) => `
     <div class="bento-cell" style="margin-bottom:12px;">
       <h3 class="serif-display" style="font-size:1.2rem;font-weight:700;margin-bottom:6px;">${escapeHtml(f.q)}</h3>
@@ -419,7 +500,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
     </div>
   `).join('');
 
-  const relatedHtml = (relatedPages || []).slice(0, 6).map((r) => `
+  const relatedHtml = (relatedPages || []).slice(0, 8).map((r) => `
     <a href="/seo/${escapeHtml(r.slug)}" class="bento-cell" style="display:block;padding:16px;">
       <div class="mono" style="font-size:0.71rem;color:var(--rose-brand);font-weight:700;margin-bottom:4px;">${escapeHtml(r.verdict)} · ΔpH ${r.deltaPh}</div>
       <div class="serif-display" style="font-weight:700;font-size:1.05rem;">${escapeHtml(r.title)}</div>
@@ -455,6 +536,31 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <div class="bento-cell">
             <div class="mono" style="font-size:0.72rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;">PM BARRIER REPAIR RITUAL</div>
             <p style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(page.pmRule)}</p>
+          </div>
+        </div>
+
+        <div class="bento-cell" style="margin-bottom:28px;padding:22px;">
+          <h2 class="serif-display" style="font-size:1.65rem;margin-bottom:8px;">Can You Use ${escapeHtml(searchIntentSubject)} Together? Clinical Verdict &amp; Layering Rules</h2>
+          <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:14px;">
+            Clinical Verdict: <strong class="mono" style="color:var(--rose-brand);">${escapeHtml(page.verdict)}</strong> (Harmony Score ${page.compatibilityScore}/100 · ΔpH ${page.deltaPh}). Compare Henderson-Hasselbalch pKa dissociation, optimal pH windows, Dalton molecular weights, EU CosIng comedogenicity (0–5), and Malassezia safety below before layering.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Active / INCI Compound</th>
+                  <th>Optimal pH Window</th>
+                  <th>pKa</th>
+                  <th>Molecular Weight (Da)</th>
+                  <th>Comedogenicity (0–5)</th>
+                  <th>Malassezia Safe</th>
+                  <th>Recommended Routine Slot (AM/PM)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${comparisonRowsHtml}
+              </tbody>
+            </table>
           </div>
         </div>
 
