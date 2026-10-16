@@ -17,6 +17,13 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const DB_PATH = path.join(DATA_DIR, 'derm_logic.db');
 const db = new Database(DB_PATH);
+const origPrepare = db.prepare.bind(db);
+const stmtCache = new Map();
+db.prepare = function cachedPrepare(sql) {
+  let stmt = stmtCache.get(sql);
+  if (!stmt) { stmt = origPrepare(sql); stmtCache.set(sql, stmt); }
+  return stmt;
+};
 db.pragma('journal_mode = WAL');
 db.pragma('synchronous = NORMAL');
 
