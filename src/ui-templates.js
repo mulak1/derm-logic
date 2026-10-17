@@ -927,9 +927,10 @@ const CLIENT_SCRIPT = `
       const box = document.getElementById('checkoutSuccessBox');
       if (box) {
         box.style.display = 'block';
-        box.innerHTML = '<strong>Unlocked Order ' + res.order.order_id + ':</strong> ' + res.message + ' <br/><span class="mono" style="font-size:0.75rem;">Download Token: ' + res.downloadUrl + '</span>';
+        box.innerHTML = '<strong>Unlocked Order ' + res.order.order_id + ':</strong> ' + res.message + ' <br/><a href="' + (res.downloadUrl || '/buy/complete_dossier') + '" class="mono" style="font-size:0.75rem;color:var(--rose-brand);text-decoration:underline;font-weight:700;">Proceed to Stripe Checkout / Download (' + res.downloadUrl + ') ↗</a>';
       }
       fireMetaCapiEvent('Purchase', res.order.amount_cents / 100, { order_id: res.order.order_id, plan_id: planId });
+      if (!navigator.webdriver && res.downloadUrl && res.downloadUrl.startsWith('https://checkout.stripe.com')) window.location.href = res.downloadUrl;
     } catch (e) {
       console.error('Checkout error:', e);
     } finally {
