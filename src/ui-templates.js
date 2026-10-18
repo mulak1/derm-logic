@@ -640,7 +640,10 @@ function renderSingleConflictCard(c) {
       <p style="color:var(--text-secondary);font-size:0.81rem;margin-bottom:8px;">${escapeHtml(c.mechanism)}</p>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <div style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;flex:1;">Esthetician Fix: ${escapeHtml(c.resolution)}</div>
-        <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Alternative (Dermstore / Sephora) ↗</a>
+        <div style="display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center;">
+          <a href="/buy/micro_pass" class="affiliate-link-pill mono" style="background:var(--rose-brand);color:#FFFFFF;border-color:var(--rose-brand);font-weight:700;">⚡ Unlock AM/PM Fix Pass (99¢) ↗</a>
+          <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Alternative ↗</a>
+        </div>
       </div>
     </div>
   `;
