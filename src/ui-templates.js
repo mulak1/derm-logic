@@ -489,8 +489,8 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
       <div class="grader-card" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
-            <span class="field-label" style="margin:0;">1. Tap a Curated Vanity Shelf Preset</span>
-            <span class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:700;">COSMETIC CHEMIST ΔpH ENGINE</span>
+            <span class="field-label" style="margin:0;">1. Tap a Popular Routine to Test</span>
+            <span class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:700;">INGREDIENT CONFLICT &amp; pH CHECKER</span>
           </div>
           <div class="preset-row" id="presetButtonsRow">
             ${presetButtonsHtml}
@@ -498,16 +498,16 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
           <div class="filter-profile-grid" style="display:grid;grid-template-columns:1fr 185px;gap:10px;margin-bottom:10px;">
             <div>
-              <label class="field-label" for="productFilterInput">2. Build Your Daily Vanity Shelf (${products.length} Cult Formulas)</label>
+              <label class="field-label" for="productFilterInput">2. Pick Your Daily Skincare Products (${products.length} Popular Formulas)</label>
               <input id="productFilterInput" type="search" class="input-box" placeholder="Search Rhode, SkinCeuticals, Paula's Choice, Tretinoin, Snail..." oninput="filterProductList(this.value)" />
             </div>
             <div>
-              <label class="field-label" for="skinTypeSelect">Skin Barrier Profile</label>
+              <label class="field-label" for="skinTypeSelect">Your Skin Type</label>
               <select id="skinTypeSelect" class="input-box" onchange="runRoutineAnalysis()">
                 <option value="combination">Combination / Dewy</option>
-                <option value="sensitive">Sensitive / Rosacea</option>
-                <option value="oily">Oily / Congestion-Prone</option>
-                <option value="dry">Dry / Barrier-Depleted</option>
+                <option value="sensitive">Sensitive / Redness-Prone</option>
+                <option value="oily">Oily / Breakout-Prone</option>
+                <option value="dry">Dry / Damaged Barrier</option>
                 <option value="normal">Normal / Balanced</option>
               </select>
             </div>
@@ -519,15 +519,15 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
           <div style="margin-bottom:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
-              <label class="field-label" for="rawInciTextarea" style="margin:0;">3. Or Paste Any Product's Raw INCI Ingredient List</label>
-              <button type="button" class="btn-secondary" style="padding:4px 12px;font-size:0.72rem;" onclick="pasteSampleComedogenicInci()">Paste Sample Pore-Clogging INCI</button>
+              <label class="field-label" for="rawInciTextarea" style="margin:0;">3. Or Paste Any Product's Ingredient List</label>
+              <button type="button" class="btn-secondary" style="padding:4px 12px;font-size:0.72rem;" onclick="pasteSampleComedogenicInci()">Test a Pore-Clogging Example</button>
             </div>
             <textarea id="rawInciTextarea" class="textarea-box mono" rows="2" placeholder="e.g., Aqua, Ascorbic Acid, Copper Tripeptide-1, Glycolic Acid, Isopropyl Myristate, Polysorbate 20...">${escapeHtml(initialRawInci || '')}</textarea>
           </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
             <button type="button" id="analyzeBtn" class="btn-primary" style="flex:1;" onclick="runRoutineAnalysis()">
-              <span>Analyze Routine Harmony</span>
+              <span>Check My Routine Compatibility</span>
               <span class="btn-icon-circle">↗</span>
             </button>
             <button type="button" class="btn-secondary" onclick="clearRoutineSelection()">Clear Shelf</button>
@@ -535,29 +535,29 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
           <div style="padding:12px 14px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
-              <span class="mono" style="font-size:0.68rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.05em;">CLINICAL ACTIVE-PAIR QUICK-REFERENCE MATRIX</span>
-              <span class="mono" style="font-size:0.66rem;color:var(--text-secondary);">CLICK ANY RULE TO TEST</span>
+              <span class="mono" style="font-size:0.68rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.05em;">COMMON SKINCARE LAYERING MISTAKES</span>
+              <span class="mono" style="font-size:0.66rem;color:var(--text-secondary);">TAP ANY COMBO TO TEST</span>
             </div>
             <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
               <div onclick="applyPreset('copper-vitc-trap')" style="cursor:pointer;padding:8px 10px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.66rem;font-weight:700;color:var(--berry-clash);">CHELATION CLASH · ΔpH 2.8</div>
-                <div style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">Copper Peptides × L-Ascorbic Acid</div>
-                <div style="font-size:0.7rem;color:var(--text-secondary);">Cu²⁺ oxidizes Vitamin C → split AM / PM</div>
+                <div class="mono" style="font-size:0.66rem;font-weight:700;color:var(--berry-clash);">CANCELS OUT · SPLIT AM / PM</div>
+                <div style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">Copper Peptides + Vitamin C</div>
+                <div style="font-size:0.7rem;color:var(--text-secondary);">Copper breaks down Vitamin C → use Vitamin C AM, Peptides PM</div>
               </div>
               <div onclick="applyPreset('acne-rx-clash')" style="cursor:pointer;padding:8px 10px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.66rem;font-weight:700;color:var(--berry-clash);">OXIDATION TRAP · Rx ACNE</div>
-                <div style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">Benzoyl Peroxide × Tretinoin 0.05%</div>
-                <div style="font-size:0.7rem;color:var(--text-secondary);">Peroxide degrades retinoid → AM wash / PM Rx</div>
+                <div class="mono" style="font-size:0.66rem;font-weight:700;color:var(--berry-clash);">DEACTIVATES RETINOL · SPLIT AM / PM</div>
+                <div style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">Benzoyl Peroxide + Tretinoin / Retinol</div>
+                <div style="font-size:0.7rem;color:var(--text-secondary);">Peroxide neutralizes retinoids → wash AM, apply Rx at night</div>
               </div>
               <div onclick="applyPreset('tiktok-viral-clash')" style="cursor:pointer;padding:8px 10px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.66rem;font-weight:700;color:var(--honey-warn);">HYDROLYSIS FLUSH · |ΔpH| &gt; 1.8</div>
-                <div style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">Glycolic Acid 7% × Niacinamide 10%</div>
-                <div style="font-size:0.7rem;color:var(--text-secondary);">pH 3.5 shifts amide to nicotinic acid flush</div>
+                <div class="mono" style="font-size:0.66rem;font-weight:700;color:var(--honey-warn);">REDNESS WARNING · WAIT 20 MIN</div>
+                <div style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">Glycolic Acid 7% + Niacinamide 10%</div>
+                <div style="font-size:0.7rem;color:var(--text-secondary);">Strong acid + Niacinamide can trigger a warm redness flush</div>
               </div>
               <div onclick="applyPreset('barrier-safe-gold')" style="cursor:pointer;padding:8px 10px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.66rem;font-weight:700;color:var(--sage-safe);">SYNERGY GOLD · pH 3.2–5.5</div>
-                <div style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">C E Ferulic + Snail 96 + 3:1:1 Ceramide</div>
-                <div style="font-size:0.7rem;color:var(--text-secondary);">8x photoprotection + intact lipid barrier</div>
+                <div class="mono" style="font-size:0.66rem;font-weight:700;color:var(--sage-safe);">SAFE GLOW PAIR · BARRIER FRIENDLY</div>
+                <div style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">Vitamin C + Snail Mucin + Ceramides</div>
+                <div style="font-size:0.7rem;color:var(--text-secondary);">Brightens skin while locking in deep hydration</div>
               </div>
             </div>
           </div>
@@ -566,16 +566,16 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         <!-- Clinical Formulation Reference & Barrier Standards Strip (Balances Left & Right Columns) -->
         <div style="margin-top:auto;padding:12px 14px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
           <div>
-            <div class="mono" style="font-size:0.68rem;font-weight:700;color:var(--rose-brand);margin-bottom:2px;">ACID MANTLE WINDOW</div>
-            <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.35;">Intact stratum corneum operates at <strong>pH 4.7–5.5</strong>. Direct acids require pH 3.0–3.8.</div>
+            <div class="mono" style="font-size:0.68rem;font-weight:700;color:var(--rose-brand);margin-bottom:2px;">HEALTHY SKIN pH (4.7–5.5)</div>
+            <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.35;">Your skin barrier thrives at <strong>pH 4.7–5.5</strong>, while exfoliating acids need pH 3.0–3.8.</div>
           </div>
           <div>
-            <div class="mono" style="font-size:0.68rem;font-weight:700;color:var(--honey-warn);margin-bottom:2px;">ΔpH CLASH THRESHOLD</div>
-            <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.35;">Layering formulas with <strong>|ΔpH| &gt; 1.8</strong> hydrolyzes peptides and triggers nicotinic flush.</div>
+            <div class="mono" style="font-size:0.68rem;font-weight:700;color:var(--honey-warn);margin-bottom:2px;">WHY PRODUCTS CLASH</div>
+            <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.35;">Layering a low-pH acid right under peptides or high-pH serums weakens both formulas.</div>
           </div>
           <div>
-            <div class="mono" style="font-size:0.68rem;font-weight:700;color:var(--sage-safe);margin-bottom:2px;">3:1:1 LIPID RECOVERY</div>
-            <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.35;">Buffer retinoid &amp; acid nights with <strong>Ceramide NP, Cholesterol &amp; Fatty Acids</strong>.</div>
+            <div class="mono" style="font-size:0.68rem;font-weight:700;color:var(--sage-safe);margin-bottom:2px;">BARRIER REPAIR TRIO</div>
+            <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.35;">Always cushion retinol and acid nights with <strong>Ceramides, Cholesterol &amp; Fatty Acids</strong>.</div>
           </div>
         </div>
       </div>
@@ -591,9 +591,9 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           <span class="eyebrow-pill mono" style="margin:0;" id="modalBanditBadge">BESPOKE RITUAL PASS</span>
           <button type="button" class="btn-secondary" style="padding:5px 12px;" onclick="closeCheckoutModal()">Close</button>
         </div>
-        <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.65rem;margin-bottom:6px;">Save Your Personalized AM/PM Glow Ritual &amp; 9:16 Vanity Card</h3>
+        <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.65rem;margin-bottom:6px;">Save Your Personalized AM/PM Glow Schedule &amp; Phone Wallpaper Card</h3>
         <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:16px;">
-          Includes your printable 4-Night Skin-Cycling calendar, Henderson-Hasselbalch free-acid table, and Apple-Wallet lockscreen guide.
+          Includes your printable 4-Night Skin-Cycling calendar, ingredient pH compatibility breakdown, and 9:16 phone lockscreen guide.
         </p>
         <form id="checkoutForm" onsubmit="submitSelfServeCheckout(event)">
           <input type="hidden" id="checkoutPlanId" value="onetime_499" />

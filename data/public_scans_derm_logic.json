@@ -1,18 +1,5 @@
 [
   {
-    "target": "stripe.com",
-    "grade": "B",
-    "score": 79,
-    "status": "WATCHLIST",
-    "kpi1": "79/100 Harmony",
-    "kpi2": "ΔpH 2.0 Matrix",
-    "cnnReadout": "81.3% Bottle Confidence • 14ms ONNX Inference",
-    "issue": "Optimization Gap Detected — Unlock 9:16 Apple-Wallet Ritual Card & 4-Night Calendar (99¢ Pass)",
-    "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
-    "cnnSensorLabel": "Bottle Label OCR & CIELAB a* Barrier Redness Tensor",
-    "scannedAt": "2026-10-18T22:03:22.355Z"
-  },
-  {
     "target": "VitC-AM-Peptides-PM",
     "grade": "A+",
     "score": 98,
@@ -22,8 +9,8 @@
     "cnnReadout": "CIELAB a* -3.8 Erythema Reduction • Intact Lipid Matrix",
     "issue": "Zero Chelation • Optimal AM/PM Partition",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
-    "cnnSensorLabel": "Bottle Label OCR & CIELAB a* Barrier Redness Tensor",
-    "scannedAt": "2026-10-18T22:03:22.360Z"
+    "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
+    "scannedAt": "2026-10-18T23:20:33.442Z"
   },
   {
     "target": "Ceramide-Tretinoin-Buffer",
@@ -35,8 +22,8 @@
     "cnnReadout": "96.4% Corneocyte Cohesion • <500 Da Controlled Flux",
     "issue": "64% Lower Retinoid Peeling via Sandwich Method",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
-    "cnnSensorLabel": "Bottle Label OCR & CIELAB a* Barrier Redness Tensor",
-    "scannedAt": "2026-10-18T22:03:22.364Z"
+    "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
+    "scannedAt": "2026-10-18T23:20:33.448Z"
   },
   {
     "target": "Azelaic15-Niacinamide5",
@@ -48,8 +35,8 @@
     "cnnReadout": "94.1% Perifollicular Redness Attenuation",
     "issue": "Malassezia-Safe & Rosacea-Safe Synergy",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
-    "cnnSensorLabel": "Bottle Label OCR & CIELAB a* Barrier Redness Tensor",
-    "scannedAt": "2026-10-18T22:03:22.368Z"
+    "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
+    "scannedAt": "2026-10-18T23:20:33.452Z"
   },
   {
     "target": "BHA2-SnailMucin-Stack",
@@ -61,8 +48,8 @@
     "cnnReadout": "90.5% Sebaceous Pore Clearing without TEWL Spike",
     "issue": "Safe 2x/Week Exfoliation Cadence",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
-    "cnnSensorLabel": "Bottle Label OCR & CIELAB a* Barrier Redness Tensor",
-    "scannedAt": "2026-10-18T22:03:22.371Z"
+    "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
+    "scannedAt": "2026-10-18T23:20:33.455Z"
   },
   {
     "target": "VitC+Cu",
@@ -74,8 +61,8 @@
     "cnnReadout": "Cu2+ Redox Oxidation Detected • 78% Active Loss",
     "issue": "Copper Peptides + L-Ascorbic Acid Cancel Out ($182/yr Waste)",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
-    "cnnSensorLabel": "Bottle Label OCR & CIELAB a* Barrier Redness Tensor",
-    "scannedAt": "2026-10-18T22:03:22.374Z"
+    "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
+    "scannedAt": "2026-10-18T23:20:33.459Z"
   },
   {
     "target": "Tret+BPO",
@@ -87,8 +74,8 @@
     "cnnReadout": "CIELAB a* +9.4 Acute Erythema Spike • Retinoid Degraded",
     "issue": "Benzoyl Peroxide Oxidizes Tretinoin Same-Night",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
-    "cnnSensorLabel": "Bottle Label OCR & CIELAB a* Barrier Redness Tensor",
-    "scannedAt": "2026-10-18T22:03:22.378Z"
+    "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
+    "scannedAt": "2026-10-18T23:20:33.463Z"
   },
   {
     "target": "TikTok",
@@ -100,7 +87,7 @@
     "cnnReadout": "Severe Stratum Corneum Delipidation (TEWL +240%)",
     "issue": "AHA 30% + BHA 2% + Retinol Same-Night Over-Exfoliation",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
-    "cnnSensorLabel": "Bottle Label OCR & CIELAB a* Barrier Redness Tensor",
-    "scannedAt": "2026-10-18T22:03:22.383Z"
+    "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
+    "scannedAt": "2026-10-18T23:20:33.467Z"
   }
 ]

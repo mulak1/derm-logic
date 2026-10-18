@@ -123,10 +123,10 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
       <div class="container">
         <div class="editorial-top-banner">
           <div>
-            <div class="eyebrow-pill mono">FORMULATION ATELIER · CLINICAL ΔpH &amp; PEPTIDE HARMONY</div>
+            <div class="eyebrow-pill mono">SKINCARE ROUTINE CHECKER · MORNING &amp; EVENING LAYERING GUIDE</div>
             <h1 class="hero-h1">Stop Layering Serums That Secretly <span class="serif-italic" style="color:var(--rose-brand);">Cancel Each Other Out.</span></h1>
             <p class="hero-sub">
-              Check your daily vanity shelf or raw INCI label in 5 seconds for |ΔpH| &gt; 1.8 peptide breakdown, Vitamin C oxidation, pore-clogging esters, and your personalized AM/PM glow ritual.
+              Check your daily skincare products or ingredient list in 5 seconds to see which serums clash, which ingredients clog pores, and how to split your routine safely between Morning and Night.
             </p>
           </div>
           <div class="editorial-photo-shell">
@@ -134,8 +134,8 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
               <img src="/public/editorial-serum.jpg" alt="Editorial luxury skincare flat-lay with glazing milk, peptide dropper serum, and botanical treatment bottles on warm oat silk" fetchpriority="high" />
               <div class="editorial-photo-caption">
                 <div>
-                  <strong class="serif-display" style="font-size:0.95rem;color:var(--text-primary);">Peptide Glaze × L-Ascorbic Acid Audit</strong>
-                  <div style="color:var(--text-secondary);font-size:0.72rem;">Instant Henderson-Hasselbalch pKa &amp; Malassezia Esters</div>
+                  <strong class="serif-display" style="font-size:0.95rem;color:var(--text-primary);">Peptide Serum × Vitamin C Routine Check</strong>
+                  <div style="color:var(--text-secondary);font-size:0.72rem;">Checks pH Clashes, Active Cancellation &amp; Pore-Safe Ingredients</div>
                 </div>
                 <span class="badge-safe mono">44 Cult Formulas</span>
               </div>
@@ -156,46 +156,46 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
     <!-- Asymmetric 3-Cell Editorial Formulation Bento -->
     <section class="section-block">
       <div class="container">
-        <h2 class="serif-display" style="font-size:2.1rem;margin-bottom:6px;">Why Luxury Serums Fail When Layered Together</h2>
+        <h2 class="serif-display" style="font-size:2.1rem;margin-bottom:6px;">Why Popular Serums Stop Working When Layered Together</h2>
         <p style="color:var(--text-secondary);font-size:0.95rem;max-width:62ch;">
-          Even the most coveted formulas from SkinCeuticals, Rhode, Paula’s Choice, and The Ordinary can neutralize one another or sensitize your moisture barrier when their pH windows clash.
+          Even best-selling products from SkinCeuticals, Rhode, Paula’s Choice, and The Ordinary can cancel each other out or irritate your skin barrier when used in the same step.
         </p>
         <div class="bento-grid-3">
           <div class="bento-cell tinted">
-            <div class="badge-clash mono" style="margin-bottom:10px;">1. |ΔpH| &gt; 1.8 &amp; PEPTIDE DE-CHELATION</div>
+            <div class="badge-clash mono" style="margin-bottom:10px;">1. CANCELS OUT · SPLIT MORNING &amp; NIGHT</div>
             <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Copper Peptides × Pure Vitamin C</h3>
             <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
-              Pure L-Ascorbic Acid (pH 3.2) requires an acidic environment to absorb, while Copper Tripeptide-1 (pH 6.2) relies on a neutral pH. Layering them together uncouples the copper ion, oxidizes your Vitamin C, and triggers nicotinic flushing.
+              Pure Vitamin C (L-Ascorbic Acid) needs a low acidic pH (3.2) to absorb, while Copper Peptides need a neutral pH (6.2). Layering them together cancels out both serums—use Vitamin C in the morning and Copper Peptides at night.
             </p>
             <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Verified Vitamin C &amp; Peptide Separates (Dermstore) ↗</a>
           </div>
           <div class="bento-cell">
-            <div class="badge-warn mono" style="margin-bottom:10px;">2. REDOX OXIDATION</div>
-            <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Benzoyl Peroxide × Retinoids</h3>
+            <div class="badge-warn mono" style="margin-bottom:10px;">2. DEACTIVATES RETINOIDS · SEPARATE AM / PM</div>
+            <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Benzoyl Peroxide × Retinol / Tretinoin</h3>
             <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
-              Benzoyl Peroxide releases oxygen radicals that oxidize Tretinoin and Retinol on contact—erasing over 80% of your night serum’s collagen-remodeling potency unless separated into AM vs. PM.
+              Benzoyl Peroxide breaks down Tretinoin and Retinol on contact—wasting over 80% of your night serum while causing dryness and peeling unless separated into a morning wash and night treatment.
             </p>
-            <a href="/api/affiliate?product=laroche-posay-adapalene-01&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Oxidation-Stable Adapalene 0.1% (Dermstore) ↗</a>
+            <a href="/api/affiliate?product=laroche-posay-adapalene-01&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Peroxide-Compatible Adapalene 0.1% (Dermstore) ↗</a>
           </div>
           <div class="bento-cell">
-            <div class="badge-safe mono" style="margin-bottom:10px;">3. PORE &amp; FUNGAL-ACNE SAFETY</div>
-            <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Hidden Vehicle Esters</h3>
+            <div class="badge-safe mono" style="margin-bottom:10px;">3. PORE &amp; BREAKOUT SAFETY</div>
+            <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Hidden Pore-Clogging Base Oils</h3>
             <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
-              Even prescription Tretinoin 0.05% creams frequently suspend the active in Isopropyl Myristate (a 5/5 pore-clogger and Malassezia yeast feeder), causing stubborn closed comedones.
+              Even prescription anti-acne creams sometimes use heavy base ingredients like Isopropyl Myristate (rated 5/5 for pore clogging), which can trigger stubborn bumps and fungal breakouts.
             </p>
-            <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Non-Comedogenic 3:1:1 Ceramide Cream (Sephora) ↗</a>
+            <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Pore-Safe Ceramide Barrier Cream (Sephora) ↗</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Clinical Reference Matrix Section -->
+    <!-- Clinical Reference Matrix Section (Layer 3 Deep Chemistry Specs) -->
     <section class="section-block" id="actives-matrix">
       <div id="inci-table"></div>
       <div class="container">
-        <h2 class="serif-display" style="font-size:2rem;margin-bottom:8px;">Cosmetic Chemist Active-Ingredient pH, pKa &amp; Pore-Safety Matrix (${ingredients.length} Clinical Actives)</h2>
+        <h2 class="serif-display" style="font-size:2rem;margin-bottom:8px;">Ingredient Reference Guide: pH Windows, Pore-Safety &amp; Chemistry Specs (${ingredients.length} Actives)</h2>
         <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:20px;max-width:65ch;">
-          Showing 18 of ${ingredients.length} clinical ingredients indexed in our formulation database, cross-referenced with EU CosIng and Malassezia lipid triggers.
+          Layer-3 Technical Reference: Showing 18 of ${ingredients.length} active ingredients with optimal pH windows, acid strength (pKa), molecular size (Daltons), and fungal-acne safety.
         </p>
         <div class="table-wrap">
           <table>
