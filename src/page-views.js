@@ -124,25 +124,31 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
         <div id="home-executive-brief" class="editorial-top-banner">
           <div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
-              <div class="eyebrow-pill mono" style="margin:0;">2026 EXECUTIVE BRIEF · SKINCARE ROUTINE CHECKER</div>
+              <div class="eyebrow-pill mono" style="margin:0;">5-SECOND SKINCARE ROUTINE &amp; INGREDIENT CHECKER</div>
               <a href="/leaderboard" class="badge-safe mono" style="text-decoration:none;">🏆 Top-3 Podium Leaderboard &rarr;</a>
             </div>
-            <h1 class="hero-h1">Executive Brief: Why Expensive Skincare Serums Secretly <span class="serif-italic" style="color:var(--rose-brand);">Cancel Out.</span></h1>
-            <p class="hero-sub" style="margin-bottom:14px;">
-              71% of multi-step skincare routines combine at least two serums that clash in acidity (pH) or deactivate each other on contact. Check your products below in 5 seconds and get a safe Morning &amp; Evening schedule.
+            <h1 class="hero-h1">Check If Your Skincare Serums Secretly <span class="serif-italic" style="color:var(--rose-brand);">Cancel Out.</span></h1>
+            <p class="hero-sub" style="margin-bottom:12px;">
+              71% of multi-step skincare routines combine at least two serums that clash in acidity (pH), cause redness, or deactivate each other on contact. Select your products below to spot conflicts in 5 seconds.
             </p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;">
+              <span class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;">Built for:</span>
+              <span class="ph-chip mono">✨ Skincare Shoppers</span>
+              <span class="ph-chip mono">🧴 Retinol &amp; Vitamin C Users</span>
+              <span class="ph-chip mono">👩‍⚕️ Estheticians &amp; Creators</span>
+            </div>
             <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
               <div style="padding:11px 12px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--rose-brand);margin-bottom:3px;">01. pH CLASHES</div>
-                <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Vitamin C &amp; acids need pH 3.2; Peptides need pH 6.0. Layering both weakens them.</div>
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--rose-brand);margin-bottom:3px;">STEP 1 • FREE CHECK</div>
+                <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Tap a popular routine or paste any product's ingredient list below.</div>
               </div>
               <div style="padding:11px 12px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--honey-warn);margin-bottom:3px;">02. DEACTIVATION</div>
-                <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Benzoyl Peroxide cancels out Retinol &amp; Vitamin C on contact unless split AM/PM.</div>
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--honey-warn);margin-bottom:3px;">STEP 2 • SPOT CLASHES</div>
+                <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">See which serums cancel out in pH, oxidize Retinol, or clog pores.</div>
               </div>
               <div style="padding:11px 12px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--sage-safe);margin-bottom:3px;">03. SAFE SCHEDULE</div>
-                <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Get a personalized Morning, Evening &amp; 4-Night Skin Cycling calendar.</div>
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--sage-safe);margin-bottom:3px;">STEP 3 • UNLOCK RITUAL</div>
+                <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Unlock your custom AM/PM order, wait timers &amp; 9:16 phone card ($1.99).</div>
               </div>
             </div>
           </div>
@@ -179,18 +185,18 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
         </p>
         <div class="bento-grid-3">
           <div class="bento-cell tinted">
-            <div class="badge-clash mono" style="margin-bottom:10px;">1. CANCELS OUT · SPLIT MORNING &amp; NIGHT</div>
+            <div class="badge-clash mono" style="margin-bottom:10px;">1. CANCELS OUT · pH 3.2 vs pH 6.2</div>
             <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Copper Peptides × Pure Vitamin C</h3>
             <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
-              Pure Vitamin C (L-Ascorbic Acid) needs a low acidic pH (3.2) to absorb, while Copper Peptides need a neutral pH (6.2). Layering them together cancels out both serums: use Vitamin C in the morning and Copper Peptides at night.
+              Pure Vitamin C (L-Ascorbic Acid) needs a low acidic pH (3.2) to absorb, while Copper Peptides need a neutral pH (6.2). Layering them in the same routine step triggers copper-ion oxidation and cancels out both serums.
             </p>
             <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Verified Vitamin C &amp; Peptide Separates (Dermstore) ↗</a>
           </div>
           <div class="bento-cell">
-            <div class="badge-warn mono" style="margin-bottom:10px;">2. DEACTIVATES RETINOIDS · SEPARATE AM / PM</div>
+            <div class="badge-warn mono" style="margin-bottom:10px;">2. DEACTIVATES RETINOIDS · OXIDATIVE LOSS</div>
             <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Benzoyl Peroxide × Retinol / Tretinoin</h3>
             <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
-              Benzoyl Peroxide breaks down Tretinoin and Retinol on contact—wasting over 80% of your night serum while causing dryness and peeling unless separated into a morning wash and night treatment.
+              Benzoyl Peroxide breaks down Tretinoin and Retinol on contact—wasting over 80% of your night serum while causing dryness, peeling, and redness when layered without proper separation.
             </p>
             <a href="/api/affiliate?product=laroche-posay-adapalene-01&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Peroxide-Compatible Adapalene 0.1% (Dermstore) ↗</a>
           </div>

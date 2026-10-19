@@ -398,7 +398,6 @@ function renderHeader(hideNav = false) {
         </a>
         <nav class="nav-links" aria-label="Main Navigation">
           <a href="/#analyzer">Routine Ritual Audit</a>
-          <a href="/#home-executive-brief">Executive Brief</a>
           <a href="/leaderboard" style="font-weight:700;color:var(--sage-safe);">🏆 Leaderboard</a>
           <a href="/directory">60+ Layering Guides</a>
         </nav>
@@ -438,7 +437,6 @@ function renderFooter() {
         </div>
         <div style="display:flex;gap:22px;flex-wrap:wrap;font-weight:600;font-size:0.88rem;">
           <a href="/#analyzer">Routine Ritual Audit</a>
-          <a href="/#home-executive-brief">Executive Brief</a>
           <a href="/leaderboard">🏆 Routine Leaderboard</a>
           <a href="/directory">60+ Layering Guides</a>
           <a href="/sitemap.xml">XML Sitemap</a>
@@ -545,17 +543,17 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             </div>
             <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
               <div onclick="applyPreset('copper-vitc-trap')" style="cursor:pointer;padding:8px 10px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--berry-clash);">CANCELS OUT · SPLIT AM / PM</div>
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--berry-clash);">CANCELS OUT · pH 3.2 vs 6.2</div>
                 <div style="font-size:0.84rem;font-weight:600;color:var(--text-primary);">Copper Peptides + Vitamin C</div>
-                <div style="font-size:0.8125rem;color:var(--text-secondary);">Copper breaks down Vitamin C → use Vitamin C AM, Peptides PM</div>
+                <div style="font-size:0.8125rem;color:var(--text-secondary);">Copper ions oxidize L-Ascorbic Acid on contact</div>
               </div>
               <div onclick="applyPreset('acne-rx-clash')" style="cursor:pointer;padding:8px 10px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--berry-clash);">DEACTIVATES RETINOL · SPLIT AM / PM</div>
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--berry-clash);">DEACTIVATES RETINOL · OXIDATION</div>
                 <div style="font-size:0.84rem;font-weight:600;color:var(--text-primary);">Benzoyl Peroxide + Tretinoin / Retinol</div>
-                <div style="font-size:0.8125rem;color:var(--text-secondary);">Peroxide neutralizes retinoids → wash AM, apply Rx at night</div>
+                <div style="font-size:0.8125rem;color:var(--text-secondary);">Peroxide breaks down retinoid potency on contact</div>
               </div>
               <div onclick="applyPreset('tiktok-viral-clash')" style="cursor:pointer;padding:8px 10px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border-hairline);">
-                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--honey-warn);">REDNESS WARNING · WAIT 20 MIN</div>
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--honey-warn);">REDNESS WARNING · ΔpH SHOCK</div>
                 <div style="font-size:0.84rem;font-weight:600;color:var(--text-primary);">Glycolic Acid 7% + Niacinamide 10%</div>
                 <div style="font-size:0.8125rem;color:var(--text-secondary);">Strong acid + Niacinamide can trigger a warm redness flush</div>
               </div>
@@ -644,7 +642,7 @@ function renderSingleConflictCard(c) {
       <div class="serif-display" style="font-size:1.12rem;font-weight:700;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(c.title)}</div>
       <p style="color:var(--text-secondary);font-size:0.81rem;margin-bottom:8px;">${escapeHtml(c.mechanism)}</p>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-        <div style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;flex:1;">Esthetician Fix: ${escapeHtml(c.resolution)}</div>
+        <div style="font-size:0.8rem;color:var(--honey-warn);font-weight:600;flex:1;">🔒 Exact AM/PM Separation &amp; Wait-Timer Fix: [LOCKED IN FREE PREVIEW — UNLOCK ($1.99)]</div>
         <div style="display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center;">
           <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Alternative ↗</a>
         </div>
@@ -698,20 +696,20 @@ function renderAnalysisResultHtml(res) {
     ? res.malasseziaFlags.map((f) => `<span class="badge-clash mono" style="margin-right:6px;margin-bottom:4px;">Fungal-Acne Trigger: ${escapeHtml(f.inciName)}</span>`).join('')
     : `<span class="badge-safe mono">100% Fungal-Acne (Malassezia) Safe</span>`;
 
-  const amListHtml = res.schedule.amSteps.map((s) => `
+  const amListHtml = res.schedule.amSteps.map((s, idx) => `
     <li style="margin-bottom:3px;font-size:0.8125rem;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-      <strong style="color:var(--rose-brand);">${escapeHtml(s.slot)}:</strong> ${escapeHtml(s.title)}
+      <strong style="color:var(--rose-brand);">${escapeHtml(s.slot)}:</strong> ${idx === 0 ? escapeHtml(s.title) : '🔒 [LOCKED IN FREE PREVIEW — UNLOCK AM/PM ORDER ($1.99)]'}
       <span class="mono" style="color:var(--text-secondary);font-size:0.8125rem;">[pH ${escapeHtml(s.ph)}]</span>
     </li>
   `).join('');
 
-  const pmCyclingHtml = res.schedule.pmCycling.map((n) => `
-    <div style="padding:6px 8px;border-radius:8px;background:var(--bg-canvas);border:1px solid var(--border-hairline);" title="${escapeHtml(n.steps.join(' → '))}">
+  const pmCyclingHtml = res.schedule.pmCycling.map((n, idx) => `
+    <div style="padding:6px 8px;border-radius:8px;background:var(--bg-canvas);border:1px solid var(--border-hairline);">
       <div style="display:flex;justify-content:space-between;font-size:0.8125rem;font-weight:700;color:var(--text-primary);margin-bottom:2px;">
         <span>${escapeHtml(n.night.split('·')[0].trim())}</span>
-        <span class="mono" style="color:var(--rose-brand);font-size:0.8125rem;">${escapeHtml(n.badge.split(' ')[0])}</span>
+        <span class="mono" style="color:var(--rose-brand);font-size:0.8125rem;">${idx === 0 ? escapeHtml(n.badge.split(' ')[0]) : '🔒 LOCKED'}</span>
       </div>
-      <div style="color:var(--text-secondary);font-size:0.8125rem;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${escapeHtml(n.steps.join(' → '))}</div>
+      <div style="color:var(--text-secondary);font-size:0.8125rem;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${idx === 0 ? escapeHtml(n.steps[0] || 'Cleanse') + ' → 🔒 [Unlock Full PM Order]' : '🔒 [LOCKED IN FREE PREVIEW — $1.99]'}</div>
     </div>
   `).join('');
 
@@ -755,7 +753,7 @@ function renderAnalysisResultHtml(res) {
     <div class="wallet-preview-wrap" style="margin-top:auto;align-items:stretch;">
       <div style="display:flex;flex-direction:column;justify-content:space-between;">
         <div>
-          <div class="serif-display" style="font-size:1.12rem;font-weight:700;margin-bottom:6px;">AM Morning Glow &amp; PM 4-Night Barrier Ritual</div>
+          <div class="serif-display" style="font-size:1.12rem;font-weight:700;margin-bottom:6px;">AM Morning Glow &amp; PM 4-Night Barrier Ritual (Preview)</div>
           <ul style="list-style:none;margin-bottom:8px;">${amListHtml}</ul>
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;">
             ${pmCyclingHtml}
@@ -781,10 +779,10 @@ function renderAnalysisResultHtml(res) {
               ${res.conflicts.length} Active Clash(es) · Barrier Stress ${res.barrierHazardIndex}%
             </div>
             <div style="border-top:1px solid var(--rose-pill-border);padding-top:9px;font-size:0.8125rem;">
-              <div class="mono" style="color:var(--rose-brand);font-weight:700;margin-bottom:3px;font-size:0.8125rem;">AM MORNING GLOW</div>
-              <div style="color:var(--text-primary);margin-bottom:8px;font-weight:500;">${escapeHtml(res.schedule.amSteps.map((s) => s.slot.replace('AM ', '')).join(' → '))}</div>
+              <div class="mono" style="color:var(--rose-brand);font-weight:700;margin-bottom:3px;font-size:0.8125rem;">AM MORNING GLOW ORDER</div>
+              <div style="color:var(--text-secondary);margin-bottom:8px;font-weight:500;">🔒 [Locked in Free Preview — Unlock 3-File Pack]</div>
               <div class="mono" style="color:var(--sage-safe);font-weight:700;margin-bottom:3px;font-size:0.8125rem;">PM 4-NIGHT SKIN CYCLING</div>
-              <div style="color:var(--text-secondary);">N1: Exfoliate · N2: Retinoid · N3: Peptide Glaze · N4: Ceramide</div>
+              <div style="color:var(--text-secondary);">🔒 [4-Night Calendar &amp; Wait Timers Locked]</div>
             </div>
           </div>
           <div style="border-top:1px dashed var(--rose-pill-border);padding-top:10px;">
