@@ -1,5 +1,5 @@
 /**
- * DermLogic (#4) — Warm Silk & Botanical Clinical Luxury Page Views & OpenGraph SVG Renderer
+ * DermLogic (#4): Warm Silk & Botanical Clinical Luxury Page Views & OpenGraph SVG Renderer
  * Renders /, /lp, /directory, /seo/:slug (60+ pSEO pages), /privacy, /terms, 404, and /api/og.
  */
 
@@ -86,13 +86,13 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
 
   const topIngredientsRows = ingredients.slice(0, 18).map((ing) => `
     <tr>
-      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span class="mono" style="font-size:0.74rem;color:var(--text-secondary);">${escapeHtml(ing.inciName)}</span></td>
+      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(ing.inciName)}</span></td>
       <td class="mono">${ing.phMin}–${ing.phMax}</td>
-      <td class="mono">${ing.pka != null ? ing.pka : '—'}</td>
+      <td class="mono">${ing.pka != null ? ing.pka : 'N/A'}</td>
       <td class="mono">${ing.molecularWeightDa} Da</td>
       <td><span class="${ing.comedogenicity >= 3 ? 'badge-clash' : 'badge-safe'} mono">${ing.comedogenicity}/5</span></td>
       <td><span class="${ing.malasseziaTrigger ? 'badge-warn' : 'badge-safe'} mono">${ing.malasseziaTrigger ? 'Trigger' : 'Safe'}</span></td>
-      <td style="color:var(--text-secondary);font-size:0.79rem;">${escapeHtml(ing.clinicalMechanism)}</td>
+      <td style="color:var(--text-secondary);font-size:0.86rem;">${escapeHtml(ing.clinicalMechanism)}</td>
     </tr>
   `).join('');
 
@@ -105,14 +105,14 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
     <div class="bento-cell" style="display:flex;flex-direction:column;justify-content:space-between;padding:18px;">
       <div>
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-          <span class="mono" style="font-size:0.71rem;color:var(--rose-brand);font-weight:700;">${escapeHtml(p.category)}</span>
-          <span class="mono" style="font-size:0.72rem;color:var(--text-secondary);">Harmony ${p.compatibilityScore}/100</span>
+          <span class="mono" style="font-size:0.8125rem;color:var(--rose-brand);font-weight:700;">${escapeHtml(p.category)}</span>
+          <span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">Harmony ${p.compatibilityScore}/100</span>
         </div>
-        <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:700;font-size:1.08rem;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
-        <p style="color:var(--text-secondary);font-size:0.79rem;margin-bottom:10px;">${escapeHtml(p.summary.slice(0, 115))}...</p>
+        <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:700;font-size:1.12rem;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
+        <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">${escapeHtml(p.summary.slice(0, 115))}...</p>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border-hairline);padding-top:8px;gap:8px;flex-wrap:wrap;">
-        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:700;">Read Layering Guide →</a>
+        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.8125rem;color:var(--rose-brand);font-weight:700;">Read Layering Guide →</a>
         <a href="/api/affiliate?product=${escapeHtml((p.presetProducts && p.presetProducts[0]) || 'skinceuticals-ce-ferulic')}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" style="margin:0;">Verified Retailer ↗</a>
       </div>
     </div>
@@ -134,8 +134,8 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
               <img src="/public/editorial-serum.jpg" alt="Editorial luxury skincare flat-lay with glazing milk, peptide dropper serum, and botanical treatment bottles on warm oat silk" fetchpriority="high" />
               <div class="editorial-photo-caption">
                 <div>
-                  <strong class="serif-display" style="font-size:0.95rem;color:var(--text-primary);">Peptide Serum × Vitamin C Routine Check</strong>
-                  <div style="color:var(--text-secondary);font-size:0.72rem;">Checks pH Clashes, Active Cancellation &amp; Pore-Safe Ingredients</div>
+                  <strong class="serif-display" style="font-size:1rem;color:var(--text-primary);">Peptide Serum × Vitamin C Routine Check</strong>
+                  <div style="color:var(--text-secondary);font-size:0.8125rem;">Checks pH Clashes, Active Cancellation &amp; Pore-Safe Ingredients</div>
                 </div>
                 <span class="badge-safe mono">44 Cult Formulas</span>
               </div>
@@ -153,6 +153,77 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
       </div>
     </section>
 
+    <!-- EXECUTIVE BRIEF & PLAIN-ENGLISH SKINCARE FIELD GUIDE (Merged onto Homepage) -->
+    <section id="home-executive-brief" class="section-block" style="background:var(--bg-oat);">
+      <div class="container">
+        <div class="hero-grid" style="align-items:stretch;">
+          <div class="bento-cell" style="padding:28px;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
+            <div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+                <span class="badge-clash mono">2026 FORMULATION EXECUTIVE BRIEF</span>
+                <span class="badge-safe mono">COSMETIC-CHEMIST LAYERING GUIDE</span>
+              </div>
+              <h2 class="serif-display" style="font-size:2.2rem;line-height:1.12;margin-bottom:12px;">
+                Executive Brief: Why Expensive Skincare Routines Secretly <span class="serif-italic" style="color:var(--rose-brand);">Cancel Out</span>
+              </h2>
+              <p style="color:var(--text-secondary);font-size:1rem;margin-bottom:18px;">
+                71% of multi-step skincare routines combine at least two active ingredients with incompatible pH windows or chemical reactivity. Instead of buying more bottles, fixing <strong>when</strong> you apply each serum protects your moisture barrier and doubles active potency.
+              </p>
+              <div style="display:grid;gap:12px;margin-bottom:20px;">
+                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);">
+                  <strong style="color:var(--text-primary);font-size:0.95rem;">1. Acidity (pH) Windows (3.0 vs. 6.0 Rule):</strong>
+                  <span style="color:var(--text-secondary);font-size:0.9rem;"> Pure Vitamin C and exfoliating acids require pH 3.0–3.6, while Copper Peptides and Niacinamide prefer pH 5.5–6.5. Layering them together neutralizes both.</span>
+                </div>
+                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);">
+                  <strong style="color:var(--text-primary);font-size:0.95rem;">2. Oxidation &amp; Active Deactivation:</strong>
+                  <span style="color:var(--text-secondary);font-size:0.9rem;"> Benzoyl Peroxide oxidizes Tretinoin and Retinol on contact. Always move Benzoyl Peroxide to a morning wash and keep Retinoids for evening.</span>
+                </div>
+                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);">
+                  <strong style="color:var(--text-primary);font-size:0.95rem;">3. Pore-Clogging &amp; Fungal-Acne Safety:</strong>
+                  <span style="color:var(--text-secondary);font-size:0.9rem;"> Heavy esters and fatty acids trigger breakouts on acne-prone skin even when a bottle claims to be "non-comedogenic."</span>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:auto;">
+              <a href="#analyzer" class="btn-primary">
+                <span>Check My Routine Above</span>
+                <span class="btn-icon-circle">&uarr;</span>
+              </a>
+              <a href="/leaderboard" class="btn-secondary mono">Explore Routine Safety Leaderboard &rarr;</a>
+            </div>
+          </div>
+
+          <div class="bento-cell tinted" style="padding:28px;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
+            <div>
+              <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.05em;margin-bottom:6px;">PLAIN-ENGLISH SKINCARE GLOSSARY</div>
+              <h3 class="serif-display" style="font-size:1.65rem;margin-bottom:14px;">Key Formulation Terms Explained Simply</h3>
+              <div style="display:grid;gap:12px;">
+                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
+                  <div style="font-weight:700;font-size:0.95rem;color:var(--text-primary);margin-bottom:4px;">pH Clash (Acidity Mismatch)</div>
+                  <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">When an acidic serum (like Vitamin C or Glycolic Acid) is layered directly with a neutral peptide serum, causing stinging and reducing absorption.</p>
+                </div>
+                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
+                  <div style="font-weight:700;font-size:0.95rem;color:var(--text-primary);margin-bottom:4px;">4-Night Skin Cycling Schedule</div>
+                  <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">Rotating Night 1 (Exfoliant), Night 2 (Retinoid), and Nights 3–4 (Barrier Recovery Ceramides) to prevent redness and peeling.</p>
+                </div>
+                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
+                  <div style="font-weight:700;font-size:0.95rem;color:var(--text-primary);margin-bottom:4px;">Comedogenicity (0–5 Pore-Clogging Scale)</div>
+                  <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">Rates how likely an oil or ester is to clog pores: 0–1 is safe for acne-prone skin; 3–5 risks congested pores.</p>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--sage-bg);border:1px solid var(--sage-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+              <div>
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--sage-safe);">CLINICAL HARMONY BENCHMARK</div>
+                <div style="font-size:0.9rem;color:var(--text-primary);font-weight:600;">Avg. $182/yr saved in wasted serums by splitting conflicting actives AM/PM</div>
+              </div>
+              <a href="/buy/flash_pass" class="btn-primary" style="padding:8px 14px;font-size:0.84rem;">Get $1.99 AM/PM Routine Card &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Asymmetric 3-Cell Editorial Formulation Bento -->
     <section class="section-block">
       <div class="container">
@@ -165,7 +236,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
             <div class="badge-clash mono" style="margin-bottom:10px;">1. CANCELS OUT · SPLIT MORNING &amp; NIGHT</div>
             <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Copper Peptides × Pure Vitamin C</h3>
             <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
-              Pure Vitamin C (L-Ascorbic Acid) needs a low acidic pH (3.2) to absorb, while Copper Peptides need a neutral pH (6.2). Layering them together cancels out both serums—use Vitamin C in the morning and Copper Peptides at night.
+              Pure Vitamin C (L-Ascorbic Acid) needs a low acidic pH (3.2) to absorb, while Copper Peptides need a neutral pH (6.2). Layering them together cancels out both serums: use Vitamin C in the morning and Copper Peptides at night.
             </p>
             <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Verified Vitamin C &amp; Peptide Separates (Dermstore) ↗</a>
           </div>
@@ -270,7 +341,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
               <div class="editorial-photo-caption">
                 <div>
                   <strong class="serif-display" style="font-size:0.95rem;">AM Morning Glow vs. PM Barrier Repair</strong>
-                  <div style="color:var(--text-secondary);font-size:0.72rem;">Instant 9:16 Apple-Wallet Vanity Card</div>
+                  <div style="color:var(--text-secondary);font-size:0.8125rem;">Instant 9:16 Apple-Wallet Vanity Card</div>
                 </div>
                 <span class="badge-clash mono">ΔpH Check</span>
               </div>
@@ -292,21 +363,21 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
       <div class="container">
         <div class="bento-grid-3">
           <div class="bento-cell tinted">
-            <div class="mono" style="color:var(--rose-brand);font-size:0.76rem;font-weight:700;margin-bottom:6px;">WHY 68% OF ROUTINES STING OR PILL</div>
+            <div class="mono" style="color:var(--rose-brand);font-size:0.84rem;font-weight:700;margin-bottom:6px;">WHY 68% OF ROUTINES STING OR PILL</div>
             <h3 class="serif-display" style="font-size:1.3rem;margin-bottom:6px;">The Copper Peptide + Vitamin C Trap</h3>
             <p style="color:var(--text-secondary);font-size:0.85rem;">
               Layering Copper Peptides 1% (pH 6.2) with 15% L-Ascorbic Acid (pH 3.2) triggers copper-ion oxidation—turning $200+ of serums into inactive pro-oxidants on your skin.
             </p>
           </div>
           <div class="bento-cell">
-            <div class="mono" style="color:var(--honey-warn);font-size:0.76rem;font-weight:700;margin-bottom:6px;">THE ACNE Rx PARADOX</div>
+            <div class="mono" style="color:var(--honey-warn);font-size:0.84rem;font-weight:700;margin-bottom:6px;">THE ACNE Rx PARADOX</div>
             <h3 class="serif-display" style="font-size:1.3rem;margin-bottom:6px;">Benzoyl Peroxide Degrades Tretinoin</h3>
             <p style="color:var(--text-secondary);font-size:0.85rem;">
               Applying Benzoyl Peroxide alongside Tretinoin or Retinol oxidizes the retinoid molecule while generic cream bases clog pores with Isopropyl Myristate (5/5 pore risk).
             </p>
           </div>
           <div class="bento-cell">
-            <div class="mono" style="color:var(--sage-safe);font-size:0.76rem;font-weight:700;margin-bottom:6px;">30-DAY HARMONY GUARANTEE</div>
+            <div class="mono" style="color:var(--sage-safe);font-size:0.84rem;font-weight:700;margin-bottom:6px;">30-DAY HARMONY GUARANTEE</div>
             <h3 class="serif-display" style="font-size:1.3rem;margin-bottom:6px;">Bespoke 9:16 Apple-Wallet Ritual Card</h3>
             <p style="color:var(--text-secondary);font-size:0.85rem;">
               Save your personalized AM Morning Glow steps, 15-minute ΔpH wait timers, and 4-Night Skin-Cycling ritual directly to your phone lockscreen.
@@ -341,13 +412,13 @@ function renderDirectoryPage({ seoPages }) {
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
             <span class="${p.compatibilityScore < 45 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(p.verdict)} · ${p.compatibilityScore}/100</span>
-            <span class="mono" style="font-size:0.74rem;color:var(--text-secondary);">ΔpH ${p.deltaPh}</span>
+            <span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">ΔpH ${p.deltaPh}</span>
           </div>
           <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-size:1.15rem;font-weight:700;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
           <p style="color:var(--text-secondary);font-size:0.81rem;margin-bottom:12px;">${escapeHtml(p.summary)}</p>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border-hairline);padding-top:10px;gap:8px;flex-wrap:wrap;">
-          <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:700;">Open Clinical Audit →</a>
+          <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.8125rem;color:var(--rose-brand);font-weight:700;">Open Clinical Audit →</a>
           <a href="/api/affiliate?product=${escapeHtml(prodId)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop at ${partnerLabel} ↗</a>
         </div>
       </div>
@@ -360,7 +431,7 @@ function renderDirectoryPage({ seoPages }) {
         <div class="eyebrow-pill mono">EDITORIAL LAYERING ENCYCLOPEDIA · ${seoPages.length} CLINICAL GUIDES</div>
         <h1 class="hero-h1" style="font-size:2.6rem;">Skincare Active-Ingredient Harmony &amp; Cult-Product INCI Directory</h1>
         <p class="hero-sub">
-          Every pairing and cult formula is evaluated deterministically for Henderson-Hasselbalch pKa bioavailability, ΔpH thresholds, and pore-safety.
+          Every pairing and cult formula is evaluated deterministically for verified skin pH compatibility, active ingredient stability, and pore-safety scores, and pore-safety.
         </p>
 
         <h2 class="serif-display" style="font-size:1.65rem;margin:32px 0 14px;">1. Active-Ingredient Layering &amp; Compatibility Guides (${pairPages.length} Guides)</h2>
@@ -483,7 +554,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
 
   const comparisonRowsHtml = comparedActives.map((ing) => `
     <tr>
-      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span class="mono" style="font-size:0.74rem;color:var(--text-secondary);">${escapeHtml(ing.inciName)}</span></td>
+      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(ing.inciName)}</span></td>
       <td class="mono">${ing.phMin}–${ing.phMax}</td>
       <td class="mono">${ing.pka != null ? ing.pka : '—'}</td>
       <td class="mono">${ing.molecularWeightDa} Da</td>
@@ -502,7 +573,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
 
   const relatedHtml = (relatedPages || []).slice(0, 8).map((r) => `
     <a href="/seo/${escapeHtml(r.slug)}" class="bento-cell" style="display:block;padding:16px;">
-      <div class="mono" style="font-size:0.71rem;color:var(--rose-brand);font-weight:700;margin-bottom:4px;">${escapeHtml(r.verdict)} · ΔpH ${r.deltaPh}</div>
+      <div class="mono" style="font-size:0.8125rem;color:var(--rose-brand);font-weight:700;margin-bottom:4px;">${escapeHtml(r.verdict)} · ΔpH ${r.deltaPh}</div>
       <div class="serif-display" style="font-weight:700;font-size:1.05rem;">${escapeHtml(r.title)}</div>
     </a>
   `).join('');
@@ -525,16 +596,16 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
 
         <div class="bento-grid-3" style="margin-bottom:28px;">
           <div class="bento-cell tinted">
-            <div class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:700;margin-bottom:4px;">FORMULATION CHEMISTRY</div>
+            <div class="mono" style="font-size:0.8125rem;color:var(--rose-brand);font-weight:700;margin-bottom:4px;">FORMULATION CHEMISTRY</div>
             <div class="serif-display" style="font-size:1.2rem;font-weight:700;margin-bottom:6px;">${escapeHtml(page.conflictType)}</div>
             <p style="font-size:0.83rem;color:var(--text-secondary);">Recommended Spacing: <strong class="mono" style="color:var(--text-primary);">${page.waitTimeMinutes >= 720 ? 'Separate AM Morning vs. PM Night' : `${page.waitTimeMinutes} Minutes`}</strong></p>
           </div>
           <div class="bento-cell">
-            <div class="mono" style="font-size:0.72rem;color:var(--sage-safe);font-weight:700;margin-bottom:4px;">AM MORNING GLOW RITUAL</div>
+            <div class="mono" style="font-size:0.8125rem;color:var(--sage-safe);font-weight:700;margin-bottom:4px;">AM MORNING GLOW RITUAL</div>
             <p style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(page.amRule)}</p>
           </div>
           <div class="bento-cell">
-            <div class="mono" style="font-size:0.72rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;">PM BARRIER REPAIR RITUAL</div>
+            <div class="mono" style="font-size:0.8125rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;">PM BARRIER REPAIR RITUAL</div>
             <p style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(page.pmRule)}</p>
           </div>
         </div>
@@ -611,7 +682,7 @@ function renderLegalPage({ type }) {
           <p style="color:var(--text-secondary);font-size:0.9rem;">
             ${isPrivacy
               ? 'DermLogic processes pasted INCI ingredient lists and vanity shelf combinations deterministically on the server to calculate pH windows, pKa free-acid fractions, and comedogenicity ratings. Optional checkout email addresses are used solely to deliver your Routine Ritual PDF and 9:16 Wallet Pass.'
-              : 'DermLogic provides deterministic cosmetic chemistry calculations (Henderson-Hasselbalch pKa bioavailability, ΔpH thresholds, and EU CosIng comedogenicity ratings) for educational formulation analysis. It does not replace individualized medical diagnosis by a board-certified dermatologist.'}
+              : 'DermLogic provides deterministic cosmetic chemistry calculations (verified skin pH compatibility, active ingredient stability, and pore-safety scores, and EU CosIng comedogenicity ratings) for educational formulation analysis. It does not replace individualized medical diagnosis by a board-certified dermatologist.'}
           </p>
         </div>
         <div class="bento-cell">

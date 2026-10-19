@@ -1,5 +1,5 @@
 /**
- * DermLogic (#4) — Clinical INCI Ingredient Database (65 Compounds) & Cult Skincare Catalog (44 Products)
+ * DermLogic (#4): Clinical INCI Ingredient Database (65 Compounds) & Cult Skincare Catalog (44 Products)
  * Deterministic pH windows, pKa dissociation constants, molecular weights (Da), comedogenicity (0-5),
  * irritation indices (0-5), Malassezia fungal-acne triggers, and pregnancy safety classifications.
  */

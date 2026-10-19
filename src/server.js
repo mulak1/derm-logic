@@ -1,5 +1,5 @@
 /**
- * DermLogic (#4) — Express Server on Dedicated Port 4104 (http://127.0.0.1:4104)
+ * DermLogic (#4): Express Server on Dedicated Port 4104 (http://127.0.0.1:4104)
  */
 
 const path = require('path');
@@ -224,10 +224,10 @@ app.get('/llms.txt', (req, res) => {
     (p) => `- ${p.brand} ${p.name} (id: ${p.id}) | pH ${p.ph} | $${p.priceUsd} | Key Actives: ${(p.primaryActives || []).join(', ')}`
   ).join('\n');
   const seoLines = seoPages.map(
-    (p) => `- [${p.title}](${PUBLIC_URL}/seo/${p.slug}): ${p.verdict} (Harmony ${p.compatibilityScore}/100, ΔpH ${p.deltaPh}) — ${p.metaDescription}`
+    (p) => `- [${p.title}](${PUBLIC_URL}/seo/${p.slug}): ${p.verdict} (Harmony ${p.compatibilityScore}/100, ΔpH ${p.deltaPh}): ${p.metaDescription}`
   ).join('\n');
 
-  const content = `# DermLogic — Clinical Skincare Active-Ingredient Conflict, ΔpH & INCI Harmony Atelier
+  const content = `# DermLogic: Clinical Skincare Active-Ingredient Conflict, ΔpH & INCI Harmony Atelier
 > Sub-5ms Henderson-Hasselbalch pKa bioavailability, ΔpH > 1.8 peptide/acid inactivation checks, Cu2+/BPO redox conflict matrix, EU CosIng comedogenicity (0–5), Malassezia fungal-acne triggers, and 4-Night Skin Cycling schedules.
 
 ## Canonical Endpoints
@@ -265,7 +265,7 @@ app.get('/llms-full.txt', (req, res) => {
   ).join('\n\n');
 
   const prodBlocks = CULT_PRODUCTS.map(
-    (p) => `### ${p.brand} — ${p.name} [id: ${p.id}]
+    (p) => `### ${p.brand}: ${p.name} [id: ${p.id}]
 - Category: ${p.category} | Formulation pH: ${p.ph} | Price: $${p.priceUsd}
 - Primary Actives: ${(p.primaryActives || []).join(', ')}
 - Full INCI: ${p.inciList}
@@ -282,7 +282,7 @@ app.get('/llms-full.txt', (req, res) => {
 - PM Barrier Repair Rule: ${p.pmRule}`
   ).join('\n\n');
 
-  const content = `# DermLogic — Complete Clinical Formulation, INCI, pKa & Layering Corpus (/llms-full.txt)
+  const content = `# DermLogic: Complete Clinical Formulation, INCI, pKa & Layering Corpus (/llms-full.txt)
 > Exhaustive reference for AI agents, dermatological researchers, and cosmetic chemists covering ${CLINICAL_INGREDIENTS.length} INCI compounds, ${CULT_PRODUCTS.length} cult skincare products, and ${seoPages.length} clinical compatibility guides.
 
 ## 1. Clinical Active-Ingredient Matrix (${CLINICAL_INGREDIENTS.length} INCI Compounds)
@@ -442,7 +442,7 @@ app.post('/api/checkout', async (req, res) => {
       } else {
         params.set('line_items[0][price_data][currency]', 'usd');
         params.set('line_items[0][price_data][unit_amount]', String(amountCents));
-        params.set('line_items[0][price_data][product_data][name]', `DermLogic — ${planName}`);
+        params.set('line_items[0][price_data][product_data][name]', `DermLogic: ${planName}`);
         if (isAnnual) params.set('line_items[0][price_data][recurring][interval]', 'year');
       }
       const sRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {

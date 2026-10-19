@@ -1,5 +1,5 @@
 /**
- * DermLogic (#4) — SQLite Persistence Layer (/data/derm_logic.db)
+ * DermLogic (#4): SQLite Persistence Layer (/data/derm_logic.db)
  * Seeds 65 clinical INCI ingredients, 44 cult skincare products, 60 pSEO pages,
  * Thompson-Sampling pricing arms, and Meta Pixel + CAPI event deduplication logs.
  */

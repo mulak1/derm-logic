@@ -1,5 +1,5 @@
 /**
- * DermLogic (#4) — Cult Skincare Products & Routine Presets Catalog
+ * DermLogic (#4): Cult Skincare Products & Routine Presets Catalog
  */
 const CULT_PRODUCTS = [
   {

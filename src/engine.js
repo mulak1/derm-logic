@@ -1,5 +1,5 @@
 /**
- * DermLogic (#4) — Sub-5ms Deterministic Clinical INCI & Routine Compatibility Engine
+ * DermLogic (#4): Sub-5ms Deterministic Clinical INCI & Routine Compatibility Engine
  * Implements Henderson-Hasselbalch pKa bioavailability, |ΔpH| > 1.8 inactivation detection,
  * oxidation/chelation conflict matrices, positional comedogenicity, Malassezia triggers,
  * AM/PM + 4-Night Skin-Cycling scheduling, and optional @google/genai (gemini-3.8-flash) synthesis.

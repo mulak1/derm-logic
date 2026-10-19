@@ -1,5 +1,5 @@
 /**
- * DermLogic (#4) — Day-1 Programmatic SEO (pSEO) Catalog (60 High-Intent Clinical Pages)
+ * DermLogic (#4): Day-1 Programmatic SEO (pSEO) Catalog (60 High-Intent Clinical Pages)
  * 36 Active-Ingredient Pair Compatibility Matrices + 24 Cult-Product INCI Teardowns.
  */
 
