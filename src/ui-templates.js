@@ -499,42 +499,44 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             ${presetButtonsHtml}
           </div>
 
-          <div class="filter-profile-grid" style="display:grid;grid-template-columns:1fr 185px;gap:10px;margin-bottom:10px;">
-            <div>
-              <label class="field-label" for="productFilterInput">2. Pick Your Daily Skincare Products (${products.length} Popular Formulas)</label>
-              <input id="productFilterInput" type="search" class="input-box" placeholder="Search Rhode, SkinCeuticals, Paula's Choice, Tretinoin, Snail..." oninput="filterProductList(this.value)" />
-            </div>
-            <div>
-              <label class="field-label" for="skinTypeSelect">Your Skin Type</label>
-              <select id="skinTypeSelect" class="input-box" onchange="runRoutineAnalysis()">
-                <option value="combination">Combination / Dewy</option>
-                <option value="sensitive">Sensitive / Redness-Prone</option>
-                <option value="oily">Oily / Breakout-Prone</option>
-                <option value="dry">Dry / Damaged Barrier</option>
-                <option value="normal">Normal / Balanced</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="product-selector-grid" id="productSelectorGrid">
-            ${productCheckboxesHtml}
-          </div>
-
-          <div style="margin-bottom:16px;">
+          <div style="margin-bottom:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
-              <label class="field-label" for="rawInciTextarea" style="margin:0;">3. Or Paste Any Product's Ingredient List</label>
-              <button type="button" class="btn-secondary" style="padding:4px 12px;font-size:0.8125rem;" onclick="pasteSampleComedogenicInci()">Test a Pore-Clogging Example</button>
+              <label class="field-label" for="rawInciTextarea" style="margin:0;">2. Paste Any Product's Ingredient List (or Pick Products Below)</label>
+              <button type="button" class="btn-secondary" style="padding:4px 12px;font-size:0.8125rem;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Example</button>
             </div>
             <textarea id="rawInciTextarea" class="textarea-box mono" rows="2" placeholder="e.g., Aqua, Ascorbic Acid, Copper Tripeptide-1, Glycolic Acid, Isopropyl Myristate, Polysorbate 20...">${escapeHtml(initialRawInci || '')}</textarea>
           </div>
 
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
             <button type="button" id="analyzeBtn" class="btn-primary" style="flex:1;" onclick="runRoutineAnalysis()">
               <span>Check My Routine Compatibility</span>
               <span class="btn-icon-circle">↗</span>
             </button>
             <button type="button" class="btn-secondary" onclick="clearRoutineSelection()">Clear Shelf</button>
           </div>
+
+          <details style="margin-bottom:14px;padding:10px 12px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);">
+            <summary style="cursor:pointer;font-size:0.86rem;font-weight:700;color:var(--text-primary);">🧴 Optional: Pick from ${products.length} Popular Products (Rhode, SkinCeuticals, The Ordinary) &amp; Skin Type ▾</summary>
+            <div class="filter-profile-grid" style="display:grid;grid-template-columns:1fr 185px;gap:10px;margin:10px 0;">
+              <div>
+                <label class="field-label" for="productFilterInput">Search ${products.length} Formulas</label>
+                <input id="productFilterInput" type="search" class="input-box" placeholder="Search Rhode, SkinCeuticals, Paula's Choice, Tretinoin..." oninput="filterProductList(this.value)" />
+              </div>
+              <div>
+                <label class="field-label" for="skinTypeSelect">Your Skin Type</label>
+                <select id="skinTypeSelect" class="input-box" onchange="runRoutineAnalysis()">
+                  <option value="combination">Combination / Dewy</option>
+                  <option value="sensitive">Sensitive / Redness-Prone</option>
+                  <option value="oily">Oily / Breakout-Prone</option>
+                  <option value="dry">Dry / Damaged Barrier</option>
+                  <option value="normal">Normal / Balanced</option>
+                </select>
+              </div>
+            </div>
+            <div class="product-selector-grid" id="productSelectorGrid">
+              ${productCheckboxesHtml}
+            </div>
+          </details>
 
           <div style="padding:12px 14px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
@@ -644,7 +646,6 @@ function renderSingleConflictCard(c) {
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <div style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;flex:1;">Esthetician Fix: ${escapeHtml(c.resolution)}</div>
         <div style="display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center;">
-          <a href="/buy/micro_pass" class="affiliate-link-pill mono" style="background:var(--rose-brand);color:#FFFFFF;border-color:var(--rose-brand);font-weight:700;">⚡ Unlock AM/PM Fix Pass (99¢) ↗</a>
           <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Alternative ↗</a>
         </div>
       </div>
@@ -671,8 +672,8 @@ function renderAnalysisResultHtml(res) {
     </span>
   `).join('');
 
-  const primaryConflicts = res.conflicts.slice(0, 2);
-  const extraConflicts = res.conflicts.slice(2);
+  const primaryConflicts = res.conflicts.slice(0, 1);
+  const extraConflicts = res.conflicts.slice(1);
 
   const conflictsHtml = res.conflicts.length === 0
     ? `<div style="padding:14px 16px;border-radius:12px;background:var(--sage-bg);border:1px solid var(--sage-border);color:var(--sage-safe);font-size:0.86rem;margin-bottom:14px;">
@@ -681,7 +682,7 @@ function renderAnalysisResultHtml(res) {
     : primaryConflicts.map(renderSingleConflictCard).join('') + (extraConflicts.length > 0 ? `
         <details style="margin-bottom:12px;border:1px solid var(--border-hairline);border-radius:12px;background:var(--bg-canvas);padding:10px 14px;">
           <summary class="mono" style="cursor:pointer;font-size:0.84rem;font-weight:700;color:var(--rose-brand);">
-            + View ${extraConflicts.length} additional secondary ingredient interaction(s)
+            + View ${extraConflicts.length} additional ingredient conflict(s) &amp; fixes ▾
           </summary>
           <div style="margin-top:10px;">
             ${extraConflicts.map(renderSingleConflictCard).join('')}

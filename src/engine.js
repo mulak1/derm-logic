@@ -168,9 +168,9 @@ function analyzeRoutine(params = {}) {
       if (classes.has('benzoyl_peroxide') && classes.has('retinoid')) {
         addConflict(
           a, b, 'CRITICAL',
-          'Oxidative Retinoid Degradation (Peroxide Homolysis)',
-          'Benzoyl Peroxide cleaves into oxygen free radicals that oxidize delicate retinoid polyene chains on contact, neutralizing >80% of Tretinoin/Retinol potency within 2 hours.',
-          'Move Benzoyl Peroxide strictly to AM (or use a rinse-off BPO cleanser); apply Tretinoin/Retinol exclusively in PM.',
+          'Benzoyl Peroxide Deactivates Retinol & Tretinoin on Contact',
+          'Benzoyl Peroxide releases oxygen molecules that break down delicate Tretinoin and Retinol on contact, wiping out over 80% of your retinoid strength within 2 hours.',
+          'Use Benzoyl Peroxide in the morning (or as a rinse-off wash) and apply Tretinoin or Retinol only at night.',
           720
         );
         continue;
@@ -180,9 +180,9 @@ function analyzeRoutine(params = {}) {
       if (classes.has('benzoyl_peroxide') && classes.has('retinoid_adapalene')) {
         addConflict(
           a, b, 'MODERATE',
-          'Compounded Xerosis & Stratum Corneum Desquamation',
-          'Adapalene’s rigid naphthoic acid ring resists Benzoyl Peroxide oxidation, but co-layering doubles transepidermal water loss (TEWL) and erythema.',
-          'Apply a physiological 3:1:1 ceramide moisturizer before co-applying (Sandwich Method), or split BPO to AM and Adapalene to PM.',
+          'High Dryness & Peeling Risk When Layered Together',
+          'Adapalene stays chemically stable with Benzoyl Peroxide, but layering both at once doubles skin dryness, flaking, and redness.',
+          'Apply a gentle ceramide moisturizer first (the Sandwich Method), or use Benzoyl Peroxide in the morning and Adapalene at night.',
           15
         );
         continue;
@@ -192,9 +192,9 @@ function analyzeRoutine(params = {}) {
       if (classes.has('benzoyl_peroxide') && (classes.has('vitamin_c_laa') || classes.has('hydroquinone'))) {
         addConflict(
           a, b, 'CRITICAL',
-          'Direct Redox Quenching & Quinone Oxidation',
-          'Benzoyl Peroxide immediately oxidizes L-Ascorbic Acid into inactive dehydroascorbic acid (and oxidizes Hydroquinone into dark-orange staining p-benzoquinone).',
-          'Never layer in the same session. Use Vitamin C in the AM and Benzoyl Peroxide on non-retinoid PM nights.',
+          'Benzoyl Peroxide Cancels Out Vitamin C Immediately',
+          'Benzoyl Peroxide oxidizes pure Vitamin C before it can absorb into your skin (and can cause temporary orange staining if mixed with Hydroquinone).',
+          'Never layer in the same routine. Use Vitamin C in the morning and Benzoyl Peroxide on alternate evenings.',
           720
         );
         continue;
@@ -204,9 +204,9 @@ function analyzeRoutine(params = {}) {
       if (classes.has('copper_peptide') && (classes.has('vitamin_c_laa') || classes.has('vitamin_c_deriv'))) {
         addConflict(
           a, b, 'CRITICAL',
-          `Cu2+ Fenton-Like Redox Oxidation & Chelation (ΔpH ${deltaPh.toFixed(1)})`,
-          'Copper ions in GHK-Cu catalyze rapid single-electron oxidation of Ascorbic Acid while low-pH Vitamin C protonates histidine and strips Cu2+ from the tripeptide.',
-          'Strict AM/PM Separation: Apply Vitamin C in the AM under SPF 50 and Copper Peptides in the PM.',
+          `Copper Peptides & Vitamin C Cancel Each Other Out (pH Gap ${deltaPh.toFixed(1)})`,
+          'Copper ions rapidly oxidize Vitamin C while acidic Vitamin C weakens the copper peptide bond, leaving both serums far less effective.',
+          'Split Morning & Night: Apply Vitamin C in the morning under sunscreen and Copper Peptides at night.',
           720
         );
         continue;
@@ -216,9 +216,9 @@ function analyzeRoutine(params = {}) {
       if (classes.has('copper_peptide') && (classes.has('aha') || classes.has('bha') || classes.has('pha'))) {
         addConflict(
           a, b, 'CRITICAL',
-          `Low-pH Histidine Protonation & Copper De-Chelation (ΔpH ${deltaPh.toFixed(1)})`,
-          'Direct acids (pH < 4.0) protonate the imidazole nitrogen of histidine in Copper Tripeptide-1, breaking the copper coordination bond and hydrolyzing peptide chains.',
-          'Apply Copper Peptides in the AM routine and reserve AHA/BHA exfoliants for dedicated PM resurfacing nights.',
+          `Strong Exfoliating Acids Break Down Copper Peptides (pH Gap ${deltaPh.toFixed(1)})`,
+          'Exfoliating acids (pH below 4.0) are too acidic for delicate Copper Peptides, breaking apart the peptide chain and causing redness.',
+          'Use Copper Peptides in your morning routine and save AHA/BHA exfoliating acids for separate evening routines.',
           720
         );
         continue;
@@ -228,9 +228,9 @@ function analyzeRoutine(params = {}) {
       if (classes.has('copper_peptide') && classes.has('kojic_acid')) {
         addConflict(
           a, b, 'CRITICAL',
-          'Competitive Copper-Ion Chelation Clash',
-          'Kojic Acid inhibits tyrosinase specifically by chelating Cu2+ ions; co-applying with GHK-Cu causes Kojic Acid to sequester copper from your peptide serum.',
-          'Separate into AM (Kojic/Tranexamic Acid) and PM (Copper Peptides).',
+          'Kojic Acid Strips Copper from Copper Peptides',
+          'Kojic Acid works by binding to copper ions, which pulls the active copper right out of your Copper Peptide serum when layered together.',
+          'Separate into Morning (Kojic Acid) and Night (Copper Peptides).',
           720
         );
         continue;
@@ -240,9 +240,9 @@ function analyzeRoutine(params = {}) {
       if (classes.has('copper_peptide') && (classes.has('retinoid') || classes.has('retinoid_adapalene'))) {
         addConflict(
           a, b, 'MODERATE',
-          'Fibroblast Over-Stimulation & Metal-Catalyzed Retinoid Stress',
-          'Co-layering 1% Copper Tripeptide-1 and potent retinoids in the same PM session increases stinging and risks trace Cu2+ acceleration of retinoid isomerization.',
-          'Alternate PM nights (Night 2 Retinoid, Night 3 Copper Peptides) or shift Copper Peptides to AM.',
+          'Layering Copper Peptides + Retinol Can Trigger Stinging',
+          'Using strong Copper Peptides and Retinol in the exact same evening step can over-stimulate sensitive skin and cause redness.',
+          'Alternate evening routines (Night 1 Retinol, Night 2 Copper Peptides) or move Copper Peptides to the morning.',
           720
         );
         continue;
@@ -252,9 +252,9 @@ function analyzeRoutine(params = {}) {
       if ((classes.has('retinoid') || classes.has('retinoid_adapalene')) && (classes.has('aha') || classes.has('bha'))) {
         addConflict(
           a, b, 'CRITICAL',
-          `Synergistic Corneodesmosome Stripping & ΔpH ${deltaPh.toFixed(1)} Retinoid Stress`,
-          'Layering low-pH keratolytic acids (pH 3.0–3.8) with nuclear retinoids strips the stratum corneum barrier, accelerates acid-catalyzed retinoid degradation, and causes severe retinoid dermatitis.',
-          'Follow the 4-Night Skin Cycling Protocol: Night 1 Exfoliating Acid, Night 2 Retinoid, Nights 3–4 Ceramide Barrier Recovery.',
+          `Exfoliating Acids + Retinol Together Strip Your Skin Barrier (pH Gap ${deltaPh.toFixed(1)})`,
+          'Layering low-pH exfoliating acids (pH 3.0–3.8) with Retinol or Tretinoin in the same night strips your moisture barrier and causes peeling and redness.',
+          'Follow a 4-Night Skin Cycling Schedule: Night 1 Exfoliating Acid, Night 2 Retinoid, Nights 3–4 Ceramide Barrier Repair.',
           1440
         );
         continue;
@@ -264,9 +264,9 @@ function analyzeRoutine(params = {}) {
       if ((classes.has('retinoid') || classes.has('retinoid_adapalene')) && classes.has('vitamin_c_laa')) {
         addConflict(
           a, b, 'MODERATE',
-          `ΔpH ${deltaPh.toFixed(1)} Acid-Mantle Clash (pH 3.2 LAA vs pH 5.8 Retinoid)`,
-          'Pure L-Ascorbic Acid requires pH <= 3.5 while retinoids require pH 5.5–6.5. Co-application creates a ΔpH > 2.2 shock and cumulative erythema.',
-          'Apply L-Ascorbic Acid exclusively in the morning under SPF 50 and Retinoids exclusively at night.',
+          `Vitamin C + Retinol Acidity Mismatch (pH 3.2 vs pH 5.8)`,
+          'Pure Vitamin C needs an acidic pH (around 3.2) while Retinol works best near pH 5.8. Layering them together increases stinging and irritation.',
+          'Use Vitamin C in the morning under sunscreen and Retinol or Tretinoin at night.',
           720
         );
         continue;
@@ -274,14 +274,13 @@ function analyzeRoutine(params = {}) {
 
       // 10. Multi-Acid Stacking (AHA + BHA or two distinct leave-on exfoliants)
       if ((cA === 'aha' || cA === 'bha') && (cB === 'aha' || cB === 'bha')) {
-        // Check if they come from different products or high-risk combination
         const diffProducts = a.sources[0] !== b.sources[0];
         if (diffProducts) {
           addConflict(
             a, b, 'CRITICAL',
-            'Dual-Acid Over-Exfoliation & Stratum Corneum Delipidation',
-            'Stacking multiple leave-on AHA/BHA exfoliants in one routine dissolves both hydrophilic surface corneodesmosomes and lipophilic sebaceous lipids, causing acute barrier burn.',
-            'Select only ONE leave-on keratolytic acid per session, maximum 2–3 nights per week.',
+            'Stacking Two Exfoliating Acids Causes Over-Exfoliation & Redness',
+            'Using two leave-on AHA/BHA exfoliating acids in the same routine strips protective skin oils and causes stinging, tightness, and barrier irritation.',
+            'Pick only ONE leave-on exfoliating acid per evening, maximum 2 to 3 nights per week.',
             1440
           );
           continue;
@@ -292,9 +291,9 @@ function analyzeRoutine(params = {}) {
       if (classes.has('vitamin_c_laa') && (classes.has('aha') || classes.has('bha'))) {
         addConflict(
           a, b, 'MODERATE',
-          'Cumulative Low-pH Acid Overload (< pH 3.5)',
-          'Stacking 15%–20% L-Ascorbic Acid (pH 3.0) with AHA/BHA exfoliants (pH 3.5) overwhelms the skin’s natural buffering capacity, triggering nociceptor stinging.',
-          'Keep L-Ascorbic Acid in your AM routine and move AHA/BHA exfoliants to PM Resurfacing Nights.',
+          'Too Much Acid in One Step (Vitamin C + Exfoliating Acid)',
+          'Stacking pure Vitamin C (pH 3.0) right on top of an AHA/BHA acid toner (pH 3.5) overwhelms sensitive skin and triggers stinging.',
+          'Keep Vitamin C in your morning routine and move AHA/BHA exfoliants to evening resurfacing nights.',
           720
         );
         continue;
@@ -304,9 +303,9 @@ function analyzeRoutine(params = {}) {
       if (classes.has('hypochlorous_acid') && (classes.has('vitamin_c_laa') || classes.has('copper_peptide') || classes.has('antioxidant_polyphenol'))) {
         addConflict(
           a, b, 'MODERATE',
-          'HOCl Oxidant Quenching When Applied Wet',
-          'Hypochlorous Acid (HOCl) is an oxidizing antimicrobial mist that neutralizes L-Ascorbic Acid and oxidizes peptides if layered before completely dry.',
-          'Mist Hypochlorous Acid onto clean skin and wait 10 full minutes until 100% dry before applying serums.',
+          'Let Hypochlorous Acid Spray Dry Before Applying Serums',
+          'Hypochlorous Acid spray neutralizes Vitamin C and peptides if you apply your serums while the mist is still wet.',
+          'Mist Hypochlorous Acid onto clean skin and wait 10 minutes until completely dry before applying serums.',
           10
         );
         continue;
@@ -317,9 +316,9 @@ function analyzeRoutine(params = {}) {
         if (classes.has('signal_peptide')) {
           addConflict(
             a, b, 'CRITICAL',
-            `ΔpH ${deltaPh.toFixed(1)} Amide-Bond Hydrolysis of Signal Peptides`,
-            `Applying pH ${minPh.toFixed(1)} acid alongside neutral oligopeptides (ΔpH ${deltaPh.toFixed(1)} > 1.8 threshold) denatures peptide conformation and cleaves matrikine bonds.`,
-            'Separate into AM (Signal Peptides) vs PM (Direct Acids), or wait at least 20 minutes between layers.',
+            `Strong Acids Weaken Peptide Serums (pH Gap ${deltaPh.toFixed(1)})`,
+            `Applying a strong acid (pH ${minPh.toFixed(1)}) right before peptide serums weakens delicate amino-acid chains so they cannot firm your skin properly.`,
+            'Use Peptide serums in the morning and Exfoliating Acids at night, or wait 20 minutes between layers.',
             720
           );
           continue;
@@ -327,9 +326,9 @@ function analyzeRoutine(params = {}) {
         if (classes.has('niacinamide') && a.sources[0] !== b.sources[0]) {
           addConflict(
             a, b, 'MODERATE',
-            `ΔpH ${deltaPh.toFixed(1)} Surface pH Shift & Nicotinic Flushing Risk`,
-            `Immediate layering across a ΔpH ${deltaPh.toFixed(1)} gap (> 1.8 threshold) buffers the acid's un-ionized free-acid fraction while risking transient nicotinic-acid prostaglandin D2 capillary flushing.`,
-            'Wait 15 minutes after applying your low-pH acid/Vitamin C before layering Niacinamide, or split AM/PM.',
+            `Acid + Niacinamide Warm Redness Flush Risk (pH Gap ${deltaPh.toFixed(1)})`,
+            `Layering a strong acid directly with Niacinamide across a ${deltaPh.toFixed(1)} pH gap can weaken the acid and trigger a temporary warm redness flush.`,
+            'Wait 15 minutes after applying your acid or Vitamin C before applying Niacinamide, or split Morning & Night.',
             15
           );
           continue;

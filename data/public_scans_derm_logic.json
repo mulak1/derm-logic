@@ -10,7 +10,7 @@
     "issue": "Zero Chelation • Optimal AM/PM Partition",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:02:22.695Z"
+    "scannedAt": "2026-10-19T01:56:18.914Z"
   },
   {
     "target": "Ceramide-Tretinoin-Buffer",
@@ -23,7 +23,7 @@
     "issue": "64% Lower Retinoid Peeling via Sandwich Method",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:02:22.700Z"
+    "scannedAt": "2026-10-19T01:56:18.919Z"
   },
   {
     "target": "Azelaic15-Niacinamide5",
@@ -36,7 +36,7 @@
     "issue": "Malassezia-Safe & Rosacea-Safe Synergy",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:02:22.705Z"
+    "scannedAt": "2026-10-19T01:56:18.924Z"
   },
   {
     "target": "BHA2-SnailMucin-Stack",
@@ -49,7 +49,7 @@
     "issue": "Safe 2x/Week Exfoliation Cadence",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:02:22.710Z"
+    "scannedAt": "2026-10-19T01:56:18.927Z"
   },
   {
     "target": "VitC+Cu",
@@ -62,7 +62,7 @@
     "issue": "Copper Peptides + L-Ascorbic Acid Cancel Out ($182/yr Waste)",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:02:22.714Z"
+    "scannedAt": "2026-10-19T01:56:18.932Z"
   },
   {
     "target": "Tret+BPO",
@@ -75,7 +75,7 @@
     "issue": "Benzoyl Peroxide Oxidizes Tretinoin Same-Night",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:02:22.718Z"
+    "scannedAt": "2026-10-19T01:56:18.937Z"
   },
   {
     "target": "TikTok",
@@ -88,6 +88,6 @@
     "issue": "AHA 30% + BHA 2% + Retinol Same-Night Over-Exfoliation",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:02:22.722Z"
+    "scannedAt": "2026-10-19T01:56:18.940Z"
   }
 ]

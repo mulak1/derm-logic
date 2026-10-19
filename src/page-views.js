@@ -121,13 +121,30 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
   const bodyHtml = `
     <section class="hero-section">
       <div class="container">
-        <div class="editorial-top-banner">
+        <div id="home-executive-brief" class="editorial-top-banner">
           <div>
-            <div class="eyebrow-pill mono">SKINCARE ROUTINE CHECKER · MORNING &amp; EVENING LAYERING GUIDE</div>
-            <h1 class="hero-h1">Stop Layering Serums That Secretly <span class="serif-italic" style="color:var(--rose-brand);">Cancel Each Other Out.</span></h1>
-            <p class="hero-sub">
-              Check your daily skincare products or ingredient list in 5 seconds to see which serums clash, which ingredients clog pores, and how to split your routine safely between Morning and Night.
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
+              <div class="eyebrow-pill mono" style="margin:0;">2026 EXECUTIVE BRIEF · SKINCARE ROUTINE CHECKER</div>
+              <a href="/leaderboard" class="badge-safe mono" style="text-decoration:none;">🏆 Top-3 Podium Leaderboard &rarr;</a>
+            </div>
+            <h1 class="hero-h1">Executive Brief: Why Expensive Skincare Serums Secretly <span class="serif-italic" style="color:var(--rose-brand);">Cancel Out.</span></h1>
+            <p class="hero-sub" style="margin-bottom:14px;">
+              71% of multi-step skincare routines combine at least two serums that clash in acidity (pH) or deactivate each other on contact. Check your products below in 5 seconds and get a safe Morning &amp; Evening schedule.
             </p>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
+              <div style="padding:11px 12px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--rose-brand);margin-bottom:3px;">01. pH CLASHES</div>
+                <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Vitamin C &amp; acids need pH 3.2; Peptides need pH 6.0. Layering both weakens them.</div>
+              </div>
+              <div style="padding:11px 12px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--honey-warn);margin-bottom:3px;">02. DEACTIVATION</div>
+                <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Benzoyl Peroxide cancels out Retinol &amp; Vitamin C on contact unless split AM/PM.</div>
+              </div>
+              <div style="padding:11px 12px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
+                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--sage-safe);margin-bottom:3px;">03. SAFE SCHEDULE</div>
+                <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Get a personalized Morning, Evening &amp; 4-Night Skin Cycling calendar.</div>
+              </div>
+            </div>
           </div>
           <div class="editorial-photo-shell">
             <div class="editorial-photo-inner">
@@ -150,77 +167,6 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
           initialProductIds: presets[0].productIds,
           initialRawInci: ''
         })}
-      </div>
-    </section>
-
-    <!-- EXECUTIVE BRIEF & PLAIN-ENGLISH SKINCARE FIELD GUIDE (Merged onto Homepage) -->
-    <section id="home-executive-brief" class="section-block" style="background:var(--bg-oat);">
-      <div class="container">
-        <div class="hero-grid" style="align-items:stretch;">
-          <div class="bento-cell" style="padding:28px;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
-            <div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
-                <span class="badge-clash mono">2026 FORMULATION EXECUTIVE BRIEF</span>
-                <span class="badge-safe mono">COSMETIC-CHEMIST LAYERING GUIDE</span>
-              </div>
-              <h2 class="serif-display" style="font-size:2.2rem;line-height:1.12;margin-bottom:12px;">
-                Executive Brief: Why Expensive Skincare Routines Secretly <span class="serif-italic" style="color:var(--rose-brand);">Cancel Out</span>
-              </h2>
-              <p style="color:var(--text-secondary);font-size:1rem;margin-bottom:18px;">
-                71% of multi-step skincare routines combine at least two active ingredients with incompatible pH windows or chemical reactivity. Instead of buying more bottles, fixing <strong>when</strong> you apply each serum protects your moisture barrier and doubles active potency.
-              </p>
-              <div style="display:grid;gap:12px;margin-bottom:20px;">
-                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);">
-                  <strong style="color:var(--text-primary);font-size:0.95rem;">1. Acidity (pH) Windows (3.0 vs. 6.0 Rule):</strong>
-                  <span style="color:var(--text-secondary);font-size:0.9rem;"> Pure Vitamin C and exfoliating acids require pH 3.0–3.6, while Copper Peptides and Niacinamide prefer pH 5.5–6.5. Layering them together neutralizes both.</span>
-                </div>
-                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);">
-                  <strong style="color:var(--text-primary);font-size:0.95rem;">2. Oxidation &amp; Active Deactivation:</strong>
-                  <span style="color:var(--text-secondary);font-size:0.9rem;"> Benzoyl Peroxide oxidizes Tretinoin and Retinol on contact. Always move Benzoyl Peroxide to a morning wash and keep Retinoids for evening.</span>
-                </div>
-                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);">
-                  <strong style="color:var(--text-primary);font-size:0.95rem;">3. Pore-Clogging &amp; Fungal-Acne Safety:</strong>
-                  <span style="color:var(--text-secondary);font-size:0.9rem;"> Heavy esters and fatty acids trigger breakouts on acne-prone skin even when a bottle claims to be "non-comedogenic."</span>
-                </div>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:auto;">
-              <a href="#analyzer" class="btn-primary">
-                <span>Check My Routine Above</span>
-                <span class="btn-icon-circle">&uarr;</span>
-              </a>
-              <a href="/leaderboard" class="btn-secondary mono">Explore Routine Safety Leaderboard &rarr;</a>
-            </div>
-          </div>
-
-          <div class="bento-cell tinted" style="padding:28px;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
-            <div>
-              <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.05em;margin-bottom:6px;">PLAIN-ENGLISH SKINCARE GLOSSARY</div>
-              <h3 class="serif-display" style="font-size:1.65rem;margin-bottom:14px;">Key Formulation Terms Explained Simply</h3>
-              <div style="display:grid;gap:12px;">
-                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
-                  <div style="font-weight:700;font-size:0.95rem;color:var(--text-primary);margin-bottom:4px;">pH Clash (Acidity Mismatch)</div>
-                  <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">When an acidic serum (like Vitamin C or Glycolic Acid) is layered directly with a neutral peptide serum, causing stinging and reducing absorption.</p>
-                </div>
-                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
-                  <div style="font-weight:700;font-size:0.95rem;color:var(--text-primary);margin-bottom:4px;">4-Night Skin Cycling Schedule</div>
-                  <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">Rotating Night 1 (Exfoliant), Night 2 (Retinoid), and Nights 3–4 (Barrier Recovery Ceramides) to prevent redness and peeling.</p>
-                </div>
-                <div style="padding:14px 16px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
-                  <div style="font-weight:700;font-size:0.95rem;color:var(--text-primary);margin-bottom:4px;">Comedogenicity (0–5 Pore-Clogging Scale)</div>
-                  <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">Rates how likely an oil or ester is to clog pores: 0–1 is safe for acne-prone skin; 3–5 risks congested pores.</p>
-                </div>
-              </div>
-            </div>
-            <div style="margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--sage-bg);border:1px solid var(--sage-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-              <div>
-                <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--sage-safe);">CLINICAL HARMONY BENCHMARK</div>
-                <div style="font-size:0.9rem;color:var(--text-primary);font-weight:600;">Avg. $182/yr saved in wasted serums by splitting conflicting actives AM/PM</div>
-              </div>
-              <a href="/buy/flash_pass" class="btn-primary" style="padding:8px 14px;font-size:0.84rem;">Get $1.99 AM/PM Routine Card &rarr;</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

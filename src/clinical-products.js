@@ -491,32 +491,32 @@ const CULT_PRODUCTS = [
 const ROUTINE_PRESETS = [
   {
     id: 'viral-tiktok-destroyer',
-    label: 'The Viral TikTok Barrier-Destroyer Stack',
-    badge: 'CRITICAL CLASH · ΔpH 2.6 + Triple Keratolytic',
+    label: 'Too Many Exfoliants + Retinol Stack',
+    badge: 'REDNESS ALERT · SPLIT MORNING & NIGHT',
     skinType: 'combination',
     productIds: ['to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005', 'skinceuticals-ce-ferulic'],
     rawInciText: ''
   },
   {
     id: 'copper-vitc-oxidation',
-    label: 'Copper Peptides + Vitamin C Oxidation Trap',
-    badge: 'CHELATION & REDOX INACTIVATION · ΔpH 3.0',
+    label: 'Copper Peptides + Vitamin C Combo',
+    badge: 'CANCELS OUT · VITAMIN C AM, PEPTIDES PM',
     skinType: 'normal',
     productIds: ['to-buffet-copper-peptides', 'skinceuticals-ce-ferulic', 'to-glycolic-acid-7', 'cerave-pm-lotion'],
     rawInciText: ''
   },
   {
     id: 'acne-rx-bpo-tretinoin',
-    label: 'Acne Rx Tretinoin + Benzoyl Peroxide Stack',
-    badge: 'OXIDATIVE DEGRADATION + PORE-CLOGGING VEHICLE',
+    label: 'Tretinoin / Retinol + Benzoyl Peroxide',
+    badge: 'WEAKENS RETINOL · WASH AM, RETINOL PM',
     skinType: 'oily',
     productIds: ['rx-tretinoin-005', 'lrp-effaclar-duo-bpo', 'paulas-choice-2-bha', 'cerave-pm-lotion'],
     rawInciText: ''
   },
   {
     id: 'glass-skin-recovery',
-    label: 'Glass-Skin Barrier Recovery Protocol (Safe Benchmark)',
-    badge: '96/100 OPTIMAL BARRIER SYNERGY',
+    label: 'Gentle Barrier Repair & Glow Routine',
+    badge: '96/100 SAFE GLOW · BARRIER FRIENDLY',
     skinType: 'sensitive',
     productIds: ['anua-heartleaf-77-toner', 'cosrx-snail-96-mucin', 'dieux-instant-angel', 'boj-relief-sun-spf50'],
     rawInciText: ''
