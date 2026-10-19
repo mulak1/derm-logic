@@ -402,8 +402,8 @@ function renderHeader(hideNav = false) {
           <a href="/leaderboard" style="font-weight:700;color:var(--sage-safe);">🏆 Leaderboard</a>
           <a href="/directory">60+ Layering Guides</a>
         </nav>
-        <a href="/#analyzer" class="btn-primary">
-          <span>Audit My Shelf</span>
+        <a href="/buy/micro_pass?source=nav_cta" class="btn-primary">
+          <span>Unlock 3-File Pack ($1.99)</span>
           <span class="btn-icon-circle">↗</span>
         </a>
       </div>
@@ -593,41 +593,41 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     <div id="checkoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
       <div class="modal-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <span class="eyebrow-pill mono" style="margin:0;" id="modalBanditBadge">BESPOKE RITUAL PASS</span>
+          <span class="eyebrow-pill mono" style="margin:0;" id="modalBanditBadge">PHASE 3 PUREST PATH • $1.99 STRIPE EXPRESS</span>
           <button type="button" class="btn-secondary" style="padding:5px 12px;" onclick="closeCheckoutModal()">Close</button>
         </div>
-        <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.65rem;margin-bottom:6px;">Save Your Personalized AM/PM Glow Schedule &amp; Phone Wallpaper Card</h3>
+        <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.65rem;margin-bottom:6px;">Unlock Your Complete 3-File AM/PM Glow Schedule &amp; 9:16 Phone Card ($1.99)</h3>
         <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:16px;">
-          Includes your printable 4-Night Skin-Cycling calendar, ingredient pH compatibility breakdown, and 9:16 phone lockscreen guide.
+          Includes your printable 4-Night Skin-Cycling calendar (.ICS), ingredient pH compatibility matrix (.CSV), and 9:16 phone lockscreen card.
         </p>
-        <form id="checkoutForm" onsubmit="submitSelfServeCheckout(event)">
-          <input type="hidden" id="checkoutPlanId" value="onetime_499" />
-          <input type="text" name="website_hp" id="checkoutHoneypot" style="display:none !important" tabindex="-1" autocomplete="off" />
-          <div style="margin-bottom:12px;">
-            <label class="field-label" for="checkoutEmailInput">Where Should We Send Your Ritual Pass &amp; PDF?</label>
-            <input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="patient@dermlogic.io" />
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
-            <label class="prod-check-item selected" id="planOption499" onclick="selectCheckoutPlan('onetime_499')">
-              <input type="radio" name="planChoice" value="onetime_499" checked />
-              <span>
-                <strong style="display:block;">$4.99 One-Time Ritual Pass</strong>
-                <span style="color:var(--text-secondary);font-size:0.8125rem;">AM/PM PDF + 9:16 Vanity Card</span>
-              </span>
-            </label>
-            <label class="prod-check-item" id="planOption1999" onclick="selectCheckoutPlan('annual_1999')">
-              <input type="radio" name="planChoice" value="annual_1999" />
-              <span>
-                <strong style="display:block;">$19.99/yr Unlimited Vanity</strong>
-                <span style="color:var(--text-secondary);font-size:0.8125rem;">Unlimited INCI &amp; Pore-Safety Scans</span>
-              </span>
-            </label>
-          </div>
-          <button type="submit" id="checkoutSubmitBtn" class="btn-primary" style="width:100%;">
-            <span>Complete Instant Unlock ($4.99)</span>
+        <div style="margin-bottom:14px;">
+          <a href="/buy/flash_pass" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none;padding:13px 20px;font-size:0.95rem;">
+            <span>Unlock 3-File Ritual Pack ($1.99 Stripe Express)</span>
             <span class="btn-icon-circle">↗</span>
-          </button>
-        </form>
+          </a>
+        </div>
+        <details style="font-size:0.84rem;color:var(--text-secondary);">
+          <summary style="cursor:pointer;font-weight:700;">Need Annual Unlimited Shelf Scans ($4.99–$19.99/yr)?</summary>
+          <form id="checkoutForm" onsubmit="submitSelfServeCheckout(event)" style="margin-top:10px;">
+            <input type="hidden" id="checkoutPlanId" value="onetime_499" />
+            <input type="text" name="website_hp" id="checkoutHoneypot" style="display:none !important" tabindex="-1" autocomplete="off" />
+            <div style="margin-bottom:10px;">
+              <label class="field-label" for="checkoutEmailInput">Work / Personal Email</label>
+              <input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="patient@dermlogic.io" />
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+              <label class="prod-check-item selected" id="planOption499" onclick="selectCheckoutPlan('onetime_499')">
+                <input type="radio" name="planChoice" value="onetime_499" checked />
+                <span><strong style="display:block;">$4.99 Ritual Pass</strong></span>
+              </label>
+              <label class="prod-check-item" id="planOption1999" onclick="selectCheckoutPlan('annual_1999')">
+                <input type="radio" name="planChoice" value="annual_1999" />
+                <span><strong style="display:block;">$19.99/yr Unlimited</strong></span>
+              </label>
+            </div>
+            <button type="submit" id="checkoutSubmitBtn" class="btn-secondary" style="width:100%;">Complete Plan Checkout ↗</button>
+          </form>
+        </details>
         <div id="checkoutSuccessBox" style="display:none;margin-top:16px;padding:14px;border-radius:12px;background:var(--sage-bg);border:1px solid var(--sage-border);color:var(--sage-safe);"></div>
       </div>
     </div>
@@ -788,8 +788,8 @@ function renderAnalysisResultHtml(res) {
             </div>
           </div>
           <div style="border-top:1px dashed var(--rose-pill-border);padding-top:10px;">
-            <button type="button" class="btn-primary" style="width:100%;font-size:0.84rem;padding:9px 12px;" onclick="openCheckoutModal('onetime_499')">
-              <span>Save Vanity Card ($4.99)</span>
+            <button type="button" class="btn-primary" style="width:100%;font-size:0.84rem;padding:9px 12px;" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass')}else{openCheckoutModal('onetime_499')}">
+              <span>Unlock 9:16 Card &amp; Ritual ($1.99)</span>
               <span class="btn-icon-circle" style="width:20px;height:20px;font-size:0.8125rem;">↗</span>
             </button>
           </div>
