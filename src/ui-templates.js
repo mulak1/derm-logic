@@ -836,7 +836,8 @@ const CLIENT_SCRIPT = `
     });
   }
   function applyPreset(presetId) {
-    const btn = document.querySelector('[data-preset-id="' + presetId + '"]');
+    const map = { 'copper-vitc-trap': 'copper-vitc-oxidation', 'acne-rx-clash': 'acne-rx-bpo-tretinoin', 'tiktok-viral-clash': 'viral-tiktok-destroyer', 'barrier-safe-gold': 'glass-skin-recovery' };
+    const btn = document.querySelector('[data-preset-id="' + (map[presetId] || presetId) + '"]');
     if (btn) applyRoutinePreset(btn);
   }
   function applyRoutinePreset(btn) {
