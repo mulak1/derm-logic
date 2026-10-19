@@ -53,15 +53,49 @@ function matchTokenToIngredient(token) {
   return null;
 }
 
+const GENERIC_PRODUCT_WORDS = new Set([
+  'acid', 'serum', 'cream', 'lotion', 'toner', 'gel', 'water', 'oil', 'skin', 'face',
+  'facial', 'treatment', 'with', 'plus', 'solution', 'suspension', 'moisturizer', 'cleanser', 'essence'
+]);
+
+function matchProductsFromText(rawText) {
+  if (!rawText || typeof rawText !== 'string') return [];
+  const lower = rawText.toLowerCase().replace(/['’]/g, '');
+  const matched = [];
+  for (const prod of CULT_PRODUCTS) {
+    const idNorm = prod.id.toLowerCase();
+    const brandNorm = prod.brand.toLowerCase().replace(/['’]/g, '');
+    const nameNorm = prod.name.toLowerCase().replace(/['’]/g, '');
+    const shortName = nameNorm.split('(')[0].trim();
+    const nameWords = shortName.split(/\s+/).filter((w) => w.length >= 4 && !GENERIC_PRODUCT_WORDS.has(w));
+    const twoWordKey = shortName.split(/\s+/).filter((w) => w.length >= 3).slice(0, 2).join(' ');
+    if (
+      lower.includes(idNorm) ||
+      lower.includes(shortName) ||
+      (brandNorm.length >= 4 && lower.includes(brandNorm) && nameWords.some((w) => lower.includes(w))) ||
+      (twoWordKey.length >= 8 && lower.includes(twoWordKey))
+    ) {
+      matched.push(prod);
+    }
+  }
+  return matched;
+}
+
 function analyzeRoutine(params = {}) {
   const startHr = process.hrtime.bigint();
   const skinType = params.skinType || 'combination';
   const productIds = Array.isArray(params.productIds) ? params.productIds : [];
   const rawInciText = typeof params.rawInciText === 'string' ? params.rawInciText.trim() : '';
 
-  const selectedProducts = productIds
-    .map((id) => PRODUCT_BY_ID.get(id))
-    .filter(Boolean);
+  const selectedProductMap = new Map();
+  for (const id of productIds) {
+    const prod = PRODUCT_BY_ID.get(id);
+    if (prod) selectedProductMap.set(prod.id, prod);
+  }
+  for (const prod of matchProductsFromText(rawInciText)) {
+    selectedProductMap.set(prod.id, prod);
+  }
+  const selectedProducts = Array.from(selectedProductMap.values());
 
   // Collect all active & functional ingredients with positional context
   const detectedMap = new Map(); // id -> { ingredient, sources: [], positionIndex, effectivePh, freeAcidPercent }
@@ -416,6 +450,58 @@ function analyzeRoutine(params = {}) {
   const schedule = buildDeterministicSchedule(detectedItems, selectedProducts, conflicts);
   const bandit = sampleBetaArm();
 
+  // Compute Personalized Shelf Dollar Value & Henderson-Hasselbalch Free-Acid Potency Loss
+  const totalShelfValueUsd = selectedProducts.length > 0
+    ? selectedProducts.reduce((sum, p) => sum + (Number(p.priceUsd) || 32), 0)
+    : Math.max(38, detectedItems.length * 34);
+
+  const conflictSourcesCrit = new Set();
+  const conflictSourcesMod = new Set();
+  for (const c of conflicts) {
+    if (c.severity === 'CRITICAL') {
+      conflictSourcesCrit.add(c.sourceA);
+      conflictSourcesCrit.add(c.sourceB);
+    } else {
+      conflictSourcesMod.add(c.sourceA);
+      conflictSourcesMod.add(c.sourceB);
+    }
+  }
+
+  let wastedShelfValueUsd = 0;
+  if (selectedProducts.length > 0) {
+    for (const p of selectedProducts) {
+      const label = `${p.brand} ${p.name}`;
+      if (conflictSourcesCrit.has(label)) {
+        wastedShelfValueUsd += Number(p.priceUsd) || 32;
+      } else if (conflictSourcesMod.has(label)) {
+        wastedShelfValueUsd += Math.round((Number(p.priceUsd) || 32) * 0.5);
+      }
+    }
+  } else if (conflicts.length > 0) {
+    wastedShelfValueUsd = Math.min(
+      totalShelfValueUsd,
+      conflicts.reduce((sum, c) => sum + (c.severity === 'CRITICAL' ? 68 : 34), 0)
+    );
+  }
+
+  const equilibriumSurfacePh = detectedItems.length > 0
+    ? Number((detectedItems.reduce((sum, d) => sum + d.effectivePh, 0) / detectedItems.length).toFixed(2))
+    : 5.5;
+
+  let freeAcidPotencyLossPct = 0;
+  for (const d of detectedItems) {
+    if (d.ingredient.pka != null && d.freeAcidPercent != null && equilibriumSurfacePh > d.effectivePh) {
+      const mixedFa = computeFreeAcidFraction(equilibriumSurfacePh, d.ingredient.pka);
+      const dropPct = Math.round(((d.freeAcidPercent - mixedFa) / Math.max(1, d.freeAcidPercent)) * 100);
+      if (dropPct > freeAcidPotencyLossPct) freeAcidPotencyLossPct = dropPct;
+    }
+  }
+  if (criticalCount > 0) {
+    freeAcidPotencyLossPct = Math.max(freeAcidPotencyLossPct, 78);
+  } else if (moderateCount > 0) {
+    freeAcidPotencyLossPct = Math.max(freeAcidPotencyLossPct, 42);
+  }
+
   const endHr = process.hrtime.bigint();
   const executionMs = Number((Number(endHr - startHr) / 1e6).toFixed(2));
 
@@ -428,7 +514,7 @@ function analyzeRoutine(params = {}) {
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       skinType,
-      JSON.stringify(productIds),
+      JSON.stringify(selectedProducts.map((p) => p.id)),
       rawInciText.slice(0, 500),
       compatibilityScore,
       barrierHazardIndex,
@@ -449,6 +535,11 @@ function analyzeRoutine(params = {}) {
     verdictLabel,
     skinType,
     executionMs,
+    totalShelfValueUsd,
+    wastedShelfValueUsd,
+    equilibriumSurfacePh,
+    freeAcidPotencyLossPct,
+    matchedProductIds: selectedProducts.map((p) => p.id),
     conflicts,
     comedogenicFlags,
     malasseziaFlags,
@@ -474,6 +565,51 @@ function analyzeRoutine(params = {}) {
     })),
     schedule,
     paywallOffer: bandit.selectedArm
+  };
+}
+
+function redactRoutineAnalysisForPreview(result) {
+  if (!result || typeof result !== 'object') return result;
+  return {
+    ...result,
+    previewLocked: true,
+    conflicts: (result.conflicts || []).map((c) => ({
+      ...c,
+      resolution: '🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Personalized AM/PM + 4-Night Skin-Cycling Calendar (/buy/flash_pass)]',
+      waitMinutes: null,
+      waitMinutesLocked: '🔒 Locked in Free Preview ($1.99 Ritual Pack)'
+    })),
+    schedule: result.schedule
+      ? {
+          ...result.schedule,
+          amSteps: (result.schedule.amSteps || []).map((s, idx) =>
+            idx === 0
+              ? s
+              : {
+                  ...s,
+                  title: '🔒 [LOCKED IN FREE PREVIEW — Unlock Exact AM Layering Sequence & Wait-Time Buffer ($1.99)]',
+                  wait: '🔒 Locked ($1.99)',
+                  locked: true
+                }
+          ),
+          pmCycling: (result.schedule.pmCycling || []).map((n, idx) =>
+            idx === 0
+              ? {
+                  ...n,
+                  steps: [
+                    n.steps && n.steps[0] ? n.steps[0] : 'pH 5.5 Cleanser',
+                    '🔒 [LOCKED IN FREE PREVIEW — Unlock Exact PM Active & Ceramide Sandwich Order ($1.99)]'
+                  ]
+                }
+              : {
+                  ...n,
+                  focus: '🔒 [LOCKED IN FREE PREVIEW — Unlock 4-Night Skin-Cycling Calendar ($1.99)]',
+                  steps: ['🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (/buy/flash_pass)]'],
+                  locked: true
+                }
+          )
+        }
+      : result.schedule
   };
 }
 
@@ -601,6 +737,7 @@ async function generateOptionalGeminiNote(analysisResult) {
 
 module.exports = {
   analyzeRoutine,
+  redactRoutineAnalysisForPreview,
   generateOptionalGeminiNote,
   INGREDIENT_BY_ID,
   PRODUCT_BY_ID

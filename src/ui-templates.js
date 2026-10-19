@@ -457,8 +457,9 @@ function renderFooter() {
   `;
 }
 
-function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds, initialRawInci }) {
+function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds, initialRawInci, initialSkinType }) {
   const selectedSet = new Set(initialProductIds || ['to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005', 'skinceuticals-ce-ferulic']);
+  const currentSkin = initialSkinType || (initialAnalysis && initialAnalysis.skinType) || 'combination';
 
   const presetButtonsHtml = presets.map((p, idx) => `
     <button type="button" class="preset-chip ${idx === 0 ? 'active' : ''}" data-preset-id="${escapeHtml(p.id)}" data-products='${JSON.stringify(p.productIds)}' data-skin="${escapeHtml(p.skinType)}" onclick="applyRoutinePreset(this)">
@@ -497,12 +498,24 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             ${presetButtonsHtml}
           </div>
 
-          <div style="margin-bottom:14px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
-              <label class="field-label" for="rawInciTextarea" style="margin:0;">2. Paste Any Product's Ingredient List (or Pick Products Below)</label>
-              <button type="button" class="btn-secondary" style="padding:4px 12px;font-size:0.8125rem;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Example</button>
+          <div style="display:grid;grid-template-columns:1fr 205px;gap:10px;margin-bottom:12px;align-items:end;">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+                <label class="field-label" for="rawInciTextarea" style="margin:0;">2. Type Product Names or Paste Ingredient List</label>
+                <button type="button" class="btn-secondary" style="padding:3px 10px;font-size:0.8125rem;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Example</button>
+              </div>
+              <textarea id="rawInciTextarea" class="textarea-box mono" rows="2" placeholder="e.g., SkinCeuticals C E Ferulic + The Ordinary Copper Peptides, or Aqua, Ascorbic Acid, Glycolic Acid...">${escapeHtml(initialRawInci || '')}</textarea>
             </div>
-            <textarea id="rawInciTextarea" class="textarea-box mono" rows="2" placeholder="e.g., Aqua, Ascorbic Acid, Copper Tripeptide-1, Glycolic Acid, Isopropyl Myristate, Polysorbate 20...">${escapeHtml(initialRawInci || '')}</textarea>
+            <div>
+              <label class="field-label" for="skinTypeSelect">3. Your Skin Type</label>
+              <select id="skinTypeSelect" class="input-box" onchange="runRoutineAnalysis()">
+                <option value="combination" ${currentSkin === 'combination' ? 'selected' : ''}>Combination / Dewy</option>
+                <option value="sensitive" ${currentSkin === 'sensitive' ? 'selected' : ''}>Sensitive / Redness-Prone</option>
+                <option value="oily" ${currentSkin === 'oily' ? 'selected' : ''}>Oily / Breakout-Prone</option>
+                <option value="dry" ${currentSkin === 'dry' ? 'selected' : ''}>Dry / Damaged Barrier</option>
+                <option value="normal" ${currentSkin === 'normal' ? 'selected' : ''}>Normal / Balanced</option>
+              </select>
+            </div>
           </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
@@ -514,22 +527,10 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           </div>
 
           <details style="margin-bottom:14px;padding:10px 12px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);">
-            <summary style="cursor:pointer;font-size:0.86rem;font-weight:700;color:var(--text-primary);">🧴 Optional: Pick from ${products.length} Popular Products (Rhode, SkinCeuticals, The Ordinary) &amp; Skin Type ▾</summary>
-            <div class="filter-profile-grid" style="display:grid;grid-template-columns:1fr 185px;gap:10px;margin:10px 0;">
-              <div>
-                <label class="field-label" for="productFilterInput">Search ${products.length} Formulas</label>
-                <input id="productFilterInput" type="search" class="input-box" placeholder="Search Rhode, SkinCeuticals, Paula's Choice, Tretinoin..." oninput="filterProductList(this.value)" />
-              </div>
-              <div>
-                <label class="field-label" for="skinTypeSelect">Your Skin Type</label>
-                <select id="skinTypeSelect" class="input-box" onchange="runRoutineAnalysis()">
-                  <option value="combination">Combination / Dewy</option>
-                  <option value="sensitive">Sensitive / Redness-Prone</option>
-                  <option value="oily">Oily / Breakout-Prone</option>
-                  <option value="dry">Dry / Damaged Barrier</option>
-                  <option value="normal">Normal / Balanced</option>
-                </select>
-              </div>
+            <summary style="cursor:pointer;font-size:0.86rem;font-weight:700;color:var(--text-primary);">🧴 Optional: Browse &amp; Check from ${products.length} Cult Formulas (Rhode, SkinCeuticals, The Ordinary) ▾</summary>
+            <div style="margin:10px 0;">
+              <label class="field-label" for="productFilterInput">Search ${products.length} Formulas</label>
+              <input id="productFilterInput" type="search" class="input-box" placeholder="Search Rhode, SkinCeuticals, Paula's Choice, Tretinoin..." oninput="filterProductList(this.value)" />
             </div>
             <div class="product-selector-grid" id="productSelectorGrid">
               ${productCheckboxesHtml}
@@ -715,9 +716,9 @@ function renderAnalysisResultHtml(res) {
 
   return `
     <div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
         <span class="${badgeClass} mono">${escapeHtml(res.verdictLabel)}</span>
-        <span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">Analyzed in ${res.executionMs}ms</span>
+        <span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">Surface Mix pH ${res.equilibriumSurfacePh || 5.5} · ${res.executionMs}ms</span>
       </div>
 
       <div class="score-strip">
@@ -730,9 +731,13 @@ function renderAnalysisResultHtml(res) {
           <div class="metric-val" style="color:${res.barrierHazardIndex > 50 ? 'var(--berry-clash)' : 'var(--sage-safe)'};">${res.barrierHazardIndex}<span style="font-size:0.95rem;color:var(--text-secondary);">/100</span></div>
         </div>
         <div class="metric-box">
-          <div style="font-size:0.8125rem;color:var(--text-secondary);font-weight:500;">Pore-Clog Load</div>
-          <div class="metric-val" style="color:${res.comedogenicLoad > 35 ? 'var(--honey-warn)' : 'var(--sage-safe)'};">${res.comedogenicLoad}<span style="font-size:0.95rem;color:var(--text-secondary);">/100</span></div>
+          <div style="font-size:0.8125rem;color:var(--text-secondary);font-weight:500;">Shelf Value Wasted</div>
+          <div class="metric-val" style="color:${(res.wastedShelfValueUsd || 0) > 0 ? 'var(--berry-clash)' : 'var(--sage-safe)'};" id="wastedShelfValueReadout">$${res.wastedShelfValueUsd || 0}<span style="font-size:0.84rem;color:var(--text-secondary);">/$${res.totalShelfValueUsd || 248}</span></div>
         </div>
+      </div>
+      <div style="margin-bottom:10px;padding:7px 11px;border-radius:9px;background:${(res.wastedShelfValueUsd || 0) > 0 ? 'rgba(181,56,82,0.08)' : 'var(--sage-bg)'};border:1px solid ${(res.wastedShelfValueUsd || 0) > 0 ? 'rgba(181,56,82,0.24)' : 'var(--sage-border)'};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:0.8125rem;">
+        <span class="mono" style="font-weight:700;color:${(res.wastedShelfValueUsd || 0) > 0 ? 'var(--berry-clash)' : 'var(--sage-safe)'};">${(res.wastedShelfValueUsd || 0) > 0 ? `💸 $${res.wastedShelfValueUsd} of your $${res.totalShelfValueUsd} shelf neutralized on contact (-${res.freeAcidPotencyLossPct || 0}% active potency)` : `✓ $0 wasted across $${res.totalShelfValueUsd || 110} shelf · 100% active bioavailability`}</span>
+        <span class="mono" style="color:var(--text-secondary);">Pore-Clog Load: ${res.comedogenicLoad}/100</span>
       </div>
 
       <div style="font-size:0.84rem;color:var(--text-secondary);display:flex;justify-content:space-between;flex-wrap:wrap;">
@@ -852,7 +857,7 @@ const CLIENT_SCRIPT = `
       const lbl = cb.closest('.prod-check-item');
       if (lbl) lbl.classList.toggle('selected', cb.checked);
     });
-    runRoutineAnalysis();
+    runRoutineAnalysis(btn.getAttribute('data-preset-id'));
   }
   function pasteSampleComedogenicInci() {
     const el = document.getElementById('rawInciTextarea');
@@ -871,10 +876,18 @@ const CLIENT_SCRIPT = `
     if (el) el.value = '';
     runRoutineAnalysis();
   }
-  async function runRoutineAnalysis() {
+  async function runRoutineAnalysis(presetSlug) {
     const checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map((cb) => cb.value);
     const skinType = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
     const rawInciText = (document.getElementById('rawInciTextarea') || {}).value || '';
+    try {
+      const u = new URL(window.location.href);
+      if (presetSlug) u.searchParams.set('preset', presetSlug);
+      u.searchParams.set('skin', skinType);
+      if (checked.length) u.searchParams.set('products', checked.join(',')); else u.searchParams.delete('products');
+      if (rawInciText.trim()) u.searchParams.set('inci', rawInciText.trim().slice(0, 160)); else u.searchParams.delete('inci');
+      window.history.replaceState({}, '', u.pathname + u.search);
+    } catch (_) {}
     const btn = document.getElementById('analyzeBtn');
     if (btn) btn.innerHTML = '<span>Analyzing ΔpH Harmony...</span><span class="btn-icon-circle">↗</span>';
     try {
@@ -891,7 +904,7 @@ const CLIENT_SCRIPT = `
     } catch (e) {
       console.error('Routine analysis error:', e);
     } finally {
-      if (btn) btn.innerHTML = '<span>Analyze Routine Harmony</span><span class="btn-icon-circle">↗</span>';
+      if (btn) btn.innerHTML = '<span>Check My Routine Compatibility</span><span class="btn-icon-circle">↗</span>';
     }
   }
   function openCheckoutModal(planId) {

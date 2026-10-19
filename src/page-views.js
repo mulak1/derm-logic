@@ -57,7 +57,7 @@ function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdO
 </html>`;
 }
 
-function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPages }) {
+function renderHomePage({ products, ingredients, presets, initialAnalysis, initialProductIds, initialRawInci, initialSkinType, seoPages }) {
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -67,7 +67,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
       operatingSystem: 'Web',
       offers: {
         '@type': 'Offer',
-        price: '4.99',
+        price: '1.99',
         priceCurrency: 'USD'
       },
       description: 'Clinical skincare active-ingredient conflict, ΔpH inactivation, pKa free-acid, comedogenic load & barrier-safety ritual planner.'
@@ -170,8 +170,9 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, seoPa
           products,
           presets,
           initialAnalysis,
-          initialProductIds: presets[0].productIds,
-          initialRawInci: ''
+          initialProductIds: initialProductIds || presets[0].productIds,
+          initialRawInci: initialRawInci || '',
+          initialSkinType: initialSkinType || presets[0].skinType
         })}
       </div>
     </section>
@@ -500,7 +501,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
       name: 'DermLogic Routine Conflict Analyzer',
       applicationCategory: 'HealthApplication',
       operatingSystem: 'Web',
-      offers: { '@type': 'Offer', price: '4.99', priceCurrency: 'USD' }
+      offers: { '@type': 'Offer', price: '1.99', priceCurrency: 'USD' }
     }
   ];
 
@@ -512,7 +513,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
       <td class="mono">${ing.molecularWeightDa} Da</td>
       <td><span class="${ing.comedogenicity >= 3 ? 'badge-clash' : 'badge-safe'} mono">${ing.comedogenicity}/5</span></td>
       <td><span class="${ing.malasseziaTrigger ? 'badge-warn' : 'badge-safe'} mono">${ing.malasseziaTrigger ? 'No (Trigger)' : 'Yes (Safe)'}</span></td>
-      <td style="font-size:0.81rem;color:var(--text-secondary);">${escapeHtml(getRoutineSlotRecommendation(ing))}</td>
+      <td style="font-size:0.81rem;color:var(--text-secondary);"><a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 Locked in Free Preview ($1.99 Ritual Pack)</a></td>
     </tr>
   `).join('');
 
@@ -550,15 +551,15 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <div class="bento-cell tinted">
             <div class="mono" style="font-size:0.8125rem;color:var(--rose-brand);font-weight:700;margin-bottom:4px;">FORMULATION CHEMISTRY</div>
             <div class="serif-display" style="font-size:1.2rem;font-weight:700;margin-bottom:6px;">${escapeHtml(page.conflictType)}</div>
-            <p style="font-size:0.83rem;color:var(--text-secondary);">Recommended Spacing: <strong class="mono" style="color:var(--text-primary);">${page.waitTimeMinutes >= 720 ? 'Separate AM Morning vs. PM Night' : `${page.waitTimeMinutes} Minutes`}</strong></p>
+            <p style="font-size:0.83rem;color:var(--text-secondary);">Recommended Spacing: <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 [LOCKED IN FREE PREVIEW — Unlock Exact Wait-Time Buffer ($1.99)]</a></p>
           </div>
           <div class="bento-cell">
             <div class="mono" style="font-size:0.8125rem;color:var(--sage-safe);font-weight:700;margin-bottom:4px;">AM MORNING GLOW RITUAL</div>
-            <p style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(page.amRule)}</p>
+            <p style="font-size:0.86rem;color:var(--text-secondary);">Step 1: Gentle pH 5.5 Cleanse &rarr; <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 [LOCKED IN FREE PREVIEW — Unlock Exact AM Layering Sequence ($1.99)]</a></p>
           </div>
           <div class="bento-cell">
             <div class="mono" style="font-size:0.8125rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;">PM BARRIER REPAIR RITUAL</div>
-            <p style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(page.pmRule)}</p>
+            <p style="font-size:0.86rem;color:var(--text-secondary);">Night 1 Preview &rarr; <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 [LOCKED IN FREE PREVIEW — Unlock 4-Night Skin-Cycling Calendar ($1.99)]</a></p>
           </div>
         </div>
 
