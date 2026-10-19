@@ -835,6 +835,10 @@ const CLIENT_SCRIPT = `
       el.style.display = (!q || el.textContent.toLowerCase().includes(q)) ? 'flex' : 'none';
     });
   }
+  function applyPreset(presetId) {
+    const btn = document.querySelector('[data-preset-id="' + presetId + '"]');
+    if (btn) applyRoutinePreset(btn);
+  }
   function applyRoutinePreset(btn) {
     document.querySelectorAll('#presetButtonsRow .preset-chip').forEach((b) => b.classList.remove('active'));
     btn.classList.add('active');
