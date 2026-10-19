@@ -251,7 +251,7 @@ const SHARED_CSS = `
     border-radius: var(--radius-shell); padding: 24px; box-shadow: var(--shadow-luxury);
   }
   .preset-row { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 18px; }
-  @media (max-width: 640px) { .preset-row { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .preset-row { grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; } .preset-chip { padding: 7px 9px !important; } .product-selector-grid { max-height: 155px !important; } }
   .preset-chip {
     background: var(--bg-canvas); border: 1px solid var(--border-hairline); border-radius: 14px;
     padding: 10px 13px; font-size: 0.85rem; cursor: pointer; text-align: left;
