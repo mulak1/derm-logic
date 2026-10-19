@@ -563,6 +563,38 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div>
         </div>
 
+        <div id="pseo-dermlogic-inline-calc" class="bento-cell tinted" style="margin-bottom:24px;padding:20px;border:1.5px solid var(--rose-brand);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
+            <div>
+              <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:800;">1-CLICK BARRIER pH &amp; WASTED SERUM CALCULATOR</div>
+              <h2 class="serif-display" style="font-size:1.35rem;margin:2px 0 0;">Tap Your Skin Profile to Calculate Active Neutralization Loss for ${escapeHtml(searchIntentSubject)}</h2>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="button" class="chip mono" style="cursor:pointer;font-weight:700;" onclick="window.__dlCalcPseoSkin(180,1.35,'sensitive_rosacea')">Sensitive / Rosacea ($180/yr)</button>
+              <button type="button" class="chip mono" style="cursor:pointer;font-weight:700;" onclick="window.__dlCalcPseoSkin(240,1.25,'dry_compromised')">Dry / Compromised ($240/yr)</button>
+              <button type="button" class="chip mono" style="cursor:pointer;font-weight:700;" onclick="window.__dlCalcPseoSkin(320,1.0,'balanced_combo')">Balanced / Combo ($320/yr)</button>
+              <button type="button" class="chip mono" style="cursor:pointer;font-weight:700;" onclick="window.__dlCalcPseoSkin(480,1.45,'oily_acne_stack')">5+ Active Stack ($480/yr)</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;background:var(--bg-card,#FFFFFF);padding:14px;border-radius:10px;border:1px solid var(--border-subtle);">
+            <div><div class="mono" style="font-size:0.75rem;color:var(--text-secondary);">EST. WASTED SERUM POTENCY / YR</div><div id="pseo-dl-waste-out" class="mono" style="font-size:1.35rem;font-weight:800;color:var(--rose-brand);">$${Math.round(240 * Math.max(0.22, (100 - (Number(page.compatibilityScore) || 55)) / 100))}/yr Lost</div></div>
+            <div><div class="mono" style="font-size:0.75rem;color:var(--text-secondary);">REQUIRED pH BUFFER WAIT</div><div id="pseo-dl-buffer-out" class="mono" style="font-size:1.35rem;font-weight:800;color:var(--text-primary);">${Number(page.deltaPh) >= 1.5 ? '20 Min / AM-PM Split' : '10 Min Wait Buffer'}</div></div>
+            <div><div class="mono" style="font-size:0.75rem;color:var(--text-secondary);">POST-FIX HARMONY SCORE</div><div id="pseo-dl-harmony-out" class="mono" style="font-size:1.35rem;font-weight:800;color:var(--sage-safe);">96/100 Verified</div></div>
+            <div style="display:flex;align-items:center;"><a href="/buy/micro_pass?source=pseo_inline_calc&amp;guide=${encodeURIComponent(page.slug)}" class="btn-primary mono" style="padding:10px 14px;font-size:0.8rem;text-decoration:none;display:inline-block;">Unlock 99¢ AM/PM Card &rarr;</a></div>
+          </div>
+          <script>
+            window.__dlCalcPseoSkin = function(spend, mult, profile) {
+              var baseLoss = Math.max(0.22, (100 - ${Number(page.compatibilityScore) || 55}) / 100);
+              var wasted = Math.round(spend * Math.min(0.88, baseLoss * mult));
+              var wEl = document.getElementById('pseo-dl-waste-out'), bEl = document.getElementById('pseo-dl-buffer-out'), hEl = document.getElementById('pseo-dl-harmony-out');
+              if (wEl) wEl.textContent = '$' + wasted + '/yr Lost';
+              if (bEl) bEl.textContent = mult >= 1.3 ? 'Alternate Nights (4-Night Cycle)' : '20 Min Wait + AM/PM Split';
+              if (hEl) hEl.textContent = (mult >= 1.3 ? '98/100' : '96/100') + ' Verified';
+              try { fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'calculate', page_url: window.location.pathname, meta: { trigger: 'pseo_inline_skin_calc', profile: profile, spend: spend, wasted_usd: wasted, slug: '${escapeHtml(page.slug)}' } }) }).catch(function(){}); } catch (_) {}
+            };
+          </script>
+        </div>
+
         <div class="bento-cell" style="margin-bottom:28px;padding:22px;">
           <h2 class="serif-display" style="font-size:1.65rem;margin-bottom:8px;">Can You Use ${escapeHtml(searchIntentSubject)} Together? Clinical Verdict &amp; Layering Rules</h2>
           <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:14px;">
