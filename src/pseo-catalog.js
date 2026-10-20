@@ -1,7 +1,15 @@
 /**
- * DermLogic (#4): Day-1 Programmatic SEO (pSEO) Catalog (60 High-Intent Clinical Pages)
- * 36 Active-Ingredient Pair Compatibility Matrices + 24 Cult-Product INCI Teardowns.
+ * DermLogic (#4): Day-1 Programmatic SEO (pSEO) Catalog (Expanded Clinical Pages)
+ * 36 Active-Ingredient Pair Compatibility Matrices + 24 Cult-Product INCI Teardowns + Search Console Expansions.
  */
+
+let EXPANDED_PAIR_SEEDS = [];
+let EXPANDED_PRODUCT_SEEDS = [];
+try {
+  const exp = require('./pseo-catalog-expanded');
+  EXPANDED_PAIR_SEEDS = exp.EXPANDED_PAIR_SEEDS || [];
+  EXPANDED_PRODUCT_SEEDS = exp.EXPANDED_PRODUCT_SEEDS || [];
+} catch (_) {}
 
 const PAIR_SEO_SEEDS = [
   {
@@ -729,7 +737,7 @@ function formatMetaDescription(rawText, maxLen = 155) {
 function buildSeoPagesCatalog(ingredientsMap, productsMap) {
   const pages = [];
 
-  for (const item of PAIR_SEO_SEEDS) {
+  for (const item of [...PAIR_SEO_SEEDS, ...EXPANDED_PAIR_SEEDS]) {
     const ingA = ingredientsMap.get(item.activeA);
     const ingB = ingredientsMap.get(item.activeB);
     const baseSummary = item.summary.length < 115
@@ -775,7 +783,7 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
     });
   }
 
-  for (const item of PRODUCT_SEO_SEEDS) {
+  for (const item of [...PRODUCT_SEO_SEEDS, ...EXPANDED_PRODUCT_SEEDS]) {
     const prod = productsMap.get(item.productId);
     const primaryIngs = (prod ? prod.primaryActives : []).map((id) => ingredientsMap.get(id)).filter(Boolean);
     const companionIngs = (item.companionProductIds || [])

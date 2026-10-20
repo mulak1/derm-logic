@@ -502,7 +502,25 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
       applicationCategory: 'HealthApplication',
       operatingSystem: 'Web',
       offers: { '@type': 'Offer', price: '1.99', priceCurrency: 'USD' }
-    }
+    },
+    ...(page.amRule && page.pmRule ? [{
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: `How to layer ${searchIntentSubject}`,
+      description: page.metaDescription,
+      step: [
+        {
+          '@type': 'HowToStep',
+          name: 'Morning (AM) Protocol',
+          text: page.amRule
+        },
+        {
+          '@type': 'HowToStep',
+          name: 'Evening (PM) Protocol',
+          text: page.pmRule
+        }
+      ]
+    }] : [])
   ];
 
   const comparisonRowsHtml = comparedActives.map((ing) => `
