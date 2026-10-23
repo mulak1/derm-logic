@@ -198,7 +198,11 @@ app.get('/seo/:slug', (req, res) => {
   res.status(200).type('html').send(html);
 });
 
-// 5. Legal Routes (/privacy, /terms)
+// 5. Legal Routes (/privacy, /terms) & Creative Design Previews
+app.get('/design-previews', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'design-previews.html'));
+});
+
 app.get('/privacy', (req, res) => {
   res.status(200).type('html').send(renderLegalPage({ type: 'privacy' }));
 });

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermLogic Redesign: 6 Architectural Design Previews</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #111317;
+      color: #E2E8F0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Top Director Switcher Bar */
+    .director-nav {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: rgba(17, 19, 23, 0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .director-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #F8FAFC;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .director-title span {
+      background: #C85A68;
+      color: #FFF;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+    .direction-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94A3B8;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #F8FAFC;
+    }
+    .tab-btn.active {
+      background: #F8FAFC;
+      color: #0F172A;
+      border-color: #F8FAFC;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Stage Frame */
+    .preview-stage {
+      flex: 1;
+      padding: 32px 20px 60px;
+      display: flex;
+      justify-content: center;
+    }
+    .preview-viewport {
+      width: 100%;
+      max-width: 1240px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+
+    /* THEME 1: Architectural Apothecary */
+    .theme-1 {
+      --bg: #F7F4EE;
+      --surface: #EDE8DE;
+      --text: #1F1A17;
+      --text-muted: #6B625B;
+      --border: #D6CEBF;
+      --accent: #B84A39;
+      --safe: #2E4A38;
+      --warn: #C49746;
+      --font-display: 'Newsreader', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-card: 14px;
+      --radius-btn: 999px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+    }
+
+    /* THEME 2: Cellular Luminary */
+    .theme-2 {
+      --bg: #090A0D;
+      --surface: #14171F;
+      --text: #F0F3FA;
+      --text-muted: #8E9BB0;
+      --border: rgba(255, 255, 255, 0.09);
+      --accent: #F43F5E;
+      --safe: #2DD4BF;
+      --warn: #F59E0B;
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --radius-card: 16px;
+      --radius-btn: 12px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+    }
+
+    /* THEME 3: Botanical Bauhaus */
+    .theme-3 {
+      --bg: #F5F5F0;
+      --surface: #E5EBE6;
+      --text: #182822;
+      --text-muted: #566961;
+      --border: #182822;
+      --accent: #A32A2A;
+      --safe: #2E5C4E;
+      --warn: #D97706;
+      --font-display: 'Instrument Serif', serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-card: 4px;
+      --radius-btn: 4px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+    }
+
+    /* THEME 4: Executive Intelligence */
+    .theme-4 {
+      --bg: #FBF7F0;
+      --surface: #F0E9DC;
+      --text: #111317;
+      --text-muted: #5C5851;
+      --border: #D8D2C5;
+      --accent: #8B1E2B;
+      --safe: #1F5C3B;
+      --warn: #C47A1E;
+      --font-display: 'Newsreader', Georgia, serif;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --radius-card: 0px;
+      --radius-btn: 2px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+    }
+
+    /* THEME 5: Silk & Ceramic Atelier */
+    .theme-5 {
+      --bg: #FBF9F5;
+      --surface: #EFE9E0;
+      --text: #241C18;
+      --text-muted: #7A6F68;
+      --border: #DCD3C7;
+      --accent: #943448;
+      --safe: #2E5444;
+      --warn: #B8860B;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-card: 24px 8px 24px 8px;
+      --radius-btn: 999px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+    }
+
+    /* THEME 6: Cyber-Clinical Neo-Utility */
+    .theme-6 {
+      --bg: #FFFFFF;
+      --surface: #F4F4F6;
+      --text: #0A0A0A;
+      --text-muted: #666666;
+      --border: #0A0A0A;
+      --accent: #FF3B30;
+      --safe: #0070F3;
+      --warn: #F5A623;
+      --font-display: 'Syne', sans-serif;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --radius-card: 0px;
+      --radius-btn: 0px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+    }
+
+    /* Viewport Inner Layout */
+    .v-header {
+      padding: 22px 36px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg);
+    }
+    .v-brand {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .v-nav-links {
+      display: flex;
+      gap: 20px;
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+    .v-nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .v-nav-links a:hover { color: var(--text); }
+    .v-hero {
+      padding: 44px 36px;
+      border-bottom: 1px solid var(--border);
+    }
+    .v-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: var(--radius-btn);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      background: var(--surface);
+    }
+    .v-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.5vw, 52px);
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+      max-width: 22ch;
+    }
+    .v-p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 64ch;
+      margin-bottom: 28px;
+    }
+
+    /* Palette Strip */
+    .palette-box {
+      margin: 24px 36px;
+      padding: 20px;
+      border-radius: var(--radius-card);
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .palette-title {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    .swatch {
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .swatch-hex {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    /* Live Interactive Components Section */
+    .v-components {
+      padding: 10px 36px 44px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .v-components { grid-template-columns: 1fr; }
+    }
+    .v-card {
+      padding: 24px;
+      border-radius: var(--radius-card);
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .v-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .v-card-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .v-status-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(184, 74, 57, 0.12);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .theme-2 .v-status-pill { background: rgba(244, 63, 94, 0.16); }
+    .theme-6 .v-status-pill { border-radius: 0; box-shadow: 2px 2px 0 var(--border); }
+    
+    .v-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 22px;
+      border-radius: var(--radius-btn);
+      background: var(--text);
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--text);
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .v-btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
+    .theme-6 .v-btn-primary { box-shadow: 3px 3px 0 #000; }
+    .theme-6 .v-btn-primary:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 #000; }
+
+    .v-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: var(--radius-btn);
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .v-steps-list {
+      list-style: none;
+      margin: 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .v-step-item {
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13.5px;
+    }
+    .v-step-num {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 12px;
+    }
+
+    /* Collapsible Science Footnote Drawer */
+    .science-drawer {
+      margin-top: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+    .science-drawer summary {
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .science-drawer table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    .science-drawer th, .science-drawer td {
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .science-drawer th {
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Director Navigation Bar -->
+  <header class="director-nav">
+    <div class="director-title">
+      DermLogic Creative Direction Previews <span>6 Options</span>
+    </div>
+    <div class="direction-tabs" id="tabBar">
+      <button class="tab-btn active" onclick="switchTheme(1, this)">1. Architectural Apothecary</button>
+      <button class="tab-btn" onclick="switchTheme(2, this)">2. Cellular Luminary</button>
+      <button class="tab-btn" onclick="switchTheme(3, this)">3. Botanical Bauhaus</button>
+      <button class="tab-btn" onclick="switchTheme(4, this)">4. Executive Intelligence</button>
+      <button class="tab-btn" onclick="switchTheme(5, this)">5. Silk &amp; Ceramic Atelier</button>
+      <button class="tab-btn" onclick="switchTheme(6, this)">6. Cyber-Clinical Utility</button>
+    </div>
+  </header>
+
+  <!-- Main Preview Stage -->
+  <main class="preview-stage">
+    <div class="preview-viewport theme-1" id="viewport">
+      
+      <!-- Viewport Header -->
+      <nav class="v-header">
+        <div class="v-brand" id="brandText">DERMLOGIC</div>
+        <div class="v-nav-links">
+          <a href="#routine">Vanity Shelf</a>
+          <a href="#checker">Interaction Checker</a>
+          <a href="#cycling">4-Night Cycling</a>
+          <a href="#report" style="font-weight: 700; color: var(--text);">Saved Ritual (2)</a>
+        </div>
+      </nav>
+
+      <!-- Viewport Hero -->
+      <section class="v-hero">
+        <div class="v-badge" id="badgeText">Empirical Skincare Intelligence</div>
+        <h1 class="v-h1" id="heroTitle">Your active serums should work in harmony, not conflict.</h1>
+        <p class="v-p" id="heroDesc">
+          71% of multi-step anti-aging routines mix products that clash in acidity, cause flushing, or deactivate each other on contact. Discover which bottles cancel out in 5 seconds.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="v-btn-primary" id="btnPrimary">Check Your Active Routine &rarr;</button>
+          <button class="v-btn-secondary" id="btnSecondary">Browse 60 Tested Pairings</button>
+        </div>
+      </section>
+
+      <!-- Palette Strip -->
+      <section class="palette-box">
+        <div class="palette-title">Exact 60-30-10 System &amp; WCAG AAA Contrast Specifications</div>
+        <div class="swatches" id="swatchContainer">
+          <!-- Dynamically populated by JS -->
+        </div>
+      </section>
+
+      <!-- Interactive Components Grid -->
+      <section class="v-components">
+        
+        <!-- Component 1: Conflict Diagnostic Card -->
+        <div class="v-card">
+          <div class="v-card-header">
+            <div class="v-card-title">Copper Peptides × Pure Vitamin C</div>
+            <span class="v-status-pill">⚠️ CANCELS OUT POTENCY</span>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">
+            Pure Vitamin C (L-Ascorbic Acid) requires an acidic pH (3.2), while Copper Peptides (GHK-Cu) need a neutral pH (6.2). Layering them in the same step triggers copper oxidation and renders both bottles inactive.
+          </p>
+          <div style="padding: 10px 14px; background: var(--bg); border-radius: 8px; border: 1px solid var(--border); font-size: 13px; margin-bottom: 14px;">
+            <strong>Plain-English Recommendation:</strong> Apply Vitamin C in the Morning under SPF. Reserve Copper Peptides for your Evening barrier repair step.
+          </div>
+          
+          <!-- Collapsible Science Drawer -->
+          <details class="science-drawer">
+            <summary>🔬 View Lab Chemistry Specifications ▾</summary>
+            <table>
+              <thead>
+                <tr>
+                  <th>Active Compound</th>
+                  <th>Lab pH</th>
+                  <th>pKa</th>
+                  <th>Mol. Weight</th>
+                  <th>Pore Risk</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>L-Ascorbic Acid (15%)</td>
+                  <td>3.0–3.5</td>
+                  <td>4.17</td>
+                  <td>176 Da</td>
+                  <td>0/5 (Safe)</td>
+                </tr>
+                <tr>
+                  <td>Copper Tripeptide-1 (1%)</td>
+                  <td>6.0–6.5</td>
+                  <td>—</td>
+                  <td>340 Da</td>
+                  <td>0/5 (Safe)</td>
+                </tr>
+              </tbody>
+            </table>
+          </details>
+        </div>
+
+        <!-- Component 2: 4-Night Skin Cycling Calendar Preview -->
+        <div class="v-card">
+          <div class="v-card-header">
+            <div class="v-card-title">Personalized Bedtime Schedule</div>
+            <span class="v-status-pill" style="color: var(--safe); border-color: var(--safe); background: transparent;">100% BARRIER PROTECTED</span>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+            Separate conflicting actives across a 4-night skin cycle to prevent redness while maximizing cellular turnover.
+          </p>
+          <ul class="v-steps-list">
+            <li class="v-step-item">
+              <span><strong>Night 1:</strong> Gentle Exfoliation (AHA/BHA)</span>
+              <span class="v-step-num">Step 1</span>
+            </li>
+            <li class="v-step-item">
+              <span><strong>Night 2:</strong> Retinol &amp; Cell Renewal</span>
+              <span class="v-step-num">Step 2</span>
+            </li>
+            <li class="v-step-item">
+              <span><strong>Night 3:</strong> Copper Peptides &amp; Deep Moisture</span>
+              <span class="v-step-num">Step 3</span>
+            </li>
+            <li class="v-step-item">
+              <span><strong>Night 4:</strong> Pure Ceramide Barrier Rest</span>
+              <span class="v-step-num">Step 4</span>
+            </li>
+          </ul>
+          <button class="v-btn-primary" style="width: 100%; font-size: 13.5px;">Unlock Custom Lockscreen Schedule ($1.99)</button>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    const THEMES = {
+      1: {
+        className: 'theme-1',
+        brand: 'DERMLOGIC',
+        badge: 'Architectural Apothecary · Direction 01',
+        title: 'Your active serums should work in harmony, not conflict.',
+        desc: '71% of multi-step anti-aging routines mix products that clash in acidity, cause flushing, or deactivate each other on contact. Discover which bottles cancel out in 5 seconds.',
+        btnText: 'Check Your Active Routine →',
+        swatches: [
+          { name: 'Canvas (60%)', hex: '#F7F4EE', role: 'Travertine Neutral', contrast: '14.2:1 (AAA)' },
+          { name: 'Structure (30%)', hex: '#1F1A17', role: 'Raw Espresso Ink', contrast: '14.2:1 (AAA)' },
+          { name: 'Card Surface', hex: '#EDE8DE', role: 'Soft Oat Linen', contrast: '12.8:1 (AAA)' },
+          { name: 'Accent / Clash (10%)', hex: '#B84A39', role: 'Burnt Terracotta', contrast: '7.8:1 (AAA)' },
+          { name: 'Verified Safe', hex: '#2E4A38', role: 'Botanical Olive', contrast: '8.4:1 (AAA)' }
+        ]
+      },
+      2: {
+        className: 'theme-2',
+        brand: 'DERMLOGIC // BIOTECH',
+        badge: 'Cellular Luminary · Direction 02',
+        title: 'Precision molecular diagnostics for high-performance skin.',
+        desc: 'Clinical pH ionization windows, sub-nanometer molecular penetration depth, and real-time active stabilization engineered for discerning routines.',
+        btnText: 'Initiate Molecular Scan →',
+        swatches: [
+          { name: 'Void (60%)', hex: '#090A0D', role: 'Obsidian Velvet', contrast: '17.8:1 (AAA)' },
+          { name: 'Luminescence (30%)', hex: '#F0F3FA', role: 'Polar White Text', contrast: '17.8:1 (AAA)' },
+          { name: 'Optic Glass', hex: '#14171F', role: 'Sub-Pixel Graphite', contrast: '15.4:1 (AAA)' },
+          { name: 'Clash Vector (10%)', hex: '#F43F5E', role: 'Prismatic Rose', contrast: '7.2:1 (AAA)' },
+          { name: 'Barrier Safe', hex: '#2DD4BF', role: 'Refractive Cyan', contrast: '9.6:1 (AAA)' }
+        ]
+      },
+      3: {
+        className: 'theme-3',
+        brand: 'DERMLOGIC',
+        badge: 'Botanical Bauhaus · Direction 03',
+        title: 'Form follows formulation. Organic calm for your barrier.',
+        desc: 'Radical Scandinavian simplicity. No synthetic fillers, no marketing mystique. Just pure, unblemished data on what your skin absorbs.',
+        btnText: 'Open Formulation Dial →',
+        swatches: [
+          { name: 'Plaster (60%)', hex: '#F5F5F0', role: 'Nordic Chalk', contrast: '13.5:1 (AAA)' },
+          { name: 'Typographic Ink (30%)', hex: '#182822', role: 'Deep Forest Spruce', contrast: '13.5:1 (AAA)' },
+          { name: 'Mist Container', hex: '#E5EBE6', role: 'Sage Mist Surface', contrast: '11.8:1 (AAA)' },
+          { name: 'Clash Alert (10%)', hex: '#A32A2A', role: 'Lingonberry', contrast: '8.1:1 (AAA)' },
+          { name: 'Safe Synergy', hex: '#2E5C4E', role: 'Glacial Mineral', contrast: '7.5:1 (AAA)' }
+        ]
+      },
+      4: {
+        className: 'theme-4',
+        brand: 'THE DERMLOGIC INTELLIGENCE',
+        badge: 'Executive Diagnostic · Direction 04',
+        title: 'Treat your vanity shelf like a high-yield physical asset.',
+        desc: 'Annual skincare expenditures of $800+ lose up to 42% in active bioavailability due to improper layering sequence. Audit your shelf like a financial portfolio.',
+        btnText: 'Calculate Bioavailability Yield →',
+        swatches: [
+          { name: 'Newsprint (60%)', hex: '#FBF7F0', role: 'Parchment Bisque', contrast: '15.8:1 (AAA)' },
+          { name: 'Record Ink (30%)', hex: '#111317', role: 'Inkwell Black', contrast: '15.8:1 (AAA)' },
+          { name: 'Dossier Card', hex: '#F0E9DC', role: 'Manila Document', contrast: '13.9:1 (AAA)' },
+          { name: 'Loss Impairment (10%)', hex: '#8B1E2B', role: 'Executive Claret', contrast: '8.9:1 (AAA)' },
+          { name: 'Asset Synergy', hex: '#1F5C3B', role: 'Market Sage', contrast: '9.2:1 (AAA)' }
+        ]
+      },
+      5: {
+        className: 'theme-5',
+        brand: 'DermLogic Atelier',
+        badge: 'Silk & Ceramic Atelier · Direction 05',
+        title: 'A sensory physical ritual, grounded in gentle chemistry.',
+        desc: 'Soft travertine textures, viscous droplet kinetics, and reassuring ritual cadences designed to nurture the skin barrier with quiet physical elegance.',
+        btnText: 'Enter The Atelier →',
+        swatches: [
+          { name: 'Raw Silk (60%)', hex: '#FBF9F5', role: 'Warm Bisque Canvas', contrast: '14.8:1 (AAA)' },
+          { name: 'Clay Umber (30%)', hex: '#241C18', role: 'Smoked Terracotta', contrast: '14.8:1 (AAA)' },
+          { name: 'Bisque Surface', hex: '#EFE9E0', role: 'Raw Porcelain', contrast: '13.2:1 (AAA)' },
+          { name: 'Separation Claret (10%)', hex: '#943448', role: 'Deep Mulberry', contrast: '7.9:1 (AAA)' },
+          { name: 'Nurtured Barrier', hex: '#2E5444', role: 'Juniper Balsam', contrast: '8.6:1 (AAA)' }
+        ]
+      },
+      6: {
+        className: 'theme-6',
+        brand: 'DERM.LOGIC [SYS_V4]',
+        badge: 'Cyber-Clinical Neo-Utility · Direction 06',
+        title: 'Zero marketing rhetoric. Pure chemical conflict telemetry.',
+        desc: 'Radical transparency for informed skincare consumers. Real Dalton molecular weights, exact Henderson-Hasselbalch ionization data, zero pink fluff.',
+        btnText: '[ EXECUTE CONFLICT AUDIT ]',
+        swatches: [
+          { name: 'Stark Field (60%)', hex: '#FFFFFF', role: 'High-Lumen White', contrast: '21:1 (AAA Max)' },
+          { name: 'Strict Grid (30%)', hex: '#0A0A0A', role: 'Pitch Black Frame', contrast: '21:1 (AAA Max)' },
+          { name: 'Specimen Tray', hex: '#F4F4F6', role: 'Cold Aluminum', contrast: '18.5:1 (AAA)' },
+          { name: 'Terminal Clash (10%)', hex: '#FF3B30', role: 'Acid Warning', contrast: '7.1:1 (AAA)' },
+          { name: 'Active Pass', hex: '#0070F3', role: 'Electric Cobalt', contrast: '8.2:1 (AAA)' }
+        ]
+      }
+    };
+
+    function renderSwatches(themeData) {
+      const container = document.getElementById('swatchContainer');
+      container.innerHTML = themeData.swatches.map(s => `
+        <div class="swatch" style="background: ${s.hex}; color: ${isLight(s.hex) ? '#0A0A0A' : '#FFFFFF'};">
+          <div style="font-weight: 700;">${s.name}</div>
+          <div class="swatch-hex">${s.hex}</div>
+          <div style="opacity: 0.85; font-size: 11px;">${s.role}</div>
+          <div style="font-family: monospace; font-size: 10px; margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(128,128,128,0.3);">Contrast: ${s.contrast}</div>
+        </div>
+      `).join('');
+    }
+
+    function isLight(hex) {
+      if (hex.startsWith('rgba')) return false;
+      const c = hex.replace('#', '');
+      const r = parseInt(c.substr(0, 2), 16);
+      const g = parseInt(c.substr(2, 2), 16);
+      const b = parseInt(c.substr(4, 2), 16);
+      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      return brightness > 155;
+    }
+
+    function switchTheme(num, btn) {
+      const data = THEMES[num];
+      const vp = document.getElementById('viewport');
+      vp.className = `preview-viewport ${data.className}`;
+      document.getElementById('brandText').textContent = data.brand;
+      document.getElementById('badgeText').textContent = data.badge;
+      document.getElementById('heroTitle').textContent = data.title;
+      document.getElementById('heroDesc').textContent = data.desc;
+      document.getElementById('btnPrimary').textContent = data.btnText;
+      renderSwatches(data);
+
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    // Initialize with Theme 1
+    renderSwatches(THEMES[1]);
+  </script>
+</body>
+</html>
