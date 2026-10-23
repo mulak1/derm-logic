@@ -84,15 +84,42 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     }
   ];
 
-  const topIngredientsRows = ingredients.slice(0, 18).map((ing) => `
+  const topIngredientsRows = ingredients.slice(0, 18).map((ing) => {
+    const poreClogText = ing.comedogenicity === 0
+      ? '<span class="badge-safe mono">✨ Zero (0/5)</span>'
+      : ing.comedogenicity <= 2
+        ? `<span class="badge-safe mono">Low (${ing.comedogenicity}/5)</span>`
+        : `<span class="badge-clash mono">⚠️ Caution (${ing.comedogenicity}/5)</span>`;
+    const sensitivityText = Number(ing.phMin) < 4.0 || String(ing.activeClass || '').includes('retinoid')
+      ? '<span class="badge-warn mono">⚡ Can Tingle / Active</span>'
+      : '<span class="badge-safe mono">🌿 Gentle / Barrier-Safe</span>';
+    const routineSlot = getRoutineSlotRecommendation(ing);
+    const textureOrder = Number(ing.molecularWeightDa) < 200
+      ? '1st · Water-light'
+      : Number(ing.molecularWeightDa) < 500
+        ? '2nd · Medium serum'
+        : '3rd · Cream / rich';
+
+    return `
     <tr>
-      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(ing.inciName)}</span></td>
+      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(ing.category || 'Targeted active')}</span></td>
+      <td>${poreClogText}</td>
+      <td>${sensitivityText}</td>
+      <td style="font-size:0.84rem;color:var(--text-primary);">${routineSlot}</td>
+      <td class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">${textureOrder}</td>
+      <td style="color:var(--text-secondary);font-size:0.84rem;">${escapeHtml(ing.clinicalMechanism)}</td>
+    </tr>
+  `;
+  }).join('');
+
+  const chemistrySpecsRows = ingredients.slice(0, 18).map((ing) => `
+    <tr>
+      <td><strong class="mono" style="font-size:0.8125rem;">${escapeHtml(ing.inciName)}</strong></td>
       <td class="mono">${ing.phMin}–${ing.phMax}</td>
-      <td class="mono">${ing.pka != null ? ing.pka : 'N/A'}</td>
+      <td class="mono">${ing.pka != null ? ing.pka : '—'}</td>
       <td class="mono">${ing.molecularWeightDa} Da</td>
-      <td><span class="${ing.comedogenicity >= 3 ? 'badge-clash' : 'badge-safe'} mono">${ing.comedogenicity}/5</span></td>
-      <td><span class="${ing.malasseziaTrigger ? 'badge-warn' : 'badge-safe'} mono">${ing.malasseziaTrigger ? 'Trigger' : 'Safe'}</span></td>
-      <td style="color:var(--text-secondary);font-size:0.86rem;">${escapeHtml(ing.clinicalMechanism)}</td>
+      <td class="mono">${ing.comedogenicity}/5</td>
+      <td class="mono">${ing.malasseziaTrigger ? 'Trigger' : 'Safe'}</td>
     </tr>
   `).join('');
 
@@ -213,25 +240,24 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       </div>
     </section>
 
-    <!-- Clinical Reference Matrix Section (Layer 3 Deep Chemistry Specs) -->
+    <!-- Ingredient Reference Guide (Everyday Benefits + Collapsible Chemistry Specs) -->
     <section class="section-block" id="actives-matrix">
       <div id="inci-table"></div>
       <div class="container">
-        <h2 class="serif-display" style="font-size:2rem;margin-bottom:8px;">Ingredient Reference Guide: pH Windows, Pore-Safety &amp; Chemistry Specs (${ingredients.length} Actives)</h2>
+        <h2 class="serif-display" style="font-size:2rem;margin-bottom:8px;">Everyday Skincare Ingredient Guide: Pore Safety, Routine Timing &amp; Benefits</h2>
         <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:20px;max-width:65ch;">
-          Layer-3 Technical Reference: Showing 18 of ${ingredients.length} active ingredients with optimal pH windows, acid strength (pKa), molecular size (Daltons), and fungal-acne safety.
+          Quick reference for 18 essential skincare ingredients. Learn which order to apply them, whether they clog pores, and when to use them in your routine.
         </p>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Active / INCI Nomenclature</th>
-                <th>Optimal pH</th>
-                <th>pKa</th>
-                <th>Mol. Weight</th>
-                <th>Pore Risk</th>
-                <th>Fungal Acne</th>
-                <th>Formulation &amp; Barrier Mechanism</th>
+                <th>Ingredient &amp; Category</th>
+                <th>Does It Clog Pores?</th>
+                <th>Skin Sensitivity</th>
+                <th>Best Time to Use</th>
+                <th>Texture &amp; Layering Step</th>
+                <th>What It Does For Your Skin</th>
               </tr>
             </thead>
             <tbody>
@@ -239,6 +265,32 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
             </tbody>
           </table>
         </div>
+
+        <details class="science-footnote-drawer" style="margin-top:16px;padding:14px 18px;background:var(--bg-surface);border-radius:12px;border:1px solid var(--border-hairline);">
+          <summary style="cursor:pointer;font-weight:700;color:var(--text-primary);font-family:var(--font-mono);font-size:0.84rem;">
+            🔬 Esthetician &amp; Cosmetic Chemist Specifications (pH Windows, pKa, Daltons &amp; Full INCI) ▾
+          </summary>
+          <div style="margin-top:14px;overflow-x:auto;">
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:10px;">
+              Laboratory formulation metrics: optimal free-acid dissociation ranges, pKa Henderson-Hasselbalch values, and Daltons (molecular weight) determining skin-barrier penetration depth.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Official INCI Nomenclature</th>
+                  <th>Lab pH Range</th>
+                  <th>pKa Dissociation</th>
+                  <th>Molecular Size (Da)</th>
+                  <th>EU CosIng Comedogenic (0–5)</th>
+                  <th>Malassezia Safe</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${chemistrySpecsRows}
+              </tbody>
+            </table>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -412,19 +464,19 @@ function renderDirectoryPage({ seoPages }) {
 }
 
 function getRoutineSlotRecommendation(ing) {
-  if (!ing) return 'AM or PM Ritual';
+  if (!ing) return '☀️ AM or 🌙 PM';
   const id = String(ing.id || '');
   const cls = String(ing.activeClass || '');
   if (cls.includes('retinoid') || id.includes('tretinoin') || id.includes('retinol') || id.includes('adapalene') || id === 'hydroquinone') {
-    return 'PM Night Only (Photolabile / Keratolytic)';
+    return '🌙 Night Only (Bedtime routine)';
   }
   if (id.includes('glycolic') || id.includes('lactic') || id.includes('mandelic')) {
-    return 'PM Exfoliation Night (SPF 50 Next AM)';
+    return '🌙 Night Only Exfoliant (Wear SPF next AM)';
   }
   if (cls === 'vitamin_c_laa' || ing.category === 'uv_filter') {
-    return 'AM Morning Glow (Photoprotective)';
+    return '☀️ Morning Glow (Layer under sunscreen)';
   }
-  return 'AM or PM (Split from ΔpH Clashes)';
+  return '☀️ Morning or 🌙 Night (Safe in either)';
 }
 
 function resolveComparisonIngredients(page, products) {
@@ -523,15 +575,42 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
     }] : [])
   ];
 
-  const comparisonRowsHtml = comparedActives.map((ing) => `
+  const comparisonRowsHtml = comparedActives.map((ing) => {
+    const poreClog = ing.comedogenicity === 0
+      ? '<span class="badge-safe mono">✨ Zero (0/5)</span>'
+      : ing.comedogenicity <= 2
+        ? `<span class="badge-safe mono">Low (${ing.comedogenicity}/5)</span>`
+        : `<span class="badge-clash mono">⚠️ Caution (${ing.comedogenicity}/5)</span>`;
+    const sensitivity = Number(ing.phMin) < 4.0 || String(ing.activeClass || '').includes('retinoid')
+      ? '<span class="badge-warn mono">⚡ Can Tingle / Active</span>'
+      : '<span class="badge-safe mono">🌿 Gentle / Barrier-Safe</span>';
+    const routineSlot = getRoutineSlotRecommendation(ing);
+    const textureOrder = Number(ing.molecularWeightDa) < 200
+      ? '1st · Water-light serum'
+      : Number(ing.molecularWeightDa) < 500
+        ? '2nd · Medium serum'
+        : '3rd · Cream / rich barrier';
+
+    return `
     <tr>
-      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(ing.inciName)}</span></td>
+      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(ing.category || 'Targeted active')}</span></td>
+      <td>${poreClog}</td>
+      <td>${sensitivity}</td>
+      <td style="font-size:0.84rem;color:var(--text-primary);">${routineSlot}</td>
+      <td class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">${textureOrder}</td>
+      <td style="font-size:0.81rem;color:var(--text-secondary);"><a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 View Schedule ($1.99)</a></td>
+    </tr>
+  `;
+  }).join('');
+
+  const seoChemistrySpecsRows = comparedActives.map((ing) => `
+    <tr>
+      <td><strong class="mono" style="font-size:0.8125rem;">${escapeHtml(ing.inciName)}</strong></td>
       <td class="mono">${ing.phMin}–${ing.phMax}</td>
       <td class="mono">${ing.pka != null ? ing.pka : '—'}</td>
       <td class="mono">${ing.molecularWeightDa} Da</td>
-      <td><span class="${ing.comedogenicity >= 3 ? 'badge-clash' : 'badge-safe'} mono">${ing.comedogenicity}/5</span></td>
-      <td><span class="${ing.malasseziaTrigger ? 'badge-warn' : 'badge-safe'} mono">${ing.malasseziaTrigger ? 'No (Trigger)' : 'Yes (Safe)'}</span></td>
-      <td style="font-size:0.81rem;color:var(--text-secondary);"><a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 Locked in Free Preview ($1.99 Ritual Pack)</a></td>
+      <td class="mono">${ing.comedogenicity}/5</td>
+      <td class="mono">${ing.malasseziaTrigger ? 'Trigger' : 'Safe'}</td>
     </tr>
   `).join('');
 
@@ -556,7 +635,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <a href="/">Home</a> / <a href="/directory">Layering Directory</a> / <span style="color:var(--rose-brand);font-weight:600;">${escapeHtml(page.category)}</span>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
-          <div class="eyebrow-pill mono" style="margin:0;">${escapeHtml(page.verdict)} · HARMONY SCORE ${page.compatibilityScore}/100 · ΔpH ${page.deltaPh}</div>
+          <div class="eyebrow-pill mono" style="margin:0;">ROUTINE COMPATIBILITY: ${escapeHtml(page.verdict)} · HARMONY SCORE ${page.compatibilityScore}/100 <span style="opacity:0.75;font-weight:normal;">(Acidity Gap ΔpH ${page.deltaPh})</span></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Verified Formula at Dermstore ↗</a>
             <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Alternative at Sephora ↗</a>
@@ -567,25 +646,25 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
 
         <div class="bento-grid-3" style="margin-bottom:28px;">
           <div class="bento-cell tinted">
-            <div class="mono" style="font-size:0.8125rem;color:var(--rose-brand);font-weight:700;margin-bottom:4px;">FORMULATION CHEMISTRY</div>
+            <div class="mono" style="font-size:0.8125rem;color:var(--rose-brand);font-weight:700;margin-bottom:4px;">DO THEY CANCEL OUT?</div>
             <div class="serif-display" style="font-size:1.2rem;font-weight:700;margin-bottom:6px;">${escapeHtml(page.conflictType)}</div>
-            <p style="font-size:0.83rem;color:var(--text-secondary);">Recommended Spacing: <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 [LOCKED IN FREE PREVIEW — Unlock Exact Wait-Time Buffer ($1.99)]</a></p>
+            <p style="font-size:0.83rem;color:var(--text-secondary);">Recommended Routine Spacing: <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 [LOCKED IN FREE PREVIEW — Unlock Exact Wait Timer ($1.99)]</a></p>
           </div>
           <div class="bento-cell">
-            <div class="mono" style="font-size:0.8125rem;color:var(--sage-safe);font-weight:700;margin-bottom:4px;">AM MORNING GLOW RITUAL</div>
-            <p style="font-size:0.86rem;color:var(--text-secondary);">Step 1: Gentle pH 5.5 Cleanse &rarr; <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 [LOCKED IN FREE PREVIEW — Unlock Exact AM Layering Sequence ($1.99)]</a></p>
+            <div class="mono" style="font-size:0.8125rem;color:var(--sage-safe);font-weight:700;margin-bottom:4px;">MORNING ROUTINE ORDER</div>
+            <p style="font-size:0.86rem;color:var(--text-secondary);">Step 1: Gentle Cleanser &rarr; <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 [LOCKED IN FREE PREVIEW — Unlock Exact Morning Steps ($1.99)]</a></p>
           </div>
           <div class="bento-cell">
-            <div class="mono" style="font-size:0.8125rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;">PM BARRIER REPAIR RITUAL</div>
-            <p style="font-size:0.86rem;color:var(--text-secondary);">Night 1 Preview &rarr; <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 [LOCKED IN FREE PREVIEW — Unlock 4-Night Skin-Cycling Calendar ($1.99)]</a></p>
+            <div class="mono" style="font-size:0.8125rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;">NIGHT ROUTINE ORDER</div>
+            <p style="font-size:0.86rem;color:var(--text-secondary);">Night 1 Preview &rarr; <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">🔒 [LOCKED IN FREE PREVIEW — Unlock 4-Night Bedtime Calendar ($1.99)]</a></p>
           </div>
         </div>
 
         <div id="pseo-dermlogic-inline-calc" class="bento-cell tinted" style="margin-bottom:24px;padding:20px;border:1.5px solid var(--rose-brand);">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
             <div>
-              <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:800;">1-CLICK BARRIER pH &amp; WASTED SERUM CALCULATOR</div>
-              <h2 class="serif-display" style="font-size:1.35rem;margin:2px 0 0;">Tap Your Skin Profile to Calculate Active Neutralization Loss for ${escapeHtml(searchIntentSubject)}</h2>
+              <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:800;">1-CLICK SKINCARE SAVINGS &amp; COMPATIBILITY CALCULATOR</div>
+              <h2 class="serif-display" style="font-size:1.35rem;margin:2px 0 0;">Tap Your Skin Type to Check Potential Product Inactivation &amp; Waste for ${escapeHtml(searchIntentSubject)}</h2>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <button type="button" class="chip mono" style="cursor:pointer;font-weight:700;" onclick="window.__dlCalcPseoSkin(180,1.35,'sensitive_rosacea')">Sensitive / Rosacea ($180/yr)</button>
@@ -595,8 +674,8 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
             </div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;background:var(--bg-card,#FFFFFF);padding:14px;border-radius:10px;border:1px solid var(--border-subtle);">
-            <div><div class="mono" style="font-size:0.75rem;color:var(--text-secondary);">EST. WASTED SERUM POTENCY / YR</div><div id="pseo-dl-waste-out" class="mono" style="font-size:1.35rem;font-weight:800;color:var(--rose-brand);">$${Math.round(240 * Math.max(0.22, (100 - (Number(page.compatibilityScore) || 55)) / 100))}/yr Lost</div></div>
-            <div><div class="mono" style="font-size:0.75rem;color:var(--text-secondary);">REQUIRED pH BUFFER WAIT</div><div id="pseo-dl-buffer-out" class="mono" style="font-size:1.35rem;font-weight:800;color:var(--text-primary);">${Number(page.deltaPh) >= 1.5 ? '20 Min / AM-PM Split' : '10 Min Wait Buffer'}</div></div>
+            <div><div class="mono" style="font-size:0.75rem;color:var(--text-secondary);">EST. WASTED PRODUCT VALUE / YR</div><div id="pseo-dl-waste-out" class="mono" style="font-size:1.35rem;font-weight:800;color:var(--rose-brand);">$${Math.round(240 * Math.max(0.22, (100 - (Number(page.compatibilityScore) || 55)) / 100))}/yr Lost</div></div>
+            <div><div class="mono" style="font-size:0.75rem;color:var(--text-secondary);">RECOMMENDED ROUTINE SPACING</div><div id="pseo-dl-buffer-out" class="mono" style="font-size:1.35rem;font-weight:800;color:var(--text-primary);">${Number(page.deltaPh) >= 1.5 ? '20 Min / AM-PM Split' : '10 Min Wait Buffer'}</div></div>
             <div><div class="mono" style="font-size:0.75rem;color:var(--text-secondary);">POST-FIX HARMONY SCORE</div><div id="pseo-dl-harmony-out" class="mono" style="font-size:1.35rem;font-weight:800;color:var(--sage-safe);">96/100 Verified</div></div>
             <div style="display:flex;align-items:center;"><a href="/buy/micro_pass?source=pseo_inline_calc&amp;guide=${encodeURIComponent(page.slug)}" class="btn-primary mono" style="padding:10px 14px;font-size:0.8rem;text-decoration:none;display:inline-block;">Unlock 99¢ AM/PM Card &rarr;</a></div>
           </div>
@@ -614,21 +693,20 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         </div>
 
         <div class="bento-cell" style="margin-bottom:28px;padding:22px;">
-          <h2 class="serif-display" style="font-size:1.65rem;margin-bottom:8px;">Can You Use ${escapeHtml(searchIntentSubject)} Together? Clinical Verdict &amp; Layering Rules</h2>
+          <h2 class="serif-display" style="font-size:1.65rem;margin-bottom:8px;">Can You Use ${escapeHtml(searchIntentSubject)} Together? Skincare Guide &amp; Layering Rules</h2>
           <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:14px;">
-            Clinical Verdict: <strong class="mono" style="color:var(--rose-brand);">${escapeHtml(page.verdict)}</strong> (Harmony Score ${page.compatibilityScore}/100 · ΔpH ${page.deltaPh}). Compare Henderson-Hasselbalch pKa dissociation, optimal pH windows, Dalton molecular weights, EU CosIng comedogenicity (0–5), and Malassezia safety below before layering.
+            Routine Compatibility: <strong class="mono" style="color:var(--rose-brand);">${escapeHtml(page.verdict)}</strong> (Compatibility Score: <strong>${page.compatibilityScore}/100</strong>). See whether these ingredients cause breakouts, sting sensitive skin, or cancel each other out before applying them together.
           </p>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Active / INCI Compound</th>
-                  <th>Optimal pH Window</th>
-                  <th>pKa</th>
-                  <th>Molecular Weight (Da)</th>
-                  <th>Comedogenicity (0–5)</th>
-                  <th>Malassezia Safe</th>
-                  <th>Recommended Routine Slot (AM/PM)</th>
+                  <th>Ingredient &amp; Category</th>
+                  <th>Does It Clog Pores?</th>
+                  <th>Skin Sensitivity</th>
+                  <th>Best Time to Use</th>
+                  <th>Texture &amp; Layering Step</th>
+                  <th>Custom Morning / Night Schedule</th>
                 </tr>
               </thead>
               <tbody>
@@ -636,6 +714,32 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               </tbody>
             </table>
           </div>
+
+          <details class="science-footnote-drawer" style="margin-top:14px;padding:12px 16px;background:var(--bg-surface);border-radius:10px;border:1px solid var(--border-hairline);">
+            <summary style="cursor:pointer;font-weight:700;color:var(--text-primary);font-family:var(--font-mono);font-size:0.82rem;">
+              🔬 Esthetician &amp; Cosmetic Chemist Specifications (pH Windows, pKa, Daltons &amp; INCI) ▾
+            </summary>
+            <div style="margin-top:12px;overflow-x:auto;">
+              <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;">
+                Lab chemistry reference: pKa acid dissociation values, pH compatibility boundaries, and molecular weights (Daltons) determining barrier penetration depth.
+              </p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Official INCI Nomenclature</th>
+                    <th>Lab pH Range</th>
+                    <th>pKa Dissociation</th>
+                    <th>Molecular Size (Da)</th>
+                    <th>EU CosIng Comedogenic (0–5)</th>
+                    <th>Malassezia Safe</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${seoChemistrySpecsRows}
+                </tbody>
+              </table>
+            </div>
+          </details>
         </div>
 
         ${renderInteractiveCheckerWidget({

@@ -672,24 +672,24 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
 
   const pmCycling = [
     {
-      night: 'Night 1 · Keratolytic Resurfacing',
-      focus: hasAcid ? 'AHA / BHA Desmosome Exfoliation (Zero Retinoids or Peptides)' : 'Gentle Hydration & Enzyme Polish',
+      night: 'Night 1 · Gentle Exfoliation & Smoothing (AHA/BHA)',
+      focus: hasAcid ? 'Gentle AHA/BHA Exfoliation (Skip retinoids & peptides on this night)' : 'Gentle Hydration & Smoothing Polish',
       steps: hasAcid
         ? ['pH 5.5 Cleanser (Dry completely)', 'Direct AHA / BHA Exfoliant (pH 3.2–3.6) · ⏱ Wait 15 min', '3:1:1 Ceramide + Cholesterol Recovery Cream']
         : ['pH 5.5 Cleanser', 'Hydrating Essence + Niacinamide 5%', 'Ceramide Barrier Cream'],
       badge: hasAcid ? 'ACTIVE ACID NIGHT' : 'GENTLE PREP'
     },
     {
-      night: 'Night 2 · Cellular Turnover (Retinoid)',
-      focus: hasRetinoid ? 'Nuclear RAR Agonist (Zero BPO, Zero Direct Acids)' : 'Peptide & Antioxidant Repair',
+      night: 'Night 2 · Retinol & Cell Renewal',
+      focus: hasRetinoid ? 'Retinol Night (Skip Benzoyl Peroxide and exfoliating acids tonight)' : 'Peptide & Antioxidant Repair',
       steps: hasRetinoid
         ? ['pH 5.5 Cleanser + Snail Mucin / Humectant Buffer (⏱ Dry 15 min)', 'Pea-sized Rx Tretinoin / Retinaldehyde / Retinol (pH 5.8)', 'Encapsulated Ceramide Barrier Cream (Sandwich Method)']
         : ['pH 5.5 Cleanser', 'Multi-Peptide or Brightening Serum', 'Lipid Recovery Moisturizer'],
       badge: hasRetinoid ? 'RETINOID NIGHT' : 'REPAIR NIGHT'
     },
     {
-      night: 'Night 3 · Peptide & Microbiome Repair',
-      focus: hasCopper ? 'Copper Tripeptide-1 (GHK-Cu) Remodeling (Zero Vitamin C / Zero Acids)' : 'Soothing Centella, Niacinamide & Barrier Lipids',
+      night: 'Night 3 · Peptide & Moisture Repair',
+      focus: hasCopper ? 'Copper Peptides & Firming (Skip Vitamin C and acids tonight)' : 'Soothing Centella, Niacinamide & Barrier Lipids',
       steps: [
         'pH 5.5 Cleanser + Heartleaf / Centella Toner',
         hasCopper ? 'Copper Peptides 1% (GHK-Cu) + Hyaluronic Acid (pH 6.2)' : 'Niacinamide 4%–10% + Snail 96 Mucin Essence',
@@ -698,8 +698,8 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
       badge: 'PEPTIDE & CICA RECOVERY'
     },
     {
-      night: 'Night 4 · Deep Lamellar Lipid Restoration',
-      focus: hasBpo && !hasLaa ? 'Targeted Benzoyl Peroxide or 100% Barrier Rest Night' : 'Zero Exfoliants · Pure 3:1:1 Ceramide-Cholesterol-Fatty Acid Seal',
+      night: 'Night 4 · Deep Skin Barrier Rest',
+      focus: hasBpo && !hasLaa ? 'Targeted Blemish Treatment or 100% Barrier Rest Night' : 'Zero Exfoliants · Pure Ceramide Barrier Hydration',
       steps: [
         'Micellar Water + pH 5.5 Cleanser',
         'Panthenol 5% + Madecassoside + Squalane',
@@ -713,8 +713,8 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
     amSteps,
     pmCycling,
     summaryNote: conflicts.length > 0
-      ? `Resolved ${conflicts.length} active conflict(s) by partitioning incompatible pH and redox pairs across AM and a 4-Night Skin-Cycling schedule.`
-      : 'Your current products operate in harmonious pH and redox windows with zero chemical antagonism.'
+      ? `Resolved ${conflicts.length} active conflict(s) by separating incompatible serums across Morning and a 4-Night Bedtime routine.`
+      : 'All your selected products work harmoniously together with zero clashing or inactivation.'
   };
 }
 

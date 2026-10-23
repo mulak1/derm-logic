@@ -567,19 +567,19 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           </div>
         </div>
 
-        <!-- Clinical Formulation Reference & Barrier Standards Strip (Balances Left & Right Columns) -->
+        <!-- Everyday Skincare Standards Strip -->
         <div style="margin-top:auto;padding:12px 14px;border-radius:12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
           <div>
-            <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--rose-brand);margin-bottom:2px;">HEALTHY SKIN pH (4.7–5.5)</div>
-            <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.35;">Your skin barrier thrives at <strong>pH 4.7–5.5</strong>, while exfoliating acids need pH 3.0–3.8.</div>
+            <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--rose-brand);margin-bottom:2px;">WHY SKIN STINGS</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.35;">Exfoliating acids are very acidic. Stacking them together can sting or damage skin.</div>
           </div>
           <div>
-            <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--honey-warn);margin-bottom:2px;">WHY PRODUCTS CLASH</div>
-            <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.35;">Layering a low-pH acid right under peptides or high-pH serums weakens both formulas.</div>
+            <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--honey-warn);margin-bottom:2px;">WHY SERUMS CANCEL OUT</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.35;">Mixing strong acids with peptides or Retinol can neutralize both bottles and waste money.</div>
           </div>
           <div>
-            <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--sage-safe);margin-bottom:2px;">BARRIER REPAIR TRIO</div>
-            <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.35;">Always cushion retinol and acid nights with <strong>Ceramides, Cholesterol &amp; Fatty Acids</strong>.</div>
+            <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--sage-safe);margin-bottom:2px;">HOW TO PROTECT SKIN</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.35;">Always follow retinol and acid nights with barrier creams rich in <strong>Ceramides &amp; Squalane</strong>.</div>
           </div>
         </div>
       </div>
@@ -634,16 +634,20 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 }
 
 function renderSingleConflictCard(c) {
+  const isCritical = c.severity === 'CRITICAL';
+  const badgeLabel = isCritical ? '⚠️ CANCELS OUT POTENCY' : '⚡ SPACE APART · IRRITATION RISK';
+  const nameA = c.ingredientA || c.inciA, nameB = c.ingredientB || c.inciB;
   return `
     <div class="conflict-card ${escapeHtml(c.severity)}">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;">
-        <span class="${c.severity === 'CRITICAL' ? 'badge-clash' : 'badge-warn'} mono">${escapeHtml(c.severity)} · ΔpH ${c.deltaPh}</span>
-        <span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(c.inciA)} (pH ${c.phA}) × ${escapeHtml(c.inciB)} (pH ${c.phB})</span>
+        <span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono">${badgeLabel}</span>
+        <span class="mono" style="font-size:0.8125rem;color:var(--text-secondary);font-weight:700;">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</span>
       </div>
       <div class="serif-display" style="font-size:1.12rem;font-weight:700;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(c.title)}</div>
-      <p style="color:var(--text-secondary);font-size:0.81rem;margin-bottom:8px;">${escapeHtml(c.mechanism)}</p>
+      <p style="color:var(--text-secondary);font-size:0.81rem;margin-bottom:6px;">${escapeHtml(c.mechanism)}</p>
+      <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px;" class="mono">🔬 Science footnote: Acidity gap ΔpH ${c.deltaPh} (${escapeHtml(c.inciA)} vs ${escapeHtml(c.inciB)})</div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-        <div style="font-size:0.8rem;color:var(--honey-warn);font-weight:600;flex:1;">🔒 Exact AM/PM Separation &amp; Wait-Timer Fix: [LOCKED IN FREE PREVIEW — UNLOCK ($1.99)]</div>
+        <div style="font-size:0.8rem;color:var(--honey-warn);font-weight:600;flex:1;">🔒 Step-by-Step AM/PM Order &amp; Wait Timers: [LOCKED IN FREE PREVIEW — UNLOCK ($1.99)]</div>
         <div style="display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center;">
           <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Alternative ↗</a>
         </div>
@@ -690,12 +694,12 @@ function renderAnalysisResultHtml(res) {
       ` : '');
 
   const comedogenicSummary = res.comedogenicFlags.length > 0
-    ? res.comedogenicFlags.map((f) => `<span class="badge-warn mono" style="margin-right:6px;margin-bottom:4px;">${escapeHtml(f.inciName)} (${f.rating}/5 Pore Risk)</span>`).join('')
-    : `<span class="badge-safe mono">0 Pore-Clogging Esters</span>`;
+    ? res.comedogenicFlags.map((f) => `<span class="badge-warn mono" style="margin-right:6px;margin-bottom:4px;">${escapeHtml(f.inciName)} (${f.rating}/5 Clogged Pore Risk)</span>`).join('')
+    : `<span class="badge-safe mono">✨ Zero Pore-Clogging Ingredients Found</span>`;
 
   const malasseziaSummary = res.malasseziaFlags.length > 0
-    ? res.malasseziaFlags.map((f) => `<span class="badge-clash mono" style="margin-right:6px;margin-bottom:4px;">Fungal-Acne Trigger: ${escapeHtml(f.inciName)}</span>`).join('')
-    : `<span class="badge-safe mono">100% Fungal-Acne (Malassezia) Safe</span>`;
+    ? res.malasseziaFlags.map((f) => `<span class="badge-clash mono" style="margin-right:6px;margin-bottom:4px;">Breakout Trigger: ${escapeHtml(f.inciName)}</span>`).join('')
+    : `<span class="badge-safe mono">✨ 100% Breakout &amp; Sensitive-Skin Safe</span>`;
 
   const amListHtml = res.schedule.amSteps.map((s, idx) => `
     <li style="margin-bottom:3px;font-size:0.8125rem;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
