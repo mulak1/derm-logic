@@ -49,8 +49,8 @@ const GROWTH_CATALOG = {
   derm_logic: {
     badgeLabel: 'DermLogic Safe',
     defaultMetric: 'Routine Safety 96/100 • pH Checked',
-    badgeColor: '#C85A70',
-    categoryTag: 'Skincare Ingredient Conflict & Routine Checker',
+    badgeColor: '#8A283B',
+    categoryTag: 'Atelier Céramique · Porcelain Ritual & Wait-Time Sequencer',
     githubTopics: ['skincare-routine', 'inci-decoder', 'cosmetic-chemistry', 'dermatology', 'retinol', 'vitamin-c', 'skin-barrier', 'ph-balance', 'fungal-acne', 'mcp-server'],
     tools: [
       { slug: 'inci-ph-conflict-and-neutralization-calculator', title: 'Skincare Ingredient Conflict & pH Safety Checker', summary: 'Check any skincare combination for pH clashes, Vitamin C + Copper Peptide cancellation, and Benzoyl Peroxide + Retinoid irritation.', metricA: 'Instant Safety Check', metricB: 'Saves $182/yr in Wasted Serums', target: 'VitC+Cu' },
@@ -145,20 +145,20 @@ function renderDynamicScorecardOgSvg(cfg, rawTarget) {
   <title>${escXml(cfg.brandName)} Live Benchmark Scorecard: ${escXml(info.target)}</title>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#F8FAFC"/>
-      <stop offset="100%" stop-color="#EEF2FF"/>
+      <stop offset="0%" stop-color="#FAF7F2"/>
+      <stop offset="100%" stop-color="#EFE9DF"/>
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect x="44" y="44" width="1112" height="542" rx="28" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="3"/>
-  <rect x="76" y="78" width="380" height="40" rx="20" fill="#EEF2FF"/>
-  <text x="98" y="104" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="${escXml(g.badgeColor)}">✦ ${escXml(g.categoryTag.toUpperCase())}</text>
-  <text x="76" y="182" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#0F172A">${escXml(cfg.brandName)} Report: ${escXml(info.target.slice(0, 26))}</text>
-  <text x="76" y="236" font-family="Inter, sans-serif" font-size="24" fill="#475569">Verified Scorecard • Ready-to-Use Action Pack &amp; 1-Click Export</text>
-  <rect x="76" y="278" width="1048" height="176" rx="20" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
-  <text x="112" y="334" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#64748B">VERIFIED SCORE &amp; IMPACT</text>
-  <text x="112" y="402" font-family="JetBrains Mono, monospace" font-size="48" font-weight="800" fill="${escXml(g.badgeColor)}">${escXml(info.message)}</text>
-  <text x="76" y="528" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#0F172A">https://${escXml(cfg.domain)}/?q=${escXml(encodeURIComponent(info.target))} • Free Interactive Check &amp; 99¢ Single-File Export</text>
+  <rect x="44" y="44" width="1112" height="542" rx="28" fill="#FFFDFB" stroke="#DFD6C7" stroke-width="3"/>
+  <rect x="76" y="78" width="440" height="40" rx="20" fill="#F7ECEF"/>
+  <text x="98" y="104" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="${escXml(g.badgeColor)}">✦ ${escXml(g.categoryTag.toUpperCase())}</text>
+  <text x="76" y="182" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#221A16">${escXml(cfg.brandName)} Report: ${escXml(info.target.slice(0, 26))}</text>
+  <text x="76" y="236" font-family="Plus Jakarta Sans, sans-serif" font-size="24" fill="#544841">Atelier Céramique Scorecard • Ready-to-Use Porcelain Ritual &amp; 1-Click Export</text>
+  <rect x="76" y="278" width="1048" height="176" rx="22" fill="#FAF7F2" stroke="#DFD6C7" stroke-width="2"/>
+  <text x="112" y="334" font-family="JetBrains Mono, monospace" font-size="20" font-weight="700" fill="#544841">VERIFIED HARMONY SCORE &amp; IMPACT</text>
+  <text x="112" y="402" font-family="Georgia, serif" font-size="48" font-weight="800" fill="${escXml(g.badgeColor)}">${escXml(info.message)}</text>
+  <text x="76" y="528" font-family="Plus Jakarta Sans, sans-serif" font-size="22" font-weight="700" fill="#221A16">https://${escXml(cfg.domain)}/?q=${escXml(encodeURIComponent(info.target))} • Free Routine Harmony Check &amp; 99¢ Lockscreen Card</text>
 </svg>`;
 }
 
@@ -204,39 +204,64 @@ function renderGrowthPageHtml(cfg, item, kind) {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escXml(item.title)}" />
   <meta name="twitter:description" content="${escXml(item.summary.slice(0, 156))}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
-<body style="margin:0;background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.6;">
-  <header style="border-bottom:1px solid ${escXml(t.border)};background:#FFFFFF;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+<body style="margin:0;background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-family:'Plus Jakarta Sans',Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.6;">
+  <header style="border-bottom:1px solid ${escXml(t.border)};background:rgba(250,247,242,0.92);backdrop-filter:blur(16px);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
     <div style="display:flex;align-items:center;gap:10px;">
-      <a href="/" style="font-weight:800;font-size:18px;color:${escXml(t.textPrimary)};text-decoration:none;">${escXml(cfg.brandName)}</a>
-      <span style="font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;background:${escXml(t.brandSoftBg)};color:${escXml(g.badgeColor)};">${escXml(kind === 'compare' ? 'SIDE-BY-SIDE COMPARISON' : 'FREE INTERACTIVE TOOL')}</span>
+      <a href="/" style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:23px;color:${escXml(t.textPrimary)};text-decoration:none;">${escXml(cfg.brandName)} <span style="font-style:italic;color:${escXml(g.badgeColor)};font-weight:500;">Atelier Céramique</span></a>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:${escXml(t.brandSoftBg)};color:${escXml(g.badgeColor)};border:1px solid ${escXml(t.accentBorder || t.border)};">ATELIER CÉRAMIQUE · ${escXml(kind === 'compare' ? 'PORCELAIN FORMULATION COMPARISON' : 'PORCELAIN RITUAL TOOL')}</span>
     </div>
     <nav aria-label="Primary" style="display:flex;gap:16px;align-items:center;font-size:14px;font-weight:600;">
-      <a href="/" style="color:${escXml(t.textSecondary)};text-decoration:none;">Home Calculator</a>
+      <a href="/" style="color:${escXml(t.textSecondary)};text-decoration:none;">Home Atelier</a>
       <a href="/leaderboard" style="color:${escXml(t.textSecondary)};text-decoration:none;">🏆 Leaderboard</a>
-      <a href="/directory" style="color:${escXml(t.textSecondary)};text-decoration:none;">All Guides</a>
+      <a href="/directory" style="color:${escXml(t.textSecondary)};text-decoration:none;">Layering Archive</a>
       <a href="/buy/flash_pass" style="padding:8px 16px;border-radius:999px;background:${escXml(g.badgeColor)};color:#FFFFFF;text-decoration:none;font-weight:700;">Unlock 3-File Pack ($1.99) ↗</a>
     </nav>
   </header>
   <main style="max-width:1240px;margin:0 auto;padding:24px;">
-    <nav aria-label="Breadcrumb" style="font-size:13px;color:#64748B;margin-bottom:10px;">
-      <a href="/" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Home</a> / <a href="/directory" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Directory</a> / <span>${escXml(item.slug)}</span>
+    <nav aria-label="Breadcrumb" style="font-size:13px;color:${escXml(t.textSecondary)};margin-bottom:10px;">
+      <a href="/" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Home</a> / <a href="/directory" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Layering Archive</a> / <span>${escXml(item.slug)}</span>
     </nav>
-    <h1 style="font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.18;margin:0 0 8px 0;">${escXml(item.title)}</h1>
-    <p class="pseo-lead" style="font-size:16px;color:${escXml(t.textSecondary)};margin:0 0 14px 0;">${escXml(item.summary)}</p>
-    <script>window.__ebRunGrowthWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var n=document.getElementById('eb-growth-r1-name'),k1=document.getElementById('eb-growth-r1-kpi'),k2=document.getElementById('eb-growth-r2-kpi'),b=document.getElementById('eb-growth-badge-img'),pl=document.getElementById('eb-growth-permalink-btn');if(n)n.textContent=s.target+' : Live Check';if(k1)k1.textContent=s.grade+' ('+s.score+'/100) • '+s.kpi1;if(k2)k2.textContent=s.kpi2+' • '+s.cnnReadout;if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';if(pl)pl.href='/scan/'+encodeURIComponent(s.target);});};</script>
-    <section id="eb-onnx-cnn-workbench" style="background:#0F172A;color:#F8FAFC;border:1px solid #1E293B;border-radius:14px;padding:14px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:13px;font-weight:800;color:#38BDF8;font-family:monospace;">⚡ LIVE INTERACTIVE CALCULATOR:</span>
-        <input id="eb-cnn-wb-input" type="text" value="${escXml(item.target)}" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:8px;border:1px solid #334155;background:#090D16;color:#F8FAFC;font-size:13.5px;width:155px;" />
-        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunGrowthWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}')" style="padding:6px 13px;border-radius:8px;border:none;background:${escXml(g.badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">Check Score ↗</button>
-        <a id="eb-growth-permalink-btn" href="/scan/${escXml(encodeURIComponent(item.target))}" style="font-size:13px;font-weight:600;color:#94A3B8;text-decoration:underline;padding:2px 6px;">Full Report ↗</a>
+    <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.1rem,3.4vw,2.85rem);font-weight:600;line-height:1.12;margin:0 0 8px 0;">${escXml(item.title)}</h1>
+    <p class="pseo-lead" style="font-size:16px;color:${escXml(t.textSecondary)};margin:0 0 18px 0;">${escXml(item.summary)}</p>
+    <section aria-label="2-Vessel Z-Axis Split Comparison Stage" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:18px;">
+      <div style="padding:7px;border-radius:32px 16px 32px 16px;background:rgba(239,233,223,0.75);border:1px solid ${escXml(t.border)};box-shadow:0 18px 36px -12px rgba(34,26,22,0.06);display:flex;">
+        <div style="flex:1;background:#EFE9DF;border-radius:26px 12px 26px 12px;padding:18px 20px;border:1px solid #DFD6C7;display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <span style="display:inline-block;padding:3px 10px;border-radius:999px;background:#F7ECEF;color:#8A283B;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin-bottom:8px;">VESSEL 01 · UNFIRED BISQUE · ${escXml(kind === 'compare' ? (item.entityB || 'STATIC INGREDIENT DICTIONARY') : 'MANUAL LABEL READING')}</span>
+            <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;margin:0 0 6px 0;color:#221A16;">${escXml(kind === 'compare' ? `${item.entityB} (${item.scoreB})` : 'Reading 40 Chemical Names One Bottle at a Time')}</h2>
+            <p style="font-size:13.5px;color:#544841;margin:0 0 10px 0;">Shows isolated ingredient definitions or single-active rules without checking whether your Morning Vitamin C, Evening Retinoid, or Peptide Serum deactivate each other on contact.</p>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#8A283B;font-weight:700;border-top:1px dashed #C8BCAB;padding-top:8px;">⚠️ Missing Whole-Shelf ΔpH &amp; Wait-Timer Pacing</div>
+        </div>
       </div>
-      <div id="eb-live-cnn-readout" style="font-family:monospace;font-size:13px;color:#34D399;font-weight:700;">${escXml(item.target)} → ${escXml(item.metricA || item.scoreA)}</div>
+      <div style="padding:7px;border-radius:32px 16px 32px 16px;background:rgba(239,233,223,0.85);border:1.5px solid ${escXml(g.badgeColor)};box-shadow:0 24px 48px -12px rgba(34,26,22,0.12);display:flex;">
+        <div style="flex:1;background:#FFFDFB;border-radius:26px 12px 26px 12px;padding:18px 20px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.95);display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <span style="display:inline-block;padding:3px 10px;border-radius:999px;background:#EDF4F0;color:#264C3C;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin-bottom:8px;">VESSEL 02 · GLAZED PORCELAIN · ${escXml(kind === 'compare' ? (item.entityA || 'DERMLOGIC ATELIER') : 'ATELIER CÉRAMIQUE HARMONY')}</span>
+            <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;margin:0 0 6px 0;color:#221A16;">${escXml(kind === 'compare' ? `${item.entityA} (${item.scoreA})` : `${item.metricA} • ${item.metricB}`)}</h2>
+            <p style="font-size:13.5px;color:#544841;margin:0 0 10px 0;">${escXml(kind === 'compare' ? item.winnerLift : 'Automatically separates clashing serums into a Sunlit Morning Porcelain Tray and Midnight Stoneware Tray with 45s/60s wait timers.')}</p>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #DFD6C7;padding-top:8px;"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#264C3C;font-weight:700;">✓ 96/100 Barrier Harmony</span><a href="/buy/flash_pass" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:${escXml(g.badgeColor)};font-weight:800;text-decoration:underline;">Unlock 9:16 Card ($1.99) →</a></div>
+        </div>
+      </div>
     </section>
-    <section class="table-wrap" style="background:#FFFFFF;border:1px solid ${escXml(t.border)};border-radius:14px;padding:18px;margin-top:14px;box-shadow:0 6px 20px rgba(15,23,42,0.04);">
+    <script>window.__ebRunGrowthWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var n=document.getElementById('eb-growth-r1-name'),k1=document.getElementById('eb-growth-r1-kpi'),k2=document.getElementById('eb-growth-r2-kpi'),b=document.getElementById('eb-growth-badge-img'),pl=document.getElementById('eb-growth-permalink-btn');if(n)n.textContent=s.target+' : Live Check';if(k1)k1.textContent=s.grade+' ('+s.score+'/100) • '+s.kpi1;if(k2)k2.textContent=s.kpi2+' • '+s.cnnReadout;if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';if(pl)pl.href='/scan/'+encodeURIComponent(s.target);});};</script>
+    <section id="eb-onnx-cnn-workbench" style="background:#221A16;color:#FAF7F2;border:1px solid #3D3029;border-radius:26px 12px 26px 12px;padding:14px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span style="font-size:13px;font-weight:800;color:#E5BCC5;font-family:'JetBrains Mono',monospace;">⚡ LIVE PORCELAIN HARMONY CHECK:</span>
+        <input id="eb-cnn-wb-input" type="text" value="${escXml(item.target)}" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:999px;border:1px solid #544841;background:#16100E;color:#FAF7F2;font-size:13.5px;width:155px;" />
+        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunGrowthWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}')" style="padding:6px 14px;border-radius:999px;border:none;background:${escXml(g.badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">Check Score ↗</button>
+        <a id="eb-growth-permalink-btn" href="/scan/${escXml(encodeURIComponent(item.target))}" style="font-size:13px;font-weight:600;color:#DFD6C7;text-decoration:underline;padding:2px 6px;">Full Report ↗</a>
+      </div>
+      <div id="eb-live-cnn-readout" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#B7D4C6;font-weight:700;">${escXml(item.target)} → ${escXml(item.metricA || item.scoreA)}</div>
+    </section>
+    <section class="table-wrap" style="background:${escXml(t.cardBg || '#FFFDFB')};border:1px solid ${escXml(t.border)};border-radius:28px 12px 28px 12px;padding:20px;margin-top:16px;box-shadow:0 24px 48px -12px rgba(34,26,22,0.08),inset 0 1px 0 rgba(255,255,255,0.92);">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-        <h2 style="font-size:18px;margin:0;">Side-by-Side Results &amp; Action Plan</h2>
+        <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;margin:0;">Porcelain Vessel Comparison &amp; Layering Action Plan</h2>
         <img id="eb-growth-badge-img" src="/badge/${escXml(encodeURIComponent(item.target))}.svg" alt="${escXml(cfg.brandName)} Live Badge" width="240" height="22" decoding="async" />
       </div>
       <table aria-label="${escXml(item.title)} Benchmark Matrix" style="width:100%;border-collapse:collapse;font-size:14px;">
