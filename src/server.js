@@ -199,6 +199,7 @@ app.get('/seo/:slug', (req, res) => {
 });
 
 // 5. Legal Routes (/privacy, /terms) & Creative Design Previews
+app.use('/previews', express.static(path.join(__dirname, '..', 'public', 'previews')));
 app.get('/design-previews', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'design-previews.html'));
 });

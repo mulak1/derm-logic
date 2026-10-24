@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction 05 · Atelier Céramique — Z-Axis Tactile Ritual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 60-30-10 WCAG AAA Ceramic Atelier Palette */
+      --silk-60: #FAF7F2;
+      --bisque-vessel: #EFE9DF;
+      --umber-30: #221A16;       /* 15.2:1 vs #FAF7F2 (AAA) */
+      --taupe-muted: #544841;     /* 7.8:1 vs #FAF7F2 (AAA) */
+      --mulberry-10: #8A283B;    /* 7.9:1 vs #FAF7F2 (AAA) - Gentle Clash Notice */
+      --celadon-safe: #264C3C;   /* 8.8:1 vs #FAF7F2 (AAA) - Nurtured Barrier */
+      --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--silk-60);
+      color: var(--umber-30);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.6s var(--ease-spring);
+    }
+
+    /* Floating Ceramic Pill Navbar with Sunrise / Moonrise Lighting Toggle */
+    .ceramic-nav-wrap {
+      position: sticky;
+      top: 22px;
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px;
+    }
+    .ceramic-nav {
+      background: rgba(250, 247, 242, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(34, 26, 22, 0.1);
+      border-radius: 999px;
+      padding: 8px 10px 8px 26px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      box-shadow: 0 18px 40px -12px rgba(34, 26, 22, 0.07);
+    }
+    .atelier-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 23px;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--umber-30);
+    }
+    .lighting-toggle {
+      display: inline-flex;
+      background: var(--bisque-vessel);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+    }
+    .light-btn {
+      padding: 7px 14px;
+      min-height: 38px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--taupe-muted);
+      cursor: pointer;
+      transition: all 0.4s var(--ease-spring);
+    }
+    .light-btn.active {
+      background: var(--umber-30);
+      color: var(--silk-60);
+    }
+
+    /* Serene Sculptural Hero */
+    .atelier-hero {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 32px 40px;
+      text-align: center;
+    }
+    .eyebrow-silk {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: var(--bisque-vessel);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mulberry-10);
+      margin-bottom: 20px;
+    }
+    .atelier-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5.4vw, 4.9rem);
+      font-weight: 400;
+      line-height: 1.02;
+      max-width: 19ch;
+      margin: 0 auto 20px;
+    }
+    .atelier-h1 em {
+      font-style: italic;
+      color: var(--mulberry-10);
+    }
+
+    /* Z-Axis Cascade Stage (Overlapping Sculptural Cards on Desktop, Clean Stack on Mobile) */
+    .z-cascade-stage {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 12px 32px 72px;
+      display: grid;
+      grid-template-columns: 0.95fr 1.18fr 0.95fr;
+      gap: 0px;
+      align-items: center;
+    }
+    .cascade-left {
+      transform: rotate(-1.6deg) translateX(14px);
+      z-index: 2;
+      transition: transform 0.5s var(--ease-spring);
+    }
+    .cascade-left:hover { transform: rotate(0deg) translateY(-6px); z-index: 10; }
+
+    .cascade-center {
+      z-index: 5;
+      transform: translateY(-10px);
+      transition: transform 0.5s var(--ease-spring);
+    }
+    .cascade-center:hover { transform: translateY(-16px); }
+
+    .cascade-right {
+      transform: rotate(1.6deg) translateX(-14px);
+      z-index: 3;
+      transition: transform 0.5s var(--ease-spring);
+    }
+    .cascade-right:hover { transform: rotate(0deg) translateY(-6px); z-index: 10; }
+
+    /* Mobile Override per Skill Rules: Flatten rotations & overlaps below 960px */
+    @media (max-width: 960px) {
+      .z-cascade-stage {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 16px 64px;
+      }
+      .cascade-left, .cascade-center, .cascade-right {
+        transform: none !important;
+        margin: 0 !important;
+      }
+    }
+
+    /* Doppelrand Sculptural Porcelain Bezel */
+    .porcelain-shell {
+      background: rgba(34, 26, 22, 0.04);
+      border: 1px solid rgba(34, 26, 22, 0.09);
+      padding: 8px;
+      border-radius: 38px 18px 38px 18px;
+      box-shadow: 0 28px 60px -18px rgba(34, 26, 22, 0.1);
+    }
+    .porcelain-core {
+      background: #FFFDFB;
+      border: 1px solid rgba(34, 26, 22, 0.07);
+      border-radius: 31px 12px 31px 12px;
+      padding: 32px 28px;
+      box-shadow: inset 0 1px 0 #FFFFFF;
+    }
+
+    /* Texture & Viscosity Droplet Sequencer */
+    .viscosity-list {
+      list-style: none;
+      margin: 18px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .viscosity-step {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--silk-60);
+      border: 1px solid rgba(34, 26, 22, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .wait-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--bisque-vessel);
+      color: var(--umber-30);
+      white-space: nowrap;
+    }
+
+    /* Button-in-Button Ceramic Pill */
+    .btn-ceramic {
+      width: 100%;
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--umber-30);
+      color: var(--silk-60);
+      padding: 8px 8px 8px 24px;
+      min-height: 50px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.45s var(--ease-spring), background 0.3s var(--ease-spring);
+    }
+    .btn-ceramic:hover {
+      background: var(--mulberry-10);
+      transform: translateY(-2px);
+    }
+    .btn-ceramic-orb {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(250, 247, 242, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .swatch-bar-5 {
+      max-width: 1280px;
+      margin: 0 auto 60px;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 800px) {
+      .swatch-bar-5 { grid-template-columns: 1fr 1fr; padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Ceramic Pill Nav -->
+  <div class="ceramic-nav-wrap">
+    <nav class="ceramic-nav" aria-label="Atelier Navigation">
+      <div class="atelier-logo">DermLogic · Atelier Céramique</div>
+      <div class="lighting-toggle" role="group" aria-label="Vanity Lighting Calibration">
+        <button class="light-btn active" onclick="setVanityLight('warm', this)">☀ 3000K Warm Vanity</button>
+        <button class="light-btn" onclick="setVanityLight('day', this)">✦ 5000K Daylight</button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Sculptural Hero -->
+  <header class="atelier-hero">
+    <div class="eyebrow-silk">Direction 05 · Silk &amp; Ceramic Atelier · Z-Axis Tactile Cascade</div>
+    <h1 class="atelier-h1">
+      A quiet bedtime ritual for skin <em>exhausted</em> by harsh acids.
+    </h1>
+    <p style="font-size: 17px; color: var(--taupe-muted); max-width: 58ch; margin: 0 auto;">
+      When your skin stings even from plain water, you don't need another ten-step chemistry lecture—you need gentle texture pacing and barrier rest.
+    </p>
+  </header>
+
+  <!-- Z-Axis Overlapping Card Cascade -->
+  <main class="z-cascade-stage">
+
+    <!-- Left Z-Card: The Sensory Fatigue Mirror Moment -->
+    <section class="cascade-left">
+      <div class="porcelain-shell">
+        <div class="porcelain-core">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mulberry-10); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">
+            🪞 The Sensory Fatigue Moment
+          </div>
+          <blockquote style="font-family: 'Cormorant Garamond', serif; font-size: 25px; font-style: italic; line-height: 1.3; margin-bottom: 16px;">
+            “My face is tight, shiny, and stinging from layering too many TikTok actives. I just want a calm routine that hydrates without burning.”
+          </blockquote>
+          <p style="font-size: 14px; color: var(--taupe-muted); margin-bottom: 16px;">
+            <strong>Plain-English Diagnosis:</strong> Layering Vitamin C, Salicylic Acid, and Retinol in the same week strips the natural ceramides holding your skin cells together.
+          </p>
+          <div style="padding: 14px; border-radius: 16px; background: var(--bisque-vessel); font-size: 12.5px;">
+            <strong>Raw Material:</strong> Unfired bisque stoneware vessels, macro emulsion droplet photography, &amp; rheometer viscosity curves.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Center Elevated Z-Card: Texture & Viscosity Layering Order -->
+    <section class="cascade-center">
+      <div class="porcelain-shell" style="background: rgba(138, 40, 59, 0.08); border-color: rgba(138, 40, 59, 0.2);">
+        <div class="porcelain-core">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--celadon-safe); font-weight: 600;">THINNEST TO THICKEST</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mulberry-10);">ZERO PILLING</span>
+          </div>
+          <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 600;">
+            Texture &amp; Wait-Time Pacing
+          </h2>
+          <p style="font-size: 13.5px; color: var(--taupe-muted);">
+            Follow this exact droplet weight order so every layer sinks in smoothly without rolling off:
+          </p>
+
+          <ul class="viscosity-list">
+            <li class="viscosity-step">
+              <div>
+                <strong>1. Water-Light Mist / Essence</strong>
+                <div style="font-size: 12px; color: var(--taupe-muted);">Apply to damp skin immediately after towel-patting</div>
+              </div>
+              <span class="wait-pill">No Wait</span>
+            </li>
+            <li class="viscosity-step">
+              <div>
+                <strong>2. Bounce Serum (Peptides / HA)</strong>
+                <div style="font-size: 12px; color: var(--taupe-muted);">Press gently with palms; do not rub in circles</div>
+              </div>
+              <span class="wait-pill">Wait 45s</span>
+            </li>
+            <li class="viscosity-step">
+              <div>
+                <strong>3. Velvet Ceramide Cream</strong>
+                <div style="font-size: 12px; color: var(--taupe-muted);">Locks water inside the barrier overnight</div>
+              </div>
+              <span class="wait-pill">Wait 60s</span>
+            </li>
+            <li class="viscosity-step">
+              <div>
+                <strong>4. Pure Squalane Seal (Optional)</strong>
+                <div style="font-size: 12px; color: var(--taupe-muted);">2 drops patted over dry cheeks in winter</div>
+              </div>
+              <span class="wait-pill">Final Step</span>
+            </li>
+          </ul>
+
+          <button class="btn-ceramic">
+            <span>Save Vanity Mirror Card ($1.99)</span>
+            <span class="btn-ceramic-orb">↗</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Z-Card: Medicine Cabinet Screenshot & Lab Footnote -->
+    <section class="cascade-right">
+      <div class="porcelain-shell">
+        <div class="porcelain-core">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--celadon-safe); text-transform: uppercase; margin-bottom: 8px;">
+            📱 Medicine Cabinet Save Card
+          </div>
+          <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; margin-bottom: 10px;">
+            9:00 PM – 11:30 PM Repeat Ritual Proof
+          </h3>
+          <p style="font-size: 14px; font-style: italic; color: var(--umber-30); background: var(--silk-60); padding: 14px; border-radius: 16px; border: 1px dashed rgba(34,26,22,0.25);">
+            “I printed the 4-night gentle cycling card and taped it inside my medicine cabinet. My cheeks haven’t flaked or stung once this winter.”
+          </p>
+
+          <details style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(34,26,22,0.1); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--taupe-muted); cursor: pointer;">
+            <summary>🔬 Optional Chemistry Footnote: Ceramide NP:AP:EOP 3:1:1 Ratio ▾</summary>
+            <div style="padding-top: 8px;"> Physiological molar ratio of Ceramides (3), Cholesterol (1), and Free Fatty Acids (1) accelerates stratum corneum lipid lamellar repair within 72 hours.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 60-30-10 WCAG AAA Palette Footer -->
+  <footer class="swatch-bar-5">
+    <div style="padding: 14px; border-radius: 16px; background: #FAF7F2; border: 1px solid rgba(34,26,22,0.15); font-size: 12px;">
+      <strong>60% Primary Silk</strong><br>#FAF7F2 · Warm Crepe<br><span style="font-family: monospace;">15.2:1 AAA vs Umber</span>
+    </div>
+    <div style="padding: 14px; border-radius: 16px; background: #EFE9DF; border: 1px solid rgba(34,26,22,0.15); font-size: 12px;">
+      <strong>Stoneware Vessel</strong><br>#EFE9DF · Raw Bisque<br><span style="font-family: monospace;">13.4:1 AAA vs Umber</span>
+    </div>
+    <div style="padding: 14px; border-radius: 16px; background: #221A16; color: #FAF7F2; font-size: 12px;">
+      <strong>30% Fired Umber</strong><br>#221A16 · Sculptural Clay<br><span style="font-family: monospace;">15.2:1 AAA Primary</span>
+    </div>
+    <div style="padding: 14px; border-radius: 16px; background: #8A283B; color: #FFFFFF; font-size: 12px;">
+      <strong>10% Mulberry</strong><br>#8A283B · Gentle Alert<br><span style="font-family: monospace;">7.9:1 AAA Verified</span>
+    </div>
+    <div style="padding: 14px; border-radius: 16px; background: #264C3C; color: #FFFFFF; font-size: 12px;">
+      <strong>Celadon Glaze</strong><br>#264C3C · Barrier Safe<br><span style="font-family: monospace;">8.8:1 AAA Verified</span>
+    </div>
+  </footer>
+
+  <script>
+    function setVanityLight(mode, btn) {
+      document.body.style.backgroundColor = mode === 'warm' ? '#FAF7F2' : '#F4F6F8';
+      document.querySelectorAll('.light-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

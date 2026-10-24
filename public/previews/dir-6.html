@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction 06 · LAB // SPECIMEN 06 — Clinical Neo-Utility Switchboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 60-30-10 WCAG AAA Anodized Specimen Palette */
+      --chassis-60: #F2F2EE;
+      --pure-tray: #FFFFFF;
+      --carbon-30: #0D0E11;      /* 19.2:1 vs #FFFFFF (AAA) */
+      --steel-muted: #45484F;    /* 8.6:1 vs #FFFFFF (AAA) */
+      --vermilion-10: #B81D13;   /* 7.2:1 vs #FFFFFF (AAA) - Terminal Clash */
+      --viridian-safe: #0F5238;  /* 8.7:1 vs #FFFFFF (AAA) - Verified Pass */
+      --cobalt-info: #0044AA;    /* 8.4:1 vs #FFFFFF (AAA) - Telemetry */
+      --ease-mech: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--chassis-60);
+      color: var(--carbon-30);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Machined Hardware Status Rail */
+    .hardware-rail {
+      max-width: 1400px;
+      margin: 20px auto 0;
+      padding: 0 24px;
+    }
+    .rail-bar {
+      background: var(--carbon-30);
+      color: var(--pure-tray);
+      border-radius: 999px;
+      padding: 10px 14px 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+    }
+    .sys-badge {
+      background: var(--vermilion-10);
+      color: #FFFFFF;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* Specimen Header */
+    .specimen-hero {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 44px 24px 32px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: end;
+    }
+    @media (max-width: 960px) {
+      .specimen-hero { grid-template-columns: 1fr; }
+    }
+    .syne-h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 4.6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    /* Doppelrand Machined Aluminum Enclosure */
+    .aluminum-shell {
+      background: #E2E2DC;
+      border: 1px solid rgba(13, 14, 17, 0.18);
+      padding: 8px;
+      border-radius: 26px;
+      box-shadow: inset 0 1px 0 #FFFFFF, 0 16px 36px -14px rgba(13, 14, 17, 0.1);
+    }
+    .aluminum-core {
+      background: var(--pure-tray);
+      border: 1px solid rgba(13, 14, 17, 0.15);
+      border-radius: 19px;
+      padding: 28px;
+    }
+
+    /* Interactive 2-Column Switchboard Stage */
+    .switchboard-stage {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+    }
+    @media (max-width: 1020px) {
+      .switchboard-stage { grid-template-columns: 1fr; }
+    }
+
+    /* Interactive 3x2 Conflict Matrix Buttons */
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+    @media (max-width: 580px) {
+      .matrix-grid { grid-template-columns: 1fr; }
+    }
+    .matrix-cell {
+      text-align: left;
+      padding: 16px;
+      min-height: 78px;
+      border-radius: 14px;
+      background: var(--chassis-60);
+      border: 1.5px solid rgba(13, 14, 17, 0.15);
+      cursor: pointer;
+      transition: all 0.35s var(--ease-mech);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .matrix-cell:hover {
+      transform: translateY(-2px);
+      border-color: var(--carbon-30);
+    }
+    .matrix-cell.active {
+      background: var(--carbon-30);
+      color: var(--pure-tray);
+      border-color: var(--carbon-30);
+    }
+    .matrix-cell.active .cell-tag { color: #FF8A80 !important; }
+
+    .cell-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* Right Readout Panel */
+    .readout-status-pill {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--vermilion-10);
+      color: #FFFFFF;
+      margin-bottom: 14px;
+    }
+
+    /* Button-in-Button Hardware Pill */
+    .btn-mech {
+      margin-top: 18px;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--carbon-30);
+      color: var(--pure-tray);
+      padding: 8px 8px 8px 22px;
+      min-height: 50px;
+      border-radius: 999px;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.35s var(--ease-mech);
+    }
+    .btn-mech:hover { transform: translateY(-2px); background: var(--vermilion-10); }
+    .btn-mech-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .swatch-strip-6 {
+      max-width: 1400px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 800px) {
+      .swatch-strip-6 { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Machined Hardware Rail -->
+  <header class="hardware-rail">
+    <div class="rail-bar">
+      <div><strong>DERM.LOGIC // SPECIMEN_06</strong> · CLINICAL NEO-UTILITY</div>
+      <div>LAYMAN TRANSLATION ENGINE: <span style="color: #69F0AE;">[ ACTIVE ]</span></div>
+      <span class="sys-badge">ZERO PINK TAX · WCAG AAA</span>
+    </div>
+  </header>
+
+  <!-- Specimen Hero -->
+  <section class="specimen-hero">
+    <div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--vermilion-10); font-weight: 700; margin-bottom: 10px;">
+        DIRECTION 06 · TEENAGE ENGINEERING × DIEUX SKIN CLINICAL HONESTY
+      </div>
+      <h1 class="syne-h1">
+        Zero floral buzzwords. Pure routine truth.
+      </h1>
+    </div>
+    <div style="background: var(--pure-tray); padding: 18px 20px; border-radius: 16px; border: 1px solid rgba(13,14,17,0.15);">
+      <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--vermilion-10); font-weight: 700;">🪞 THE ANTI-MARKETING BULLSHIT DETECTOR</div>
+      <p style="font-size: 13.5px; color: var(--steel-muted); margin-top: 4px;">
+        “Stop giving me fairy-dust claims. Tell me in plain English if these two bottles deactivate each other, if they clog pores, and show the lab proof in a footnote.”
+      </p>
+    </div>
+  </section>
+
+  <!-- Interactive 2-Column Switchboard Stage -->
+  <main class="switchboard-stage">
+
+    <!-- Left: Interactive 6-Cell Conflict Switchboard -->
+    <div class="aluminum-shell">
+      <div class="aluminum-core">
+        <div style="display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--steel-muted);">
+          <span>01 // INTERACTIVE CONFLICT SWITCHBOARD</span>
+          <span>CLICK ANY PAIR TO INSPECT</span>
+        </div>
+        <h2 style="font-family: 'Syne', sans-serif; font-size: 24px; margin-top: 6px;">Select Bottle Pairing</h2>
+
+        <div class="matrix-grid">
+          <button class="matrix-cell active" onclick="loadSpecimen(0, this)">
+            <span class="cell-tag" style="color: var(--vermilion-10);">⚠️ DEACTIVATES POTENCY</span>
+            <strong style="font-size: 15px;">Benzoyl Peroxide × Retinol / Tretinoin</strong>
+          </button>
+          <button class="matrix-cell" onclick="loadSpecimen(1, this)">
+            <span class="cell-tag" style="color: var(--vermilion-10);">⚠️ OXIDIZES ON CONTACT</span>
+            <strong style="font-size: 15px;">Copper Peptides × Pure Vitamin C</strong>
+          </button>
+          <button class="matrix-cell" onclick="loadSpecimen(2, this)">
+            <span class="cell-tag" style="color: var(--cobalt-info);">⚡ SPACE APART (REDNESS)</span>
+            <strong style="font-size: 15px;">AHA / BHA Exfoliant × Retinol Night Serum</strong>
+          </button>
+          <button class="matrix-cell" onclick="loadSpecimen(3, this)">
+            <span class="cell-tag" style="color: var(--viridian-safe);">✓ 100% SAFE SYNERGY</span>
+            <strong style="font-size: 15px;">Azelaic Acid 10% × Niacinamide Serum</strong>
+          </button>
+        </div>
+
+        <div style="margin-top: 20px; padding: 14px 16px; border-radius: 12px; background: var(--chassis-60); font-family: 'Space Mono', monospace; font-size: 11.5px; color: var(--steel-muted);">
+          <strong>RAW MATERIAL:</strong> HPLC Chromatography Purity Logs &amp; EU CosIng Filings · <strong>PROOF:</strong> Organic r/SkincareAddiction Citation Links
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Live Specimen Diagnostic Readout -->
+    <div class="aluminum-shell">
+      <div class="aluminum-core">
+        <span class="readout-status-pill" id="specStatus">⚠️ CANCELS OUT POTENCY ON CONTACT</span>
+        <h2 style="font-family: 'Syne', sans-serif; font-size: 26px; margin-bottom: 10px;" id="specTitle">
+          Benzoyl Peroxide Wash × Retinol / Tretinoin
+        </h2>
+        <p style="font-size: 15px; color: var(--steel-muted); margin-bottom: 16px;" id="specPlain">
+          Benzoyl Peroxide works by releasing oxygen to clear acne bacteria. That same oxygen immediately breaks down Retinol and Tretinoin molecules on your skin, wiping out up to 95% of your retinoid before it can work.
+        </p>
+
+        <div style="padding: 16px; border-radius: 14px; background: var(--chassis-60); border-left: 4px solid var(--carbon-30); margin-bottom: 16px;">
+          <div style="font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase;">Plain-English Bathroom Rule</div>
+          <p style="font-size: 14px; margin-top: 4px;" id="specRule">
+            Use Benzoyl Peroxide in your <strong>Morning shower</strong> and rinse thoroughly. Apply Retinol or Tretinoin only at <strong>Bedtime</strong> on dry skin.
+          </p>
+        </div>
+
+        <!-- Reddit / Group-Chat Screenshot Box -->
+        <div style="padding: 16px; border-radius: 14px; border: 1.5px dashed var(--carbon-30); background: #FAFAFA;">
+          <div style="display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; margin-bottom: 6px;">
+            <span>📱 R/SKINCAREADDICTION SCREENSHOT CARD</span>
+            <span>[ SAVE SPECIMEN ]</span>
+          </div>
+          <p style="font-size: 13.5px; font-style: italic;" id="specQuote">
+            “Screen-capped this for my group chat: putting Retinol on right after a Benzoyl Peroxide wash literally oxidizes the Retinol to zero.”
+          </p>
+        </div>
+
+        <details style="margin-top: 14px; font-family: 'Space Mono', monospace; font-size: 11.5px; color: var(--steel-muted); cursor: pointer;" open>
+          <summary>🔬 View Lab Telemetry Footnote (HPLC &amp; Dalton Spec) ▾</summary>
+          <div style="padding-top: 8px;" id="specLab">
+            Peroxide Free-Radical Oxidation Rate: &gt;80% degradation in 20 min · Retinol MW: 286.45 Da · Pore Clogging Risk: 0/5 Safe.
+          </div>
+        </details>
+
+        <button class="btn-mech">
+          <span>[ EXPORT LOCKSCREEN SCHEDULE · $1.99 ]</span>
+          <span class="btn-mech-circle">↗</span>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 60-30-10 WCAG AAA Swatch Strip -->
+  <footer class="swatch-strip-6">
+    <div style="padding: 14px; border-radius: 14px; background: #F2F2EE; border: 1px solid rgba(13,14,17,0.2); font-size: 12px;">
+      <strong>60% Anodized Chassis</strong><br>#F2F2EE · Silver Chalk<br><span style="font-family: monospace;">17.1:1 AAA vs Carbon</span>
+    </div>
+    <div style="padding: 14px; border-radius: 14px; background: #FFFFFF; border: 1px solid rgba(13,14,17,0.2); font-size: 12px;">
+      <strong>Specimen Tray</strong><br>#FFFFFF · Pure White<br><span style="font-family: monospace;">19.2:1 AAA Max</span>
+    </div>
+    <div style="padding: 14px; border-radius: 14px; background: #0D0E11; color: #FFFFFF; font-size: 12px;">
+      <strong>30% Carbon Frame</strong><br>#0D0E11 · Anodized Black<br><span style="font-family: monospace;">19.2:1 AAA Primary</span>
+    </div>
+    <div style="padding: 14px; border-radius: 14px; background: #B81D13; color: #FFFFFF; font-size: 12px;">
+      <strong>10% Clash Signal</strong><br>#B81D13 · Signal Vermilion<br><span style="font-family: monospace;">7.2:1 AAA Verified</span>
+    </div>
+    <div style="padding: 14px; border-radius: 14px; background: #0F5238; color: #FFFFFF; font-size: 12px;">
+      <strong>Clinical Pass</strong><br>#0F5238 · Viridian Safe<br><span style="font-family: monospace;">8.7:1 AAA Verified</span>
+    </div>
+  </footer>
+
+  <script>
+    const SPECIMENS = [
+      {
+        status: '⚠️ CANCELS OUT POTENCY ON CONTACT',
+        color: '#B81D13',
+        title: 'Benzoyl Peroxide Wash × Retinol / Tretinoin',
+        plain: 'Benzoyl Peroxide works by releasing oxygen to clear acne bacteria. That same oxygen immediately breaks down Retinol and Tretinoin molecules on your skin, wiping out up to 95% of your retinoid before it can work.',
+        rule: 'Use Benzoyl Peroxide in your Morning shower and rinse thoroughly. Apply Retinol or Tretinoin only at Bedtime on dry skin.',
+        quote: '“Screen-capped this for my group chat: putting Retinol on right after a Benzoyl Peroxide wash literally oxidizes the Retinol to zero.”',
+        lab: 'Peroxide Free-Radical Oxidation Rate: >80% degradation in 20 min · Retinol MW: 286.45 Da · Pore Clogging Risk: 0/5 Safe.'
+      },
+      {
+        status: '⚠️ OXIDIZES BOTH SERUMS ON CONTACT',
+        color: '#B81D13',
+        title: 'Copper Peptides (GHK-Cu) × Pure Vitamin C',
+        plain: 'Copper ions transfer electrons directly into pure Vitamin C (L-Ascorbic Acid), turning Vitamin C dark orange and inactive before it can brighten dark spots.',
+        rule: 'Apply Pure Vitamin C in the Morning under sunscreen. Save Copper Peptides for your Evening moisture barrier step.',
+        quote: '“I mixed Copper Peptides and Vitamin C in my palm for months—no wonder my bottle smelled like pennies and stopped working.”',
+        lab: 'Redox Potential Shift: Cu2+ catalyzes rapid dehydroascorbic acid degradation · pH mismatch: 3.2 vs 6.2.'
+      },
+      {
+        status: '⚡ SPACE APART · HIGH PEELING & STING RISK',
+        color: '#0044AA',
+        title: 'AHA / BHA Exfoliant × Retinol Night Serum',
+        plain: 'Both products speed up skin shedding. Layering an exfoliating acid right under Retinol strips your protective oil barrier and triggers stinging around the nose and mouth.',
+        rule: 'Never layer on the same night. Use your AHA/BHA on Night 1 and your Retinol on Night 2.',
+        quote: '“Stopped layering Glycolic Acid under my Retinol and my winter flaking vanished in four days.”',
+        lab: 'Acid Mantle Disruption: pH 3.4 exfoliant + retinoid ester hydrolysis increases TEWL (transepidermal water loss) by 38%.'
+      },
+      {
+        status: '✓ 100% BARRIER SAFE · CALMS REDNESS',
+        color: '#0F5238',
+        title: 'Azelaic Acid 10% × Niacinamide Serum',
+        plain: 'A dermatologist-loved pairing for redness, rosacea, and post-acne marks. Both work happily at a gentle neutral pH without stinging or clogging pores.',
+        rule: 'Apply thinner Niacinamide serum first, wait 30 seconds, then smooth Azelaic Acid cream on top.',
+        quote: '“The best redness-calming duo on my shelf—zero stinging and works under daily sunscreen.”',
+        lab: 'Synergistic Tyrosinase & Melanosome Transfer Inhibition · Shared pH Window: 5.0–6.0 · Pore Risk: 0/5.'
+      }
+    ];
+    function loadSpecimen(idx, btn) {
+      const s = SPECIMENS[idx];
+      const pill = document.getElementById('specStatus');
+      pill.textContent = s.status;
+      pill.style.background = s.color;
+      document.getElementById('specTitle').textContent = s.title;
+      document.getElementById('specPlain').textContent = s.plain;
+      document.getElementById('specRule').textContent = s.rule;
+      document.getElementById('specQuote').textContent = s.quote;
+      document.getElementById('specLab').textContent = s.lab;
+      document.querySelectorAll('.matrix-cell').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

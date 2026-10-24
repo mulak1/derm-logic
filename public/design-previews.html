@@ -3,28 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DermLogic Redesign: 6 Authentic Creative Direction Previews</title>
+  <title>DermLogic Redesign Studio · 6 Distinct Architectural Interpretations</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #0B0D11;
-      color: #E2E8F0;
-      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #090A0D;
+      color: #F2F5FA;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
     }
-    
-    /* Top Director Switcher Bar */
-    .director-nav {
+
+    /* Top Creative Director Studio Bar */
+    .studio-header {
       position: sticky;
       top: 0;
-      z-index: 9999;
-      background: rgba(11, 13, 17, 0.95);
-      backdrop-filter: blur(16px);
+      z-index: 100;
+      background: rgba(9, 10, 13, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding: 12px 24px;
       display: flex;
@@ -33,940 +34,262 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-    .director-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #F8FAFC;
+
+    .studio-brand {
       display: flex;
       align-items: center;
       gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
-    .director-title span {
-      background: #C85A68;
-      color: #FFF;
-      font-size: 11px;
-      padding: 2px 8px;
+    .studio-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      padding: 3px 9px;
       border-radius: 999px;
-      font-weight: 800;
+      background: #9E3324;
+      color: #FFF;
     }
-    .direction-tabs {
+
+    .direction-pills {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
     }
-    .tab-btn {
-      background: rgba(255, 255, 255, 0.06);
+    .dir-pill {
+      padding: 8px 14px;
+      min-height: 38px;
+      border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #94A3B8;
-      padding: 7px 14px;
-      border-radius: 8px;
-      font-size: 12.5px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #9BA8BF;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
-      white-space: nowrap;
+      transition: all 0.3s cubic-bezier(0.32, 0.72, 0, 1);
     }
-    .tab-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
-      color: #F8FAFC;
+    .dir-pill:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.1);
     }
-    .tab-btn.active {
-      background: #F8FAFC;
-      color: #0F172A;
-      border-color: #F8FAFC;
-      box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
-    }
-    
-    /* Stage Frame */
-    .preview-stage {
-      flex: 1;
-      padding: 32px 20px 60px;
-      display: flex;
-      justify-content: center;
-    }
-    .preview-viewport {
-      width: 100%;
-      max-width: 1240px;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 30px 80px -15px rgba(0,0,0,0.7);
-      border: 1px solid rgba(255,255,255,0.12);
-      transition: all 0.3s ease;
-      background: var(--bg);
-      color: var(--text);
+    .dir-pill.active {
+      background: #F2F5FA;
+      color: #090A0D;
+      border-color: #F2F5FA;
     }
 
-    /* THEME 1: Architectural Apothecary */
-    .theme-1 {
-      --bg: #F7F4EE;
-      --surface: #EDE8DE;
-      --surface-tint: #E4DDD1;
-      --text: #1F1A17;
-      --text-muted: #6B625B;
-      --border: #D6CEBF;
-      --accent: #B84A39;
-      --safe: #2E4A38;
-      --warn: #C49746;
-      --font-display: 'Newsreader', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      --radius-card: 14px;
-      --radius-btn: 999px;
-      --shadow-card: 0 1px 3px rgba(31,26,23,0.04), 0 10px 30px rgba(31,26,23,0.06);
-      font-family: var(--font-sans);
-    }
-
-    /* THEME 2: Cellular Luminary */
-    .theme-2 {
-      --bg: #090A0D;
-      --surface: #14171F;
-      --surface-tint: #1C222D;
-      --text: #F0F3FA;
-      --text-muted: #8E9BB0;
-      --border: rgba(255, 255, 255, 0.1);
-      --accent: #F43F5E;
-      --safe: #2DD4BF;
-      --warn: #F59E0B;
-      --font-display: 'Fraunces', Georgia, serif;
-      --font-sans: 'Inter', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-      --radius-card: 18px;
-      --radius-btn: 12px;
-      --shadow-card: 0 0 35px rgba(45, 212, 191, 0.07);
-      font-family: var(--font-sans);
-    }
-
-    /* THEME 3: Botanical Bauhaus */
-    .theme-3 {
-      --bg: #F5F5F0;
-      --surface: #E5EBE6;
-      --surface-tint: #D6E0D8;
-      --text: #182822;
-      --text-muted: #566961;
-      --border: #182822;
-      --accent: #A32A2A;
-      --safe: #2E5C4E;
-      --warn: #D97706;
-      --font-display: 'Instrument Serif', serif;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      --radius-card: 4px;
-      --radius-btn: 4px;
-      --shadow-card: none;
-      font-family: var(--font-sans);
-    }
-
-    /* THEME 4: Executive Intelligence */
-    .theme-4 {
-      --bg: #FBF7F0;
-      --surface: #F0E9DC;
-      --surface-tint: #E6DDCF;
-      --text: #111317;
-      --text-muted: #5C5851;
-      --border: #D8D2C5;
-      --accent: #8B1E2B;
-      --safe: #1F5C3B;
-      --warn: #C47A1E;
-      --font-display: 'Newsreader', Georgia, serif;
-      --font-sans: 'Inter', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-      --radius-card: 0px;
-      --radius-btn: 2px;
-      --shadow-card: none;
-      font-family: var(--font-sans);
-    }
-
-    /* THEME 5: Silk & Ceramic Atelier */
-    .theme-5 {
-      --bg: #FBF9F5;
-      --surface: #EFE9E0;
-      --surface-tint: #E4DCD1;
-      --text: #241C18;
-      --text-muted: #7A6F68;
-      --border: #DCD3C7;
-      --accent: #943448;
-      --safe: #2E5444;
-      --warn: #B8860B;
-      --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      --radius-card: 28px 10px 28px 10px;
-      --radius-btn: 999px;
-      --shadow-card: 0 4px 20px rgba(36,28,24,0.04), 0 20px 40px rgba(36,28,24,0.03);
-      font-family: var(--font-sans);
-    }
-
-    /* THEME 6: Cyber-Clinical Neo-Utility */
-    .theme-6 {
-      --bg: #FFFFFF;
-      --surface: #F4F4F6;
-      --surface-tint: #ECECEE;
-      --text: #0A0A0A;
-      --text-muted: #555555;
-      --border: #0A0A0A;
-      --accent: #FF3B30;
-      --safe: #0070F3;
-      --warn: #F5A623;
-      --font-display: 'Syne', sans-serif;
-      --font-sans: 'Inter', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-      --radius-card: 0px;
-      --radius-btn: 0px;
-      --shadow-card: 4px 4px 0px #0A0A0A;
-      font-family: var(--font-sans);
-    }
-
-    /* Viewport Inner Layout */
-    .v-header {
-      padding: 24px 40px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--bg);
-    }
-    .v-brand {
-      font-family: var(--font-display);
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text);
-    }
-    .v-nav-links {
-      display: flex;
-      gap: 24px;
-      font-size: 13.5px;
-      font-weight: 600;
-    }
-    .v-nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }
-    .v-nav-links a:hover { color: var(--text); }
-    
-    .v-hero {
-      padding: 48px 40px 40px;
-      border-bottom: 1px solid var(--border);
-    }
-    .v-badge {
-      display: inline-block;
-      padding: 5px 12px;
-      border-radius: var(--radius-btn);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      border: 1px solid var(--border);
-      color: var(--accent);
-      background: var(--surface);
-    }
-    .v-h1 {
-      font-family: var(--font-display);
-      font-size: clamp(34px, 4.6vw, 56px);
-      line-height: 1.08;
-      font-weight: 700;
-      margin-bottom: 18px;
-      color: var(--text);
-      max-width: 24ch;
-    }
-    .v-p {
-      font-size: 16.5px;
-      line-height: 1.6;
-      color: var(--text-muted);
-      max-width: 66ch;
-      margin-bottom: 30px;
-    }
-
-    /* Expert Mirror Callout Banner */
-    .expert-mirror-banner {
-      margin: 0 40px 32px;
-      padding: 16px 20px;
-      border-radius: var(--radius-card);
-      background: var(--surface-tint);
-      border-left: 4px solid var(--accent);
+    .studio-controls {
       display: flex;
       align-items: center;
-      gap: 16px;
-    }
-    .expert-mirror-icon {
-      font-size: 24px;
-      flex-shrink: 0;
-    }
-    .expert-mirror-text {
-      font-size: 14px;
-      line-height: 1.45;
-      color: var(--text);
-    }
-    .expert-mirror-text strong {
-      color: var(--accent);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    /* 4-Column Methodology Matrix Strip */
-    .method-matrix {
-      margin: 0 40px 32px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    @media (max-width: 900px) {
-      .method-matrix { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 550px) {
-      .method-matrix { grid-template-columns: 1fr; }
-    }
-    .method-cell {
-      padding: 16px 18px;
-      border-radius: var(--radius-card);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-card);
-    }
-    .method-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 6px;
-    }
-    .method-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .method-desc {
-      font-size: 12.5px;
-      color: var(--text-muted);
-      line-height: 1.45;
-    }
-
-    /* Palette Strip */
-    .palette-box {
-      margin: 0 40px 32px;
-      padding: 22px;
-      border-radius: var(--radius-card);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-card);
-    }
-    .palette-title {
-      font-size: 12px;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 14px;
-      color: var(--text);
-    }
-    .swatches {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 12px;
-    }
-    .swatch {
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-    .swatch-hex {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 12px;
-    }
-
-    /* Live Interactive Components Section */
-    .v-components {
-      padding: 0 40px 48px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    @media (max-width: 900px) {
-      .v-components { grid-template-columns: 1fr; }
-    }
-    .v-card {
-      padding: 26px;
-      border-radius: var(--radius-card);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .v-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
       gap: 8px;
     }
-    .v-card-title {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .v-status-pill {
-      font-family: var(--font-mono);
-      font-size: 11.5px;
-      font-weight: 700;
-      padding: 5px 10px;
-      border-radius: var(--radius-btn);
-      background: rgba(184, 74, 57, 0.12);
-      color: var(--accent);
-      border: 1px solid var(--accent);
-    }
-    .theme-2 .v-status-pill { background: rgba(244, 63, 94, 0.18); }
-    .theme-6 .v-status-pill { border-radius: 0; box-shadow: 2px 2px 0 var(--border); }
-    
-    .v-btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 13px 24px;
-      border-radius: var(--radius-btn);
-      background: var(--text);
-      color: var(--bg);
-      font-weight: 700;
-      font-size: 14px;
-      text-decoration: none;
-      cursor: pointer;
-      border: 1px solid var(--text);
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-    .v-btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
-    .theme-6 .v-btn-primary { box-shadow: 4px 4px 0 #000; }
-    .theme-6 .v-btn-primary:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 #000; }
-
-    .v-btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 13px 22px;
-      border-radius: var(--radius-btn);
+    .ctrl-btn {
+      padding: 7px 12px;
+      min-height: 36px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
       background: transparent;
-      color: var(--text);
-      font-weight: 600;
-      font-size: 14px;
-      border: 1px solid var(--border);
+      color: #F2F5FA;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ctrl-btn.active {
+      background: rgba(52, 211, 153, 0.16);
+      border-color: #34D399;
+      color: #34D399;
     }
 
-    .v-steps-list {
-      list-style: none;
-      margin: 18px 0;
+    /* Single Stage Mode */
+    .stage-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .iframe-shell {
+      width: 100%;
+      max-width: 1440px;
+      height: calc(100dvh - 96px);
+      min-height: 760px;
+      background: #14171F;
+      padding: 8px;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.75);
+      transition: max-width 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .iframe-shell.mobile-mode {
+      max-width: 410px;
+    }
+    .preview-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 19px;
+      background: #FFF;
+    }
+
+    /* 6-Up Side-by-Side Comparison Matrix Mode */
+    .gallery-grid {
+      display: none;
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      width: 100%;
+    }
+    @media (max-width: 1100px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+    .gallery-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px;
+      border-radius: 26px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
     }
-    .v-step-item {
+    .gallery-card-bar {
       padding: 12px 16px;
-      border-radius: 8px;
-      background: var(--bg);
-      border: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 13.5px;
-    }
-    .v-step-num {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      color: var(--accent);
-      font-size: 12px;
-    }
-
-    /* Tangible Screenshot Artifact Box */
-    .screenshot-artifact-box {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 10px;
-      background: var(--bg);
-      border: 1.5px dashed var(--accent);
-    }
-    .screenshot-top-label {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    .screenshot-quote {
-      font-style: italic;
-      font-size: 13.5px;
-      line-height: 1.45;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .screenshot-author {
-      font-size: 11.5px;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-    }
-
-    /* Collapsible Science Footnote Drawer */
-    .science-drawer {
-      margin-top: 16px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      padding: 12px 16px;
       font-size: 13px;
     }
-    .science-drawer summary {
-      cursor: pointer;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
+    .gallery-iframe-wrap {
+      height: 560px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .science-drawer table {
+    .gallery-iframe-wrap iframe {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      font-size: 12px;
-    }
-    .science-drawer th, .science-drawer td {
-      padding: 7px 10px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-    .science-drawer th {
-      font-family: var(--font-mono);
-      color: var(--text-muted);
-      font-size: 11px;
+      height: 100%;
+      border: none;
+      background: #FFF;
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Director Navigation Bar -->
-  <header class="director-nav">
-    <div class="director-title">
-      DermLogic Creative Direction Previews <span>6 Options</span>
+  <header class="studio-header">
+    <div class="studio-brand">
+      <span>DermLogic Principal Redesign Suite</span>
+      <span class="studio-badge">6 Bespoke Architectures</span>
     </div>
-    <div class="direction-tabs" id="tabBar">
-      <button class="tab-btn active" onclick="switchTheme(1, this)">1. Architectural Apothecary</button>
-      <button class="tab-btn" onclick="switchTheme(2, this)">2. Cellular Luminary</button>
-      <button class="tab-btn" onclick="switchTheme(3, this)">3. Botanical Bauhaus</button>
-      <button class="tab-btn" onclick="switchTheme(4, this)">4. Executive Intelligence</button>
-      <button class="tab-btn" onclick="switchTheme(5, this)">5. Silk &amp; Ceramic Atelier</button>
-      <button class="tab-btn" onclick="switchTheme(6, this)">6. Cyber-Clinical Utility</button>
+
+    <div class="direction-pills" id="pillGroup">
+      <button class="dir-pill active" onclick="selectDirection(1, this)">01 · L’Officine Brut (Editorial Split)</button>
+      <button class="dir-pill" onclick="selectDirection(2, this)">02 · Spectra Dermis (Dark Bento)</button>
+      <button class="dir-pill" onclick="selectDirection(3, this)">03 · Klinisk Form (Nordic Poster)</button>
+      <button class="dir-pill" onclick="selectDirection(4, this)">04 · Vanity Ledger (Broadsheet Receipt)</button>
+      <button class="dir-pill" onclick="selectDirection(5, this)">05 · Atelier Céramique (Z-Axis Cascade)</button>
+      <button class="dir-pill" onclick="selectDirection(6, this)">06 · Specimen 06 (Clinical Switchboard)</button>
+    </div>
+
+    <div class="studio-controls">
+      <button class="ctrl-btn active" id="btnSingle" onclick="setMode('single')">Single Focus</button>
+      <button class="ctrl-btn" id="btnGallery" onclick="setMode('gallery')">Compare All 6 Grid</button>
+      <button class="ctrl-btn" id="btnViewport" onclick="toggleMobile()">📱 390px Thumb-Zone</button>
+      <a class="ctrl-btn" id="openDirectLink" href="/previews/dir-1.html" target="_blank">Open Standalone ↗</a>
     </div>
   </header>
 
-  <!-- Main Preview Stage -->
-  <main class="preview-stage">
-    <div class="preview-viewport theme-1" id="viewport">
-      
-      <!-- Viewport Header -->
-      <nav class="v-header">
-        <div class="v-brand" id="brandText">DERMLOGIC</div>
-        <div class="v-nav-links">
-          <a href="#shelf">Vanity Shelf</a>
-          <a href="#checker">Clash Checker</a>
-          <a href="#cycling">4-Night Cycling</a>
-          <a href="#report" style="font-weight: 700; color: var(--text);" id="navPill">Saved Ritual (3 Bottles)</a>
-        </div>
-      </nav>
-
-      <!-- Viewport Hero -->
-      <section class="v-hero">
-        <div class="v-badge" id="badgeText">Architectural Apothecary · Direction 01</div>
-        <h1 class="v-h1" id="heroTitle">Your active serums should work in harmony, not conflict.</h1>
-        <p class="v-p" id="heroDesc">
-          71% of multi-step anti-aging routines mix products that clash in acidity, cause flushing, or deactivate each other on contact. Discover which bottles cancel out in 5 seconds.
-        </p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <button class="v-btn-primary" id="btnPrimary">Check Your Active Routine &rarr;</button>
-          <button class="v-btn-secondary" id="btnSecondary">Browse 60 Tested Pairings</button>
-        </div>
-      </section>
-
-      <!-- The Expert Mirror Question (What Women Actually Ask) -->
-      <section class="expert-mirror-banner">
-        <div class="expert-mirror-icon">🪞</div>
-        <div class="expert-mirror-text">
-          <strong id="mirrorLabel">The Bathroom Mirror Vulnerability</strong>
-          <span id="mirrorQuestion">"Why did my $182 Vitamin C turn orange in 6 weeks, and why does my face sting when I put my ceramide moisturizer on top?"</span>
-        </div>
-      </section>
-
-      <!-- 4-Column Methodology Matrix Strip -->
-      <section class="method-matrix">
-        <div class="method-cell">
-          <div class="method-label">1. Rawest Material</div>
-          <div class="method-title" id="mRawTitle">Handwritten Compounding Batch Record</div>
-          <div class="method-desc" id="mRawDesc">Unfiltered physical laboratory compounding log sheets, amber glass pipette meniscus levels, and raw unedited skin erythema photos.</div>
-        </div>
-        <div class="method-cell">
-          <div class="method-label">2. Specific Tools</div>
-          <div class="method-title" id="mToolTitle">Medium-Format Macro &amp; Cotton Stock</div>
-          <div class="method-desc" id="mToolDesc">Fujifilm GFX 100S 120mm macro photography, 300gsm physical cotton proof prints, and 3000K/5000K bathroom vanity lighting calibration.</div>
-        </div>
-        <div class="method-cell">
-          <div class="method-label">3. Screenshot Factor</div>
-          <div class="method-title" id="mScreenTitle">The Group-Chat Save Card</div>
-          <div class="method-desc" id="mScreenDesc">A high-contrast 9:16 mobile artifact designed to be texted directly into group chats: "Look why our serum stack is pilling!"</div>
-        </div>
-        <div class="method-cell">
-          <div class="method-label">4. External Proof</div>
-          <div class="method-title" id="mProofTitle">100-User Wynter Blind Test</div>
-          <div class="method-desc" id="mProofDesc">Independent panel of active beauty buyers (>85% "Feels like a luxury French authority", <5% "Feels like generic AI").</div>
-        </div>
-      </section>
-
-      <!-- Palette Strip -->
-      <section class="palette-box">
-        <div class="palette-title">Exact 60-30-10 System &amp; WCAG AAA Contrast Specifications</div>
-        <div class="swatches" id="swatchContainer">
-          <!-- Dynamically populated by JS -->
-        </div>
-      </section>
-
-      <!-- Interactive Components Grid -->
-      <section class="v-components">
-        
-        <!-- Component 1: Conflict Diagnostic Card -->
-        <div class="v-card">
-          <div>
-            <div class="v-card-header">
-              <div class="v-card-title">Copper Peptides × Pure Vitamin C</div>
-              <span class="v-status-pill">⚠️ CANCELS OUT POTENCY</span>
-            </div>
-            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">
-              Pure Vitamin C (L-Ascorbic Acid) requires an acidic pH (3.2), while Copper Peptides (GHK-Cu) need a neutral pH (6.2). Layering them in the same step triggers copper oxidation and renders both bottles inactive.
-            </p>
-            <div style="padding: 10px 14px; background: var(--bg); border-radius: 8px; border: 1px solid var(--border); font-size: 13px; margin-bottom: 14px;">
-              <strong>Plain-English Recommendation:</strong> Apply Vitamin C in the Morning under SPF. Reserve Copper Peptides for your Evening barrier repair step.
-            </div>
-
-            <!-- Tangible Screenshot Artifact -->
-            <div class="screenshot-artifact-box">
-              <div class="screenshot-top-label">
-                <span>📱 Group-Chat Screenshot Moment</span>
-                <span>Tap to Save</span>
-              </div>
-              <div class="screenshot-quote" id="screenshotQuote">
-                "Wait... I’ve been putting my $120 CE Ferulic right after my Ordinary Copper Peptides every single morning. I literally neutralized both bottles for 6 months."
-              </div>
-              <div class="screenshot-author">— Verified r/SkincareAddiction Routine Audit #4092</div>
-            </div>
-          </div>
-          
-          <!-- Collapsible Science Drawer -->
-          <details class="science-drawer">
-            <summary>🔬 View Lab Chemistry Specifications ▾</summary>
-            <table>
-              <thead>
-                <tr>
-                  <th>Active Compound</th>
-                  <th>Lab pH</th>
-                  <th>pKa</th>
-                  <th>Mol. Weight</th>
-                  <th>Pore Risk</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>L-Ascorbic Acid (15%)</td>
-                  <td>3.0–3.5</td>
-                  <td>4.17</td>
-                  <td>176 Da</td>
-                  <td>0/5 (Safe)</td>
-                </tr>
-                <tr>
-                  <td>Copper Tripeptide-1 (1%)</td>
-                  <td>6.0–6.5</td>
-                  <td>—</td>
-                  <td>340 Da</td>
-                  <td>0/5 (Safe)</td>
-                </tr>
-              </tbody>
-            </table>
-          </details>
-        </div>
-
-        <!-- Component 2: 4-Night Skin Cycling Calendar Preview -->
-        <div class="v-card">
-          <div>
-            <div class="v-card-header">
-              <div class="v-card-title">Personalized Bedtime Schedule</div>
-              <span class="v-status-pill" style="color: var(--safe); border-color: var(--safe); background: transparent;">100% BARRIER PROTECTED</span>
-            </div>
-            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
-              Separate conflicting actives across a 4-night skin cycle to prevent redness while maximizing cellular turnover.
-            </p>
-            <ul class="v-steps-list">
-              <li class="v-step-item">
-                <span><strong>Night 1:</strong> Gentle Exfoliation (AHA/BHA)</span>
-                <span class="v-step-num">Step 1</span>
-              </li>
-              <li class="v-step-item">
-                <span><strong>Night 2:</strong> Retinol &amp; Cell Renewal</span>
-                <span class="v-step-num">Step 2</span>
-              </li>
-              <li class="v-step-item">
-                <span><strong>Night 3:</strong> Copper Peptides &amp; Deep Moisture</span>
-                <span class="v-step-num">Step 3</span>
-              </li>
-              <li class="v-step-item">
-                <span><strong>Night 4:</strong> Pure Ceramide Barrier Rest</span>
-                <span class="v-step-num">Step 4</span>
-              </li>
-            </ul>
-          </div>
-          <button class="v-btn-primary" style="width: 100%; font-size: 13.5px; margin-top: 14px;">Unlock Custom Lockscreen Schedule ($1.99)</button>
-        </div>
-
-      </section>
-
+  <!-- Single Focus Interactive Stage -->
+  <main class="stage-container" id="singleStage">
+    <div class="iframe-shell" id="frameShell">
+      <iframe class="preview-frame" id="mainFrame" src="/previews/dir-1.html" title="DermLogic Redesign Direction Preview"></iframe>
     </div>
   </main>
 
+  <!-- 6-Up Side-by-Side Comparison Grid -->
+  <section class="gallery-grid" id="galleryStage">
+    <div class="gallery-card">
+      <div class="gallery-card-bar">
+        <strong>01 · L’Officine Brut — Sticky Travertine Editorial Split</strong>
+        <a class="ctrl-btn" href="/previews/dir-1.html" target="_blank">Full Screen ↗</a>
+      </div>
+      <div class="gallery-iframe-wrap"><iframe src="/previews/dir-1.html" loading="lazy" title="Direction 1"></iframe></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-bar">
+        <strong>02 · Spectra Dermis — Dark-Field Confocal Bento Cockpit</strong>
+        <a class="ctrl-btn" href="/previews/dir-2.html" target="_blank">Full Screen ↗</a>
+      </div>
+      <div class="gallery-iframe-wrap"><iframe src="/previews/dir-2.html" loading="lazy" title="Direction 2"></iframe></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-bar">
+        <strong>03 · Klinisk Form — Nordic Structuralist Poster &amp; Cycling Wheel</strong>
+        <a class="ctrl-btn" href="/previews/dir-3.html" target="_blank">Full Screen ↗</a>
+      </div>
+      <div class="gallery-iframe-wrap"><iframe src="/previews/dir-3.html" loading="lazy" title="Direction 3"></iframe></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-bar">
+        <strong>04 · The Vanity Ledger — 3-Column Broadsheet &amp; Waste Receipt</strong>
+        <a class="ctrl-btn" href="/previews/dir-4.html" target="_blank">Full Screen ↗</a>
+      </div>
+      <div class="gallery-iframe-wrap"><iframe src="/previews/dir-4.html" loading="lazy" title="Direction 4"></iframe></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-bar">
+        <strong>05 · Atelier Céramique — Z-Axis Overlapping Card Cascade</strong>
+        <a class="ctrl-btn" href="/previews/dir-5.html" target="_blank">Full Screen ↗</a>
+      </div>
+      <div class="gallery-iframe-wrap"><iframe src="/previews/dir-5.html" loading="lazy" title="Direction 5"></iframe></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-bar">
+        <strong>06 · LAB // SPECIMEN 06 — Machined Aluminum Matrix Switchboard</strong>
+        <a class="ctrl-btn" href="/previews/dir-6.html" target="_blank">Full Screen ↗</a>
+      </div>
+      <div class="gallery-iframe-wrap"><iframe src="/previews/dir-6.html" loading="lazy" title="Direction 6"></iframe></div>
+    </div>
+  </section>
+
   <script>
-    const THEMES = {
-      1: {
-        className: 'theme-1',
-        brand: 'DERMLOGIC',
-        badge: 'Architectural Apothecary · Direction 01',
-        title: 'Your active serums should work in harmony, not conflict.',
-        desc: '71% of multi-step anti-aging routines mix products that clash in acidity, cause flushing, or deactivate each other on contact. Discover which bottles cancel out in 5 seconds.',
-        btnText: 'Check Your Active Routine →',
-        navPill: 'Saved Ritual (3 Bottles)',
-        mirrorLabel: 'The Bathroom Mirror Vulnerability',
-        mirrorQuestion: '"Why did my $182 Vitamin C turn orange in 6 weeks, and why does my face sting when I put my ceramide moisturizer on top?"',
-        mRawTitle: 'Handwritten Compounding Batch Record',
-        mRawDesc: 'Unfiltered physical laboratory compounding log sheets, amber glass pipette meniscus levels, and raw unedited skin erythema photos.',
-        mToolTitle: 'Medium-Format Macro & Cotton Stock',
-        mToolDesc: 'Fujifilm GFX 100S 120mm macro photography, 300gsm physical cotton proof prints, and 3000K/5000K bathroom vanity lighting calibration.',
-        mScreenTitle: 'The Group-Chat Save Card',
-        mScreenDesc: 'A high-contrast 9:16 mobile artifact designed to be texted directly into group chats: "Look why our serum stack is pilling!"',
-        mProofTitle: '100-User Wynter Blind Test',
-        mProofDesc: 'Independent panel of active beauty buyers (>85% "Feels like a luxury French authority", <5% "Feels like generic AI").',
-        screenshotQuote: '"Wait... I’ve been putting my $120 CE Ferulic right after my Ordinary Copper Peptides every single morning. I literally neutralized both bottles for 6 months."',
-        swatches: [
-          { name: 'Canvas (60%)', hex: '#F7F4EE', role: 'Travertine Neutral', contrast: '14.2:1 (AAA)' },
-          { name: 'Structure (30%)', hex: '#1F1A17', role: 'Raw Espresso Ink', contrast: '14.2:1 (AAA)' },
-          { name: 'Card Surface', hex: '#EDE8DE', role: 'Soft Oat Linen', contrast: '12.8:1 (AAA)' },
-          { name: 'Accent / Clash (10%)', hex: '#B84A39', role: 'Burnt Terracotta', contrast: '7.8:1 (AAA)' },
-          { name: 'Verified Safe', hex: '#2E4A38', role: 'Botanical Olive', contrast: '8.4:1 (AAA)' }
-        ]
-      },
-      2: {
-        className: 'theme-2',
-        brand: 'DERMLOGIC // BIOTECH',
-        badge: 'Cellular Luminary · Direction 02',
-        title: 'Precision molecular diagnostics for high-performance skin.',
-        desc: 'Clinical pH ionization windows, sub-nanometer molecular penetration depth, and real-time active stabilization engineered for discerning routines.',
-        btnText: 'Initiate Molecular Scan →',
-        navPill: 'Spectra Active (4 Vectors)',
-        mirrorLabel: 'The Laser Clinic Vulnerability',
-        mirrorQuestion: '"My esthetician said my moisture barrier is compromised from over-exfoliating, but every anti-acne product has salicylic acid in it."',
-        mRawTitle: 'Confocal Laser Scanning Microscopy',
-        mRawDesc: 'Fluorescence-tagged lipid bilayer stacks, mass spectrometry Dalton peak charts, and multi-spectral Visia UV damage photographs.',
-        mToolTitle: 'Polarized Optics & Sub-Pixel Shaders',
-        mToolDesc: 'Sub-nanometer spectrophotometer calibration, custom WebGL chromatic dispersion shaders, and true-black OLED color grading.',
-        mScreenTitle: 'The Molecular Conflict Vector',
-        mScreenDesc: 'Visual orbital clash diagrams showing exact Dalton molecular weight penetration depths and acid ionization spikes.',
-        mProofTitle: 'Visia Erythema Score Reductions',
-        mProofDesc: 'Clinical dermatologist cross-polarized photographs proving 44% reduction in superficial capillary flushing after 14 days.',
-        screenshotQuote: '"The visual radar showed my glycolic acid was hitting at pH 3.1 right when my niacinamide was at pH 6.0. No wonder my cheeks were bright red by 10 AM."',
-        swatches: [
-          { name: 'Void (60%)', hex: '#090A0D', role: 'Obsidian Velvet', contrast: '17.8:1 (AAA)' },
-          { name: 'Luminescence (30%)', hex: '#F0F3FA', role: 'Polar White Text', contrast: '17.8:1 (AAA)' },
-          { name: 'Optic Glass', hex: '#14171F', role: 'Sub-Pixel Graphite', contrast: '15.4:1 (AAA)' },
-          { name: 'Clash Vector (10%)', hex: '#F43F5E', role: 'Prismatic Rose', contrast: '7.2:1 (AAA)' },
-          { name: 'Barrier Safe', hex: '#2DD4BF', role: 'Refractive Cyan', contrast: '9.6:1 (AAA)' }
-        ]
-      },
-      3: {
-        className: 'theme-3',
-        brand: 'DERMLOGIC',
-        badge: 'Botanical Bauhaus · Direction 03',
-        title: 'Form follows formulation. Organic calm for your barrier.',
-        desc: 'Radical Scandinavian simplicity. No synthetic fillers, no marketing mystique. Just pure, unblemished data on what your skin absorbs.',
-        btnText: 'Open Formulation Dial →',
-        navPill: 'Index (18 Actives)',
-        mirrorLabel: 'The Clean Beauty Skepticism',
-        mirrorQuestion: '"Every brand calls itself clean and non-toxic, but my face still breaks out in tiny fungal bumps every time I use a facial oil."',
-        mRawTitle: 'Hand-Pressed Herbarium & Plaster Proofs',
-        mRawDesc: 'Botanical cold-extraction press sheets, unbleached linen pressings, and physical ceramic clay slip test tiles showing absorption rates.',
-        mToolTitle: 'Pantone SkinTone & Swiss Grid Scales',
-        mToolDesc: 'Physical Pantone SkinTone guide matching, typographic scaling set to traditional European poster proportions, and zero fake shadows.',
-        mScreenTitle: 'The Pure Formulation Index Card',
-        mScreenDesc: 'Clean, unembellished typography that reads like an architectural blueprint: "Zero pore-clogging esters, 100% barrier calm."',
-        mProofTitle: 'Unprompted Pinterest Save Rate',
-        mProofDesc: 'Measuring real aesthetic save rates on Pinterest boards (Interior / Routine / Packaging) with >12% save-to-impression ratio.',
-        screenshotQuote: '"Finally a skincare site that doesn’t treat me like a child with glitter and pink bubbles. Just tell me if the oil clogs pores."',
-        swatches: [
-          { name: 'Plaster (60%)', hex: '#F5F5F0', role: 'Nordic Chalk', contrast: '13.5:1 (AAA)' },
-          { name: 'Typographic Ink (30%)', hex: '#182822', role: 'Deep Forest Spruce', contrast: '13.5:1 (AAA)' },
-          { name: 'Mist Container', hex: '#E5EBE6', role: 'Sage Mist Surface', contrast: '11.8:1 (AAA)' },
-          { name: 'Clash Alert (10%)', hex: '#A32A2A', role: 'Lingonberry', contrast: '8.1:1 (AAA)' },
-          { name: 'Safe Synergy', hex: '#2E5C4E', role: 'Glacial Mineral', contrast: '7.5:1 (AAA)' }
-        ]
-      },
-      4: {
-        className: 'theme-4',
-        brand: 'THE DERMLOGIC INTELLIGENCE',
-        badge: 'Executive Diagnostic · Direction 04',
-        title: 'Treat your vanity shelf like a high-yield physical asset.',
-        desc: 'Annual skincare expenditures of $800+ lose up to 42% in active bioavailability due to improper layering sequence. Audit your shelf like a financial portfolio.',
-        btnText: 'Calculate Bioavailability Yield →',
-        navPill: 'Shelf Portfolio ($1,420/yr)',
-        mirrorLabel: 'The Financial Waste Realization',
-        mirrorQuestion: '"I just spent $380 at the Sephora sale, but my tinted moisturizer pills into little grey eraser shavings by 2 PM every day."',
-        mRawTitle: '12-Month Sephora Billing Receipts',
-        mRawDesc: 'Real credit card itemized beauty receipts, expiration depreciation timetables, and shelf-life potency half-life degradation logs.',
-        mToolTitle: 'Bloomberg Typography & Tabular Engines',
-        mToolDesc: 'Financial-grade tabular figures, high-density rule dividers, dual-axis potency loss curves, and Monocle editorial styling.',
-        mScreenTitle: 'The Wasted Potency Receipt',
-        mScreenDesc: 'A stark, undeniable financial receipt showing: "$180/yr in Vitamin C neutralized by Copper Peptides on contact."',
-        mProofTitle: 'Sephora Affiliate Basket Yield ($)',
-        mProofDesc: 'Measured click-through to verified retailer substitutes yielding an average EPC (Earnings Per Click) exceeding $1.45.',
-        screenshotQuote: '"Sent this to my sister: we literally wasted $340 this year layering retinol right after benzoyl peroxide. It breaks it down on contact."',
-        swatches: [
-          { name: 'Newsprint (60%)', hex: '#FBF7F0', role: 'Parchment Bisque', contrast: '15.8:1 (AAA)' },
-          { name: 'Record Ink (30%)', hex: '#111317', role: 'Inkwell Black', contrast: '15.8:1 (AAA)' },
-          { name: 'Dossier Card', hex: '#F0E9DC', role: 'Manila Document', contrast: '13.9:1 (AAA)' },
-          { name: 'Loss Impairment (10%)', hex: '#8B1E2B', role: 'Executive Claret', contrast: '8.9:1 (AAA)' },
-          { name: 'Asset Synergy', hex: '#1F5C3B', role: 'Market Sage', contrast: '9.2:1 (AAA)' }
-        ]
-      },
-      5: {
-        className: 'theme-5',
-        brand: 'DermLogic Atelier',
-        badge: 'Silk & Ceramic Atelier · Direction 05',
-        title: 'A sensory physical ritual, grounded in gentle chemistry.',
-        desc: 'Soft travertine textures, viscous droplet kinetics, and reassuring ritual cadences designed to nurture the skin barrier with quiet physical elegance.',
-        btnText: 'Enter The Atelier →',
-        navPill: 'The Ritual (Bedtime)',
-        mirrorLabel: 'The Sensory Fatigue Vulnerability',
-        mirrorQuestion: '"My skin is exhausted from 10 different harsh acids. I just want a gentle, luxurious routine that actually hydrates without stinging."',
-        mRawTitle: 'Raw Bisque Pottery & Serum Emulsions',
-        mRawDesc: 'Sculptural stoneware dishes, high-shutter micro-photography of milky essence droplets tearing on skin, and silk weave textures.',
-        mToolTitle: 'Viscosity Rheometer & Fluid Springs',
-        mToolDesc: 'Fluid physical spring dynamics (mass/tension calibration), fluid droplet sliders, and warm daylight color temperature balancing.',
-        mScreenTitle: 'The Ceramic Vanity Lockscreen',
-        mScreenDesc: 'A serene, elegant 9:16 phone card formatted like an art exhibition catalog to keep on your bathroom vanity mirror.',
-        mProofTitle: 'Bedtime Repeat Execution Rate',
-        mProofDesc: 'Telemetry confirming repeat active sessions between 9:00 PM and 11:30 PM local time (users actively following the steps at the mirror).',
-        screenshotQuote: '"I printed the 4-night cycling card and taped it to the inside of my medicine cabinet. My skin hasn’t flaked once this winter."',
-        swatches: [
-          { name: 'Raw Silk (60%)', hex: '#FBF9F5', role: 'Warm Bisque Canvas', contrast: '14.8:1 (AAA)' },
-          { name: 'Clay Umber (30%)', hex: '#241C18', role: 'Smoked Terracotta', contrast: '14.8:1 (AAA)' },
-          { name: 'Bisque Surface', hex: '#EFE9E0', role: 'Raw Porcelain', contrast: '13.2:1 (AAA)' },
-          { name: 'Separation Claret (10%)', hex: '#943448', role: 'Deep Mulberry', contrast: '7.9:1 (AAA)' },
-          { name: 'Nurtured Barrier', hex: '#2E5444', role: 'Juniper Balsam', contrast: '8.6:1 (AAA)' }
-        ]
-      },
-      6: {
-        className: 'theme-6',
-        brand: 'DERM.LOGIC [SYS_V4]',
-        badge: 'Cyber-Clinical Neo-Utility · Direction 06',
-        title: 'Zero marketing rhetoric. Pure chemical conflict telemetry.',
-        desc: 'Radical transparency for informed skincare consumers. Real Dalton molecular weights, exact Henderson-Hasselbalch ionization data, zero pink fluff.',
-        btnText: '[ EXECUTE CONFLICT AUDIT ]',
-        navPill: 'STATUS: READY',
-        mirrorLabel: 'The Anti-Marketing Bullshit Detector',
-        mirrorQuestion: '"Stop giving me floral buzzwords and TikTok doctor sponsorships. Give me the raw INCI list, the molecular weight, and tell me if it pills."',
-        mRawTitle: 'HPLC Purity Spectrograms & FDA Filings',
-        mRawDesc: 'High-Performance Liquid Chromatography chromatography printouts, raw EU CosIng chemical database dumps, and unfiltered barcode feeds.',
-        mToolTitle: 'Terminal Monospace & Mechanical Click',
-        mToolDesc: 'Zero-radius rigid 2px black grid borders, hard 4px offset shadow geometry, typewriter audio cues, and brutalist typographic hierarchy.',
-        mScreenTitle: 'The Raw Specimen Clash Warning',
-        mScreenDesc: 'An uncompromising high-contrast diagnostic warning box: "REDOX COLLISION IMMINENT: SEPARATE TO AM/PM SLOTS."',
-        mProofTitle: 'Organic r/SkincareAddiction Mentions',
-        mProofDesc: 'Direct organic referral spikes from Reddit skincare community threads where users link DermLogic as the definitive truth source.',
-        screenshotQuote: '"This is the only site on the internet that doesn’t lie about pKa free-acid levels. Screen-capped this to show my dermatologist."',
-        swatches: [
-          { name: 'Stark Field (60%)', hex: '#FFFFFF', role: 'High-Lumen White', contrast: '21:1 (AAA Max)' },
-          { name: 'Strict Grid (30%)', hex: '#0A0A0A', role: 'Pitch Black Frame', contrast: '21:1 (AAA Max)' },
-          { name: 'Specimen Tray', hex: '#F4F4F6', role: 'Cold Aluminum', contrast: '18.5:1 (AAA)' },
-          { name: 'Terminal Clash (10%)', hex: '#FF3B30', role: 'Acid Warning', contrast: '7.1:1 (AAA)' },
-          { name: 'Active Pass', hex: '#0070F3', role: 'Electric Cobalt', contrast: '8.2:1 (AAA)' }
-        ]
-      }
-    };
-
-    function renderSwatches(themeData) {
-      const container = document.getElementById('swatchContainer');
-      container.innerHTML = themeData.swatches.map(s => `
-        <div class="swatch" style="background: ${s.hex}; color: ${isLight(s.hex) ? '#0A0A0A' : '#FFFFFF'};">
-          <div style="font-weight: 700;">${s.name}</div>
-          <div class="swatch-hex">${s.hex}</div>
-          <div style="opacity: 0.85; font-size: 11px;">${s.role}</div>
-          <div style="font-family: monospace; font-size: 10px; margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(128,128,128,0.3);">Contrast: ${s.contrast}</div>
-        </div>
-      `).join('');
-    }
-
-    function isLight(hex) {
-      if (hex.startsWith('rgba')) return false;
-      const c = hex.replace('#', '');
-      const r = parseInt(c.substr(0, 2), 16);
-      const g = parseInt(c.substr(2, 2), 16);
-      const b = parseInt(c.substr(4, 2), 16);
-      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-      return brightness > 155;
-    }
-
-    function switchTheme(num, btn) {
-      const data = THEMES[num];
-      const vp = document.getElementById('viewport');
-      vp.className = `preview-viewport ${data.className}`;
-      document.getElementById('brandText').textContent = data.brand;
-      document.getElementById('badgeText').textContent = data.badge;
-      document.getElementById('heroTitle').textContent = data.title;
-      document.getElementById('heroDesc').textContent = data.desc;
-      document.getElementById('btnPrimary').textContent = data.btnText;
-      document.getElementById('navPill').textContent = data.navPill;
-      
-      document.getElementById('mirrorLabel').textContent = data.mirrorLabel;
-      document.getElementById('mirrorQuestion').textContent = data.mirrorQuestion;
-
-      document.getElementById('mRawTitle').textContent = data.mRawTitle;
-      document.getElementById('mRawDesc').textContent = data.mRawDesc;
-      document.getElementById('mToolTitle').textContent = data.mToolTitle;
-      document.getElementById('mToolDesc').textContent = data.mToolDesc;
-      document.getElementById('mScreenTitle').textContent = data.mScreenTitle;
-      document.getElementById('mScreenDesc').textContent = data.mScreenDesc;
-      document.getElementById('mProofTitle').textContent = data.mProofTitle;
-      document.getElementById('mProofDesc').textContent = data.mProofDesc;
-
-      document.getElementById('screenshotQuote').textContent = data.screenshotQuote;
-
-      renderSwatches(data);
-
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    function selectDirection(num, btn) {
+      setMode('single');
+      const url = '/previews/dir-' + num + '.html';
+      document.getElementById('mainFrame').src = url;
+      document.getElementById('openDirectLink').href = url;
+      document.querySelectorAll('.dir-pill').forEach(p => p.classList.remove('active'));
       if (btn) btn.classList.add('active');
     }
 
-    // Initialize with Theme 1
-    renderSwatches(THEMES[1]);
+    function setMode(mode) {
+      const single = document.getElementById('singleStage');
+      const gallery = document.getElementById('galleryStage');
+      const bSingle = document.getElementById('btnSingle');
+      const bGallery = document.getElementById('btnGallery');
+      if (mode === 'gallery') {
+        single.style.display = 'none';
+        gallery.style.display = 'grid';
+        bGallery.classList.add('active');
+        bSingle.classList.remove('active');
+      } else {
+        single.style.display = 'flex';
+        gallery.style.display = 'none';
+        bSingle.classList.add('active');
+        bGallery.classList.remove('active');
+      }
+    }
+
+    function toggleMobile() {
+      const shell = document.getElementById('frameShell');
+      const btn = document.getElementById('btnViewport');
+      shell.classList.toggle('mobile-mode');
+      btn.classList.toggle('active');
+    }
   </script>
 </body>
 </html>

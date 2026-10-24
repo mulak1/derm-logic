@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction 04 · The Vanity Ledger — Executive Bioavailability Dossier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 60-30-10 WCAG AAA Broadsheet Dossier Palette */
+      --bisque-60: #FBF6EE;
+      --manila-card: #F0E7D8;
+      --press-30: #121316;       /* 16.4:1 vs #FBF6EE (AAA) */
+      --lead-muted: #494640;     /* 8.3:1 vs #FBF6EE (AAA) */
+      --claret-10: #851B28;      /* 8.5:1 vs #FBF6EE (AAA) - Potency Deficit */
+      --emerald-yield: #185233;  /* 8.9:1 vs #FBF6EE (AAA) - Bioavailable Yield */
+      --rule-ink: #121316;
+      --ease-editorial: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bisque-60);
+      color: var(--press-30);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Editorial Broadsheet Masthead */
+    .masthead {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 20px 32px 0;
+    }
+    .masthead-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--lead-muted);
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(18, 19, 22, 0.2);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .masthead-title-row {
+      text-align: center;
+      padding: 24px 0 20px;
+      border-bottom: 4px double var(--rule-ink);
+    }
+    .masthead-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+    .masthead-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      color: var(--lead-muted);
+      margin-top: 6px;
+    }
+
+    /* 3-Column Broadsheet Dossier Grid */
+    .broadsheet-grid {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 36px 32px 80px;
+      display: grid;
+      grid-template-columns: 1.1fr 1.15fr 0.85fr;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 1060px) {
+      .broadsheet-grid {
+        grid-template-columns: 1fr;
+        padding: 24px 16px 64px;
+      }
+    }
+
+    .col-editorial {
+      padding-right: 28px;
+      border-right: 1px solid rgba(18, 19, 22, 0.18);
+    }
+    @media (max-width: 1060px) {
+      .col-editorial { padding-right: 0; border-right: none; border-bottom: 1px solid rgba(18, 19, 22, 0.18); padding-bottom: 28px; }
+    }
+
+    .kicker-claret {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--claret-10);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .editorial-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.3rem, 3.4vw, 3.25rem);
+      font-weight: 600;
+      line-height: 1.06;
+      margin-bottom: 18px;
+    }
+    .editorial-h1 em {
+      font-style: italic;
+      color: var(--claret-10);
+    }
+
+    .dropcap-p::first-letter {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 54px;
+      float: left;
+      line-height: 0.85;
+      padding-right: 10px;
+      font-weight: 700;
+      color: var(--claret-10);
+    }
+
+    /* Mirror Vulnerability Pullquote */
+    .mirror-pullquote {
+      margin: 24px 0;
+      padding: 20px;
+      background: var(--manila-card);
+      border-top: 2px solid var(--rule-ink);
+      border-bottom: 2px solid var(--rule-ink);
+    }
+
+    /* Column 2: Interactive Wasted Potency Receipt (Doppelrand Manila Tray) */
+    .receipt-shell {
+      background: rgba(18, 19, 22, 0.05);
+      border: 1px solid rgba(18, 19, 22, 0.16);
+      padding: 8px;
+      border-radius: 22px;
+    }
+    .receipt-core {
+      background: #FFFDF9;
+      border: 1px solid rgba(18, 19, 22, 0.2);
+      border-radius: 15px;
+      padding: 28px 24px;
+      box-shadow: 0 18px 40px -15px rgba(18, 19, 22, 0.08);
+    }
+    .receipt-header {
+      text-align: center;
+      border-bottom: 2px dashed rgba(18, 19, 22, 0.25);
+      padding-bottom: 16px;
+      margin-bottom: 18px;
+    }
+    .receipt-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(18, 19, 22, 0.1);
+      font-size: 13.5px;
+      cursor: pointer;
+      min-height: 48px;
+    }
+    .receipt-price {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+    }
+    .receipt-total-box {
+      margin-top: 18px;
+      padding: 16px;
+      background: rgba(133, 27, 40, 0.08);
+      border: 1px solid var(--claret-10);
+      border-radius: 10px;
+    }
+
+    /* Button-in-Button Executive Pill */
+    .btn-ledger {
+      width: 100%;
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--press-30);
+      color: var(--bisque-60);
+      padding: 8px 8px 8px 22px;
+      min-height: 50px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.4s var(--ease-editorial);
+    }
+    .btn-ledger:hover { transform: translateY(-2px); background: var(--claret-10); }
+    .btn-ledger-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(251, 246, 238, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Column 3: Verified Substitution Ticker */
+    .col-substitutes {
+      padding-left: 28px;
+      border-left: 1px solid rgba(18, 19, 22, 0.18);
+    }
+    @media (max-width: 1060px) {
+      .col-substitutes { padding-left: 0; border-left: none; }
+    }
+    .sub-card {
+      background: var(--manila-card);
+      border: 1px solid rgba(18, 19, 22, 0.16);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .swatch-strip-4 {
+      max-width: 1380px;
+      margin: 0 auto 60px;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 800px) {
+      .swatch-strip-4 { grid-template-columns: 1fr 1fr; padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Broadsheet Masthead -->
+  <header class="masthead">
+    <div class="masthead-top-bar">
+      <span>ISSUE NO. 42 · THE VANITY ASSET AUDIT</span>
+      <span>RAW MATERIAL: 12-MONTH SEPHORA RECEIPTS</span>
+      <span>PROOF METRIC: $1.45+ AFFILIATE EPC</span>
+    </div>
+    <div class="masthead-title-row">
+      <div class="masthead-brand">The DermLogic Ledger</div>
+      <div class="masthead-sub">Executive Bioavailability &amp; Routine Portfolio Intelligence</div>
+    </div>
+  </header>
+
+  <!-- 3-Column Broadsheet Layout -->
+  <main class="broadsheet-grid">
+
+    <!-- Column 1: Editorial Case Study -->
+    <article class="col-editorial">
+      <span class="kicker-claret">01 // THE FINANCIAL WASTE REALIZATION</span>
+      <h1 class="editorial-h1">
+        Treat your bathroom vanity like a <em>high-yield</em> asset, not a chemistry experiment.
+      </h1>
+      <p class="dropcap-p" style="font-size: 15.5px; color: var(--lead-muted); margin-bottom: 16px;">
+        The average woman with a 5-step anti-aging routine spends $840 a year on prestige serums—yet loses nearly half of that active potency before leaving the bathroom. Why? Because layering incompatible bottles causes immediate chemical neutralization or silicone pilling.
+      </p>
+
+      <div class="mirror-pullquote">
+        <div style="font-family: 'Space Mono', monospace; font-size: 10.5px; color: var(--claret-10); text-transform: uppercase; margin-bottom: 6px;">
+          🪞 The 2:00 PM Office Mirror Moment
+        </div>
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; line-height: 1.3;">
+          “I just spent $380 at the Sephora savings event, so why is my tinted SPF rolling off my cheekbones in little grey eraser shavings before my 10 AM meeting?”
+        </p>
+      </div>
+
+      <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 6px;">The Plain-English Pilling Fix</h3>
+      <p style="font-size: 14px; color: var(--lead-muted);">
+        Your water-based Hyaluronic serum is being trapped underneath a heavy silicone primer before it has 60 seconds to absorb. Apply thinnest-to-thickest and pat—never rub—your SPF on top.
+      </p>
+
+      <details style="margin-top: 18px; padding-top: 12px; border-top: 1px solid rgba(18,19,22,0.15); font-family: 'Space Mono', monospace; font-size: 11px; color: var(--lead-muted); cursor: pointer;">
+        <summary>🔬 Optional Lab Footnote: Dimethicone Crosspolymer Flocculation ▾</summary>
+        <div style="padding-top: 8px;">High-molecular-weight hyaluronic polymers (&gt;1,000 kDa) form a surface hydrogel film that precipitates when sheared against anhydrous elastomer silicones.</div>
+      </details>
+    </article>
+
+    <!-- Column 2: Interactive Wasted Potency Receipt -->
+    <section>
+      <div class="receipt-shell">
+        <div class="receipt-core">
+          <div class="receipt-header">
+            <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--claret-10); font-weight: 700;">📱 GROUP-CHAT SCREENSHOT RECEIPT</div>
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700;">Annual Routine Audit #409</h2>
+            <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--lead-muted);">Click any bottle to toggle in your stack</div>
+          </div>
+
+          <div class="receipt-line" onclick="toggleReceiptItem(this, 182)">
+            <div>
+              <strong>✓ Vitamin C 15% + Ferulic</strong>
+              <div style="font-size: 12px; color: var(--lead-muted);">Morning Brightening Serum (Acidic pH 3.2)</div>
+            </div>
+            <span class="receipt-price">$182/yr</span>
+          </div>
+
+          <div class="receipt-line" onclick="toggleReceiptItem(this, 68)">
+            <div>
+              <strong>✓ Copper Peptides 1% Serum</strong>
+              <div style="font-size: 12px; color: var(--claret-10);">⚠️ Layered together: Oxidizes Vitamin C</div>
+            </div>
+            <span class="receipt-price">$68/yr</span>
+          </div>
+
+          <div class="receipt-line" onclick="toggleReceiptItem(this, 96)">
+            <div>
+              <strong>✓ Retinol 0.5% Night Emulsion</strong>
+              <div style="font-size: 12px; color: var(--lead-muted);">Evening Cell Renewal (Neutral pH 5.8)</div>
+            </div>
+            <span class="receipt-price">$96/yr</span>
+          </div>
+
+          <div class="receipt-line" onclick="toggleReceiptItem(this, 54)">
+            <div>
+              <strong>✓ Benzoyl Peroxide 5% Wash</strong>
+              <div style="font-size: 12px; color: var(--claret-10);">⚠️ Deactivates Retinol on contact</div>
+            </div>
+            <span class="receipt-price">$54/yr</span>
+          </div>
+
+          <div class="receipt-total-box" id="receiptSummaryBox">
+            <div style="display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 12px; color: var(--claret-10); font-weight: 700;">
+              <span>WASTED POTENCY (NEUTRALIZED):</span>
+              <span id="wastedAmount">-$250.00 / YR</span>
+            </div>
+            <p style="font-size: 13px; color: var(--press-30); margin-top: 8px;" id="recoveryNote">
+              <strong>Instant $250 Recovery Fix:</strong> Keep Vitamin C &amp; Benzoyl Peroxide in the <strong>Morning</strong>. Move Copper Peptides &amp; Retinol to alternating <strong>Bedtime</strong> nights.
+            </p>
+          </div>
+
+          <button class="btn-ledger" onclick="recoverPortfolio()">
+            <span id="ledgerBtnText">Rebalance My Shelf (Recover $250/yr)</span>
+            <span class="btn-ledger-circle">↗</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Column 3: Verified Compatible Swaps -->
+    <aside class="col-substitutes">
+      <span class="kicker-claret" style="color: var(--emerald-yield);">03 // VERIFIED COMPATIBLE SWAPS</span>
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; margin-bottom: 14px;">
+        Zero-Clash Alternatives
+      </h2>
+
+      <div class="sub-card">
+        <div style="font-family: 'Space Mono', monospace; font-size: 10.5px; color: var(--emerald-yield); font-weight: 700;">✓ SAFE WITH COPPER PEPTIDES</div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 21px; margin: 4px 0;">THD Ascorbate (Gentle Oil-Soluble Vitamin C)</h3>
+        <p style="font-size: 13px; color: var(--lead-muted); margin-bottom: 10px;">
+          Unlike acidic L-Ascorbic Acid, THD Vitamin C operates at a neutral pH—so it never stings and never clashes with peptides.
+        </p>
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; color: var(--press-30);">
+          Sephora Verified · Pores: 1/5 Safe →
+        </div>
+      </div>
+
+      <div class="sub-card">
+        <div style="font-family: 'Space Mono', monospace; font-size: 10.5px; color: var(--emerald-yield); font-weight: 700;">✓ ZERO MAKEUP PILLING</div>
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 21px; margin: 4px 0;">Squalane + Multi-Peptide Fluid</h3>
+        <p style="font-size: 13px; color: var(--lead-muted); margin-bottom: 10px;">
+          Silicone-free micro-emulsion that sinks in within 20 seconds and grips foundation smoothly all day.
+        </p>
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; color: var(--press-30);">
+          Dermstore Verified · Pores: 0/5 Safe →
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- 60-30-10 WCAG AAA Palette Footer -->
+  <footer class="swatch-strip-4">
+    <div style="padding: 14px; border: 1px solid rgba(18,19,22,0.2); border-radius: 12px; background: #FBF6EE; font-size: 12px;">
+      <strong>60% Primary Bisque</strong><br>#FBF6EE · FT Parchment<br><span style="font-family: monospace;">16.4:1 AAA vs Ink</span>
+    </div>
+    <div style="padding: 14px; border: 1px solid rgba(18,19,22,0.2); border-radius: 12px; background: #F0E7D8; font-size: 12px;">
+      <strong>Dossier Manila</strong><br>#F0E7D8 · Ledger Surface<br><span style="font-family: monospace;">14.1:1 AAA vs Ink</span>
+    </div>
+    <div style="padding: 14px; border: 1px solid rgba(18,19,22,0.2); border-radius: 12px; background: #121316; color: #FBF6EE; font-size: 12px;">
+      <strong>30% Press Ink</strong><br>#121316 · Broadsheet Black<br><span style="font-family: monospace;">16.4:1 AAA Primary</span>
+    </div>
+    <div style="padding: 14px; border: 1px solid rgba(18,19,22,0.2); border-radius: 12px; background: #851B28; color: #FFFFFF; font-size: 12px;">
+      <strong>10% Deficit Claret</strong><br>#851B28 · Clash Alert<br><span style="font-family: monospace;">8.5:1 AAA Verified</span>
+    </div>
+    <div style="padding: 14px; border: 1px solid rgba(18,19,22,0.2); border-radius: 12px; background: #185233; color: #FFFFFF; font-size: 12px;">
+      <strong>Asset Yield</strong><br>#185233 · Market Emerald<br><span style="font-family: monospace;">8.9:1 AAA Verified</span>
+    </div>
+  </footer>
+
+  <script>
+    function recoverPortfolio() {
+      const box = document.getElementById('receiptSummaryBox');
+      box.style.background = 'rgba(24, 82, 51, 0.1)';
+      box.style.borderColor = '#185233';
+      document.getElementById('wastedAmount').textContent = '$0.00 WASTED (100% ACTIVE)';
+      document.getElementById('wastedAmount').style.color = '#185233';
+      document.getElementById('ledgerBtnText').textContent = '✓ Portfolio Rebalanced Across AM / PM';
+    }
+    function toggleReceiptItem(el) {
+      el.style.opacity = el.style.opacity === '0.45' ? '1' : '0.45';
+    }
+  </script>
+</body>
+</html>

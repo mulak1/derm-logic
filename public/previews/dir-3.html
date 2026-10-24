@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction 03 · Klinisk Form — Nordic Botanical Bauhaus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 60-30-10 WCAG AAA Nordic Bauhaus Palette */
+      --plaster-60: #F4F4EF;
+      --sage-mist: #E4EAE5;
+      --spruce-30: #14221C;      /* 14.6:1 vs #F4F4EF (AAA) */
+      --lichen-muted: #3D4F47;   /* 7.6:1 vs #F4F4EF (AAA) */
+      --lingon-10: #8F2424;      /* 7.8:1 vs #F4F4EF (AAA) - Clash Alert */
+      --pine-safe: #1E4D3B;      /* 9.1:1 vs #F4F4EF (AAA) - Safe Synergy */
+      --rule: #14221C;
+      --ease-nordic: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--plaster-60);
+      color: var(--spruce-30);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Architectural Exposed Grid Shell with Left Index Rail */
+    .nordic-frame {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      min-height: 100dvh;
+      border-top: 1px solid var(--rule);
+    }
+    @media (max-width: 900px) {
+      .nordic-frame { grid-template-columns: 1fr; }
+    }
+
+    /* Vertical Left Architectural Rail */
+    .left-rail {
+      border-right: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      background: var(--sage-mist);
+    }
+    @media (max-width: 900px) {
+      .left-rail {
+        flex-direction: row;
+        padding: 12px 20px;
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+      }
+    }
+    .rail-index {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    @media (max-width: 900px) {
+      .rail-index { writing-mode: horizontal-tb; transform: none; }
+    }
+
+    /* Top Poster Header Band */
+    .poster-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      border-bottom: 1px solid var(--rule);
+    }
+    .poster-title-block {
+      padding: 48px 44px;
+    }
+    @media (max-width: 768px) {
+      .poster-top { grid-template-columns: 1fr; }
+      .poster-title-block { padding: 32px 20px; }
+    }
+    .kicker-mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lichen-muted);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .monumental-h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3.1rem, 6vw, 5.4rem);
+      font-weight: 400;
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+      max-width: 18ch;
+    }
+    .monumental-h1 em {
+      font-style: italic;
+      color: var(--lingon-10);
+    }
+
+    .poster-meta-col {
+      border-left: 1px solid var(--rule);
+      padding: 48px 36px;
+      width: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--sage-mist);
+    }
+    @media (max-width: 768px) {
+      .poster-meta-col {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--rule);
+        padding: 24px 20px;
+      }
+    }
+
+    /* Button-in-Button Architectural Pill */
+    .btn-nordic {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--spruce-30);
+      color: var(--plaster-60);
+      padding: 8px 8px 8px 22px;
+      min-height: 50px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.4s var(--ease-nordic);
+    }
+    .btn-nordic:hover { transform: translateY(-2px); }
+    .btn-nordic-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--plaster-60);
+      color: var(--spruce-30);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 2-Column Exposed Bauhaus Split */
+    .bauhaus-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--rule);
+    }
+    @media (max-width: 980px) {
+      .bauhaus-split { grid-template-columns: 1fr; }
+    }
+    .bauhaus-cell-left {
+      padding: 44px;
+      border-right: 1px solid var(--rule);
+    }
+    .bauhaus-cell-right {
+      padding: 44px;
+    }
+    @media (max-width: 980px) {
+      .bauhaus-cell-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 28px 20px; }
+      .bauhaus-cell-right { padding: 28px 20px; }
+    }
+
+    /* Interactive 4-Night Circular Sun/Moon Dial */
+    .dial-wrapper {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 28px;
+      align-items: center;
+      margin: 24px 0;
+      padding: 24px;
+      background: var(--sage-mist);
+      border: 1px solid var(--rule);
+    }
+    @media (max-width: 600px) {
+      .dial-wrapper { grid-template-columns: 1fr; text-align: center; }
+    }
+    .night-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--rule);
+      margin-top: 16px;
+    }
+    .night-tab {
+      padding: 12px 8px;
+      min-height: 44px;
+      background: var(--plaster-60);
+      border: none;
+      border-right: 1px solid var(--rule);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--spruce-30);
+      cursor: pointer;
+    }
+    .night-tab:last-child { border-right: none; }
+    .night-tab.active {
+      background: var(--spruce-30);
+      color: var(--plaster-60);
+    }
+
+    /* Clean Beauty Skepticism Ledger Table */
+    .clean-ledger {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 13.5px;
+    }
+    .clean-ledger th, .clean-ledger td {
+      border: 1px solid var(--rule);
+      padding: 12px 14px;
+      text-align: left;
+    }
+    .clean-ledger th {
+      background: var(--sage-mist);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Minimalist Blueprint Save Card */
+    .blueprint-save {
+      margin-top: 24px;
+      padding: 20px;
+      border: 1.5px solid var(--rule);
+      background: #FFFFFF;
+    }
+
+    .swatch-grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-top: 1px solid var(--rule);
+    }
+    @media (max-width: 800px) {
+      .swatch-grid-5 { grid-template-columns: 1fr 1fr; }
+    }
+    .swatch-cell {
+      padding: 18px 20px;
+      border-right: 1px solid var(--rule);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nordic-frame">
+    <!-- Left Architectural Index Rail -->
+    <aside class="left-rail">
+      <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px;">KF // 03</div>
+      <div class="rail-index">KLINISK FORM · STOCKHOLM · FORMULATION LEDGER</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px;">AAA</div>
+    </aside>
+
+    <div>
+      <!-- Top Monumental Poster Band -->
+      <header class="poster-top">
+        <div class="poster-title-block">
+          <span class="kicker-mono">01 / NORDIC BOTANICAL BAUHAUS · ZERO MARKETING MYSTIQUE</span>
+          <h1 class="monumental-h1">
+            Form follows formulation. <em>Calm</em> for your barrier.
+          </h1>
+        </div>
+        <div class="poster-meta-col">
+          <div>
+            <span class="kicker-mono">🪞 Clean Beauty Skepticism</span>
+            <p style="font-family: 'Instrument Serif', serif; font-size: 21px; line-height: 1.25;">
+              “Every brand calls itself clean and non-toxic, yet my cheeks break out in tiny bumps every time I layer a facial oil over my serum.”
+            </p>
+          </div>
+          <button class="btn-nordic" onclick="cycleNight(1)">
+            <span>Inspect Pore-Clogging Index</span>
+            <span class="btn-nordic-dot">→</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- 2-Column Bauhaus Split -->
+      <main class="bauhaus-split">
+
+        <!-- Left Cell: Interactive 4-Night Circular Sun/Moon Dial -->
+        <section class="bauhaus-cell-left">
+          <span class="kicker-mono">02 / INTERACTIVE 4-NIGHT SKIN CYCLING WHEEL</span>
+          <h2 style="font-family: 'Instrument Serif', serif; font-size: 34px; font-weight: 400; margin-bottom: 8px;">
+            Pace your active bottles by biological rhythm.
+          </h2>
+          <p style="font-size: 14.5px; color: var(--lichen-muted);">
+            Click any night below to see how Scandinavian dermatologists separate exfoliating acids and retinoids so your skin never flakes.
+          </p>
+
+          <div class="dial-wrapper">
+            <svg viewBox="0 0 180 180" width="180" height="180" style="margin: 0 auto;">
+              <circle cx="90" cy="90" r="80" fill="#F4F4EF" stroke="#14221C" stroke-width="1.5"/>
+              <circle cx="90" cy="90" r="52" fill="none" stroke="#14221C" stroke-dasharray="3 3"/>
+              <line x1="90" y1="10" x2="90" y2="170" stroke="#14221C" stroke-width="1"/>
+              <line x1="10" y1="90" x2="170" y2="90" stroke="#14221C" stroke-width="1"/>
+              <circle id="dialPointer" cx="132" cy="48" r="10" fill="#1E4D3B"/>
+              <text x="90" y="95" text-anchor="middle" font-family="Instrument Serif" font-size="20" fill="#14221C" id="dialCenterText">Night 01</text>
+            </svg>
+            <div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--pine-safe); font-weight: 600;" id="dialStepTag">STEP 01 OF 04 · EXFOLIATE</div>
+              <h3 style="font-family: 'Instrument Serif', serif; font-size: 28px; font-weight: 400; margin: 4px 0;" id="dialTitle">Gentle Acid Sweep</h3>
+              <p style="font-size: 13.5px; color: var(--lichen-muted);" id="dialDesc">
+                Apply Mandelic or Lactic Acid to dry skin, wait 2 minutes, then seal with a plain fragrance-free ceramide cream. No retinol tonight.
+              </p>
+            </div>
+          </div>
+
+          <div class="night-tabs" role="tablist">
+            <button class="night-tab active" onclick="cycleNight(0, this)">Night 01 · Smooth</button>
+            <button class="night-tab" onclick="cycleNight(1, this)">Night 02 · Renew</button>
+            <button class="night-tab" onclick="cycleNight(2, this)">Night 03 · Plump</button>
+            <button class="night-tab" onclick="cycleNight(3, this)">Night 04 · Rest</button>
+          </div>
+        </section>
+
+        <!-- Right Cell: Unembellished Pore-Clogging & Clash Ledger -->
+        <section class="bauhaus-cell-right">
+          <span class="kicker-mono">03 / PLAIN-ENGLISH PORE &amp; SENSITIVITY LEDGER</span>
+          <h2 style="font-family: 'Instrument Serif', serif; font-size: 34px; font-weight: 400; margin-bottom: 8px;">
+            Does it clog pores? Does it sting?
+          </h2>
+          <p style="font-size: 14.5px; color: var(--lichen-muted);">
+            Every ingredient translated out of Latin chemical jargon into three honest bathroom answers:
+          </p>
+
+          <table class="clean-ledger">
+            <thead>
+              <tr>
+                <th>Bottle / Active</th>
+                <th>Does It Clog Pores?</th>
+                <th>Skin Sensitivity</th>
+                <th>Layering Rule</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Squalane Oil (Plant)</strong></td>
+                <td style="color: var(--pine-safe); font-weight: 600;">0/5 · Never Clogs</td>
+                <td>Ultra-Calm</td>
+                <td>Pat over moisturizer last</td>
+              </tr>
+              <tr>
+                <td><strong>Rosehip Seed Oil</strong></td>
+                <td>1/5 · Very Low</td>
+                <td>Gentle</td>
+                <td>Safe over evening peptides</td>
+              </tr>
+              <tr>
+                <td><strong>Coconut / Marula Esters</strong></td>
+                <td style="color: var(--lingon-10); font-weight: 600;">4/5 · High Pore Risk</td>
+                <td>Traps Heat/Sweat</td>
+                <td>⚠️ Avoid on acne-prone zones</td>
+              </tr>
+              <tr>
+                <td><strong>Mandelic Acid 10%</strong></td>
+                <td style="color: var(--pine-safe); font-weight: 600;">0/5 · Unclogs Pores</td>
+                <td>Gentle Large Molecule</td>
+                <td>⚡ Space apart from Retinol</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Pinterest / Group-Chat Blueprint Card -->
+          <div class="blueprint-save">
+            <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--lingon-10); margin-bottom: 6px;">
+              <span>📱 PINTEREST / GROUP-CHAT BLUEPRINT CARD</span>
+              <span>PROOF: &gt;12% SAVE RATE</span>
+            </div>
+            <p style="font-family: 'Instrument Serif', serif; font-size: 20px; font-style: italic;">
+              “Finally a skincare site without pink glitter that just tells me if a facial oil will clog my pores or make my concealer separate.”
+            </p>
+            <details style="margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--lichen-muted); cursor: pointer;">
+              <summary>🔬 Optional Lab Footnote: Mandelic Acid = 152.15 Daltons (Slow, even absorption vs 76 Da Glycolic) ▾</summary>
+              <div style="padding-top: 6px;">pKa: 3.41 · Comedogenic Index: 0 · Ideal Mantle Window: pH 3.5–4.0</div>
+            </details>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- 60-30-10 WCAG AAA Swatch Strip -->
+      <footer class="swatch-grid-5">
+        <div class="swatch-cell" style="background: #F4F4EF; color: #14221C;">
+          <strong>60% Primary Plaster</strong><br>#F4F4EF · Nordic Chalk<br><span style="font-family: monospace;">14.6:1 AAA vs Spruce</span>
+        </div>
+        <div class="swatch-cell" style="background: #E4EAE5; color: #14221C;">
+          <strong>Secondary Mist</strong><br>#E4EAE5 · Glacial Sage<br><span style="font-family: monospace;">12.8:1 AAA vs Spruce</span>
+        </div>
+        <div class="swatch-cell" style="background: #14221C; color: #F4F4EF;">
+          <strong>30% Structural Ink</strong><br>#14221C · Deep Spruce<br><span style="font-family: monospace;">14.6:1 AAA Primary</span>
+        </div>
+        <div class="swatch-cell" style="background: #8F2424; color: #FFFFFF;">
+          <strong>10% Clash Accent</strong><br>#8F2424 · Lingonberry<br><span style="font-family: monospace;">7.8:1 AAA Verified</span>
+        </div>
+        <div class="swatch-cell" style="background: #1E4D3B; color: #FFFFFF; border-right: none;">
+          <strong>Safe Botanical</strong><br>#1E4D3B · Fjord Pine<br><span style="font-family: monospace;">9.1:1 AAA Verified</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const NIGHTS = [
+      { cx: 132, cy: 48, center: 'Night 01', tag: 'STEP 01 OF 04 · EXFOLIATE', title: 'Gentle Acid Sweep', desc: 'Apply Mandelic or Lactic Acid to dry skin, wait 2 minutes, then seal with a plain fragrance-free ceramide cream. No retinol tonight.' },
+      { cx: 132, cy: 132, center: 'Night 02', tag: 'STEP 02 OF 04 · CELL TURNOVER', title: 'Retinol Renewal', desc: 'Apply a pea-sized drop of Retinol to completely dry skin. Buffer around the corners of your nose and mouth with moisturizer first.' },
+      { cx: 48, cy: 132, center: 'Night 03', tag: 'STEP 03 OF 04 · HYDRATE & PLUMP', title: 'Peptides & Damp Skin', desc: 'Mist face with water, press in Copper Peptides or Hyaluronic Acid, and lock in moisture with your barrier cream.' },
+      { cx: 48, cy: 48, center: 'Night 04', tag: 'STEP 04 OF 04 · DEEP REST', title: 'Pure Ceramide Recovery', desc: 'Give your skin barrier a full night off from active acids. Cleanse gently and apply rich ceramide + squalane nourishment.' }
+    ];
+    function cycleNight(idx, btn) {
+      const n = NIGHTS[idx];
+      document.getElementById('dialPointer').setAttribute('cx', n.cx);
+      document.getElementById('dialPointer').setAttribute('cy', n.cy);
+      document.getElementById('dialCenterText').textContent = n.center;
+      document.getElementById('dialStepTag').textContent = n.tag;
+      document.getElementById('dialTitle').textContent = n.title;
+      document.getElementById('dialDesc').textContent = n.desc;
+      if (btn) {
+        document.querySelectorAll('.night-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>

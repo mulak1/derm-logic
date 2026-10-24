@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction 02 · Spectra Dermis — Dark-Field Cellular Luminary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 60-30-10 WCAG AAA Dark-Field Palette */
+      --void-60: #06070A;
+      --graphite-surface: #0E1117;
+      --glass-core: #131720;
+      --polar-30: #F2F5FA;       /* 18.4:1 vs #06070A (AAA) */
+      --silver-muted: #9BA8BF;   /* 7.9:1 vs #06070A (AAA) */
+      --rose-10: #FB7185;        /* 8.1:1 vs #06070A (AAA) - Clash Vector */
+      --mint-safe: #34D399;      /* 10.6:1 vs #06070A (AAA) - Barrier Safe */
+      --amber-warn: #FBBF24;     /* 11.8:1 vs #06070A (AAA) - Wait Window */
+      --hairline-light: rgba(255, 255, 255, 0.09);
+      --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--void-60);
+      color: var(--polar-30);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100dvh;
+      background-image:
+        radial-gradient(circle at 18% 12%, rgba(251, 113, 133, 0.09), transparent 38%),
+        radial-gradient(circle at 84% 22%, rgba(52, 211, 153, 0.08), transparent 42%);
+    }
+
+    /* Floating Glass Command Pill Nav */
+    .command-bar-wrap {
+      position: sticky;
+      top: 20px;
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px;
+    }
+    .command-bar {
+      background: rgba(14, 17, 23, 0.82);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 8px 12px 8px 22px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      max-width: 100%;
+    }
+    .spectra-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--polar-30);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--mint-safe);
+      box-shadow: 0 0 12px var(--mint-safe);
+    }
+    .cmd-trigger {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--hairline-light);
+      color: var(--silver-muted);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    @media (max-width: 768px) {
+      .cmd-trigger { display: none; }
+    }
+
+    /* Centered Monumental Optical Hero */
+    .optical-hero {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+    .eyebrow-optic {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-family: 'Space Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mint-safe);
+      margin-bottom: 24px;
+    }
+    .hero-h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.6rem, 5vw, 4.6rem);
+      font-weight: 300;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .hero-h1 em {
+      font-style: italic;
+      color: var(--rose-10);
+      font-weight: 400;
+    }
+    .hero-sub {
+      font-size: 17.5px;
+      color: var(--silver-muted);
+      max-width: 62ch;
+      margin: 0 auto 32px;
+    }
+
+    /* Interactive Preset Switcher Pills */
+    .preset-bar {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--hairline-light);
+    }
+    .preset-btn {
+      padding: 10px 20px;
+      min-height: 44px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: var(--silver-muted);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s var(--ease-fluid);
+    }
+    .preset-btn.active {
+      background: var(--polar-30);
+      color: var(--void-60);
+      box-shadow: 0 4px 20px rgba(242, 245, 250, 0.25);
+    }
+
+    /* 12-Column Asymmetrical Bento Grid */
+    .bento-stage {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 16px 28px 96px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 22px;
+    }
+    .span-7 { grid-column: span 7; }
+    .span-5 { grid-column: span 5; }
+    .span-4 { grid-column: span 4; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+
+    @media (max-width: 980px) {
+      .bento-stage { grid-template-columns: 1fr; padding: 16px 16px 80px; }
+      .span-7, .span-5, .span-4, .span-8, .span-12 { grid-column: span 1; }
+    }
+
+    /* Doppelrand Dark Hardware Bezel */
+    .optic-shell {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 7px;
+      border-radius: 30px;
+      height: 100%;
+    }
+    .optic-core {
+      background: var(--glass-core);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 23px;
+      padding: 28px;
+      height: 100%;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-kicker {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--silver-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .card-h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    /* Interactive SVG Optical Waveform Visualizer */
+    .spectrum-canvas {
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 16px;
+      background: #080A0F;
+      border: 1px solid var(--hairline-light);
+      position: relative;
+    }
+    .ph-scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--silver-muted);
+      margin-top: 8px;
+    }
+
+    /* Button-in-Button Optical Pill */
+    .btn-optic {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      background: var(--polar-30);
+      color: var(--void-60);
+      padding: 8px 8px 8px 22px;
+      min-height: 48px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.4s var(--ease-fluid);
+    }
+    .btn-optic:hover { transform: translateY(-2px); }
+    .btn-optic-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--void-60);
+      color: var(--polar-30);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s var(--ease-fluid);
+    }
+    .btn-optic:hover .btn-optic-circle {
+      transform: translate(2px, -2px);
+    }
+
+    /* Group Chat Dark OLED Save Artifact */
+    .oled-save-card {
+      background: rgba(251, 113, 133, 0.07);
+      border: 1px solid rgba(251, 113, 133, 0.35);
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    details.optic-drawer {
+      margin-top: 16px;
+      border-top: 1px solid var(--hairline-light);
+      padding-top: 12px;
+    }
+    details.optic-drawer summary {
+      font-family: 'Space Mono', monospace;
+      font-size: 11.5px;
+      color: var(--mint-safe);
+      cursor: pointer;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .swatch-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    @media (max-width: 800px) {
+      .swatch-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Glass Command Bar -->
+  <div class="command-bar-wrap">
+    <nav class="command-bar" aria-label="Spectra Navigation">
+      <div class="spectra-logo">
+        <span class="pulse-dot"></span>
+        SPECTRA // DERMLOGIC
+      </div>
+      <div class="cmd-trigger">
+        <span>Search 1,400+ Active Molecules &amp; Serums...</span>
+        <span style="color: var(--polar-30);">⌘K</span>
+      </div>
+      <button class="btn-optic" style="min-height: 40px; padding: 4px 6px 4px 16px; font-size: 12.5px;">
+        <span>Barrier Scan</span>
+        <span class="btn-optic-circle" style="width: 28px; height: 28px;">↗</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Centered Optical Hero -->
+  <header class="optical-hero">
+    <div class="eyebrow-optic">
+      <span>◈</span> Direction 02 · Cellular Luminary · Confocal Dark-Field Architecture
+    </div>
+    <h1 class="hero-h1">
+      See why your skin stings <em>before</em> two drops touch your face.
+    </h1>
+    <p class="hero-sub">
+      High-performance skincare shouldn't require a chemistry degree—or a ruined moisture barrier. Select any active pair below to visualize why they clash and how to space them safely.
+    </p>
+    <div class="preset-bar" role="tablist">
+      <button class="preset-btn active" onclick="selectPair(0, this)"> Glycolic Acid 7% × Retinol 0.5%</button>
+      <button class="preset-btn" onclick="selectPair(1, this)">Pure Vitamin C × Copper Peptides</button>
+      <button class="preset-btn" onclick="selectPair(2, this)">Niacinamide 10% × Hyaluronic Acid</button>
+    </div>
+  </header>
+
+  <!-- 12-Column Asymmetrical Bento Cockpit -->
+  <main class="bento-stage">
+
+    <!-- Span 7: Interactive Live Acidity & Barrier Stress Visualizer -->
+    <div class="span-7">
+      <div class="optic-shell">
+        <div class="optic-core">
+          <div>
+            <div class="card-kicker">
+              <span>01 // LIVE BARRIER STRESS &amp; ACIDITY SPECTRUM</span>
+              <span id="statusBadge" style="color: var(--rose-10); font-weight: 700;">⚡ SPACE APART · IRRITATION RISK</span>
+            </div>
+            <h2 class="card-h2" id="pairTitle">Glycolic Acid 7% + Retinol 0.5% Night Serum</h2>
+            <p style="font-size: 15px; color: var(--silver-muted);" id="pairPlainDesc">
+              Both products speed up skin peeling, but Glycolic Acid sits at a sharp acidic pH (3.5) while Retinol prefers a calm, neutral barrier (pH 5.8). Layering them in the same evening strips your lipid shield and triggers next-day redness and flaking.
+            </p>
+
+            <!-- SVG Interactive Waveform -->
+            <div class="spectrum-canvas">
+              <svg viewBox="0 0 600 130" width="100%" height="130" fill="none">
+                <defs>
+                  <linearGradient id="clashGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#FB7185" stop-opacity="0.45"/>
+                    <stop offset="50%" stop-color="#FBBF24" stop-opacity="0.25"/>
+                    <stop offset="100%" stop-color="#34D399" stop-opacity="0.45"/>
+                  </linearGradient>
+                </defs>
+                <!-- Grid lines -->
+                <line x1="0" y1="30" x2="600" y2="30" stroke="rgba(255,255,255,0.06)" />
+                <line x1="0" y1="70" x2="600" y2="70" stroke="rgba(255,255,255,0.06)" />
+                <line x1="0" y1="110" x2="600" y2="110" stroke="rgba(255,255,255,0.06)" />
+                <!-- Wave -->
+                <path id="wavePath" d="M 10 100 Q 140 10, 270 95 T 590 40" stroke="url(#clashGrad)" stroke-width="4" fill="none" />
+                <circle id="nodeA" cx="135" cy="52" r="7" fill="#FB7185" />
+                <text id="labelA" x="95" y="35" fill="#FB7185" font-family="Space Mono" font-size="11">Acid Peak (pH 3.5)</text>
+                <circle id="nodeB" cx="435" cy="68" r="7" fill="#34D399" />
+                <text id="labelB" x="380" y="50" fill="#34D399" font-family="Space Mono" font-size="11">Retinol Zone (pH 5.8)</text>
+              </svg>
+              <div class="ph-scale-labels">
+                <span>pH 2.5 (High Acid Sting)</span>
+                <span>pH 4.7–5.5 (Natural Skin Mantle)</span>
+                <span>pH 7.0 (Neutral Water)</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="font-size: 13.5px; color: var(--polar-30);" id="fixInstruction">
+              <strong>Plain-English Fix:</strong> Alternate nights (Night 1: Glycolic Acid · Night 2: Retinol). Never apply on the same evening.
+            </div>
+            <button class="btn-optic">
+              <span>Save 4-Night Schedule</span>
+              <span class="btn-optic-circle">↗</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Span 5: Bathroom Mirror Vulnerability & Group-Chat Card -->
+    <div class="span-5">
+      <div class="optic-shell">
+        <div class="optic-core">
+          <div>
+            <div class="card-kicker">
+              <span>02 // THE LASER CLINIC VULNERABILITY</span>
+              <span>VISIA UV PROOF</span>
+            </div>
+            <h2 class="card-h2" style="font-style: italic; font-size: 22px; color: var(--polar-30);">
+              “My esthetician told me my moisture barrier is stripped from over-exfoliating, but none of my bottles say they conflict.”
+            </h2>
+
+            <div class="oled-save-card">
+              <div style="display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 10.5px; color: var(--rose-10); margin-bottom: 8px;">
+                <span>📱 GROUP-CHAT SCREENSHOT ARTIFACT</span>
+                <span>[ OLED 9:16 CARD ]</span>
+              </div>
+              <p style="font-size: 14px; color: var(--polar-30); line-height: 1.5;" id="quoteText">
+                “Look at this chart—putting Glycolic Toner under Retinol drops skin pH to 3.5 and causes 44% more capillary redness by morning.”
+              </p>
+            </div>
+
+            <details class="optic-drawer" open>
+              <summary>🔬 Optional Lab Chemistry Footnote (pKa &amp; Dalton Size) ▾</summary>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--silver-muted);">
+                <div style="padding: 10px; background: rgba(255,255,255,0.03); border-radius: 10px;">
+                  Free Acid pKa: <strong style="color: var(--polar-30);">3.83</strong><br>
+                  Mol. Size: <strong style="color: var(--polar-30);">76 Daltons</strong>
+                </div>
+                <div style="padding: 10px; background: rgba(255,255,255,0.03); border-radius: 10px;">
+                  Pore Clogging: <strong style="color: var(--mint-safe);">0/5 Safe</strong><br>
+                  Sun Sensitivity: <strong style="color: var(--rose-10);">High (Use SPF)</strong>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--hairline-light); font-size: 12px; color: var(--silver-muted); display: flex; justify-content: space-between;">
+            <span>Raw Material: Confocal Lipid Bilayer Scans</span>
+            <span>Proof: -44% Visia Redness</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Span 12: 60-30-10 WCAG AAA Palette Specification -->
+    <div class="span-12">
+      <div class="optic-shell">
+        <div class="optic-core">
+          <div class="card-kicker" style="margin-bottom: 4px;">
+            <span>Direction 02 · Exact 60-30-10 Palette &amp; WCAG AAA Contrast Ratios</span>
+            <span>Fraunces + Plus Jakarta Sans + Space Mono</span>
+          </div>
+          <div class="swatch-row">
+            <div style="padding: 14px; border-radius: 14px; background: #06070A; border: 1px solid var(--hairline-light); font-size: 12px;">
+              <strong>60% Primary Void</strong><br>#06070A · OLED Obsidian<br><span style="font-family: monospace; color: var(--mint-safe);">18.4:1 AAA vs Polar</span>
+            </div>
+            <div style="padding: 14px; border-radius: 14px; background: #131720; border: 1px solid var(--hairline-light); font-size: 12px;">
+              <strong>Optic Glass Core</strong><br>#131720 · Sub-Pixel Slate<br><span style="font-family: monospace; color: var(--mint-safe);">15.9:1 AAA vs Polar</span>
+            </div>
+            <div style="padding: 14px; border-radius: 14px; background: #F2F5FA; color: #06070A; font-size: 12px;">
+              <strong>30% Luminescence</strong><br>#F2F5FA · Polar White<br><span style="font-family: monospace;">18.4:1 AAA Primary</span>
+            </div>
+            <div style="padding: 14px; border-radius: 14px; background: #FB7185; color: #06070A; font-size: 12px;">
+              <strong>10% Clash Vector</strong><br>#FB7185 · Fluorescent Rose<br><span style="font-family: monospace;">8.1:1 AAA on Void</span>
+            </div>
+            <div style="padding: 14px; border-radius: 14px; background: #34D399; color: #06070A; font-size: 12px;">
+              <strong>Barrier Synergy</strong><br>#34D399 · Bioluminescent Mint<br><span style="font-family: monospace;">10.6:1 AAA on Void</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const PAIRS = [
+      {
+        badge: '⚡ SPACE APART · IRRITATION RISK',
+        badgeColor: '#FB7185',
+        title: 'Glycolic Acid 7% + Retinol 0.5% Night Serum',
+        desc: 'Both products speed up skin peeling, but Glycolic Acid sits at a sharp acidic pH (3.5) while Retinol prefers a calm, neutral barrier (pH 5.8). Layering them in the same evening strips your lipid shield and triggers next-day redness.',
+        fix: 'Plain-English Fix: Alternate nights (Night 1: Glycolic Acid · Night 2: Retinol). Never apply on the same evening.',
+        quote: '“Look at this chart—putting Glycolic Toner under Retinol drops skin pH to 3.5 and causes 44% more capillary redness by morning.”',
+        wave: 'M 10 100 Q 140 10, 270 95 T 590 40'
+      },
+      {
+        badge: '⚠️ CANCELS OUT POTENCY',
+        badgeColor: '#FBBF24',
+        title: 'Pure Vitamin C (15%) + Copper Peptides',
+        desc: 'Copper ions rapidly oxidize pure L-Ascorbic Acid on contact. Instead of brightening and firming, both expensive serums neutralize each other in your palm or on your cheek.',
+        fix: 'Plain-English Fix: Apply Vitamin C in the Morning under sunscreen. Save Copper Peptides for your Evening routine.',
+        quote: '“Our Vitamin C and Copper Peptides literally cancel each other out in 10 seconds if layered together.”',
+        wave: 'M 10 40 Q 200 125, 350 30 T 590 95'
+      },
+      {
+        badge: '✓ 100% BARRIER SAFE SYNERGY',
+        badgeColor: '#34D399',
+        title: 'Niacinamide 10% + Hyaluronic Acid 2%',
+        desc: 'Both water-based hydrators share a gentle neutral pH (5.5–6.2). Hyaluronic Acid pulls water into thirsty skin cells while Niacinamide calms redness and strengthens ceramide production.',
+        fix: 'Plain-English Fix: Layer Hyaluronic Acid first on damp skin, then seal in with Niacinamide and moisturizer.',
+        quote: '“Finally a pairing that calms my barrier down—zero stinging, zero pilling under makeup.”',
+        wave: 'M 10 70 Q 180 62, 340 70 T 590 65'
+      }
+    ];
+
+    function selectPair(idx, btn) {
+      const p = PAIRS[idx];
+      document.getElementById('statusBadge').textContent = p.badge;
+      document.getElementById('statusBadge').style.color = p.badgeColor;
+      document.getElementById('pairTitle').textContent = p.title;
+      document.getElementById('pairPlainDesc').textContent = p.desc;
+      document.getElementById('fixInstruction').innerHTML = '<strong>' + p.fix + '</strong>';
+      document.getElementById('quoteText').textContent = p.quote;
+      document.getElementById('wavePath').setAttribute('d', p.wave);
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
