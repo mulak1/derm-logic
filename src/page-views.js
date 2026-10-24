@@ -43,6 +43,9 @@ function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdO
   <meta name="twitter:description" content="${escapeHtml(description)}" />
   <meta name="twitter:image" content="${escapeHtml(ogImageUrl)}" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   ${jsonLdScripts}
   <style>${SHARED_CSS}</style>
 </head>
@@ -151,29 +154,29 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
         <div id="home-executive-brief" class="editorial-top-banner">
           <div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
-              <div class="eyebrow-pill mono" style="margin:0;">5-SECOND SKINCARE ROUTINE &amp; INGREDIENT CHECKER</div>
+              <div class="eyebrow-pill mono" style="margin:0;">ATELIER CÉRAMIQUE · Z-AXIS PORCELAIN RITUAL &amp; WAIT-TIME SEQUENCER</div>
               <a href="/leaderboard" class="badge-safe mono" style="text-decoration:none;">🏆 Top-3 Podium Leaderboard &rarr;</a>
             </div>
-            <h1 class="hero-h1">Check If Your Skincare Serums Secretly <span class="serif-italic" style="color:var(--rose-brand);">Cancel Out.</span></h1>
+            <h1 class="hero-h1">A Quiet Bedtime Ritual for Skin <span class="serif-italic" style="color:var(--rose-brand);">Exhausted</span> by Harsh Acids.</h1>
             <p class="hero-sub" style="margin-bottom:12px;">
-              71% of multi-step skincare routines combine at least two serums that clash in acidity (pH), cause redness, or deactivate each other on contact. Select your products below to spot conflicts in 5 seconds.
+              71% of multi-step routines combine serums that clash in acidity, pill under moisturizer, or cancel each other out on contact. Check your bathroom shelf in 5 seconds for calm, plain-English layering order and droplet wait timers.
             </p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;">
               <span class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;">Built for:</span>
               <span class="ph-chip mono">✨ Skincare Shoppers</span>
-              <span class="ph-chip mono">🧴 Retinol &amp; Vitamin C Users</span>
-              <span class="ph-chip mono">👩‍⚕️ Estheticians &amp; Creators</span>
+              <span class="ph-chip mono">🧴 Retinol &amp; Peptide Users</span>
+              <span class="ph-chip mono">🌿 Sensitive Barrier Recovery</span>
             </div>
             <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
-              <div style="padding:11px 12px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
+              <div style="padding:11px 12px;border-radius:14px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
                 <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--rose-brand);margin-bottom:3px;">STEP 1 • FREE CHECK</div>
                 <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Tap a popular routine or paste any product's ingredient list below.</div>
               </div>
-              <div style="padding:11px 12px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
+              <div style="padding:11px 12px;border-radius:14px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
                 <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--honey-warn);margin-bottom:3px;">STEP 2 • SPOT CLASHES</div>
                 <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">See which serums cancel out in pH, oxidize Retinol, or clog pores.</div>
               </div>
-              <div style="padding:11px 12px;border-radius:12px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
+              <div style="padding:11px 12px;border-radius:14px;background:var(--bg-surface);border:1px solid var(--border-hairline);">
                 <div class="mono" style="font-size:0.8125rem;font-weight:700;color:var(--sage-safe);margin-bottom:3px;">STEP 3 • UNLOCK RITUAL</div>
                 <div style="font-size:0.84rem;color:var(--text-primary);font-weight:600;line-height:1.35;">Unlock your custom AM/PM order, wait timers &amp; 9:16 phone card ($1.99).</div>
               </div>
@@ -181,11 +184,11 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           </div>
           <div class="editorial-photo-shell">
             <div class="editorial-photo-inner">
-              <img src="/public/editorial-serum.jpg" alt="Editorial luxury skincare flat-lay with glazing milk, peptide dropper serum, and botanical treatment bottles on warm oat silk" fetchpriority="high" />
+              <img src="/public/editorial-serum.jpg" alt="Atelier Céramique stoneware vessels, peptide dropper serum, and silk emulsion on warm bisque" fetchpriority="high" />
               <div class="editorial-photo-caption">
                 <div>
-                  <strong class="serif-display" style="font-size:1rem;color:var(--text-primary);">Peptide Serum × Vitamin C Routine Check</strong>
-                  <div style="color:var(--text-secondary);font-size:0.8125rem;">Checks pH Clashes, Active Cancellation &amp; Pore-Safe Ingredients</div>
+                  <strong class="serif-display" style="font-size:1.05rem;color:var(--text-primary);">Atelier Céramique · Droplet &amp; Barrier Audit</strong>
+                  <div style="color:var(--text-secondary);font-size:0.8125rem;">3000K Vanity Calibrated · Checks Clashes, Wait Times &amp; Pore Safety</div>
                 </div>
                 <span class="badge-safe mono">44 Cult Formulas</span>
               </div>
@@ -204,37 +207,111 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       </div>
     </section>
 
-    <!-- Asymmetric 3-Cell Editorial Formulation Bento -->
-    <section class="section-block">
+    <!-- Direction 05: Z-Axis Overlapping Porcelain Cascade & Viscosity Wait-Time Sequencer -->
+    <section class="section-block" id="viscosity-sequencer">
       <div class="container">
-        <h2 class="serif-display" style="font-size:2.1rem;margin-bottom:6px;">Why Popular Serums Stop Working When Layered Together</h2>
-        <p style="color:var(--text-secondary);font-size:0.95rem;max-width:62ch;">
-          Even best-selling products from SkinCeuticals, Rhode, Paula’s Choice, and The Ordinary can cancel each other out or irritate your skin barrier when used in the same step.
-        </p>
-        <div class="bento-grid-3">
-          <div class="bento-cell tinted">
-            <div class="badge-clash mono" style="margin-bottom:10px;">1. CANCELS OUT · pH 3.2 vs pH 6.2</div>
-            <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Copper Peptides × Pure Vitamin C</h3>
-            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
-              Pure Vitamin C (L-Ascorbic Acid) needs a low acidic pH (3.2) to absorb, while Copper Peptides need a neutral pH (6.2). Layering them in the same routine step triggers copper-ion oxidation and cancels out both serums.
-            </p>
-            <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Verified Vitamin C &amp; Peptide Separates (Dermstore) ↗</a>
+        <div style="text-align:center;max-width:68ch;margin:0 auto 12px;">
+          <span class="eyebrow-pill mono">ATELIER CÉRAMIQUE · Z-AXIS TACTILE CASCADE</span>
+          <h2 class="serif-display" style="font-size:clamp(2rem,3.4vw,2.85rem);line-height:1.08;margin-bottom:8px;">
+            Why Serums <span class="serif-italic" style="color:var(--rose-brand);">Cancel Out</span>—And How to Pace Every Layer
+          </h2>
+          <p style="color:var(--text-secondary);font-size:0.96rem;">
+            When your skin stings even from plain water, you don't need a chemistry lecture—you need gentle texture pacing, wait-time discipline, and barrier rest.
+          </p>
+        </div>
+
+        <div class="z-cascade-stage">
+          <!-- Left Tilted Porcelain Vessel: Sensory Fatigue & Copper Peptide Clash -->
+          <div class="z-vessel-left">
+            <div class="porcelain-vessel-core">
+              <div>
+                <div class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">
+                  🪞 THE SENSORY FATIGUE MIRROR MOMENT
+                </div>
+                <blockquote class="serif-italic" style="font-size:1.38rem;line-height:1.3;color:var(--text-primary);margin-bottom:12px;">
+                  “My face is tight, shiny, and stinging from layering too many TikTok actives. Why did my $182 Vitamin C stop working when I added Copper Peptides?”
+                </blockquote>
+                <div class="badge-clash mono" style="margin-bottom:8px;">⚠️ CANCELS OUT · pH 3.2 vs pH 6.2</div>
+                <p style="color:var(--text-secondary);font-size:0.86rem;margin-bottom:12px;">
+                  <strong>Plain-English Diagnosis:</strong> Pure Vitamin C needs an acidic pH (3.2), while Copper Peptides need a neutral pH (6.2). Layering them in the same step oxidizes both bottles on contact. Use Vitamin C in the <strong>Morning</strong> and Copper Peptides at <strong>Bedtime</strong>.
+                </p>
+              </div>
+              <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;">Shop Verified AM Vitamin C &amp; PM Peptides (Dermstore) ↗</a>
+            </div>
           </div>
-          <div class="bento-cell">
-            <div class="badge-warn mono" style="margin-bottom:10px;">2. DEACTIVATES RETINOIDS · OXIDATIVE LOSS</div>
-            <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Benzoyl Peroxide × Retinol / Tretinoin</h3>
-            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
-              Benzoyl Peroxide breaks down Tretinoin and Retinol on contact—wasting over 80% of your night serum while causing dryness, peeling, and redness when layered without proper separation.
-            </p>
-            <a href="/api/affiliate?product=laroche-posay-adapalene-01&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Peroxide-Compatible Adapalene 0.1% (Dermstore) ↗</a>
+
+          <!-- Center Elevated Porcelain Vessel: Interactive Viscosity & Droplet Wait-Time Sequencer -->
+          <div class="z-vessel-center">
+            <div class="porcelain-vessel-core">
+              <div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;flex-wrap:wrap;">
+                  <span class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:700;letter-spacing:0.08em;">THINNEST TO THICKEST</span>
+                  <span class="badge-safe mono">ZERO MAKEUP PILLING</span>
+                </div>
+                <h3 class="serif-display" style="font-size:1.75rem;margin-bottom:4px;">Viscosity &amp; Wait-Time Sequencer</h3>
+                <p style="color:var(--text-secondary);font-size:0.85rem;">
+                  Follow this droplet weight order—and tap any timer below at your bathroom sink so layers never roll off:
+                </p>
+
+                <ul class="viscosity-seq-list">
+                  <li class="viscosity-seq-item">
+                    <div>
+                      <strong style="font-size:0.9rem;color:var(--text-primary);">1. Water-Light Mist / Essence</strong>
+                      <div style="font-size:0.78rem;color:var(--text-secondary);">Apply to damp skin right after cleansing</div>
+                    </div>
+                    <span class="wait-timer-btn mono" style="cursor:default;">No Wait</span>
+                  </li>
+                  <li class="viscosity-seq-item">
+                    <div>
+                      <strong style="font-size:0.9rem;color:var(--text-primary);">2. Bounce Serum (Peptides / HA)</strong>
+                      <div style="font-size:0.78rem;color:var(--text-secondary);">Press gently with palms; never rub in circles</div>
+                    </div>
+                    <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(45, this)">⏱ Start 45s Timer</button>
+                  </li>
+                  <li class="viscosity-seq-item">
+                    <div>
+                      <strong style="font-size:0.9rem;color:var(--text-primary);">3. Velvet Ceramide Cream</strong>
+                      <div style="font-size:0.78rem;color:var(--text-secondary);">Seals hydration inside the lipid barrier</div>
+                    </div>
+                    <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(60, this)">⏱ Start 60s Timer</button>
+                  </li>
+                  <li class="viscosity-seq-item">
+                    <div>
+                      <strong style="font-size:0.9rem;color:var(--text-primary);">4. Pure Squalane Oil / SPF Seal</strong>
+                      <div style="font-size:0.78rem;color:var(--text-secondary);">Pat 2 drops over dry cheeks (or SPF in AM)</div>
+                    </div>
+                    <span class="wait-timer-btn mono" style="cursor:default;">Final Step</span>
+                  </li>
+                </ul>
+              </div>
+              <a href="/buy/micro_pass?source=viscosity_sequencer" class="btn-primary" style="width:100%;justify-content:space-between;padding:10px 12px 10px 20px;">
+                <span>Save Vanity Mirror Lockscreen Card ($1.99)</span>
+                <span class="btn-icon-circle">↗</span>
+              </a>
+            </div>
           </div>
-          <div class="bento-cell">
-            <div class="badge-safe mono" style="margin-bottom:10px;">3. PORE &amp; BREAKOUT SAFETY</div>
-            <h3 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;">Hidden Pore-Clogging Base Oils</h3>
-            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:10px;">
-              Even prescription anti-acne creams sometimes use heavy base ingredients like Isopropyl Myristate (rated 5/5 for pore clogging), which can trigger stubborn bumps and fungal breakouts.
-            </p>
-            <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Pore-Safe Ceramide Barrier Cream (Sephora) ↗</a>
+
+          <!-- Right Tilted Porcelain Vessel: Medicine Cabinet Save Card & Retinol Protection -->
+          <div class="z-vessel-right">
+            <div class="porcelain-vessel-core">
+              <div>
+                <div class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">
+                  📱 MEDICINE CABINET SAVE CARD · 9:00 PM PROOF
+                </div>
+                <h3 class="serif-display" style="font-size:1.42rem;margin-bottom:8px;">Benzoyl Peroxide × Retinol Separation</h3>
+                <p style="font-size:0.85rem;font-style:italic;color:var(--text-primary);background:var(--bg-canvas);padding:12px 14px;border-radius:14px;border:1px dashed var(--border-strong);margin-bottom:10px;">
+                  “I printed the 4-night gentle cycling card and taped it inside my medicine cabinet. Moving Benzoyl Peroxide to morning and Retinol to bedtime stopped my winter flaking in 4 days.”
+                </p>
+                <p style="color:var(--text-secondary);font-size:0.84rem;margin-bottom:10px;">
+                  <strong>Why it matters:</strong> Benzoyl Peroxide releases oxygen that wipes out 80%+ of Retinol on contact, while heavy base esters (Isopropyl Myristate 5/5) trap sweat and clog pores.
+                </p>
+                <details style="margin-bottom:12px;padding-top:8px;border-top:1px solid var(--border-hairline);font-size:0.78rem;color:var(--text-secondary);">
+                  <summary class="mono" style="cursor:pointer;font-weight:700;color:var(--text-primary);">🔬 Optional Lab Footnote: Ceramide 3:1:1 Molar Ratio ▾</summary>
+                  <div style="padding-top:6px;">Physiological 3:1:1 ratio of Ceramides NP/AP, Cholesterol, and Fatty Acids accelerates stratum corneum recovery within 72 hours.</div>
+                </details>
+              </div>
+              <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;">Shop Pore-Safe 3:1:1 Ceramide Cream (Sephora) ↗</a>
+            </div>
           </div>
         </div>
       </div>
