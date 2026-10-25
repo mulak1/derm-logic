@@ -837,19 +837,19 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
   }).join('');
   const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13px;font-weight:600;text-decoration:none;"><span>${escHtml(fmtTarget(s.target))}</span><span class="eb-tabular">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Diagnosis →</span></a>`).join('');
 
-  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Routine Harmony Leaderboard" style="margin:36px auto;font-family:${t.fontSans};">
-    <div class="eb-panel-card" style="margin:0;padding:24px;background:${t.cardBg};">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Routine Harmony Leaderboard" style="margin:56px auto;font-family:${t.fontSans};">
+    <div class="eb-panel-card" style="margin:0;padding:30px 32px;background:${t.cardBg};">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:20px;">
         <div>
-          <span style="font-size:12.5px;font-weight:600;letter-spacing:0.04em;color:${t.brandPrimary};">Public Formulation Archive · Verified Shelf Scans</span>
-          <h2 style="margin:4px 0 0 0;font-size:24px;font-family:${t.fontDisplay};font-weight:400;color:${t.textPrimary};">Routine Harmony Leaderboard &amp; Common Shelf Clashes</h2>
+          <span style="font-size:13.5px;font-weight:500;letter-spacing:0.03em;color:${t.brandPrimary};">Public Formulation Archive · Verified Shelf Scans</span>
+          <h2 style="margin:6px 0 0 0;font-size:clamp(1.65rem,2.4vw,2.25rem);font-family:${t.fontDisplay};font-weight:300;color:${t.textPrimary};letter-spacing:-0.02em;">Routine Harmony Leaderboard &amp; Common Shelf Clashes</h2>
         </div>
-        <a href="/leaderboard" style="padding:10px 18px;background:${t.brandPrimary};color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">Explore Full Routine Leaderboard →</a>
+        <a href="/leaderboard" style="padding:11px 20px;background:${t.brandPrimary};color:#FFFFFF;font-size:14px;font-weight:500;text-decoration:none;">Explore Full Routine Leaderboard →</a>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:16px;">${podiumCards}</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:12px;">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:13.5px;font-weight:600;color:${t.textSecondary};">Common Shelf Clashes Analysed:</span>${fixPills}</div>
-        <a href="/leaderboard" style="font-size:13.5px;font-weight:600;color:${t.brandPrimary};text-decoration:underline;">Browse all ${ledger.length} ranked routines →</a>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;margin-bottom:18px;">${podiumCards}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:14px;">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><span style="font-size:14px;font-weight:500;color:${t.textSecondary};">Common Shelf Clashes Analysed:</span>${fixPills}</div>
+        <a href="/leaderboard" style="font-size:14px;font-weight:500;color:${t.brandPrimary};text-decoration:underline;">Browse all ${ledger.length} ranked routines →</a>
       </div>
     </div>
   </section>`;
@@ -869,18 +869,18 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   ];
   const pillsHtml = growthItems.map((item) => {
     const active = reqPath === item.href;
-    return `<a href="${escHtml(item.href)}" class="eb-mesh-link" data-mesh-text="${escHtml((item.title + ' ' + item.cat).toLowerCase())}" style="display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;background:${active ? t.brandSoftBg : t.surfaceBg};color:${active ? t.brandPrimary : t.textPrimary};border:1px solid ${active ? t.accentBorder : t.border};font-size:13px;font-weight:${active ? '700' : '500'};text-decoration:none;line-height:1.35;"><span>${escHtml(item.title)}</span></a>`;
+    return `<a href="${escHtml(item.href)}" class="eb-mesh-link" data-mesh-text="${escHtml((item.title + ' ' + item.cat).toLowerCase())}" style="display:inline-flex;align-items:center;gap:5px;padding:7px 13px;background:${active ? t.brandSoftBg : t.surfaceBg};color:${active ? t.brandPrimary : t.textPrimary};font-size:13.5px;font-weight:${active ? '600' : '400'};text-decoration:none;line-height:1.35;"><span>${escHtml(item.title)}</span></a>`;
   }).join('');
 
-  return `<nav id="eb-seo-crawl-mesh" aria-label="${escHtml(cfg.brandName)} Complete ${growthItems.length}-Page Programmatic Benchmark &amp; AI Indexing Mesh" style="margin-top:16px;padding:18px;border-radius:${t.radiusCard};background:${t.subtleBg};border:1px solid ${t.border};">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+  return `<nav id="eb-seo-crawl-mesh" aria-label="${escHtml(cfg.brandName)} Complete ${growthItems.length}-Page Programmatic Benchmark &amp; AI Indexing Mesh" style="margin-top:24px;padding:26px 28px;background:${t.subtleBg};">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
       <div>
-        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:${t.brandPrimary};">Complete ${growthItems.length}-Benchmark Knowledge Graph &amp; AI Crawl Mesh</div>
-        <div style="font-size:13.5px;color:${t.textSecondary};">1-click access to all ${growthItems.length} verified guides, interactive tools, comparisons, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:700;">Public Leaderboard</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, <a href="/llms-full.txt" style="color:${t.brandPrimary};text-decoration:underline;">Full Knowledge Corpus</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap Index</a>.</div>
+        <div style="font-size:13.5px;font-weight:500;letter-spacing:0.03em;color:${t.brandPrimary};">Complete ${growthItems.length}-Dossier Layering Archive &amp; Ingredient Index</div>
+        <div style="font-size:14.5px;color:${t.textSecondary};margin-top:4px;">Direct access to all ${growthItems.length} verified pairing guides, calculators, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:500;">Routine Leaderboard</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap</a>.</div>
       </div>
-      <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="Filter ${growthItems.length} guides by keyword..." oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:7px 12px;border-radius:8px;border:1px solid ${t.border};background:${t.surfaceBg};color:${t.textPrimary};font-size:13.5px;min-width:220px;" />
+      <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="Filter ${growthItems.length} guides by ingredient..." oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:9px 14px;background:${t.surfaceBg};color:${t.textPrimary};font-size:14px;min-width:240px;border:none;" />
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow-y:auto;padding:2px;">${pillsHtml}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;max-height:220px;overflow-y:auto;padding:2px;">${pillsHtml}</div>
   </nav>`;
 }
 

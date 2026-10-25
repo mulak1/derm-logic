@@ -79,12 +79,12 @@ function getRoutineSlotRecommendation(ing) {
 }
 
 function renderPorcelainSwatchCards(ingList) {
-  return `<div class="porcelain-swatch-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-bottom:24px;">${(ingList || []).slice(0, 3).map((ing) => {
+  return `<div class="porcelain-swatch-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px;margin-bottom:28px;">${(ingList || []).slice(0, 3).map((ing) => {
     const slot = getRoutineSlotRecommendation(ing);
     const step = Number(ing.molecularWeightDa) < 200 ? 'First · Water-Light' : (Number(ing.molecularWeightDa) < 500 ? 'Second · Bounce Serum' : 'Third · Velvet Seal');
     const feel = Number(ing.phMin) < 4.0 ? 'Active Tingle (Wait 60s)' : 'Cushion-Soft & Calm';
     const pore = ing.comedogenicity === 0 ? '0/5 Pore-Safe' : `Low (${ing.comedogenicity}/5)`;
-    return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 22px;justify-content:space-between;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">Formulation Swatch</span><span class="badge-safe mono">${pore}</span></div><h3 class="serif-display" style="font-size:1.4rem;margin-bottom:12px;">${escapeHtml(ing.commonName)}</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;"><div style="padding:9px 11px;background:var(--bg-surface);"><div class="mono" style="font-size:0.72rem;color:var(--text-secondary);">When to Use</div><div style="font-size:0.84rem;font-weight:500;">${slot.split('(')[0].trim()}</div></div><div style="padding:9px 11px;background:var(--bg-surface);"><div class="mono" style="font-size:0.72rem;color:var(--text-secondary);">Layering Step</div><div style="font-size:0.84rem;font-weight:500;">${step}</div></div></div></div><div style="font-size:0.82rem;color:var(--text-secondary);padding-top:6px;"><strong>Skin Feel:</strong> ${feel} · <span class="mono">pH ${ing.phMin}–${ing.phMax}</span></div></div>`;
+    return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;justify-content:space-between;gap:14px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Formulation Swatch</span><span class="badge-safe mono">${pore}</span></div><h3 class="serif-display" style="font-size:1.5rem;margin-bottom:14px;">${escapeHtml(ing.commonName)}</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">When to Use</div><div style="font-size:0.9rem;font-weight:500;margin-top:2px;">${slot.split('(')[0].trim()}</div></div><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Layering Step</div><div style="font-size:0.9rem;font-weight:500;margin-top:2px;">${step}</div></div></div></div><div style="font-size:0.88rem;color:var(--text-secondary);padding-top:8px;"><strong>Skin Feel:</strong> ${feel} · <span class="mono">pH ${ing.phMin}–${ing.phMax}</span></div></div>`;
   }).join('')}</div>`;
 }
 
@@ -152,17 +152,17 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
   ];
 
   const featuredSeoLinks = featuredSeoPages.map((p, idx) => `
-    <div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:22px 24px;justify-content:space-between;gap:10px;">
+    <div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:26px 28px;justify-content:space-between;gap:14px;">
       <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-          <span class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Dossier 0${idx + 1} · ${escapeHtml(p.category)}</span>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">Dossier 0${idx + 1} · ${escapeHtml(p.category)}</span>
           <span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))} · ${p.compatibilityScore}/100</span>
         </div>
-        <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.3rem;line-height:1.2;color:var(--text-primary);margin-bottom:8px;">${escapeHtml(p.title)}</a>
-        <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.55;">${escapeHtml(p.summary)}</p>
+        <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.38rem;line-height:1.22;color:var(--text-primary);margin-bottom:10px;">${escapeHtml(p.title)}</a>
+        <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;">${escapeHtml(p.summary)}</p>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;gap:8px;flex-wrap:wrap;">
-        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Read Layering Dossier &rarr;</a>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;gap:8px;flex-wrap:wrap;">
+        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.86rem;color:var(--rose-brand);font-weight:500;">Read Layering Dossier &rarr;</a>
         <a href="/api/affiliate?product=${escapeHtml((p.presetProducts && p.presetProducts[0]) || 'skinceuticals-ce-ferulic')}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" style="margin:0;">Verified Retailer &rarr;</a>
       </div>
     </div>
@@ -236,59 +236,59 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div class="z-vessel-left">
             <div class="porcelain-vessel-core">
               <div>
-                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:8px;">
+                <div class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;margin-bottom:10px;">
                   The Sensory Fatigue Mirror Moment
                 </div>
-                <blockquote class="serif-italic" style="font-size:1.38rem;line-height:1.3;color:var(--text-primary);margin-bottom:12px;">
+                <blockquote class="serif-italic" style="font-size:1.45rem;line-height:1.32;color:var(--text-primary);margin-bottom:14px;">
                   “My face is tight, shiny, and stinging from layering too many actives. Why did my $182 Vitamin C stop working when I added Copper Peptides?”
                 </blockquote>
-                <div class="badge-clash mono" style="margin-bottom:8px;">Cancels Out · pH 3.2 vs pH 6.2</div>
-                <p style="color:var(--text-secondary);font-size:0.86rem;margin-bottom:12px;">
+                <div class="badge-clash mono" style="margin-bottom:10px;">Cancels Out · pH 3.2 vs pH 6.2</div>
+                <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;margin-bottom:14px;">
                   <strong>Plain-English Diagnosis:</strong> Pure Vitamin C needs an acidic pH (3.2), while Copper Peptides need a neutral pH (6.2). Layering them in the same step oxidizes both bottles on contact. Use Vitamin C in the <strong>Morning</strong> and Copper Peptides at <strong>Bedtime</strong>.
                 </p>
               </div>
-              <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;">Shop Verified AM Vitamin C &amp; PM Peptides (Dermstore) &rarr;</a>
+              <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:9px 16px;">Shop Verified AM Vitamin C &amp; PM Peptides (Dermstore) &rarr;</a>
             </div>
           </div>
 
           <div class="z-vessel-center">
             <div class="porcelain-vessel-core">
               <div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;flex-wrap:wrap;">
-                  <span class="mono" style="font-size:0.78rem;color:var(--sage-safe);font-weight:500;">Thinnest to Thickest</span>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;">
+                  <span class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;">Thinnest to Thickest</span>
                   <span class="badge-safe mono">Zero Makeup Pilling</span>
                 </div>
-                <h3 class="serif-display" style="font-size:1.75rem;margin-bottom:4px;">Viscosity &amp; Wait-Time Sequencer</h3>
-                <p style="color:var(--text-secondary);font-size:0.85rem;">
+                <h3 class="serif-display" style="font-size:1.85rem;margin-bottom:6px;">Viscosity &amp; Wait-Time Sequencer</h3>
+                <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.55;">
                   Follow this droplet weight order—and tap any timer below at your bathroom sink so layers never roll off:
                 </p>
 
                 <ul class="viscosity-seq-list">
                   <li class="viscosity-seq-item">
                     <div>
-                      <strong style="font-size:0.9rem;color:var(--text-primary);">First · Water-Light Mist / Essence</strong>
-                      <div style="font-size:0.78rem;color:var(--text-secondary);">Apply to damp skin right after cleansing</div>
+                      <strong style="font-size:0.95rem;color:var(--text-primary);">First · Water-Light Mist / Essence</strong>
+                      <div style="font-size:0.82rem;color:var(--text-secondary);">Apply to damp skin right after cleansing</div>
                     </div>
                     <span class="wait-timer-btn mono" style="cursor:default;">No Wait</span>
                   </li>
                   <li class="viscosity-seq-item">
                     <div>
-                      <strong style="font-size:0.9rem;color:var(--text-primary);">Second · Bounce Serum (Peptides / HA)</strong>
-                      <div style="font-size:0.78rem;color:var(--text-secondary);">Press gently with palms; never rub in circles</div>
+                      <strong style="font-size:0.95rem;color:var(--text-primary);">Second · Bounce Serum (Peptides / HA)</strong>
+                      <div style="font-size:0.82rem;color:var(--text-secondary);">Press gently with palms; never rub in circles</div>
                     </div>
                     <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(45, this)">Start 45s Timer</button>
                   </li>
                   <li class="viscosity-seq-item">
                     <div>
-                      <strong style="font-size:0.9rem;color:var(--text-primary);">Third · Velvet Ceramide Cream</strong>
-                      <div style="font-size:0.78rem;color:var(--text-secondary);">Seals hydration inside the lipid barrier</div>
+                      <strong style="font-size:0.95rem;color:var(--text-primary);">Third · Velvet Ceramide Cream</strong>
+                      <div style="font-size:0.82rem;color:var(--text-secondary);">Seals hydration inside the lipid barrier</div>
                     </div>
                     <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(60, this)">Start 60s Timer</button>
                   </li>
                   <li class="viscosity-seq-item">
                     <div>
-                      <strong style="font-size:0.9rem;color:var(--text-primary);">Fourth · Pure Squalane Oil / SPF Seal</strong>
-                      <div style="font-size:0.78rem;color:var(--text-secondary);">Pat 2 drops over dry cheeks (or SPF in AM)</div>
+                      <strong style="font-size:0.95rem;color:var(--text-primary);">Fourth · Pure Squalane Oil / SPF Seal</strong>
+                      <div style="font-size:0.82rem;color:var(--text-secondary);">Pat 2 drops over dry cheeks (or SPF in AM)</div>
                     </div>
                     <span class="wait-timer-btn mono" style="cursor:default;">Final Step</span>
                   </li>
@@ -304,22 +304,22 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div class="z-vessel-right">
             <div class="porcelain-vessel-core">
               <div>
-                <div class="mono" style="font-size:0.78rem;color:var(--sage-safe);font-weight:500;margin-bottom:8px;">
+                <div class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;margin-bottom:10px;">
                   Medicine Cabinet Save Card · 11:00 PM Proof
                 </div>
-                <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">Benzoyl Peroxide &amp; Retinol Separation</h3>
-                <p style="font-size:0.86rem;font-style:italic;color:var(--text-primary);background:var(--bg-canvas);padding:12px 14px;margin-bottom:10px;">
+                <h3 class="serif-display" style="font-size:1.55rem;margin-bottom:10px;">Benzoyl Peroxide &amp; Retinol Separation</h3>
+                <p style="font-size:0.92rem;line-height:1.58;font-style:italic;color:var(--text-primary);background:var(--bg-canvas);padding:14px 16px;margin-bottom:12px;">
                   “I printed the 4-night gentle cycling card and taped it inside my medicine cabinet. Moving Benzoyl Peroxide to morning and Retinol to bedtime stopped my winter flaking in 4 days.”
                 </p>
-                <p style="color:var(--text-secondary);font-size:0.84rem;margin-bottom:10px;">
+                <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;margin-bottom:12px;">
                   <strong>Why it matters:</strong> Benzoyl Peroxide releases oxygen that wipes out 80%+ of Retinol on contact, while heavy base esters (Isopropyl Myristate 5/5) trap sweat and clog pores.
                 </p>
-                <details style="margin-bottom:12px;padding:10px 12px;background:var(--bg-canvas);font-size:0.78rem;color:var(--text-secondary);">
+                <details style="margin-bottom:12px;padding:12px 14px;background:var(--bg-canvas);font-size:0.84rem;color:var(--text-secondary);">
                   <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);">Optional Lab Footnote: Ceramide 3:1:1 Molar Ratio</summary>
                   <div style="padding-top:6px;">Physiological 3:1:1 ratio of Ceramides NP/AP, Cholesterol, and Fatty Acids accelerates stratum corneum recovery within 72 hours.</div>
                 </details>
               </div>
-              <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;">Shop Pore-Safe 3:1:1 Ceramide Cream (Sephora) &rarr;</a>
+              <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:9px 16px;">Shop Pore-Safe 3:1:1 Ceramide Cream (Sephora) &rarr;</a>
             </div>
           </div>
         </div>
@@ -503,38 +503,38 @@ function renderDirectoryPage({ seoPages }) {
     const partner = p.pageType === 'product_teardown' ? 'dermstore' : 'sephora';
     const partnerLabel = partner === 'dermstore' ? 'Dermstore' : 'Sephora';
     const vaultTag = p.pageType === 'product_teardown' ? 'product' : (p.compatibilityScore < 55 ? 'clash' : (p.compatibilityScore < 75 ? 'timer' : 'safe'));
-    return `<div class="dir-vault-card porcelain-vessel-core" data-vault-tag="${vaultTag}" data-vault-text="${escapeHtml((p.title + ' ' + p.summary + ' ' + p.verdict).toLowerCase())}" style="padding:22px 24px;background:var(--bg-oat);display:flex;flex-direction:column;justify-content:space-between;">
+    return `<div class="dir-vault-card porcelain-vessel-core" data-vault-tag="${vaultTag}" data-vault-text="${escapeHtml((p.title + ' ' + p.summary + ' ' + p.verdict).toLowerCase())}" style="padding:26px 28px;background:var(--bg-oat);display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
       <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
           <span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))} · ${p.compatibilityScore}/100</span>
-          <span class="mono" style="font-size:0.82rem;color:var(--text-secondary);">ΔpH ${p.deltaPh}</span>
+          <span class="mono" style="font-size:0.86rem;color:var(--text-secondary);">ΔpH ${p.deltaPh}</span>
         </div>
-        <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-size:1.28rem;font-weight:400;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
-        <p style="color:var(--text-secondary);font-size:0.86rem;margin-bottom:12px;">${escapeHtml(p.summary)}</p>
+        <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-size:1.38rem;font-weight:400;line-height:1.22;margin-bottom:10px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
+        <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;margin-bottom:12px;">${escapeHtml(p.summary)}</p>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;gap:8px;flex-wrap:wrap;">
-        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Read Layering Dossier &rarr;</a>
+        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.86rem;color:var(--rose-brand);font-weight:500;">Read Layering Dossier &rarr;</a>
         <a href="/api/affiliate?product=${escapeHtml(prodId)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop at ${partnerLabel} &rarr;</a>
       </div>
     </div>`;
   }).join('');
 
   const bodyHtml = `
-    <section class="section-block">
+    <section class="section-block" style="padding-top:36px;">
       <div class="container">
-        <h1 class="hero-h1" style="font-size:clamp(2.4rem,4.2vw,3.8rem);margin-bottom:12px;">Skincare Active-Ingredient Harmony &amp; Cult-Product INCI Directory</h1>
+        <h1 class="hero-h1" style="font-size:clamp(2.4rem,4.2vw,3.8rem);margin-bottom:14px;">Skincare Active-Ingredient Harmony &amp; Cult-Product INCI Directory</h1>
         <p class="hero-sub" style="margin-bottom:24px;">
           Every pairing and cult formula is housed in a dedicated formulation dossier with plain-English morning and bedtime separation rules, droplet wait-time sequencers, and pore-safety scores.
         </p>
 
-        <div id="dir-apothecary-vault-bar" data-ui="directory-filter-bar" style="padding:14px 18px;background:var(--bg-oat);margin-bottom:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;" role="group" aria-label="Filter Apothecary Archive">
+        <div id="dir-apothecary-vault-bar" data-ui="directory-filter-bar" style="padding:18px 22px;background:var(--bg-oat);margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;" role="group" aria-label="Filter Apothecary Archive">
             <button type="button" class="vanity-light-btn mono dir-vault-pill active" aria-pressed="true" onclick="window.__dlFilterVault('all',this)">All ${seoPages.length} Guides</button>
             <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('clash',this)">Do Not Mix (${clashCount})</button>
             <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('safe',this)">Safe Together (${safeCount})</button>
             <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('product',this)">Cult Product Breakdowns (${productPages.length})</button>
           </div>
-          <input type="search" id="dir-vault-search" aria-label="Search layering guides" placeholder="Search Retinol, Copper Peptides, Vitamin C..." oninput="window.__dlSearchVault(this.value)" class="input-box" style="max-width:290px;padding:8px 14px;font-size:0.86rem;" />
+          <input type="search" id="dir-vault-search" aria-label="Search layering guides" placeholder="Search Retinol, Copper Peptides, Vitamin C..." oninput="window.__dlSearchVault(this.value)" class="input-box" style="max-width:310px;padding:10px 16px;font-size:0.92rem;" />
         </div>
         <script>
           window.__dlVaultTag='all';
