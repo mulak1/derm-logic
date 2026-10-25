@@ -809,29 +809,29 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
   ];
   const podiumCards = top3.map((s, i) => {
     const m = medals[i] || medals[2];
-    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:16px 18px;border-radius:12px;background:#FFFFFF;border:1.5px solid ${i === 0 ? t.brandPrimary : t.border};box-shadow:0 4px 14px rgba(15,23,42,0.04);text-decoration:none;color:${t.textPrimary};">
+    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px;border-radius:26px 12px 26px 12px;background:${t.cardBg || '#FFFDFB'};border:1.5px solid ${i === 0 ? t.brandPrimary : t.border};box-shadow:0 18px 36px -12px rgba(34,26,22,0.08),inset 0 1px 0 rgba(255,255,255,0.92);text-decoration:none;color:${t.textPrimary};">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
           <span style="padding:3px 9px;border-radius:999px;background:${m.bg};border:1px solid ${m.border};color:${m.text};font-size:13px;font-weight:800;">${m.icon}</span>
           <span style="padding:3px 10px;border-radius:999px;background:${t.safeSoftBg};color:${t.safeColor};font-family:monospace;font-size:13.5px;font-weight:800;">Grade ${escHtml(s.grade)} · ${s.score}/100</span>
         </div>
-        <div style="font-size:17px;font-weight:800;color:${t.textPrimary};margin-bottom:4px;">${escHtml(s.target)}</div>
+        <div style="font-family:${t.fontDisplay};font-size:19px;font-weight:700;color:${t.textPrimary};margin-bottom:4px;">${escHtml(s.target)}</div>
         <div style="font-size:13.5px;color:${t.textSecondary};margin-bottom:10px;">${escHtml(s.kpi1)} · ${escHtml(s.kpi2)}</div>
       </div>
       <div>
-        <div style="width:100%;height:7px;background:#E2E8F0;border-radius:999px;overflow:hidden;margin-bottom:6px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};border-radius:999px;"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:${t.brandPrimary};font-weight:700;"><span>View Verified Report</span><span>→</span></div>
+        <div style="width:100%;height:7px;background:${t.border};border-radius:999px;overflow:hidden;margin-bottom:6px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};border-radius:999px;"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:${t.brandPrimary};font-weight:700;"><span>View Porcelain Report</span><span>→</span></div>
       </div>
     </a>`;
   }).join('');
-  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#FFF1F2;border:1px solid #FECDD3;color:#BE123C;font-size:13px;font-weight:700;text-decoration:none;"><span>⚠️ ${escHtml(s.target)}</span><span style="font-family:monospace;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
+  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:${t.brandSoftBg};border:1px solid ${t.accentBorder};color:${t.brandPrimary};font-size:13px;font-weight:700;text-decoration:none;"><span>⚠️ ${escHtml(s.target)}</span><span style="font-family:monospace;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
 
   return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Industry Leaderboard Podium" style="margin:36px auto;font-family:${t.fontSans};">
-    <div class="eb-panel-card" style="margin:0;padding:24px;background:${t.cardBg};border:1.5px solid ${t.accentBorder};">
+    <div class="eb-panel-card" style="margin:0;padding:24px;background:${t.cardBg};border:1.5px solid ${t.accentBorder};border-radius:32px 16px 32px 16px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
         <div>
-          <span style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:${t.brandPrimary};">🏆 Live Public Benchmark Leaderboard</span>
-          <h2 style="margin:4px 0 0 0;font-size:22px;font-family:${t.fontDisplay};font-weight:700;color:${t.textPrimary};">Top-Rated Industry Leaders (Grade A+) &amp; Common Mistakes</h2>
+          <span style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:${t.brandPrimary};">🏆 Atelier Céramique · Live Routine Harmony Podium</span>
+          <h2 style="margin:4px 0 0 0;font-size:24px;font-family:${t.fontDisplay};font-weight:600;color:${t.textPrimary};">Top-Rated Porcelain Rituals (Grade A+) &amp; Common Clashes</h2>
         </div>
         <a href="/leaderboard" style="padding:9px 18px;border-radius:999px;background:${t.brandPrimary};color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;">Explore Full Interactive Leaderboard →</a>
       </div>

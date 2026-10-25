@@ -734,15 +734,51 @@ function formatMetaDescription(rawText, maxLen = 155) {
   return base.endsWith('.') ? base : `${base}.`;
 }
 
+function toPlainConsumerPair(item, ingA, ingB) {
+  const nameA = ingA ? ingA.commonName : item.activeA;
+  const nameB = ingB ? ingB.commonName : item.activeB;
+  const score = Number(item.compatibilityScore) || 50;
+  if (score < 45) {
+    return {
+      conflictType: 'Cancels Out Potency & Triggers Redness — Separate Morning & Night',
+      summary: `Do not layer ${nameA} and ${nameB} at the same time. Because their acidity levels clash (ΔpH ${item.deltaPh}), applying them back-to-back weakens both formulas and can cause redness, stinging, or flaking. Use one in the morning and the other at night.`
+    };
+  }
+  if (score < 78) {
+    return {
+      conflictType: 'Can Over-Exfoliate or Sting Sensitive Skin — Alternate Nights or Wait',
+      summary: `Be careful layering ${nameA} and ${nameB} in the same routine (ΔpH ${item.deltaPh}). Stacking both at once can overwhelm your moisture barrier and trigger dryness or irritation. Alternate nights or wait ${item.waitTimeMinutes >= 60 ? 'until bedtime' : `${item.waitTimeMinutes} minutes`} between layers.`
+    };
+  }
+  return {
+    conflictType: 'Safe & Hydrating Together — Layer Thinnest to Thickest',
+    summary: `Yes, you can safely layer ${nameA} and ${nameB} in the same skincare routine (Harmony ${score}/100). They work well together to support a calm, hydrated moisture barrier without canceling each other out.`
+  };
+}
+
+function toPlainConsumerProduct(item, prod) {
+  const label = prod ? `${prod.brand} ${prod.name}` : item.title.split(':')[0];
+  const ph = prod ? prod.ph : 5.0;
+  if (ph <= 3.8) {
+    return {
+      conflictType: 'High-Potency Acidic Formula — Wait Before Layering Delicates',
+      summary: `${label} is a strong, low-pH treatment (pH ${ph}) designed for fast brightening or smoothing. Give it 60 seconds to absorb on clean skin, and avoid layering it right under Copper Peptides or strong Retinoids in the same step.`
+    };
+  }
+  return {
+    conflictType: 'Barrier-Friendly Formula — Check Active & Pore-Clogging Pairings',
+    summary: `${label} (pH ${ph}) fits smoothly into most daily routines. Check the ingredient breakdown below to see whether to apply it in the morning or at night, how long to wait between drops, and whether it is safe for breakout-prone pores.`
+  };
+}
+
 function buildSeoPagesCatalog(ingredientsMap, productsMap) {
   const pages = [];
 
   for (const item of [...PAIR_SEO_SEEDS, ...EXPANDED_PAIR_SEEDS]) {
     const ingA = ingredientsMap.get(item.activeA);
     const ingB = ingredientsMap.get(item.activeB);
-    const baseSummary = item.summary.length < 115
-      ? `${item.summary} (ΔpH ${item.deltaPh}, Harmony ${item.compatibilityScore}/100).`
-      : item.summary;
+    const plain = toPlainConsumerPair(item, ingA, ingB);
+    const baseSummary = plain.summary;
     const comparisonIngredients = [ingA, ingB].filter(Boolean);
 
     pages.push({
@@ -754,8 +790,10 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       verdict: item.verdict,
       compatibilityScore: item.compatibilityScore,
       deltaPh: item.deltaPh,
-      conflictType: item.conflictType,
-      summary: item.summary,
+      conflictType: plain.conflictType,
+      summary: plain.summary,
+      labConflictType: item.conflictType,
+      labSummary: item.summary,
       amRule: item.amRule,
       pmRule: item.pmRule,
       waitTimeMinutes: item.waitTimeMinutes,
@@ -767,17 +805,17 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       faqs: [
         {
           q: `Can you layer ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} in the same skincare routine?`,
-          a: `${item.summary} Recommended protocol: ${item.amRule} ${item.pmRule}`
+          a: `${plain.summary}`
         },
         {
-          q: `What is the ΔpH between ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB}?`,
-          a: `The formulation pH differential is approximately ΔpH ${item.deltaPh} (${ingA ? `${ingA.phMin}–${ingA.phMax}` : 'acidic'} vs ${ingB ? `${ingB.phMin}–${ingB.phMax}` : 'neutral'}). Any ΔpH > 1.8 shifts Henderson-Hasselbalch free-acid bioavailability or stresses acid-labile bonds.`
+          q: `Why do ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} clash or work together?`,
+          a: `They have a pH difference of ΔpH ${item.deltaPh} (${ingA ? `pH ${ingA.phMin}–${ingA.phMax}` : 'acidic'} vs ${ingB ? `pH ${ingB.phMin}–${ingB.phMax}` : 'neutral'}). When two products have very different acidity levels, layering them right on top of each other can make them less effective or irritate sensitive skin.`
         },
         {
-          q: `How long should I wait between ${ingA ? ingA.inciName : item.activeA} and ${ingB ? ingB.inciName : item.activeB}?`,
+          q: `How long should I wait between ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB}?`,
           a: item.waitTimeMinutes >= 720
-            ? `Waiting 15 minutes is not sufficient for ${item.conflictType}. Separate them into dedicated AM vs PM routines or alternate evenings.`
-            : `Allow a ${item.waitTimeMinutes}-minute acid-mantle equilibration window on dry skin before applying the second layer.`
+            ? `Waiting a few minutes isn't enough when two strong actives clash. Use one in your morning routine and the other at bedtime (or alternate nights).`
+            : `Wait about 60 seconds for the first layer to absorb on dry skin (or up to ${item.waitTimeMinutes} minutes for sensitive skin) before patting on the next step.`
         }
       ]
     });
@@ -785,6 +823,7 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
 
   for (const item of [...PRODUCT_SEO_SEEDS, ...EXPANDED_PRODUCT_SEEDS]) {
     const prod = productsMap.get(item.productId);
+    const plainProd = toPlainConsumerProduct(item, prod);
     const primaryIngs = (prod ? prod.primaryActives : []).map((id) => ingredientsMap.get(id)).filter(Boolean);
     const companionIngs = (item.companionProductIds || [])
       .map((pid) => productsMap.get(pid))
@@ -801,7 +840,7 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       if (comparisonIngredients.length >= 4) break;
     }
 
-    const rawProdMeta = `${prod ? `${prod.brand} ${prod.name} (pH ${prod.ph})` : item.title}: ${item.conflictHighlights}`;
+    const rawProdMeta = `${plainProd.summary}`;
 
     pages.push({
       slug: item.slug,
@@ -812,12 +851,14 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       verdict: prod && prod.ph <= 3.8 ? 'LOW_PH_ACTIVE' : 'CLINICAL_TEARDOWN',
       compatibilityScore: prod && prod.ph <= 3.8 ? 64 : 86,
       deltaPh: prod ? Number(Math.abs(5.5 - prod.ph).toFixed(1)) : 0.5,
-      conflictType: item.conflictHighlights,
-      summary: prod ? prod.summary : item.conflictHighlights,
+      conflictType: plainProd.conflictType,
+      summary: plainProd.summary,
+      labConflictType: item.conflictHighlights,
+      labSummary: prod ? prod.summary : item.conflictHighlights,
       amRule: prod && prod.category.includes('Retinoid')
-        ? 'Do not apply in the AM; UV photons and oxidizing actives degrade retinoid efficacy. Wear SPF 50+ daily.'
-        : 'Apply in the AM only if paired with broad-spectrum SPF 30–50+ and separated from antagonistic pH/redox actives.',
-      pmRule: `In the PM, ${item.conflictHighlights}`,
+        ? 'Use at night only—sunlight breaks down retinoids. Always wear SPF 30–50+ the next morning.'
+        : 'Safe for morning use when topped with broad-spectrum SPF 30–50+ and kept separate from clashing strong acids.',
+      pmRule: `In your evening routine, apply thin-to-thick and avoid stacking with clashing exfoliants on the same night.`,
       waitTimeMinutes: prod && prod.ph <= 3.8 ? 15 : 5,
       ingredientA: comparisonIngredients[0] || null,
       ingredientB: comparisonIngredients[1] || null,
@@ -826,16 +867,16 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       presetProducts: [item.productId, ...item.companionProductIds.slice(0, 2)],
       faqs: [
         {
-          q: `What is the formulation pH and full INCI profile of ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`,
-          a: `${prod ? `${prod.brand} ${prod.name} is formulated at pH ${prod.ph} ($${prod.priceUsd}). Full INCI: ${prod.inciList}.` : item.conflictHighlights}`
+          q: `What is the pH and ingredient profile of ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`,
+          a: `${prod ? `${prod.brand} ${prod.name} is formulated at pH ${prod.ph} ($${prod.priceUsd}). Full ingredient list: ${prod.inciList}.` : plainProd.summary}`
         },
         {
-          q: `Which skincare actives conflict with ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`,
-          a: item.conflictHighlights
+          q: `Which skincare ingredients should I avoid mixing with ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`,
+          a: plainProd.summary
         },
         {
-          q: `Is ${prod ? `${prod.brand} ${prod.name}` : item.slug} comedogenic or fungal-acne (Malassezia) safe?`,
-          a: `Run the pre-loaded INCI analyzer above to inspect positional comedogenicity (0–5) and C12–C24 Malassezia lipid ester triggers for every ingredient in ${prod ? prod.name : 'this formula'}.`
+          q: `Will ${prod ? `${prod.brand} ${prod.name}` : item.slug} clog pores or trigger fungal acne?`,
+          a: `Use the interactive routine checker above to see the 0–5 pore-clogging score and fungal-acne safety check for every ingredient in ${prod ? prod.name : 'this formula'}.`
         }
       ]
     });

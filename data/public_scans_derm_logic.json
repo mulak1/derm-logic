@@ -4,52 +4,52 @@
     "grade": "A+",
     "score": 98,
     "status": "HALL_OF_FAME",
-    "kpi1": "98/100 Harmony",
-    "kpi2": "ΔpH 0.2 Safe Split",
-    "cnnReadout": "CIELAB a* -3.8 Erythema Reduction • Intact Lipid Matrix",
-    "issue": "Zero Chelation • Optimal AM/PM Partition",
+    "kpi1": "98/100 Safety Score",
+    "kpi2": "Safe AM/PM Split",
+    "cnnReadout": "Calms Skin Redness • Protects Moisture Barrier",
+    "issue": "Zero Conflict • Vitamin C in AM, Peptides in PM",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:56:18.914Z"
+    "scannedAt": "2026-10-24T10:50:00.000Z"
   },
   {
     "target": "Ceramide-Tretinoin-Buffer",
     "grade": "A+",
     "score": 95,
     "status": "HALL_OF_FAME",
-    "kpi1": "95/100 Harmony",
+    "kpi1": "95/100 Safety Score",
     "kpi2": "pH 5.6 Balanced",
-    "cnnReadout": "96.4% Corneocyte Cohesion • <500 Da Controlled Flux",
-    "issue": "64% Lower Retinoid Peeling via Sandwich Method",
+    "cnnReadout": "96.4% Smooth Barrier • Gentle Retinoid Absorption",
+    "issue": "64% Less Peeling with Moisturizer Buffer",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:56:18.919Z"
+    "scannedAt": "2026-10-24T10:50:00.000Z"
   },
   {
     "target": "Azelaic15-Niacinamide5",
     "grade": "A",
     "score": 92,
     "status": "HALL_OF_FAME",
-    "kpi1": "92/100 Harmony",
-    "kpi2": "pH 4.9–5.5 Sync",
-    "cnnReadout": "94.1% Perifollicular Redness Attenuation",
-    "issue": "Malassezia-Safe & Rosacea-Safe Synergy",
+    "kpi1": "92/100 Safety Score",
+    "kpi2": "pH 4.9–5.5 Matched",
+    "cnnReadout": "94.1% Redness & Blemish Calming",
+    "issue": "Fungal-Acne Safe & Sensitive-Skin Friendly",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:56:18.924Z"
+    "scannedAt": "2026-10-24T10:50:00.000Z"
   },
   {
     "target": "BHA2-SnailMucin-Stack",
     "grade": "A",
     "score": 89,
     "status": "HALL_OF_FAME",
-    "kpi1": "89/100 Harmony",
-    "kpi2": "15m Wait Verified",
-    "cnnReadout": "90.5% Sebaceous Pore Clearing without TEWL Spike",
-    "issue": "Safe 2x/Week Exfoliation Cadence",
+    "kpi1": "89/100 Safety Score",
+    "kpi2": "15m Wait Step",
+    "cnnReadout": "90.5% Pore Clearing Without Dryness",
+    "issue": "Safe 2x/Week Exfoliation Schedule",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:56:18.927Z"
+    "scannedAt": "2026-10-24T10:50:00.000Z"
   },
   {
     "target": "VitC+Cu",
@@ -57,25 +57,25 @@
     "score": 52,
     "status": "WALL_OF_SHAME",
     "kpi1": "52/100 Conflict",
-    "kpi2": "|ΔpH| = 2.8 Clash",
-    "cnnReadout": "Cu2+ Redox Oxidation Detected • 78% Active Loss",
-    "issue": "Copper Peptides + L-Ascorbic Acid Cancel Out ($182/yr Waste)",
+    "kpi2": "pH Clash (2.8 Gap)",
+    "cnnReadout": "Copper & Vitamin C Cancel Out (78% Potency Lost)",
+    "issue": "Split Vitamin C to Morning & Copper Peptides to Night ($182/yr Saved)",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:56:18.932Z"
+    "scannedAt": "2026-10-24T10:50:00.000Z"
   },
   {
     "target": "Tret+BPO",
     "grade": "D",
     "score": 38,
     "status": "WALL_OF_SHAME",
-    "kpi1": "38/100 Hazard",
-    "kpi2": "Peroxide Oxidation",
-    "cnnReadout": "CIELAB a* +9.4 Acute Erythema Spike • Retinoid Degraded",
-    "issue": "Benzoyl Peroxide Oxidizes Tretinoin Same-Night",
+    "kpi1": "38/100 High Irritation",
+    "kpi2": "Ingredients Deactivate",
+    "cnnReadout": "High Redness Risk • Benzoyl Peroxide Deactivates Tretinoin",
+    "issue": "Never Layer Same-Night: Move Benzoyl Peroxide to AM Wash",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:56:18.937Z"
+    "scannedAt": "2026-10-24T10:50:00.000Z"
   },
   {
     "target": "TikTok",
@@ -83,11 +83,11 @@
     "score": 20,
     "status": "WALL_OF_SHAME",
     "kpi1": "20/100 Barrier Alert",
-    "kpi2": "pH 2.8 Triple-Acid",
-    "cnnReadout": "Severe Stratum Corneum Delipidation (TEWL +240%)",
-    "issue": "AHA 30% + BHA 2% + Retinol Same-Night Over-Exfoliation",
+    "kpi2": "3 Strong Acids + Retinol",
+    "cnnReadout": "Over-Exfoliation Risk • Strips Skin Moisture Barrier",
+    "issue": "Too Many Strong Acids in One Night: Switch to 4-Night Cycling",
     "cnnModel": "PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)",
     "cnnSensorLabel": "Ingredient Label & Skin Barrier Safety Check",
-    "scannedAt": "2026-10-19T01:56:18.940Z"
+    "scannedAt": "2026-10-24T10:50:00.000Z"
   }
 ]

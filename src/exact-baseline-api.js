@@ -215,14 +215,14 @@ const VERTICAL_CONFIGS = {
     }
   },
   derm_logic: {
-    moduleId: 'derm_logic', brandName: 'DermLogic', domain: 'www.dermlogic.io', accentColor: '#C85A68',
+    moduleId: 'derm_logic', brandName: 'DermLogic', domain: 'www.dermlogic.io', accentColor: '#8A283B',
     theme: {
-      canvasBg: '#FAF6F0', cardBg: '#FFFDFB', subtleBg: '#F4EDE4', dockBg: 'rgba(255, 253, 251, 0.95)',
-      border: '#E6DDD2', accentBorder: '#F3C8CE', textPrimary: '#1C1613', textSecondary: '#6E6259', textMuted: '#93857B',
-      brandPrimary: '#C85A68', brandSoftBg: '#FDF2F4', brandText: '#9E3B49',
-      safeColor: '#2D6A4F', safeSoftBg: '#EAF4EE', safeBorder: '#B7DFC7', warnColor: '#B4690E',
+      canvasBg: '#FAF7F2', cardBg: '#FFFDFB', subtleBg: '#EFE9DF', surfaceBg: '#FFFDFB', dockBg: 'rgba(250, 247, 242, 0.96)',
+      border: '#DFD6C7', accentBorder: '#E5BCC5', textPrimary: '#221A16', textSecondary: '#544841', textMuted: '#6E6056',
+      brandPrimary: '#8A283B', brandSoftBg: '#FCEEED', brandText: '#6B1D2F',
+      safeColor: '#264C3C', safeSoftBg: '#EDF4F0', safeBorder: '#B7D4C6', warnColor: '#7D5116',
       fontDisplay: "'Cormorant Garamond', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      radiusCard: '20px', radiusPill: '999px', shadow: '0 14px 36px -14px rgba(110, 98, 89, 0.12), 0 2px 8px rgba(110, 98, 89, 0.04)'
+      radiusCard: '28px 12px 28px 12px', radiusPill: '999px', shadow: '0 24px 48px -12px rgba(34, 26, 22, 0.08), 0 4px 12px rgba(34, 26, 22, 0.03)'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMsIaoGnkXxS8ru7bwyQe',
     corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 4.99, coreLabel: 'Complete Morning & Night Routine Kit ($4.99)',
@@ -902,9 +902,11 @@ function attachExactBaselinePack(app, options = {}) {
     const isOneTime = isMicro || isFlash || isPlaybook || (!isPro && (verticalId === 'citation_forge' || verticalId === 'derm_logic'));
 
     const userEmail = String(req.query?.email || req.body?.email || req.body?.customerEmail || req.body?.customer_email || '').trim();
+    const vid = String(req.body?.vid || req.query?.vid || (String(req.headers.cookie || '').match(/vs_vid=([^;]+)/) || [])[1] || '');
+    const rawTarget = String(req.body?.target || req.query?.target || req.query?.brand || req.query?.q || '').replace(/[<>"']/g, '').trim().slice(0, 44);
     let { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, userEmail);
-    const ref = String(req.headers.referer || ''), hasSameRef = ref.includes(cfg.domain.replace(/^www\./, ''));
-    if (req.method === 'GET' && !hasSameRef) { isTest = 1; isCrawler = 1; }
+    const ref = String(req.headers.referer || ''), hasSameRef = ref.includes(cfg.domain.replace(/^www\./, '')), hasValidVid = /^v_[a-z0-9_]+$/i.test(vid);
+    if (req.method === 'GET' && (!hasSameRef || !hasValidVid)) { isTest = 1; isCrawler = 1; }
     const deviceType = /mobile|iphone|android/i.test(String(req.headers['user-agent'] || '')) ? 'mobile' : 'desktop';
 
     if (userEmail && userEmail.includes('@') && !/^(patient@dermlogic\.io|founder@creatorstudio\.io|founder@merchant\.io|founder@dtcstore\.io|vp-marketing@)/i.test(userEmail)) {
@@ -913,23 +915,19 @@ function attachExactBaselinePack(app, options = {}) {
       sendOneClickLeadEmail(userEmail, `${cfg.brandName} Checkout Summary (${tierName})`, isTest).catch(() => {});
     }
 
-    const vid = String(req.body?.vid || req.query?.vid || '');
-    store.recordEvent({ eventType: 'checkout_intent', pageUrl: String(req.body?.pageUrl || req.originalUrl || '/'), deviceType, isTest, isCrawler, isOwnerIp, clientIp, meta: { tier: tierName, sku, price_usd: priceUsd, method: req.method, has_referer: hasSameRef, target: req.query?.target || '', vid } });
+    store.recordEvent({ eventType: 'checkout_intent', pageUrl: String(req.body?.pageUrl || req.originalUrl || '/'), deviceType, isTest, isCrawler, isOwnerIp, clientIp, meta: { tier: tierName, sku, price_usd: priceUsd, method: req.method, has_referer: hasSameRef, target: rawTarget, vid } });
 
     const baseUrl = `https://${cfg.domain}`;
     let checkoutUrl = `https://checkout.stripe.com/c/pay/cs_live_${cfg.moduleId}_${tierName}_${Date.now()}`;
     let sessionId = `cs_live_${cfg.moduleId}_${Date.now()}`;
     const stripeKey = process.env.STRIPE_SECRET_KEY || '';
-    const prodLabel = `${cfg.brandName}: ${isMicro ? 'Single-File Instant Export Pass (99¢)' : (isFlash ? 'Single-Audit Instant Export Pass ($1.99)' : (isPlaybook ? 'Founder Stripe Recovery Audit & Dunning Playbook ($29)' : (isPro ? cfg.proLabel : cfg.coreLabel)))}`;
+    const targetPrefix = rawTarget ? `${rawTarget} — ` : '';
+    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? 'Single-File Instant Export Pass (99¢)' : (isFlash ? `${cfg.freeDeliverableName || '3-File Instant Export Pack'} ($1.99)` : (isPlaybook ? 'Founder Stripe Recovery Audit & Dunning Playbook ($29)' : (isPro ? cfg.proLabel : cfg.coreLabel)))}`;
+    const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack';
+    const prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList}. One-time payment, never renews.`;
 
     const buildInlineParams = () => {
-      const p = new URLSearchParams({
-        'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&session_id={CHECKOUT_SESSION_ID}`,
-        'cancel_url': `${baseUrl}/?checkout=cancel`, 'mode': isOneTime ? 'payment' : 'subscription',
-        'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)),
-        'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][quantity]': '1',
-        'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0'
-      });
+      const p = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&target=${encodeURIComponent(rawTarget)}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}&target=${encodeURIComponent(rawTarget)}`, 'mode': isOneTime ? 'payment' : 'subscription', 'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)), 'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][price_data][product_data][description]': prodDesc, 'line_items[0][quantity]': '1', 'custom_text[submit][message]': `Instant browser redirect: your ${filesList} download automatically the second payment completes.`, 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[target]': rawTarget, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
       if (!isOneTime) p.set('line_items[0][price_data][recurring][interval]', verticalId === 'derm_logic' ? 'year' : 'month');
       if (userEmail && userEmail.includes('@')) p.set('customer_email', userEmail);
       return p;
@@ -938,8 +936,8 @@ function attachExactBaselinePack(app, options = {}) {
     if (stripeKey && stripeKey.startsWith('sk_') && !isCrawler && (!isTest || req.query?.live_stripe === '1')) {
       try {
         let stData = null;
-        if (priceId && priceId.startsWith('price_')) {
-          const params = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel`, 'mode': isOneTime ? 'payment' : 'subscription', 'line_items[0][price]': priceId, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[vid]': vid, 'metadata[is_human]': '1' });
+        if (!isOneTime && priceId && priceId.startsWith('price_')) {
+          const params = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}`, 'mode': 'subscription', 'line_items[0][price]': priceId, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[vid]': vid, 'metadata[is_human]': '1' });
           if (userEmail && userEmail.includes('@')) params.set('customer_email', userEmail);
           stData = await (await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: params })).json();
         }
@@ -949,7 +947,7 @@ function attachExactBaselinePack(app, options = {}) {
     }
     store.recordOrder({ tier: tierName, sku, amountUsd: priceUsd, status: 'intent', sessionId, isTest, isOwnerIp, clientIp });
     if (req.method === 'GET' && req.query?.format !== 'json') return res.redirect(303, checkoutUrl);
-    return res.status(200).json({ ok: true, success: true, tier: tierName, sku, price_usd: priceUsd, session_id: sessionId, checkout_url: checkoutUrl, checkoutUrl, url: checkoutUrl, direct_buy_url: `${baseUrl}/buy/${tierName}` });
+    return res.status(200).json({ ok: true, success: true, tier: tierName, sku, price_usd: priceUsd, target: rawTarget, product_label: prodLabel, session_id: sessionId, checkout_url: checkoutUrl, checkoutUrl, url: checkoutUrl, direct_buy_url: `${baseUrl}/buy/${tierName}` });
   }
   app.get(['/buy/:tier', '/api/buy/:tier'], handleTierCheckout);
   app.post([`/api/calculators/${cfg.moduleId}/checkout`, '/api/calculators/:anyMod/checkout', '/api/exact-checkout', '/api/checkout/create-session', '/api/stripe/create-checkout-session'], handleTierCheckout);
@@ -962,7 +960,9 @@ function attachExactBaselinePack(app, options = {}) {
     if (req.method === 'GET' && req.query?.checkout === 'success' && req.query?.session_id) reconcileStripeOrders().catch(() => {});
     if (req.method === 'GET' && req.path === '/api/affiliate') {
       const hasSameDomainRef = String(req.headers.referer || '').includes(cfg.domain.replace(/^www\./, ''));
-      store.recordEvent({ eventType: 'affiliate_click', pageUrl: req.headers.referer || '/api/affiliate', deviceType, utmSource: String(req.query?.partner || 'sovrn'), utmCampaign: String(req.query?.product || ''), isTest: (isTest || !hasSameDomainRef) ? 1 : 0, isCrawler: (isCrawler || !hasSameDomainRef) ? 1 : 0, isOwnerIp, clientIp, meta: { product: req.query?.product, partner: req.query?.partner } });
+      const affVid = String(req.query?.vid || (String(req.headers.cookie || '').match(/vs_vid=([^;]+)/) || [])[1] || '');
+      const isHumanAff = !isTest && !isCrawler && hasSameDomainRef && /^v_[a-z0-9_]+$/i.test(affVid);
+      store.recordEvent({ eventType: 'affiliate_click', pageUrl: req.headers.referer || '/api/affiliate', deviceType, utmSource: String(req.query?.partner || 'sovrn'), utmCampaign: String(req.query?.product || ''), isTest: isHumanAff ? 0 : 1, isCrawler: isHumanAff ? 0 : 1, isOwnerIp, clientIp, meta: { product: req.query?.product, partner: req.query?.partner, vid: affVid } });
     }
     if (req.method === 'POST' && req.path === '/api/checkout') {
       const reqTier = String(req.body?.tier || req.body?.plan || req.body?.planTier || req.body?.planId || '').toLowerCase();
