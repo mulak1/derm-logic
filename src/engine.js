@@ -575,9 +575,9 @@ function redactRoutineAnalysisForPreview(result) {
     previewLocked: true,
     conflicts: (result.conflicts || []).map((c) => ({
       ...c,
-      resolution: '🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Personalized AM/PM + 4-Night Skin-Cycling Calendar (/buy/flash_pass)]',
+      resolution: '[LOCKED IN FREE PREVIEW — Unlock $1.99 Personalized AM/PM + 4-Night Skin-Cycling Calendar (/buy/flash_pass)]',
       waitMinutes: null,
-      waitMinutesLocked: '🔒 Locked in Free Preview ($1.99 Ritual Pack)'
+      waitMinutesLocked: 'Locked in Free Preview ($1.99 Ritual Pack)'
     })),
     schedule: result.schedule
       ? {
@@ -587,8 +587,8 @@ function redactRoutineAnalysisForPreview(result) {
               ? s
               : {
                   ...s,
-                  title: '🔒 [LOCKED IN FREE PREVIEW — Unlock Exact AM Layering Sequence & Wait-Time Buffer ($1.99)]',
-                  wait: '🔒 Locked ($1.99)',
+                  title: '[LOCKED IN FREE PREVIEW — Unlock Exact AM Layering Sequence & Wait-Time Buffer ($1.99)]',
+                  wait: 'Locked ($1.99)',
                   locked: true
                 }
           ),
@@ -598,13 +598,13 @@ function redactRoutineAnalysisForPreview(result) {
                   ...n,
                   steps: [
                     n.steps && n.steps[0] ? n.steps[0] : 'pH 5.5 Cleanser',
-                    '🔒 [LOCKED IN FREE PREVIEW — Unlock Exact PM Active & Ceramide Sandwich Order ($1.99)]'
+                    '[LOCKED IN FREE PREVIEW — Unlock Exact PM Active & Ceramide Sandwich Order ($1.99)]'
                   ]
                 }
               : {
                   ...n,
-                  focus: '🔒 [LOCKED IN FREE PREVIEW — Unlock 4-Night Skin-Cycling Calendar ($1.99)]',
-                  steps: ['🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (/buy/flash_pass)]'],
+                  focus: '[LOCKED IN FREE PREVIEW — Unlock 4-Night Skin-Cycling Calendar ($1.99)]',
+                  steps: ['[LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (/buy/flash_pass)]'],
                   locked: true
                 }
           )
@@ -632,7 +632,7 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
       slot: 'AM Antioxidant (Low pH)',
       title: 'L-Ascorbic Acid 15%–20% + Ferulic Acid Serum',
       ph: '3.2',
-      wait: hasNiacinamide ? '⏱ Wait 15 min (ΔpH Equilibration)' : '⏱ Wait 5 min'
+      wait: hasNiacinamide ? 'Wait 15 min (ΔpH Equilibration)' : 'Wait 5 min'
     });
   } else if (hasCopper) {
     amSteps.push({
@@ -648,7 +648,7 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
       slot: 'AM Antibacterial (Split from PM Retinoid)',
       title: 'Benzoyl Peroxide 2.5%–5.5% Treatment (Prevents PM Retinoid Oxidation)',
       ph: '5.0',
-      wait: '⏱ Let dry 5 min'
+      wait: 'Let dry 5 min'
     });
   }
 
@@ -675,7 +675,7 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
       night: 'Night 1 · Gentle Exfoliation & Smoothing (AHA/BHA)',
       focus: hasAcid ? 'Gentle AHA/BHA Exfoliation (Skip retinoids & peptides on this night)' : 'Gentle Hydration & Smoothing Polish',
       steps: hasAcid
-        ? ['pH 5.5 Cleanser (Dry completely)', 'Direct AHA / BHA Exfoliant (pH 3.2–3.6) · ⏱ Wait 15 min', '3:1:1 Ceramide + Cholesterol Recovery Cream']
+        ? ['pH 5.5 Cleanser (Dry completely)', 'Direct AHA / BHA Exfoliant (pH 3.2–3.6) · Wait 15 min', '3:1:1 Ceramide + Cholesterol Recovery Cream']
         : ['pH 5.5 Cleanser', 'Hydrating Essence + Niacinamide 5%', 'Ceramide Barrier Cream'],
       badge: hasAcid ? 'ACTIVE ACID NIGHT' : 'GENTLE PREP'
     },
@@ -683,7 +683,7 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
       night: 'Night 2 · Retinol & Cell Renewal',
       focus: hasRetinoid ? 'Retinol Night (Skip Benzoyl Peroxide and exfoliating acids tonight)' : 'Peptide & Antioxidant Repair',
       steps: hasRetinoid
-        ? ['pH 5.5 Cleanser + Snail Mucin / Humectant Buffer (⏱ Dry 15 min)', 'Pea-sized Rx Tretinoin / Retinaldehyde / Retinol (pH 5.8)', 'Encapsulated Ceramide Barrier Cream (Sandwich Method)']
+        ? ['pH 5.5 Cleanser + Snail Mucin / Humectant Buffer (Dry 15 min)', 'Pea-sized Rx Tretinoin / Retinaldehyde / Retinol (pH 5.8)', 'Encapsulated Ceramide Barrier Cream (Sandwich Method)']
         : ['pH 5.5 Cleanser', 'Multi-Peptide or Brightening Serum', 'Lipid Recovery Moisturizer'],
       badge: hasRetinoid ? 'RETINOID NIGHT' : 'REPAIR NIGHT'
     },

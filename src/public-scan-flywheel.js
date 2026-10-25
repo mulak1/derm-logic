@@ -156,19 +156,19 @@ function renderAnsiTerminalScorecard(cfg, scan) {
 function renderScanCnnOverlaySvg(cfg, scan, badgeColor) {
   const isHigh = scan.score >= 86;
   const strokeCol = isHigh ? '#264C3C' : '#8A283B';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 170" width="100%" height="170" role="img" aria-label="Live Scorecard Readout for ${esc(scan.target)}" style="background:#EFE9DF;border-radius:26px 12px 26px 12px;border:1px solid #DFD6C7;display:block;box-shadow:inset 0 1px 0 rgba(255,255,255,0.85);">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 170" width="100%" height="170" role="img" aria-label="Live Scorecard Readout for ${esc(scan.target)}" style="background:#EFE9DF;border-radius:26px 12px 26px 12px;border:1px solid #DFD6C7;display:block;">
     <title>Live Scorecard &amp; Quality Check: ${esc(scan.target)}</title>
     <rect x="14" y="14" width="220" height="142" rx="16" fill="#FFFDFB" stroke="${strokeCol}" stroke-width="2" stroke-dasharray="5,3"/>
     <circle cx="124" cy="85" r="42" fill="${strokeCol}" fill-opacity="0.12" stroke="${strokeCol}" stroke-width="2"/>
     <circle cx="124" cy="85" r="14" fill="${strokeCol}" fill-opacity="0.35"/>
-    <text x="24" y="34" fill="#544841" font-family="JetBrains Mono,monospace" font-size="11" font-weight="700">ATELIER PORCELAIN SENSOR</text>
-    <text x="24" y="144" fill="${strokeCol}" font-family="JetBrains Mono,monospace" font-size="12" font-weight="700">${esc(scan.grade)} • ${scan.score}/100 SCORE</text>
+    <text x="24" y="34" fill="#544841" font-family="Georgia, serif" font-size="11" font-weight="700">ATELIER PORCELAIN SENSOR</text>
+    <text x="24" y="144" fill="${strokeCol}" font-family="Georgia, serif" font-size="12" font-weight="700">${esc(scan.grade)} • ${scan.score}/100 SCORE</text>
     <text x="254" y="36" fill="#221A16" font-family="Cormorant Garamond,Georgia,serif" font-size="18" font-weight="700">${esc(scan.cnnSensorLabel || cfg.brandName)}</text>
-    <text x="254" y="62" fill="${strokeCol}" font-family="JetBrains Mono,monospace" font-size="13" font-weight="700">Finding: ${esc(scan.cnnReadout)}</text>
+    <text x="254" y="62" fill="${strokeCol}" font-family="Georgia, serif" font-size="13" font-weight="700">Finding: ${esc(scan.cnnReadout)}</text>
     <rect x="254" y="78" width="396" height="10" rx="5" fill="#DFD6C7"/>
     <rect x="254" y="78" width="${Math.round(3.96 * scan.score)}" height="10" rx="5" fill="${strokeCol}"/>
     <text x="254" y="114" fill="#544841" font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="600">Key Metric: ${esc(scan.kpi1)} • ${esc(scan.kpi2)}</text>
-    <text x="254" y="142" fill="#7D5116" font-family="JetBrains Mono,monospace" font-size="12" font-weight="700">Next Step: ${esc(scan.issue)}</text>
+    <text x="254" y="142" fill="#7D5116" font-family="Georgia, serif" font-size="12" font-weight="700">Next Step: ${esc(scan.issue)}</text>
   </svg>`;
 }
 
@@ -196,17 +196,17 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:'Plus Jakarta Sans',Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.6;">
-  <header style="border-bottom:1px solid ${esc(t.border)};background:rgba(250,247,242,0.92);backdrop-filter:blur(16px);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+  <header style="};background:rgba(250,247,242,0.92);backdrop-filter:blur(16px);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
     <div style="display:flex;align-items:center;gap:10px;">
       <a href="/" style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:23px;color:${esc(t.textPrimary)};text-decoration:none;">${esc(cfg.brandName)} <span style="font-style:italic;color:${esc(badgeColor)};font-weight:500;">Atelier Céramique</span></a>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:${esc(t.brandSoftBg)};color:${esc(badgeColor)};border:1px solid ${esc(t.accentBorder || t.border)};">ATELIER CÉRAMIQUE · GRADE ${esc(scan.grade)}</span>
+      <span style="font-variant-numeric: tabular-nums;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:${esc(t.brandSoftBg)};color:${esc(badgeColor)};border:1px solid ${esc(t.accentBorder || t.border)};">ATELIER CÉRAMIQUE · GRADE ${esc(scan.grade)}</span>
     </div>
     <nav aria-label="Primary" style="display:flex;gap:16px;align-items:center;font-size:14px;font-weight:600;">
       <a href="/" style="color:${esc(t.textSecondary)};text-decoration:none;">Home Atelier</a>
-      <a href="/leaderboard" style="color:${esc(t.textSecondary)};text-decoration:none;">🏆 Leaderboard</a>
+      <a href="/leaderboard" style="color:${esc(t.textSecondary)};text-decoration:none;">Leaderboard</a>
       <a href="/directory" style="color:${esc(t.textSecondary)};text-decoration:none;">Layering Archive</a>
       <a href="/buy/flash_pass" style="padding:8px 16px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;text-decoration:none;font-weight:700;">Unlock 3-File Pack ($1.99) ↗</a>
     </nav>
@@ -224,41 +224,41 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
     </div>
     <section style="margin-top:16px;">${renderScanCnnOverlaySvg(cfg, scan, badgeColor)}</section>
     <div id="eb-scan-purest-cta-bar" style="margin-top:14px;padding:7px;border-radius:32px 16px 32px 16px;background:rgba(239,233,223,0.65);border:1px solid ${esc(t.border)};">
-      <div style="background:${esc(t.cardBg || '#FFFDFB')};border-radius:26px 12px 26px 12px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.9);">
-        <div style="font-size:14px;font-weight:700;color:${esc(t.textPrimary)};">⚡ <strong>${esc(scan.target)}</strong> Porcelain Ritual Ready: Download the verified 3-file production fix pack (<span style="font-family:'JetBrains Mono',monospace;color:${esc(badgeColor)};">${esc(scan.kpi1)}</span>)</div>
-        <a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" onclick="if(window.__ebTrack)window.__ebTrack('view_paywall',{source:'scan_first_fold',target:'${esc(scan.target)}'})" style="padding:9px 18px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 8px 20px rgba(138,40,59,0.22);white-space:nowrap;">Unlock 3-File Action Pack ($1.99 Stripe Express) ↗</a>
+      <div style="background:${esc(t.cardBg || '#FFFDFB')};border-radius:26px 12px 26px 12px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div style="font-size:14px;font-weight:700;color:${esc(t.textPrimary)};"><strong>${esc(scan.target)}</strong> Porcelain Ritual Ready: Download the verified 3-file production fix pack (<span style="font-variant-numeric: tabular-nums;color:${esc(badgeColor)};">${esc(scan.kpi1)}</span>)</div>
+        <a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" onclick="if(window.__ebTrack)window.__ebTrack('view_paywall',{source:'scan_first_fold',target:'${esc(scan.target)}'})" style="padding:9px 18px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:800;text-decoration:none;white-space:nowrap;">Unlock 3-File Action Pack ($1.99 Stripe Express) ↗</a>
       </div>
     </div>
     <script>window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target+' : ${esc(cfg.brandName)} Porcelain Ritual Scorecard';var b=document.getElementById('eb-scan-badge-img');if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val');if(r1)r1.textContent=s.grade+' ('+s.score+'/100)';if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.status;if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};</script>
     <section id="eb-onnx-cnn-workbench" style="background:#221A16;color:#FAF7F2;border:1px solid #3D3029;border-radius:26px 12px 26px 12px;padding:14px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:13px;font-weight:800;color:#E5BCC5;font-family:'JetBrains Mono',monospace;">⚡ TEST ANY ROUTINE LIVE:</span>
-        ${cat.entities.slice(0, 4).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:5px 11px;border-radius:999px;border:1px solid #544841;background:#2E241E;color:#FAF7F2;font-size:13px;font-weight:700;cursor:pointer;">⚡ ${esc(e.target)}</button>`).join('')}
+        <span style="font-size:13px;font-weight:800;color:#E5BCC5;font-variant-numeric: tabular-nums;">TEST ANY ROUTINE LIVE:</span>
+        ${cat.entities.slice(0, 4).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:5px 11px;border-radius:999px;border:1px solid #544841;background:#2E241E;color:#FAF7F2;font-size:13px;font-weight:700;cursor:pointer;">${esc(e.target)}</button>`).join('')}
         <input id="eb-cnn-wb-input" type="text" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:999px;border:1px solid #544841;background:#16100E;color:#FAF7F2;font-size:13.5px;width:155px;" />
         <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" style="padding:6px 13px;border-radius:999px;border:none;background:${esc(badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">Check Score ↗</button>
       </div>
-      <div id="eb-live-cnn-readout" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#B7D4C6;font-weight:700;">${esc(scan.target)} → ${esc(scan.grade)} (${scan.score}/100) • ${esc(scan.cnnReadout)}</div>
+      <div id="eb-live-cnn-readout" style="font-variant-numeric: tabular-nums;font-size:13px;color:#B7D4C6;font-weight:700;">${esc(scan.target)} → ${esc(scan.grade)} (${scan.score}/100) • ${esc(scan.cnnReadout)}</div>
     </section>
-    <section class="table-wrap" style="background:${esc(t.cardBg || '#FFFDFB')};border:1px solid ${esc(t.border)};border-radius:28px 12px 28px 12px;padding:20px;margin-top:16px;box-shadow:0 24px 48px -12px rgba(34,26,22,0.08),inset 0 1px 0 rgba(255,255,255,0.9);">
+    <section class="table-wrap" style="background:${esc(t.cardBg || '#FFFDFB')};border:1px solid ${esc(t.border)};border-radius:28px 12px 28px 12px;padding:20px;margin-top:16px;">
       <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;margin:0 0 12px 0;">Porcelain Ritual Summary &amp; Layering Action Plan</h2>
       <table aria-label="${esc(scan.target)} Public Scan Matrix" style="width:100%;border-collapse:collapse;font-size:14px;">
         <thead><tr style="background:${esc(t.canvasBg)};text-align:left;"><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">What We Checked</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Result</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Recommended Next Step</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Status</th></tr></thead>
         <tbody id="prompt-matrix-tbody">
-          <tr><th scope="row" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;">Overall Grade</th><td id="eb-scan-r1-val" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-family:monospace;font-weight:700;">${esc(scan.grade)} (${scan.score}/100)</td><td id="eb-scan-r1-act" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-weight:700;color:${scan.score >= 86 ? '#059669' : '#E11D48'};">${esc(scan.status)}</td></tr>
-          <tr><th scope="row" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;">Key Performance Metric</th><td id="eb-scan-r2-val" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-family:monospace;font-weight:700;">${esc(scan.kpi1)} • ${esc(scan.kpi2)}</td><td style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};">Compare on Public Leaderboard</td><td style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-weight:700;color:#059669;">VERIFIED</td></tr>
-          <tr><th scope="row" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;">Automated Quality Check</th><td id="eb-scan-r3-val" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-family:monospace;font-weight:700;">${esc(scan.cnnReadout)}</td><td style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};">${esc(scan.cnnSensorLabel)}</td><td style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-weight:700;color:#059669;">VERIFIED</td></tr>
-          <tr id="eb-scan-row4-tr"><th scope="row" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;">Row #4 Step-by-Step Fix Guide</th><td id="eb-scan-row4-val" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-family:monospace;">Locked in Preview</td><td style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" style="color:${esc(badgeColor)};font-weight:700;">Unlock Complete 3-File Pack ($1.99) ↗</a></td><td id="eb-scan-row4-status" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-weight:700;">LOCKED_PREVIEW</td></tr>
-          <tr><th scope="row" style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;">Row #5 Complete 3-File Action Pack</th><td style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-family:monospace;">Locked in Preview</td><td style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" style="color:${esc(badgeColor)};font-weight:700;">Unlock Complete 3-File Pack ($1.99) ↗</a></td><td style="padding:11px 14px;border-bottom:1px solid ${esc(t.border)};font-weight:700;">LOCKED_PREVIEW</td></tr>
+          <tr><th scope="row" style="padding:11px 14px;};text-align:left;">Overall Grade</th><td id="eb-scan-r1-val" style="padding:11px 14px;};font-variant-numeric: tabular-nums;font-weight:700;">${esc(scan.grade)} (${scan.score}/100)</td><td id="eb-scan-r1-act" style="padding:11px 14px;};">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="padding:11px 14px;};font-weight:700;color:${scan.score >= 86 ? '#059669' : '#E11D48'};">${esc(scan.status)}</td></tr>
+          <tr><th scope="row" style="padding:11px 14px;};text-align:left;">Key Performance Metric</th><td id="eb-scan-r2-val" style="padding:11px 14px;};font-variant-numeric: tabular-nums;font-weight:700;">${esc(scan.kpi1)} • ${esc(scan.kpi2)}</td><td style="padding:11px 14px;};">Compare on Public Leaderboard</td><td style="padding:11px 14px;};font-weight:700;color:#059669;">VERIFIED</td></tr>
+          <tr><th scope="row" style="padding:11px 14px;};text-align:left;">Automated Quality Check</th><td id="eb-scan-r3-val" style="padding:11px 14px;};font-variant-numeric: tabular-nums;font-weight:700;">${esc(scan.cnnReadout)}</td><td style="padding:11px 14px;};">${esc(scan.cnnSensorLabel)}</td><td style="padding:11px 14px;};font-weight:700;color:#059669;">VERIFIED</td></tr>
+          <tr id="eb-scan-row4-tr"><th scope="row" style="padding:11px 14px;};text-align:left;">Row #4 Step-by-Step Fix Guide</th><td id="eb-scan-row4-val" style="padding:11px 14px;};font-variant-numeric: tabular-nums;">Locked in Preview</td><td style="padding:11px 14px;};"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" style="color:${esc(badgeColor)};font-weight:700;">Unlock Complete 3-File Pack ($1.99) ↗</a></td><td id="eb-scan-row4-status" style="padding:11px 14px;};font-weight:700;">LOCKED_PREVIEW</td></tr>
+          <tr><th scope="row" style="padding:11px 14px;};text-align:left;">Row #5 Complete 3-File Action Pack</th><td style="padding:11px 14px;};font-variant-numeric: tabular-nums;">Locked in Preview</td><td style="padding:11px 14px;};"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" style="color:${esc(badgeColor)};font-weight:700;">Unlock Complete 3-File Pack ($1.99) ↗</a></td><td style="padding:11px 14px;};font-weight:700;">LOCKED_PREVIEW</td></tr>
         </tbody>
       </table>
       <div id="eb-inline-row4-unlock" style="margin-top:14px;padding:12px 16px;border-radius:20px 8px 20px 8px;background:${esc(t.canvasBg)};border:1px solid ${esc(t.border)};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-        <div style="font-size:13.5px;font-weight:800;color:${esc(t.textPrimary)};">🔒 Rows #4 &amp; #5 Locked: Unblur your complete 3-Card Porcelain Ritual Pack via 1-Click Stripe Express</div>
+        <div style="font-size:13.5px;font-weight:800;color:${esc(t.textPrimary)};">Rows #4 &amp; #5 Locked: Unblur your complete 3-Card Porcelain Ritual Pack via 1-Click Stripe Express</div>
         <div id="eb-scan-row4-msg" style="display:none !important;"><input id="eb-scan-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" /><button id="eb-scan-row4-btn" type="button">Reveal Row #4 →</button></div>
-        <div style="display:flex;align-items:center;gap:8px;"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" style="padding:8px 16px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 6px 16px rgba(138,40,59,0.2);">Unlock Complete 3-File Action Pack ($1.99 Stripe Express) ↗</a></div>
+        <div style="display:flex;align-items:center;gap:8px;"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" style="padding:8px 16px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:800;text-decoration:none;">Unlock Complete 3-File Action Pack ($1.99 Stripe Express) ↗</a></div>
       </div>
     </section>
-    <details style="background:#FFFDFB;border:1px solid ${esc(t.border)};border-radius:26px 12px 26px 12px;padding:14px 18px;margin-top:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.9);">
-      <summary style="cursor:pointer;font-size:14px;font-weight:700;color:${esc(t.textPrimary)};">🔬 Cosmetic Chemist Footnote, Shareable Badge &amp; Terminal Export</summary>
+    <details style="background:#FFFDFB;border:1px solid ${esc(t.border)};border-radius:26px 12px 26px 12px;padding:14px 18px;margin-top:16px;">
+      <summary style="cursor:pointer;font-size:14px;font-weight:700;color:${esc(t.textPrimary)};">Cosmetic Chemist Footnote, Shareable Badge &amp; Terminal Export</summary>
       <div style="margin-top:10px;">
         <p style="font-size:13.5px;color:${esc(t.textSecondary)};margin:0 0 8px 0;"><strong>Formulation Engine:</strong> ${esc(scan.cnnModel)} (${esc(scan.cnnSensorLabel)}). Share or embed the live porcelain badge:</p>
         <pre style="background:#221A16;color:#FAF7F2;border-radius:14px 6px 14px 6px;padding:10px 12px;font-size:13px;overflow-x:auto;margin:0 0 8px 0;"><code>curl -sL https://${esc(cfg.domain)}/scan/${esc(encodeURIComponent(scan.target))}</code></pre>
@@ -266,7 +266,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
       </div>
     </details>
     <section style="margin-top:18px;">
-      <h2 style="font-size:16px;margin:0 0 10px 0;">🔥 Recent Public Reports (<a href="/leaderboard" style="color:${esc(badgeColor)};">View Full Leaderboard →</a>)</h2>
+      <h2 style="font-size:16px;margin:0 0 10px 0;">Recent Public Reports (<a href="/leaderboard" style="color:${esc(badgeColor)};">View Full Leaderboard →</a>)</h2>
       <div style="display:flex;flex-wrap:wrap;gap:8px;">${recentLinks}</div>
     </section>
   </main>
@@ -279,19 +279,19 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   const cat = getFlywheelCatalog(cfg.moduleId);
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const podium = ledger.slice(0, 3);
-  const medals = ['🥇 #1 Hall of Fame Leader', '🥈 #2 Verified Runner-Up', '🥉 #3 Top Category Benchmark'];
-  const podiumHtml = podium.map((item, idx) => `<div style="padding:7px;border-radius:32px 16px 32px 16px;background:rgba(239,233,223,0.65);border:1px solid ${esc(t.border)};box-shadow:0 24px 48px -12px rgba(34,26,22,0.08);display:flex;"><div style="flex:1;background:${esc(t.cardBg || '#FFFDFB')};border:${idx === 0 ? `2px solid ${esc(badgeColor)}` : `1px solid ${esc(t.border)}`};border-radius:26px 12px 26px 12px;padding:18px 20px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.92);display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
+  const medals = ['#1 Hall of Fame Leader', '#2 Verified Runner-Up', '#3 Top Category Benchmark'];
+  const podiumHtml = podium.map((item, idx) => `<div style="padding:7px;border-radius:32px 16px 32px 16px;background:rgba(239,233,223,0.65);border:1px solid ${esc(t.border)};display:flex;"><div style="flex:1;background:${esc(t.cardBg || '#FFFDFB')};border:${idx === 0 ? `2px solid ${esc(badgeColor)}` : `1px solid ${esc(t.border)}`};border-radius:26px 12px 26px 12px;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
     <div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
         <span style="font-size:13px;font-weight:800;color:${idx === 0 ? esc(badgeColor) : '#264C3C'};">${medals[idx]}</span>
-        <span style="padding:3px 10px;border-radius:999px;background:#EDF4F0;color:#264C3C;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:800;">${esc(item.grade)} (${item.score}/100)</span>
+        <span style="padding:3px 10px;border-radius:999px;background:#EDF4F0;color:#264C3C;font-variant-numeric: tabular-nums;font-size:13px;font-weight:800;">${esc(item.grade)} (${item.score}/100)</span>
       </div>
       <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-family:'Cormorant Garamond',Georgia,serif;font-size:21px;font-weight:700;color:${esc(t.textPrimary)};text-decoration:none;display:block;margin-bottom:4px;">${esc(item.target)} ↗</a>
       <div style="font-size:13.5px;font-weight:700;color:${esc(badgeColor)};margin-bottom:6px;">${esc(item.kpi1)} • ${esc(item.kpi2)}</div>
       <div style="width:100%;height:8px;border-radius:999px;background:#DFD6C7;overflow:hidden;margin-bottom:8px;"><div style="width:${item.score}%;height:100%;background:#264C3C;border-radius:999px;"></div></div>
       <p style="font-size:13.5px;color:${esc(t.textSecondary)};margin:0;line-height:1.45;">${esc(item.cnnReadout)}</p>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid ${esc(t.border)};font-size:13px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;};font-size:13px;">
       <a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(badgeColor)};font-weight:700;text-decoration:none;">Open Porcelain Report →</a>
       <a href="/badge/${esc(encodeURIComponent(item.target))}.svg" target="_blank" rel="noopener" style="color:${esc(t.textSecondary)};text-decoration:underline;">Live SVG Badge</a>
     </div>
@@ -302,12 +302,12 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
     const barColor = isTop ? '#264C3C' : (item.score >= 75 ? '#7D5116' : '#8A283B');
     const rowTier = isTop ? 'fame' : 'fix';
     return `<tr data-lb-tier="${rowTier}" data-lb-text="${esc((item.target + ' ' + item.kpi1 + ' ' + item.kpi2 + ' ' + item.cnnReadout + ' ' + item.issue).toLowerCase())}">
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;">#${idx + 1}</td>
-    <th scope="row" style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(badgeColor)};font-weight:800;text-decoration:none;">${esc(item.target)} ↗</a></th>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};min-width:150px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:14px;color:${barColor};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:7px;background:#DFD6C7;border-radius:999px;overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:600;">${esc(item.kpi1)} • ${esc(item.kpi2)}</td>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-size:13.5px;color:${esc(t.textSecondary)};">${esc(item.cnnReadout)}</td>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:13.5px;font-weight:700;color:${barColor};text-decoration:none;">${isTop ? '🏆 View Report' : '🔧 View Fix Plan'} →</a></td>
+    <td style="padding:12px 14px;};font-variant-numeric: tabular-nums;font-weight:700;font-size:14px;">#${idx + 1}</td>
+    <th scope="row" style="padding:12px 14px;};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(badgeColor)};font-weight:800;text-decoration:none;">${esc(item.target)} ↗</a></th>
+    <td style="padding:12px 14px;};min-width:150px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-variant-numeric: tabular-nums;font-weight:800;font-size:14px;color:${barColor};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:7px;background:#DFD6C7;border-radius:999px;overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
+    <td style="padding:12px 14px;};font-variant-numeric: tabular-nums;font-size:13.5px;font-weight:600;">${esc(item.kpi1)} • ${esc(item.kpi2)}</td>
+    <td style="padding:12px 14px;};font-size:13.5px;color:${esc(t.textSecondary)};">${esc(item.cnnReadout)}</td>
+    <td style="padding:12px 14px;};"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:13.5px;font-weight:700;color:${barColor};text-decoration:none;">${isTop ? 'View Report' : 'View Fix Plan'} →</a></td>
   </tr>`;
   }).join('');
 
@@ -321,33 +321,33 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   <link rel="canonical" href="https://${esc(cfg.domain)}/leaderboard" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:'Plus Jakarta Sans',Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.6;">
-  <header style="border-bottom:1px solid ${esc(t.border)};background:rgba(250,247,242,0.92);backdrop-filter:blur(16px);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+  <header style="};background:rgba(250,247,242,0.92);backdrop-filter:blur(16px);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
     <div style="display:flex;align-items:center;gap:10px;">
       <a href="/" style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:23px;color:${esc(t.textPrimary)};text-decoration:none;">${esc(cfg.brandName)} <span style="font-style:italic;color:${esc(badgeColor)};font-weight:500;">Atelier Céramique</span></a>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:${esc(t.brandSoftBg)};color:${esc(badgeColor)};border:1px solid ${esc(t.accentBorder || t.border)};">ATELIER CÉRAMIQUE · PUBLIC LEADERBOARD</span>
+      <span style="font-variant-numeric: tabular-nums;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:${esc(t.brandSoftBg)};color:${esc(badgeColor)};border:1px solid ${esc(t.accentBorder || t.border)};">ATELIER CÉRAMIQUE · PUBLIC LEADERBOARD</span>
     </div>
     <nav aria-label="Primary" style="display:flex;gap:16px;align-items:center;font-size:14px;font-weight:600;">
       <a href="/" style="color:${esc(t.textSecondary)};text-decoration:none;">Home Atelier</a>
-      <a href="/leaderboard" style="color:${esc(badgeColor)};text-decoration:none;font-weight:800;">🏆 Leaderboard</a>
+      <a href="/leaderboard" style="color:${esc(badgeColor)};text-decoration:none;font-weight:800;">Leaderboard</a>
       <a href="/directory" style="color:${esc(t.textSecondary)};text-decoration:none;">Layering Archive</a>
       <a href="/buy/flash_pass" style="padding:8px 16px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;text-decoration:none;font-weight:700;">Unlock 3-File Pack ($1.99) ↗</a>
     </nav>
   </header>
   <main style="max-width:1240px;margin:0 auto;padding:24px;">
     <div style="text-align:center;max-width:74ch;margin:0 auto 22px;">
-      <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:#EFE9DF;border:1px solid #DFD6C7;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:0.08em;color:${esc(badgeColor)};margin-bottom:10px;">ATELIER CÉRAMIQUE · Z-AXIS PORCELAIN PODIUM</span>
+      <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:#EFE9DF;border:1px solid #DFD6C7;font-variant-numeric: tabular-nums;font-size:11.5px;font-weight:700;letter-spacing:0.08em;color:${esc(badgeColor)};margin-bottom:10px;">ATELIER CÉRAMIQUE · Z-AXIS PORCELAIN PODIUM</span>
       <h1 style="font-family:'Cormorant Garamond',Georgia,serif;margin:0 0 8px 0;font-size:clamp(2.2rem,3.4vw,3rem);font-weight:600;line-height:1.1;">${esc(cfg.brandName)} Routine Harmony Leaderboard: Top Performers (A+) &amp; Common Clashes</h1>
       <p class="pseo-lead" style="margin:0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified porcelain ritual grades side-by-side, filter between Hall of Fame barrier-safe routines and Needs-Fix clashes, or test any combination below.</p>
     </div>
     <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">${podiumHtml}</section>
-    <div id="leaderboard-filter-bar" style="background:${esc(t.cardBg || '#FFFDFB')};border:1px solid ${esc(t.border)};border-radius:26px 12px 26px 12px;padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 18px 36px -12px rgba(34,26,22,0.06);">
+    <div id="leaderboard-filter-bar" style="background:${esc(t.cardBg || '#FFFDFB')};border:1px solid ${esc(t.border)};border-radius:26px 12px 26px 12px;padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;" role="tablist" aria-label="Filter Leaderboard Categories">
         <button type="button" onclick="window.__lbFilter('all',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:1px solid ${esc(badgeColor)};background:${esc(badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">All Ranked (${ledger.length})</button>
-        <button type="button" onclick="window.__lbFilter('fame',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:1px solid ${esc(t.border)};background:#FFFDFB;color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">🏆 Hall of Fame (A+/A)</button>
-        <button type="button" onclick="window.__lbFilter('fix',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:1px solid ${esc(t.border)};background:#FFFDFB;color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">⚠️ Needs Fix (B/C/D)</button>
+        <button type="button" onclick="window.__lbFilter('fame',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:1px solid ${esc(t.border)};background:#FFFDFB;color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">Hall of Fame (A+/A)</button>
+        <button type="button" onclick="window.__lbFilter('fix',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:1px solid ${esc(t.border)};background:#FFFDFB;color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">Needs Fix (B/C/D)</button>
         <input type="search" id="lb-search-input" aria-label="Filter leaderboard rows" placeholder="Filter routines by active or pH..." oninput="window.__lbSearch(this.value)" style="padding:7px 12px;border-radius:999px;border:1px solid ${esc(t.border)};background:#FAF7F2;font-size:13.5px;min-width:220px;" />
       </div>
       <form action="/scan" method="get" onsubmit="if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_check'});" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
@@ -356,7 +356,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
       </form>
     </div>
     <script>window.__lbTier='all';window.__lbApply=function(){var q=((document.getElementById('lb-search-input')||{}).value||'').toLowerCase(),trs=document.querySelectorAll('#prompt-matrix-tbody tr[data-lb-tier]');for(var i=0;i<trs.length;i++){var tOk=window.__lbTier==='all'||trs[i].getAttribute('data-lb-tier')===window.__lbTier;var qOk=!q||(trs[i].getAttribute('data-lb-text')||'').indexOf(q)!==-1;trs[i].style.display=(tOk&&qOk)?'':'none';}};window.__lbFilter=function(t,btn){window.__lbTier=t;var bs=document.querySelectorAll('.lb-tab-btn');for(var i=0;i<bs.length;i++){bs[i].style.background='#FFFDFB';bs[i].style.color='#221A16';}if(btn){btn.style.background='${esc(badgeColor)}';btn.style.color='#FFFFFF';}if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_filter',tier:t});window.__lbApply();};window.__lbSearch=function(){window.__lbApply();};</script>
-    <section class="table-wrap" style="background:${esc(t.cardBg || '#FFFDFB')};border:1px solid ${esc(t.border)};border-radius:28px 12px 28px 12px;padding:20px;box-shadow:0 24px 48px -12px rgba(34,26,22,0.08),inset 0 1px 0 rgba(255,255,255,0.92);">
+    <section class="table-wrap" style="background:${esc(t.cardBg || '#FFFDFB')};border:1px solid ${esc(t.border)};border-radius:28px 12px 28px 12px;padding:20px;">
       <table aria-label="${esc(cfg.brandName)} Public Leaderboard" style="width:100%;border-collapse:collapse;font-size:14px;">
         <thead>
           <tr style="background:${esc(t.canvasBg)};text-align:left;">
@@ -372,7 +372,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
       </table>
     </section>
     <details style="background:#FFFFFF;border:1px solid ${esc(t.border)};border-radius:14px;padding:14px 18px;margin-top:16px;">
-      <summary style="cursor:pointer;font-size:14px;font-weight:700;color:${esc(t.textSecondary)};">🔬 Technical Scoring Methodology (Layer-3 Specs)</summary>
+      <summary style="cursor:pointer;font-size:14px;font-weight:700;color:${esc(t.textSecondary)};">Technical Scoring Methodology (Layer-3 Specs)</summary>
       <p style="font-size:13.5px;color:${esc(t.textSecondary)};margin:8px 0 0 0;">Scores are computed deterministically and cross-checked with <strong>${esc(cat.cnnModel)}</strong> (${esc(cat.cnnSensorLabel)}).</p>
     </details>
   </main>
@@ -453,13 +453,13 @@ function attachPublicScanFlywheel(app, cfg, badgeColor, renderHtmlFn, classifyFn
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="440" height="128" viewBox="0 0 440 128" role="img" aria-label="${esc(cfg.brandName)} Porcelain Ritual Scorecard for ${esc(scan.target)}">
   <rect width="440" height="128" rx="18" fill="#EFE9DF" stroke="#DFD6C7" stroke-width="2"/>
   <rect x="6" y="6" width="428" height="116" rx="14" fill="#FFFDFB" stroke="${accent}" stroke-width="1.2" stroke-opacity="0.45"/>
-  <text x="18" y="28" fill="#8A283B" font-family="ui-monospace,monospace" font-size="10" font-weight="700">${esc(cfg.brandName.toUpperCase())} · ATELIER CÉRAMIQUE</text>
+  <text x="18" y="28" fill="#8A283B" font-family="Georgia,serif" font-size="10" font-weight="700">${esc(cfg.brandName.toUpperCase())} · ATELIER CÉRAMIQUE</text>
   <text x="18" y="50" fill="#221A16" font-family="Georgia,serif" font-size="17" font-weight="700">${esc(scan.target.slice(0, 28))}</text>
   <rect x="344" y="16" width="76" height="36" rx="10" fill="${accentBg}" stroke="${accent}" stroke-width="1.2"/>
-  <text x="382" y="39" text-anchor="middle" fill="${accent}" font-family="ui-monospace,monospace" font-size="15" font-weight="800">${esc(scan.grade)} ${scan.score}</text>
-  <text x="18" y="76" fill="#264C3C" font-family="ui-monospace,monospace" font-size="11" font-weight="700">RITUAL: ${esc(scan.kpi1)} • ${esc(scan.kpi2)}</text>
-  <text x="18" y="96" fill="#544841" font-family="ui-monospace,monospace" font-size="10.5">CNN: ${esc(scan.cnnReadout.slice(0, 56))}</text>
-  <text x="18" y="114" fill="#7D5116" font-family="ui-monospace,monospace" font-size="9.5">https://${esc(cfg.domain)}/scan/${esc(encodeURIComponent(scan.target))}</text>
+  <text x="382" y="39" text-anchor="middle" fill="${accent}" font-family="Georgia,serif" font-size="15" font-weight="800">${esc(scan.grade)} ${scan.score}</text>
+  <text x="18" y="76" fill="#264C3C" font-family="Georgia,serif" font-size="11" font-weight="700">RITUAL: ${esc(scan.kpi1)} • ${esc(scan.kpi2)}</text>
+  <text x="18" y="96" fill="#544841" font-family="Georgia,serif" font-size="10.5">CNN: ${esc(scan.cnnReadout.slice(0, 56))}</text>
+  <text x="18" y="114" fill="#7D5116" font-family="Georgia,serif" font-size="9.5">https://${esc(cfg.domain)}/scan/${esc(encodeURIComponent(scan.target))}</text>
 </svg>`;
     res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8');
     res.setHeader('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'");
@@ -475,10 +475,10 @@ function attachPublicScanFlywheel(app, cfg, badgeColor, renderHtmlFn, classifyFn
       iteration: 34,
       module_id: cfg.moduleId,
       github_repos: [
-        'anuraghazra/github-readme-stats (★ 69,000+) & badges/shields (★ 23,000+) : Multi-Metric SVG CNN Scorecard (/api/badge/cnn/:target.svg) & Public Ego-Bait Leaderboard (/leaderboard)',
-        'huggingface/transformers.js (★ 13,500+) & microsoft/onnxruntime (★ 16,200+) : Interactive Live ONNX/CNN Sensor Workbench (#eb-onnx-cnn-workbench) with Custom Scan Input',
-        'react-hook-form/react-hook-form (★ 42,000+) & emilkowalski/vaul (★ 7,500+) : Inline Row #4 Instant Email Reveal + 99¢ Micro-Pass Strip (#eb-inline-row4-unlock)',
-        'ekalinin/sitemap.js (★ 1,900+) & AnswerDotAI/llms-txt (★ 3,100+) : Unified Sitemap Index (/sitemap-scans.xml), Image Sitemaps & llms.txt Public Scan Graph'
+        'anuraghazra/github-readme-stats (69,000+) & badges/shields (23,000+) : Multi-Metric SVG CNN Scorecard (/api/badge/cnn/:target.svg) & Public Ego-Bait Leaderboard (/leaderboard)',
+        'huggingface/transformers.js (13,500+) & microsoft/onnxruntime (16,200+) : Interactive Live ONNX/CNN Sensor Workbench (#eb-onnx-cnn-workbench) with Custom Scan Input',
+        'react-hook-form/react-hook-form (42,000+) & emilkowalski/vaul (7,500+) : Inline Row #4 Instant Email Reveal + 99¢ Micro-Pass Strip (#eb-inline-row4-unlock)',
+        'ekalinin/sitemap.js (1,900+) & AnswerDotAI/llms-txt (3,100+) : Unified Sitemap Index (/sitemap-scans.xml), Image Sitemaps & llms.txt Public Scan Graph'
       ],
       features: { interactive_onnx_cnn_workbench: true, cnn_inspect_calc_telemetry: true, multi_metric_svg_cnn_card: true, inline_row4_email_reveal_and_custom_scan: true, unified_sitemap_and_llms_txt_scan_graph: true },
       endpoints: { leaderboard: `https://${cfg.domain}/leaderboard`, sample_scan: `https://${cfg.domain}/scan/${encodeURIComponent(cat.entities[0].target)}`, cnn_inspect: `https://${cfg.domain}/api/cnn/inspect?target=${encodeURIComponent(cat.entities[0].target)}`, cnn_svg_card: `https://${cfg.domain}/api/badge/cnn/${encodeURIComponent(cat.entities[0].target)}.svg`, sitemap_scans: `https://${cfg.domain}/sitemap-scans.xml` }

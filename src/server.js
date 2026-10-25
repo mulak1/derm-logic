@@ -300,11 +300,11 @@ app.get('/llms-full.txt', (req, res) => {
   const seoBlocks = seoPages.map(
     (p) => `### ${p.title}
 - URL: ${PUBLIC_URL}/seo/${p.slug}
-- Type: ${p.pageType} | Verdict: ${p.verdict} | Harmony Score: ${p.compatibilityScore}/100 | ΔpH: ${p.deltaPh} | Wait Window: 🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (${PUBLIC_URL}/buy/flash_pass)]
+- Type: ${p.pageType} | Verdict: ${p.verdict} | Harmony Score: ${p.compatibilityScore}/100 | ΔpH: ${p.deltaPh} | Wait Window: [LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (${PUBLIC_URL}/buy/flash_pass)]
 - Conflict Mechanism: ${p.conflictType}
 - Meta Summary: ${p.metaDescription}
-- AM Morning Glow Rule: 🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (${PUBLIC_URL}/buy/flash_pass)]
-- PM Barrier Repair Rule: 🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (${PUBLIC_URL}/buy/flash_pass)]`
+- AM Morning Glow Rule: [LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (${PUBLIC_URL}/buy/flash_pass)]
+- PM Barrier Repair Rule: [LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (${PUBLIC_URL}/buy/flash_pass)]`
   ).join('\n\n');
 
   const content = `# DermLogic: Complete Clinical Formulation, INCI, pKa & Layering Corpus (/llms-full.txt)

@@ -188,6 +188,40 @@ async function runVerification() {
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-home-initial.png'), fullPage: false });
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'home-desktop.png'), fullPage: false });
 
+    // Verify Day/Night Vanity Toggle (#vanityLightToggle) — Day Mode (Preview A) & Night Mode (Preview B)
+    const initialThemeAttr = await page.getAttribute('html', 'data-theme');
+    assert.strictEqual(initialThemeAttr, 'day', 'Initial html[data-theme] must be day');
+    const dayBg = await page.evaluate(() => window.getComputedStyle(document.body).backgroundColor);
+    assert.strictEqual(dayBg, 'rgb(244, 239, 232)', `Day Mode body background must be #F4EFE8 (rgb(244, 239, 232)), got ${dayBg}`);
+
+    await page.click('#vanityLightToggle button[data-theme-mode="night"]');
+    await page.waitForTimeout(380);
+    const nightThemeAttr = await page.getAttribute('html', 'data-theme');
+    assert.strictEqual(nightThemeAttr, 'night', 'Toggling 11 PM Vanity must set html[data-theme="night"]');
+    const nightState = await page.evaluate(() => ({
+      hasClass: document.body.classList.contains('vanity-night'),
+      bg: window.getComputedStyle(document.body).backgroundColor,
+      stored: localStorage.getItem('dermlogic_vanity_theme')
+    }));
+    assert.strictEqual(nightState.hasClass, true, 'Night mode must add body.vanity-night');
+    assert.strictEqual(nightState.bg, 'rgb(12, 10, 8)', `Night Mode body background must be #0C0A08 (rgb(12, 10, 8)), got ${nightState.bg}`);
+    assert.strictEqual(nightState.stored, 'night', 'Night mode must persist dermlogic_vanity_theme=night in localStorage');
+    await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-home-night.png'), fullPage: false });
+
+    // Toggle back to Daylight Gallery
+    await page.click('#vanityLightToggle button[data-theme-mode="day"]');
+    await page.waitForTimeout(380);
+    const restoredState = await page.evaluate(() => ({
+      theme: document.documentElement.getAttribute('data-theme'),
+      hasClass: document.body.classList.contains('vanity-night'),
+      bg: window.getComputedStyle(document.body).backgroundColor,
+      stored: localStorage.getItem('dermlogic_vanity_theme')
+    }));
+    assert.strictEqual(restoredState.theme, 'day', 'Toggling Daylight Gallery must restore html[data-theme="day"]');
+    assert.strictEqual(restoredState.hasClass, false, 'Toggling Daylight Gallery must remove body.vanity-night');
+    assert.strictEqual(restoredState.bg, 'rgb(244, 239, 232)', `Day Mode restored background must be rgb(244, 239, 232), got ${restoredState.bg}`);
+    assert.strictEqual(restoredState.stored, 'day', 'Daylight Gallery must persist dermlogic_vanity_theme=day in localStorage');
+
     // Click Preset 2 ("Copper Peptides + Vitamin C Oxidation Trap")
     await page.click('button[data-preset-id="copper-vitc-oxidation"]');
     await page.waitForTimeout(250);
@@ -273,10 +307,35 @@ async function runVerification() {
     await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'mobile-home.png'), fullPage: false });
     await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'home-mobile.png'), fullPage: false });
 
+    // Mobile Night Mode check & screenshot
+    await mPage.click('#vanityLightToggle button[data-theme-mode="night"]');
+    await mPage.waitForTimeout(380);
+    await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'mobile-home-night.png'), fullPage: false });
+    await mPage.click('#vanityLightToggle button[data-theme-mode="day"]');
+    await mPage.waitForTimeout(200);
+
     await mPage.goto(`${BASE_URL}/lp`, { waitUntil: 'networkidle' });
     await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'mobile-lp.png'), fullPage: false });
 
     await mobileCtx.close();
+
+    // Tablet Viewport (768x1024) — Day & Night Mode responsive verification
+    const tabletCtx = await browser.newContext({ viewport: { width: 768, height: 1024 } });
+    const tPage = await tabletCtx.newPage();
+    await tPage.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' });
+    if (await tPage.locator('#cookie-accept').isVisible()) {
+      await tPage.click('#cookie-accept');
+      await tPage.evaluate(() => window.scrollTo(0, 0));
+      await tPage.waitForTimeout(100);
+    }
+    const tabletOverflow = await tPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
+    assert(tabletOverflow, 'Tablet 768x1024 must have zero horizontal overflow');
+    await tPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'tablet-home-day.png'), fullPage: false });
+    await tPage.click('#vanityLightToggle button[data-theme-mode="night"]');
+    await tPage.waitForTimeout(380);
+    await tPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'tablet-home-night.png'), fullPage: false });
+    await tabletCtx.close();
+
     await browser.close();
 
     assert.strictEqual(consoleErrors.length, 0, `Expected 0 console errors, got: ${consoleErrors.join('; ')}`);
