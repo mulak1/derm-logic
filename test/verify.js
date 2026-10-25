@@ -168,7 +168,7 @@ async function runVerification() {
     });
     page.on('pageerror', (err) => pageErrors.push(err.message));
 
-    await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded' });
 
     // Verify hyperlinked logo & unified header links on /
     const logoHref = await page.getAttribute('header a.brand-logo-link', 'href');
@@ -247,13 +247,13 @@ async function runVerification() {
     await page.click('button[onclick="closeCheckoutModal()"]');
 
     // Capture /lp (Cold Paid-Social Landing Page) & /seo/:slug
-    await page.goto(`${BASE_URL}/lp?utm_source=meta&utm_medium=paid_social&utm_campaign=angle1`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE_URL}/lp?utm_source=meta&utm_medium=paid_social&utm_campaign=angle1`, { waitUntil: 'domcontentloaded' });
     const lpLogoHref = await page.getAttribute('header a.brand-logo-link', 'href');
     assert.strictEqual(lpLogoHref, '/', 'Brand logo on /lp must also link to /');
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-lp-paid-social.png'), fullPage: false });
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'lp-desktop.png'), fullPage: false });
 
-    await page.goto(`${BASE_URL}/seo/can-you-mix-copper-peptides-and-vitamin-c`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE_URL}/seo/can-you-mix-copper-peptides-and-vitamin-c`, { waitUntil: 'domcontentloaded' });
     const seoLogoHref = await page.getAttribute('header a.brand-logo-link', 'href');
     assert.strictEqual(seoLogoHref, '/', 'Brand logo on /seo/:slug must link to /');
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-seo-copper-vitc.png'), fullPage: false });
@@ -272,7 +272,7 @@ async function runVerification() {
     });
     mPage.on('pageerror', (err) => pageErrors.push(err.message));
 
-    await mPage.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' });
+    await mPage.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded' });
     if (await mPage.locator('#cookie-accept').isVisible()) {
       await mPage.click('#cookie-accept');
       await mPage.evaluate(() => window.scrollTo(0, 0));
@@ -314,7 +314,7 @@ async function runVerification() {
     await mPage.click('#vanityLightToggle button[data-theme-mode="day"]');
     await mPage.waitForTimeout(200);
 
-    await mPage.goto(`${BASE_URL}/lp`, { waitUntil: 'networkidle' });
+    await mPage.goto(`${BASE_URL}/lp`, { waitUntil: 'domcontentloaded' });
     await mPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'mobile-lp.png'), fullPage: false });
 
     await mobileCtx.close();
@@ -322,7 +322,7 @@ async function runVerification() {
     // Tablet Viewport (768x1024) — Day & Night Mode responsive verification
     const tabletCtx = await browser.newContext({ viewport: { width: 768, height: 1024 } });
     const tPage = await tabletCtx.newPage();
-    await tPage.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' });
+    await tPage.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded' });
     if (await tPage.locator('#cookie-accept').isVisible()) {
       await tPage.click('#cookie-accept');
       await tPage.evaluate(() => window.scrollTo(0, 0));

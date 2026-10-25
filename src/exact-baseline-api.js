@@ -26,11 +26,11 @@ const VERTICAL_CONFIGS = {
     moduleId: 'citation_forge',
     brandName: 'CitationForge',
     domain: 'www.citationforge.io',
-    accentColor: '#4F46E5',
+    accentColor: '#7A2332',
     theme: {
-      canvasBg: '#FAF9F5', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(250, 249, 245, 0.95)',
+      canvasBg: '#F4EFE8', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(250, 249, 245, 0.95)',
       border: '#E4E2DD', accentBorder: '#C7D2FE', textPrimary: '#0F172A', textSecondary: '#475569', textMuted: '#64748B',
-      brandPrimary: '#4F46E5', brandSoftBg: '#EEF2FF', brandText: '#3730A3',
+      brandPrimary: '#7A2332', brandSoftBg: '#EEF2FF', brandText: '#3730A3',
       safeColor: '#059669', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
       fontDisplay: "'Newsreader', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
       radiusCard: '14px', radiusPill: '8px', shadow: '0 12px 32px -12px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03)'
@@ -107,7 +107,7 @@ const VERTICAL_CONFIGS = {
     ],
     githubRepo: {
       name: 'AnswerDotAI/llms-txt + colinhacks/zod + kpdecker/jsdiff',
-      stars: '★ 167,494 Combined', url: 'https://github.com/colinhacks/zod',
+      stars: '167,494 Combined', url: 'https://github.com/colinhacks/zod',
       badge: 'AnswerDotAI/llms-txt + Zod Schema-Verified Deliverable Contract',
       title: 'Deterministic /llms.txt, JSON-LD @graph & Zod-Verified Export Bundle',
       summary: 'Compiles spec-compliant /llms-full.txt manifests and schema-dts @graph blocks with Zod contract verification.'
@@ -198,7 +198,7 @@ const VERTICAL_CONFIGS = {
     ],
     githubRepo: {
       name: 'pyannote/pyannote-audio + colinhacks/zod + parallax/jsPDF',
-      stars: '★ 216,756 Combined', url: 'https://github.com/pyannote/pyannote-audio',
+      stars: '216,756 Combined', url: 'https://github.com/pyannote/pyannote-audio',
       badge: 'Host-Read Diarization + Zod-Verified Buyer Contact Ledger',
       title: 'Host-Voiced Ad-Read Diarization & 3-Flight Pitch Engine',
       summary: 'Verifies host-voiced ad reads vs. spliced dynamic insertions and compiles 3x-renewal anchored sponsorship pitches.'
@@ -215,14 +215,14 @@ const VERTICAL_CONFIGS = {
     }
   },
   derm_logic: {
-    moduleId: 'derm_logic', brandName: 'DermLogic', domain: 'www.dermlogic.io', accentColor: '#C85A68',
+    moduleId: 'derm_logic', brandName: 'DermLogic', domain: 'www.dermlogic.io', accentColor: '#7A2332',
     theme: {
-      canvasBg: '#FAF6F0', cardBg: '#FFFDFB', subtleBg: '#F4EDE4', dockBg: 'rgba(255, 253, 251, 0.95)',
-      border: '#E6DDD2', accentBorder: '#F3C8CE', textPrimary: '#1C1613', textSecondary: '#6E6259', textMuted: '#93857B',
-      brandPrimary: '#C85A68', brandSoftBg: '#FDF2F4', brandText: '#9E3B49',
-      safeColor: '#2D6A4F', safeSoftBg: '#EAF4EE', safeBorder: '#B7DFC7', warnColor: '#B4690E',
-      fontDisplay: "'Cormorant Garamond', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      radiusCard: '20px', radiusPill: '999px', shadow: '0 14px 36px -14px rgba(110, 98, 89, 0.12), 0 2px 8px rgba(110, 98, 89, 0.04)'
+      canvasBg: 'var(--bg-canvas)', cardBg: 'var(--bg-surface)', surfaceBg: 'var(--bg-surface)', subtleBg: 'var(--bg-oat)', dockBg: 'var(--bg-porcelain)',
+      border: 'var(--border-hairline)', accentBorder: 'var(--rose-pill-border)', textPrimary: 'var(--text-primary)', textSecondary: 'var(--text-secondary)', textMuted: 'var(--text-muted)',
+      brandPrimary: 'var(--rose-brand)', brandSoftBg: 'var(--rose-pill-bg)', brandText: 'var(--rose-brand)',
+      safeColor: 'var(--sage-safe)', safeSoftBg: 'var(--sage-bg)', safeBorder: 'var(--sage-border)', warnColor: 'var(--honey-warn)',
+      fontDisplay: "'Newsreader', Georgia, serif", fontSans: "'Newsreader', Georgia, serif",
+      radiusCard: '0px', radiusPill: '0px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMsIaoGnkXxS8ru7bwyQe',
     corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 4.99, coreLabel: 'Complete Morning & Night Routine Kit ($4.99)',
@@ -289,7 +289,7 @@ const VERTICAL_CONFIGS = {
     ],
     githubRepo: {
       name: 'rdkit/rdkit + EU CosIng pKa Matrix + adamgibbons/ics',
-      stars: '★ 159,786 Combined', url: 'https://github.com/rdkit/rdkit',
+      stars: '159,786 Combined', url: 'https://github.com/rdkit/rdkit',
       badge: 'Henderson-Hasselbalch pKa + 500-Dalton Layering Engine',
       title: 'Cosmetic-Chemist ΔpH & 500-Dalton Routine Harmony Engine',
       summary: 'Calculates free-acid bio-availability, Cu2+/Retinoid redox inactivation, and 4-night skin-cycling schedules.'
@@ -380,7 +380,7 @@ const VERTICAL_CONFIGS = {
     ],
     githubRepo: {
       name: 'carlsednaoui/ouibounce + PostHog/posthog + colinhacks/zod',
-      stars: '★ 171,369 Combined', url: 'https://github.com/PostHog/posthog',
+      stars: '171,369 Combined', url: 'https://github.com/PostHog/posthog',
       badge: 'Beta-Bernoulli C1–C6 Bandit + Stripe Decline-Code Retry Engine',
       title: 'Autonomous Exit-Intent Bandit & Issuer-Window Dunning Worker',
       summary: 'Replaces naive 24h card retries and static popups with decline-code aware scheduling and Thompson Sampling.'
@@ -670,7 +670,7 @@ function attachExactBaselinePack(app, options = {}) {
             : [`$${(9 + (hash % 55)).toLocaleString()},400`, `$${(6 + (hash % 32)).toLocaleString()},200`, `$${(3 + (hash % 22)).toLocaleString()},200`, `< ${(9.5 + (hash % 40) / 10).toFixed(1)}s`]);
     res.json({
       ok: true,
-      engine: 'krisk/Fuse (★ 20,503 Bitap Fuzzy Scorer)',
+      engine: 'krisk/Fuse (20,503 Bitap Fuzzy Scorer)',
       query: q,
       matched_preset: matchedPreset ? matchedPreset.key : 'custom_deterministic',
       kpis: kpiVals,
@@ -694,24 +694,24 @@ function attachExactBaselinePack(app, options = {}) {
     });
   });
 
-  // 4E. colinhacks/zod (★ 44,132) + ajv-validator/ajv (★ 14,862) Deliverable Contract & File Manifest Verification
+  // 4E. colinhacks/zod (44,132) + ajv-validator/ajv (14,862) Deliverable Contract & File Manifest Verification
   app.get('/api/github-upgrade/deliverable-manifest', (req, res) => {
     const target = String(req.query.target || cfg.presets[0].key).trim();
     res.json({
       ok: true, module_id: cfg.moduleId, target_entity: target,
-      validator: 'colinhacks/zod (★ 44,132) + ajv-validator/ajv (★ 14,862) RFC-8927 Contract',
+      validator: 'colinhacks/zod (44,132) + ajv-validator/ajv (14,862) RFC-8927 Contract',
       express_checkout_wallets: ['Apple Pay', 'Google Pay', 'Stripe Link', '1-Click Card'],
       files: cfg.deliverableFiles || [], flash_pass_usd: 1.99, savings_vs_core_pct: Math.round((1 - 1.99 / cfg.corePriceUsd) * 100)
     });
   });
 
-  // 4F. nilbuild/driver.js (★ 26,919) + sweetalert2/sweetalert2 (★ 18,099) + zenorocha/clipboard.js (★ 34,103) Spotlight & Endowment Engine
+  // 4F. nilbuild/driver.js (26,919) + sweetalert2/sweetalert2 (18,099) + zenorocha/clipboard.js (34,103) Spotlight & Endowment Engine
   const handleRoiAndEndowment = (req, res) => {
     const legacyCostUsd = verticalId === 'citation_forge' ? 299 : (verticalId === 'sponsor_radar' ? 2500 : (verticalId === 'derm_logic' ? 332 : 1800));
     const paybackMultiple = Math.round(legacyCostUsd / 1.99);
     res.json({
       ok: true, module_id: cfg.moduleId, iteration: 52,
-      engine: 'nilbuild/driver.js (★ 26,919) + sweetalert2/sweetalert2 (★ 18,099) + zenorocha/clipboard.js (★ 34,103) + TanStack/table (★ 26,100)',
+      engine: 'nilbuild/driver.js (26,919) + sweetalert2/sweetalert2 (18,099) + zenorocha/clipboard.js (34,103) + TanStack/table (26,100)',
       micro_pass_usd: 0.99, flash_pass_usd: 1.99, legacy_alternative_usd: legacyCostUsd, payback_multiple_x: paybackMultiple,
       driver_spotlight_enabled: true, one_tap_preset_chips: true, interactive_file_pill_modals: true,
       endowment_customizer_enabled: true, pseo_inline_curtain_enabled: true, pseo_table_express_bar_enabled: true, sqlite_statement_cache_active: true
@@ -780,7 +780,7 @@ function attachExactBaselinePack(app, options = {}) {
   app.get('/api/github-upgrade/remediation-diff', (req, res) => {
     const diff = cfg.remediationDiff || { beforeLine: '- [BEFORE] Legacy baseline', afterLine: '+ [AFTER] Optimized baseline', roiBadge: 'Verified Lift' };
     res.json({
-      ok: true, module_id: cfg.moduleId, engine: 'kpdecker/jsdiff (★ 9,214) + eligrey/FileSaver.js (★ 22,040)',
+      ok: true, module_id: cfg.moduleId, engine: 'kpdecker/jsdiff (9,214) + eligrey/FileSaver.js (22,040)',
       before_line: diff.beforeLine, after_line: diff.afterLine, roi_badge: diff.roiBadge,
       unified_patch: `--- a/${cfg.domain}/baseline\n+++ b/${cfg.domain}/remediated\n@@ -1,1 +1,1 @@\n${diff.beforeLine}\n${diff.afterLine}`,
       unlock_paths: [
@@ -827,12 +827,12 @@ function attachExactBaselinePack(app, options = {}) {
     res.json(store.getPstReport(Number(req.query.hours || 3)));
   });
 
-  app.get('/api/github-upgrade/stripe-express-vaul-dock', (req, res) => res.json({ ok: true, iteration: 24, module_id: cfg.moduleId, repo: 'stripe/stripe-js (★ 4,200) + emilkowalski/vaul (★ 15,800) + floating-ui/floating-ui (★ 31,400)', features: { native_checkout_stripe_redirect: true, live_stripe_session_reconciliation: true, symmetrical_3_zone_vaul_dock: true, pseo_lead_card_eyebrow_symmetry: true } }));
-  app.get('/api/github-upgrade/observable-plot-radar-symmetry', (req, res) => res.json({ ok: true, iteration: 25, module_id: cfg.moduleId, repo: 'observablehq/plot (★ 4,400) + FormKit/auto-animate (★ 13,100) + shadcn-ui/ui (★ 81,000)', features: { stealth_burst_crawler_telemetry_guard: true, symmetrical_manifest_svg_telemetry_bar: true, full_native_control_telemetry_capture: true } }));
-  app.get('/api/github-upgrade/nuqs-deeplink-mobile-firstfold', (req, res) => res.json({ ok: true, iteration: 26, module_id: cfg.moduleId, repo: '47ng/nuqs (★ 6,200) + PrismJS/prism (★ 12,300) + observablehq/plot (★ 4,400)', features: { url_query_state_deeplink_hydration: true, mobile_firstfold_interactive_presets: true, symmetrical_doppelrand_diff_inspector_footer: true } }));
-  app.get('/api/github-upgrade/tanstack-table-row-gate-qbar', (req, res) => res.json({ ok: true, iteration: 27, module_id: cfg.moduleId, repo: 'TanStack/table (★ 25,400) + TanStack/query (★ 43,800) + 47ng/nuqs (★ 6,200)', features: { symmetrical_2row_qbar_zero_truncation: true, word_boundary_pseo_entity_title: true, interactive_table_row4_unlock_banner: true, non_browser_polling_guard: true } }));
-  app.get('/api/github-upgrade/reactive-live-calc-dual-pass', (req, res) => res.json({ ok: true, iteration: 49, module_id: cfg.moduleId, repo: 'hotwired/stimulus (★ 12,400) + alpinejs/alpine (★ 28,900) + stripe/stripe-js (★ 4,200)', features: { reactive_input_auto_calculation: true, visible_99c_micro_pass_anchoring: true, visible_inline_scorecard_email_bar: true, scroll_and_exit_rescue_toast: true } }));
-  app.get('/api/github-upgrade/floating-ui-firstfold-pill', (req, res) => res.json({ ok: true, iteration: 51, module_id: cfg.moduleId, repo: 'floating-ui/floating-ui (★ 31,400) + zenorocha/clipboard.js (★ 34,200) + stripe/stripe-js (★ 4,200)', features: { default_visible_firstfold_score_pill: true, one_tap_firstfold_99c_199_unlock: true, js_hydrated_calculate_bot_guard: true, mobile_viewport_device_attribution: true } }));
+  app.get('/api/github-upgrade/stripe-express-vaul-dock', (req, res) => res.json({ ok: true, iteration: 24, module_id: cfg.moduleId, repo: 'stripe/stripe-js (4,200) + emilkowalski/vaul (15,800) + floating-ui/floating-ui (31,400)', features: { native_checkout_stripe_redirect: true, live_stripe_session_reconciliation: true, symmetrical_3_zone_vaul_dock: true, pseo_lead_card_eyebrow_symmetry: true } }));
+  app.get('/api/github-upgrade/observable-plot-radar-symmetry', (req, res) => res.json({ ok: true, iteration: 25, module_id: cfg.moduleId, repo: 'observablehq/plot (4,400) + FormKit/auto-animate (13,100) + shadcn-ui/ui (81,000)', features: { stealth_burst_crawler_telemetry_guard: true, symmetrical_manifest_svg_telemetry_bar: true, full_native_control_telemetry_capture: true } }));
+  app.get('/api/github-upgrade/nuqs-deeplink-mobile-firstfold', (req, res) => res.json({ ok: true, iteration: 26, module_id: cfg.moduleId, repo: '47ng/nuqs (6,200) + PrismJS/prism (12,300) + observablehq/plot (4,400)', features: { url_query_state_deeplink_hydration: true, mobile_firstfold_interactive_presets: true, symmetrical_doppelrand_diff_inspector_footer: true } }));
+  app.get('/api/github-upgrade/tanstack-table-row-gate-qbar', (req, res) => res.json({ ok: true, iteration: 27, module_id: cfg.moduleId, repo: 'TanStack/table (25,400) + TanStack/query (43,800) + 47ng/nuqs (6,200)', features: { symmetrical_2row_qbar_zero_truncation: true, word_boundary_pseo_entity_title: true, interactive_table_row4_unlock_banner: true, non_browser_polling_guard: true } }));
+  app.get('/api/github-upgrade/reactive-live-calc-dual-pass', (req, res) => res.json({ ok: true, iteration: 49, module_id: cfg.moduleId, repo: 'hotwired/stimulus (12,400) + alpinejs/alpine (28,900) + stripe/stripe-js (4,200)', features: { reactive_input_auto_calculation: true, visible_99c_micro_pass_anchoring: true, visible_inline_scorecard_email_bar: true, scroll_and_exit_rescue_toast: true } }));
+  app.get('/api/github-upgrade/floating-ui-firstfold-pill', (req, res) => res.json({ ok: true, iteration: 51, module_id: cfg.moduleId, repo: 'floating-ui/floating-ui (31,400) + zenorocha/clipboard.js (34,200) + stripe/stripe-js (4,200)', features: { default_visible_firstfold_score_pill: true, one_tap_firstfold_99c_199_unlock: true, js_hydrated_calculate_bot_guard: true, mobile_viewport_device_attribution: true } }));
 
   // 7. Transactional Lead Capture & Automated Backfill Resend Dispatcher (/api/leads/capture, /api/leads/resend-backfill)
   const escMailHtml = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

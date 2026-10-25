@@ -132,59 +132,61 @@ const SHARED_CSS = `
   .affiliate-micro-link:hover { color: var(--rose-brand); }
 
   /* Hero — Uneven Editorial Gallery & Nocturnal Plinth */
-  .hero-section { padding: 14px 0 20px; }
-  .editorial-top-banner { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 24px; align-items: center; margin-bottom: 16px; }
-  .hero-copy-col { min-width: 0; }
-  .hero-photo-col { min-width: 0; }
-  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 300; line-height: 0.96; letter-spacing: -0.04em; color: var(--text-primary); margin-bottom: 10px; }
+  .hero-section { padding: 12px 0 18px; }
+  .editorial-top-banner { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: stretch; margin-bottom: 16px; }
+  .hero-copy-col { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; }
+  .hero-photo-col { min-width: 0; display: flex; flex-direction: column; }
+  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.35rem, 4.1vw, 3.65rem); font-weight: 300; line-height: 0.96; letter-spacing: -0.04em; color: var(--text-primary); margin-bottom: 10px; }
   .hero-h1-line1 { display: block; }
-  .hero-h1-line2 { display: block; padding-left: 8vw; }
-  .hero-sub { color: var(--text-secondary); font-size: var(--step-lead); line-height: 1.4; max-width: 54ch; margin-bottom: 10px; }
-  .editorial-photo-shell { background: var(--bg-oat); padding: 10px; position: relative; }
-  .editorial-photo-inner { overflow: hidden; position: relative; height: 185px; background: var(--bg-porcelain); }
+  .hero-h1-line2 { display: block; padding-left: 5vw; }
+  .hero-sub { color: var(--text-secondary); font-size: var(--step-lead); line-height: 1.38; max-width: 54ch; margin-bottom: 12px; }
+  .editorial-photo-shell { background: var(--bg-oat); padding: 10px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .editorial-photo-inner { overflow: hidden; position: relative; height: 205px; flex: 1; background: var(--bg-porcelain); }
   .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .editorial-photo-caption { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: var(--step-small); color: var(--text-secondary); }
 
   /* Interactive Shelf Audit Workbench ([data-ui]) */
-  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 24px; align-items: stretch; }
-  .grader-card, .results-panel { background: var(--bg-oat); padding: 16px; }
-  .porcelain-vessel-core { background: var(--bg-surface); padding: 16px 18px; width: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-  .preset-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-  .preset-chip { background: var(--bg-canvas); padding: 8px 10px; font-size: 0.86rem; border: none; cursor: pointer; text-align: left; transition: transform 180ms ease-out, background-color 180ms ease-out; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr); gap: 20px; align-items: stretch; }
+  .grader-card, .results-panel { background: var(--bg-oat); padding: 8px; min-width: 0; }
+  .porcelain-vessel-core { background: var(--bg-surface); padding: 16px 18px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 12px; }
+  #textureFilterTabs { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 6px !important; }
+  #textureFilterTabs .vanity-light-btn { padding: 6px 10px !important; font-size: 0.78rem !important; white-space: nowrap !important; flex: 1 1 auto; text-align: center; }
+  .preset-row { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; margin-bottom: 8px; }
+  .preset-chip { background: var(--bg-canvas); padding: 9px 11px !important; font-size: 0.84rem; border: none; cursor: pointer; text-align: left !important; display: flex !important; flex-direction: column !important; justify-content: center !important; white-space: normal !important; line-height: 1.25 !important; transition: transform 180ms ease-out, background-color 180ms ease-out; }
   .preset-chip:hover, .preset-chip.active { background: var(--rose-pill-bg); }
   .preset-chip:active { transform: scale(0.98); }
-  .preset-chip strong { display: block; color: var(--text-primary); font-size: 0.9rem; font-weight: 500; margin-bottom: 2px; }
-  .preset-chip span { color: var(--rose-brand); font-size: 0.8rem; font-weight: 500; }
-  .field-label { display: block; font-size: 0.86rem; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
-  .product-selector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; max-height: 170px; overflow-y: auto; padding: 10px; background: var(--bg-canvas); margin-bottom: 10px; }
-  .prod-check-item { display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; background: var(--bg-surface); cursor: pointer; font-size: 0.86rem; transition: background-color 180ms ease-out; }
+  .preset-chip strong { display: block; color: var(--text-primary); font-size: 0.88rem; font-weight: 500; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .preset-chip span { color: var(--rose-brand); font-size: 0.78rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .field-label { display: block; font-size: 0.84rem; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px; max-height: 184px; overflow-y: auto; padding: 8px; background: var(--bg-canvas); margin-bottom: 8px; }
+  .prod-check-item { display: flex; align-items: flex-start; gap: 8px; padding: 9px 10px; background: var(--bg-surface); cursor: pointer; font-size: 0.84rem; transition: background-color 180ms ease-out; }
   .prod-check-item.selected { background: var(--rose-pill-bg); }
-  .prod-check-item input { margin-top: 4px; accent-color: var(--rose-brand); }
-  [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); padding: 10px 12px; color: var(--text-primary); font-size: 16px; border: none; }
+  .prod-check-item input { margin-top: 3px; accent-color: var(--rose-brand); flex-shrink: 0; }
+  [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); padding: 9px 12px; color: var(--text-primary); font-size: 15px; border: none; }
   .input-box:focus, .textarea-box:focus { outline: 2px solid var(--rose-brand); }
 
-  .score-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
-  .metric-box { background: var(--bg-canvas); padding: 14px; font-variant-numeric: tabular-nums; }
-  .metric-val { font-family: 'Newsreader', Georgia, serif; font-size: 2rem; font-weight: 400; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .score-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+  .metric-box { background: var(--bg-canvas); padding: 12px; font-variant-numeric: tabular-nums; }
+  .metric-val { font-family: 'Newsreader', Georgia, serif; font-size: 1.85rem; font-weight: 400; line-height: 1.05; font-variant-numeric: tabular-nums; }
 
-  .badge-safe, .badge-clash, .badge-warn { display: inline-flex; align-items: center; padding: 4px 11px; font-size: 0.82rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .badge-safe, .badge-clash, .badge-warn { display: inline-flex; align-items: center; padding: 4px 10px; font-size: 0.8rem; font-weight: 500; font-variant-numeric: tabular-nums; }
   .badge-safe { background: var(--sage-bg); color: var(--sage-safe); }
   .badge-clash { background: var(--berry-bg); color: var(--berry-clash); }
   .badge-warn { background: var(--honey-bg); color: var(--honey-warn); }
 
-  .conflict-card { background: var(--berry-bg); padding: 16px; margin-bottom: 10px; }
+  .conflict-card { background: var(--berry-bg); padding: 14px; margin-bottom: 8px; }
   .conflict-card.MODERATE { background: var(--honey-bg); }
 
   /* Uneven Gallery & 4-Night Skin-Cycling Strip */
-  .z-cascade-stage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; margin-top: 28px; }
-  .z-vessel-left, .z-vessel-center, .z-vessel-right { background: var(--bg-oat); padding: 12px; display: flex; }
-  .viscosity-seq-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
-  .viscosity-seq-item { padding: 12px 14px; background: var(--bg-canvas); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .z-cascade-stage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; margin-top: 24px; }
+  .z-vessel-left, .z-vessel-center, .z-vessel-right { background: var(--bg-oat); padding: 8px; display: flex; }
+  .viscosity-seq-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+  .viscosity-seq-item { padding: 10px 12px; background: var(--bg-canvas); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
   .wait-timer-btn { padding: 6px 12px; background: var(--bg-oat); border: none; color: var(--text-primary); font-size: 0.8rem; font-weight: 500; cursor: pointer; white-space: nowrap; font-variant-numeric: tabular-nums; transition: background-color 200ms ease-out, color 200ms ease-out; }
   .wait-timer-btn:hover, .wait-timer-btn.running { background: var(--rose-brand); color: var(--accent-ink); }
 
-  .section-block { padding: 96px 0; }
-  .section-block-alt { padding: 96px 0; background: var(--bg-oat); }
+  .section-block { padding: 72px 0; }
+  .section-block-alt { padding: 72px 0; background: var(--bg-oat); }
   .bento-grid-3 { display: grid; grid-template-columns: 1.2fr 0.9fr 0.9fr; gap: 20px; margin-top: 24px; }
   .bento-cell { background: var(--bg-surface); padding: 24px; }
 
@@ -525,26 +527,26 @@ function renderAnalysisResultHtml(res) {
   `).join('');
 
   return `
-    <div class="porcelain-vessel-core" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;">
+    <div class="porcelain-vessel-core" style="height:100%;display:flex;flex-direction:column;justify-content:flex-start;gap:14px;">
       <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
           <span class="${badgeClass} mono">${escapeHtml(res.verdictLabel)}</span>
           <span class="mono" style="font-size:0.8rem;color:var(--text-secondary);">Vanity Shelf pH ${res.equilibriumSurfacePh || 5.5} · Pore Safety: ${res.comedogenicFlags.length === 0 ? '0 Clogs' : `${res.comedogenicFlags.length} Alert`}</span>
         </div>
 
-        <div class="score-strip" style="display:grid;grid-template-columns:112px 1fr 1fr;gap:10px;align-items:stretch;margin-bottom:14px;">
+        <div class="score-strip" style="display:grid;grid-template-columns:108px 1fr 1fr;gap:10px;align-items:stretch;margin-bottom:12px;">
           <div class="metric-box" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
             <span class="serif-display" style="font-size:2rem;font-weight:400;color:${scoreColor};line-height:1;" id="compatibilityScoreValue">${res.compatibilityScore}</span>
             <span class="mono" style="font-size:0.72rem;color:var(--text-secondary);margin-top:4px;">Harmony / 100</span>
           </div>
           <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
             <div class="mono" style="font-size:0.74rem;color:var(--text-secondary);">Barrier Stress</div>
-            <div class="metric-val" style="color:${res.barrierHazardIndex > 50 ? 'var(--berry-clash)' : 'var(--sage-safe)'};font-size:1.6rem;">${res.barrierHazardIndex}<span style="font-size:0.85rem;color:var(--text-secondary);">/100</span></div>
+            <div class="metric-val" style="color:${res.barrierHazardIndex > 50 ? 'var(--berry-clash)' : 'var(--sage-safe)'};font-size:1.55rem;">${res.barrierHazardIndex}<span style="font-size:0.85rem;color:var(--text-secondary);">/100</span></div>
             <div style="font-size:0.76rem;color:var(--text-secondary);">${res.barrierHazardIndex > 50 ? 'High stinging risk' : 'Calm moisture barrier'}</div>
           </div>
           <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
             <div class="mono" style="font-size:0.74rem;color:var(--text-secondary);">Serum Value at Risk</div>
-            <div class="metric-val" style="color:${(res.wastedShelfValueUsd || 0) > 0 ? 'var(--berry-clash)' : 'var(--sage-safe)'};font-size:1.6rem;" id="wastedShelfValueReadout">$${res.wastedShelfValueUsd || 0}<span style="font-size:0.8rem;color:var(--text-secondary);">/$${res.totalShelfValueUsd || 248}</span></div>
+            <div class="metric-val" style="color:${(res.wastedShelfValueUsd || 0) > 0 ? 'var(--berry-clash)' : 'var(--sage-safe)'};font-size:1.55rem;" id="wastedShelfValueReadout">$${res.wastedShelfValueUsd || 0}<span style="font-size:0.8rem;color:var(--text-secondary);">/$${res.totalShelfValueUsd || 248}</span></div>
             <div style="font-size:0.76rem;color:var(--text-secondary);">${(res.wastedShelfValueUsd || 0) > 0 ? 'Canceled on contact' : '100% absorbed'}</div>
           </div>
         </div>
@@ -553,33 +555,40 @@ function renderAnalysisResultHtml(res) {
         <div id="walletConflicts" style="display:none;"></div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:auto;" id="appleWalletCardPreview">
-        <div style="padding:14px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;">
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;width:100%;overflow:hidden;" id="appleWalletCardPreview">
+        <div style="padding:12px 14px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
               <span class="mono" style="font-size:0.72rem;font-weight:500;color:var(--honey-warn);">Morning Daylight Tray</span>
               <span class="badge-safe mono" style="font-size:0.68rem;padding:2px 6px;">No Pilling</span>
             </div>
-            <div class="serif-display" style="font-size:1.12rem;font-weight:400;margin-bottom:6px;">Brighten &amp; Shield Under SPF</div>
+            <div class="serif-display" style="font-size:1.1rem;font-weight:400;margin-bottom:6px;">Brighten &amp; Shield Under SPF</div>
             ${amStepsHtml}
           </div>
-          <div style="font-size:0.76rem;color:var(--text-secondary);margin-top:6px;">Wait 60s before SPF so makeup never pills.</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:6px;">Wait 60s before SPF so makeup never pills.</div>
         </div>
 
-        <div style="padding:14px;background:#181412;color:#F4EFE8;display:flex;flex-direction:column;justify-content:space-between;">
+        <div style="padding:12px 14px;background:#181412;color:#F4EFE8;display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
               <span class="mono" style="font-size:0.72rem;font-weight:500;color:#C9A45A;">11 PM Nocturnal Tray</span>
               <span class="mono" style="font-size:0.68rem;padding:2px 6px;background:rgba(244,239,232,0.12);color:#F4EFE8;">3000K Vanity</span>
             </div>
-            <div class="serif-display" style="font-size:1.12rem;font-weight:400;margin-bottom:6px;color:#F4EFE8;">Overnight Barrier Recovery</div>
+            <div class="serif-display" style="font-size:1.1rem;font-weight:400;margin-bottom:6px;color:#F4EFE8;">Overnight Barrier Recovery</div>
             ${pmStepsHtml}
           </div>
-          <button type="button" class="btn-primary" style="width:100%;font-size:0.8rem;padding:9px 12px;margin-top:8px;background:#C9A45A;color:#0C0A08;" onclick="openCheckoutModal('onetime_499')">
+          <button type="button" class="btn-primary" style="width:100%;font-size:0.78rem;padding:8px 10px;margin-top:8px;background:#C9A45A;color:#0C0A08;" onclick="openCheckoutModal('onetime_499')">
             <span>Save 9:16 Lock-Screen Card ($1.99)</span>
             <span class="btn-icon-circle">&rarr;</span>
           </button>
         </div>
+      </div>
+
+      <div style="padding:10px 14px;background:var(--bg-canvas);display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+        <div><div class="mono" style="font-size:0.7rem;color:var(--rose-brand);font-weight:500;">Night 1 · Exfoliate</div><div style="font-size:0.78rem;color:var(--text-primary);">AHA / BHA Acid</div></div>
+        <div><div class="mono" style="font-size:0.7rem;color:var(--honey-warn);font-weight:500;">Night 2 · Retinoid</div><div style="font-size:0.78rem;color:var(--text-primary);">Tretinoin / Retinol</div></div>
+        <div><div class="mono" style="font-size:0.7rem;color:var(--sage-safe);font-weight:500;">Night 3 · Lipid Rest</div><div style="font-size:0.78rem;color:var(--text-primary);">Copper Peptides</div></div>
+        <div><div class="mono" style="font-size:0.7rem;color:var(--sage-safe);font-weight:500;">Night 4 · Barrier Seal</div><div style="font-size:0.78rem;color:var(--text-primary);">3:1:1 Ceramides</div></div>
       </div>
     </div>
   `;

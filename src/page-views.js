@@ -61,6 +61,14 @@ function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdO
 </html>`;
 }
 
+function formatVerdictLabel(verdict) {
+  const v = String(verdict || '');
+  if (v === 'CRITICAL_CLASH') return 'Cancels on Contact';
+  if (v === 'MODERATE_CAUTION') return 'Space Apart (Wait Buffer)';
+  if (v === 'SAFE_SYNERGY') return 'Safe Together';
+  return v.replace(/_/g, ' ');
+}
+
 function getRoutineSlotRecommendation(ing) {
   if (!ing) return 'Morning or Night';
   const id = String(ing.id || ''), cls = String(ing.activeClass || '');
@@ -139,22 +147,20 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
   `).join('');
 
   const featuredSeoPages = [
-    ...seoPages.filter((p) => p.pageType === 'active_pair').slice(0, 12),
-    ...seoPages.filter((p) => p.pageType === 'product_teardown').slice(0, 12)
+    ...seoPages.filter((p) => p.pageType === 'active_pair').slice(0, 3),
+    ...seoPages.filter((p) => p.pageType === 'product_teardown').slice(0, 3)
   ];
 
-  const featuredSeoLinks = featuredSeoPages.map((p) => `
-    <div style="padding:10px;background:var(--bg-oat);display:flex;">
-      <div class="porcelain-vessel-core" style="flex:1;padding:18px;">
-        <div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-            <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">${escapeHtml(p.category)}</span>
-            <span class="${p.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono">Harmony ${p.compatibilityScore}/100</span>
-          </div>
-          <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.22rem;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
-          <p style="color:var(--text-secondary);font-size:0.86rem;margin-bottom:10px;">${escapeHtml(p.summary.slice(0, 115))}...</p>
+  const featuredSeoLinks = featuredSeoPages.map((p, idx) => `
+    <div style="padding:8px;background:var(--bg-canvas);display:flex;">
+      <div class="porcelain-vessel-core" style="flex:1;padding:16px 18px;gap:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Dossier 0${idx + 1} · ${escapeHtml(p.category)}</span>
+          <span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))} · ${p.compatibilityScore}/100</span>
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;gap:8px;flex-wrap:wrap;">
+        <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.25rem;color:var(--text-primary);">${escapeHtml(p.title)}</a>
+        <p style="color:var(--text-secondary);font-size:0.86rem;">${escapeHtml(p.summary.slice(0, 118))}...</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;gap:8px;flex-wrap:wrap;">
           <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">Read Layering Dossier &rarr;</a>
           <a href="/api/affiliate?product=${escapeHtml((p.presetProducts && p.presetProducts[0]) || 'skinceuticals-ce-ferulic')}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" style="margin:0;">Verified Retailer &rarr;</a>
         </div>
@@ -169,22 +175,23 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       <div class="container">
         <div id="home-executive-brief" class="editorial-top-banner">
           <div class="hero-copy-col">
-            <h1 class="hero-h1">
-              <span class="hero-h1-line1">Why two serums</span>
-              <span class="hero-h1-line2"><span class="serif-italic" style="color:var(--rose-brand);">cancel</span> on skin.</span>
-            </h1>
-            <p class="hero-sub">
-              An editorial formulation table for women who own Copper Peptides, Vitamin C, and Tretinoin—and want to know which morning and night order keeps every drop active without stinging or pilling.
-            </p>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
-              <a href="#analyzer" class="btn-primary"><span>Check My Bathroom Shelf</span><span class="btn-icon-circle">&rarr;</span></a>
-              <a href="/leaderboard" class="btn-secondary"><span>Routine Harmony Leaderboard</span></a>
-            </div>
-            <div style="padding:12px 14px;background:var(--bg-oat);">
-              <div class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;margin-bottom:2px;">Daylight Gallery &amp; 11 PM Vanity Switch</div>
-              <p style="font-size:0.86rem;color:var(--text-secondary);">
-                Use the top header toggle to switch between <strong>Daylight Gallery</strong> (Warm Bisque &amp; Rose-Burgundy) and <strong>11 PM Vanity</strong> (3000K Nocturnal Apothecary &amp; Champagne Gold) for zero blue-light glare at your bathroom sink.
+            <div>
+              <h1 class="hero-h1">
+                <span class="hero-h1-line1">Quiet your shelf.</span>
+                <span class="hero-h1-line2">Save your skin.</span>
+              </h1>
+              <p class="hero-sub">
+                An editorial formulation table for women who own Copper Peptides, Vitamin C, and Tretinoin. Check in five seconds which serums cancel on contact and which morning and bedtime order keeps every drop active.
               </p>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
+                <a href="#analyzer" class="btn-primary"><span>Check My Bathroom Shelf</span><span class="btn-icon-circle">&rarr;</span></a>
+                <a href="/leaderboard" class="btn-secondary"><span>Routine Harmony Leaderboard</span></a>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px;background:var(--bg-oat);">
+              <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">44</div><div style="font-size:0.78rem;color:var(--text-secondary);">Cult Formulas Indexed</div></div>
+              <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">65</div><div style="font-size:0.78rem;color:var(--text-secondary);">Clinical INCI Actives</div></div>
+              <div><div class="mono" style="font-size:1.15rem;color:var(--rose-brand);font-weight:500;">&lt;4ms</div><div style="font-size:0.78rem;color:var(--text-secondary);">ΔpH &amp; Pore-Safety Audit</div></div>
             </div>
           </div>
           <div class="hero-photo-col">
@@ -216,12 +223,12 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
 
     <section class="section-block-alt" id="viscosity-sequencer">
       <div class="container">
-        <div style="max-width:64ch;margin-bottom:28px;">
+        <div style="max-width:64ch;margin-bottom:24px;">
           <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:10px;">
-            Why Serums <span class="serif-italic" style="color:var(--rose-brand);">Cancel Out</span>—And How to Pace Every Layer
+            Stinging Is Not Proof That a Serum Works
           </h2>
           <p style="color:var(--text-secondary);font-size:var(--step-body);">
-            When your skin stings even from plain water, you do not need a chemistry lecture—you need gentle texture pacing, wait-time discipline, and four-night barrier rest.
+            When your skin stings even from plain water, you do not need a chemistry lecture. You need gentle texture pacing, ninety-second wait discipline, and four-night barrier rest.
           </p>
         </div>
 
@@ -322,9 +329,9 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     <section class="section-block" id="actives-matrix">
       <div id="inci-table"></div>
       <div class="container">
-        <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:8px;">Everyday Skincare Ingredient Guide: Pore Safety, Routine Timing &amp; Benefits</h2>
+        <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:8px;">Sixty-five actives, measured by pH and molecular weight.</h2>
         <p style="color:var(--text-secondary);font-size:var(--step-body);margin-bottom:20px;max-width:65ch;">
-          Inspect formulation swatch cards for our signature actives, then browse all 18 essential skincare ingredients below to see pore-safety scores and wait times.
+          Inspect formulation swatch cards for our signature actives, then browse the clinical ingredient index below to check pore-safety scores and wait times.
         </p>
         ${homeSwatchesHtml}
         <div class="table-wrap">
@@ -375,11 +382,14 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
 
     <section class="section-block-alt">
       <div class="container">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-          <h2 class="serif-display" style="font-size:var(--step-head);">Editorial Layering Guides &amp; Cult-Product INCI Teardowns</h2>
-          <a href="/directory" class="btn-secondary">Explore All ${seoPages.length} Layering Guides &rarr;</a>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+          <div>
+            <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:4px;">Selected Formulation Dossiers</h2>
+            <p style="color:var(--text-secondary);font-size:var(--step-small);">Six essential active-pairing and cult-bottle breakdowns from our 72-dossier clinical archive.</p>
+          </div>
+          <a href="/directory" class="btn-primary"><span>Explore All ${seoPages.length} Layering Guides</span><span class="btn-icon-circle">&rarr;</span></a>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;">
           ${featuredSeoLinks}
         </div>
       </div>
@@ -413,7 +423,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
         <div class="editorial-top-banner">
           <div class="hero-copy-col">
             <h1 class="hero-h1" style="font-size:clamp(2.5rem,4.5vw,4.2rem);">
-              Stop Layering Serums That <span class="serif-italic" style="color:var(--rose-brand);">Cancel Out</span> on Your Skin.
+              Stop layering serums that cancel out on skin.
             </h1>
             <p class="hero-sub">
               Mixing Copper Peptides with Vitamin C, or Glycolic Acid with Tretinoin, deactivates your most expensive serums and leaves your skin tight and stinging. Tap your bottles below to get a gentle Morning &amp; Bedtime order.
@@ -493,11 +503,11 @@ function renderDirectoryPage({ seoPages }) {
     const partner = p.pageType === 'product_teardown' ? 'dermstore' : 'sephora';
     const partnerLabel = partner === 'dermstore' ? 'Dermstore' : 'Sephora';
     const vaultTag = p.pageType === 'product_teardown' ? 'product' : (p.compatibilityScore < 55 ? 'clash' : (p.compatibilityScore < 75 ? 'timer' : 'safe'));
-    return `<div class="dir-vault-card" data-vault-tag="${vaultTag}" data-vault-text="${escapeHtml((p.title + ' ' + p.summary + ' ' + p.verdict).toLowerCase())}" style="padding:10px;background:var(--bg-oat);display:flex;">
+    return `<div class="dir-vault-card" data-vault-tag="${vaultTag}" data-vault-text="${escapeHtml((p.title + ' ' + p.summary + ' ' + p.verdict).toLowerCase())}" style="padding:8px;background:var(--bg-oat);display:flex;">
       <div class="porcelain-vessel-core" style="flex:1;padding:20px;">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-            <span class="${p.compatibilityScore < 45 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(p.verdict)} · ${p.compatibilityScore}/100</span>
+            <span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))} · ${p.compatibilityScore}/100</span>
             <span class="mono" style="font-size:0.82rem;color:var(--text-secondary);">ΔpH ${p.deltaPh}</span>
           </div>
           <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-size:1.25rem;font-weight:400;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
@@ -515,7 +525,7 @@ function renderDirectoryPage({ seoPages }) {
     <section class="section-block">
       <div class="container">
         <div style="max-width:70ch;margin-bottom:28px;">
-          <h1 class="hero-h1" style="font-size:clamp(2.4rem,4.2vw,3.8rem);">Skincare Active-Ingredient <span class="serif-italic" style="color:var(--rose-brand);">Harmony</span> &amp; Cult-Product INCI Directory</h1>
+          <h1 class="hero-h1" style="font-size:clamp(2.4rem,4.2vw,3.8rem);">Skincare Active-Ingredient Harmony &amp; Cult-Product INCI Directory</h1>
           <p class="hero-sub">
             Every pairing and cult formula is housed in a dedicated formulation dossier with plain-English morning and bedtime separation rules, droplet wait-time sequencers, and pore-safety scores.
           </p>
@@ -626,7 +636,9 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
 
   const faqHtml = (page.faqs || []).map((f) => `<div style="padding:10px;background:var(--bg-oat);margin-bottom:12px;"><div class="porcelain-vessel-core" style="padding:18px 20px;"><h3 class="serif-display" style="font-size:1.25rem;font-weight:400;margin-bottom:6px;">${escapeHtml(f.q)}</h3><p style="color:var(--text-secondary);font-size:0.88rem;">${escapeHtml(f.a)}</p></div></div>`).join('');
 
-  const relatedHtml = (relatedPages || []).slice(0, 8).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" style="display:flex;padding:10px;background:var(--bg-oat);text-decoration:none;"><div class="porcelain-vessel-core" style="flex:1;padding:16px 18px;"><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">${escapeHtml(r.verdict)} · ΔpH ${r.deltaPh}</div><div class="serif-display" style="font-weight:400;font-size:1.12rem;color:var(--text-primary);">${escapeHtml(r.title)}</div></div></a>`).join('');
+  const relatedHtml = (relatedPages || []).slice(0, 8).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" style="display:flex;padding:8px;background:var(--bg-oat);text-decoration:none;"><div class="porcelain-vessel-core" style="flex:1;padding:16px 18px;"><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">${escapeHtml(formatVerdictLabel(r.verdict))} · ΔpH ${r.deltaPh}</div><div class="serif-display" style="font-weight:400;font-size:1.12rem;color:var(--text-primary);">${escapeHtml(r.title)}</div></div></a>`).join('');
+
+  const seoBadgeClass = page.compatibilityScore < 55 ? 'badge-clash' : page.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe';
 
   const bodyHtml = `
     <section class="hero-section">
@@ -635,14 +647,14 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <a href="/">Home</a> / <a href="/directory">Layering Archive</a> / <span style="color:var(--rose-brand);font-weight:500;">${escapeHtml(page.category)}</span>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
-          <span class="badge-safe mono">${escapeHtml(page.verdict)} · Harmony ${page.compatibilityScore}/100 (ΔpH ${page.deltaPh})</span>
+          <span class="${seoBadgeClass} mono">${escapeHtml(formatVerdictLabel(page.verdict))} · Harmony ${page.compatibilityScore}/100 (ΔpH ${page.deltaPh})</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Verified Formula at Dermstore &rarr;</a>
             <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Alternative at Sephora &rarr;</a>
           </div>
         </div>
         <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.8vw,3.4rem);">${escapeHtml(page.title)}</h1>
-        <p class="hero-sub" style="margin-bottom:24px;">${escapeHtml(page.summary)}</p>
+        <p class="hero-sub" style="margin-bottom:20px;">${escapeHtml(page.summary)}</p>
 
         <div class="z-cascade-stage" style="margin-bottom:28px;">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
@@ -716,7 +728,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <div class="porcelain-vessel-core" style="padding:22px;">
             <h2 class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Can You Use ${escapeHtml(searchIntentSubject)} Together? Skincare Guide &amp; Layering Rules</h2>
             <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:14px;">
-              Routine Compatibility: <strong class="mono" style="color:var(--rose-brand);">${escapeHtml(page.verdict)}</strong> (Compatibility Score: <strong>${page.compatibilityScore}/100</strong>). Inspect each ingredient's formulation swatch card and full layering matrix below.
+              Routine Compatibility: <strong class="mono" style="color:var(--rose-brand);">${escapeHtml(formatVerdictLabel(page.verdict))}</strong> (Compatibility Score: <strong>${page.compatibilityScore}/100</strong>). Inspect each ingredient's formulation swatch card and full layering matrix below.
             </p>
             ${seoSwatchesHtml}
             <div class="table-wrap">
