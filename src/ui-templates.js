@@ -158,8 +158,8 @@ const SHARED_CSS = `
   .preset-chip strong { display: block; color: var(--text-primary); font-size: 0.88rem; font-weight: 500; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .preset-chip span { color: var(--rose-brand); font-size: 0.78rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .field-label { display: block; font-size: 0.84rem; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
-  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px; max-height: 184px; overflow-y: auto; padding: 8px; background: var(--bg-canvas); margin-bottom: 8px; }
-  .prod-check-item { display: flex; align-items: flex-start; gap: 8px; padding: 9px 10px; background: var(--bg-surface); cursor: pointer; font-size: 0.84rem; transition: background-color 180ms ease-out; }
+  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px; flex: 1 1 310px; min-height: 310px; max-height: 500px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 10px; background: var(--bg-canvas); margin-bottom: 10px; align-content: start; }
+  .prod-check-item { display: flex; align-items: flex-start; gap: 8px; padding: 10px 11px; background: var(--bg-surface); cursor: pointer; font-size: 0.84rem; transition: background-color 180ms ease-out; }
   .prod-check-item.selected { background: var(--rose-pill-bg); }
   .prod-check-item input { margin-top: 3px; accent-color: var(--rose-brand); flex-shrink: 0; }
   [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); padding: 9px 12px; color: var(--text-primary); font-size: 15px; border: none; }
@@ -179,7 +179,8 @@ const SHARED_CSS = `
 
   /* Uneven Gallery & 4-Night Skin-Cycling Strip */
   .z-cascade-stage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; margin-top: 24px; }
-  .z-vessel-left, .z-vessel-center, .z-vessel-right { background: var(--bg-oat); padding: 8px; display: flex; }
+  .z-vessel-left, .z-vessel-center, .z-vessel-right { background: var(--bg-surface); padding: 0; display: flex; }
+  .z-vessel-left > .porcelain-vessel-core, .z-vessel-center > .porcelain-vessel-core, .z-vessel-right > .porcelain-vessel-core { padding: 24px; justify-content: space-between; flex: 1; }
   .viscosity-seq-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
   .viscosity-seq-item { padding: 10px 12px; background: var(--bg-canvas); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
   .wait-timer-btn { padding: 6px 12px; background: var(--bg-oat); border: none; color: var(--text-primary); font-size: 0.8rem; font-weight: 500; cursor: pointer; white-space: nowrap; font-variant-numeric: tabular-nums; transition: background-color 200ms ease-out, color 200ms ease-out; }
@@ -362,8 +363,8 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     <div class="hero-grid" id="analyzer" data-ui="vanity-audit-workbench">
       <div class="grader-card" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
         <div class="porcelain-vessel-core" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+          <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
               <span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Bathroom Vanity Shelf Builder</span>
               <span class="badge-safe mono">44 Cult Formulas Indexed</span>
             </div>
