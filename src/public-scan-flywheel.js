@@ -2,6 +2,20 @@
 
 const fs = require('fs');
 const path = require('path');
+const { SHARED_CSS, CLIENT_SCRIPT, renderHeader, renderFooter } = require('./ui-templates');
+
+function fmtRoutineTitle(raw) {
+  const map = {
+    'VitC-AM-Peptides-PM': 'Vitamin C (AM) + Copper Peptides (PM)',
+    'Ceramide-Tretinoin-Buffer': 'Ceramide Buffer + Tretinoin 0.05%',
+    'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5%',
+    'BHA2-SnailMucin-Stack': '2% BHA + Snail Mucin Essence',
+    'VitC+Cu': 'Vitamin C 15% + Copper Peptides 1%',
+    'Tret+BPO': 'Rx Tretinoin 0.05% + Benzoyl Peroxide',
+    'TikTok': '7-Active Acid & Retinol Stack'
+  };
+  return map[raw] || String(raw || '').replace(/VitC/g, 'Vitamin C').replace(/\+Cu/g, ' + Copper Peptides').replace(/Tret\+BPO/g, 'Tretinoin + Benzoyl Peroxide').replace(/-/g, ' ');
+}
 
 /**
  * Phase A: Zero-HITL Public Scan Permalink, URL-Prefix / curl Terminal Magic,
@@ -155,38 +169,37 @@ function renderAnsiTerminalScorecard(cfg, scan) {
 
 function renderScanCnnOverlaySvg(cfg, scan, badgeColor) {
   const isHigh = scan.score >= 86;
-  const strokeCol = isHigh ? '#264C3C' : '#8A283B';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 170" width="100%" height="170" role="img" aria-label="Live Scorecard Readout for ${esc(scan.target)}" style="background:#EFE9DF;border-radius:26px 12px 26px 12px;border:1px solid #DFD6C7;display:block;">
+  const strokeCol = isHigh ? '#235340' : '#7A2332';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 156" width="100%" height="156" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Live Scorecard Readout for ${esc(scan.target)}" style="background:var(--bg-oat);display:block;padding:0 8px;">
     <title>Live Scorecard &amp; Quality Check: ${esc(scan.target)}</title>
-    <rect x="14" y="14" width="220" height="142" rx="16" fill="#FFFDFB" stroke="${strokeCol}" stroke-width="2" stroke-dasharray="5,3"/>
-    <circle cx="124" cy="85" r="42" fill="${strokeCol}" fill-opacity="0.12" stroke="${strokeCol}" stroke-width="2"/>
-    <circle cx="124" cy="85" r="14" fill="${strokeCol}" fill-opacity="0.35"/>
-    <text x="24" y="34" fill="#544841" font-family="Georgia, serif" font-size="11" font-weight="700">ATELIER PORCELAIN SENSOR</text>
-    <text x="24" y="144" fill="${strokeCol}" font-family="Georgia, serif" font-size="12" font-weight="700">${esc(scan.grade)} • ${scan.score}/100 SCORE</text>
-    <text x="254" y="36" fill="#221A16" font-family="Cormorant Garamond,Georgia,serif" font-size="18" font-weight="700">${esc(scan.cnnSensorLabel || cfg.brandName)}</text>
-    <text x="254" y="62" fill="${strokeCol}" font-family="Georgia, serif" font-size="13" font-weight="700">Finding: ${esc(scan.cnnReadout)}</text>
-    <rect x="254" y="78" width="396" height="10" rx="5" fill="#DFD6C7"/>
-    <rect x="254" y="78" width="${Math.round(3.96 * scan.score)}" height="10" rx="5" fill="${strokeCol}"/>
-    <text x="254" y="114" fill="#544841" font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="600">Key Metric: ${esc(scan.kpi1)} • ${esc(scan.kpi2)}</text>
-    <text x="254" y="142" fill="#7D5116" font-family="Georgia, serif" font-size="12" font-weight="700">Next Step: ${esc(scan.issue)}</text>
+    <rect x="18" y="16" width="270" height="124" fill="#FAF6F0" stroke="${strokeCol}" stroke-width="1.5"/>
+    <circle cx="153" cy="74" r="32" fill="${strokeCol}" fill-opacity="0.1" stroke="${strokeCol}" stroke-width="1.5"/>
+    <circle cx="153" cy="74" r="11" fill="${strokeCol}" fill-opacity="0.32"/>
+    <text x="30" y="34" fill="#524943" font-family="Newsreader, Georgia, serif" font-size="11.5" font-weight="500">FORMULATION SENSOR</text>
+    <text x="30" y="130" fill="${strokeCol}" font-family="Newsreader, Georgia, serif" font-size="12.5" font-weight="600">${esc(scan.grade)} · ${scan.score}/100 HARMONY SCORE</text>
+    <text x="316" y="38" fill="#181412" font-family="Newsreader, Georgia, serif" font-size="21" font-weight="400">${esc(scan.cnnSensorLabel || cfg.brandName)}</text>
+    <text x="316" y="64" fill="${strokeCol}" font-family="Newsreader, Georgia, serif" font-size="15" font-weight="500">Finding: ${esc(scan.cnnReadout)}</text>
+    <rect x="316" y="78" width="836" height="6" fill="#F4EFE8"/>
+    <rect x="316" y="78" width="${Math.round(8.36 * scan.score)}" height="6" fill="${strokeCol}"/>
+    <text x="316" y="108" fill="#524943" font-family="Newsreader, Georgia, serif" font-size="14.5" font-weight="400">Key Metric: ${esc(scan.kpi1)} · ${esc(scan.kpi2)} · Sensor: ${esc(scan.cnnModel)}</text>
+    <text x="316" y="132" fill="#7D4F18" font-family="Newsreader, Georgia, serif" font-size="14" font-weight="500">Recommended Protocol: ${esc(scan.issue)}</text>
   </svg>`;
 }
 
 function renderPublicScanPageHtml(cfg, scan, badgeColor) {
-  const t = cfg.theme || { canvasBg: '#F8FAFC', brandSoftBg: '#EEF2FF', border: '#E2E8F0', textPrimary: '#0F172A', textSecondary: '#475569', safeColor: '#059669' };
   const cat = getFlywheelCatalog(cfg.moduleId);
   const canonicalUrl = `https://${cfg.domain}/scan/${encodeURIComponent(scan.target)}`;
   const badgeUrl = `https://${cfg.domain}/badge/${encodeURIComponent(scan.target)}.svg`;
   const mdSnippet = `[![${cfg.brandName} ${scan.grade}](${badgeUrl})](${canonicalUrl})`;
   const ledger = loadPublicScanLedger(cfg).slice(0, 8);
-  const recentLinks = ledger.map((item) => `<a href="/scan/${esc(encodeURIComponent(item.target))}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#FFFFFF;border:1px solid ${esc(t.border)};font-size:13px;font-weight:600;color:${esc(t.textPrimary)};text-decoration:none;"><span>${esc(item.target)}</span><span style="color:${item.score >= 86 ? '#059669' : '#E11D48'};font-weight:800;">${esc(item.grade)}</span></a>`).join(' ');
+  const recentLinks = ledger.map((item) => `<a href="/scan/${esc(encodeURIComponent(item.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:7px 14px;background:var(--bg-oat);font-size:14px;font-weight:400;color:var(--text-primary);text-decoration:none;"><span>${esc(fmtRoutineTitle(item.target))}</span><span class="mono" style="color:${item.score >= 86 ? 'var(--sage-safe)' : 'var(--rose-brand)'};font-weight:600;">${esc(item.grade)}</span></a>`).join(' ');
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="day">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${esc(scan.target)} : ${esc(cfg.brandName)} Scorecard &amp; Action Report (${esc(scan.grade)} ${scan.score}/100)</title>
+  <title>${esc(fmtRoutineTitle(scan.target))} : ${esc(cfg.brandName)} Scorecard &amp; Action Report (${esc(scan.grade)} ${scan.score}/100)</title>
   <meta name="description" content="Live ${esc(cfg.brandName)} scorecard for ${esc(scan.target)}: Grade ${esc(scan.grade)} (${scan.score}/100), ${esc(scan.kpi1)}, ${esc(scan.kpi2)}. View full action plan and 1-click fixes." />
   <link rel="canonical" href="${esc(canonicalUrl)}" />
   <meta property="og:title" content="${esc(scan.target)} : ${esc(cfg.brandName)} Scorecard (${esc(scan.grade)})" />
@@ -196,194 +209,178 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
+  <style>${SHARED_CSS}</style>
+  <script>try{if(localStorage.getItem('dermlogic_vanity_theme')==='night')document.documentElement.setAttribute('data-theme','night');}catch(_){}</script>
 </head>
-<body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:'Plus Jakarta Sans',Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.6;">
-  <header style="};background:rgba(250,247,242,0.92);backdrop-filter:blur(16px);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <a href="/" style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:23px;color:${esc(t.textPrimary)};text-decoration:none;">${esc(cfg.brandName)} <span style="font-style:italic;color:${esc(badgeColor)};font-weight:500;">Atelier Céramique</span></a>
-      <span style="font-variant-numeric: tabular-nums;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:${esc(t.brandSoftBg)};color:${esc(badgeColor)};border:1px solid ${esc(t.accentBorder || t.border)};">ATELIER CÉRAMIQUE · GRADE ${esc(scan.grade)}</span>
-    </div>
-    <nav aria-label="Primary" style="display:flex;gap:16px;align-items:center;font-size:14px;font-weight:600;">
-      <a href="/" style="color:${esc(t.textSecondary)};text-decoration:none;">Home Atelier</a>
-      <a href="/leaderboard" style="color:${esc(t.textSecondary)};text-decoration:none;">Leaderboard</a>
-      <a href="/directory" style="color:${esc(t.textSecondary)};text-decoration:none;">Layering Archive</a>
-      <a href="/buy/flash_pass" rel="nofollow" style="padding:8px 16px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;text-decoration:none;font-weight:700;">Unlock 3-File Pack ($1.99) ↗</a>
+<body>
+  ${renderHeader(false)}
+  <main class="container" style="padding-top:48px;padding-bottom:96px;">
+    <nav aria-label="Breadcrumb" style="font-size:14px;color:var(--text-muted);margin-bottom:18px;">
+      <a href="/" style="color:var(--rose-brand);text-decoration:none;font-weight:500;">Atelier</a> / <a href="/leaderboard" style="color:var(--rose-brand);text-decoration:none;font-weight:500;">Leaderboard</a> / <span id="eb-scan-bc-target" style="color:var(--text-primary);">${esc(scan.target)}</span>
     </nav>
-  </header>
-  <main style="max-width:1240px;margin:0 auto;padding:24px;">
-    <nav aria-label="Breadcrumb" style="font-size:13px;color:${esc(t.textSecondary)};margin-bottom:10px;">
-      <a href="/" style="color:${esc(badgeColor)};text-decoration:none;font-weight:600;">Home</a> / <a href="/leaderboard" style="color:${esc(badgeColor)};text-decoration:none;font-weight:600;">Leaderboard</a> / <span id="eb-scan-bc-target">${esc(scan.target)}</span>
-    </nav>
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
       <div>
-        <h1 id="eb-scan-h1" style="font-family:'Cormorant Garamond',Georgia,serif;margin:0 0 6px 0;font-size:clamp(2.1rem,3.4vw,2.8rem);font-weight:600;line-height:1.12;">${esc(scan.target)} : ${esc(cfg.brandName)} Porcelain Ritual Scorecard</h1>
-        <p class="pseo-lead" style="margin:0;color:${esc(t.textSecondary)};font-size:16px;">Shareable Atelier Céramique report for <strong id="eb-scan-lead-target">${esc(scan.target)}</strong>. Rated <strong id="eb-scan-lead-grade">${esc(scan.grade)} (${scan.score}/100)</strong> based on ${esc(scan.kpi1)} and ${esc(scan.kpi2)}.</p>
+        <h1 id="eb-scan-h1" class="hero-h1" style="margin:0 0 12px 0;">${esc(fmtRoutineTitle(scan.target))}.</h1>
+        <p class="pseo-lead hero-sub" style="margin:0;">Verified formulation dossier for <strong id="eb-scan-lead-target">${esc(scan.target)}</strong>. Rated <strong id="eb-scan-lead-grade">${esc(scan.grade)} (${scan.score}/100)</strong> based on ${esc(scan.kpi1)} and ${esc(scan.kpi2)}.</p>
       </div>
       <img id="eb-scan-badge-img" src="/badge/${esc(encodeURIComponent(scan.target))}.svg" alt="${esc(scan.target)} Verified Score Badge" width="240" height="22" decoding="async" />
     </div>
-    <section style="margin-top:16px;">${renderScanCnnOverlaySvg(cfg, scan, badgeColor)}</section>
-    <div id="eb-scan-purest-cta-bar" style="margin-top:14px;padding:7px;border-radius:32px 16px 32px 16px;background:rgba(239,233,223,0.65);border:1px solid ${esc(t.border)};">
-      <div style="background:${esc(t.cardBg || '#FFFDFB')};border-radius:26px 12px 26px 12px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <div style="font-size:14px;font-weight:700;color:${esc(t.textPrimary)};"><strong>${esc(scan.target)}</strong> Porcelain Ritual Ready: Download the verified 3-file production fix pack (<span style="font-variant-numeric: tabular-nums;color:${esc(badgeColor)};">${esc(scan.kpi1)}</span>)</div>
-        <a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" onclick="if(window.__ebTrack)window.__ebTrack('view_paywall',{source:'scan_first_fold',target:'${esc(scan.target)}'})" style="padding:9px 18px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:800;text-decoration:none;white-space:nowrap;">Unlock 3-File Action Pack ($1.99 Stripe Express) ↗</a>
-      </div>
+    <section style="margin-top:20px;">${renderScanCnnOverlaySvg(cfg, scan, badgeColor)}</section>
+    <div id="eb-scan-purest-cta-bar" style="margin-top:20px;padding:18px 26px;background:var(--bg-oat);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
+      <div style="font-size:15.5px;font-weight:400;color:var(--text-primary);flex:1;min-width:280px;"><strong>${esc(fmtRoutineTitle(scan.target))}</strong> Ritual Dossier (<span class="mono" style="color:var(--rose-brand);font-weight:500;">${esc(scan.kpi1)}</span>) · 9:16 Lock-Screen Card + 4-Night .ICS</div>
+      <a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" onclick="if(window.__ebTrack)window.__ebTrack('view_paywall',{source:'scan_first_fold',target:'${esc(scan.target)}'})" class="btn btn-primary" style="white-space:nowrap;">Save 3-File Ritual Dossier ($1.99) →</a>
     </div>
-    <script>window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target+' : ${esc(cfg.brandName)} Porcelain Ritual Scorecard';var b=document.getElementById('eb-scan-badge-img');if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val');if(r1)r1.textContent=s.grade+' ('+s.score+'/100)';if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.status;if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};</script>
-    <section id="eb-onnx-cnn-workbench" style="background:#221A16;color:#FAF7F2;border:1px solid #3D3029;border-radius:26px 12px 26px 12px;padding:14px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:13px;font-weight:800;color:#E5BCC5;font-variant-numeric: tabular-nums;">TEST ANY ROUTINE LIVE:</span>
-        ${cat.entities.slice(0, 4).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:5px 11px;border-radius:999px;border:1px solid #544841;background:#2E241E;color:#FAF7F2;font-size:13px;font-weight:700;cursor:pointer;">${esc(e.target)}</button>`).join('')}
-        <input id="eb-cnn-wb-input" type="text" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:999px;border:1px solid #544841;background:#16100E;color:#FAF7F2;font-size:13.5px;width:155px;" />
-        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" style="padding:6px 13px;border-radius:999px;border:none;background:${esc(badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">Check Score ↗</button>
+    <script>window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target+' Ritual Dossier.';var b=document.getElementById('eb-scan-badge-img');if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val');if(r1)r1.textContent=s.grade+' ('+s.score+'/100)';if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.status;if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};</script>
+    <section id="eb-onnx-cnn-workbench" style="background:var(--bg-oat);color:var(--text-primary);padding:18px 26px;margin-top:16px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <span style="font-size:13.5px;font-weight:500;color:var(--rose-brand);letter-spacing:0.03em;">TEST ANY ROUTINE LIVE</span>
+        <div id="eb-live-cnn-readout" class="mono" style="font-size:14px;color:var(--sage-safe);font-weight:500;">${esc( fmtRoutineTitle(scan.target))} → ${esc(scan.grade)} (${scan.score}/100) · ${esc(scan.cnnReadout)}</div>
       </div>
-      <div id="eb-live-cnn-readout" style="font-variant-numeric: tabular-nums;font-size:13px;color:#B7D4C6;font-weight:700;">${esc(scan.target)} → ${esc(scan.grade)} (${scan.score}/100) • ${esc(scan.cnnReadout)}</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        ${cat.entities.slice(0, 4).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:7px 13px;border:none;background:var(--bg-surface);color:var(--text-primary);font-family:var(--font-sans);font-size:13.5px;font-weight:500;cursor:pointer;">${esc(fmtRoutineTitle(e.target))}</button>`).join('')}
+        <input id="eb-cnn-wb-input" type="text" placeholder="Enter routine or active..." aria-label="Custom scan target" class="input-box" style="flex:1;min-width:170px;padding:7px 12px;font-size:14px;background:var(--bg-surface);" />
+        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" class="btn btn-primary" style="padding:8px 16px;font-size:13.5px;white-space:nowrap;">Check Score →</button>
+      </div>
     </section>
-    <section class="table-wrap" style="background:${esc(t.cardBg || '#FFFDFB')};border:1px solid ${esc(t.border)};border-radius:28px 12px 28px 12px;padding:20px;margin-top:16px;">
-      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;margin:0 0 12px 0;">Porcelain Ritual Summary &amp; Layering Action Plan</h2>
-      <table aria-label="${esc(scan.target)} Public Scan Matrix" style="width:100%;border-collapse:collapse;font-size:14px;">
-        <thead><tr style="background:${esc(t.canvasBg)};text-align:left;"><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">What We Checked</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Result</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Recommended Next Step</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Status</th></tr></thead>
+    <section class="table-wrap" style="background:var(--bg-oat);padding:28px 32px;margin-top:24px;">
+      <h2 style="font-size:clamp(1.45rem,2.1vw,1.9rem);margin:0 0 16px 0;">Formulation Summary &amp; Layering Action Plan</h2>
+      <table aria-label="${esc(scan.target)} Public Scan Matrix" style="width:100%;border-collapse:collapse;">
+        <thead><tr><th scope="col">What We Checked</th><th scope="col">Result</th><th scope="col">Recommended Next Step</th><th scope="col">Status</th></tr></thead>
         <tbody id="prompt-matrix-tbody">
-          <tr><th scope="row" style="padding:11px 14px;};text-align:left;">Overall Grade</th><td id="eb-scan-r1-val" style="padding:11px 14px;};font-variant-numeric: tabular-nums;font-weight:700;">${esc(scan.grade)} (${scan.score}/100)</td><td id="eb-scan-r1-act" style="padding:11px 14px;};">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="padding:11px 14px;};font-weight:700;color:${scan.score >= 86 ? '#059669' : '#E11D48'};">${esc(scan.status)}</td></tr>
-          <tr><th scope="row" style="padding:11px 14px;};text-align:left;">Key Performance Metric</th><td id="eb-scan-r2-val" style="padding:11px 14px;};font-variant-numeric: tabular-nums;font-weight:700;">${esc(scan.kpi1)} • ${esc(scan.kpi2)}</td><td style="padding:11px 14px;};">Compare on Public Leaderboard</td><td style="padding:11px 14px;};font-weight:700;color:#059669;">VERIFIED</td></tr>
-          <tr><th scope="row" style="padding:11px 14px;};text-align:left;">Automated Quality Check</th><td id="eb-scan-r3-val" style="padding:11px 14px;};font-variant-numeric: tabular-nums;font-weight:700;">${esc(scan.cnnReadout)}</td><td style="padding:11px 14px;};">${esc(scan.cnnSensorLabel)}</td><td style="padding:11px 14px;};font-weight:700;color:#059669;">VERIFIED</td></tr>
-          <tr id="eb-scan-row4-tr"><th scope="row" style="padding:11px 14px;};text-align:left;">Row #4 Step-by-Step Fix Guide</th><td id="eb-scan-row4-val" style="padding:11px 14px;};font-variant-numeric: tabular-nums;">Locked in Preview</td><td style="padding:11px 14px;};"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:${esc(badgeColor)};font-weight:700;">Unlock Complete 3-File Pack ($1.99) ↗</a></td><td id="eb-scan-row4-status" style="padding:11px 14px;};font-weight:700;">LOCKED_PREVIEW</td></tr>
-          <tr><th scope="row" style="padding:11px 14px;};text-align:left;">Row #5 Complete 3-File Action Pack</th><td style="padding:11px 14px;};font-variant-numeric: tabular-nums;">Locked in Preview</td><td style="padding:11px 14px;};"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:${esc(badgeColor)};font-weight:700;">Unlock Complete 3-File Pack ($1.99) ↗</a></td><td style="padding:11px 14px;};font-weight:700;">LOCKED_PREVIEW</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Overall Harmony Grade</th><td id="eb-scan-r1-val" class="mono" style="font-weight:500;">${esc(scan.grade)} (${scan.score}/100)</td><td id="eb-scan-r1-act">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="font-weight:500;color:${scan.score >= 86 ? 'var(--sage-safe)' : 'var(--rose-brand)'};">${esc(scan.status)}</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Primary pH &amp; Barrier Metric</th><td id="eb-scan-r2-val" class="mono" style="font-weight:500;">${esc(scan.kpi1)} · ${esc(scan.kpi2)}</td><td>Compare on Public Leaderboard</td><td style="font-weight:500;color:var(--sage-safe);">VERIFIED</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Automated Barrier Check</th><td id="eb-scan-r3-val" class="mono" style="font-weight:500;">${esc(scan.cnnReadout)}</td><td>${esc(scan.cnnSensorLabel)}</td><td style="font-weight:500;color:var(--sage-safe);">VERIFIED</td></tr>
+          <tr id="eb-scan-row4-tr"><th scope="row" style="text-align:left;font-weight:500;">Row #4 Step-by-Step Fix Guide</th><td id="eb-scan-row4-val" class="mono">Locked in Preview</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-File Dossier ($1.99) →</a></td><td id="eb-scan-row4-status" style="font-weight:500;">LOCKED_PREVIEW</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Row #5 Complete 3-File Ritual Pack</th><td class="mono">Locked in Preview</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-File Dossier ($1.99) →</a></td><td style="font-weight:500;">LOCKED_PREVIEW</td></tr>
         </tbody>
       </table>
-      <div id="eb-inline-row4-unlock" style="margin-top:14px;padding:12px 16px;border-radius:20px 8px 20px 8px;background:${esc(t.canvasBg)};border:1px solid ${esc(t.border)};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-        <div style="font-size:13.5px;font-weight:800;color:${esc(t.textPrimary)};">Rows #4 &amp; #5 Locked: Unblur your complete 3-Card Porcelain Ritual Pack via 1-Click Stripe Express</div>
-        <div id="eb-scan-row4-msg" style="display:none !important;"><input id="eb-scan-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" /><button id="eb-scan-row4-btn" type="button">Reveal Row #4 →</button></div>
-        <div style="display:flex;align-items:center;gap:8px;"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="padding:8px 16px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:800;text-decoration:none;">Unlock Complete 3-File Action Pack ($1.99 Stripe Express) ↗</a></div>
+      <div id="eb-inline-row4-unlock" style="margin-top:18px;padding:16px 20px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div style="font-size:15px;font-weight:500;color:var(--text-primary);">Rows #4 &amp; #5 Locked: Unblur your complete 3-File Ritual Dossier via 1-Click Stripe Express</div>
+        <div id="eb-scan-row4-msg" style="display:none !important;"><input id="eb-scan-row4-email" type="email" placeholder="you@email.com" aria-label="Email to unlock Row 4" /><button id="eb-scan-row4-btn" type="button">Reveal Row #4 →</button></div>
+        <div style="display:flex;align-items:center;gap:8px;"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" class="btn btn-primary" style="padding:10px 18px;font-size:14px;">Save Complete 3-File Dossier ($1.99) →</a></div>
       </div>
     </section>
-    <article style="background:#FFFDFB;border:1px solid ${esc(t.border)};border-radius:26px 12px 26px 12px;padding:20px;margin-top:16px;">
-      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:21px;margin:0 0 10px 0;">Detailed Porcelain Formulation Analysis: ${esc(scan.target)}</h2>
-      <p style="font-size:14.5px;color:${esc(t.textSecondary)};margin:0 0 12px 0;line-height:1.65;">Our clinical formulation check evaluated <strong>${esc(scan.target)}</strong> using the <strong>${esc(scan.cnnModel)}</strong> barrier sensor (${esc(scan.cnnSensorLabel)}). Across 2026 dermatological benchmarks, ${esc(scan.target)} achieved an overall harmony grade of <strong>${esc(scan.grade)} (${scan.score}/100)</strong>, recording <strong>${esc(scan.kpi1)}</strong> on its primary pH/barrier metric and <strong>${esc(scan.kpi2)}</strong> on its secondary compatibility check. The sensor flagged <code>${esc(scan.cnnReadout)}</code> with recommended ritual adjustment: <strong>${esc(scan.issue)}</strong>.</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px;">
-        <div style="padding:14px;border-radius:16px 8px 16px 8px;background:${esc(t.canvasBg)};border:1px solid ${esc(t.border)};"><div style="font-size:12px;font-weight:800;text-transform:uppercase;color:${esc(badgeColor)};margin-bottom:4px;">1. Barrier Telemetry Readout</div><div style="font-size:13.5px;color:${esc(t.textPrimary)};">Sensor verified <strong>${esc(scan.cnnReadout)}</strong> (${esc(scan.status)}). Compare this score directly against Grade A+ routines on the <a href="/leaderboard" style="color:${esc(badgeColor)};font-weight:700;">Public Leaderboard</a>.</div></div>
-        <div style="padding:14px;border-radius:16px 8px 16px 8px;background:${esc(t.canvasBg)};border:1px solid ${esc(t.border)};"><div style="font-size:12px;font-weight:800;text-transform:uppercase;color:${esc(badgeColor)};margin-bottom:4px;">2. Recommended Layering Protocol</div><div style="font-size:13.5px;color:${esc(t.textPrimary)};">Priority action for <strong>${esc(scan.target)}</strong>: ${esc(scan.issue)}. Explore our <a href="/directory" style="color:${esc(badgeColor)};font-weight:700;">60+ Layering Playbooks</a> for full AM/PM schedules.</div></div>
+    <article style="background:var(--bg-oat);padding:28px 32px;margin-top:24px;">
+      <h2 style="font-size:clamp(1.35rem,1.9vw,1.7rem);margin:0 0 12px 0;">Detailed Formulation Analysis: ${esc(fmtRoutineTitle(scan.target))}</h2>
+      <p style="font-size:16px;color:var(--text-secondary);margin:0 0 18px 0;line-height:1.68;max-width:74ch;">Our clinical formulation check evaluated <strong>${esc(fmtRoutineTitle(scan.target))}</strong> (${esc(scan.target)}) using the <strong>${esc(scan.cnnModel)}</strong> barrier sensor (${esc(scan.cnnSensorLabel)}). Across 2026 dermatological benchmarks, ${esc(scan.target)} achieved an overall harmony grade of <strong>${esc(scan.grade)} (${scan.score}/100)</strong>, recording <strong>${esc(scan.kpi1)}</strong> on its primary pH/barrier metric and <strong>${esc(scan.kpi2)}</strong> on its secondary compatibility check. The sensor flagged <code>${esc(scan.cnnReadout)}</code> with recommended ritual adjustment: <strong>${esc(scan.issue)}</strong>.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:16px;">
+        <div style="padding:20px 22px;background:var(--bg-surface);"><div style="font-size:12.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--rose-brand);margin-bottom:6px;">1. Barrier Telemetry Readout</div><div style="font-size:15px;color:var(--text-primary);line-height:1.6;">Sensor verified <strong>${esc(scan.cnnReadout)}</strong> (${esc(scan.status)}). Compare this score directly against Grade A+ routines on the <a href="/leaderboard" style="color:var(--rose-brand);font-weight:500;">Routine Leaderboard</a>.</div></div>
+        <div style="padding:20px 22px;background:var(--bg-surface);"><div style="font-size:12.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--rose-brand);margin-bottom:6px;">2. Recommended Layering Protocol</div><div style="font-size:15px;color:var(--text-primary);line-height:1.6;">Priority action for <strong>${esc(fmtRoutineTitle(scan.target))}</strong>: ${esc(scan.issue)}. Explore our <a href="/directory" style="color:var(--rose-brand);font-weight:500;">72+ Layering Guides</a> for full AM/PM schedules.</div></div>
       </div>
     </article>
-    <details style="background:#FFFDFB;border:1px solid ${esc(t.border)};border-radius:26px 12px 26px 12px;padding:14px 18px;margin-top:16px;">
-      <summary style="cursor:pointer;font-size:14px;font-weight:700;color:${esc(t.textPrimary)};">Cosmetic Chemist Footnote, Shareable Badge &amp; Terminal Export</summary>
-      <div style="margin-top:10px;">
-        <p style="font-size:13.5px;color:${esc(t.textSecondary)};margin:0 0 8px 0;"><strong>Formulation Engine:</strong> ${esc(scan.cnnModel)} (${esc(scan.cnnSensorLabel)}). Share or embed the live porcelain badge:</p>
-        <pre style="background:#221A16;color:#FAF7F2;border-radius:14px 6px 14px 6px;padding:10px 12px;font-size:13px;overflow-x:auto;margin:0 0 8px 0;"><code>curl -sL https://${esc(cfg.domain)}/scan/${esc(encodeURIComponent(scan.target))}</code></pre>
-        <pre style="background:${esc(t.canvasBg)};border:1px solid ${esc(t.border)};border-radius:14px 6px 14px 6px;padding:10px 12px;font-size:13px;overflow-x:auto;margin:0;"><code>${esc(mdSnippet)}</code></pre>
+    <details style="background:var(--bg-oat);padding:18px 24px;margin-top:20px;">
+      <summary style="cursor:pointer;font-size:15px;font-weight:500;color:var(--text-primary);">Cosmetic Chemist Footnote, Shareable Badge &amp; Terminal Export</summary>
+      <div style="margin-top:12px;">
+        <p style="font-size:14.5px;color:var(--text-secondary);margin:0 0 10px 0;"><strong>Formulation Engine:</strong> ${esc(scan.cnnModel)} (${esc(scan.cnnSensorLabel)}). Share or embed the live badge:</p>
+        <pre style="background:var(--bg-surface);color:var(--text-primary);padding:12px 14px;font-size:13.5px;overflow-x:auto;margin:0 0 8px 0;"><code>curl -sL https://${esc(cfg.domain)}/scan/${esc(encodeURIComponent(scan.target))}</code></pre>
+        <pre style="background:var(--bg-surface);color:var(--text-primary);padding:12px 14px;font-size:13.5px;overflow-x:auto;margin:0;"><code>${esc(mdSnippet)}</code></pre>
       </div>
     </details>
-    <section style="margin-top:18px;">
-      <h2 style="font-size:16px;margin:0 0 10px 0;">Recent Public Reports (<a href="/leaderboard" style="color:${esc(badgeColor)};">View Full Leaderboard →</a>)</h2>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;">${recentLinks}</div>
+    <section style="margin-top:28px;">
+      <h2 style="font-size:1.3rem;margin:0 0 14px 0;">Recent Public Reports (<a href="/leaderboard" style="color:var(--rose-brand);font-weight:400;">View Full Leaderboard →</a>)</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">${recentLinks}</div>
     </section>
   </main>
+  ${renderFooter()}
+  <script>${CLIENT_SCRIPT}</script>
 </body>
 </html>`;
 }
 
 function renderLeaderboardPageHtml(cfg, badgeColor) {
-  const t = cfg.theme || { canvasBg: '#F8FAFC', brandSoftBg: '#EEF2FF', border: '#E2E8F0', textPrimary: '#0F172A', textSecondary: '#475569' };
   const cat = getFlywheelCatalog(cfg.moduleId);
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const podium = ledger.slice(0, 3);
-  const medals = ['#1 Hall of Fame Leader', '#2 Verified Runner-Up', '#3 Top Category Benchmark'];
-  const podiumHtml = podium.map((item, idx) => `<div style="padding:7px;border-radius:32px 16px 32px 16px;background:rgba(239,233,223,0.65);border:1px solid ${esc(t.border)};display:flex;"><div style="flex:1;background:${esc(t.cardBg || '#FFFDFB')};border:${idx === 0 ? `2px solid ${esc(badgeColor)}` : `1px solid ${esc(t.border)}`};border-radius:26px 12px 26px 12px;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
+  const medals = ['Rank 01 · Hall of Fame Leader', 'Rank 02 · Verified Runner-Up', 'Rank 03 · Barrier Benchmark'];
+  const podiumHtml = podium.map((item, idx) => `<div style="background:var(--bg-oat);padding:28px 30px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;">
     <div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
-        <span style="font-size:13px;font-weight:800;color:${idx === 0 ? esc(badgeColor) : '#264C3C'};">${medals[idx]}</span>
-        <span style="padding:3px 10px;border-radius:999px;background:#EDF4F0;color:#264C3C;font-variant-numeric: tabular-nums;font-size:13px;font-weight:800;">${esc(item.grade)} (${item.score}/100)</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;">
+        <span style="font-size:13px;font-weight:500;letter-spacing:0.03em;color:${idx === 0 ? 'var(--rose-brand)' : 'var(--text-secondary)'};">${medals[idx]}</span>
+        <span class="badge-safe mono">${esc(item.grade)} · ${item.score}/100</span>
       </div>
-      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-family:'Cormorant Garamond',Georgia,serif;font-size:21px;font-weight:700;color:${esc(t.textPrimary)};text-decoration:none;display:block;margin-bottom:4px;">${esc(item.target)} ↗</a>
-      <div style="font-size:13.5px;font-weight:700;color:${esc(badgeColor)};margin-bottom:6px;">${esc(item.kpi1)} • ${esc(item.kpi2)}</div>
-      <div style="width:100%;height:8px;border-radius:999px;background:#DFD6C7;overflow:hidden;margin-bottom:8px;"><div style="width:${item.score}%;height:100%;background:#264C3C;border-radius:999px;"></div></div>
-      <p style="font-size:13.5px;color:${esc(t.textSecondary)};margin:0;line-height:1.45;">${esc(item.cnnReadout)}</p>
+      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-family:var(--font-display);font-size:1.45rem;font-weight:400;line-height:1.2;color:var(--text-primary);text-decoration:none;display:block;margin-bottom:6px;">${esc(fmtRoutineTitle(item.target))}</a>
+      <div class="mono" style="font-size:14px;font-weight:500;color:var(--rose-brand);margin-bottom:10px;">${esc(item.kpi1)} · ${esc(item.kpi2)}</div>
+      <div style="width:100%;height:4px;background:var(--bg-surface);overflow:hidden;margin-bottom:12px;"><div style="width:${item.score}%;height:100%;background:var(--sage-safe);"></div></div>
+      <p style="font-size:15px;color:var(--text-secondary);margin:0;line-height:1.55;">${esc(item.cnnReadout)}</p>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;};font-size:13px;">
-      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(badgeColor)};font-weight:700;text-decoration:none;">Open Porcelain Report →</a>
-      <a href="/badge/${esc(encodeURIComponent(item.target))}.svg" target="_blank" rel="noopener" style="color:${esc(t.textSecondary)};text-decoration:underline;">Live SVG Badge</a>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;font-size:14px;">
+      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:var(--rose-brand);font-weight:500;text-decoration:none;">Open Ritual Dossier →</a>
+      <a href="/badge/${esc(encodeURIComponent(item.target))}.svg" target="_blank" rel="noopener" style="color:var(--text-muted);text-decoration:underline;font-size:13px;">Live SVG Badge</a>
     </div>
-  </div></div>`).join('');
+  </div>`).join('');
 
   const rowsHtml = ledger.map((item, idx) => {
     const isTop = item.score >= 86;
-    const barColor = isTop ? '#264C3C' : (item.score >= 75 ? '#7D5116' : '#8A283B');
+    const barColor = isTop ? 'var(--sage-safe)' : (item.score >= 75 ? 'var(--honey-warn)' : 'var(--rose-brand)');
     const rowTier = isTop ? 'fame' : 'fix';
-    return `<tr data-lb-tier="${rowTier}" data-lb-text="${esc((item.target + ' ' + item.kpi1 + ' ' + item.kpi2 + ' ' + item.cnnReadout + ' ' + item.issue).toLowerCase())}">
-    <td style="padding:12px 14px;};font-variant-numeric: tabular-nums;font-weight:700;font-size:14px;">#${idx + 1}</td>
-    <th scope="row" style="padding:12px 14px;};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(badgeColor)};font-weight:800;text-decoration:none;">${esc(item.target)} ↗</a></th>
-    <td style="padding:12px 14px;};min-width:150px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-variant-numeric: tabular-nums;font-weight:800;font-size:14px;color:${barColor};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:7px;background:#DFD6C7;border-radius:999px;overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
-    <td style="padding:12px 14px;};font-variant-numeric: tabular-nums;font-size:13.5px;font-weight:600;">${esc(item.kpi1)} • ${esc(item.kpi2)}</td>
-    <td style="padding:12px 14px;};font-size:13.5px;color:${esc(t.textSecondary)};">${esc(item.cnnReadout)}</td>
-    <td style="padding:12px 14px;};"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:13.5px;font-weight:700;color:${barColor};text-decoration:none;">${isTop ? 'View Report' : 'View Fix Plan'} →</a></td>
+    return `<tr data-lb-tier="${rowTier}" data-lb-text="${esc((item.target + ' ' + fmtRoutineTitle(item.target) + ' ' + item.kpi1 + ' ' + item.kpi2 + ' ' + item.cnnReadout + ' ' + item.issue).toLowerCase())}">
+    <td class="mono" style="font-weight:500;">#${idx + 1}</td>
+    <th scope="row" style="text-align:left;font-weight:500;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:var(--text-primary);font-weight:500;text-decoration:none;display:block;">${esc(fmtRoutineTitle(item.target))}</a><span class="mono" style="font-size:12.5px;color:var(--text-muted);font-weight:400;">${esc(item.target)}</span></th>
+    <td style="min-width:165px;"><div style="display:flex;align-items:center;gap:10px;"><span class="mono" style="font-weight:500;color:${barColor};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:4px;background:var(--bg-surface);overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
+    <td class="mono" style="font-size:14.5px;font-weight:400;">${esc(item.kpi1)} · ${esc(item.kpi2)}</td>
+    <td style="font-size:15px;color:var(--text-secondary);">${esc(item.cnnReadout)}</td>
+    <td><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:14px;font-weight:500;color:${barColor};text-decoration:none;white-space:nowrap;">${isTop ? 'View Dossier' : 'View Fix Plan'} →</a></td>
   </tr>`;
   }).join('');
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="day">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${esc(cfg.brandName)} Public Leaderboard : Top Rated (A+) &amp; Needs Improvement (2026)</title>
+  <title>${esc(cfg.brandName)} Routine Harmony Leaderboard : Top Rated (A+) &amp; Common Clashes (2026)</title>
   <meta name="description" content="Live public benchmark leaderboard for ${esc(cfg.brandName)}. Compare Grade A+ leaders, spot common mistakes, or check any target for an instant public report." />
   <link rel="canonical" href="https://${esc(cfg.domain)}/leaderboard" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
+  <style>${SHARED_CSS}</style>
+  <script>try{if(localStorage.getItem('dermlogic_vanity_theme')==='night')document.documentElement.setAttribute('data-theme','night');}catch(_){}</script>
 </head>
-<body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:'Plus Jakarta Sans',Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.6;">
-  <header style="};background:rgba(250,247,242,0.92);backdrop-filter:blur(16px);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <a href="/" style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:23px;color:${esc(t.textPrimary)};text-decoration:none;">${esc(cfg.brandName)} <span style="font-style:italic;color:${esc(badgeColor)};font-weight:500;">Atelier Céramique</span></a>
-      <span style="font-variant-numeric: tabular-nums;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:${esc(t.brandSoftBg)};color:${esc(badgeColor)};border:1px solid ${esc(t.accentBorder || t.border)};">ATELIER CÉRAMIQUE · PUBLIC LEADERBOARD</span>
+<body>
+  ${renderHeader(false)}
+  <main class="container" style="padding-top:48px;padding-bottom:96px;">
+    <div style="margin-bottom:36px;">
+      <h1 class="hero-h1" style="margin:0 0 14px 0;">Routine Harmony Leaderboard.</h1>
+      <p class="pseo-lead hero-sub" style="margin:0;">Compare verified Morning/Evening skincare routines side-by-side, filter between Grade A+ barrier-safe rituals and active clashes, or test any combination below.</p>
     </div>
-    <nav aria-label="Primary" style="display:flex;gap:16px;align-items:center;font-size:14px;font-weight:600;">
-      <a href="/" style="color:${esc(t.textSecondary)};text-decoration:none;">Home Atelier</a>
-      <a href="/leaderboard" style="color:${esc(badgeColor)};text-decoration:none;font-weight:800;">Leaderboard</a>
-      <a href="/directory" style="color:${esc(t.textSecondary)};text-decoration:none;">Layering Archive</a>
-      <a href="/buy/flash_pass" rel="nofollow" style="padding:8px 16px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;text-decoration:none;font-weight:700;">Unlock 3-File Pack ($1.99) ↗</a>
-    </nav>
-  </header>
-  <main style="max-width:1240px;margin:0 auto;padding:24px;">
-    <div style="text-align:center;max-width:74ch;margin:0 auto 22px;">
-      <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:#EFE9DF;border:1px solid #DFD6C7;font-variant-numeric: tabular-nums;font-size:11.5px;font-weight:700;letter-spacing:0.08em;color:${esc(badgeColor)};margin-bottom:10px;">ATELIER CÉRAMIQUE · Z-AXIS PORCELAIN PODIUM</span>
-      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;margin:0 0 8px 0;font-size:clamp(2.2rem,3.4vw,3rem);font-weight:600;line-height:1.1;">${esc(cfg.brandName)} Routine Harmony Leaderboard: Top Performers (A+) &amp; Common Clashes</h1>
-      <p class="pseo-lead" style="margin:0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified porcelain ritual grades side-by-side, filter between Hall of Fame barrier-safe routines and Needs-Fix clashes, or test any combination below.</p>
-    </div>
-    <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">${podiumHtml}</section>
-    <div id="leaderboard-filter-bar" style="background:${esc(t.cardBg || '#FFFDFB')};border:1px solid ${esc(t.border)};border-radius:26px 12px 26px 12px;padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:28px;">${podiumHtml}</section>
+    <div id="leaderboard-filter-bar" style="background:var(--bg-oat);padding:18px 22px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;" role="tablist" aria-label="Filter Leaderboard Categories">
-        <button type="button" onclick="window.__lbFilter('all',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:1px solid ${esc(badgeColor)};background:${esc(badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">All Ranked (${ledger.length})</button>
-        <button type="button" onclick="window.__lbFilter('fame',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:1px solid ${esc(t.border)};background:#FFFDFB;color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">Hall of Fame (A+/A)</button>
-        <button type="button" onclick="window.__lbFilter('fix',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:1px solid ${esc(t.border)};background:#FFFDFB;color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">Needs Fix (B/C/D)</button>
-        <input type="search" id="lb-search-input" aria-label="Filter leaderboard rows" placeholder="Filter routines by active or pH..." oninput="window.__lbSearch(this.value)" style="padding:7px 12px;border-radius:999px;border:1px solid ${esc(t.border)};background:#FAF7F2;font-size:13.5px;min-width:220px;" />
+        <button type="button" onclick="window.__lbFilter('all',this)" class="lb-tab-btn" style="padding:9px 16px;border:none;background:var(--rose-brand);color:#FAF6F0;font-family:var(--font-sans);font-size:14px;font-weight:500;cursor:pointer;">All Ranked (${ledger.length})</button>
+        <button type="button" onclick="window.__lbFilter('fame',this)" class="lb-tab-btn" style="padding:9px 16px;border:none;background:var(--bg-surface);color:var(--text-primary);font-family:var(--font-sans);font-size:14px;font-weight:500;cursor:pointer;">Hall of Fame (A+/A)</button>
+        <button type="button" onclick="window.__lbFilter('fix',this)" class="lb-tab-btn" style="padding:9px 16px;border:none;background:var(--bg-surface);color:var(--text-primary);font-family:var(--font-sans);font-size:14px;font-weight:500;cursor:pointer;">Needs Fix (B/C/D)</button>
+        <input type="search" id="lb-search-input" aria-label="Filter leaderboard rows" placeholder="Filter routines by active or pH..." oninput="window.__lbSearch(this.value)" class="input-box" style="width:240px;padding:8px 13px;font-size:14px;background:var(--bg-surface);" />
       </div>
       <form action="/scan" method="get" onsubmit="if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_check'});" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
-        <input type="text" name="q" required aria-label="Target entity to scan" placeholder="Test new: ${esc(cat.inputPlaceholder)}" style="padding:8px 12px;border-radius:999px;border:1px solid ${esc(t.border)};background:#FAF7F2;font-size:14px;min-width:210px;" />
-        <button type="submit" style="padding:8px 16px;border-radius:999px;border:none;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:700;cursor:pointer;">Check &amp; Rank →</button>
+        <input type="text" name="q" required aria-label="Target entity to scan" placeholder="Test routine: ${esc(cat.inputPlaceholder)}" class="input-box" style="width:230px;padding:8px 13px;font-size:14px;background:var(--bg-surface);" />
+        <button type="submit" class="btn btn-primary" style="padding:9px 18px;font-size:14px;">Check &amp; Rank →</button>
       </form>
     </div>
-    <script>window.__lbTier='all';window.__lbApply=function(){var q=((document.getElementById('lb-search-input')||{}).value||'').toLowerCase(),trs=document.querySelectorAll('#prompt-matrix-tbody tr[data-lb-tier]');for(var i=0;i<trs.length;i++){var tOk=window.__lbTier==='all'||trs[i].getAttribute('data-lb-tier')===window.__lbTier;var qOk=!q||(trs[i].getAttribute('data-lb-text')||'').indexOf(q)!==-1;trs[i].style.display=(tOk&&qOk)?'':'none';}};window.__lbFilter=function(t,btn){window.__lbTier=t;var bs=document.querySelectorAll('.lb-tab-btn');for(var i=0;i<bs.length;i++){bs[i].style.background='#FFFDFB';bs[i].style.color='#221A16';}if(btn){btn.style.background='${esc(badgeColor)}';btn.style.color='#FFFFFF';}if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_filter',tier:t});window.__lbApply();};window.__lbSearch=function(){window.__lbApply();};</script>
-    <section class="table-wrap" style="background:${esc(t.cardBg || '#FFFDFB')};border:1px solid ${esc(t.border)};border-radius:28px 12px 28px 12px;padding:20px;">
-      <table aria-label="${esc(cfg.brandName)} Public Leaderboard" style="width:100%;border-collapse:collapse;font-size:14px;">
+    <script>window.__lbTier='all';window.__lbApply=function(){var q=((document.getElementById('lb-search-input')||{}).value||'').toLowerCase(),trs=document.querySelectorAll('#prompt-matrix-tbody tr[data-lb-tier]');for(var i=0;i<trs.length;i++){var tOk=window.__lbTier==='all'||trs[i].getAttribute('data-lb-tier')===window.__lbTier;var qOk=!q||(trs[i].getAttribute('data-lb-text')||'').indexOf(q)!==-1;trs[i].style.display=(tOk&&qOk)?'':'none';}};window.__lbFilter=function(t,btn){window.__lbTier=t;var bs=document.querySelectorAll('.lb-tab-btn');for(var i=0;i<bs.length;i++){bs[i].style.background='var(--bg-surface)';bs[i].style.color='var(--text-primary)';}if(btn){btn.style.background='var(--rose-brand)';btn.style.color='#FAF6F0';}if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_filter',tier:t});window.__lbApply();};window.__lbSearch=function(){window.__lbApply();};</script>
+    <section class="table-wrap" style="background:var(--bg-oat);padding:28px 32px;">
+      <table aria-label="${esc(cfg.brandName)} Public Leaderboard" style="width:100%;border-collapse:collapse;">
         <thead>
-          <tr style="background:${esc(t.canvasBg)};text-align:left;">
-            <th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Rank</th>
-            <th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Target / Report</th>
-            <th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Grade &amp; Score Bar</th>
-            <th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Key Metrics</th>
-            <th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Diagnostic Finding</th>
-            <th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Next Step</th>
+          <tr>
+            <th scope="col">Rank</th>
+            <th scope="col">Routine / Dossier</th>
+            <th scope="col">Grade &amp; Harmony</th>
+            <th scope="col">Key Metrics</th>
+            <th scope="col">Formulation Finding</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody id="prompt-matrix-tbody">${rowsHtml}</tbody>
       </table>
     </section>
-    <details style="background:#FFFFFF;border:1px solid ${esc(t.border)};border-radius:14px;padding:14px 18px;margin-top:16px;">
-      <summary style="cursor:pointer;font-size:14px;font-weight:700;color:${esc(t.textSecondary)};">Technical Scoring Methodology (Layer-3 Specs)</summary>
-      <p style="font-size:13.5px;color:${esc(t.textSecondary)};margin:8px 0 0 0;">Scores are computed deterministically and cross-checked with <strong>${esc(cat.cnnModel)}</strong> (${esc(cat.cnnSensorLabel)}).</p>
+    <details style="background:var(--bg-oat);padding:18px 24px;margin-top:24px;">
+      <summary style="cursor:pointer;font-size:14.5px;font-weight:500;color:var(--text-secondary);">Formulation Scoring Methodology &amp; Barrier Telemetry</summary>
+      <p style="font-size:14.5px;color:var(--text-secondary);margin:10px 0 0 0;line-height:1.6;">Scores are computed deterministically (&lt;4ms) across 65 active ingredients and cross-checked with <strong>${esc(cat.cnnModel)}</strong> (${esc(cat.cnnSensorLabel)}).</p>
     </details>
   </main>
+  ${renderFooter()}
+  <script>${CLIENT_SCRIPT}</script>
 </body>
 </html>`;
 }

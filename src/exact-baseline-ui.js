@@ -450,7 +450,7 @@ function buildClientRuntimeScript(cfg) {
         var pills = document.getElementById('eb-manifest-pills-left') || document.getElementById('eb-zod-manifest-pills');
         if (pills && CFG.deliverableFiles) {
           pills.innerHTML = CFG.deliverableFiles.map(function(f, idx) {
-            return '<span class="eb-manifest-pill" onclick="window.__ebSelectManifestFile(' + idx + ', this)" style="cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:500;padding:5px 11px;background:' + CFG.theme.subtleBg + ';color:' + CFG.theme.textPrimary + ';"><span>' + f.file + '</span> <span style="color:' + CFG.theme.textMuted + ';">(' + f.size + ')</span></span>';
+            return '<span class="eb-manifest-pill" onclick="window.__ebSelectManifestFile(' + idx + ', this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:7px 12px;background:' + (idx === 0 ? CFG.theme.brandSoftBg : CFG.theme.subtleBg) + ';color:' + (idx === 0 ? CFG.theme.brandPrimary : CFG.theme.textPrimary) + ';"><span>' + f.file + '</span> <span style="color:' + CFG.theme.textMuted + ';">(' + f.size + ')</span></span>';
           }).join('');
         }
         var pre = document.getElementById('eb-prism-proof-preview');
@@ -466,15 +466,17 @@ function buildClientRuntimeScript(cfg) {
     if (entityOverride) window.__ebActiveEntity = String(entityOverride);
     var targetEl = document.getElementById('compiler-code-output') || document.getElementById('res-pitch-body') || document.getElementById('out-sdk-snippet') || document.getElementById('walletConflicts') || document.getElementById('appleWalletCardPreview');
     if (CFG.moduleId === 'sponsor_radar') { var nd = document.getElementById('res-dm-email'); if (nd && nd.textContent.indexOf('@') !== -1 && nd.textContent.indexOf('***') === -1) { nd.setAttribute('data-raw-email', nd.textContent); var parts = nd.textContent.trim().split('@'); nd.textContent = '[verified-buyer]***@' + (parts[1] || 'brand.com').slice(0, 18) + ' + Agency Desk'; } }
+    var isLeaderboard = window.location.pathname === '/leaderboard';
+    var isScanPage = window.location.pathname.indexOf('/scan/') === 0 || window.location.pathname.indexOf('/report/') === 0;
     var isPseoOrDir = window.location.pathname.indexOf('/seo/') === 0 || window.location.pathname.indexOf('/tools/') === 0 || window.location.pathname.indexOf('/compare/') === 0 || window.location.pathname === '/directory';
     var tbody = document.getElementById('prompt-matrix-tbody') || document.getElementById('res-placements-tbody') || document.querySelector('main table tbody, article table tbody');
-    if (tbody && !window.__ebIsUnlocked) {
+    if (tbody && !window.__ebIsUnlocked && !isLeaderboard) {
       var trs = tbody.querySelectorAll('tr');
       for (var r0 = 0; r0 < Math.min(3, trs.length); r0++) {
         if (!trs[r0].hasAttribute('data-eb-live-row')) {
           trs[r0].setAttribute('data-eb-live-row', String(r0 + 1)); trs[r0].title = 'Click row to benchmark & compile custom deliverable';
           var tdFirst = trs[r0].querySelector('td, th');
-          if (tdFirst && !tdFirst.querySelector('.eb-row-sim-pill')) tdFirst.insertAdjacentHTML('beforeend', ' <span class="eb-row-sim-pill" style="display:inline-block;margin-left:4px;padding:1px 6px;border-radius:999px;background:' + CFG.theme.brandSoftBg + ';color:' + CFG.theme.brandPrimary + ';border:1px solid ' + CFG.theme.accentBorder + ';font-size:13px;font-weight:700;white-space:nowrap;vertical-align:middle;">Sim</span>');
+          if (tdFirst && !tdFirst.querySelector('.eb-row-sim-pill')) tdFirst.insertAdjacentHTML('beforeend', ' <span class="eb-row-sim-pill" style="display:inline-block;margin-left:4px;padding:1px 6px;background:' + CFG.theme.brandSoftBg + ';color:' + CFG.theme.brandPrimary + ';font-size:12.5px;font-weight:600;white-space:nowrap;vertical-align:middle;">Sim</span>');
           trs[r0].addEventListener('click', function(ev) { if (ev.target && ev.target.closest && ev.target.closest('a, button, input')) return; this.style.background = CFG.theme.brandSoftBg; var td0 = this.querySelector('td, th'), ent = td0 ? (td0.textContent || '').replace('Sim', '').trim().slice(0, 36) : ''; if (ent) window.__ebCompileCustomCurtain(ent); });
         }
       }
@@ -495,13 +497,15 @@ function buildClientRuntimeScript(cfg) {
       }
     }
     var h1Node = document.querySelector('main h1, article h1, h1');
-    if (h1Node && !window.__ebActiveEntity && isPseoOrDir) {
+    if (h1Node && !window.__ebActiveEntity && (isPseoOrDir || isLeaderboard || isScanPage)) {
       if (window.location.pathname === '/directory') {
         window.__ebActiveEntity = '72-Guide Formulation Archive';
+      } else if (isLeaderboard) {
+        window.__ebActiveEntity = 'Routine Harmony Leaderboard';
       } else {
         var rawH1 = (h1Node.textContent || '').replace(/\\s+/g, ' ').trim().split(/\\s*[—–|:]\\s*/)[0];
         if (rawH1.length > 36) rawH1 = rawH1.slice(0, 36).replace(/\\s+\\S*$/, '');
-        window.__ebActiveEntity = rawH1.replace(/\\s+(?:&|and|\\+|-|vs\\.?)$/i, '').replace(/[,;:\\s&+-]+$/, '');
+        window.__ebActiveEntity = rawH1.replace(/\\s+(?:&|and|\\+|-|vs\\.?)$/i, '').replace(/[,.;:\\s&+-]+$/, '');
       }
     }
     // Native enterable input with sample chips (datalist removed for clean UX)
@@ -539,7 +543,7 @@ function buildClientRuntimeScript(cfg) {
         if (!window.__ebIsUnlocked && !document.getElementById('eb-pseo-quick-bar')) { var qb = buildQBar('eb-pseo-quick-bar'); if (window.location.pathname === '/directory') qb.style.display = 'none'; leftCol.appendChild(qb); }
         splitWrap.appendChild(leftCol); splitWrap.appendChild(buildHeroCardEl(168, 'margin:0;'));
       }
-    } else {
+    } else if (!isLeaderboard && !isScanPage) {
       var nativePhotoShell = document.querySelector('.editorial-photo-shell');
       if (nativePhotoShell && !document.getElementById('eb-hero-sparkline-pill')) {
         nativePhotoShell.style.position = 'relative'; nativePhotoShell.style.cursor = 'pointer'; nativePhotoShell.onclick = function(ev) { window.__ebCycleHeroScenario(ev); }; nativePhotoShell.insertAdjacentHTML('beforeend', sparkPillHtml);
@@ -551,21 +555,22 @@ function buildClientRuntimeScript(cfg) {
       if (homeSubLead && homeSubLead.parentNode && !window.__ebIsUnlocked && !document.getElementById('eb-mobile-firstfold-bar')) homeSubLead.parentNode.insertBefore(buildQBar('eb-mobile-firstfold-bar'), homeSubLead.nextSibling);
     }
     var scoreAnchor = document.querySelector('#liveResultsContainer .score-strip, .telemetry-card .metric-duo, #results-panel .kpi-grid, #radar-results-container .kpi-grid, .panel-elevated .telemetry-grid');
-    if ((scoreAnchor || targetEl) && !window.__ebIsUnlocked && !isPseoOrDir) {
+    if ((scoreAnchor || targetEl) && !window.__ebIsUnlocked && !isPseoOrDir && !isLeaderboard && !isScanPage) {
       if (targetEl && CFG.moduleId !== 'derm_logic') targetEl.classList.add('eb-blurred-deliverable');
       if (!document.getElementById('eb-postcalc-inline-cta')) {
         var pcCta = document.createElement('div'); pcCta.id = 'eb-postcalc-inline-cta';
-        pcCta.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;margin:10px 0;border-radius:10px;background:' + CFG.theme.brandSoftBg + ';border:1.5px solid ' + CFG.theme.accentBorder + ';font-family:' + CFG.theme.fontSans + ';';
-        pcCta.innerHTML = '<span id="eb-postcalc-cta-title" style="font-size:13px;font-weight:700;color:' + CFG.theme.brandPrimary + ';">' + PERSONA.ctaTitle + '</span><div style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;"><a id="btn-postcalc-permalink" ' + 'hr' + 'ef="/scan/' + encodeURIComponent(window.__ebActiveEntity || (CFG.presets[0] && CFG.presets[0].key) || 'verified') + '" style="font-size:12.5px;font-weight:600;color:' + CFG.theme.textSecondary + ';text-decoration:underline;white-space:nowrap;">Share Report ↗</a><button type="button" id="btn-postcalc-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\')" style="display:none;">' + PERSONA.microBtn + '</button><button type="button" id="btn-postcalc-flash-pass" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="padding:6px 12px;border-radius:999px;background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;border:none;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;">Unlock Full Fix Pack ($1.99) →</button></div>'
+        pcCta.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;margin:10px 0;background:' + CFG.theme.brandSoftBg + ';font-family:' + CFG.theme.fontSans + ';';
+        pcCta.innerHTML = '<span id="eb-postcalc-cta-title" style="font-size:13px;font-weight:700;color:' + CFG.theme.brandPrimary + ';">' + PERSONA.ctaTitle + '</span><div style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;"><a id="btn-postcalc-permalink" ' + 'hr' + 'ef="/scan/' + encodeURIComponent(window.__ebActiveEntity || (CFG.presets[0] && CFG.presets[0].key) || 'verified') + '" style="font-size:12.5px;font-weight:600;color:' + CFG.theme.textSecondary + ';text-decoration:underline;white-space:nowrap;">Share Report ↗</a><button type="button" id="btn-postcalc-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\')" style="display:none;">' + PERSONA.microBtn + '</button><button type="button" id="btn-postcalc-flash-pass" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="padding:6px 12px;background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;border:none;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;">Unlock Full Fix Pack ($1.99) →</button></div>'
           + '<form id="eb-postcalc-email-form" onsubmit="return window.__ebSaveInlineScorecard(event, \\\'eb-postcalc-email-input\\\', \\\'eb-postcalc-email-form\\\')" style="display:none;"><input type="email" id="eb-postcalc-email-input" placeholder="' + PERSONA.leadPh + '" /><button type="submit" id="btn-postcalc-email-submit">' + PERSONA.leadBtn + '</button></form>';
         if (scoreAnchor && scoreAnchor.parentNode) scoreAnchor.parentNode.insertBefore(pcCta, scoreAnchor.nextSibling);
         else if (targetEl && targetEl.parentNode) targetEl.parentNode.insertBefore(pcCta, targetEl);
         if (window.__ebPaywallObserver) window.__ebPaywallObserver.observe(pcCta);
       }
     }
-    var tBarAnchor = document.getElementById('eb-tanstack-table-bar'), homeFullGrid = !isPseoOrDir ? document.querySelector('main .bento-grid, main .hero-split, main .hero-grid') : null;
+    var tBarAnchor = document.getElementById('eb-tanstack-table-bar'), homeFullGrid = (!isPseoOrDir && !isLeaderboard && !isScanPage) ? document.querySelector('main .bento-grid, main .hero-split, main .hero-grid') : null;
     var seoTargetEl = isPseoOrDir ? (existingHeroSplit || document.getElementById('eb-pseo-hero-split') || document.querySelector('main .table-wrap, article .table-wrap, main .posterior-table-wrap') || tBarAnchor || targetEl) : null;
-    var mountAnchor = isPseoOrDir ? seoTargetEl : (homeFullGrid || tBarAnchor || targetEl || document.getElementById('eb-doppelrand-hero-card'));
+    var scanOrLbAnchor = (isLeaderboard || isScanPage) ? document.querySelector('main .table-wrap') : null;
+    var mountAnchor = isPseoOrDir ? seoTargetEl : (scanOrLbAnchor || homeFullGrid || tBarAnchor || targetEl || document.getElementById('eb-doppelrand-hero-card'));
     if (!mountAnchor) return;
     var fInit = (CFG.deliverableFiles && CFG.deliverableFiles[0]) || { file: 'bundle.txt', size: '4.2 KB' }, f1 = (CFG.deliverableFiles && CFG.deliverableFiles[1]) || fInit, f2 = (CFG.deliverableFiles && CFG.deliverableFiles[2]) || fInit;
     var activeEnt = window.__ebActiveEntity || (CFG.presets && CFG.presets[0] && CFG.presets[0].label) || CFG.brandName;
@@ -582,11 +587,11 @@ function buildClientRuntimeScript(cfg) {
       return;
     }
     var filesHtml = (CFG.deliverableFiles || []).map(function(f, idx) {
-      return '<span class="eb-manifest-pill" onclick="window.__ebSelectManifestFile(' + idx + ', this)" style="cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:500;padding:5px 11px;background:' + (idx === 0 ? CFG.theme.brandSoftBg : CFG.theme.subtleBg) + ';color:' + (idx === 0 ? CFG.theme.brandPrimary : CFG.theme.textPrimary) + ';"><span>' + f.file + '</span> <span style="color:' + CFG.theme.textMuted + ';">(' + f.size + ')</span></span>';
+      return '<span class="eb-manifest-pill" onclick="window.__ebSelectManifestFile(' + idx + ', this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:7px 12px;background:' + (idx === 0 ? CFG.theme.brandSoftBg : CFG.theme.subtleBg) + ';color:' + (idx === 0 ? CFG.theme.brandPrimary : CFG.theme.textPrimary) + ';"><span>' + f.file + '</span> <span style="color:' + CFG.theme.textMuted + ';">(' + f.size + ')</span></span>';
     }).join('');
     var chipsHtml = (CFG.presets || []).map(function(p) { return '<button type="button" class="eb-curtain-preset-chip" onclick="window.__ebCompileCustomCurtain(\\\'' + p.key + '\\\')" style="padding:4px 9px;background:' + CFG.theme.subtleBg + ';color:' + CFG.theme.textSecondary + ';font-size:13px;font-weight:600;cursor:pointer;border:none;">' + p.label + '</button>'; }).join('');
     var domChipsHtml = ['@gmail.com', '@icloud.com', '@outlook.com'].map(function(d) { return '<button type="button" class="eb-domain-chip" onclick="window.__ebFillEmailDomain(\\\'eb-inline-scorecard-email\\\', \\\'' + d + '\\\', \\\'eb-save-scorecard-bar\\\')" style="padding:3px 8px;background:' + CFG.theme.cardBg + ';color:' + CFG.theme.textSecondary + ';font-size:11.5px;font-weight:600;cursor:pointer;border:none;">' + d + '</button>'; }).join('');
-    var dossierSplitHtml = '<div id="eb-curtain-visual-split" style="margin:0;"><div id="eb-curtain-dossier-card" class="eb-doppelrand-shell" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="cursor:pointer;margin:0 !important;" title="Click to unlock ' + PERSONA.dossierTag + ' ($1.99)"><div class="eb-doppelrand-inner" style="height:100%;"><span id="eb-dossier-format-pill">9:16 Lock-Screen Card</span><img src="/public/editorial-dossier.jpg" alt="' + CFG.brandName + ' ' + PERSONA.dossierTag + '" class="eb-doppelrand-img" style="height:100%;min-height:195px;" loading="lazy" decoding="async" /><div class="eb-doppelrand-caption" style="padding:5px 10px;bottom:6px;left:6px;right:6px;"><span style="font-weight:600;font-size:12.5px;color:' + CFG.theme.textPrimary + ';">3-File Ritual Dossier</span><span style="color:' + CFG.theme.brandPrimary + ';font-weight:700;font-size:12.5px;flex-shrink:0;">$1.99 →</span></div></div></div><div id="eb-prism-proof-frame" style="display:flex;flex-direction:column;justify-content:space-between;gap:12px;"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span id="eb-curtain-title-span" style="font-size:13px;font-weight:600;color:' + CFG.theme.brandPrimary + ';letter-spacing:0.02em;">Formulation Dossier' + entityTag + '</span><span id="eb-curtain-roi-badge" style="font-size:12.5px;color:' + CFG.theme.safeColor + ';font-weight:600;background:' + CFG.theme.safeSoftBg + ';padding:3px 10px;">' + CFG.remDiff.roiBadge + '</span></div><div id="eb-prism-proof-preview" style="margin:0;flex:1;">' + CFG.remDiff.beforeLine + '\\n' + CFG.remDiff.afterLine + '\\n' + previewLines + '</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><div id="eb-zod-manifest-pills" style="display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;"><div id="eb-manifest-pills-left" style="display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;">' + filesHtml + '</div></div><div style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;flex-shrink:0;"><button type="button" id="btn-curtain-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\')" style="padding:10px 14px;background:' + CFG.theme.subtleBg + ';color:' + CFG.theme.textPrimary + ';font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;border:none;">' + PERSONA.microBtn + '</button><button type="button" id="btn-curtain-flash-pass" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="padding:11px 20px;background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;border:none;font-weight:600;font-size:13.5px;white-space:nowrap;">Save 3-File Ritual Dossier ($1.99) →</button></div></div></div></div>';
+    var dossierSplitHtml = '<div id="eb-curtain-visual-split" style="margin:0;"><div id="eb-curtain-dossier-card" class="eb-doppelrand-shell" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="cursor:pointer;margin:0 !important;" title="Click to unlock ' + PERSONA.dossierTag + ' ($1.99)"><div class="eb-doppelrand-inner" style="height:100%;"><span id="eb-dossier-format-pill">9:16 Lock-Screen Card</span><img src="/public/editorial-dossier.jpg" alt="' + CFG.brandName + ' ' + PERSONA.dossierTag + '" class="eb-doppelrand-img" style="height:100%;min-height:195px;" loading="lazy" decoding="async" /><div class="eb-doppelrand-caption" style="padding:5px 10px;bottom:6px;left:6px;right:6px;"><span style="font-weight:600;font-size:12.5px;color:' + CFG.theme.textPrimary + ';">3-File Ritual Dossier</span><span style="color:' + CFG.theme.brandPrimary + ';font-weight:700;font-size:12.5px;flex-shrink:0;">$1.99 →</span></div></div></div><div id="eb-prism-proof-frame" style="display:flex;flex-direction:column;justify-content:space-between;gap:12px;"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span id="eb-curtain-title-span" style="font-size:13.5px;font-weight:600;color:' + CFG.theme.brandPrimary + ';letter-spacing:0.02em;">Formulation Dossier' + entityTag + '</span><span id="eb-curtain-roi-badge" style="font-size:13px;color:' + CFG.theme.safeColor + ';font-weight:600;background:' + CFG.theme.safeSoftBg + ';padding:4px 11px;">' + CFG.remDiff.roiBadge + '</span></div><div id="eb-prism-proof-preview" style="margin:0;flex:1;">' + CFG.remDiff.beforeLine + '\\n' + CFG.remDiff.afterLine + '\\n' + previewLines + '</div><div id="eb-zod-manifest-pills" style="width:100%;"><div id="eb-manifest-pills-left" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;width:100%;">' + filesHtml + '</div></div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:2px;"><span style="font-size:13.5px;color:' + CFG.theme.textSecondary + ';">Instant Browser Unlock · PDF + .ICS Calendar + Retail Swaps</span><div style="display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;flex-shrink:0;"><button type="button" id="btn-curtain-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\')" style="padding:10px 15px;background:' + CFG.theme.subtleBg + ';color:' + CFG.theme.textPrimary + ';font-weight:600;font-size:13.5px;cursor:pointer;white-space:nowrap;border:none;">' + PERSONA.microBtn + '</button><button type="button" id="btn-curtain-flash-pass" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="padding:11px 20px;background:' + CFG.theme.brandPrimary + ';color:#FAF6F0;border:none;font-weight:600;font-size:13.5px;white-space:nowrap;">Save 3-File Ritual Dossier ($1.99) →</button></div></div></div></div>';
     var curtain = document.createElement('div');
     curtain.id = 'eb-deliverable-curtain';
     curtain.innerHTML = '<div id="eb-curtain-customizer-bar" style="display:none;"><input type="text" id="eb-curtain-entity-input" /><button type="button" id="btn-curtain-run-custom"></button>' + chipsHtml + '</div>'
@@ -594,9 +599,9 @@ function buildClientRuntimeScript(cfg) {
       + '<div id="eb-prism-proof-footer" style="display:none;"><button type="button" id="btn-peek-sample-demo" onclick="window.__ebToggleSampleDemo(this)">Demo</button><button type="button" id="btn-copy-readme-badge"></button><button type="button" id="btn-nuqs-share-url"></button></div>'
       + '<div id="eb-click-trigger-bar" style="display:none;"></div>'
       + '<form id="eb-save-scorecard-bar" onsubmit="return window.__ebSaveInlineScorecard(event)" style="display:none;">' + domChipsHtml + '<input type="email" id="eb-inline-scorecard-email" /><button type="submit" id="btn-save-scorecard"></button></form>';
-    var lbShowcase = !isPseoOrDir ? document.getElementById('eb-leaderboard-home-showcase') : null;
+    var lbShowcase = (!isPseoOrDir && !isLeaderboard && !isScanPage) ? document.getElementById('eb-leaderboard-home-showcase') : null;
     if (mountAnchor.parentNode) {
-      if (mountAnchor === tBarAnchor || mountAnchor === targetEl) mountAnchor.parentNode.insertBefore(curtain, mountAnchor);
+      if ((mountAnchor === tBarAnchor || mountAnchor === targetEl) && !scanOrLbAnchor) mountAnchor.parentNode.insertBefore(curtain, mountAnchor);
       else if (lbShowcase) { curtain.style.marginTop = '0'; curtain.style.marginBottom = '24px'; lbShowcase.insertBefore(curtain, lbShowcase.firstChild); }
       else mountAnchor.parentNode.insertBefore(curtain, mountAnchor.nextSibling);
     }
