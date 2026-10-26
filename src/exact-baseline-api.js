@@ -252,30 +252,31 @@ const VERTICAL_CONFIGS = {
     },
     exportActions: [
       { id: 'btn-copy-shopping-list', label: 'Copy Routine Steps', type: 'copy' },
-      { id: 'btn-export-ics', label: '4-Night Calendar (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
-      { id: 'btn-export-csv', label: 'Ingredient Chart (.CSV)', href: '/api/github-upgrade/export.csv' },
-      { id: 'btn-export-llms', label: 'Download Routine Notes (.TXT)', href: '/api/github-upgrade/llms-bundle.txt' },
-      { id: 'btn-print-summary', label: 'Print Vanity Card', type: 'print' },
-      { id: 'btn-showroom-hud', label: 'Vanity Shelf HUD', type: 'hud' },
-      { id: 'btn-cmdk-trigger', label: '⌘K Quick Menu', type: 'cmdk' },
-      { id: 'btn-reddit-share', label: 'Share to r/SkincareAddiction', type: 'reddit' }
+      { id: 'btn-export-ics', label: 'Add to Phone Calendar', href: '/api/github-upgrade/skin-cycling.ics' },
+      { id: 'btn-export-csv', label: 'Save Ingredient Guide', href: '/api/github-upgrade/export.csv' },
+      { id: 'btn-print-summary', label: 'Print Routine Card', type: 'print' },
+      { id: 'btn-showroom-hud', label: 'Evening Vanity Tip', type: 'hud' },
+      { id: 'btn-cmdk-trigger', label: 'Quick Routine Menu', type: 'cmdk' }
     ],
     kpis: [
-      { label: 'Routine Verdict', val: 'Clash Found', sub: 'Separate Morning & Night' },
-      { label: 'Morning vs. Night', val: '12h Split', sub: 'Vitamin C AM · Peptides PM' },
+      { label: 'Routine Verdict', val: 'Wear AM & PM Apart', sub: 'Separate Morning & Night' },
+      { label: 'Morning vs. Night', val: 'Vitamin C AM · Peptides PM', sub: 'Gentle 12-Hour Split' },
       { label: 'Layering Order', val: 'Thinnest First', sub: 'Water-Light to Rich Cream' },
       { label: 'Pore & Blemish Check', val: '1 Alert', sub: 'Heavy Cream Base Found' }
     ],
     presetKpis: {
-      'preset-tiktok-destroyer': ['Clash Found', '4-Night Split', 'Space Apart', '1 Pore Alert'], 'TikTok 7-Active Stack': ['Clash Found', '4-Night Split', 'Space Apart', '1 Pore Alert'],
-      'preset-copper-vitc-trap': ['Split AM & PM', '12h Apart', 'Smooth Order', 'Pore-Safe'], 'Vitamin C + Copper Peptides': ['Split AM & PM', '12h Apart', 'Smooth Order', 'Pore-Safe'],
-      'preset-acne-rx-bpo-tret': ['Split AM & PM', 'Wash AM / Rx PM', 'Buffer Cream', 'Pore-Safe'], 'Tretinoin + Benzoyl Peroxide': ['Split AM & PM', 'Wash AM / Rx PM', 'Buffer Cream', 'Pore-Safe'],
-      'preset-fungal-safe-barrier': ['Safe Together', 'Everyday Calm', 'Zero Pilling', 'Pore-Safe'], 'Fungal-Safe Barrier Care': ['Safe Together', 'Everyday Calm', 'Zero Pilling', 'Pore-Safe'],
-      'preset-glass-skin': ['Safe Together', 'Dewy & Calm', 'Zero Pilling', 'Pore-Safe'], 'Glass Skin Hydration': ['Safe Together', 'Dewy & Calm', 'Zero Pilling', 'Pore-Safe']
+      'preset-tiktok-destroyer': ['Alternate Nights · Space Apart', '4-Night Recovery Rhythm', 'Space Apart', '1 Pore Alert'], 'TikTok 7-Active Stack': ['Alternate Nights · Space Apart', '4-Night Recovery Rhythm', 'Space Apart', '1 Pore Alert'], 'Retinol + Glycolic Acid': ['Alternate Nights · Space Apart', '4-Night Recovery Rhythm', 'Space Apart', 'Pore-Safe'],
+      'preset-copper-vitc-trap': ['Wear Vitamin C AM, Peptides PM', 'Gentle Morning & Night Split', 'Smooth Order', 'Pore-Safe'], 'Vitamin C + Copper Peptides': ['Wear Vitamin C AM, Peptides PM', 'Gentle Morning & Night Split', 'Smooth Order', 'Pore-Safe'],
+      'preset-acne-rx-bpo-tret': ['Use Wash in AM, Retinoid at Night', 'Buffer With Ceramide Cream', 'Buffer Cream', 'Pore-Safe'], 'Tretinoin + Benzoyl Peroxide': ['Use Wash in AM, Retinoid at Night', 'Buffer With Ceramide Cream', 'Buffer Cream', 'Pore-Safe'], 'Ceramide + Tretinoin Routine': ['Safe Together · Cushion With Cream', 'Zero Flaking Method', 'Smooth Order', 'Pore-Safe'],
+      'preset-fungal-safe-barrier': ['Safe Together Morning or Night', 'Calm & Hydrated Barrier', 'Zero Pilling', 'Pore-Safe'], 'Fungal-Safe Barrier Care': ['Safe Together Morning or Night', 'Calm & Hydrated Barrier', 'Zero Pilling', 'Pore-Safe'],
+      'preset-glass-skin': ['Safe Together Morning or Night', 'Dewy & Calm Barrier', 'Zero Pilling', 'Pore-Safe'], 'Glass Skin Hydration': ['Safe Together Morning or Night', 'Dewy & Calm Barrier', 'Zero Pilling', 'Pore-Safe']
     },
     presets: [
-      { key: 'TikTok 7-Active Stack', label: 'TikTok 7-Active' }, { key: 'Vitamin C + Copper Peptides', label: 'VitC + Copper' },
-      { key: 'Tretinoin + Benzoyl Peroxide', label: 'Tret + BPO' }, { key: 'Fungal-Safe Barrier Care', label: 'Fungal-Safe' }, { key: 'Glass Skin Hydration', label: 'Glass Skin' }
+      { key: 'Vitamin C + Copper Peptides', label: 'Vitamin C + Peptides' },
+      { key: 'Retinol + Glycolic Acid', label: 'Retinol + Glycolic Acid' },
+      { key: 'Ceramide + Tretinoin Routine', label: 'Ceramide + Tretinoin' },
+      { key: 'Glass Skin Hydration', label: 'Gentle Barrier Glow' },
+      { key: 'Fungal-Safe Barrier Care', label: 'Blemish-Safe Routine' }
     ],
     coMarketingPills: [
       { key: 'sephora', label: 'Vitamin C + Peptides', rowText: 'When you layer a morning Vitamin C serum right under Copper Peptides, both bottles lose their glow-boosting power and leave your skin feeling tight. Wear Vitamin C under morning sunscreen and save Peptides for bedtime.' },
@@ -288,11 +289,11 @@ const VERTICAL_CONFIGS = {
       { title: 'La Roche-Posay Cicaplast Baume B5+', badge: 'Recovery Night Cream', cpa: 'Shop Dermatologist Pick', url: 'https://www.ulta.com/p/cicaplast-baume-b5-soothing-therapeutic-multi-purpose-cream-pimprod2018267' }
     ],
     githubRepo: {
-      name: 'Verified pH & Pore-Safety Reference',
-      stars: '65 Ingredients & 44 Bottles', url: 'https://www.dermlogic.io/directory',
-      badge: 'Skincare pH & Ingredient Compatibility Guide',
-      title: 'Cosmetic-Chemist pH & Routine Harmony Guide',
-      summary: 'Checks serum pH windows, Vitamin C & peptide pairing rules, pore-clogging oils, and 4-night skin-cycling schedules.'
+      name: '65 Skincare Ingredients & 44 Popular Bottles',
+      stars: 'Updated Daily', url: 'https://www.dermlogic.io/directory',
+      badge: 'How We Check Your Shelf',
+      title: 'Morning & Bedtime Skincare Pairing Guide',
+      summary: 'Every pairing is cross-checked for morning and bedtime timing, wait times between layers, and pore-safe moisturizer bases.'
     },
     deliverableFiles: [
       { file: 'am-pm-vanity-card-9x16.pdf', label: '9:16 Phone Lock-Screen Card', desc: 'Morning & night bottle order with wait times', size: '48.2 KB', schema: '9:16 Phone & Print Card', status: 'VALID' },

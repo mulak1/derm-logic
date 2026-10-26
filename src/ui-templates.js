@@ -160,10 +160,10 @@ const SHARED_CSS = `
   .preset-chip strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-primary); font-family: 'Newsreader', Georgia, serif; font-size: 1rem; font-weight: 400; line-height: 1.25; white-space: normal; }
   .preset-chip span { display: block; color: var(--rose-brand); font-size: 0.8rem; font-weight: 500; line-height: 1.3; white-space: normal; }
   .field-label { display: block; font-size: 0.9rem; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
-  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px; flex: 1 1 auto; min-height: 420px; max-height: 560px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 12px; background: var(--bg-canvas); margin-bottom: 14px; align-content: start; }
-  .prod-check-item { display: flex; align-items: flex-start; gap: 10px; padding: 13px 14px; background: var(--bg-surface); cursor: pointer; font-size: 0.88rem; transition: background-color 180ms ease-out; }
+  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: 138px; gap: 10px; flex: 0 0 606px; height: 606px; min-height: 606px; max-height: 606px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 12px; background: var(--bg-canvas); margin-bottom: 14px; align-content: start; }
+  .prod-check-item { display: flex; align-items: stretch; gap: 10px; padding: 12px 14px; height: 138px; background: var(--bg-surface); cursor: pointer; font-size: 0.88rem; transition: background-color 180ms ease-out; overflow: hidden; }
   .prod-check-item.selected { background: var(--rose-pill-bg); }
-  .prod-check-item input { margin-top: 3px; accent-color: var(--rose-brand); flex-shrink: 0; }
+  .prod-check-item input { margin-top: 2px; align-self: flex-start; accent-color: var(--rose-brand); flex-shrink: 0; }
   [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); padding: 10px 14px; color: var(--text-primary); font-size: 15.5px; border: none; }
   .input-box:focus, .textarea-box:focus { outline: 2px solid var(--rose-brand); }
 
@@ -261,7 +261,7 @@ function renderHeader(hideNav = false) {
         <nav class="nav-links" aria-label="Main Navigation">
           <a href="/#analyzer">Shelf Audit</a>
           <a href="/#viscosity-sequencer">Four-Night Cycle</a>
-          <a href="/directory">60+ Layering Guides</a>
+          <a href="/directory">Layering Guides</a>
         </nav>
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="vanity-light-pill" id="vanityLightToggle" role="group" aria-label="Day and Night Vanity Mode">
@@ -306,7 +306,7 @@ function renderFooter() {
           <div style="display:flex;gap:24px;flex-wrap:wrap;font-weight:400;font-size:0.9rem;color:var(--ink-on-deep);">
             <a href="/#analyzer">Shelf Audit</a>
             <a href="/leaderboard">Routine Leaderboard</a>
-            <a href="/directory">60+ Layering Guides</a>
+            <a href="/directory">Layering Guides</a>
             <a href="/sitemap.xml">XML Sitemap</a>
             <a href="/privacy">Privacy Policy</a>
             <a href="/terms">Terms of Service</a>
@@ -339,6 +339,49 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     </button>
   `).join('');
 
+  const shortNameMap = {
+    'skinceuticals-ce-ferulic': 'C E Ferulic Vitamin C Serum',
+    'paulas-choice-2-bha': '2% BHA Liquid Exfoliant',
+    'lrp-effaclar-duo-bpo': 'Effaclar Duo Blemish Cream',
+    'rx-tretinoin-005': 'Tretinoin 0.05% Night Cream',
+    'to-buffet-copper-peptides': 'Multi-Peptide + Copper Serum',
+    'sunday-riley-good-genes': 'Good Genes Lactic Acid Serum',
+    'lrp-cicaplast-baume-b5': 'Cicaplast Baume B5+ Cream',
+    'dieux-instant-angel': 'Instant Angel Barrier Cream',
+    'topicals-faded-serum': 'Faded Dark Spot Serum',
+    'boj-relief-sun-spf50': 'Relief Sun Rice + Probiotics SPF 50',
+    'medik8-crystal-retinal-6': 'Crystal Retinal 6 Night Serum',
+    'tower28-sos-spray': 'SOS Daily Rescue Facial Mist',
+    'panoxyl-10-bpo-wash': '10% Benzoyl Peroxide Wash',
+    'drunk-elephant-babyfacial': 'Sukari Babyfacial Weekly Mask',
+    'aestura-atobarrier-365': 'Atobarrier 365 Ceramide Cream',
+    'stratia-lipid-gold': 'Lipid Gold Barrier Lotion',
+    'nizoral-ketoconazole-1': 'Nizoral Blemish & Bump Wash',
+    'malezia-5-urea-moisturizer': '5% Urea Barrier Moisturizer',
+    'rohto-melano-cc': 'Melano CC Vitamin C Essence',
+    'sunday-riley-ceo-15': 'C.E.O. 15% Vitamin C Serum'
+  };
+  const categoryLabelMap = {
+    'Antioxidant Serum': 'Morning Vitamin C',
+    'Exfoliating Acid': 'Gentle Exfoliant',
+    'Exfoliating Peel': 'Weekly Smoothing Mask',
+    'Acne Treatment': 'Blemish Treatment',
+    'Acne Cleanser': 'Clarifying Wash',
+    'Fungal Acne Wash': 'Clarifying Wash',
+    'Retinoid (Rx)': 'Night Retinoid',
+    'Retinoid': 'Night Retinoid',
+    'Peptide Serum': 'Firming Peptide Serum',
+    'Barrier Moisturizer': 'Barrier Cream',
+    'Barrier Recovery': 'Barrier Cream',
+    'Barrier Essence': 'Hydrating Essence',
+    'Soothing Toner': 'Soothing Toner',
+    'Acne & Eczema Mist': 'Soothing Mist',
+    'Rosacea & Brightening': 'Redness & Tone Serum',
+    'Brightening Serum': 'Brightening Serum',
+    'Sebum & Pore Serum': 'Pore-Balancing Serum',
+    'Sunscreen (SPF)': 'Morning SPF Shield',
+    'Cleanser': 'Gentle Cleanser'
+  };
   const productCheckboxesHtml = products.map((prod) => {
     const isChecked = selectedSet.has(prod.id);
     const partner = prod.priceUsd >= 50 ? 'Dermstore' : 'Sephora';
@@ -346,19 +389,21 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     const isAcid = prod.ph <= 4.0;
     const isCream = (prod.category || '').toLowerCase().includes('cream') || (prod.category || '').toLowerCase().includes('moistur') || (prod.category || '').toLowerCase().includes('retin');
     const texGroup = isAcid ? 'toner_acid' : isCream ? 'cream_retinol' : 'active_serum';
-    const roleTag = isAcid ? 'Brightening / Exfoliant' : isCream ? 'Night / Barrier Cream' : 'Hydrating / Peptide Serum';
-    const cleanProdName = String(prod.name || '').replace(/\s*\((?:All-Trans Retinoic Acid|Buffet \+ Copper|THD Ascorbate)\)/gi, '');
+    const roleTag = categoryLabelMap[prod.category] || 'Daily Skincare';
+    const cleanProdName = shortNameMap[prod.id] || String(prod.name || '').replace(/\s*\([^)]*\)/g, '');
     return `
       <label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}">
         <input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" />
-        <span style="flex:1;min-width:0;">
-          <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px;">
-            <span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span>
-            <span class="mono" style="font-size:0.72rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--text-secondary)'};font-weight:500;">${isChecked ? 'Selected' : '+ Add'}</span>
+        <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
+          <span>
+            <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:3px;">
+              <span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span>
+              <span class="mono" style="font-size:0.72rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--text-secondary)'};font-weight:500;flex-shrink:0;">${isChecked ? 'Selected' : '+ Add'}</span>
+            </span>
+            <strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:1.02rem;font-weight:400;line-height:1.2;margin-bottom:4px;">${escapeHtml(cleanProdName)}</strong>
+            <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${roleTag} · $${prod.priceUsd}</span>
           </span>
-          <strong class="serif-display" style="display:block;color:var(--text-primary);font-size:1.05rem;font-weight:400;line-height:1.18;margin-bottom:3px;">${escapeHtml(cleanProdName)}</strong>
-          <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;">${roleTag} · $${prod.priceUsd}</span>
-          <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partnerSlug}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" onclick="event.stopPropagation()">Shop at ${partner} &rarr;</a>
+          <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partnerSlug}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" style="margin-top:auto;" onclick="event.stopPropagation()">Shop at ${partner} &rarr;</a>
         </span>
       </label>
     `;
@@ -406,12 +451,13 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               </div>
             </div>
 
-            <div style="padding:16px 18px;background:var(--bg-canvas);">
+            <div style="flex:1;display:flex;flex-direction:column;padding:16px 18px;background:var(--bg-canvas);">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
                 <label class="field-label" for="rawInciTextarea" style="margin:0;font-size:0.9rem;">Paste Any Ingredient List for a Pore-Clogging &amp; Blemish Check</label>
                 <button type="button" class="btn-secondary" style="padding:6px 12px;font-size:0.82rem;min-height:34px;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Sample</button>
               </div>
-              <textarea id="rawInciTextarea" class="textarea-box mono" rows="2" placeholder="e.g., Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate...">${escapeHtml(initialRawInci || '')}</textarea>
+              <textarea id="rawInciTextarea" class="textarea-box mono" rows="3" style="flex:1;min-height:76px;" placeholder="e.g., Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate...">${escapeHtml(initialRawInci || '')}</textarea>
+              <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:8px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients — helpful before buying a new moisturizer or foundation.</div>
             </div>
           </div>
 
@@ -473,18 +519,22 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
 function renderSingleConflictCard(c) {
   const isCritical = c.severity === 'CRITICAL';
-  const badgeLabel = isCritical ? 'CANCELS ON CONTACT' : 'SPACE APART · IRRITATION RISK';
-  const nameA = c.ingredientA || c.inciA, nameB = c.ingredientB || c.inciB;
+  const badgeLabel = isCritical ? 'Cancels on Contact' : 'Space Apart · Irritation Risk';
+  const nameA = String(c.ingredientA || c.inciA || '').replace(/\s*\([^)]*\)/g, '');
+  const nameB = String(c.ingredientB || c.inciB || '').replace(/\s*\([^)]*\)/g, '');
+  const cleanTitle = String(c.title || '').replace(/\s*\(pH[^)]*\)/gi, '');
+  const cleanMechanism = String(c.mechanism || '').replace(/\s*\(pH[^)]*\)/gi, '').replace(/\blow-pH\s+/gi, '');
+  const timingTip = isCritical ? 'Wear Morning & Night Apart' : 'Give 60 Seconds to Dry First';
   return `
     <div class="conflict-card ${escapeHtml(c.severity)}">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
         <span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono">${badgeLabel}</span>
         <span class="mono" style="font-size:0.86rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</span>
       </div>
-      <div class="serif-display" style="font-size:1.28rem;font-weight:400;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(c.title)}</div>
-      <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;margin-bottom:10px;">${escapeHtml(c.mechanism)}</p>
+      <div class="serif-display" style="font-size:1.28rem;font-weight:400;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(cleanTitle)}</div>
+      <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;margin-bottom:10px;">${escapeHtml(cleanMechanism)}</p>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-        <span class="mono" style="font-size:0.82rem;color:var(--text-muted);">pH difference: ${c.deltaPh}</span>
+        <span class="mono" style="font-size:0.82rem;color:var(--text-muted);">${timingTip}</span>
         <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Fix &rarr;</a>
       </div>
     </div>
@@ -498,8 +548,8 @@ function renderAnalysisResultHtml(res) {
   const badgeClass = isCritical ? 'badge-clash' : isWarn ? 'badge-warn' : 'badge-safe';
   const topVerdictText = res.conflicts.length === 0 ? 'Safe Everyday Routine · Zero Clashes' : res.verdictLabel;
 
-  const primaryConflicts = res.conflicts.slice(0, 2);
-  const extraConflicts = res.conflicts.slice(2);
+  const primaryConflicts = res.conflicts.slice(0, 1);
+  const extraConflicts = res.conflicts.slice(1);
 
   const conflictsHtml = res.conflicts.length === 0
     ? `<div style="padding:18px 20px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.94rem;line-height:1.58;margin-bottom:10px;">
@@ -509,7 +559,7 @@ function renderAnalysisResultHtml(res) {
     : primaryConflicts.map(renderSingleConflictCard).join('') + (extraConflicts.length > 0 ? `
         <details style="margin-bottom:12px;background:var(--bg-canvas);padding:12px 16px;">
           <summary class="mono" style="cursor:pointer;font-size:0.9rem;font-weight:500;color:var(--rose-brand);">
-            + View ${extraConflicts.length} more bottle clash(es) on your tray
+            + See ${extraConflicts.length} more bottle ${extraConflicts.length === 1 ? 'clash' : 'clashes'} on your shelf
           </summary>
           <div style="margin-top:10px;">
             ${extraConflicts.map(renderSingleConflictCard).join('')}
@@ -563,7 +613,7 @@ function renderAnalysisResultHtml(res) {
           <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
             <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Routine Verdict</div>
             <div class="serif-display" style="font-size:1.55rem;font-weight:400;color:${scoreColor};line-height:1.15;margin-top:2px;" id="compatibilityScoreValue">${isCritical ? 'Clash Found' : isWarn ? 'Space Apart' : 'Calm & Safe'}</div>
-            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:2px;">${res.conflicts.length === 0 ? 'Bottles layer smoothly' : `${res.conflicts.length} bottle clash(es)`}</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:2px;">${res.conflicts.length === 0 ? 'Bottles layer smoothly' : `${res.conflicts.length} bottle ${res.conflicts.length === 1 ? 'clash' : 'clashes'}`}</div>
           </div>
           <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
             <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Skin Barrier Feel</div>
