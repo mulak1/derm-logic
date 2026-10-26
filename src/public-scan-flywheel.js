@@ -57,17 +57,17 @@ const FLYWHEEL_SEED = {
     ]
   },
   derm_logic: {
-    cnnModel: 'PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)',
-    cnnSensorLabel: 'Ingredient Label & Skin Barrier Safety Check',
-    inputPlaceholder: 'VitC+Cu, Tret+BPO, Retinol+Glycolic, or any routine...',
+    cnnModel: 'Dermatologist & Esthetician Layering Rules',
+    cnnSensorLabel: 'Morning & Night Skincare Compatibility Check',
+    inputPlaceholder: 'Vitamin C + Copper Peptides, Tretinoin + BPO, or any routine...',
     entities: [
-      { target: 'VitC-AM-Peptides-PM', grade: 'A+', score: 98, status: 'HALL_OF_FAME', kpi1: '98/100 Safety Score', kpi2: 'Safe AM/PM Split', cnnReadout: 'Calms Skin Redness • Protects Moisture Barrier', issue: 'Zero Conflict • Vitamin C in AM, Peptides in PM' },
-      { target: 'Ceramide-Tretinoin-Buffer', grade: 'A+', score: 95, status: 'HALL_OF_FAME', kpi1: '95/100 Safety Score', kpi2: 'pH 5.6 Balanced', cnnReadout: '96.4% Smooth Barrier • Gentle Retinoid Absorption', issue: '64% Less Peeling with Moisturizer Buffer' },
-      { target: 'Azelaic15-Niacinamide5', grade: 'A', score: 92, status: 'HALL_OF_FAME', kpi1: '92/100 Safety Score', kpi2: 'pH 4.9–5.5 Matched', cnnReadout: '94.1% Redness & Blemish Calming', issue: 'Fungal-Acne Safe & Sensitive-Skin Friendly' },
-      { target: 'BHA2-SnailMucin-Stack', grade: 'A', score: 89, status: 'HALL_OF_FAME', kpi1: '89/100 Safety Score', kpi2: '15m Wait Step', cnnReadout: '90.5% Pore Clearing Without Dryness', issue: 'Safe 2x/Week Exfoliation Schedule' },
-      { target: 'VitC+Cu', grade: 'C', score: 52, status: 'WALL_OF_SHAME', kpi1: '52/100 Conflict', kpi2: 'pH Clash (2.8 Gap)', cnnReadout: 'Copper & Vitamin C Cancel Out (78% Potency Lost)', issue: 'Split Vitamin C to Morning & Copper Peptides to Night ($182/yr Saved)' },
-      { target: 'Tret+BPO', grade: 'D', score: 38, status: 'WALL_OF_SHAME', kpi1: '38/100 High Irritation', kpi2: 'Ingredients Deactivate', cnnReadout: 'High Redness Risk • Benzoyl Peroxide Deactivates Tretinoin', issue: 'Never Layer Same-Night: Move Benzoyl Peroxide to AM Wash' },
-      { target: 'TikTok', grade: 'D', score: 20, status: 'WALL_OF_SHAME', kpi1: '20/100 Barrier Alert', kpi2: '3 Strong Acids + Retinol', cnnReadout: 'Over-Exfoliation Risk • Strips Skin Moisture Barrier', issue: 'Too Many Strong Acids in One Night: Switch to 4-Night Cycling' }
+      { target: 'VitC-AM-Peptides-PM', grade: 'A+', score: 98, status: 'Barrier-Safe Routine', kpi1: 'Morning & Night Split', kpi2: 'Safe Under SPF', cnnReadout: 'Calms redness and protects your moisture barrier all day', issue: 'Use Vitamin C in the morning under SPF and Copper Peptides at night' },
+      { target: 'Ceramide-Tretinoin-Buffer', grade: 'A+', score: 95, status: 'Barrier-Safe Routine', kpi1: 'Gentle Night Buffer', kpi2: 'Zero Flaking Method', cnnReadout: 'Cushions sensitive skin so nightly retinoids absorb without peeling', issue: 'Apply a rich ceramide cream 20 minutes before Tretinoin (the Sandwich Method)' },
+      { target: 'Azelaic15-Niacinamide5', grade: 'A', score: 92, status: 'Barrier-Safe Routine', kpi1: 'Everyday Calm Pair', kpi2: 'Redness & Pore Safe', cnnReadout: 'Soothes visible redness, blemishes, and uneven texture together', issue: 'Apply Niacinamide serum first, then smooth Azelaic Acid cream on top' },
+      { target: 'BHA2-SnailMucin-Stack', grade: 'A', score: 89, status: 'Barrier-Safe Routine', kpi1: '10-Minute Wait Step', kpi2: 'Clear Pores + Bounce', cnnReadout: 'Unclogs congested pores and replenishes lightweight hydration', issue: 'Swipe 2% BHA on dry skin, wait 10 minutes, then pat Snail Mucin on damp skin' },
+      { target: 'VitC+Cu', grade: 'C', score: 52, status: 'Separate Morning & Night', kpi1: 'Cancels Out on Contact', kpi2: 'Morning vs. Night Clash', cnnReadout: 'Layering these back-to-back weakens both bottles and triggers tightness', issue: 'Move Vitamin C to your morning routine and save Copper Peptides for bedtime' },
+      { target: 'Tret+BPO', grade: 'D', score: 38, status: 'Separate Morning & Night', kpi1: 'High Irritation Clash', kpi2: 'Never Layer Same-Night', cnnReadout: 'Benzoyl Peroxide deactivates Tretinoin and causes dryness and flaking', issue: 'Use a gentle Benzoyl Peroxide wash in the morning and Tretinoin alone at night' },
+      { target: 'TikTok', grade: 'D', score: 20, status: 'Separate Morning & Night', kpi1: 'Over-Exfoliation Alert', kpi2: 'Switch to 4-Night Cycle', cnnReadout: 'Stacking multiple acids with retinol in one night strips your moisture barrier', issue: 'Spread your exfoliants and retinoids across a calm 4-night recovery schedule' }
     ]
   },
   abandon_alpha: {
@@ -107,7 +107,10 @@ function loadPublicScanLedger(cfg) {
   const filePath = path.join(process.cwd(), 'data', `public_scans_${cfg.moduleId}.json`);
   try {
     if (fs.existsSync(filePath)) {
-      const parsed = filterClean(JSON.parse(fs.readFileSync(filePath, 'utf8')) || []);
+      const parsed = filterClean(JSON.parse(fs.readFileSync(filePath, 'utf8')) || []).map((item) => {
+        const seedMatch = cat.entities.find((e) => e.target.toLowerCase() === String(item.target || '').toLowerCase());
+        return seedMatch ? { ...item, ...seedMatch } : item;
+      });
       if (Array.isArray(parsed) && parsed.length > 0) return (MEM_SCAN_LEDGERS[cfg.moduleId] = parsed);
     }
   } catch (_) {}
@@ -167,23 +170,23 @@ function renderAnsiTerminalScorecard(cfg, scan) {
   ].join('\n');
 }
 
-function renderScanCnnOverlaySvg(cfg, scan, badgeColor) {
+function renderScanCnnOverlaySvg(cfg, scan) {
   const isHigh = scan.score >= 86;
   const strokeCol = isHigh ? '#235340' : '#7A2332';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 156" width="100%" height="156" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Live Scorecard Readout for ${esc(scan.target)}" style="background:var(--bg-oat);display:block;padding:0 8px;">
-    <title>Live Scorecard &amp; Quality Check: ${esc(scan.target)}</title>
-    <rect x="18" y="16" width="270" height="124" fill="#FAF6F0" stroke="${strokeCol}" stroke-width="1.5"/>
-    <circle cx="153" cy="74" r="32" fill="${strokeCol}" fill-opacity="0.1" stroke="${strokeCol}" stroke-width="1.5"/>
-    <circle cx="153" cy="74" r="11" fill="${strokeCol}" fill-opacity="0.32"/>
-    <text x="30" y="34" fill="#524943" font-family="Newsreader, Georgia, serif" font-size="11.5" font-weight="500">FORMULATION SENSOR</text>
-    <text x="30" y="130" fill="${strokeCol}" font-family="Newsreader, Georgia, serif" font-size="12.5" font-weight="600">${esc(scan.grade)} · ${scan.score}/100 HARMONY SCORE</text>
-    <text x="316" y="38" fill="#181412" font-family="Newsreader, Georgia, serif" font-size="21" font-weight="400">${esc(scan.cnnSensorLabel || cfg.brandName)}</text>
-    <text x="316" y="64" fill="${strokeCol}" font-family="Newsreader, Georgia, serif" font-size="15" font-weight="500">Finding: ${esc(scan.cnnReadout)}</text>
-    <rect x="316" y="78" width="836" height="6" fill="#F4EFE8"/>
-    <rect x="316" y="78" width="${Math.round(8.36 * scan.score)}" height="6" fill="${strokeCol}"/>
-    <text x="316" y="108" fill="#524943" font-family="Newsreader, Georgia, serif" font-size="14.5" font-weight="400">Key Metric: ${esc(scan.kpi1)} · ${esc(scan.kpi2)} · Sensor: ${esc(scan.cnnModel)}</text>
-    <text x="316" y="132" fill="#7D4F18" font-family="Newsreader, Georgia, serif" font-size="14" font-weight="500">Recommended Protocol: ${esc(scan.issue)}</text>
-  </svg>`;
+  const softBg = isHigh ? 'var(--sage-bg)' : 'var(--berry-bg)';
+  const statusPill = isHigh ? 'Gentle & Barrier-Safe' : 'Separate Morning & Night';
+  return `<div role="region" aria-label="Routine Compatibility Summary for ${esc(fmtRoutineTitle(scan.target))}" style="background:var(--bg-oat);padding:26px 30px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px;align-items:center;">
+    <div style="background:var(--bg-surface);padding:22px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;border-left:3px solid ${strokeCol};">
+      <span class="mono" style="font-size:13px;color:var(--text-secondary);font-weight:500;">Routine Verdict</span>
+      <div class="serif-display" style="font-size:1.38rem;color:${strokeCol};font-weight:400;line-height:1.2;">${esc(scan.kpi1)}</div>
+      <span class="mono" style="font-size:13px;padding:4px 10px;background:${softBg};color:${strokeCol};font-weight:500;align-self:flex-start;">${statusPill}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;min-width:0;">
+      <div class="mono" style="font-size:13.5px;color:var(--rose-brand);font-weight:500;">${esc(scan.cnnSensorLabel || 'Morning & Night Skincare Compatibility Check')} · ${esc(scan.kpi2)}</div>
+      <div class="serif-display" style="font-size:1.45rem;color:var(--text-primary);font-weight:400;line-height:1.28;">${esc(scan.cnnReadout)}</div>
+      <div style="font-size:15.5px;color:var(--text-secondary);line-height:1.55;"><strong style="color:var(--text-primary);font-weight:500;">How to wear it:</strong> ${esc(scan.issue)}.</div>
+    </div>
+  </div>`;
 }
 
 function renderPublicScanPageHtml(cfg, scan, badgeColor) {
@@ -192,18 +195,19 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
   const badgeUrl = `https://${cfg.domain}/badge/${encodeURIComponent(scan.target)}.svg`;
   const mdSnippet = `[![${cfg.brandName} ${scan.grade}](${badgeUrl})](${canonicalUrl})`;
   const ledger = loadPublicScanLedger(cfg).slice(0, 8);
-  const recentLinks = ledger.map((item) => `<a href="/scan/${esc(encodeURIComponent(item.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:7px 14px;background:var(--bg-oat);font-size:14px;font-weight:400;color:var(--text-primary);text-decoration:none;"><span>${esc(fmtRoutineTitle(item.target))}</span><span class="mono" style="color:${item.score >= 86 ? 'var(--sage-safe)' : 'var(--rose-brand)'};font-weight:600;">${esc(item.grade)}</span></a>`).join(' ');
+  const recentLinks = ledger.map((item) => `<a href="/scan/${esc(encodeURIComponent(item.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:8px 15px;background:var(--bg-oat);font-size:14.5px;font-weight:400;color:var(--text-primary);text-decoration:none;"><span>${esc(fmtRoutineTitle(item.target))}</span><span class="mono" style="color:${item.score >= 86 ? 'var(--sage-safe)' : 'var(--rose-brand)'};font-weight:500;">${item.score >= 86 ? 'Barrier-Safe' : 'Split AM/PM'}</span></a>`).join(' ');
+  const humanTitle = fmtRoutineTitle(scan.target);
 
   return `<!DOCTYPE html>
 <html lang="en" data-theme="day">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${esc(fmtRoutineTitle(scan.target))} : ${esc(cfg.brandName)} Scorecard &amp; Action Report (${esc(scan.grade)} ${scan.score}/100)</title>
-  <meta name="description" content="Live ${esc(cfg.brandName)} scorecard for ${esc(scan.target)}: Grade ${esc(scan.grade)} (${scan.score}/100), ${esc(scan.kpi1)}, ${esc(scan.kpi2)}. View full action plan and 1-click fixes." />
+  <title>${esc(humanTitle)} : ${esc(cfg.brandName)} Layering &amp; Routine Guide</title>
+  <meta name="description" content="Morning and night skincare layering guide for ${esc(humanTitle)}: ${esc(scan.kpi1)}, ${esc(scan.cnnReadout)}. View step-by-step wait times and gentle swaps." />
   <link rel="canonical" href="${esc(canonicalUrl)}" />
-  <meta property="og:title" content="${esc(scan.target)} : ${esc(cfg.brandName)} Scorecard (${esc(scan.grade)})" />
-  <meta property="og:description" content="Verified ${esc(cfg.brandName)} Results: ${esc(scan.kpi1)} • ${esc(scan.cnnReadout)}" />
+  <meta property="og:title" content="${esc(humanTitle)} : ${esc(cfg.brandName)} Layering Guide" />
+  <meta property="og:description" content="Verified ${esc(cfg.brandName)} Guide: ${esc(scan.kpi1)} • ${esc(scan.cnnReadout)}" />
   <meta property="og:url" content="${esc(canonicalUrl)}" />
   <meta property="og:image" content="https://${esc(cfg.domain)}/api/og/scorecard?target=${esc(encodeURIComponent(scan.target))}" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -217,68 +221,67 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
   ${renderHeader(false)}
   <main class="container" style="padding-top:48px;padding-bottom:96px;">
     <nav aria-label="Breadcrumb" style="font-size:14px;color:var(--text-muted);margin-bottom:18px;">
-      <a href="/" style="color:var(--rose-brand);text-decoration:none;font-weight:500;">Atelier</a> / <a href="/leaderboard" style="color:var(--rose-brand);text-decoration:none;font-weight:500;">Leaderboard</a> / <span id="eb-scan-bc-target" style="color:var(--text-primary);">${esc(scan.target)}</span>
+      <a href="/" style="color:var(--rose-brand);text-decoration:none;font-weight:500;">Home</a> / <a href="/leaderboard" style="color:var(--rose-brand);text-decoration:none;font-weight:500;">Routine Library</a> / <span id="eb-scan-bc-target" style="color:var(--text-primary);">${esc(humanTitle)}</span>
     </nav>
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
       <div>
-        <h1 id="eb-scan-h1" class="hero-h1" style="margin:0 0 12px 0;">${esc(fmtRoutineTitle(scan.target))}.</h1>
-        <p class="pseo-lead hero-sub" style="margin:0;">Verified formulation dossier for <strong id="eb-scan-lead-target">${esc(scan.target)}</strong>. Rated <strong id="eb-scan-lead-grade">${esc(scan.grade)} (${scan.score}/100)</strong> based on ${esc(scan.kpi1)} and ${esc(scan.kpi2)}.</p>
+        <h1 id="eb-scan-h1" class="hero-h1" style="margin:0 0 12px 0;">${esc(humanTitle)}</h1>
+        <p class="pseo-lead hero-sub" style="margin:0;">Step-by-step morning and bedtime layering guide for <strong id="eb-scan-lead-target">${esc(humanTitle)}</strong> (<strong id="eb-scan-lead-grade">${esc(scan.kpi1)}</strong>). ${esc(scan.cnnReadout)}.</p>
       </div>
-      <img id="eb-scan-badge-img" src="/badge/${esc(encodeURIComponent(scan.target))}.svg" alt="${esc(scan.target)} Verified Score Badge" width="240" height="22" decoding="async" />
+      <span class="${scan.score >= 86 ? 'badge-safe' : 'badge-clash'} mono" style="font-size:0.9rem;padding:8px 16px;">${esc(scan.kpi1)} · ${esc(scan.kpi2)}</span>
     </div>
     <section style="margin-top:20px;">${renderScanCnnOverlaySvg(cfg, scan, badgeColor)}</section>
     <div id="eb-scan-purest-cta-bar" style="margin-top:20px;padding:18px 26px;background:var(--bg-oat);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
-      <div style="font-size:15.5px;font-weight:400;color:var(--text-primary);flex:1;min-width:280px;"><strong>${esc(fmtRoutineTitle(scan.target))}</strong> Ritual Dossier (<span class="mono" style="color:var(--rose-brand);font-weight:500;">${esc(scan.kpi1)}</span>) · 9:16 Lock-Screen Card + 4-Night .ICS</div>
-      <a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" onclick="if(window.__ebTrack)window.__ebTrack('view_paywall',{source:'scan_first_fold',target:'${esc(scan.target)}'})" class="btn btn-primary" style="white-space:nowrap;">Save 3-File Ritual Dossier ($1.99) →</a>
+      <div style="font-size:15.5px;font-weight:400;color:var(--text-primary);flex:1;min-width:280px;"><strong>${esc(humanTitle)}</strong> Routine Kit (<span class="mono" style="color:var(--rose-brand);font-weight:500;">${esc(scan.kpi1)}</span>) · 9:16 Phone Lock-Screen Card + 4-Night Calendar Reminders</div>
+      <a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" onclick="if(window.__ebTrack)window.__ebTrack('view_paywall',{source:'scan_first_fold',target:'${esc(scan.target)}'})" class="btn btn-primary" style="white-space:nowrap;">Save Complete Routine Kit ($1.99) →</a>
     </div>
-    <script>window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target+' Ritual Dossier.';var b=document.getElementById('eb-scan-badge-img');if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val');if(r1)r1.textContent=s.grade+' ('+s.score+'/100)';if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.status;if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};</script>
-    <section id="eb-onnx-cnn-workbench" style="background:var(--bg-oat);color:var(--text-primary);padding:18px 26px;margin-top:16px;display:flex;flex-direction:column;gap:12px;">
+    <script>window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.kpi1+' • '+s.cnnReadout;var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target+' Routine Guide';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val');if(r1)r1.textContent=s.kpi1;if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.status;if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};</script>
+    <section id="eb-onnx-cnn-workbench" style="background:var(--bg-oat);color:var(--text-primary);padding:20px 26px;margin-top:16px;display:flex;flex-direction:column;gap:12px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-        <span style="font-size:13.5px;font-weight:500;color:var(--rose-brand);letter-spacing:0.03em;">TEST ANY ROUTINE LIVE</span>
-        <div id="eb-live-cnn-readout" class="mono" style="font-size:14px;color:var(--sage-safe);font-weight:500;">${esc( fmtRoutineTitle(scan.target))} → ${esc(scan.grade)} (${scan.score}/100) · ${esc(scan.cnnReadout)}</div>
+        <span style="font-size:14px;font-weight:500;color:var(--rose-brand);">Compare Another Routine Pairing</span>
+        <div id="eb-live-cnn-readout" class="mono" style="font-size:14px;color:var(--sage-safe);font-weight:500;">${esc(humanTitle)} · ${esc(scan.kpi1)} · ${esc(scan.kpi2)}</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        ${cat.entities.slice(0, 4).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:7px 13px;border:none;background:var(--bg-surface);color:var(--text-primary);font-family:var(--font-sans);font-size:13.5px;font-weight:500;cursor:pointer;">${esc(fmtRoutineTitle(e.target))}</button>`).join('')}
-        <input id="eb-cnn-wb-input" type="text" placeholder="Enter routine or active..." aria-label="Custom scan target" class="input-box" style="flex:1;min-width:170px;padding:7px 12px;font-size:14px;background:var(--bg-surface);" />
-        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" class="btn btn-primary" style="padding:8px 16px;font-size:13.5px;white-space:nowrap;">Check Score →</button>
+        ${cat.entities.slice(0, 4).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:8px 14px;border:none;background:var(--bg-surface);color:var(--text-primary);font-family:var(--font-sans);font-size:14px;font-weight:500;cursor:pointer;">${esc(fmtRoutineTitle(e.target))}</button>`).join('')}
+        <input id="eb-cnn-wb-input" type="text" placeholder="Enter routine or ingredient pair..." aria-label="Custom routine pairing" class="input-box" style="flex:1;min-width:170px;padding:8px 12px;font-size:14px;background:var(--bg-surface);" />
+        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" class="btn btn-primary" style="padding:8px 16px;font-size:14px;white-space:nowrap;">Check Pairing →</button>
       </div>
     </section>
     <section class="table-wrap" style="background:var(--bg-oat);padding:28px 32px;margin-top:24px;">
-      <h2 style="font-size:clamp(1.45rem,2.1vw,1.9rem);margin:0 0 16px 0;">Formulation Summary &amp; Layering Action Plan</h2>
-      <table aria-label="${esc(scan.target)} Public Scan Matrix" style="width:100%;border-collapse:collapse;">
-        <thead><tr><th scope="col">What We Checked</th><th scope="col">Result</th><th scope="col">Recommended Next Step</th><th scope="col">Status</th></tr></thead>
+      <h2 style="font-size:clamp(1.45rem,2.1vw,1.9rem);margin:0 0 16px 0;">Morning &amp; Bedtime Layering Summary</h2>
+      <table aria-label="${esc(humanTitle)} Layering Summary" style="width:100%;border-collapse:collapse;">
+        <thead><tr><th scope="col">What We Checked</th><th scope="col">How It Behaves</th><th scope="col">How to Wear It</th><th scope="col">Routine Fit</th></tr></thead>
         <tbody id="prompt-matrix-tbody">
-          <tr><th scope="row" style="text-align:left;font-weight:500;">Overall Harmony Grade</th><td id="eb-scan-r1-val" class="mono" style="font-weight:500;">${esc(scan.grade)} (${scan.score}/100)</td><td id="eb-scan-r1-act">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="font-weight:500;color:${scan.score >= 86 ? 'var(--sage-safe)' : 'var(--rose-brand)'};">${esc(scan.status)}</td></tr>
-          <tr><th scope="row" style="text-align:left;font-weight:500;">Primary pH &amp; Barrier Metric</th><td id="eb-scan-r2-val" class="mono" style="font-weight:500;">${esc(scan.kpi1)} · ${esc(scan.kpi2)}</td><td>Compare on Public Leaderboard</td><td style="font-weight:500;color:var(--sage-safe);">VERIFIED</td></tr>
-          <tr><th scope="row" style="text-align:left;font-weight:500;">Automated Barrier Check</th><td id="eb-scan-r3-val" class="mono" style="font-weight:500;">${esc(scan.cnnReadout)}</td><td>${esc(scan.cnnSensorLabel)}</td><td style="font-weight:500;color:var(--sage-safe);">VERIFIED</td></tr>
-          <tr id="eb-scan-row4-tr"><th scope="row" style="text-align:left;font-weight:500;">Row #4 Step-by-Step Fix Guide</th><td id="eb-scan-row4-val" class="mono">Locked in Preview</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-File Dossier ($1.99) →</a></td><td id="eb-scan-row4-status" style="font-weight:500;">LOCKED_PREVIEW</td></tr>
-          <tr><th scope="row" style="text-align:left;font-weight:500;">Row #5 Complete 3-File Ritual Pack</th><td class="mono">Locked in Preview</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-File Dossier ($1.99) →</a></td><td style="font-weight:500;">LOCKED_PREVIEW</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Morning vs. Night Pairing</th><td id="eb-scan-r1-val" class="mono" style="font-weight:500;">${esc(scan.kpi1)}</td><td id="eb-scan-r1-act">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="font-weight:500;color:${scan.score >= 86 ? 'var(--sage-safe)' : 'var(--rose-brand)'};">${scan.score >= 86 ? 'Barrier-Safe' : 'Separate AM/PM'}</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Skin Comfort &amp; Pacing</th><td id="eb-scan-r2-val" class="mono" style="font-weight:500;">${esc(scan.kpi2)}</td><td>Give 60 seconds between watery serums and rich creams</td><td style="font-weight:500;color:var(--sage-safe);">Gentle</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Moisture Barrier Effect</th><td id="eb-scan-r3-val" class="mono" style="font-weight:500;">${esc(scan.cnnReadout)}</td><td>Top morning serums with broad-spectrum SPF 30–50+</td><td style="font-weight:500;color:var(--sage-safe);">Checked</td></tr>
+          <tr id="eb-scan-row4-tr"><th scope="row" style="text-align:left;font-weight:500;">Row #4 Step-by-Step Wait Times</th><td id="eb-scan-row4-val" class="mono">Included in Routine Kit</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-Part Routine Kit ($1.99) →</a></td><td id="eb-scan-row4-status" style="font-weight:500;">Preview</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Row #5 4-Night Skin-Cycling Schedule</th><td class="mono">Included in Routine Kit</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-Part Routine Kit ($1.99) →</a></td><td style="font-weight:500;">Preview</td></tr>
         </tbody>
       </table>
       <div id="eb-inline-row4-unlock" style="margin-top:18px;padding:16px 20px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <div style="font-size:15px;font-weight:500;color:var(--text-primary);">Rows #4 &amp; #5 Locked: Unblur your complete 3-File Ritual Dossier via 1-Click Stripe Express</div>
+        <div style="font-size:15px;font-weight:500;color:var(--text-primary);">Want your complete 9:16 lock-screen card, wait times &amp; 4-Night schedule on your phone?</div>
         <div id="eb-scan-row4-msg" style="display:none !important;"><input id="eb-scan-row4-email" type="email" placeholder="you@email.com" aria-label="Email to unlock Row 4" /><button id="eb-scan-row4-btn" type="button">Reveal Row #4 →</button></div>
-        <div style="display:flex;align-items:center;gap:8px;"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" class="btn btn-primary" style="padding:10px 18px;font-size:14px;">Save Complete 3-File Dossier ($1.99) →</a></div>
+        <div style="display:flex;align-items:center;gap:8px;"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" class="btn btn-primary" style="padding:10px 18px;font-size:14px;">Save Complete 3-Part Kit ($1.99) →</a></div>
       </div>
     </section>
     <article style="background:var(--bg-oat);padding:28px 32px;margin-top:24px;">
-      <h2 style="font-size:clamp(1.35rem,1.9vw,1.7rem);margin:0 0 12px 0;">Detailed Formulation Analysis: ${esc(fmtRoutineTitle(scan.target))}</h2>
-      <p style="font-size:16px;color:var(--text-secondary);margin:0 0 18px 0;line-height:1.68;max-width:74ch;">Our clinical formulation check evaluated <strong>${esc(fmtRoutineTitle(scan.target))}</strong> (${esc(scan.target)}) using the <strong>${esc(scan.cnnModel)}</strong> barrier sensor (${esc(scan.cnnSensorLabel)}). Across 2026 dermatological benchmarks, ${esc(scan.target)} achieved an overall harmony grade of <strong>${esc(scan.grade)} (${scan.score}/100)</strong>, recording <strong>${esc(scan.kpi1)}</strong> on its primary pH/barrier metric and <strong>${esc(scan.kpi2)}</strong> on its secondary compatibility check. The sensor flagged <code>${esc(scan.cnnReadout)}</code> with recommended ritual adjustment: <strong>${esc(scan.issue)}</strong>.</p>
+      <h2 style="font-size:clamp(1.35rem,1.9vw,1.7rem);margin:0 0 12px 0;font-weight:400;">How to Layer ${esc(humanTitle)} Without Irritation</h2>
+      <p style="font-size:16.5px;color:var(--text-secondary);margin:0 0 18px 0;line-height:1.68;max-width:74ch;">When building a routine around <strong>${esc(humanTitle)}</strong>, timing and texture order make all the difference. ${esc(scan.cnnReadout)}. Our dermatologist-rule check recommends a simple adjustment: <strong>${esc(scan.issue)}</strong>. Giving each layer 60 seconds to settle before applying moisturizer or sunscreen keeps your skin calm, hydrated, and pill-free.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:16px;">
-        <div style="padding:20px 22px;background:var(--bg-surface);"><div style="font-size:12.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--rose-brand);margin-bottom:6px;">1. Barrier Telemetry Readout</div><div style="font-size:15px;color:var(--text-primary);line-height:1.6;">Sensor verified <strong>${esc(scan.cnnReadout)}</strong> (${esc(scan.status)}). Compare this score directly against Grade A+ routines on the <a href="/leaderboard" style="color:var(--rose-brand);font-weight:500;">Routine Leaderboard</a>.</div></div>
-        <div style="padding:20px 22px;background:var(--bg-surface);"><div style="font-size:12.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--rose-brand);margin-bottom:6px;">2. Recommended Layering Protocol</div><div style="font-size:15px;color:var(--text-primary);line-height:1.6;">Priority action for <strong>${esc(fmtRoutineTitle(scan.target))}</strong>: ${esc(scan.issue)}. Explore our <a href="/directory" style="color:var(--rose-brand);font-weight:500;">72+ Layering Guides</a> for full AM/PM schedules.</div></div>
+        <div style="padding:22px 24px;background:var(--bg-surface);"><div style="font-size:13.5px;font-weight:500;color:var(--rose-brand);margin-bottom:6px;">1. How It Feels on Your Skin</div><div style="font-size:15.5px;color:var(--text-primary);line-height:1.6;">${esc(scan.cnnReadout)}. Compare this pairing with other gentle combinations in our <a href="/leaderboard" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">Routine Library</a>.</div></div>
+        <div style="padding:22px 24px;background:var(--bg-surface);"><div style="font-size:13.5px;font-weight:500;color:var(--rose-brand);margin-bottom:6px;">2. Recommended Morning &amp; Bedtime Order</div><div style="font-size:15.5px;color:var(--text-primary);line-height:1.6;">${esc(scan.issue)}. Browse our <a href="/directory" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">72+ Pairing &amp; Bottle Guides</a> for step-by-step wait times.</div></div>
       </div>
     </article>
     <details style="background:var(--bg-oat);padding:18px 24px;margin-top:20px;">
-      <summary style="cursor:pointer;font-size:15px;font-weight:500;color:var(--text-primary);">Cosmetic Chemist Footnote, Shareable Badge &amp; Terminal Export</summary>
+      <summary style="cursor:pointer;font-size:15px;font-weight:500;color:var(--text-primary);">Esthetician Notes &amp; Shareable Routine Link</summary>
       <div style="margin-top:12px;">
-        <p style="font-size:14.5px;color:var(--text-secondary);margin:0 0 10px 0;"><strong>Formulation Engine:</strong> ${esc(scan.cnnModel)} (${esc(scan.cnnSensorLabel)}). Share or embed the live badge:</p>
-        <pre style="background:var(--bg-surface);color:var(--text-primary);padding:12px 14px;font-size:13.5px;overflow-x:auto;margin:0 0 8px 0;"><code>curl -sL https://${esc(cfg.domain)}/scan/${esc(encodeURIComponent(scan.target))}</code></pre>
-        <pre style="background:var(--bg-surface);color:var(--text-primary);padding:12px 14px;font-size:13.5px;overflow-x:auto;margin:0;"><code>${esc(mdSnippet)}</code></pre>
+        <p style="font-size:14.5px;color:var(--text-secondary);margin:0 0 10px 0;"><strong>Checked with:</strong> ${esc(scan.cnnModel)} (${esc(scan.cnnSensorLabel)}). Share this routine guide:</p>
+        <pre style="background:var(--bg-surface);color:var(--text-primary);padding:12px 14px;font-size:13.5px;overflow-x:auto;margin:0;"><code>${esc(canonicalUrl)}</code></pre>
       </div>
     </details>
     <section style="margin-top:28px;">
-      <h2 style="font-size:1.3rem;margin:0 0 14px 0;">Recent Public Reports (<a href="/leaderboard" style="color:var(--rose-brand);font-weight:400;">View Full Leaderboard →</a>)</h2>
+      <h2 style="font-size:1.35rem;font-weight:400;margin:0 0 14px 0;">More Popular Routine Guides (<a href="/leaderboard" style="color:var(--rose-brand);font-weight:400;">Browse All Ranked Routines →</a>)</h2>
       <div style="display:flex;flex-wrap:wrap;gap:10px;">${recentLinks}</div>
     </section>
   </main>
@@ -295,13 +298,12 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   const medals = ['Brightening & Firming Split', 'Gentle Retinoid Buffer', 'Redness & Pore Calming'];
   const podiumHtml = podium.map((item, idx) => `<div style="background:var(--bg-oat);padding:32px 34px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;">
     <div>
-      <div class="mono" style="font-size:14.5px;font-weight:500;color:var(--sage-safe);margin-bottom:12px;">${item.score} / 100 Harmony · ${medals[idx]}</div>
+      <div class="mono" style="font-size:14px;font-weight:500;color:var(--sage-safe);margin-bottom:12px;">${medals[idx]} · Barrier-Safe</div>
       <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-family:var(--font-display);font-size:1.45rem;font-weight:400;line-height:1.25;color:var(--text-primary);text-decoration:none;display:block;margin-bottom:10px;">${esc(fmtRoutineTitle(item.target))}</a>
       <p style="font-size:16px;color:var(--text-secondary);margin:0;line-height:1.6;">${esc(item.issue)}. ${esc(item.cnnReadout)}.</p>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;font-size:14.5px;">
       <a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:var(--rose-brand);font-weight:500;text-decoration:none;">Read step-by-step routine →</a>
-      <a href="/badge/${esc(encodeURIComponent(item.target))}.svg" target="_blank" rel="noopener" style="color:var(--text-muted);text-decoration:underline;font-size:13px;">Live SVG Badge</a>
     </div>
   </div>`).join('');
 
@@ -312,7 +314,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
     return `<tr data-lb-tier="${rowTier}" data-lb-text="${esc((item.target + ' ' + fmtRoutineTitle(item.target) + ' ' + item.kpi1 + ' ' + item.kpi2 + ' ' + item.cnnReadout + ' ' + item.issue).toLowerCase())}">
     <td class="mono" style="font-weight:500;">${idx + 1}</td>
     <th scope="row" style="text-align:left;font-weight:500;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:var(--text-primary);font-weight:500;text-decoration:none;display:block;font-size:16px;">${esc(fmtRoutineTitle(item.target))}</a></th>
-    <td style="min-width:150px;"><span class="mono" style="font-weight:500;color:${barColor};font-size:15px;">${item.score} / 100 (${esc(item.grade)})</span></td>
+    <td style="min-width:150px;"><span class="mono" style="font-weight:500;color:${barColor};font-size:15px;">${esc(item.kpi1)}</span></td>
     <td style="font-size:15px;color:var(--text-secondary);">${esc(item.kpi2)}</td>
     <td style="font-size:15.5px;color:var(--text-primary);">${esc(item.issue)}</td>
     <td><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:14.5px;font-weight:500;color:${barColor};text-decoration:none;white-space:nowrap;">${isTop ? 'Read Guide' : 'See Fix Plan'} →</a></td>

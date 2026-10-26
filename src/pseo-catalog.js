@@ -730,16 +730,42 @@ function cleanHumanTitle(rawTitle) {
     .replace(/Chelation\s*&\s*Redox\s*Alert/gi, 'Why They Cancel Out & Morning/Night Split')
     .replace(/Oxidative\s*Degradation\s*&\s*Rescue\s*Schedule/gi, 'Why They Cancel Out & Safe Night Routine')
     .replace(/ΔpH\s*\d+(?:\.\d+)?\s*Nicotinic\s*Flushing\s*Analysis/gi, 'How to Layer Without Redness or Pilling')
-    .replace(/ΔpH\s*\d+(?:\.\d+)?\s*Conflict\s*&\s*AM\/PM\s*Split\s*Guide/gi, 'Morning vs. Night Layering Guide')
+    .replace(/ΔpH\s*\d+(?:\.\d+)?\s*Conflict\s*&\s*(?:AM\/PM\s*Split\s*Guide|Alternate-Night\s*Skin\s*Cycling)/gi, 'Morning & Night Layering Guide')
     .replace(/Acidic\s*Hydroquinone\s*Hydrolysis/gi, 'Gentle Wait-Time Rules')
     .replace(/Competitive\s*Cu2\+\s*Chelation/gi, 'Why They Cancel Out on Contact')
     .replace(/Epidermal\s*Staining\s*&\s*Oxidation/gi, 'How to Prevent Skin Staining & Irritation')
     .replace(/Pro-Collagen\s*Type\s*I\s*Fibroblast\s*Synergy/gi, 'Soothing Morning Glow Pairing')
     .replace(/Erythema\s*&\s*Peeling\s*Risk/gi, 'How to Clear Breakouts Without Peeling')
     .replace(/pH\s*2\.7\s*Penetration\s*vs\s*ΔpH\s*Conflicts/gi, 'Morning Layering & Sensitive-Skin Guide')
-    .replace(/INCI\s*Teardown/gi, 'Bottle Breakdown')
-    .replace(/INCI\s*Analysis/gi, 'Formula Guide')
+    .replace(/Immediate\s*Redox\s*Quenching\s*Explained/gi, 'Why They Cancel Out & Morning/Night Split')
+    .replace(/Clinical\s*Melasma\s*&\s*(?:Acne\s*Pairing\s*Protocol|PIH\s*Layering\s*Guide)/gi, 'Evening Layering Guide for Dark Spots & Blemishes')
+    .replace(/Dual-Pathway\s*PIH\s*&\s*Melasma\s*Stack/gi, 'Brightening & Dark-Spot Layering Guide')
+    .replace(/Why\s*Adapalene\s*Survives\s*Oxidation/gi, 'How to Layer Without Dryness or Peeling')
+    .replace(/Modern\s*pH\s*Equilibrium\s*vs\s*1960s\s*Hydrolysis\s*Myth/gi, 'How to Layer Safely Without Flushing')
+    .replace(/The\s*Hydrolysis\s*Flush\s*Myth\s*vs\s*Clinical\s*Facts/gi, 'How to Layer Without Warm Flushing')
+    .replace(/Histidine\s*Protonation\s*&\s*Cu2\+\s*Loss/gi, 'Why They Cancel Out & How to Alternate')
+    .replace(/Why\s*Low\s*pH\s*Breaks\s*GHK-Cu/gi, 'Morning vs. Night Layering Guide')
+    .replace(/Ceramide\s*Biosynthesis\s*&\s*Retinoid\s*Buffering/gi, 'How to Prevent Flaking & Redness')
+    .replace(/Photostabilization\s*&\s*Collagen\s*(?:Synergy|Pairing)/gi, 'Gentle Firming & Glow Routine')
+    .replace(/Fungal-Acne\s*Safe\s*Keratolytic\s*Balance/gi, 'Gentle Pore-Clearing & Hydration Guide')
+    .replace(/Amide\s*Bond\s*Hydrolysis\s*&\s*ΔpH\s*\d+(?:\.\d+)?\s*Alert/gi, 'Why They Cancel Out & Alternate-Night Rules')
+    .replace(/Why\s*Oil-Soluble\s*Vitamin\s*C\s*Works\s*at\s*pH\s*5\.5/gi, 'Gentle Brightening & Firming Routine')
+    .replace(/PIH,\s*Erythema\s*&\s*Antioxidant\s*Order/gi, 'Dark Spots, Redness & Morning Layering Order')
+    .replace(/pH\s*3\.2\s*Free-Acid\s*Value\s*&\s*Routine\s*Conflicts/gi, 'Morning Layering Guide & What Not to Mix')
+    .replace(/pH\s*3\.5\s*Conflicts\s*&\s*Malassezia\s*Check/gi, 'How to Layer & Pore-Safety Guide')
+    .replace(/pH\s*2\.8\s*Free-Acid\s*Potency\s*&\s*Conflicts/gi, 'Nightly Exfoliation & Layering Guide')
+    .replace(/Hidden\s*Isopropyl\s*Myristate\s*\(5\/5\s*Comedogen\)\s*&\s*Conflicts/gi, 'Pore-Clogging Check & Night Layering Guide')
+    .replace(/DermaON\s*Ceramide-Cholesterol-Fatty\s*Acid\s*Ratio/gi, 'How to Buffer Retinoids & Repair Dry Skin')
+    .replace(/100%\s*Malassezia-Safe\s*Emollient\s*Architecture/gi, '100% Fungal-Acne Safe Moisture Guide')
+    .replace(/INCI\s*(?:Teardown|Breakdown|Analysis)/gi, 'Bottle Guide')
+    .replace(/INCI\s*&\s*(?:ΔpH\s*)?Conflict\s*(?:Guide|Matrix)/gi, 'What Not to Mix & Layering Guide')
+    .replace(/\s*\(GHK-Cu\)/gi, '')
+    .replace(/\s*Protocol\b/gi, ' Routine')
     .replace(/Synergy/gi, 'Pairing');
+}
+
+function cleanIngName(rawName) {
+  return String(rawName || '').replace(/\s*\([^)]*\)/g, '').trim();
 }
 
 function formatMetaDescription(rawText, maxLen = 155) {
@@ -752,39 +778,39 @@ function formatMetaDescription(rawText, maxLen = 155) {
 }
 
 function toPlainConsumerPair(item, ingA, ingB) {
-  const nameA = ingA ? ingA.commonName : item.activeA;
-  const nameB = ingB ? ingB.commonName : item.activeB;
+  const nameA = cleanIngName(ingA ? ingA.commonName : item.activeA);
+  const nameB = cleanIngName(ingB ? ingB.commonName : item.activeB);
   const score = Number(item.compatibilityScore) || 50;
   if (score < 45) {
     return {
       conflictType: 'Cancels Out Potency & Triggers Redness — Separate Morning & Night',
-      summary: `Do not layer ${nameA} and ${nameB} at the same time. Because their acidity levels clash (ΔpH ${item.deltaPh}), applying them back-to-back weakens both formulas and can cause redness, stinging, or flaking. Use one in the morning and the other at night.`
+      summary: `Do not layer ${nameA} and ${nameB} at the same time. Applying them back-to-back weakens both formulas and can cause redness, stinging, or flaking. Use one in your morning routine and the other at bedtime.`
     };
   }
   if (score < 78) {
     return {
-      conflictType: 'Can Over-Exfoliate or Sting Sensitive Skin — Alternate Nights or Wait',
-      summary: `Be careful layering ${nameA} and ${nameB} in the same routine (ΔpH ${item.deltaPh}). Stacking both at once can overwhelm your moisture barrier and trigger dryness or irritation. Alternate nights or wait ${item.waitTimeMinutes >= 60 ? 'until bedtime' : `${item.waitTimeMinutes} minutes`} between layers.`
+      conflictType: 'Can Over-Exfoliate Sensitive Skin — Alternate Nights or Wait',
+      summary: `Take care when pairing ${nameA} and ${nameB} in the same routine. Stacking both at once can overwhelm your moisture barrier and trigger dryness or tightness. Alternate nights or wait ${item.waitTimeMinutes >= 60 ? 'until bedtime' : `${item.waitTimeMinutes} minutes`} between layers.`
     };
   }
   return {
-    conflictType: 'Safe & Hydrating Together — Layer Thinnest to Thickest',
-    summary: `Yes, you can safely layer ${nameA} and ${nameB} in the same skincare routine (Harmony ${score}/100). They work well together to support a calm, hydrated moisture barrier without canceling each other out.`
+    conflictType: 'Gentle & Hydrating Together — Layer Thinnest to Thickest',
+    summary: `Yes, you can safely layer ${nameA} and ${nameB} in the same skincare routine. Apply the lighter, watery serum first, let it settle for 60 seconds, and smooth the richer formula on top for a calm, hydrated moisture barrier.`
   };
 }
 
 function toPlainConsumerProduct(item, prod) {
-  const label = prod ? `${prod.brand} ${prod.name}` : item.title.split(':')[0];
+  const label = cleanIngName(prod ? `${prod.brand} ${prod.name}` : item.title.split(':')[0]);
   const ph = prod ? prod.ph : 5.0;
   if (ph <= 3.8) {
     return {
-      conflictType: 'High-Potency Acidic Formula — Wait Before Layering Delicates',
-      summary: `${label} is a strong, low-pH treatment (pH ${ph}) designed for fast brightening or smoothing. Give it 60 seconds to absorb on clean skin, and avoid layering it right under Copper Peptides or strong Retinoids in the same step.`
+      conflictType: 'Potent Brightening & Exfoliating Formula — Give 60 Seconds to Absorb',
+      summary: `${label} is a concentrated treatment designed for fast brightening and smoothing. Pat onto clean, dry skin, give it 60 seconds to settle, and avoid layering it in the same routine with Copper Peptides or night Retinoids.`
     };
   }
   return {
-    conflictType: 'Barrier-Friendly Formula — Check Active & Pore-Clogging Pairings',
-    summary: `${label} (pH ${ph}) fits smoothly into most daily routines. Check the ingredient breakdown below to see whether to apply it in the morning or at night, how long to wait between drops, and whether it is safe for breakout-prone pores.`
+    conflictType: 'Barrier-Friendly Formula — Everyday Morning & Night Guide',
+    summary: `${label} fits smoothly into most daily routines. Check the guide below to see whether to wear it in the morning or at bedtime, how long to wait between layers, and whether it is safe for breakout-prone pores.`
   };
 }
 

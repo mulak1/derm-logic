@@ -437,13 +437,13 @@ function analyzeRoutine(params = {}) {
   const comedogenicLoad = Math.max(0, Math.min(98, Math.round(weightedComedogenicSum)));
 
   let verdictStatus = 'OPTIMAL_SYNERGY';
-  let verdictLabel = 'Optimal Clinical Barrier Synergy';
+  let verdictLabel = 'Calm & Balanced Routine';
   if (criticalCount > 0 || compatibilityScore < 50) {
     verdictStatus = 'CRITICAL_CLASH';
-    verdictLabel = 'Critical Chemical / ΔpH Inactivation Detected';
+    verdictLabel = 'Serums Cancel Out · Split Morning & Night';
   } else if (moderateCount > 0 || compatibilityScore < 76) {
     verdictStatus = 'MODERATE_CAUTION';
-    verdictLabel = 'Moderate ΔpH / Barrier Desquamation Hazard';
+    verdictLabel = 'Wait Between Layers · Mild Stinging Risk';
   }
 
   // Deterministic AM / PM & 4-Night Skin-Cycling Calendar Synthesis
@@ -623,30 +623,30 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
   const hasNiacinamide = detectedItems.some((d) => d.ingredient.activeClass === 'niacinamide');
 
   const amSteps = [
-    { step: 1, slot: 'AM Prep', title: 'pH 5.5 Gentle Amino-Acid Cleanser or Water Rinse', ph: '5.5', wait: 'Pat dry' }
+    { step: 1, slot: 'AM Prep', title: 'Gentle Morning Cleanse', ph: '5.5', wait: 'Pat dry' }
   ];
 
   if (hasLaa) {
     amSteps.push({
       step: amSteps.length + 1,
-      slot: 'AM Antioxidant (Low pH)',
-      title: 'L-Ascorbic Acid 15%–20% + Ferulic Acid Serum',
+      slot: 'AM Brightening',
+      title: 'Vitamin C + Ferulic Serum',
       ph: '3.2',
-      wait: hasNiacinamide ? 'Wait 15 min (ΔpH Equilibration)' : 'Wait 5 min'
+      wait: hasNiacinamide ? 'Wait 15 min to absorb' : 'Wait 60s'
     });
   } else if (hasCopper) {
     amSteps.push({
       step: amSteps.length + 1,
-      slot: 'AM Peptide Remodeling',
-      title: 'Copper Tripeptide-1 (GHK-Cu) 1% Serum (Separated from PM Acids/Retinoids)',
+      slot: 'AM Peptide Repair',
+      title: 'Copper Peptide Firming Serum',
       ph: '6.2',
       wait: 'Apply on damp skin'
     });
   } else if (hasBpo && hasRetinoid) {
     amSteps.push({
       step: amSteps.length + 1,
-      slot: 'AM Antibacterial (Split from PM Retinoid)',
-      title: 'Benzoyl Peroxide 2.5%–5.5% Treatment (Prevents PM Retinoid Oxidation)',
+      slot: 'AM Blemish Care',
+      title: 'Benzoyl Peroxide Wash / Spot Care',
       ph: '5.0',
       wait: 'Let dry 5 min'
     });
@@ -655,8 +655,8 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
   if (hasAzelaic) {
     amSteps.push({
       step: amSteps.length + 1,
-      slot: 'AM Anti-Erythema / Tyrosinase',
-      title: 'Azelaic Acid 10%–15% Gel/Suspension',
+      slot: 'AM Redness Care',
+      title: 'Azelaic Acid 10% Soothing Gel',
       ph: '4.9',
       wait: 'Smooth thin layer'
     });
@@ -664,46 +664,46 @@ function buildDeterministicSchedule(detectedItems, selectedProducts, conflicts) 
 
   amSteps.push({
     step: amSteps.length + 1,
-    slot: 'AM Barrier + Photoprotection',
-    title: 'Physiological Ceramide Moisturizer + Broad-Spectrum SPF 50+ PA++++',
+    slot: 'AM Moisture + SPF',
+    title: 'Ceramide Moisturizer + Daily SPF 50',
     ph: '5.8',
-    wait: 'Mandatory final step'
+    wait: 'Final morning step'
   });
 
   const pmCycling = [
     {
-      night: 'Night 1 · Gentle Exfoliation & Smoothing (AHA/BHA)',
-      focus: hasAcid ? 'Gentle AHA/BHA Exfoliation (Skip retinoids & peptides on this night)' : 'Gentle Hydration & Smoothing Polish',
+      night: 'Night 1 · Gentle Exfoliation (AHA/BHA)',
+      focus: hasAcid ? 'Gentle AHA/BHA Exfoliation (Skip retinoids & peptides tonight)' : 'Gentle Hydration & Smoothing Polish',
       steps: hasAcid
-        ? ['pH 5.5 Cleanser (Dry completely)', 'Direct AHA / BHA Exfoliant (pH 3.2–3.6) · Wait 15 min', '3:1:1 Ceramide + Cholesterol Recovery Cream']
-        : ['pH 5.5 Cleanser', 'Hydrating Essence + Niacinamide 5%', 'Ceramide Barrier Cream'],
-      badge: hasAcid ? 'ACTIVE ACID NIGHT' : 'GENTLE PREP'
+        ? ['Gentle Night Cleanse', 'AHA / BHA Exfoliating Toner · Wait 15 min', 'Ceramide Barrier Recovery Cream']
+        : ['Gentle Night Cleanse', 'Hydrating Essence + Niacinamide', 'Ceramide Barrier Cream'],
+      badge: hasAcid ? 'EXFOLIATION NIGHT' : 'GENTLE PREP'
     },
     {
       night: 'Night 2 · Retinol & Cell Renewal',
       focus: hasRetinoid ? 'Retinol Night (Skip Benzoyl Peroxide and exfoliating acids tonight)' : 'Peptide & Antioxidant Repair',
       steps: hasRetinoid
-        ? ['pH 5.5 Cleanser + Snail Mucin / Humectant Buffer (Dry 15 min)', 'Pea-sized Rx Tretinoin / Retinaldehyde / Retinol (pH 5.8)', 'Encapsulated Ceramide Barrier Cream (Sandwich Method)']
-        : ['pH 5.5 Cleanser', 'Multi-Peptide or Brightening Serum', 'Lipid Recovery Moisturizer'],
+        ? ['Gentle Cleanse + Hydrating Buffer', 'Pea-Sized Tretinoin or Retinol', 'Ceramide Barrier Cream']
+        : ['Gentle Night Cleanse', 'Multi-Peptide Firming Serum', 'Rich Barrier Moisturizer'],
       badge: hasRetinoid ? 'RETINOID NIGHT' : 'REPAIR NIGHT'
     },
     {
       night: 'Night 3 · Peptide & Moisture Repair',
       focus: hasCopper ? 'Copper Peptides & Firming (Skip Vitamin C and acids tonight)' : 'Soothing Centella, Niacinamide & Barrier Lipids',
       steps: [
-        'pH 5.5 Cleanser + Heartleaf / Centella Toner',
-        hasCopper ? 'Copper Peptides 1% (GHK-Cu) + Hyaluronic Acid (pH 6.2)' : 'Niacinamide 4%–10% + Snail 96 Mucin Essence',
-        'Dieux Instant Angel / Aestura Atobarrier 365 Cream'
+        'Gentle Cleanse + Soothing Toner',
+        hasCopper ? 'Copper Peptides 1% + Hyaluronic Acid' : 'Niacinamide + Snail Mucin Essence',
+        'Ceramide Barrier Cream'
       ],
       badge: 'PEPTIDE & CICA RECOVERY'
     },
     {
       night: 'Night 4 · Deep Skin Barrier Rest',
-      focus: hasBpo && !hasLaa ? 'Targeted Blemish Treatment or 100% Barrier Rest Night' : 'Zero Exfoliants · Pure Ceramide Barrier Hydration',
+      focus: hasBpo && !hasLaa ? 'Targeted Blemish Care or Pure Barrier Rest Night' : 'Zero Exfoliants · Pure Ceramide Barrier Hydration',
       steps: [
-        'Micellar Water + pH 5.5 Cleanser',
-        'Panthenol 5% + Madecassoside + Squalane',
-        'La Roche-Posay Cicaplast Baume B5+ or Ceramide Cream'
+        'Gentle Micellar + Cream Cleanse',
+        'Panthenol + Squalane Soothing Drops',
+        'Rich Ceramide Recovery Balm'
       ],
       badge: '100% BARRIER REST'
     }

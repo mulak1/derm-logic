@@ -148,9 +148,11 @@ const SHARED_CSS = `
   /* Interactive Shelf Audit Workbench ([data-ui]) */
   .hero-grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr); gap: 24px; align-items: stretch; }
   .grader-card, .results-panel { background: var(--bg-oat); padding: 12px; min-width: 0; }
-  .porcelain-vessel-core { background: var(--bg-surface); padding: 24px 26px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 16px; }
-  #textureFilterTabs { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 8px !important; }
-  #textureFilterTabs .vanity-light-btn { padding: 8px 12px !important; font-size: 0.84rem !important; white-space: nowrap !important; flex: 1 1 auto; text-align: center; }
+  .porcelain-vessel-core { background: var(--bg-surface); padding: 24px 26px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 16px; min-width: 0; }
+  #textureFilterTabs { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 6px !important; width: 100%; }
+  #textureFilterTabs .vanity-light-btn { padding: 7px 6px !important; font-size: 0.78rem !important; white-space: normal !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; }
+  .shelf-search-row { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 10px; align-items: center; }
+  .shelf-search-row .input-box { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .preset-row { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; margin-bottom: 4px; }
   .preset-chip { background: var(--bg-canvas); padding: 13px 15px !important; font-size: 0.9rem; border: none; cursor: pointer; text-align: left !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; gap: 5px; white-space: normal !important; line-height: 1.3 !important; min-height: 76px; transition: transform 180ms ease-out, background-color 180ms ease-out; }
   .preset-chip:hover, .preset-chip.active { background: var(--rose-pill-bg); }
@@ -158,7 +160,7 @@ const SHARED_CSS = `
   .preset-chip strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-primary); font-family: 'Newsreader', Georgia, serif; font-size: 1rem; font-weight: 400; line-height: 1.25; white-space: normal; }
   .preset-chip span { display: block; color: var(--rose-brand); font-size: 0.8rem; font-weight: 500; line-height: 1.3; white-space: normal; }
   .field-label { display: block; font-size: 0.9rem; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
-  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px; flex: 1 1 auto; min-height: 416px; max-height: 680px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 12px; background: var(--bg-canvas); margin-bottom: 14px; align-content: start; }
+  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px; flex: 1 1 auto; min-height: 420px; max-height: 560px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 12px; background: var(--bg-canvas); margin-bottom: 14px; align-content: start; }
   .prod-check-item { display: flex; align-items: flex-start; gap: 10px; padding: 13px 14px; background: var(--bg-surface); cursor: pointer; font-size: 0.88rem; transition: background-color 180ms ease-out; }
   .prod-check-item.selected { background: var(--rose-pill-bg); }
   .prod-check-item input { margin-top: 3px; accent-color: var(--rose-brand); flex-shrink: 0; }
@@ -220,7 +222,8 @@ const SHARED_CSS = `
   @media (max-width: 640px) {
     .container { padding: 0 18px; }
     .grader-card, .results-panel { padding: 16px; }
-    .preset-row, .score-strip, .viscosity-seq-list { grid-template-columns: 1fr; }
+    .preset-row, .score-strip, .viscosity-seq-list, .shelf-search-row, .product-selector-grid, #appleWalletCardPreview { grid-template-columns: 1fr !important; }
+    #textureFilterTabs { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
     .brand-logo-link { font-size: 1.15rem; gap: 8px; }
     .brand-atelier-word { display: none; }
     .vanity-light-btn { padding: 6px 10px; font-size: 0.76rem; white-space: nowrap; min-height: 32px; }
@@ -280,7 +283,7 @@ function renderFooter() {
     <div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie Consent">
       <div class="container cookie-banner-inner">
         <div style="font-size:0.85rem;color:var(--text-secondary);">
-          We use privacy-safe first-party telemetry &amp; CAPI deduplication to personalize your skincare ritual. See our <a href="/privacy" style="text-decoration:underline;color:var(--rose-brand);">Privacy Policy</a>.
+          We use privacy-friendly cookies to remember your skincare routine preferences. See our <a href="/privacy" style="text-decoration:underline;color:var(--rose-brand);">Privacy Policy</a>.
         </div>
         <div style="display:flex;gap:8px;">
           <button type="button" id="cookie-reject" class="btn-secondary" style="padding:6px 14px;font-size:0.8125rem;" onclick="setCookieConsent('rejected')">Reject</button>
@@ -343,17 +346,18 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     const isAcid = prod.ph <= 4.0;
     const isCream = (prod.category || '').toLowerCase().includes('cream') || (prod.category || '').toLowerCase().includes('moistur') || (prod.category || '').toLowerCase().includes('retin');
     const texGroup = isAcid ? 'toner_acid' : isCream ? 'cream_retinol' : 'active_serum';
-    const phTag = prod.ph <= 4.0 ? `pH ${prod.ph} (Acidic)` : prod.ph >= 5.8 ? `pH ${prod.ph} (Neutral)` : `pH ${prod.ph} (Balanced)`;
+    const roleTag = isAcid ? 'Brightening / Exfoliant' : isCream ? 'Night / Barrier Cream' : 'Hydrating / Peptide Serum';
+    const cleanProdName = String(prod.name || '').replace(/\s*\((?:All-Trans Retinoic Acid|Buffet \+ Copper|THD Ascorbate)\)/gi, '');
     return `
       <label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}">
         <input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" />
         <span style="flex:1;min-width:0;">
           <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px;">
             <span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span>
-            <span class="mono" style="font-size:0.72rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--text-secondary)'};font-weight:500;">${isChecked ? 'ON TRAY' : '+ TRAY'}</span>
+            <span class="mono" style="font-size:0.72rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--text-secondary)'};font-weight:500;">${isChecked ? 'Selected' : '+ Add'}</span>
           </span>
-          <strong class="serif-display" style="display:block;color:var(--text-primary);font-size:1.05rem;font-weight:400;line-height:1.18;margin-bottom:3px;">${escapeHtml(prod.name)}</strong>
-          <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;">${phTag} · $${prod.priceUsd}</span>
+          <strong class="serif-display" style="display:block;color:var(--text-primary);font-size:1.05rem;font-weight:400;line-height:1.18;margin-bottom:3px;">${escapeHtml(cleanProdName)}</strong>
+          <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;">${roleTag} · $${prod.priceUsd}</span>
           <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partnerSlug}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" onclick="event.stopPropagation()">Shop at ${partner} &rarr;</a>
         </span>
       </label>
@@ -368,24 +372,24 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           <div style="flex:1;display:flex;flex-direction:column;min-height:0;gap:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
               <span class="mono" style="font-size:0.9rem;color:var(--rose-brand);font-weight:500;">Bathroom Vanity Shelf Builder</span>
-              <span class="badge-safe mono">44 Cult Formulas Indexed</span>
+              <span class="badge-safe mono">${products.length} Popular Bottles</span>
             </div>
 
-            <div style="display:flex;gap:8px;flex-wrap:wrap;" id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Texture">
-              <button type="button" class="vanity-light-btn active mono" aria-pressed="true" onclick="filterShelfByTexture('all', this)">All Bottles (${products.length})</button>
+            <div id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Texture">
+              <button type="button" class="vanity-light-btn active mono" aria-pressed="true" onclick="filterShelfByTexture('all', this)">All (${products.length})</button>
               <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('toner_acid', this)">Toners &amp; Acids</button>
-              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('active_serum', this)">Active Serums</button>
-              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('cream_retinol', this)">Creams &amp; Retinoids</button>
+              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('active_serum', this)">Serums</button>
+              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('cream_retinol', this)">Creams &amp; Retinol</button>
             </div>
 
-            <div style="display:grid;grid-template-columns:1fr 205px;gap:10px;">
-              <input id="productFilterInput" type="search" aria-label="Search skincare products" class="input-box" style="padding:10px 14px;font-size:0.92rem;" placeholder="Search SkinCeuticals, The Ordinary, Tretinoin..." oninput="filterProductList(this.value)" />
-              <select id="skinTypeSelect" class="input-box" style="padding:10px 12px;font-size:0.92rem;" aria-label="Your Skin Type" onchange="runRoutineAnalysis()">
-                <option value="combination" ${currentSkin === 'combination' ? 'selected' : ''}>Skin: Combination / Dewy</option>
-                <option value="sensitive" ${currentSkin === 'sensitive' ? 'selected' : ''}>Skin: Sensitive / Rosacea</option>
-                <option value="oily" ${currentSkin === 'oily' ? 'selected' : ''}>Skin: Oily / Breakout-Prone</option>
-                <option value="dry" ${currentSkin === 'dry' ? 'selected' : ''}>Skin: Dry / Barrier Repair</option>
-                <option value="normal" ${currentSkin === 'normal' ? 'selected' : ''}>Skin: Normal / Balanced</option>
+            <div class="shelf-search-row">
+              <input id="productFilterInput" type="search" aria-label="Search skincare products" class="input-box" style="padding:10px 12px;font-size:0.88rem;" placeholder="Search brand or bottle..." oninput="filterProductList(this.value)" />
+              <select id="skinTypeSelect" class="input-box" style="padding:10px 10px;font-size:0.88rem;" aria-label="Your Skin Type" onchange="runRoutineAnalysis()">
+                <option value="combination" ${currentSkin === 'combination' ? 'selected' : ''}>Skin: Combination</option>
+                <option value="sensitive" ${currentSkin === 'sensitive' ? 'selected' : ''}>Skin: Sensitive</option>
+                <option value="oily" ${currentSkin === 'oily' ? 'selected' : ''}>Skin: Oily / Blemish</option>
+                <option value="dry" ${currentSkin === 'dry' ? 'selected' : ''}>Skin: Dry</option>
+                <option value="normal" ${currentSkin === 'normal' ? 'selected' : ''}>Skin: Balanced</option>
               </select>
             </div>
 
@@ -404,7 +408,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
             <div style="padding:16px 18px;background:var(--bg-canvas);">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
-                <label class="field-label" for="rawInciTextarea" style="margin:0;font-size:0.9rem;">Paste Any Sephora or Ulta INCI List for Pore-Clogging &amp; Fungal Check</label>
+                <label class="field-label" for="rawInciTextarea" style="margin:0;font-size:0.9rem;">Paste Any Ingredient List for a Pore-Clogging &amp; Blemish Check</label>
                 <button type="button" class="btn-secondary" style="padding:6px 12px;font-size:0.82rem;min-height:34px;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Sample</button>
               </div>
               <textarea id="rawInciTextarea" class="textarea-box mono" rows="2" placeholder="e.g., Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate...">${escapeHtml(initialRawInci || '')}</textarea>
@@ -480,7 +484,7 @@ function renderSingleConflictCard(c) {
       <div class="serif-display" style="font-size:1.28rem;font-weight:400;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(c.title)}</div>
       <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;margin-bottom:10px;">${escapeHtml(c.mechanism)}</p>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-        <span class="mono" style="font-size:0.82rem;color:var(--text-muted);">Acidity gap ΔpH ${c.deltaPh}</span>
+        <span class="mono" style="font-size:0.82rem;color:var(--text-muted);">pH difference: ${c.deltaPh}</span>
         <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Fix &rarr;</a>
       </div>
     </div>
@@ -488,17 +492,19 @@ function renderSingleConflictCard(c) {
 }
 
 function renderAnalysisResultHtml(res) {
-  const isCritical = res.verdictStatus === 'CRITICAL_CLASH';
-  const isWarn = res.verdictStatus === 'MODERATE_CAUTION';
+  const isCritical = res.conflicts.length > 0 && res.verdictStatus === 'CRITICAL_CLASH';
+  const isWarn = res.conflicts.length > 0 && !isCritical;
   const scoreColor = isCritical ? 'var(--berry-clash)' : isWarn ? 'var(--honey-warn)' : 'var(--sage-safe)';
   const badgeClass = isCritical ? 'badge-clash' : isWarn ? 'badge-warn' : 'badge-safe';
+  const topVerdictText = res.conflicts.length === 0 ? 'Safe Everyday Routine · Zero Clashes' : res.verdictLabel;
 
   const primaryConflicts = res.conflicts.slice(0, 2);
   const extraConflicts = res.conflicts.slice(2);
 
   const conflictsHtml = res.conflicts.length === 0
-    ? `<div style="padding:16px 18px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.95rem;margin-bottom:12px;">
-         <strong>Pure Shelf Harmony:</strong> Every bottle on your tray layers smoothly with zero acidity shock or pilling.
+    ? `<div style="padding:18px 20px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.94rem;line-height:1.58;margin-bottom:10px;">
+         <div class="serif-display" style="font-size:1.25rem;color:var(--sage-safe);margin-bottom:4px;">Pure Shelf Harmony — Every Bottle Works Together</div>
+         <div>Your selected bottles layer smoothly with zero stinging, canceling out, or makeup pilling. Apply from thinnest watery serum to richest moisturizer, and give each layer 60 seconds to settle.</div>
        </div>`
     : primaryConflicts.map(renderSingleConflictCard).join('') + (extraConflicts.length > 0 ? `
         <details style="margin-bottom:12px;background:var(--bg-canvas);padding:12px 16px;">
@@ -511,46 +517,63 @@ function renderAnalysisResultHtml(res) {
         </details>
       ` : '');
 
-  const amStepsHtml = (res.schedule.amSteps || []).slice(0, 3).map((s, idx) => `
-    <div style="padding:10px 12px;background:var(--bg-canvas);display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
-      <div style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.88rem;">
-        <strong style="color:var(--text-primary);">${idx + 1}. ${idx === 0 ? escapeHtml(s.title) : '[Morning Step Locked]'}</strong>
+  const amFallbacks = [
+    'Gentle Morning Cleanse on Damp Skin',
+    'Vitamin C or Hydrating Serum Layer (Wait 60s)',
+    'Barrier Moisturizer & Broad-Spectrum SPF 50'
+  ];
+  const amStepsHtml = (res.schedule.amSteps || []).slice(0, 3).map((s, idx) => {
+    const rawStep = String(s.title || '').replace(/^pH\s*[\d.]+\s*/i, '');
+    const cleanStepTitle = rawStep.includes('[LOCKED') ? amFallbacks[idx] || amFallbacks[1] : rawStep;
+    return `
+    <div style="padding:9px 12px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;">
+      <div style="min-width:0;font-size:0.88rem;line-height:1.38;">
+        <strong style="color:var(--text-primary);">${idx + 1}. ${escapeHtml(cleanStepTitle)}</strong>
       </div>
-      <span class="mono" style="font-size:0.78rem;padding:3px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:500;flex-shrink:0;">${idx === 0 ? '60s Wait' : `pH ${escapeHtml(s.ph)}`}</span>
-    </div>
-  `).join('');
+      <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? 'Apply First' : idx === 1 ? 'Wait 60s' : 'Morning SPF'}</span>
+    </div>`;
+  }).join('');
 
-  const pmStepsHtml = (res.schedule.pmCycling || []).slice(0, 3).map((n, idx) => `
-    <div style="padding:10px 12px;background:rgba(244,239,232,0.08);display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
-      <div style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.88rem;color:#F4EFE8;">
-        <strong>${escapeHtml(n.night.split('·')[0].trim())}:</strong> ${idx === 0 ? escapeHtml(n.steps[0] || 'Gentle Cleanse') : '[4-Night Cycle]'}
+  const pmFallbacks = [
+    'Gentle Evening Cleanse & Damp-Skin Prep',
+    'Targeted Night Active (Exfoliant or Retinoid)',
+    'Peptide Serum & Ceramide Barrier Cushion'
+  ];
+  const pmStepsHtml = (res.schedule.pmCycling || []).slice(0, 3).map((n, idx) => {
+    const rawNight = String((n.steps && n.steps[0]) || '').replace(/^pH\s*[\d.]+\s*/i, '');
+    const cleanNightStep = (!rawNight || rawNight.includes('[LOCKED')) ? pmFallbacks[idx] || pmFallbacks[2] : rawNight;
+    return `
+    <div style="padding:9px 12px;background:rgba(244,239,232,0.08);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;">
+      <div style="min-width:0;font-size:0.88rem;line-height:1.38;color:#F4EFE8;">
+        <strong>${escapeHtml(n.night.split('·')[0].trim())}:</strong> ${escapeHtml(cleanNightStep)}
       </div>
-      <span class="mono" style="font-size:0.78rem;padding:3px 8px;background:#7A2332;color:#F4EFE8;font-weight:500;flex-shrink:0;">${idx === 0 ? '45s Wait' : 'Locked'}</span>
-    </div>
-  `).join('');
+      <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:#7A2332;color:#F4EFE8;font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? '45s Wait' : 'Alternate Nights'}</span>
+    </div>`;
+  }).join('');
 
   return `
-    <div class="porcelain-vessel-core" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:16px;">
+    <div class="porcelain-vessel-core" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
-          <span class="${badgeClass} mono">${escapeHtml(res.verdictLabel)}</span>
-          <span class="mono" style="font-size:0.86rem;color:var(--text-secondary);">Vanity Shelf pH ${res.equilibriumSurfacePh || 5.5} · Pore Safety: ${res.comedogenicFlags.length === 0 ? '0 Clogs' : `${res.comedogenicFlags.length} Alert`}</span>
+          <span class="${badgeClass} mono">${escapeHtml(topVerdictText)}</span>
+          <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">Pore Safety: ${res.comedogenicFlags.length === 0 ? 'Zero Clogging Oils' : `${res.comedogenicFlags.length} Pore Alert`}</span>
         </div>
 
-        <div class="score-strip" style="display:grid;grid-template-columns:116px 1fr 1fr;gap:12px;align-items:stretch;margin-bottom:14px;">
-          <div class="metric-box" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
-            <span class="serif-display" style="font-size:2.2rem;font-weight:400;color:${scoreColor};line-height:1;" id="compatibilityScoreValue">${res.compatibilityScore}</span>
-            <span class="mono" style="font-size:0.78rem;color:var(--text-secondary);margin-top:4px;">Harmony / 100</span>
+        <div class="score-strip" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:stretch;margin-bottom:14px;">
+          <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
+            <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Routine Verdict</div>
+            <div class="serif-display" style="font-size:1.55rem;font-weight:400;color:${scoreColor};line-height:1.15;margin-top:2px;" id="compatibilityScoreValue">${isCritical ? 'Clash Found' : isWarn ? 'Space Apart' : 'Calm & Safe'}</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:2px;">${res.conflicts.length === 0 ? 'Bottles layer smoothly' : `${res.conflicts.length} bottle clash(es)`}</div>
           </div>
           <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
-            <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Barrier Stress</div>
-            <div class="metric-val" style="color:${res.barrierHazardIndex > 50 ? 'var(--berry-clash)' : 'var(--sage-safe)'};font-size:1.75rem;">${res.barrierHazardIndex}<span style="font-size:0.9rem;color:var(--text-secondary);">/100</span></div>
-            <div style="font-size:0.82rem;color:var(--text-secondary);">${res.barrierHazardIndex > 50 ? 'High stinging risk' : 'Calm moisture barrier'}</div>
+            <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Skin Barrier Feel</div>
+            <div class="metric-val" style="color:${res.barrierHazardIndex > 50 ? 'var(--berry-clash)' : 'var(--sage-safe)'};font-size:1.55rem;margin-top:2px;">${res.barrierHazardIndex > 50 ? 'High Tingle' : 'Gentle'}</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:2px;">${res.barrierHazardIndex > 50 ? 'Separate morning & night' : 'Calm moisture barrier'}</div>
           </div>
           <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
             <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Serum Value at Risk</div>
-            <div class="metric-val" style="color:${(res.wastedShelfValueUsd || 0) > 0 ? 'var(--berry-clash)' : 'var(--sage-safe)'};font-size:1.75rem;" id="wastedShelfValueReadout">$${res.wastedShelfValueUsd || 0}<span style="font-size:0.85rem;color:var(--text-secondary);">/$${res.totalShelfValueUsd || 248}</span></div>
-            <div style="font-size:0.82rem;color:var(--text-secondary);">${(res.wastedShelfValueUsd || 0) > 0 ? 'Canceled on contact' : '100% absorbed'}</div>
+            <div class="metric-val" style="color:${(res.wastedShelfValueUsd || 0) > 0 ? 'var(--berry-clash)' : 'var(--sage-safe)'};font-size:1.55rem;margin-top:2px;" id="wastedShelfValueReadout">$${res.wastedShelfValueUsd || 0}<span style="font-size:0.85rem;color:var(--text-secondary);">/$${res.totalShelfValueUsd || 248}</span></div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:2px;">${(res.wastedShelfValueUsd || 0) > 0 ? 'Canceled on contact' : '100% absorbed'}</div>
           </div>
         </div>
 
@@ -559,40 +582,40 @@ function renderAnalysisResultHtml(res) {
       </div>
 
       <div style="display:flex;flex-direction:column;gap:14px;">
-        <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;width:100%;overflow:hidden;" id="appleWalletCardPreview">
-          <div style="padding:16px 18px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
+        <div style="display:grid;grid-template-columns:1fr;gap:14px;width:100%;" id="appleWalletCardPreview">
+          <div style="padding:18px 20px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
             <div>
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                <span class="mono" style="font-size:0.78rem;font-weight:500;color:var(--honey-warn);">Morning Daylight Tray</span>
-                <span class="badge-safe mono" style="font-size:0.74rem;padding:2px 8px;">No Pilling</span>
+                <span class="mono" style="font-size:0.8rem;font-weight:500;color:var(--honey-warn);">Morning Routine Order</span>
+                <span class="badge-safe mono" style="font-size:0.76rem;padding:2px 8px;">No Pilling Under Makeup</span>
               </div>
-              <div class="serif-display" style="font-size:1.2rem;font-weight:400;margin-bottom:8px;">Brighten &amp; Shield Under SPF</div>
+              <div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-bottom:10px;">Brighten &amp; Protect in Daylight</div>
               ${amStepsHtml}
             </div>
-            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:8px;">Wait 60s before SPF so makeup never pills.</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);margin-top:6px;">Wait 60 seconds before applying sunscreen so makeup glides on smoothly.</div>
           </div>
 
-          <div style="padding:16px 18px;background:#181412;color:#F4EFE8;display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
+          <div style="padding:18px 20px;background:#181412;color:#F4EFE8;display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
             <div>
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                <span class="mono" style="font-size:0.78rem;font-weight:500;color:#C9A45A;">11 PM Nocturnal Tray</span>
-                <span class="mono" style="font-size:0.74rem;padding:2px 8px;background:rgba(244,239,232,0.12);color:#F4EFE8;">3000K Vanity</span>
+                <span class="mono" style="font-size:0.8rem;font-weight:500;color:#C9A45A;">Bedtime Routine Order</span>
+                <span class="mono" style="font-size:0.76rem;padding:2px 8px;background:rgba(244,239,232,0.12);color:#F4EFE8;">Evening Recovery</span>
               </div>
-              <div class="serif-display" style="font-size:1.2rem;font-weight:400;margin-bottom:8px;color:#F4EFE8;">Overnight Barrier Recovery</div>
+              <div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-bottom:10px;color:#F4EFE8;">Overnight Renewal &amp; Moisture Cushion</div>
               ${pmStepsHtml}
             </div>
-            <button type="button" class="btn-primary" style="width:100%;font-size:0.8rem;padding:10px 10px;margin-top:10px;background:#C9A45A;color:#0C0A08;white-space:normal;text-align:center;" onclick="openCheckoutModal('onetime_499')">
-              <span>Save Lock-Screen Card ($1.99)</span>
+            <button type="button" class="btn-primary" style="width:100%;font-size:0.86rem;padding:11px 14px;margin-top:10px;background:#C9A45A;color:#0C0A08;white-space:normal;text-align:center;" onclick="openCheckoutModal('onetime_499')">
+              <span>Save Morning &amp; Bedtime Lock-Screen Card ($1.99)</span>
               <span class="btn-icon-circle">&rarr;</span>
             </button>
           </div>
         </div>
 
         <div style="padding:14px 16px;background:var(--bg-canvas);display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-          <div><div class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;">Night 1 · Exfoliate</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">AHA / BHA Acid</div></div>
-          <div><div class="mono" style="font-size:0.76rem;color:var(--honey-warn);font-weight:500;">Night 2 · Retinoid</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Tretinoin / Retinol</div></div>
-          <div><div class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:500;">Night 3 · Lipid Rest</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Copper Peptides</div></div>
-          <div><div class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:500;">Night 4 · Barrier Seal</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">3:1:1 Ceramides</div></div>
+          <div><div class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;">Night 1 · Polish</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Gentle Exfoliant</div></div>
+          <div><div class="mono" style="font-size:0.76rem;color:var(--honey-warn);font-weight:500;">Night 2 · Renew</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Retinol / Tretinoin</div></div>
+          <div><div class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:500;">Night 3 · Soothe</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Peptide Serum</div></div>
+          <div><div class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:500;">Night 4 · Cushion</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Ceramide Cream</div></div>
         </div>
       </div>
     </div>
@@ -632,7 +655,7 @@ const CLIENT_SCRIPT = `
       label.classList.toggle('selected', checkbox.checked);
       const pill = label.querySelector('span.mono');
       if (pill) {
-        pill.textContent = checkbox.checked ? 'ON TRAY' : '+ TRAY';
+        pill.textContent = checkbox.checked ? 'Selected' : '+ Add';
         pill.style.background = checkbox.checked ? 'var(--rose-brand)' : 'var(--bg-oat)';
         pill.style.color = checkbox.checked ? 'var(--accent-ink)' : 'var(--text-secondary)';
       }
@@ -678,7 +701,7 @@ const CLIENT_SCRIPT = `
         lbl.classList.toggle('selected', cb.checked);
         const pill = lbl.querySelector('span.mono');
         if (pill) {
-          pill.textContent = cb.checked ? 'ON TRAY' : '+ TRAY';
+          pill.textContent = cb.checked ? 'Selected' : '+ Add';
           pill.style.background = cb.checked ? 'var(--rose-brand)' : 'var(--bg-oat)';
           pill.style.color = cb.checked ? 'var(--accent-ink)' : 'var(--text-secondary)';
         }
@@ -701,7 +724,7 @@ const CLIENT_SCRIPT = `
         lbl.classList.remove('selected');
         const pill = lbl.querySelector('span.mono');
         if (pill) {
-          pill.textContent = '+ TRAY';
+          pill.textContent = '+ Add';
           pill.style.background = 'var(--bg-oat)';
           pill.style.color = 'var(--text-secondary)';
         }

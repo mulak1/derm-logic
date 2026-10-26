@@ -492,7 +492,7 @@ const ROUTINE_PRESETS = [
   {
     id: 'viral-tiktok-destroyer',
     label: 'Too Many Exfoliants + Retinol Stack',
-    badge: 'REDNESS ALERT · SPLIT MORNING & NIGHT',
+    badge: 'Redness Alert · Separate Morning & Night',
     skinType: 'combination',
     productIds: ['to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005', 'skinceuticals-ce-ferulic'],
     rawInciText: ''
@@ -500,7 +500,7 @@ const ROUTINE_PRESETS = [
   {
     id: 'copper-vitc-oxidation',
     label: 'Copper Peptides + Vitamin C Combo',
-    badge: 'CANCELS OUT · VITAMIN C AM, PEPTIDES PM',
+    badge: 'Cancels Out · Vitamin C AM, Peptides PM',
     skinType: 'normal',
     productIds: ['to-buffet-copper-peptides', 'skinceuticals-ce-ferulic', 'to-glycolic-acid-7', 'cerave-pm-lotion'],
     rawInciText: ''
@@ -508,7 +508,7 @@ const ROUTINE_PRESETS = [
   {
     id: 'acne-rx-bpo-tretinoin',
     label: 'Tretinoin / Retinol + Benzoyl Peroxide',
-    badge: 'WEAKENS RETINOL · WASH AM, RETINOL PM',
+    badge: 'Weakens Retinol · Wash AM, Retinol PM',
     skinType: 'oily',
     productIds: ['rx-tretinoin-005', 'lrp-effaclar-duo-bpo', 'paulas-choice-2-bha', 'cerave-pm-lotion'],
     rawInciText: ''
@@ -516,7 +516,7 @@ const ROUTINE_PRESETS = [
   {
     id: 'glass-skin-recovery',
     label: 'Gentle Barrier Repair & Glow Routine',
-    badge: '96/100 SAFE GLOW · BARRIER FRIENDLY',
+    badge: 'Safe Everyday Glow · Barrier Friendly',
     skinType: 'sensitive',
     productIds: ['anua-heartleaf-77-toner', 'cosrx-snail-96-mucin', 'dieux-instant-angel', 'boj-relief-sun-spf50'],
     rawInciText: ''

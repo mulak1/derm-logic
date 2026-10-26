@@ -234,7 +234,7 @@ const VERTICAL_CONFIGS = {
     explainerText: 'See which products clash, how long to wait between steps, and your safe Morning & Night order',
     hudLabel: 'Vanity Shelf HUD', redditSub: 'SkincareAddiction',
     sliderLabel: 'Products', sliderMin: 2, sliderMax: 8, sliderVal: 4,
-    searchPlaceholder: 'Search ingredient or product (e.g. Retinol)...',
+    searchPlaceholder: 'Search bottle or active...',
     tier1Tag: 'Single-Routine Pass · Save 60% vs. Complete Kit',
     tier1Desc: 'Instantly saves your 9:16 phone lock-screen routine card, exact wait times between serums, and 4-Night Skin-Cycling phone reminders.',
     tier2Tag: 'Complete Morning & Night Routine Kit',
@@ -261,26 +261,26 @@ const VERTICAL_CONFIGS = {
       { id: 'btn-reddit-share', label: 'Share to r/SkincareAddiction', type: 'reddit' }
     ],
     kpis: [
-      { label: 'Routine Harmony Score', val: '20/100', sub: 'Ingredient Clash Found' },
-      { label: 'Acid vs. Peptide Gap', val: '2.8 pH', sub: 'Separate into AM / PM' },
-      { label: 'Absorption Order', val: '84% Pass', sub: 'Lightest to Richest' },
-      { label: 'Pore & Fungal Check', val: '1 Trigger', sub: 'Heavy Ester Found' }
+      { label: 'Routine Verdict', val: 'Clash Found', sub: 'Separate Morning & Night' },
+      { label: 'Morning vs. Night', val: '12h Split', sub: 'Vitamin C AM · Peptides PM' },
+      { label: 'Layering Order', val: 'Thinnest First', sub: 'Water-Light to Rich Cream' },
+      { label: 'Pore & Blemish Check', val: '1 Alert', sub: 'Heavy Cream Base Found' }
     ],
     presetKpis: {
-      'preset-tiktok-destroyer': ['20/100', '2.8 pH', '76% Pass', '1 Trigger'], 'TikTok 7-Active Stack': ['20/100', '2.8 pH', '76% Pass', '1 Trigger'],
-      'preset-copper-vitc-trap': ['54/100', '2.6 pH', '88% Pass', '0 Triggers'], 'Vitamin C + Copper Peptides': ['54/100', '2.6 pH', '88% Pass', '0 Triggers'],
-      'preset-acne-rx-bpo-tret': ['49/100', '1.9 pH', '91% Pass', '0 Triggers'], 'Tretinoin + Benzoyl Peroxide': ['49/100', '1.9 pH', '91% Pass', '0 Triggers'],
-      'preset-fungal-safe-barrier': ['96/100', '0.6 pH', '94% Pass', '0 Triggers'], 'Fungal-Safe Barrier Care': ['96/100', '0.6 pH', '94% Pass', '0 Triggers'],
-      'preset-glass-skin': ['94/100', '0.8 pH', '89% Pass', '0 Triggers'], 'Glass Skin Hydration': ['94/100', '0.8 pH', '89% Pass', '0 Triggers']
+      'preset-tiktok-destroyer': ['Clash Found', '4-Night Split', 'Space Apart', '1 Pore Alert'], 'TikTok 7-Active Stack': ['Clash Found', '4-Night Split', 'Space Apart', '1 Pore Alert'],
+      'preset-copper-vitc-trap': ['Split AM & PM', '12h Apart', 'Smooth Order', 'Pore-Safe'], 'Vitamin C + Copper Peptides': ['Split AM & PM', '12h Apart', 'Smooth Order', 'Pore-Safe'],
+      'preset-acne-rx-bpo-tret': ['Split AM & PM', 'Wash AM / Rx PM', 'Buffer Cream', 'Pore-Safe'], 'Tretinoin + Benzoyl Peroxide': ['Split AM & PM', 'Wash AM / Rx PM', 'Buffer Cream', 'Pore-Safe'],
+      'preset-fungal-safe-barrier': ['Safe Together', 'Everyday Calm', 'Zero Pilling', 'Pore-Safe'], 'Fungal-Safe Barrier Care': ['Safe Together', 'Everyday Calm', 'Zero Pilling', 'Pore-Safe'],
+      'preset-glass-skin': ['Safe Together', 'Dewy & Calm', 'Zero Pilling', 'Pore-Safe'], 'Glass Skin Hydration': ['Safe Together', 'Dewy & Calm', 'Zero Pilling', 'Pore-Safe']
     },
     presets: [
       { key: 'TikTok 7-Active Stack', label: 'TikTok 7-Active' }, { key: 'Vitamin C + Copper Peptides', label: 'VitC + Copper' },
       { key: 'Tretinoin + Benzoyl Peroxide', label: 'Tret + BPO' }, { key: 'Fungal-Safe Barrier Care', label: 'Fungal-Safe' }, { key: 'Glass Skin Hydration', label: 'Glass Skin' }
     ],
     coMarketingPills: [
-      { key: 'sephora', label: 'Acid + Peptide Clash', rowText: 'When you layer an acidic Vitamin C serum (pH 3.2) right under Copper Peptides (pH 6.2), both bottles lose potency and leave your skin feeling tight. Use Vitamin C in the morning and Peptides at night.' },
-      { key: 'dermstore', label: 'Retinoid Pacing', rowText: 'Applying prescription Tretinoin or Retinol on the same night as exfoliating acids or Benzoyl Peroxide strips your moisture barrier. Alternate them across a calm 4-night recovery schedule.' },
-      { key: 'ultrasun', label: 'Pore-Safe Bases', rowText: 'Heavy cream bases containing Isopropyl Myristate or coconut esters can trap heat and trigger small bumps under active serums. Pair strong actives with a breathable gel-cream.' }
+      { key: 'sephora', label: 'Vitamin C + Peptides', rowText: 'When you layer a morning Vitamin C serum right under Copper Peptides, both bottles lose their glow-boosting power and leave your skin feeling tight. Wear Vitamin C under morning sunscreen and save Peptides for bedtime.' },
+      { key: 'dermstore', label: 'Nighttime Retinol Pacing', rowText: 'Applying Tretinoin or Retinol on the same night as exfoliating acids or acne washes strips your moisture barrier. Alternate them across a calm 4-night recovery schedule.' },
+      { key: 'ultrasun', label: 'Pore-Safe Moisturizers', rowText: 'Rich cream bases with heavy coconut esters can trap heat and trigger small bumps under active serums. Pair strong actives with a breathable ceramide lotion or gel-cream.' }
     ],
     affiliates: [
       { title: 'SkinCeuticals C E Ferulic (Dermstore)', badge: 'Morning Vitamin C Pick', cpa: 'Shop Authorized Clinical', url: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/' },
@@ -288,11 +288,11 @@ const VERTICAL_CONFIGS = {
       { title: 'La Roche-Posay Cicaplast Baume B5+', badge: 'Recovery Night Cream', cpa: 'Shop Dermatologist Pick', url: 'https://www.ulta.com/p/cicaplast-baume-b5-soothing-therapeutic-multi-purpose-cream-pimprod2018267' }
     ],
     githubRepo: {
-      name: 'rdkit/rdkit + EU CosIng pKa Matrix + adamgibbons/ics',
-      stars: '159,786 Combined', url: 'https://github.com/rdkit/rdkit',
-      badge: 'Henderson-Hasselbalch pKa + 500-Dalton Layering Engine',
-      title: 'Cosmetic-Chemist ΔpH & 500-Dalton Routine Harmony Engine',
-      summary: 'Calculates free-acid bio-availability, Cu2+/Retinoid redox inactivation, and 4-night skin-cycling schedules.'
+      name: 'Verified pH & Pore-Safety Reference',
+      stars: '65 Ingredients & 44 Bottles', url: 'https://www.dermlogic.io/directory',
+      badge: 'Skincare pH & Ingredient Compatibility Guide',
+      title: 'Cosmetic-Chemist pH & Routine Harmony Guide',
+      summary: 'Checks serum pH windows, Vitamin C & peptide pairing rules, pore-clogging oils, and 4-night skin-cycling schedules.'
     },
     deliverableFiles: [
       { file: 'am-pm-vanity-card-9x16.pdf', label: '9:16 Phone Lock-Screen Card', desc: 'Morning & night bottle order with wait times', size: '48.2 KB', schema: '9:16 Phone & Print Card', status: 'VALID' },
@@ -300,8 +300,8 @@ const VERTICAL_CONFIGS = {
       { file: 'non-comedogenic-swaps.csv', label: 'Barrier-Safe Swap Guide', desc: 'Pore-safe alternatives at Dermstore & Sephora', size: '5.5 KB', schema: 'Pore-Safe Product Swaps', status: 'VALID' }
     ],
     remediationDiff: {
-      beforeLine: 'Why your shelf stings (20/100 Harmony): Layering acidic Vitamin C (pH 3.2) with Copper Peptides or Retinoids in the same evening cancels out both serums and strips your moisture barrier.',
-      afterLine: 'Your corrected order (96/100 Harmony): Vitamin C moves to morning protection, while Copper Peptides and Retinoids alternate across a gentle 4-night recovery rhythm.',
+      beforeLine: 'Why your shelf stings: Layering pure Vitamin C with Copper Peptides or Retinol in the same evening cancels out both serums and leaves your skin tight and reactive.',
+      afterLine: 'Your calm morning & night order: Vitamin C moves to morning sun defense, while Copper Peptides and Retinol alternate across a gentle 4-night recovery rhythm.',
       roiBadge: 'Saves $182+ in Wasted Serums'
     }
   },
@@ -666,7 +666,7 @@ function attachExactBaselinePack(app, options = {}) {
         : verticalId === 'sponsor_radar'
           ? [`${88 + (hash % 11)}/100`, `$${(120 + (hash % 680)).toLocaleString()},000`, `$${(34 + (hash % 16)).toFixed(2)}`, `${(1.32 + (hash % 18) / 100).toFixed(2)}x`]
           : verticalId === 'derm_logic'
-            ? [`${52 + (hash % 44)}/100`, `${(0.7 + (hash % 22) / 10).toFixed(1)} pH`, `${78 + (hash % 19)}% Pass`, `${hash % 2} Triggers`]
+            ? [`Safe Morning & Night Order`, `Wait 60s Between Layers`, `Zero Makeup Pilling`, `Pore-Safe Verified`]
             : [`$${(9 + (hash % 55)).toLocaleString()},400`, `$${(6 + (hash % 32)).toLocaleString()},200`, `$${(3 + (hash % 22)).toLocaleString()},200`, `< ${(9.5 + (hash % 40) / 10).toFixed(1)}s`]);
     res.json({
       ok: true,

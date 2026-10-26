@@ -814,17 +814,17 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
   const top3 = ledger.filter((s) => s.score >= 85).slice(0, 3);
   const fix2 = ledger.filter((s) => s.score < 80).slice(0, 2);
   const copyMap = {
-    'VitC-AM-Peptides-PM': { tag: 'Brightening & Firming Split', title: 'Vitamin C in the Morning, Copper Peptides at Night', desc: 'Keeps acidic Vitamin C (pH 3.2) and Copper Peptides (pH 6.2) twelve hours apart so neither bottle oxidizes or stings.' },
-    'Ceramide-Tretinoin-Buffer': { tag: 'Gentle Retinoid Buffer', title: 'Ceramide Cream Buffer Before Rx Tretinoin', desc: 'Applies a lipid-rich ceramide moisturizer twenty minutes before Tretinoin 0.05% to prevent flaking and tightness.' },
-    'Azelaic15-Niacinamide5': { tag: 'Redness & Pore Calming', title: 'Azelaic Acid 15% Layered with Niacinamide 5%', desc: 'Pairs two soothing actives that share a gentle pH 5.0 window—calming redness and congestion without flushing.' },
-    'VitC+Cu': { tag: 'Common Shelf Clash', title: 'Vitamin C + Copper Peptides in the Same Routine', desc: 'Copper ions oxidize L-Ascorbic Acid on contact. Separate into morning and bedtime steps →' },
-    'Tret+BPO': { tag: 'High Irritation Risk', title: 'Rx Tretinoin + Benzoyl Peroxide Layered Together', desc: 'Peroxide cancels over 80% of Tretinoin potency in two hours. See the safe alternating schedule →' }
+    'VitC-AM-Peptides-PM': { tag: 'Brightening & Firming Split', title: 'Vitamin C in the Morning, Copper Peptides at Night', desc: 'Keeps morning Vitamin C and evening Copper Peptides twelve hours apart so neither bottle cancels out or stings.' },
+    'Ceramide-Tretinoin-Buffer': { tag: 'Gentle Retinoid Cushion', title: 'Ceramide Cream Cushion Before Nighttime Tretinoin', desc: 'Applies a soothing ceramide moisturizer twenty minutes before nighttime Tretinoin to prevent flaking and dryness.' },
+    'Azelaic15-Niacinamide5': { tag: 'Redness & Pore Calming', title: 'Azelaic Acid Layered with Soothing Niacinamide', desc: 'Pairs two gentle, redness-calming serums that layer smoothly together without warmth or flushing.' },
+    'VitC+Cu': { tag: 'Common Shelf Clash', title: 'Vitamin C + Copper Peptides in the Same Routine', desc: 'Layering them together cancels out both serums on contact. Separate into morning and bedtime steps →' },
+    'Tret+BPO': { tag: 'High Dryness Risk', title: 'Nighttime Retinol + Benzoyl Peroxide Layered Together', desc: 'Acne washes deactivate nighttime Retinol on contact. See the gentle morning-and-night split →' }
   };
   const podiumCards = top3.map((s) => {
     const c = copyMap[s.target] || { tag: 'Verified Ritual', title: s.target, desc: `${s.kpi1} · ${s.kpi2}` };
     return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:34px 32px;background:${t.subtleBg};text-decoration:none;color:${t.textPrimary};">
       <div>
-        <div class="eb-tabular" style="color:${t.safeColor};font-size:14.5px;font-weight:500;margin-bottom:12px;">${s.score} / 100 Harmony · ${escHtml(c.tag)}</div>
+        <div class="eb-tabular" style="color:${t.safeColor};font-size:14.5px;font-weight:500;margin-bottom:12px;">Safe Everyday Routine · ${escHtml(c.tag)}</div>
         <h3 style="font-family:${t.fontDisplay};font-size:1.45rem;font-weight:400;color:${t.textPrimary};margin:0 0 12px 0;line-height:1.28;max-width:none;">${escHtml(c.title)}</h3>
         <p style="font-size:16.5px;color:${t.textSecondary};line-height:1.62;margin:0 0 24px 0;">${escHtml(c.desc)}</p>
       </div>
@@ -834,7 +834,7 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
   const fixCards = fix2.map((s) => {
     const c = copyMap[s.target] || { tag: 'Shelf Clash', title: s.target, desc: `${s.issue} →` };
     return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:flex;flex-direction:column;gap:6px;padding:24px 28px;background:${t.brandSoftBg};text-decoration:none;color:${t.textPrimary};">
-      <div class="eb-tabular" style="font-size:14px;font-weight:500;color:${t.brandPrimary};">${escHtml(c.tag)} · ${s.score} / 100 Harmony</div>
+      <div class="eb-tabular" style="font-size:14px;font-weight:500;color:${t.brandPrimary};">${escHtml(c.tag)} · Separate Morning &amp; Night</div>
       <div style="font-family:${t.fontDisplay};font-size:1.25rem;font-weight:400;color:${t.textPrimary};line-height:1.3;">${escHtml(c.title)}</div>
       <div style="font-size:15.5px;color:${t.textSecondary};line-height:1.55;">${escHtml(c.desc)}</div>
     </a>`;
@@ -859,15 +859,15 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   if (entries.length === 0) return '';
   const gCfg = getGrowthConfig(cfg.moduleId);
   const scanNameMap = {
-    'VitC-AM-Peptides-PM': 'Vitamin C Morning + Copper Peptides Night (96/100)',
-    'Ceramide-Tretinoin-Buffer': 'Ceramide Cream + Night Retinoid Sandwich (95/100)',
-    'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5% Routine (95/100)',
-    'BHA2-SnailMucin-Stack': '2% BHA Liquid + Snail Mucin Hydration (93/100)',
-    'VitC+Cu': 'Vitamin C + Copper Peptides Same-Night Clash (44/100)',
-    'Tret+BPO': 'Tretinoin + Benzoyl Peroxide Same-Night Clash (38/100)',
-    'TikTok': 'Viral 7-Serum Same-Night Routine Clash (28/100)'
+    'VitC-AM-Peptides-PM': 'Vitamin C Morning + Copper Peptides Night Routine',
+    'Ceramide-Tretinoin-Buffer': 'Ceramide Cream + Night Retinoid Cushion Routine',
+    'Azelaic15-Niacinamide5': 'Azelaic Acid + Niacinamide Calming Routine',
+    'BHA2-SnailMucin-Stack': '2% BHA Exfoliant + Snail Mucin Hydration Routine',
+    'VitC+Cu': 'Vitamin C + Copper Peptides Same-Night Clash Guide',
+    'Tret+BPO': 'Tretinoin + Benzoyl Peroxide Same-Night Clash Guide',
+    'TikTok': 'Viral 7-Serum Same-Night Routine Clash Guide'
   };
-  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: scanNameMap[s.target] || `${s.target} (${s.score}/100)`, cat: 'routine-guide' }));
+  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: scanNameMap[s.target] || `${s.target} Routine Guide`, cat: 'routine-guide' }));
   const growthItems = [
     ...gCfg.tools.map((x) => ({ href: `/tools/${x.slug}`, title: x.title, cat: 'interactive-tool' })),
     ...gCfg.comparisons.map((x) => ({ href: `/compare/${x.slug}`, title: x.title, cat: 'comparison' })),
