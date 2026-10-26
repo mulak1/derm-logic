@@ -204,6 +204,7 @@ function initDatabase() {
       );
     }
 
+    db.prepare('DELETE FROM seo_pages').run();
     const seoPages = buildSeoPagesCatalog(ingredientsMap, productsMap);
     for (const page of seoPages) {
       insertSeo.run(

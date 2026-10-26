@@ -543,18 +543,21 @@ function renderDirectoryPage({ seoPages }) {
   const productPages = seoPages.filter((p) => p.pageType === 'product_teardown');
   const ingredientPages = seoPages.filter((p) => p.pageType === 'ingredient_guide');
   const clashCount = seoPages.filter((p) => p.compatibilityScore < 55).length;
+  const bufferCount = seoPages.filter((p) => p.compatibilityScore >= 55 && p.compatibilityScore < 75).length;
   const safeCount = seoPages.filter((p) => p.compatibilityScore >= 75).length;
 
   const renderCardList = (items) => items.map((p) => {
     const prodId = (p.presetProducts && p.presetProducts[0]) || 'skinceuticals-ce-ferulic';
     const partner = p.pageType === 'product_teardown' ? 'dermstore' : 'sephora';
     const partnerLabel = partner === 'dermstore' ? 'Dermstore' : 'Sephora';
-    const vaultTag = p.pageType === 'product_teardown' ? 'product' : (p.pageType === 'ingredient_guide' ? 'ingredient' : (p.compatibilityScore < 55 ? 'clash' : (p.compatibilityScore < 75 ? 'timer' : 'safe')));
-    const timingLabel = p.pageType === 'product_teardown' ? 'Morning & Night Guide' : (p.pageType === 'ingredient_guide' ? 'pH & Pore-Safety Spec' : (p.compatibilityScore < 55 ? 'Separate AM & PM' : (p.compatibilityScore < 75 ? 'Give 60s to Dry' : 'Everyday Friendly')));
-    return `<div class="dir-vault-card porcelain-vessel-core" data-vault-tag="${vaultTag}" data-vault-text="${escapeHtml((p.title + ' ' + p.summary + ' ' + p.verdict).toLowerCase())}" style="padding:26px 28px;background:var(--bg-oat);display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
+    const vType = p.pageType === 'product_teardown' ? 'product' : (p.pageType === 'ingredient_guide' ? 'ingredient' : 'pair');
+    const vVerdict = p.compatibilityScore < 55 ? 'clash' : (p.compatibilityScore < 75 ? 'timer' : 'safe');
+    const vaultTag = vType === 'pair' ? vVerdict : vType;
+    const timingLabel = vType === 'product' ? 'Morning & Night Guide' : (vType === 'ingredient' ? 'Pore-Safety & Layering' : (vVerdict === 'clash' ? 'Separate AM & PM' : (vVerdict === 'timer' ? 'Give 60s to Dry' : 'Everyday Friendly')));
+    return `<div class="dir-vault-card porcelain-vessel-core" data-vault-tag="${vaultTag}" data-vault-type="${vType}" data-vault-verdict="${vVerdict}" data-vault-text="${escapeHtml((p.title + ' ' + p.summary + ' ' + p.verdict).toLowerCase())}" style="padding:26px 28px;background:var(--bg-oat);display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-          <span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))}</span>
+          <span class="${vVerdict === 'clash' ? 'badge-clash' : vVerdict === 'timer' ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))}</span>
           <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${timingLabel}</span>
         </div>
         <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-size:1.38rem;font-weight:400;line-height:1.22;margin-bottom:10px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
@@ -575,26 +578,65 @@ function renderDirectoryPage({ seoPages }) {
           Find out which serums belong in the morning, which belong at bedtime, how long to wait between layers, and whether your favorite bottles and ingredients are safe for breakout-prone pores.
         </p>
 
-        <div id="dir-apothecary-vault-bar" data-ui="directory-filter-bar" style="padding:18px 22px;background:var(--bg-oat);margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
-          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;" role="group" aria-label="Filter Apothecary Archive">
-            <button type="button" class="vanity-light-btn mono dir-vault-pill active" aria-pressed="true" onclick="window.__dlFilterVault('all',this)">All ${seoPages.length} Guides</button>
-            <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('clash',this)">Do Not Mix (${clashCount})</button>
-            <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('safe',this)">Safe Together (${safeCount})</button>
-            <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('product',this)">Cult Bottle Guides (${productPages.length})</button>
-            <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('ingredient',this)">Ingredient Fact Sheets (${ingredientPages.length})</button>
+        <div id="dir-apothecary-vault-bar" data-ui="directory-filter-bar" style="padding:16px 20px;background:var(--bg-oat);margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:1 1 auto;" role="group" aria-label="Filter Apothecary Archive">
+            <button type="button" class="vanity-light-btn mono dir-vault-pill active" style="padding:7px 11px;font-size:0.8rem;" aria-pressed="true" onclick="window.__dlFilterVault('all',this)">All (${seoPages.length})</button>
+            <button type="button" class="vanity-light-btn mono dir-vault-pill" style="padding:7px 11px;font-size:0.8rem;" aria-pressed="false" onclick="window.__dlFilterVault('pair',this)">Pairings (${pairPages.length})</button>
+            <button type="button" class="vanity-light-btn mono dir-vault-pill" style="padding:7px 11px;font-size:0.8rem;" aria-pressed="false" onclick="window.__dlFilterVault('clash',this)">Do Not Mix (${clashCount})</button>
+            <button type="button" class="vanity-light-btn mono dir-vault-pill" style="padding:7px 11px;font-size:0.8rem;" aria-pressed="false" onclick="window.__dlFilterVault('timer',this)">Wait / Buffer (${bufferCount})</button>
+            <button type="button" class="vanity-light-btn mono dir-vault-pill" style="padding:7px 11px;font-size:0.8rem;" aria-pressed="false" onclick="window.__dlFilterVault('safe',this)">Safe Together (${safeCount})</button>
+            <button type="button" class="vanity-light-btn mono dir-vault-pill" style="padding:7px 11px;font-size:0.8rem;" aria-pressed="false" onclick="window.__dlFilterVault('product',this)">Cult Bottles (${productPages.length})</button>
+            ${ingredientPages.length > 0 ? `<button type="button" class="vanity-light-btn mono dir-vault-pill" style="padding:7px 11px;font-size:0.8rem;" aria-pressed="false" onclick="window.__dlFilterVault('ingredient',this)">Ingredients (${ingredientPages.length})</button>` : ''}
           </div>
-          <input type="search" id="dir-vault-search" aria-label="Search layering guides" placeholder="Search Retinol, Copper Peptides, Vitamin C..." oninput="window.__dlSearchVault(this.value)" class="input-box" style="max-width:340px;padding:10px 16px;font-size:0.9rem;" />
+          <input type="search" id="dir-vault-search" aria-label="Search layering guides" placeholder="Search by serum, bottle, or ingredient (e.g. Retinol, Copper Peptides, Vitamin C)..." oninput="window.__dlSearchVault(this.value)" class="input-box" style="flex:1 1 260px;min-width:240px;padding:9px 14px;font-size:0.86rem;" />
         </div>
+
+        <div id="dir-vault-live-header" style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;margin:8px 0 22px;">
+          <h2 id="dir-vault-live-title" class="serif-display" style="font-size:1.95rem;margin:0;">All Skincare Layering, Bottle &amp; Ingredient Guides (${seoPages.length})</h2>
+          <span id="dir-vault-live-sub" class="mono" style="font-size:0.86rem;color:var(--text-secondary);">Showing all ${seoPages.length} guides · ${pairPages.length} Pairings · ${productPages.length} Cult Bottles${ingredientPages.length > 0 ? ` · ${ingredientPages.length} Ingredients` : ''}</span>
+        </div>
+
+        <div class="dir-vault-section" data-dir-sec="pair" style="margin-bottom:42px;">
+          <h3 class="dir-sec-heading serif-display" style="font-size:1.45rem;margin:0 0 14px;color:var(--text-secondary);">Part 1 · Active Serum &amp; Ingredient Pairing Guides (<span class="dir-sec-count">${pairPages.length} of ${seoPages.length}</span>)</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;">${renderCardList(pairPages)}</div>
+        </div>
+
+        <div class="dir-vault-section" data-dir-sec="product" style="margin-bottom:42px;">
+          <h3 class="dir-sec-heading serif-display" style="font-size:1.45rem;margin:0 0 14px;color:var(--text-secondary);">Part 2 · Cult Bottle Breakdowns &amp; Routine Guides (<span class="dir-sec-count">${productPages.length} of ${seoPages.length}</span>)</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;">${renderCardList(productPages)}</div>
+        </div>
+
+        ${ingredientPages.length > 0 ? `<div class="dir-vault-section" data-dir-sec="ingredient" style="margin-bottom:42px;">
+          <h3 class="dir-sec-heading serif-display" style="font-size:1.45rem;margin:0 0 14px;color:var(--text-secondary);">Part 3 · Single-Ingredient Pore-Safety &amp; Layering Guides (<span class="dir-sec-count">${ingredientPages.length} of ${seoPages.length}</span>)</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;">${renderCardList(ingredientPages)}</div>
+        </div>` : ''}
+
         <script>
           window.__dlVaultTag='all';
+          window.__dlTagLabels={all:'All Skincare Layering, Bottle & Ingredient Guides',pair:'Active Serum & Ingredient Pairing Guides',clash:'Do Not Mix — Separate Morning & Night',timer:'Wait or Buffer Between Layers',safe:'Safe Together — Layer in the Same Routine',product:'Cult Bottle Breakdowns & Routine Guides',ingredient:'Single-Ingredient Pore-Safety & Layering Guides'};
           window.__dlApplyVault=function(){
-            var q=((document.getElementById('dir-vault-search')||{}).value||'').toLowerCase();
-            var cards=document.querySelectorAll('.dir-vault-card');
-            for(var i=0;i<cards.length;i++){
-              var tOk=window.__dlVaultTag==='all'||cards[i].getAttribute('data-vault-tag')===window.__dlVaultTag;
-              var qOk=!q||(cards[i].getAttribute('data-vault-text')||'').indexOf(q)!==-1;
-              cards[i].style.display=(tOk&&qOk)?'flex':'none';
+            var q=((document.getElementById('dir-vault-search')||{}).value||'').toLowerCase(),tag=window.__dlVaultTag,totalVis=0,secs=document.querySelectorAll('.dir-vault-section'),visSecs=0;
+            for(var s=0;s<secs.length;s++){
+              var cards=secs[s].querySelectorAll('.dir-vault-card'),secVis=0;
+              for(var i=0;i<cards.length;i++){
+                var tOk=tag==='all'||cards[i].getAttribute('data-vault-type')===tag||cards[i].getAttribute('data-vault-verdict')===tag||cards[i].getAttribute('data-vault-tag')===tag;
+                var qOk=!q||(cards[i].getAttribute('data-vault-text')||'').indexOf(q)!==-1;
+                var show=tOk&&qOk;
+                cards[i].style.display=show?'flex':'none';
+                if(show){secVis++;totalVis++;}
+              }
+              secs[s].setAttribute('data-sec-vis',String(secVis));
+              secs[s].style.display=secVis>0?'block':'none';
+              if(secVis>0)visSecs++;
             }
+            for(var s2=0;s2<secs.length;s2++){
+              var sv=Number(secs[s2].getAttribute('data-sec-vis')||0),cntEl=secs[s2].querySelector('.dir-sec-count'),hdEl=secs[s2].querySelector('.dir-sec-heading');
+              if(cntEl)cntEl.textContent=visSecs>1?(sv+' of '+totalVis):String(sv);
+              if(hdEl)hdEl.style.display=visSecs>1?'block':'none';
+            }
+            var tEl=document.getElementById('dir-vault-live-title'),sEl=document.getElementById('dir-vault-live-sub'),baseLbl=window.__dlTagLabels[tag]||'Filtered Skincare Guides';
+            if(tEl)tEl.textContent=baseLbl+' ('+totalVis+')';
+            if(sEl)sEl.textContent=q?('Matching "'+q+'" · '+totalVis+' guide'+(totalVis===1?'':'s')+' shown'):('Showing '+totalVis+' matching guide'+(totalVis===1?'':'s'));
           };
           window.__dlFilterVault=function(tag,btn){
             window.__dlVaultTag=tag;
@@ -605,34 +647,11 @@ function renderDirectoryPage({ seoPages }) {
           };
           window.__dlSearchVault=function(){window.__dlApplyVault();};
         </script>
-
-        <h2 class="serif-display" style="font-size:1.85rem;margin:28px 0 16px;">Active Serum &amp; Ingredient Pairing Guides (${pairPages.length})</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;">
-          ${renderCardList(pairPages)}
-        </div>
-
-        <h2 class="serif-display" style="font-size:1.85rem;margin:48px 0 16px;">Cult Bottle Breakdowns &amp; Routine Guides (${productPages.length})</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;">
-          ${renderCardList(productPages)}
-        </div>
-
-        <h2 class="serif-display" style="font-size:1.85rem;margin:48px 0 16px;">Single-Ingredient pH, pKa &amp; Pore-Safety Fact Sheets (${ingredientPages.length})</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;">
-          ${renderCardList(ingredientPages)}
-        </div>
       </div>
     </section>
   `;
 
-  return renderBaseDocument({
-    title: `Skincare Layering & INCI Directory (${seoPages.length} Guides) | DermLogic`,
-    description: `Browse ${seoPages.length} clinical active-ingredient interaction matrices and cult skincare INCI teardowns.`,
-    canonicalPath: '/directory',
-    ogSlug: 'directory',
-    jsonLdObjects: [],
-    hideNav: false,
-    bodyHtml
-  });
+  return renderBaseDocument({ title: `Skincare Layering & INCI Directory (${seoPages.length} Guides) | DermLogic`, description: `Browse ${seoPages.length} clinical active-ingredient interaction matrices and cult skincare INCI teardowns.`, canonicalPath: '/directory', ogSlug: 'directory', jsonLdObjects: [], hideNav: false, bodyHtml });
 }
 
 function resolveComparisonIngredients(page, products) {
@@ -938,45 +957,31 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
 function renderLegalPage({ type }) {
   const isPrivacy = type === 'privacy';
   const title = isPrivacy ? 'Privacy Policy | DermLogic Atelier Céramique' : 'Terms of Service & Formulation Disclaimer | DermLogic';
-  const bodyHtml = `
-    <section class="section-block">
-      <div class="container" style="max-width:840px;">
-        <div class="z-vessel-center"><div class="porcelain-vessel-core">
-          <div>
-            <h1 class="hero-h1" style="font-size:2.4rem;margin-bottom:10px;">${isPrivacy ? 'Privacy Policy & Data Governance' : 'Terms of Service & Educational Formulation Disclaimer'}</h1>
-            <p style="color:var(--text-secondary);margin-bottom:18px;">Last Updated: October 14, 2026 · Contact: concierge@dermlogic.io</p>
-            <div class="bento-cell" style="margin-bottom:14px;">
-              <h2 class="serif-display" style="font-size:1.35rem;margin-bottom:6px;">${isPrivacy ? 'Privacy & Routine Preferences' : 'Skincare Routine Educational Scope'}</h2>
-              <p style="color:var(--text-secondary);font-size:0.9rem;">${isPrivacy ? 'DermLogic checks your pasted ingredient lists and bathroom shelf selections to spot serum clashes, pH gaps, and pore-clogging oils. Optional checkout email addresses are used solely to deliver your Routine Ritual PDF and 9:16 Phone Lock-Screen Card.' : 'DermLogic provides cosmetic chemistry guidance (verified skin pH compatibility, active ingredient stability, and pore-safety scores) for educational skincare planning. It does not replace individualized medical diagnosis by a board-certified dermatologist.'}</p>
-            </div>
-            <div class="bento-cell">
-              <h2 class="serif-display" style="font-size:1.35rem;margin-bottom:6px;">${isPrivacy ? 'GDPR / CCPA Rights, Cookie Controls & Retailer Disclosures' : '30-Day Harmony Guarantee & Self-Serve Fulfillment'}</h2>
-              <p style="color:var(--text-secondary);font-size:0.9rem;">${isPrivacy ? 'Visitors may reject non-essential analytics via the Cookie Consent ribbon at any time and request complete deletion of order or telemetry records by emailing concierge@dermlogic.io. Verified retailer links to Dermstore and Sephora include sponsored affiliate tags.' : 'All $1.99 Single-Routine Passes, $4.99 Complete Routine Kits, and $19.99/yr Unlimited Shelf Passes include an unconditional 30-day satisfaction guarantee.'}</p>
-            </div>
-          </div>
-        </div></div>
-      </div>
-    </section>
-  `;
+  const bodyHtml = `<section class="section-block"><div class="container" style="max-width:840px;"><div class="z-vessel-center"><div class="porcelain-vessel-core"><div>
+    <h1 class="hero-h1" style="font-size:2.4rem;margin-bottom:10px;">${isPrivacy ? 'Privacy Policy & Data Governance' : 'Terms of Service & Educational Formulation Disclaimer'}</h1>
+    <p style="color:var(--text-secondary);margin-bottom:18px;">Last Updated: October 14, 2026 · Contact: concierge@dermlogic.io</p>
+    <div class="bento-cell" style="margin-bottom:14px;">
+      <h2 class="serif-display" style="font-size:1.35rem;margin-bottom:6px;">${isPrivacy ? 'Privacy & Routine Preferences' : 'Skincare Routine Educational Scope'}</h2>
+      <p style="color:var(--text-secondary);font-size:0.9rem;">${isPrivacy ? 'DermLogic checks your pasted ingredient lists and bathroom shelf selections to spot serum clashes, pH gaps, and pore-clogging oils. Optional checkout email addresses are used solely to deliver your Routine Ritual PDF and 9:16 Phone Lock-Screen Card.' : 'DermLogic provides cosmetic chemistry guidance (verified skin pH compatibility, active ingredient stability, and pore-safety scores) for educational skincare planning. It does not replace individualized medical diagnosis by a board-certified dermatologist.'}</p>
+    </div>
+    <div class="bento-cell">
+      <h2 class="serif-display" style="font-size:1.35rem;margin-bottom:6px;">${isPrivacy ? 'GDPR / CCPA Rights, Cookie Controls & Retailer Disclosures' : '30-Day Harmony Guarantee & Self-Serve Fulfillment'}</h2>
+      <p style="color:var(--text-secondary);font-size:0.9rem;">${isPrivacy ? 'Visitors may reject non-essential analytics via the Cookie Consent ribbon at any time and request complete deletion of order or telemetry records by emailing concierge@dermlogic.io. Verified retailer links to Dermstore and Sephora include sponsored affiliate tags.' : 'All $1.99 Single-Routine Passes, $4.99 Complete Routine Kits, and $19.99/yr Unlimited Shelf Passes include an unconditional 30-day satisfaction guarantee.'}</p>
+    </div>
+  </div></div></div></div></section>`;
   return renderBaseDocument({ title, description: title, canonicalPath: isPrivacy ? '/privacy' : '/terms', ogSlug: type, jsonLdObjects: [], hideNav: false, bodyHtml });
 }
 
 function render404Page() {
-  const bodyHtml = `
-    <section class="section-block">
-      <div class="container" style="max-width:680px;text-align:center;padding:42px 20px;">
-        <div class="z-vessel-center"><div class="porcelain-vessel-core" style="align-items:center;">
-          <div class="badge-clash mono" style="margin-bottom:12px;">HTTP 404 · Vessel Not Found</div>
-          <h1 class="hero-h1" style="font-size:2.4rem;">This Skincare Ritual Page Could Not Be Found</h1>
-          <p style="color:var(--text-secondary);margin-bottom:24px;">Return to the DermLogic Routine Harmony Checker or explore all skincare layering guides.</p>
-          <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-            <a href="/#analyzer" class="btn-primary"><span>Open Routine Harmony Checker</span><span class="btn-icon-circle">&rarr;</span></a>
-            <a href="/directory" class="btn-secondary">Browse Layering Guides</a>
-          </div>
-        </div></div>
-      </div>
-    </section>
-  `;
+  const bodyHtml = `<section class="section-block"><div class="container" style="max-width:680px;text-align:center;padding:42px 20px;"><div class="z-vessel-center"><div class="porcelain-vessel-core" style="align-items:center;">
+    <div class="badge-clash mono" style="margin-bottom:12px;">HTTP 404 · Vessel Not Found</div>
+    <h1 class="hero-h1" style="font-size:2.4rem;">This Skincare Ritual Page Could Not Be Found</h1>
+    <p style="color:var(--text-secondary);margin-bottom:24px;">Return to the DermLogic Routine Harmony Checker or explore all skincare layering guides.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="/#analyzer" class="btn-primary"><span>Open Routine Harmony Checker</span><span class="btn-icon-circle">&rarr;</span></a>
+      <a href="/directory" class="btn-secondary">Browse Layering Guides</a>
+    </div>
+  </div></div></div></section>`;
   return renderBaseDocument({ title: '404 Page Not Found | DermLogic', description: 'Page not found on DermLogic Formulation Atelier.', canonicalPath: '/404', ogSlug: '404', jsonLdObjects: [], hideNav: false, bodyHtml });
 }
 
@@ -985,31 +990,7 @@ function renderOgSvg(pageOrTitle, subtitle, score, deltaPh) {
   const safeSub = escapeHtml((subtitle || 'Porcelain Ritual & Viscosity Wait-Time Sequencer · Peptide & Vitamin C Harmony').slice(0, 95));
   const safeScore = score != null ? `${score}/100` : '96/100';
   const safeDelta = deltaPh != null ? `ΔpH ${deltaPh}` : 'ΔpH 2.8';
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#F4EFE8"/>
-  <rect x="48" y="48" width="1104" height="534" fill="#FAF6F0" stroke="#D5CCC0" stroke-width="2"/>
-  <rect x="88" y="92" width="420" height="42" fill="#EFE5E7"/>
-  <text x="114" y="119" fill="#7A2332" font-family="Georgia, serif" font-size="16" font-weight="bold">DERMLOGIC · FORMULATION ATELIER</text>
-  <text x="88" y="218" fill="#181412" font-family="Georgia, serif" font-size="40" font-weight="bold">${safeTitle}</text>
-  <text x="88" y="282" fill="#5C534C" font-family="Georgia, serif" font-size="22">${safeSub}</text>
-  <rect x="88" y="355" width="290" height="145" fill="#E9E2D7"/>
-  <text x="116" y="400" fill="#5C534C" font-family="Georgia, serif" font-size="15">ROUTINE HARMONY SCORE</text>
-  <text x="116" y="466" fill="#264C3C" font-family="Georgia, serif" font-size="50" font-weight="bold">${escapeHtml(safeScore)}</text>
-  <rect x="406" y="355" width="280" height="145" fill="#EFE5E7"/>
-  <text x="434" y="400" fill="#7A2332" font-family="Georgia, serif" font-size="15">PH DIFFERENTIAL</text>
-  <text x="434" y="466" fill="#7A2332" font-family="Georgia, serif" font-size="50" font-weight="bold">${escapeHtml(safeDelta)}</text>
-  <rect x="714" y="355" width="388" height="145" fill="#E9E2D7"/>
-  <text x="742" y="400" fill="#7A2332" font-family="Georgia, serif" font-size="15">VISCOSITY &amp; WAIT SEQUENCER</text>
-  <text x="742" y="452" fill="#181412" font-family="Georgia, serif" font-size="25" font-weight="bold">4-Night Skin Cycling + 9:16 Card</text>
-</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#F4EFE8"/><rect x="48" y="48" width="1104" height="534" fill="#FAF6F0" stroke="#D5CCC0" stroke-width="2"/><rect x="88" y="92" width="420" height="42" fill="#EFE5E7"/><text x="114" y="119" fill="#7A2332" font-family="Georgia, serif" font-size="16" font-weight="bold">DERMLOGIC · FORMULATION ATELIER</text><text x="88" y="218" fill="#181412" font-family="Georgia, serif" font-size="40" font-weight="bold">${safeTitle}</text><text x="88" y="282" fill="#5C534C" font-family="Georgia, serif" font-size="22">${safeSub}</text><rect x="88" y="355" width="290" height="145" fill="#E9E2D7"/><text x="116" y="400" fill="#5C534C" font-family="Georgia, serif" font-size="15">ROUTINE HARMONY SCORE</text><text x="116" y="466" fill="#264C3C" font-family="Georgia, serif" font-size="50" font-weight="bold">${escapeHtml(safeScore)}</text><rect x="406" y="355" width="280" height="145" fill="#EFE5E7"/><text x="434" y="400" fill="#7A2332" font-family="Georgia, serif" font-size="15">PH DIFFERENTIAL</text><text x="434" y="466" fill="#7A2332" font-family="Georgia, serif" font-size="50" font-weight="bold">${escapeHtml(safeDelta)}</text><rect x="714" y="355" width="388" height="145" fill="#E9E2D7"/><text x="742" y="400" fill="#7A2332" font-family="Georgia, serif" font-size="15">VISCOSITY &amp; WAIT SEQUENCER</text><text x="742" y="452" fill="#181412" font-family="Georgia, serif" font-size="25" font-weight="bold">4-Night Skin Cycling + 9:16 Card</text></svg>`;
 }
 
-module.exports = {
-  renderHomePage,
-  renderPaidSocialLpPage,
-  renderDirectoryPage,
-  renderSeoDetailPage,
-  renderLegalPage,
-  render404Page,
-  renderOgSvg
-};
+module.exports = { renderHomePage, renderPaidSocialLpPage, renderDirectoryPage, renderSeoDetailPage, renderLegalPage, render404Page, renderOgSvg };

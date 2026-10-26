@@ -386,13 +386,19 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     'Sunscreen (SPF)': 'Morning SPF Shield',
     'Cleanser': 'Gentle Cleanser'
   };
+  const getTexGroup = (prod) => {
+    const isAcid = prod.ph <= 4.0;
+    const isCream = (prod.category || '').toLowerCase().includes('cream') || (prod.category || '').toLowerCase().includes('moistur') || (prod.category || '').toLowerCase().includes('retin');
+    return isAcid ? 'toner_acid' : isCream ? 'cream_retinol' : 'active_serum';
+  };
+  const tonerCount = products.filter((p) => getTexGroup(p) === 'toner_acid').length;
+  const serumCount = products.filter((p) => getTexGroup(p) === 'active_serum').length;
+  const creamCount = products.filter((p) => getTexGroup(p) === 'cream_retinol').length;
   const productCheckboxesHtml = products.map((prod) => {
     const isChecked = selectedSet.has(prod.id);
     const partner = prod.priceUsd >= 50 ? 'Dermstore' : 'Sephora';
     const partnerSlug = partner.toLowerCase();
-    const isAcid = prod.ph <= 4.0;
-    const isCream = (prod.category || '').toLowerCase().includes('cream') || (prod.category || '').toLowerCase().includes('moistur') || (prod.category || '').toLowerCase().includes('retin');
-    const texGroup = isAcid ? 'toner_acid' : isCream ? 'cream_retinol' : 'active_serum';
+    const texGroup = getTexGroup(prod);
     const roleTag = categoryLabelMap[prod.category] || 'Daily Skincare';
     const cleanProdName = shortNameMap[prod.id] || String(prod.name || '').replace(/\s*\([^)]*\)/g, '');
     return `
@@ -421,14 +427,14 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           <div style="flex:1;display:flex;flex-direction:column;min-height:0;gap:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
               <span class="mono" style="font-size:0.9rem;color:var(--rose-brand);font-weight:500;">Bathroom Vanity Shelf Builder</span>
-              <span class="badge-safe mono">${products.length} Popular Bottles</span>
+              <span class="badge-safe mono" id="shelfCountBadge">${products.length} Popular Bottles</span>
             </div>
 
             <div id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Texture">
               <button type="button" class="vanity-light-btn active mono" aria-pressed="true" onclick="filterShelfByTexture('all', this)">All (${products.length})</button>
-              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('toner_acid', this)">Toners &amp; Acids</button>
-              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('active_serum', this)">Serums</button>
-              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('cream_retinol', this)">Creams &amp; Retinol</button>
+              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('toner_acid', this)">Toners &amp; Acids (${tonerCount})</button>
+              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('active_serum', this)">Serums (${serumCount})</button>
+              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('cream_retinol', this)">Creams &amp; Retinol (${creamCount})</button>
             </div>
 
             <div class="shelf-search-row">
@@ -716,7 +722,25 @@ const CLIENT_SCRIPT = `
     }
     runRoutineAnalysis();
   }
+  window.__dlActiveTexGroup = 'all';
+  function applyShelfFilters() {
+    const group = window.__dlActiveTexGroup || 'all';
+    const q = ((document.getElementById('productFilterInput') || {}).value || '').toLowerCase().trim();
+    let vis = 0;
+    document.querySelectorAll('#productSelectorGrid .prod-check-item').forEach((el) => {
+      const g = el.getAttribute('data-tex-group') || 'all';
+      const gOk = group === 'all' || g === group;
+      const qOk = !q || el.textContent.toLowerCase().includes(q);
+      const show = gOk && qOk;
+      el.style.display = show ? 'flex' : 'none';
+      if (show) vis++;
+    });
+    const badge = document.getElementById('shelfCountBadge');
+    const labels = { all: 'Popular Bottles', toner_acid: 'Toners & Acids', active_serum: 'Serums', cream_retinol: 'Creams & Retinol' };
+    if (badge) badge.textContent = vis + ' ' + (labels[group] || 'Bottles');
+  }
   function filterShelfByTexture(group, btn) {
+    window.__dlActiveTexGroup = group;
     document.querySelectorAll('#textureFilterTabs .vanity-light-btn').forEach((b) => {
       b.classList.remove('active');
       b.setAttribute('aria-pressed', 'false');
@@ -725,16 +749,10 @@ const CLIENT_SCRIPT = `
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
     }
-    document.querySelectorAll('#productSelectorGrid .prod-check-item').forEach((el) => {
-      const g = el.getAttribute('data-tex-group') || 'all';
-      el.style.display = (group === 'all' || g === group) ? 'flex' : 'none';
-    });
+    applyShelfFilters();
   }
-  function filterProductList(query) {
-    const q = (query || '').toLowerCase().trim();
-    document.querySelectorAll('#productSelectorGrid .prod-check-item').forEach((el) => {
-      el.style.display = (!q || el.textContent.toLowerCase().includes(q)) ? 'flex' : 'none';
-    });
+  function filterProductList() {
+    applyShelfFilters();
   }
   function applyPreset(presetId) {
     const map = { 'copper-vitc-trap': 'copper-vitc-oxidation', 'acne-rx-clash': 'acne-rx-bpo-tretinoin', 'tiktok-viral-clash': 'viral-tiktok-destroyer', 'barrier-safe-gold': 'glass-skin-recovery' };

@@ -7,10 +7,14 @@ const { CLINICAL_INGREDIENTS, CULT_PRODUCTS } = require('./clinical-data');
 
 let EXPANDED_PAIR_SEEDS = [];
 let EXPANDED_PRODUCT_SEEDS = [];
+let buildCombinatorialPairSeeds = () => [];
+let appendIngredientGuidePages = () => {};
 try {
   const exp = require('./pseo-catalog-expanded');
   EXPANDED_PAIR_SEEDS = exp.EXPANDED_PAIR_SEEDS || [];
   EXPANDED_PRODUCT_SEEDS = exp.EXPANDED_PRODUCT_SEEDS || [];
+  if (exp.buildCombinatorialPairSeeds) buildCombinatorialPairSeeds = exp.buildCombinatorialPairSeeds;
+  if (exp.appendIngredientGuidePages) appendIngredientGuidePages = exp.appendIngredientGuidePages;
 } catch (_) {}
 
 const PAIR_SEO_SEEDS = [
@@ -759,8 +763,11 @@ function cleanHumanTitle(rawTitle) {
     .replace(/Hidden\s*Isopropyl\s*Myristate\s*\(5\/5\s*Comedogen\)\s*&\s*Conflicts/gi, 'Pore-Clogging Check & Night Layering Guide')
     .replace(/DermaON\s*Ceramide-Cholesterol-Fatty\s*Acid\s*Ratio/gi, 'How to Buffer Retinoids & Repair Dry Skin')
     .replace(/100%\s*Malassezia-Safe\s*Emollient\s*Architecture/gi, '100% Fungal-Acne Safe Moisture Guide')
+    .replace(/INCI\s*&\s*pH:\s*3:1:1\s*/gi, 'Bottle Guide: ')
     .replace(/INCI\s*(?:Teardown|Breakdown|Analysis)/gi, 'Bottle Guide')
     .replace(/INCI\s*&\s*(?:ΔpH\s*)?Conflict\s*(?:Guide|Matrix)/gi, 'What Not to Mix & Layering Guide')
+    .replace(/:\s*pH\s*\d+(?:\.\d+)?(?:\s*to\s*\d+(?:\.\d+)?)?\s*(?:Spec,?\s*INCI\s*&|Spec\s*&|Bottle\s*Guide\s*&|,?\s*)/gi, ': ')
+    .replace(/\s*&\s*pH\s*Guide/gi, ' Guide')
     .replace(/\s*\(GHK-Cu\)/gi, '')
     .replace(/\s*Protocol\b/gi, ' Routine')
     .replace(/Synergy/gi, 'Pairing');
@@ -825,117 +832,9 @@ function sanitizeBannedTerms(str) {
     .replace(/\balcohol\b/gi, 'solvent');
 }
 
-function buildCombinatorialPairSeeds(ingredientsMap, seenPairKeys, seenSlugs) {
-  const heroIds = [
-    'l-ascorbic-acid',
-    'tretinoin',
-    'retinol',
-    'retinaldehyde',
-    'adapalene',
-    'copper-tripeptide-1',
-    'glycolic-acid',
-    'lactic-acid',
-    'mandelic-acid',
-    'salicylic-acid',
-    'gluconolactone',
-    'niacinamide',
-    'azelaic-acid',
-    'tranexamic-acid',
-    'alpha-arbutin',
-    'benzoyl-peroxide',
-    'hypochlorous-acid',
-    'hyaluronic-acid',
-    'ceramide-np',
-    'centella-asiatica'
-  ];
-  const generated = [];
-  for (let i = 0; i < heroIds.length; i++) {
-    for (let j = i + 1; j < heroIds.length; j++) {
-      const idA = heroIds[i];
-      const idB = heroIds[j];
-      const pairKey = [idA, idB].sort().join('::');
-      if (seenPairKeys.has(pairKey)) continue;
-      const ingA = ingredientsMap.get(idA);
-      const ingB = ingredientsMap.get(idB);
-      if (!ingA || !ingB) continue;
-      const slug = `${idA}-and-${idB}-layering-guide`;
-      if (seenSlugs.has(slug)) continue;
-      seenPairKeys.add(pairKey);
-      seenSlugs.add(slug);
-
-      const midA = (Number(ingA.phMin) + Number(ingA.phMax)) / 2;
-      const midB = (Number(ingB.phMin) + Number(ingB.phMax)) / 2;
-      const deltaPh = Number(Math.abs(midA - midB).toFixed(1));
-      const clsA = String(ingA.activeClass || '');
-      const clsB = String(ingB.activeClass || '');
-      const isStrongA = clsA.includes('retinoid') || clsA.includes('aha') || clsA.includes('bha') || clsA === 'benzoyl_peroxide' || clsA === 'vitamin_c_laa' || idA === 'hypochlorous-acid';
-      const isStrongB = clsB.includes('retinoid') || clsB.includes('aha') || clsB.includes('bha') || clsB === 'benzoyl_peroxide' || clsB === 'vitamin_c_laa' || idB === 'hypochlorous-acid';
-      const isSoothing = (c) => c.includes('humectant') || c.includes('barrier') || c.includes('soothing') || c === 'niacinamide' || c === 'tranexamic' || c === 'arbutin';
-
-      let verdict = 'SAFE_SYNERGY';
-      let compatibilityScore = 92;
-      let waitTimeMinutes = 1;
-      let conflictType = 'Biocompatible pH & Complementary Barrier Support';
-
-      if ((idA === 'hypochlorous-acid' || idB === 'hypochlorous-acid') && (clsA.includes('vitamin_c') || clsB.includes('vitamin_c') || clsA.includes('retinoid') || clsB.includes('retinoid') || clsA.includes('peptide') || clsB.includes('peptide'))) {
-        verdict = 'COMPATIBLE_WITH_WAIT';
-        compatibilityScore = 62;
-        waitTimeMinutes = 10;
-        conflictType = 'Hypochlorous Oxidation Window: Allow Mist to Dry 100% First';
-      } else if ((clsA === 'benzoyl_peroxide' || clsB === 'benzoyl_peroxide') && (clsA.includes('retinoid') || clsB.includes('retinoid') || clsA.includes('vitamin_c') || clsB.includes('vitamin_c'))) {
-        verdict = 'CRITICAL_CLASH';
-        compatibilityScore = 24;
-        waitTimeMinutes = 720;
-        conflictType = 'Peroxide Free-Radical Oxidation & Active Deactivation';
-      } else if ((clsA.includes('peptide') || clsB.includes('peptide')) && (deltaPh >= 1.8 || clsA.includes('aha') || clsB.includes('aha') || clsA.includes('bha') || clsB.includes('bha'))) {
-        verdict = 'CRITICAL_CLASH';
-        compatibilityScore = 29;
-        waitTimeMinutes = 720;
-        conflictType = 'Low-pH Peptide Chelation & Amide Bond Stress';
-      } else if (isStrongA && isStrongB && !isSoothing(clsA) && !isSoothing(clsB)) {
-        verdict = 'SPLIT_AM_PM';
-        compatibilityScore = deltaPh >= 1.5 ? 46 : 58;
-        waitTimeMinutes = 720;
-        conflictType = 'Compounded Keratolytic & Barrier Turnover Load';
-      } else if (deltaPh >= 1.6) {
-        verdict = 'COMPATIBLE_WITH_WAIT';
-        compatibilityScore = 76;
-        waitTimeMinutes = 5;
-        conflictType = 'Sequential pH Equilibration Window (Apply Lower pH First)';
-      }
-
-      const nameA = cleanIngName(ingA.commonName);
-      const nameB = cleanIngName(ingB.commonName);
-      generated.push({
-        slug,
-        title: `Can You Layer ${nameA} and ${nameB}? Routine Order & pH Guide`,
-        category: 'Active Pair Matrix',
-        activeA: idA,
-        activeB: idB,
-        verdict,
-        compatibilityScore,
-        deltaPh,
-        conflictType,
-        summary: `Clinical pH comparison for ${nameA} (pH ${ingA.phMin} to ${ingA.phMax}) and ${nameB} (pH ${ingB.phMin} to ${ingB.phMax}) with a pH difference of ${deltaPh}.`,
-        amRule: `In the morning, apply watery antioxidant or hydrating layers first on clean skin and finish with broad-spectrum SPF 50.`,
-        pmRule: waitTimeMinutes >= 720
-          ? `Alternate nights or separate ${nameA} and ${nameB} between morning and evening routines, cushioning with ceramide moisturizer.`
-          : `Apply the lighter, lower-pH formula first, wait ${waitTimeMinutes} minute(s) to absorb, then smooth on the second step.`,
-        waitTimeMinutes,
-        presetProducts: ['skinceuticals-ce-ferulic', 'rx-tretinoin-005', 'aestura-atobarrier-365']
-      });
-    }
-  }
-  return generated;
-}
-
 function buildSeoPagesCatalog(ingredientsMap, productsMap) {
-  if (!ingredientsMap) {
-    ingredientsMap = new Map(CLINICAL_INGREDIENTS.map((i) => [i.id, i]));
-  }
-  if (!productsMap) {
-    productsMap = new Map(CULT_PRODUCTS.map((p) => [p.id, p]));
-  }
+  if (!ingredientsMap) ingredientsMap = new Map(CLINICAL_INGREDIENTS.map((i) => [i.id, i]));
+  if (!productsMap) productsMap = new Map(CULT_PRODUCTS.map((p) => [p.id, p]));
   const pages = [];
   const seenSlugs = new Set();
   const seenPairKeys = new Set();
@@ -943,11 +842,9 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
   const initialPairs = [...PAIR_SEO_SEEDS, ...EXPANDED_PAIR_SEEDS];
   for (const item of initialPairs) {
     seenSlugs.add(item.slug);
-    if (item.activeA && item.activeB) {
-      seenPairKeys.add([item.activeA, item.activeB].sort().join('::'));
-    }
+    if (item.activeA && item.activeB) seenPairKeys.add([item.activeA, item.activeB].sort().join('::'));
   }
-  const combinatorialPairs = buildCombinatorialPairSeeds(ingredientsMap, seenPairKeys, seenSlugs);
+  const combinatorialPairs = buildCombinatorialPairSeeds(ingredientsMap, seenPairKeys, seenSlugs, cleanIngName);
 
   for (const item of [...initialPairs, ...combinatorialPairs]) {
     const ingA = ingredientsMap.get(item.activeA);
@@ -978,29 +875,22 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       product: null,
       presetProducts: item.presetProducts,
       faqs: [
-        {
-          q: `Can you layer ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} in the same skincare routine?`,
-          a: `${plain.summary}`
-        },
-        {
-          q: `Why do ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} clash or work together?`,
-          a: `They have a pH difference of ΔpH ${item.deltaPh} (${ingA ? `pH ${ingA.phMin} to ${ingA.phMax}` : 'acidic'} vs ${ingB ? `pH ${ingB.phMin} to ${ingB.phMax}` : 'neutral'}). When two products have very different acidity levels, layering them right on top of each other can make them less effective or irritate sensitive skin.`
-        },
-        {
-          q: `How long should I wait between ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB}?`,
-          a: item.waitTimeMinutes >= 720
-            ? `Waiting a few minutes isn't enough when two strong actives clash. Use one in your morning routine and the other at bedtime (or alternate nights).`
-            : `Wait about 60 seconds for the first layer to absorb on dry skin (or up to ${item.waitTimeMinutes} minutes for sensitive skin) before patting on the next step.`
-        }
+        { q: `Can you layer ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} in the same skincare routine?`, a: `${plain.summary}` },
+        { q: `Why do ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} clash or work together?`, a: `They have a pH difference of ΔpH ${item.deltaPh} (${ingA ? `pH ${ingA.phMin} to ${ingA.phMax}` : 'acidic'} vs ${ingB ? `pH ${ingB.phMin} to ${ingB.phMax}` : 'neutral'}). When two products have very different acidity levels, layering them right on top of each other can make them less effective or irritate sensitive skin.` },
+        { q: `How long should I wait between ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB}?`, a: item.waitTimeMinutes >= 720 ? `Waiting a few minutes isn't enough when two strong actives clash. Use one in your morning routine and the other at bedtime (or alternate nights).` : `Wait about 60 seconds for the first layer to absorb on dry skin (or up to ${item.waitTimeMinutes} minutes for sensitive skin) before patting on the next step.` }
       ]
     });
   }
 
   const coveredProductIds = new Set();
-  const initialProductSeeds = [...PRODUCT_SEO_SEEDS, ...EXPANDED_PRODUCT_SEEDS];
-  for (const item of initialProductSeeds) {
+  const initialProductSeeds = [];
+  for (const item of [...PRODUCT_SEO_SEEDS, ...EXPANDED_PRODUCT_SEEDS]) {
+    if (seenSlugs.has(item.slug)) continue;
+    const isCustomBottle = item.slug.includes('skinoren');
+    if (item.productId && coveredProductIds.has(item.productId) && !isCustomBottle) continue;
     seenSlugs.add(item.slug);
     if (item.productId) coveredProductIds.add(item.productId);
+    initialProductSeeds.push(item);
   }
   const autoProductSeeds = [];
   for (const [prodId, prod] of productsMap.entries()) {
@@ -1021,23 +911,13 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
     const prod = productsMap.get(item.productId);
     const plainProd = toPlainConsumerProduct(item, prod);
     const primaryIngs = (prod ? prod.primaryActives : []).map((id) => ingredientsMap.get(id)).filter(Boolean);
-    const companionIngs = (item.companionProductIds || [])
-      .map((pid) => productsMap.get(pid))
-      .filter(Boolean)
-      .flatMap((cp) => (cp.primaryActives || []).map((id) => ingredientsMap.get(id)))
-      .filter(Boolean);
-    const seenIds = new Set();
-    const comparisonIngredients = [];
+    const companionIngs = (item.companionProductIds || []).map((pid) => productsMap.get(pid)).filter(Boolean).flatMap((cp) => (cp.primaryActives || []).map((id) => ingredientsMap.get(id))).filter(Boolean);
+    const seenIds = new Set(), comparisonIngredients = [];
     for (const ing of [...primaryIngs, ...companionIngs]) {
-      if (ing && !seenIds.has(ing.id)) {
-        seenIds.add(ing.id);
-        comparisonIngredients.push(ing);
-      }
+      if (ing && !seenIds.has(ing.id)) { seenIds.add(ing.id); comparisonIngredients.push(ing); }
       if (comparisonIngredients.length >= 4) break;
     }
-
     const rawProdMeta = `${plainProd.summary}`;
-
     pages.push({
       slug: item.slug,
       pageType: 'product_teardown',
@@ -1051,9 +931,7 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       summary: sanitizeBannedTerms(plainProd.summary),
       labConflictType: sanitizeBannedTerms(item.conflictHighlights),
       labSummary: sanitizeBannedTerms(prod ? prod.summary : item.conflictHighlights),
-      amRule: prod && prod.category.includes('Retinoid')
-        ? 'Use at night only: sunlight breaks down retinoids. Always wear SPF 30 to 50+ the next morning.'
-        : 'Safe for morning use when topped with broad-spectrum SPF 30 to 50+ and kept separate from clashing strong acids.',
+      amRule: prod && prod.category.includes('Retinoid') ? 'Use at night only: sunlight breaks down retinoids. Always wear SPF 30 to 50+ the next morning.' : 'Safe for morning use when topped with broad-spectrum SPF 30 to 50+ and kept separate from clashing strong acids.',
       pmRule: `In your evening routine, apply thin-to-thick and avoid stacking with clashing exfoliants on the same night.`,
       waitTimeMinutes: prod && prod.ph <= 3.8 ? 15 : 5,
       ingredientA: comparisonIngredients[0] || null,
@@ -1062,83 +940,15 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       product: prod || null,
       presetProducts: [item.productId, ...(item.companionProductIds || []).slice(0, 2)],
       faqs: [
-        {
-          q: `What is the pH and ingredient profile of ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`,
-          a: sanitizeBannedTerms(`${prod ? `${prod.brand} ${prod.name} is formulated at pH ${prod.ph} ($${prod.priceUsd}). Full ingredient list: ${prod.inciList}.` : plainProd.summary}`)
-        },
-        {
-          q: `Which skincare ingredients should I avoid mixing with ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`,
-          a: sanitizeBannedTerms(plainProd.summary)
-        },
-        {
-          q: `Will ${prod ? `${prod.brand} ${prod.name}` : item.slug} clog pores or trigger fungal acne?`,
-          a: `Use the interactive routine checker above to see the 0 to 5 pore-clogging score and fungal-acne safety check for every ingredient in ${prod ? prod.name : 'this formula'}.`
-        }
+        { q: `What is the pH and ingredient profile of ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`, a: sanitizeBannedTerms(`${prod ? `${prod.brand} ${prod.name} is formulated at pH ${prod.ph} ($${prod.priceUsd}). Full ingredient list: ${prod.inciList}.` : plainProd.summary}`) },
+        { q: `Which skincare ingredients should I avoid mixing with ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`, a: sanitizeBannedTerms(plainProd.summary) },
+        { q: `Will ${prod ? `${prod.brand} ${prod.name}` : item.slug} clog pores or trigger fungal acne?`, a: `Use the interactive routine checker above to see the 0 to 5 pore-clogging score and fungal-acne safety check for every ingredient in ${prod ? prod.name : 'this formula'}.` }
       ]
     });
   }
 
-  for (const [ingId, ing] of ingredientsMap.entries()) {
-    const safeId = sanitizeBannedTerms(ingId);
-    const ingSlug = `${safeId}-ph-inci-layering-guide`;
-    if (seenSlugs.has(ingSlug)) continue;
-    seenSlugs.add(ingSlug);
-
-    const safeCommon = sanitizeBannedTerms(cleanIngName(ing.commonName));
-    const safeInci = sanitizeBannedTerms(ing.inciName);
-    const companionIng = ingredientsMap.get(ingId === 'niacinamide' ? 'hyaluronic-acid' : 'niacinamide');
-    const isLowPh = Number(ing.phMin) < 4.0;
-    const isRetinoid = String(ing.activeClass || '').includes('retinoid');
-    const summaryText = sanitizeBannedTerms(
-      `${safeCommon} (${safeInci}) is formulated at pH ${ing.phMin} to ${ing.phMax} (${ing.molecularWeightDa} Da, pore-clog score ${ing.comedogenicity}/5). ${ing.clinicalMechanism}`
-    );
-
-    pages.push({
-      slug: ingSlug,
-      pageType: 'ingredient_guide',
-      title: `${safeCommon}: pH ${ing.phMin} to ${ing.phMax}, Pore-Safety & Skincare Layering Guide`,
-      metaDescription: formatMetaDescription(summaryText, 155),
-      category: 'Ingredient Fact Sheet',
-      verdict: isLowPh ? 'LOW_PH_ACTIVE' : (isRetinoid ? 'SPLIT_AM_PM' : 'SAFE_SYNERGY'),
-      compatibilityScore: ing.comedogenicity >= 3 ? 58 : (isLowPh || isRetinoid ? 74 : 94),
-      deltaPh: Number(Math.abs(5.5 - (Number(ing.phMin) + Number(ing.phMax)) / 2).toFixed(1)),
-      conflictType: sanitizeBannedTerms(`${ing.functionRole || ing.category} · pH ${ing.phMin} to ${ing.phMax} · ${ing.molecularWeightDa} Da`),
-      summary: summaryText,
-      labConflictType: sanitizeBannedTerms(`${safeInci} (pKa ${ing.pka != null ? ing.pka : 'Neutral'}, ${ing.molecularWeightDa} Da)`),
-      labSummary: summaryText,
-      amRule: isRetinoid
-        ? `Reserve ${safeCommon} for your evening routine and wear broad-spectrum SPF 50 every morning.`
-        : `Apply ${safeCommon} in order of texture weight (water-light before creams) and seal with broad-spectrum SPF 50 in daylight.`,
-      pmRule: `In your evening routine, pair ${safeCommon} with ceramide barrier moisture and avoid stacking multiple low-pH exfoliants on the same night.`,
-      waitTimeMinutes: isLowPh ? 5 : 1,
-      ingredientA: ing,
-      ingredientB: companionIng || null,
-      comparisonIngredients: [ing, companionIng].filter(Boolean),
-      product: null,
-      presetProducts: ['skinceuticals-ce-ferulic', 'cerave-pm-lotion', 'aestura-atobarrier-365'],
-      faqs: [
-        {
-          q: `What is the optimal pH and molecular weight of ${safeCommon}?`,
-          a: `${safeCommon} (${safeInci}) operates at pH ${ing.phMin} to ${ing.phMax} with a molecular size of ${ing.molecularWeightDa} Daltons${ing.pka != null ? ` and pKa ${ing.pka}` : ''}.`
-        },
-        {
-          q: `Does ${safeCommon} clog pores or trigger fungal acne (Malassezia)?`,
-          a: `${safeCommon} has an EU CosIng comedogenicity rating of ${ing.comedogenicity}/5 and is ${ing.malasseziaTrigger ? 'flagged as a potential Malassezia (fungal acne) lipid trigger' : '100% Malassezia (fungal-acne) safe'}.`
-        },
-        {
-          q: `Can I use ${safeCommon} every day in my skincare routine?`,
-          a: summaryText
-        }
-      ]
-    });
-  }
-
+  appendIngredientGuidePages({ ingredientsMap, seenSlugs, pages, sanitizeBannedTerms, cleanIngName, formatMetaDescription });
   return pages;
 }
 
-module.exports = {
-  PAIR_SEO_SEEDS,
-  PRODUCT_SEO_SEEDS,
-  cleanHumanTitle,
-  buildSeoPagesCatalog
-};
+module.exports = { PAIR_SEO_SEEDS, PRODUCT_SEO_SEEDS, cleanHumanTitle, buildSeoPagesCatalog };

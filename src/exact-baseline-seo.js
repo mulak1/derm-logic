@@ -972,16 +972,10 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
         '@type': 'ItemList',
         '@id': `${canonicalUrl}#itemlist`,
         name: `${cfg.brandName} Top Verified Benchmarks`,
-        itemListElement: entries.slice(0, 10).map((e, idx) => ({
-          '@type': 'ListItem',
-          position: idx + 1,
-          name: e.title,
-          url: `${hostUrl}/seo/${e.slug}`
-        }))
+        itemListElement: entries.slice(0, 10).map((e, idx) => ({ '@type': 'ListItem', position: idx + 1, name: e.title, url: `${hostUrl}/seo/${e.slug}` }))
       }
     ]
   };
-
   const headLinks = [
     '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />',
     !/rel=["']canonical["']/i.test(out) ? `<link rel="canonical" href="${canonicalUrl}" />` : '',
@@ -994,10 +988,8 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
     `<script id="eb-schema-dts-graph" type="application/ld+json">${JSON.stringify(schemaGraph)}</script>`,
     `<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-18526471751"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18526471751');</script>`
   ].filter(Boolean).join('\n  ');
-
   if (out.includes('</head>')) out = out.replace('</head>', () => `  ${headLinks}\n</head>`);
   return out;
 }
-
 module.exports = { AI_CRAWLER_AGENTS, CRAWLER_UA_REGEX, loadVerticalSeoCatalog, attachUniversalSeoAndAiRoutes, buildTopLeaderboardPodiumShowcaseHtml, buildMobileSeoCrawlMeshHtml, enhanceHtmlForSearchAndAiBots };
 

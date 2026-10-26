@@ -269,7 +269,107 @@ const EXPANDED_PRODUCT_SEEDS = [
   }
 ];
 
+function buildCombinatorialPairSeeds(ingredientsMap, seenPairKeys, seenSlugs, cleanIngName) {
+  const heroIds = [
+    'l-ascorbic-acid', 'tretinoin', 'retinol', 'retinaldehyde', 'adapalene',
+    'copper-tripeptide-1', 'glycolic-acid', 'lactic-acid', 'mandelic-acid',
+    'salicylic-acid', 'gluconolactone', 'niacinamide', 'azelaic-acid',
+    'tranexamic-acid', 'alpha-arbutin', 'benzoyl-peroxide', 'hypochlorous-acid',
+    'hyaluronic-acid', 'ceramide-np', 'centella-asiatica'
+  ];
+  const generated = [];
+  for (let i = 0; i < heroIds.length; i++) {
+    for (let j = i + 1; j < heroIds.length; j++) {
+      const idA = heroIds[i], idB = heroIds[j];
+      const pairKey = [idA, idB].sort().join('::');
+      if (seenPairKeys.has(pairKey)) continue;
+      const ingA = ingredientsMap.get(idA), ingB = ingredientsMap.get(idB);
+      if (!ingA || !ingB) continue;
+      const slug = `${idA}-and-${idB}-layering-guide`;
+      if (seenSlugs.has(slug)) continue;
+      seenPairKeys.add(pairKey);
+      seenSlugs.add(slug);
+
+      const midA = (Number(ingA.phMin) + Number(ingA.phMax)) / 2;
+      const midB = (Number(ingB.phMin) + Number(ingB.phMax)) / 2;
+      const deltaPh = Number(Math.abs(midA - midB).toFixed(1));
+      const clsA = String(ingA.activeClass || ''), clsB = String(ingB.activeClass || '');
+      const isStrongA = clsA.includes('retinoid') || clsA.includes('aha') || clsA.includes('bha') || clsA === 'benzoyl_peroxide' || clsA === 'vitamin_c_laa' || idA === 'hypochlorous-acid';
+      const isStrongB = clsB.includes('retinoid') || clsB.includes('aha') || clsB.includes('bha') || clsB === 'benzoyl_peroxide' || clsB === 'vitamin_c_laa' || idB === 'hypochlorous-acid';
+      const isSoothing = (c) => c.includes('humectant') || c.includes('barrier') || c.includes('soothing') || c === 'niacinamide' || c === 'tranexamic' || c === 'arbutin';
+
+      let verdict = 'SAFE_SYNERGY', compatibilityScore = 92, waitTimeMinutes = 1;
+      let conflictType = 'Biocompatible pH & Complementary Barrier Support';
+
+      if ((idA === 'hypochlorous-acid' || idB === 'hypochlorous-acid') && (clsA.includes('vitamin_c') || clsB.includes('vitamin_c') || clsA.includes('retinoid') || clsB.includes('retinoid') || clsA.includes('peptide') || clsB.includes('peptide'))) {
+        verdict = 'COMPATIBLE_WITH_WAIT'; compatibilityScore = 62; waitTimeMinutes = 10;
+        conflictType = 'Hypochlorous Oxidation Window: Allow Mist to Dry 100% First';
+      } else if ((clsA === 'benzoyl_peroxide' || clsB === 'benzoyl_peroxide') && (clsA.includes('retinoid') || clsB.includes('retinoid') || clsA.includes('vitamin_c') || clsB.includes('vitamin_c'))) {
+        verdict = 'CRITICAL_CLASH'; compatibilityScore = 24; waitTimeMinutes = 720;
+        conflictType = 'Peroxide Free-Radical Oxidation & Active Deactivation';
+      } else if ((clsA.includes('peptide') || clsB.includes('peptide')) && (deltaPh >= 1.8 || clsA.includes('aha') || clsB.includes('aha') || clsA.includes('bha') || clsB.includes('bha'))) {
+        verdict = 'CRITICAL_CLASH'; compatibilityScore = 29; waitTimeMinutes = 720;
+        conflictType = 'Low-pH Peptide Chelation & Amide Bond Stress';
+      } else if (isStrongA && isStrongB && !isSoothing(clsA) && !isSoothing(clsB)) {
+        verdict = 'SPLIT_AM_PM'; compatibilityScore = deltaPh >= 1.5 ? 46 : 58; waitTimeMinutes = 720;
+        conflictType = 'Compounded Keratolytic & Barrier Turnover Load';
+      } else if (deltaPh >= 1.6) {
+        verdict = 'COMPATIBLE_WITH_WAIT'; compatibilityScore = 76; waitTimeMinutes = 5;
+        conflictType = 'Sequential pH Equilibration Window (Apply Lower pH First)';
+      }
+
+      const nameA = cleanIngName(ingA.commonName), nameB = cleanIngName(ingB.commonName);
+      generated.push({
+        slug, title: `Can You Layer ${nameA} and ${nameB}? Routine Order & pH Guide`,
+        category: 'Active Pair Matrix', activeA: idA, activeB: idB, verdict, compatibilityScore, deltaPh, conflictType,
+        summary: `Clinical pH comparison for ${nameA} (pH ${ingA.phMin} to ${ingA.phMax}) and ${nameB} (pH ${ingB.phMin} to ${ingB.phMax}) with a pH difference of ${deltaPh}.`,
+        amRule: `In the morning, apply watery antioxidant or hydrating layers first on clean skin and finish with broad-spectrum SPF 50.`,
+        pmRule: waitTimeMinutes >= 720 ? `Alternate nights or separate ${nameA} and ${nameB} between morning and evening routines, cushioning with ceramide moisturizer.` : `Apply the lighter, lower-pH formula first, wait ${waitTimeMinutes} minute(s) to absorb, then smooth on the second step.`,
+        waitTimeMinutes, presetProducts: ['skinceuticals-ce-ferulic', 'rx-tretinoin-005', 'aestura-atobarrier-365']
+      });
+    }
+  }
+  return generated;
+}
+
+function appendIngredientGuidePages({ ingredientsMap, seenSlugs, pages, sanitizeBannedTerms, cleanIngName, formatMetaDescription }) {
+  for (const [ingId, ing] of ingredientsMap.entries()) {
+    const safeId = sanitizeBannedTerms(ingId);
+    const ingSlug = `${safeId}-ph-inci-layering-guide`;
+    if (seenSlugs.has(ingSlug)) continue;
+    seenSlugs.add(ingSlug);
+    const safeCommon = sanitizeBannedTerms(cleanIngName(ing.commonName));
+    const safeInci = sanitizeBannedTerms(ing.inciName);
+    const companionIng = ingredientsMap.get(ingId === 'niacinamide' ? 'hyaluronic-acid' : 'niacinamide');
+    const isLowPh = Number(ing.phMin) < 4.0, isRetinoid = String(ing.activeClass || '').includes('retinoid');
+    const summaryText = sanitizeBannedTerms(`${safeCommon} (${safeInci}) is formulated at pH ${ing.phMin} to ${ing.phMax} (${ing.molecularWeightDa} Da, pore-clog score ${ing.comedogenicity}/5). ${ing.clinicalMechanism}`);
+    pages.push({
+      slug: ingSlug, pageType: 'ingredient_guide',
+      title: `${safeCommon}: pH ${ing.phMin} to ${ing.phMax}, Pore-Safety & Skincare Layering Guide`,
+      metaDescription: formatMetaDescription(summaryText, 155), category: 'Ingredient Fact Sheet',
+      verdict: isLowPh ? 'LOW_PH_ACTIVE' : (isRetinoid ? 'SPLIT_AM_PM' : 'SAFE_SYNERGY'),
+      compatibilityScore: ing.comedogenicity >= 3 ? 58 : (isLowPh || isRetinoid ? 74 : 94),
+      deltaPh: Number(Math.abs(5.5 - (Number(ing.phMin) + Number(ing.phMax)) / 2).toFixed(1)),
+      conflictType: sanitizeBannedTerms(`${ing.functionRole || ing.category} · pH ${ing.phMin} to ${ing.phMax} · ${ing.molecularWeightDa} Da`),
+      summary: summaryText, labConflictType: sanitizeBannedTerms(`${safeInci} (pKa ${ing.pka != null ? ing.pka : 'Neutral'}, ${ing.molecularWeightDa} Da)`),
+      labSummary: summaryText,
+      amRule: isRetinoid ? `Reserve ${safeCommon} for your evening routine and wear broad-spectrum SPF 50 every morning.` : `Apply ${safeCommon} in order of texture weight (water-light before creams) and seal with broad-spectrum SPF 50 in daylight.`,
+      pmRule: `In your evening routine, pair ${safeCommon} with ceramide barrier moisture and avoid stacking multiple low-pH exfoliants on the same night.`,
+      waitTimeMinutes: isLowPh ? 5 : 1, ingredientA: ing, ingredientB: companionIng || null,
+      comparisonIngredients: [ing, companionIng].filter(Boolean), product: null,
+      presetProducts: ['skinceuticals-ce-ferulic', 'cerave-pm-lotion', 'aestura-atobarrier-365'],
+      faqs: [
+        { q: `What is the optimal pH and molecular weight of ${safeCommon}?`, a: `${safeCommon} (${safeInci}) operates at pH ${ing.phMin} to ${ing.phMax} with a molecular size of ${ing.molecularWeightDa} Daltons${ing.pka != null ? ` and pKa ${ing.pka}` : ''}.` },
+        { q: `Does ${safeCommon} clog pores or trigger fungal acne (Malassezia)?`, a: `${safeCommon} has an EU CosIng comedogenicity rating of ${ing.comedogenicity}/5 and is ${ing.malasseziaTrigger ? 'flagged as a potential Malassezia (fungal acne) lipid trigger' : '100% Malassezia (fungal-acne) safe'}.` },
+        { q: `Can I use ${safeCommon} every day in my skincare routine?`, a: summaryText }
+      ]
+    });
+  }
+}
+
 module.exports = {
   EXPANDED_PAIR_SEEDS,
-  EXPANDED_PRODUCT_SEEDS
+  EXPANDED_PRODUCT_SEEDS,
+  buildCombinatorialPairSeeds,
+  appendIngredientGuidePages
 };
