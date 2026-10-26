@@ -40,6 +40,9 @@ function parseRawInciTokens(rawText) {
 function matchTokenToIngredient(token) {
   const lower = token.toLowerCase().trim();
   if (!lower) return null;
+  if (lower === 'minerals' || lower === 'mineral' || lower === 'mineral spf' || lower === 'mineral sunscreen') {
+    return INGREDIENT_BY_ID.get('zinc-oxide') || null;
+  }
   for (const ing of CLINICAL_INGREDIENTS) {
     if (ing.id === lower || ing.inciName.toLowerCase() === lower || ing.commonName.toLowerCase() === lower) {
       return ing;
@@ -129,10 +132,30 @@ function analyzeRoutine(params = {}) {
     }
   }
 
+  const pastedMatched = [];
+  const pastedUnmatched = [];
   if (rawInciText) {
     const rawTokens = parseRawInciTokens(rawInciText);
+    const seenPastedIds = new Set();
     rawTokens.forEach((tok, idx) => {
       orderedTokens.push({ token: tok, pos: idx + 1, sourceProduct: 'Pasted INCI Label', productPh: null });
+      const m = matchTokenToIngredient(tok);
+      if (m) {
+        if (!seenPastedIds.has(m.id)) {
+          seenPastedIds.add(m.id);
+          pastedMatched.push({
+            id: m.id,
+            commonName: m.commonName,
+            inciName: m.inciName,
+            comedogenicity: m.comedogenicity,
+            malasseziaTrigger: m.malasseziaTrigger,
+            functionRole: m.functionRole,
+            clinicalMechanism: m.clinicalMechanism
+          });
+        }
+      } else {
+        pastedUnmatched.push(tok);
+      }
     });
   }
 
@@ -544,6 +567,9 @@ function analyzeRoutine(params = {}) {
     comedogenicFlags,
     malasseziaFlags,
     pregnancyFlags,
+    rawInciText,
+    pastedMatched,
+    pastedUnmatched,
     ingredientBreakdown: detectedItems.map((d) => ({
       id: d.ingredient.id,
       inciName: d.ingredient.inciName,

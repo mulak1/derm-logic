@@ -407,23 +407,19 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     const texGroup = getTexGroup(prod);
     const roleTag = categoryLabelMap[prod.category] || 'Daily Skincare';
     const cleanProdName = shortNameMap[prod.id] || String(prod.name || '').replace(/\s*\([^)]*\)/g, '');
-    return `
-      <label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}">
+    const searchBlob = (prod.brand + ' ' + prod.name + ' ' + (prod.category || '') + ' ' + (prod.inciList || '') + ' ' + (prod.summary || '')).toLowerCase();
+    return `<label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}" data-search="${escapeHtml(searchBlob)}">
         <input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" />
         <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
           <span>
-            <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:3px;">
-              <span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span>
-              <span class="mono" style="font-size:0.72rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--text-secondary)'};font-weight:500;flex-shrink:0;">${isChecked ? 'Selected' : '+ Add'}</span>
-            </span>
+            <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.72rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--text-secondary)'};font-weight:500;flex-shrink:0;">${isChecked ? 'Selected' : '+ Add'}</span></span>
             <strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:1.02rem;font-weight:400;line-height:1.2;margin-bottom:4px;">${escapeHtml(cleanProdName)}</strong>
             <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${roleTag} · $${prod.priceUsd}</span>
           </span>
           <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partnerSlug}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" style="margin-top:auto;" onclick="event.stopPropagation()">Shop at ${partner} &rarr;</a>
         </span>
-      </label>
-    `;
-  }).join('');
+      </label>`;
+  }).join('') + `<div id="shelfEmptyState" style="display:none;grid-column:1/-1;padding:16px;background:var(--bg-canvas);font-size:0.88rem;color:var(--text-secondary);text-align:center;">No bottle matched that search. <button type="button" class="btn-secondary" style="padding:5px 12px;min-height:30px;font-size:0.82rem;margin-left:6px;" onclick="const q=document.getElementById('productFilterInput').value;const ta=document.getElementById('rawInciTextarea');if(ta&&q){ta.value=q;runRoutineAnalysis();}">Check as Ingredient Below &rarr;</button></div>`;
 
   return `
     <div id="checker"></div>
@@ -472,8 +468,9 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
                 <label class="field-label" for="rawInciTextarea" style="margin:0;font-size:0.9rem;">Paste Any Ingredient List for a Pore-Clogging &amp; Blemish Check</label>
                 <button type="button" class="btn-secondary" style="padding:6px 12px;font-size:0.82rem;min-height:34px;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Sample</button>
               </div>
-              <textarea id="rawInciTextarea" class="textarea-box mono" rows="3" style="flex:1;min-height:76px;" placeholder="e.g., Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate...">${escapeHtml(initialRawInci || '')}</textarea>
-              <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:8px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients, helpful before buying a new moisturizer or foundation.</div>
+              <textarea id="rawInciTextarea" class="textarea-box mono" rows="3" style="flex:1;min-height:76px;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="e.g., Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate...">${escapeHtml(initialRawInci || '')}</textarea>
+              <div id="rawInciFeedbackBox" style="margin-top:8px;"></div>
+              <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:6px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients, helpful before buying a new moisturizer or foundation.</div>
             </div>
           </div>
 
@@ -566,8 +563,16 @@ function renderAnalysisResultHtml(res) {
 
   const primaryConflicts = res.conflicts.slice(0, 1);
   const extraConflicts = res.conflicts.slice(1);
+  const rawTxt = String(res.rawInciText || '').trim();
+  const pMatched = res.pastedMatched || [];
+  const pCloggers = pMatched.filter((m) => m.comedogenicity >= 2 || m.malasseziaTrigger);
+  const pastedBoxHtml = !rawTxt ? '' : (pCloggers.length > 0
+    ? `<div id="pastedInciCard" style="padding:14px 16px;background:var(--berry-bg);border-left:3px solid var(--berry-clash);margin-bottom:10px;font-size:0.88rem;line-height:1.5;"><strong style="color:var(--berry-clash);display:block;margin-bottom:4px;">Pasted Ingredient Check: ${pCloggers.length} Pore-Clogging / Blemish Trigger(s) Flagged</strong><div style="color:var(--text-primary);">${pCloggers.map((m) => `<strong>${escapeHtml(m.commonName)}</strong> (${m.comedogenicity}/5 Pore Score${m.malasseziaTrigger ? ' · Fungal-Blemish Trigger' : ''})`).join(' · ')}</div></div>`
+    : (pMatched.length > 0
+      ? `<div id="pastedInciCard" style="padding:14px 16px;background:var(--sage-bg);border-left:3px solid var(--sage-safe);margin-bottom:10px;font-size:0.88rem;line-height:1.5;"><strong style="color:var(--sage-safe);display:block;margin-bottom:4px;">Pasted Ingredient Check: 100% Pore-Safe (0 Clogging Oils)</strong><div style="color:var(--text-primary);">Matched: ${pMatched.map((m) => `<strong>${escapeHtml(m.commonName)}</strong> (${m.comedogenicity}/5 Pore-Safe · ${escapeHtml(m.functionRole)})`).join(', ')}. Safe for blemish-prone &amp; sensitive skin.</div></div>`
+      : `<div id="pastedInciCard" style="padding:14px 16px;background:var(--bg-oat);border-left:3px solid var(--honey-warn);margin-bottom:10px;font-size:0.88rem;line-height:1.5;"><strong style="color:var(--text-primary);display:block;margin-bottom:4px;">Pasted Ingredient Check (&ldquo;${escapeHtml(rawTxt.slice(0, 36))}&rdquo;): 0 Pore-Cloggers Flagged</strong><div style="color:var(--text-secondary);">No high-risk pore-clogging oils, heavy waxes, or active clashes matched in our 65-ingredient dermatology index. Paste a full comma-separated label or tap <strong>Try Pore-Clogging Sample</strong> to test a clogging formula.</div></div>`));
 
-  const conflictsHtml = res.conflicts.length === 0
+  const conflictsHtml = pastedBoxHtml + (res.conflicts.length === 0
     ? `<div style="padding:18px 20px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.94rem;line-height:1.58;margin-bottom:10px;">
          <div class="serif-display" style="font-size:1.25rem;color:var(--sage-safe);margin-bottom:4px;">Pure Shelf Harmony · Every Bottle Works Together</div>
          <div>Your selected bottles layer smoothly with zero stinging, canceling out, or makeup pilling. Apply from thinnest watery serum to richest moisturizer, and give each layer 60 seconds to settle.</div>
@@ -581,7 +586,7 @@ function renderAnalysisResultHtml(res) {
             ${extraConflicts.map(renderSingleConflictCard).join('')}
           </div>
         </details>
-      ` : '');
+      ` : ''));
 
   const amFallbacks = [
     'Gentle Morning Cleanse on Damp Skin',
@@ -736,11 +741,14 @@ const CLIENT_SCRIPT = `
     document.querySelectorAll('#productSelectorGrid .prod-check-item').forEach((el) => {
       const g = el.getAttribute('data-tex-group') || 'all';
       const gOk = group === 'all' || g === group;
-      const qOk = !q || el.textContent.toLowerCase().includes(q);
+      const hay = (el.getAttribute('data-search') || el.textContent).toLowerCase();
+      const qOk = !q || hay.includes(q);
       const show = gOk && qOk;
       el.style.display = show ? 'flex' : 'none';
       if (show) vis++;
     });
+    const emptyEl = document.getElementById('shelfEmptyState');
+    if (emptyEl) emptyEl.style.display = vis === 0 ? 'block' : 'none';
     const badge = document.getElementById('shelfCountBadge');
     const labels = { all: 'Popular Bottles', toner_acid: 'Toners & Acids', active_serum: 'Serums', cream_retinol: 'Creams & Retinol' };
     if (badge) badge.textContent = vis + ' ' + (labels[group] || 'Bottles');
@@ -836,6 +844,9 @@ const CLIENT_SCRIPT = `
       window.__DERMLOGIC_LAST_RESULT = data;
       const container = document.getElementById('liveResultsContainer');
       if (container && data.renderedHtml) container.innerHTML = data.renderedHtml;
+      const fbBox = document.getElementById('rawInciFeedbackBox');
+      const pCard = container ? container.querySelector('#pastedInciCard') : null;
+      if (fbBox) fbBox.innerHTML = pCard ? pCard.outerHTML : '';
       fireMetaCapiEvent('Lead', 0, { compatibilityScore: data.compatibilityScore, conflictsCount: (data.conflicts || []).length });
     } catch (e) {
       console.error('Routine analysis error:', e);

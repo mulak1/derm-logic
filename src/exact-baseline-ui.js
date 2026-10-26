@@ -779,8 +779,8 @@ function buildClientRuntimeScript(cfg) {
                 }
               } else if (CFG.moduleId === 'derm_logic' && data) {
                 entityName = data.compatibilityScore != null ? ('Routine (' + data.compatibilityScore + '/100)') : '';
-                customBadge = ((data.conflicts && data.conflicts.length) || 0) + ' Active Clash(es) • Barrier Stress ' + (data.barrierHazardIndex || 0) + '%';
-                customDiagLine = '- [DIAGNOSIS] Routine Harmony: ' + data.compatibilityScore + '/100 • ' + ((data.conflicts && data.conflicts.length) || 0) + ' Active Conflict(s) Detected';
+                customBadge = ((data.conflicts && data.conflicts.length) ? (data.conflicts.length + ' Clash(es) · Split AM/PM') : 'Calm & Barrier-Safe · Ready to Save');
+                customDiagLine = '';
                 if (boxes.length >= 2 && data.compatibilityScore != null) boxes[0].textContent = data.compatibilityScore + '/100';
               } else if (CFG.moduleId === 'abandon_alpha' && data) {
                 entityName = data.storeName || (data.selectedArm && data.selectedArm.objection_code) || '';
