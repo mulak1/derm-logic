@@ -105,14 +105,14 @@ const SHARED_CSS = `
 
   /* Header: Editorial Gallery & Nocturnal Vanity Switcher */
   .site-header { background: var(--bg-canvas); position: sticky; top: 0; z-index: 40; transition: background-color 320ms var(--ease-spring); }
-  .nav-inner { min-height: 76px; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
-  .brand-logo-link { display: inline-flex; align-items: center; gap: 10px; font-size: 1.375rem; font-weight: 400; letter-spacing: -0.02em; color: var(--text-primary); text-decoration: none; transition: opacity 180ms ease-out; }
+  .nav-inner { min-height: 72px; padding: 14px 0; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+  .brand-logo-link { display: inline-flex; align-items: center; gap: 10px; font-size: 1.32rem; font-weight: 400; letter-spacing: -0.02em; color: var(--text-primary); text-decoration: none; white-space: nowrap; transition: opacity 180ms ease-out; }
   .brand-logo-link:hover { opacity: 0.78; }
-  .nav-links { display: flex; align-items: center; gap: 28px; font-size: var(--step-small); font-weight: 400; color: var(--text-secondary); flex-wrap: wrap; }
-  .nav-links a { transition: color 180ms ease-out, opacity 180ms ease-out; }
+  .nav-links { display: flex; align-items: center; gap: 20px; font-size: var(--step-small); font-weight: 400; color: var(--text-secondary); flex-wrap: wrap; }
+  .nav-links a { white-space: nowrap; transition: color 180ms ease-out, opacity 180ms ease-out; }
   .nav-links a:hover { color: var(--rose-brand); }
   .vanity-light-pill { display: inline-flex; background: var(--bg-oat); padding: 4px; gap: 4px; }
-  .vanity-light-btn { border: none; background: transparent; padding: 7px 14px; min-height: 36px; font-size: 0.84rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: background-color 200ms var(--ease-spring), color 200ms var(--ease-spring), transform 160ms ease-out; }
+  .vanity-light-btn { border: none; background: transparent; padding: 6px 11px; min-height: 34px; font-size: 0.82rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: background-color 200ms var(--ease-spring), color 200ms var(--ease-spring), transform 160ms ease-out; }
   .vanity-light-btn.active { background: var(--rose-brand); color: var(--accent-ink); }
   .vanity-light-btn:active { transform: scale(0.97); }
 
@@ -273,8 +273,8 @@ function renderHeader(hideNav = false) {
             <button type="button" class="vanity-light-btn active" data-theme-mode="day" onclick="setAtelierVanityLight('day', this)">Daylight Gallery</button>
             <button type="button" class="vanity-light-btn" data-theme-mode="night" onclick="setAtelierVanityLight('night', this)">11 PM Vanity</button>
           </div>
-          <a href="/buy/micro_pass?source=nav_cta" class="btn-primary">
-            <span>Save Lock-Screen Card ($1.99)</span>
+          <a href="/buy/micro_pass?source=nav_cta" class="btn-primary" style="padding:10px 16px;">
+            <span>Save Routine Card ($1.99)</span>
             <span class="btn-icon-circle">&rarr;</span>
           </a>
         </div>

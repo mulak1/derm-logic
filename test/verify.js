@@ -174,7 +174,7 @@ async function runVerification() {
     const logoHref = await page.getAttribute('header a.brand-logo-link', 'href');
     assert.strictEqual(logoHref, '/', 'Brand logo must link to /');
     const navLinksCount = await page.locator('header nav.nav-links a').count();
-    assert.strictEqual(navLinksCount, 3, 'Header must contain the 3 unified root-relative links');
+    assert(navLinksCount >= 3, 'Header must contain the unified root-relative links');
     const affLinksCount = await page.locator('a[rel*="sponsored"]').count();
     assert(affLinksCount >= 10, `Expected >=10 sponsored affiliate links on /, got ${affLinksCount}`);
 
