@@ -164,17 +164,17 @@ function renderGrowthPageHtml(cfg, item, kind) {
   const rows = kind === 'compare'
     ? [
         { name: item.entityA, kpi: item.scoreA, action: 'Top Rated · Leading Option', status: 'RECOMMENDED (#1)' },
-        { name: item.entityB, kpi: item.scoreB, action: 'Alternative · Comparison Baseline', status: 'GAP FOUND' },
+        { name: item.entityB, kpi: item.scoreB, action: 'Alternative · Comparison Baseline', status: 'SEPARATE AM/PM' },
         { name: 'Key Difference & Gain', kpi: item.winnerLift, action: `Use ${cfg.freeDeliverableName}`, status: 'VERIFIED GAIN' },
-        { name: 'Row #4 Step-by-Step Comparison Breakdown', kpi: 'Locked in Preview', action: 'Save Complete 3-File Dossier ($1.99)', status: 'LOCKED_PREVIEW' },
-        { name: 'Row #5 Complete 3-File Ritual Pack', kpi: 'Locked in Preview', action: 'Save Complete 3-File Dossier ($1.99)', status: 'LOCKED_PREVIEW' }
+        { name: '4-Night Recovery Schedule & Wait Intervals', kpi: '60s Dry-Down + 4-Night Cycle', action: 'Alternate active nights with 2 ceramide recovery nights', status: 'INCLUDED IN KIT' },
+        { name: 'Printable 9:16 Phone Card & Calendar (.ICS)', kpi: 'PDF + .ICS + .CSV Swaps', action: 'Save complete Morning & Bedtime Routine Kit ($1.99)', status: 'READY TO SAVE' }
       ]
     : [
         { name: `${item.target} : Baseline Check`, kpi: item.metricA, action: 'Test Your Own Above', status: 'VERIFIED' },
         { name: `${cfg.freeDeliverableName} Impact`, kpi: item.metricB, action: 'Ready-to-Use Ritual File', status: 'READY' },
         { name: 'Setup Time', kpi: '< 10 Seconds', action: 'Instant Browser Calculation', status: 'INSTANT' },
-        { name: 'Row #4 Step-by-Step Fix Breakdown', kpi: 'Locked in Preview', action: 'Save Complete 3-File Dossier ($1.99)', status: 'LOCKED_PREVIEW' },
-        { name: 'Row #5 Complete 3-File Ritual Pack', kpi: 'Locked in Preview', action: 'Save Complete 3-File Dossier ($1.99)', status: 'LOCKED_PREVIEW' }
+        { name: '4-Night Recovery Schedule & Wait Intervals', kpi: '60s Dry-Down + 4-Night Cycle', action: 'Alternate active nights with 2 ceramide recovery nights', status: 'INCLUDED IN KIT' },
+        { name: 'Printable 9:16 Phone Card & Calendar (.ICS)', kpi: 'PDF + .ICS + .CSV Swaps', action: 'Save complete Morning & Bedtime Routine Kit ($1.99)', status: 'READY TO SAVE' }
       ];
 
   const trsHtml = rows.map((r, idx) => `<tr${idx === 3 ? ' id="eb-growth-row4-tr"' : ''}><th${idx === 0 ? ' id="eb-growth-r1-name"' : ''} scope="row" style="text-align:left;font-weight:500;">${escXml(r.name)}</th><td${idx === 0 ? ' id="eb-growth-r1-kpi"' : (idx === 1 ? ' id="eb-growth-r2-kpi"' : (idx === 3 ? ' id="eb-growth-row4-val"' : ''))} class="mono" style="font-weight:500;color:var(--rose-brand);">${escXml(r.kpi)}</td><td style="color:var(--text-secondary);">${escXml(r.action)}</td><td${idx === 3 ? ' id="eb-growth-row4-status"' : ''} style="font-size:13.5px;font-weight:500;color:var(--sage-safe);">${escXml(r.status)}</td></tr>`).join('');
@@ -229,13 +229,13 @@ function renderGrowthPageHtml(cfg, item, kind) {
         <tbody id="prompt-matrix-tbody">${trsHtml}</tbody>
       </table>
       <div id="eb-inline-row4-unlock" style="margin-top:18px;padding:16px 20px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <div style="font-size:15px;font-weight:500;color:var(--text-primary);">Rows #4 &amp; #5 Locked: Unblur your complete 3-File Ritual Dossier via 1-Click Stripe Express</div>
+        <div style="font-size:15px;font-weight:500;color:var(--text-primary);">Want to save this schedule to your phone? Get the 9:16 Lock-Screen Card, 4-Night Calendar (.ICS) &amp; Pore-Safe Swaps</div>
         <div id="eb-growth-row4-msg" style="display:none !important;">
           <input id="eb-growth-row4-email" type="email" placeholder="you@email.com" aria-label="Email to unlock Row 4" />
           <button id="eb-growth-row4-btn" type="button">Reveal Row #4 →</button>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
-          <a href="/buy/flash_pass" rel="nofollow" class="btn btn-primary" style="padding:10px 18px;font-size:14px;">Save Complete 3-File Dossier ($1.99) →</a>
+          <a href="/buy/flash_pass" rel="nofollow" class="btn btn-primary" style="padding:10px 18px;font-size:14px;">Save Complete Routine Kit ($1.99) →</a>
         </div>
       </div>
     </section>
