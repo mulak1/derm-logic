@@ -265,12 +265,55 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
         <div style="display:flex;align-items:center;gap:8px;"><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" class="btn btn-primary" style="padding:10px 18px;font-size:14px;">Save Complete 3-Part Kit ($1.99) →</a></div>
       </div>
     </section>
-    <article style="background:var(--bg-oat);padding:28px 32px;margin-top:24px;">
-      <h2 style="font-size:clamp(1.35rem,1.9vw,1.7rem);margin:0 0 12px 0;font-weight:400;">How to Layer ${esc(humanTitle)} Without Irritation</h2>
-      <p style="font-size:16.5px;color:var(--text-secondary);margin:0 0 18px 0;line-height:1.68;max-width:74ch;">When building a routine around <strong>${esc(humanTitle)}</strong>, timing and texture order make all the difference. ${esc(scan.cnnReadout)}. Our dermatologist-rule check recommends a simple adjustment: <strong>${esc(scan.issue)}</strong>. Giving each layer 60 seconds to settle before applying moisturizer or sunscreen keeps your skin calm, hydrated, and pill-free.</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:16px;">
-        <div style="padding:22px 24px;background:var(--bg-surface);"><div style="font-size:13.5px;font-weight:500;color:var(--rose-brand);margin-bottom:6px;">1. How It Feels on Your Skin</div><div style="font-size:15.5px;color:var(--text-primary);line-height:1.6;">${esc(scan.cnnReadout)}. Compare this pairing with other gentle combinations in our <a href="/leaderboard" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">Routine Library</a>.</div></div>
-        <div style="padding:22px 24px;background:var(--bg-surface);"><div style="font-size:13.5px;font-weight:500;color:var(--rose-brand);margin-bottom:6px;">2. Recommended Morning &amp; Bedtime Order</div><div style="font-size:15.5px;color:var(--text-primary);line-height:1.6;">${esc(scan.issue)}. Browse our <a href="/directory" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">72+ Pairing &amp; Bottle Guides</a> for step-by-step wait times.</div></div>
+    <article id="scan-layering-ritual-guide" style="background:var(--bg-oat);padding:32px;margin-top:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:18px;margin-bottom:22px;">
+        <div style="flex:1 1 520px;max-width:64ch;">
+          <div class="mono" style="font-size:13.5px;font-weight:500;color:var(--rose-brand);margin-bottom:6px;">Step-by-Step Bathroom Vanity Guide · Zero Pilling &amp; Zero Stinging</div>
+          <h2 style="font-size:clamp(1.5rem,2.1vw,1.9rem);margin:0 0 10px 0;font-weight:400;max-width:none;">How to Layer ${esc(humanTitle)} Without Irritation</h2>
+          <p style="font-size:16px;color:var(--text-secondary);margin:0;line-height:1.62;">${scan.score < 86 ? `When two concentrated formulas clash on contact, waiting a few minutes isn't enough—separating them between morning sun defense and bedtime repair keeps both bottles at full strength while protecting your moisture barrier.` : `Applying your bottles from thinnest watery serum to richest barrier cream—with a brief 60-second dry-down window between steps—lets every active absorb cleanly without tightness or sunscreen pilling.`}</p>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:14px 18px;background:var(--bg-surface);">
+          <span class="mono" style="font-size:13px;color:var(--sage-safe);font-weight:500;">7:30 AM Morning Shield · 9:30 PM Bedtime Repair</span>
+          <a href="/#analyzer" class="mono" style="font-size:14px;color:var(--rose-brand);font-weight:500;text-decoration:none;">Check Your Own Bottles on the Shelf &rarr;</a>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;align-items:stretch;">
+        <div style="padding:22px 24px;background:var(--bg-surface);display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
+          <div>
+            <div style="overflow:hidden;margin-bottom:14px;background:var(--bg-oat);"><img src="/public/editorial-woman-morning.jpg" alt="Morning skincare layering at sunlit vanity" loading="lazy" style="width:100%;height:148px;object-fit:cover;object-position:center 28%;display:block;" /></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+              <span class="mono" style="font-size:13px;font-weight:500;color:var(--rose-brand);">1. Morning Order (7:30 AM)</span>
+              <span class="badge-safe mono" style="font-size:12px;padding:2px 8px;">Protect &amp; Glow</span>
+            </div>
+            <div class="serif-display" style="font-size:1.25rem;color:var(--text-primary);margin-bottom:8px;line-height:1.28;">Antioxidant Serum Under Broad-Spectrum SPF</div>
+            <p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0;">After a gentle lukewarm rinse, pat your morning brightening or hydrating serum onto dry skin. Give it <strong>60 seconds</strong> to settle so your moisturizer and <strong>SPF 30–50+</strong> glide on smoothly under makeup without pilling.</p>
+          </div>
+          <a href="/leaderboard" class="mono" style="font-size:13.5px;color:var(--rose-brand);font-weight:500;text-decoration:none;padding-top:8px;">Compare Ranked Morning &amp; Night Routines &rarr;</a>
+        </div>
+        <div style="padding:22px 24px;background:var(--bg-surface);display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
+          <div>
+            <div style="overflow:hidden;margin-bottom:14px;background:var(--bg-oat);"><img src="/public/editorial-woman-evening.jpg" alt="Evening barrier repair skincare ritual" loading="lazy" style="width:100%;height:148px;object-fit:cover;object-position:center 25%;display:block;" /></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+              <span class="mono" style="font-size:13px;font-weight:500;color:var(--rose-brand);">2. Bedtime Order (9:30 PM)</span>
+              <span class="badge-safe mono" style="font-size:12px;padding:2px 8px;">Repair &amp; Cushion</span>
+            </div>
+            <div class="serif-display" style="font-size:1.25rem;color:var(--text-primary);margin-bottom:8px;line-height:1.28;">Night Renewal Cushioned With Ceramide Cream</div>
+            <p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0;">${esc(scan.issue)}. Wait 60 seconds after applying your evening treatment, then seal in overnight moisture with a soothing <strong>ceramide barrier cream</strong> to prevent dryness or flaking.</p>
+          </div>
+          <a href="/directory" class="mono" style="font-size:13.5px;color:var(--rose-brand);font-weight:500;text-decoration:none;padding-top:8px;">Browse All 318 Pairing &amp; Bottle Guides &rarr;</a>
+        </div>
+        <div style="padding:22px 24px;background:var(--bg-surface);display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
+          <div>
+            <div style="overflow:hidden;margin-bottom:14px;background:var(--bg-oat);"><img src="/public/editorial-vanity-shelf.jpg" alt="Organized porcelain bathroom vanity shelf" loading="lazy" style="width:100%;height:148px;object-fit:cover;object-position:center 50%;display:block;" /></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+              <span class="mono" style="font-size:13px;font-weight:500;color:var(--sage-safe);">3. Weekly Pacing Rhythm</span>
+              <span class="badge-safe mono" style="font-size:12px;padding:2px 8px;">4-Night Cycle</span>
+            </div>
+            <div class="serif-display" style="font-size:1.25rem;color:var(--text-primary);margin-bottom:8px;line-height:1.28;">Never Stack Strong Acids &amp; Retinoids Same-Night</div>
+            <p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0;">Give your skin barrier room to breathe by rotating active nights: <strong>Night 1</strong> gentle exfoliant, <strong>Night 2</strong> retinoid renewal, and <strong>Nights 3 &amp; 4</strong> pure peptide and ceramide hydration.</p>
+          </div>
+          <a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" class="mono" style="font-size:13.5px;color:var(--rose-brand);font-weight:500;text-decoration:none;padding-top:8px;">Save 9:16 Phone Card &amp; Calendar ($1.99) &rarr;</a>
+        </div>
       </div>
     </article>
     <details style="background:var(--bg-oat);padding:18px 24px;margin-top:20px;">
