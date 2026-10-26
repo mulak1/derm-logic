@@ -33,7 +33,7 @@ const VERTICAL_CONFIGS = {
       brandPrimary: '#0F172A', brandSoftBg: '#F1F5F9', brandText: '#0F172A',
       safeColor: '#047857', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
       fontDisplay: "'Newsreader', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      radiusCard: '14px', radiusPill: '8px', shadow: 'none'
+      radiusCard: '8px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199',
     flashPriceDefault: 'price_1UQjMqIaoGnkXxS84yeYo8HG',
@@ -113,14 +113,14 @@ const VERTICAL_CONFIGS = {
       summary: 'Compiles spec-compliant /llms-full.txt manifests and schema-dts @graph blocks with Zod contract verification.'
     },
     deliverableFiles: [
-      { file: 'llms-full.txt', size: '18.4 KB', schema: 'AI Crawler Guide File', status: 'VALID' },
-      { file: 'schema-graph.jsonld', size: '3.2 KB', schema: 'Structured Data Code', status: 'VALID' },
-      { file: '25-buyer-prompts.csv', size: '6.1 KB', schema: '25 Buyer Questions Table', status: 'VALID' }
+      { file: 'llms-full.txt', label: 'AI Crawler Guide (llms.txt)', size: '18.4 KB', schema: 'Plain-English guide that tells ChatGPT & Perplexity what your product does and how it is priced', status: 'VALID' },
+      { file: 'schema-graph.jsonld', label: 'Product Schema Code (.JSON)', size: '3.2 KB', schema: 'Copy-paste structured data so Google AI and search engines cite your facts accurately', status: 'VALID' },
+      { file: '25-buyer-prompts.csv', label: '25 Buyer Questions (.CSV)', size: '6.1 KB', schema: 'Spreadsheet of the 25 questions buyers ask AI in your category and who currently ranks #1', status: 'VALID' }
     ],
     remediationDiff: {
-      beforeLine: '- [DIAGNOSIS] 3 AI Crawler & Schema Gaps Detected | Current AI Mention Share: 22.9%',
-      afterLine: '+ [LOCKED FIX] Custom /llms-full.txt + JSON-LD @graph [REDACTED IN PREVIEW] -> 29.2% (+6.3% Lift)',
-      roiBadge: '+6.3% to +27% More AI Mentions'
+      beforeLine: 'What we found: ChatGPT, Perplexity, and Google AI mention this site in only 22.9% of buyer searches because 3 key AI crawler and product-summary files are missing.',
+      afterLine: 'How the $1.99 pack fixes it: Gives you the ready-to-upload llms.txt guide, copy-paste product schema code, and 25 buyer-question rankings to lift AI mentions to an estimated 29.2%.',
+      roiBadge: 'Est. +6.3% to +27% more AI mentions'
     }
   },
   sponsor_radar: {
@@ -131,7 +131,7 @@ const VERTICAL_CONFIGS = {
       brandPrimary: '#C23B22', brandSoftBg: '#FFF4F1', brandText: '#9B2C18',
       safeColor: '#0F766E', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#92400E',
       fontDisplay: "'Newsreader', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      radiusCard: '14px', radiusPill: '8px', shadow: 'none'
+      radiusCard: '8px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMrIaoGnkXxS82T5cPcjM',
     corePriceEnv: 'STRIPE_PRICE_CREATOR_49', corePriceUsd: 49, coreLabel: 'Complete Creator Sponsor Database ($49/mo)',
@@ -204,14 +204,14 @@ const VERTICAL_CONFIGS = {
       summary: 'Verifies host-voiced ad reads vs. spliced dynamic insertions and compiles 3x-renewal anchored sponsorship pitches.'
     },
     deliverableFiles: [
-      { file: 'verified-buyer-contacts.csv', size: '3.8 KB', schema: 'Sponsor Contact Emails', status: 'VALID' },
-      { file: '3-flight-anchor-pitch.eml', size: '2.5 KB', schema: 'Ready-to-Send Pitch Email', status: 'VALID' },
-      { file: '96-flight-cpm-decay.csv', size: '14.2 KB', schema: '96 Ad Placements & Rates', status: 'VALID' }
+      { file: 'verified-buyer-contacts.csv', label: 'Sponsor Contact Emails (.CSV)', size: '3.8 KB', schema: 'Direct partnerships team emails and decision-maker roles for verified repeat sponsors', status: 'VALID' },
+      { file: '3-flight-anchor-pitch.eml', label: 'Ready-to-Send Pitch (.EML)', size: '2.5 KB', schema: 'Proven 3-episode pilot pitch email template referencing the sponsor’s active shows', status: 'VALID' },
+      { file: '96-flight-cpm-decay.csv', label: 'Show Ad Rates & Renewals (.CSV)', size: '14.2 KB', schema: 'Full table of 96 tracked ad placements, renewal counts, and negotiated CPM rates', status: 'VALID' }
     ],
     remediationDiff: {
-      beforeLine: '- [DIAGNOSIS] 14 Verified 3x+ Renewed Placements Found | Generic Cold Outreach Reply: 1.1%',
-      afterLine: '+ [LOCKED FIX] Verified Partnerships Email + 3-Flight Pitch [REDACTED IN PREVIEW] -> 18.4% Reply',
-      roiBadge: '16.7x Higher Sponsor Reply Rate'
+      beforeLine: 'What we found: Cold-emailing generic brand addresses gets a 1.1% reply rate, while this sponsor has renewed 3+ times across 14 verified shows.',
+      afterLine: 'How the $1.99 pack helps you close: Gives you the verified partnerships contact email, the exact CPM rates they paid on similar shows, and a ready-to-send 3-episode pilot pitch.',
+      roiBadge: '14 repeat sponsor placements verified'
     }
   },
   derm_logic: {
@@ -274,7 +274,7 @@ const VERTICAL_CONFIGS = {
       'preset-glass-skin': ['94/100', '0.8 pH', '89% Pass', '0 Triggers'], 'Glass Skin Hydration': ['94/100', '0.8 pH', '89% Pass', '0 Triggers']
     },
     presets: [
-      { key: 'TikTok 7-Active Stack', label: 'TikTok 7-Active' }, { key: 'Vitamin C + Copper Peptides', label: 'VitC + Copper' },
+      { key: 'TikTok 7-Active Stack', label: '7-Active' }, { key: 'Vitamin C + Copper Peptides', label: 'VitC + Cu' },
       { key: 'Tretinoin + Benzoyl Peroxide', label: 'Tret + BPO' }, { key: 'Fungal-Safe Barrier Care', label: 'Fungal-Safe' }, { key: 'Glass Skin Hydration', label: 'Glass Skin' }
     ],
     coMarketingPills: [
@@ -295,14 +295,14 @@ const VERTICAL_CONFIGS = {
       summary: 'Calculates free-acid bio-availability, Cu2+/Retinoid redox inactivation, and 4-night skin-cycling schedules.'
     },
     deliverableFiles: [
-      { file: 'am-pm-vanity-card-9x16.pdf', size: '48.2 KB', schema: '9:16 Phone & Print Card', status: 'VALID' },
-      { file: '4-night-skin-cycling.ics', size: '3.1 KB', schema: 'Apple & Google Calendar', status: 'VALID' },
-      { file: 'non-comedogenic-swaps.csv', size: '5.5 KB', schema: 'Pore-Safe Product Swaps', status: 'VALID' }
+      { file: 'am-pm-vanity-card-9x16.pdf', label: 'Phone Routine Card (PDF)', size: '48.2 KB', schema: 'Step-by-step Morning & Bedtime order tailored to your selected bottles with exact pH dry-down wait times', status: 'VALID' },
+      { file: '4-night-skin-cycling.ics', label: '4-Night Calendar (.ICS)', size: '3.1 KB', schema: '1-click Apple & Google Calendar rotation separating your conflicting acids, retinoids, and peptides across 4 nights', status: 'VALID' },
+      { file: 'non-comedogenic-swaps.csv', label: 'Pore-Safe Swaps (.CSV)', size: '5.5 KB', schema: '1-to-1 non-comedogenic, fungal-safe product swaps that layer cleanly with your active serums without pilling', status: 'VALID' }
     ],
     remediationDiff: {
-      beforeLine: 'Morning (7:30 AM): Gentle Rinse → Antioxidant / Hydrating Serum (Wait 60s) → Moisturizer & Broad-Spectrum SPF 50',
-      afterLine: 'Bedtime (9:30 PM): Gentle Cleanser → Targeted Night Treatment (4-Night Cycle) → 3:1:1 Ceramide Barrier Cream',
-      roiBadge: '9:16 Phone Card + 4-Night Calendar'
+      beforeLine: 'Morning (7:30 AM): Gentle Rinse -> Antioxidant Serum (exact wait time locked in PDF) -> Barrier Moisturizer & SPF 50.',
+      afterLine: 'Bedtime (9:30 PM): Separates conflicting night actives onto alternating nights -> 3:1:1 Ceramide Barrier Cream.',
+      roiBadge: 'Tailored to Your Shelf · Protects Active Serums'
     }
   },
   abandon_alpha: {
@@ -313,7 +313,7 @@ const VERTICAL_CONFIGS = {
       brandPrimary: '#0F172A', brandSoftBg: '#F1F5F9', brandText: '#0F172A',
       safeColor: '#047857', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
       fontDisplay: "'Playfair Display', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      radiusCard: '16px', radiusPill: '999px', shadow: 'none'
+      radiusCard: '8px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMtIaoGnkXxS8fAEYjqnp',
     corePriceEnv: 'STRIPE_PRICE_STARTER_49', corePriceUsd: 49, coreLabel: 'Complete Store Recovery Suite ($49/mo)',
@@ -386,14 +386,14 @@ const VERTICAL_CONFIGS = {
       summary: 'Replaces naive 24h card retries and static popups with decline-code aware scheduling and Thompson Sampling.'
     },
     deliverableFiles: [
-      { file: 'abandon-alpha-bandit-sdk.js', size: '8.9 KB', schema: 'Beta-Bernoulli C1–C6 SDK', status: 'VALID' },
-      { file: 'stripe-recovery-worker.js', size: '4.6 KB', schema: 'Decline-Code Retry Worker', status: 'VALID' },
-      { file: 'payday-retry-schedule.csv', size: '5.2 KB', schema: 'Visa/MC Compliance Matrix', status: 'VALID' }
+      { file: 'abandon-alpha-bandit-sdk.js', label: 'Smart Exit-Offer Script (.JS)', size: '8.9 KB', schema: 'Shows leaving shoppers the right offer (free shipping, payment plan, or small discount) without giving coupons to full-price buyers', status: 'VALID' },
+      { file: 'stripe-recovery-worker.js', label: 'Payday Card Retry Script (.JS)', size: '4.6 KB', schema: 'Retries declined Stripe cards on payday mornings and bank-approval windows instead of blind daily retries', status: 'VALID' },
+      { file: 'payday-retry-schedule.csv', label: 'Bank Retry Schedule (.CSV)', size: '5.2 KB', schema: 'Day-and-hour retry calendar for every Stripe decline code (insufficient funds, do not honor, expired card)', status: 'VALID' }
     ],
     remediationDiff: {
-      beforeLine: '- [DIAGNOSIS] $214,523/mo Leaking Across Checkout Exits & Failed Stripe Card Renewals',
-      afterLine: '+ [LOCKED FIX] Issuer-Timed Retry Schedule + C1–C6 Bandit SDK [REDACTED IN PREVIEW] -> +$56,722/mo',
-      roiBadge: '+$56,722/mo Net Recovery'
+      beforeLine: 'What we found: Your checkout is losing an estimated $214,523/mo from shoppers leaving at checkout and declined Stripe cards retried at the wrong time.',
+      afterLine: 'How the $1.99 pack fixes it: Matches leaving shoppers with the right exit offer and retries failed cards on payday mornings when bank balances clear, recovering an estimated +$36,620/mo.',
+      roiBadge: 'Est. +$36,620/mo recoverable sales'
     }
   }
 };
@@ -629,7 +629,7 @@ function attachExactBaselinePack(app, options = {}) {
   app.get('/api/github-upgrade/skin-cycling.ics', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
     store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/skin-cycling.ics', isTest, isCrawler, meta: { export: 'ics_calendar' } });
-    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', `PRODID:-//${cfg.brandName}//NONSGML v1.0//EN`, 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT', `UID:${cfg.moduleId}-night1@dermlogic.io`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261015T210000Z', 'DTEND:20261015T213000Z', `SUMMARY:${cfg.brandName} Cycle 1: Primary Protocol Window`, `DESCRIPTION:${cfg.explainerText}: https://${cfg.domain}`, 'END:VEVENT', 'BEGIN:VEVENT', `UID:${cfg.moduleId}-night2@dermlogic.io`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261016T210000Z', 'DTEND:20261016T213000Z', `SUMMARY:${cfg.brandName} Cycle 2: Secondary Recovery Window`, `DESCRIPTION:Follow spacing protocol: https://${cfg.domain}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', `PRODID:-//${cfg.brandName}//NONSGML v2.0//EN`, 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT', `UID:${cfg.moduleId}-night1@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261015T210000Z', 'DTEND:20261015T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Night 1: Exfoliation & Active Window`, `DESCRIPTION:${cfg.explainerText} (Wait 60s before barrier moisturizer): https://${cfg.domain}`, 'END:VEVENT', 'BEGIN:VEVENT', `UID:${cfg.moduleId}-night2@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261016T210000Z', 'DTEND:20261016T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Night 2: Retinoid / Secondary Active Window`, `DESCRIPTION:Pea-sized retinoid on dry skin + ceramide buffer: https://${cfg.domain}`, 'END:VEVENT', 'BEGIN:VEVENT', `UID:${cfg.moduleId}-night3@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261017T210000Z', 'DTEND:20261017T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Nights 3-4: Barrier Recovery & Peptide Cushion`, `DESCRIPTION:Zero acids or retinoids; hydrate + seal moisture barrier: https://${cfg.domain}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
     res.status(200).type('text/calendar; charset=utf-8').setHeader('Content-Disposition', `attachment; filename="${cfg.moduleId}-schedule.ics"`).send(ics);
   });
 
@@ -766,12 +766,14 @@ function attachExactBaselinePack(app, options = {}) {
 
   app.get('/api/github-upgrade/stripe-recovery-worker.js', (req, res) => {
     const code = [
-      '/** AbandonAlpha (#9): Autonomous Stripe Webhook Dunning & Exit-Intent Worker */',
-      'export default { async fetch(request) {',
-      '  const payload = await request.json();',
-      '  const code = payload?.data?.object?.last_payment_error?.decline_code || "insufficient_funds";',
-      '  const delayHours = code === "insufficient_funds" ? 72 : (code === "do_not_honor" ? 4 : 12);',
-      '  return new Response(JSON.stringify({ ok: true, decline_code: code, scheduled_retry_hours: delayHours, bandit_arm: "C1_SAVE15" }), { headers: { "Content-Type": "application/json" } });',
+      '/** AbandonAlpha (#9): Autonomous Stripe Webhook Dunning & Exit-Intent Worker (Cloudflare / Edge) */',
+      'export default { async fetch(request, env) {',
+      '  const sig = request.headers.get("stripe-signature") || ""; if (!sig) return new Response("Missing signature", { status: 400 });',
+      '  const payload = await request.json(); const obj = payload?.data?.object || {};',
+      '  const code = obj?.last_payment_error?.decline_code || "insufficient_funds";',
+      '  const action = code === "expired_card" ? "SEND_1TAP_PORTAL_LINK_ZERO_RETRY" : (code === "insufficient_funds" ? "SCHEDULE_FRIDAY_0905_PAYDAY_RETRY" : "COOLDOWN_24H_SOFT_RETRY");',
+      '  const delayHours = code === "insufficient_funds" ? 72 : (code === "do_not_honor" ? 24 : 0);',
+      '  return new Response(JSON.stringify({ ok: true, idempotency_key: `aa_${obj.id || Date.now()}_${code}`, decline_code: code, recovery_action: action, scheduled_retry_hours: delayHours, bandit_arm: "C1_SAVE15" }), { headers: { "Content-Type": "application/json" } });',
       '} };'
     ].join('\n');
     res.status(200).type('application/javascript; charset=utf-8').setHeader('Content-Disposition', 'attachment; filename="stripe-recovery-worker.js"').send(code);
@@ -896,7 +898,7 @@ function attachExactBaselinePack(app, options = {}) {
     const isUpgradeFlash = !isMicro && !isFlash && (rawTier.includes('upgrade_from_flash') || rawTier.includes('2701'));
     const isPlaybook = !isMicro && !isFlash && !isUpgradeFlash && (rawTier.includes('playbook') || rawTier.includes('29') || rawTier === 'audit_playbook' || rawTier === 'playbook_pass');
     const isPro = !isMicro && !isFlash && !isUpgradeFlash && !isPlaybook && (rawTier.includes('pro') || rawTier.includes('agency') || rawTier.includes('annual') || rawTier.includes('growth') || rawTier.includes('149') || rawTier.includes('99'));
-    const priceUsd = isMicro ? 0.99 : (isFlash ? 1.99 : (isUpgradeFlash ? 27.01 : (isPlaybook ? 29 : (isPro ? cfg.proPriceUsd : cfg.corePriceUsd))));
+    const upgPrice = Math.max(1, Number(((cfg.corePriceUsd || 29) - 1.99).toFixed(2))), priceUsd = isMicro ? 0.99 : (isFlash ? 1.99 : (isUpgradeFlash ? upgPrice : (isPlaybook ? 29 : (isPro ? cfg.proPriceUsd : cfg.corePriceUsd))));
     const tierName = isMicro ? 'micro_pass' : (isFlash ? 'flash_pass' : (isUpgradeFlash ? 'upgrade_from_flash' : (isPlaybook ? 'playbook_pass' : (isPro ? 'pro_b2b' : 'complete_dossier'))));
     const sku = String(req.body?.sku || `${cfg.moduleId}_${tierName}`);
     const priceId = (isMicro || isUpgradeFlash) ? '' : (isFlash ? (process.env[cfg.flashPriceEnv] || cfg.flashPriceDefault) : (isPlaybook ? (process.env.STRIPE_PRICE_PLAYBOOK_29 || '') : (isPro ? process.env[cfg.proPriceEnv] : process.env[cfg.corePriceEnv])));
@@ -920,8 +922,8 @@ function attachExactBaselinePack(app, options = {}) {
     store.recordEvent({ eventType: 'checkout_intent', pageUrl: String(req.body?.pageUrl || req.originalUrl || '/'), deviceType, isTest, isCrawler, isOwnerIp, clientIp, meta: { tier: tierName, sku, price_usd: priceUsd, method: req.method, has_referer: hasSameRef, target: rawTarget, vid } });
 
     const baseUrl = `https://${cfg.domain}`, stripeKey = process.env.STRIPE_SECRET_KEY || '', targetPrefix = rawTarget ? `${rawTarget} · ` : '';
-    let checkoutUrl = `https://checkout.stripe.com/c/pay/cs_live_${cfg.moduleId}_${tierName}_${Date.now()}`, sessionId = `cs_live_${cfg.moduleId}_${Date.now()}`;
-    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? 'Instant 15-Brand Campaign & Lookalike Pass ($1 Trial)' : (isFlash ? `${cfg.freeDeliverableName || 'Full 85-Brand Vault & .EML Pack'} ($1.99)` : (isUpgradeFlash ? 'CFO Moneyball Media Plan & Agency Rep Vault ($27.01, $1.99 Pass Credit Applied)' : (isPlaybook ? 'CFO Moneyball Media Plan & Agency Rep Vault ($29)' : (isPro ? cfg.proLabel : cfg.coreLabel))))}`;
+    let checkoutUrl = `https://checkout.stripe.com/c/pay/cs_live_${cfg.moduleId}_${tierName}_${Date.now()}`, sessionId = `cs_live_${cfg.moduleId}_${Date.now()}`, f0Lbl = (cfg.deliverableFiles && cfg.deliverableFiles[0] && (cfg.deliverableFiles[0].label || cfg.deliverableFiles[0].file)) || 'Single Deliverable File';
+    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? `Single-File Pass: ${f0Lbl} (99¢)` : (isFlash ? `${cfg.freeDeliverableName || 'Full 3-File Deliverable Pack'} ($1.99)` : (isUpgradeFlash ? `${cfg.coreLabel} ($${upgPrice.toFixed(2)}, $1.99 Pass Credit Applied)` : (isPlaybook ? cfg.coreLabel : (isPro ? cfg.proLabel : cfg.coreLabel))))}`;
     const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList}. One-time payment, never renews.`;
 
     const buildInlineParams = () => {

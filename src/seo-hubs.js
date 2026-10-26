@@ -402,52 +402,63 @@ function renderCelebrityDetailPage(celeb) {
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:28px;">
         <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;position:relative;overflow:hidden;">
-          <svg aria-hidden="true" width="148" height="148" viewBox="0 0 120 120" fill="none" style="position:absolute;top:-22px;right:-22px;pointer-events:none;opacity:0.12;">
-            <circle cx="60" cy="60" r="24" stroke="#A46B1D" stroke-width="1.25"/>
-            <circle cx="60" cy="60" r="40" stroke="#A46B1D" stroke-width="0.9" stroke-dasharray="3 4"/>
-            <path d="M60 8V22M60 98V112M8 60H22M98 60H112M23 23L33 33M87 87L97 97M97 23L87 33M33 87L23 97" stroke="#A46B1D" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px;position:relative;z-index:1;">
-            <div>
-              <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--honey-warn);font-weight:500;">
-                <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg>
-                <span>7:30 AM · Morning Prep Under Makeup</span>
-              </span>
-              <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;">Morning Layering Sequence</h2>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:4px 10px 4px 4px;background:var(--bg-surface);border:1px solid rgba(164,107,29,0.22);flex-shrink:0;">
-              <img src="/public/editorial-woman-morning.jpg" alt="Morning daylight skincare application" width="44" height="44" style="width:44px;height:44px;object-fit:cover;object-position:center 20%;display:block;" loading="lazy" />
-              <div style="line-height:1.25;">
-                <div class="mono" style="font-size:0.7rem;color:var(--honey-warn);font-weight:600;letter-spacing:0.03em;">DAYLIGHT</div>
-                <div style="font-size:0.76rem;color:var(--text-secondary);">Under SPF 50</div>
-              </div>
-            </div>
+          <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:112px;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse 68% 95% at 80% 10%, rgba(214,152,58,0.28) 0%, rgba(232,190,118,0.12) 52%, transparent 82%),linear-gradient(90deg, rgba(255,248,234,0.5) 0%, rgba(222,168,84,0.22) 100%);-webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 55%, transparent 100%);mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 55%, transparent 100%);">
+            <svg width="100%" height="112" viewBox="0 0 640 112" preserveAspectRatio="xMidYMin slice" fill="none">
+              <defs>
+                <radialGradient id="amSunGlow" cx="78%" cy="28%" r="48%">
+                  <stop offset="0%" stop-color="#D99B38" stop-opacity="0.42"/>
+                  <stop offset="55%" stop-color="#D99B38" stop-opacity="0.12"/>
+                  <stop offset="100%" stop-color="#D99B38" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <rect width="640" height="112" fill="url(#amSunGlow)"/>
+              <path d="M-20 92 Q 260 44 660 84" stroke="#A46B1D" stroke-opacity="0.22" stroke-width="1.2"/>
+              <path d="M-20 104 Q 300 62 660 98" stroke="#A46B1D" stroke-opacity="0.14" stroke-width="1" stroke-dasharray="4 6"/>
+              <circle cx="512" cy="34" r="22" fill="#E3A84B" fill-opacity="0.22" stroke="#A46B1D" stroke-opacity="0.42" stroke-width="1.3"/>
+              <circle cx="512" cy="34" r="38" stroke="#A46B1D" stroke-opacity="0.22" stroke-width="1" stroke-dasharray="3 5"/>
+              <circle cx="512" cy="34" r="58" stroke="#A46B1D" stroke-opacity="0.14" stroke-width="0.9"/>
+              <path d="M512 2V10M512 58V66M474 34H482M542 34H550M485 7L491 13M533 55L539 61M539 7L533 13M491 55L485 61M420 22L464 30M360 14L448 26" stroke="#A46B1D" stroke-opacity="0.28" stroke-width="1.15" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div style="margin-bottom:16px;position:relative;z-index:1;">
+            <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--honey-warn);font-weight:500;">
+              <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg>
+              <span>7:30 AM · Morning Prep Under Makeup</span>
+            </span>
+            <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;">Morning Layering Sequence</h2>
           </div>
           <div style="position:relative;z-index:1;">
             ${celeb.amSteps.map((s) => `<div style="padding:13px 16px;background:var(--bg-surface);border-left:2.5px solid rgba(164,107,29,0.45);margin-bottom:9px;"><strong style="display:block;font-size:0.93rem;margin-bottom:3px;">${escapeHtml(s.step)}</strong><span style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
           </div>
         </div>
         <div class="porcelain-vessel-core" style="background:#181412;color:#F4EFE8;padding:26px 28px;position:relative;overflow:hidden;">
-          <svg aria-hidden="true" width="148" height="148" viewBox="0 0 120 120" fill="none" style="position:absolute;top:-18px;right:-18px;pointer-events:none;opacity:0.14;">
-            <path d="M74 28C57.4 28 44 41.4 44 58C44 74.6 57.4 88 74 88C81.2 88 87.8 85.4 93 81.2C82.4 83.6 71.2 76.8 68.8 66.2C66.4 55.6 73.2 44.4 83.8 42C80.7 33.8 77.6 28 74 28Z" stroke="#C9A45A" stroke-width="1.25"/>
-            <circle cx="60" cy="60" r="44" stroke="#C9A45A" stroke-width="0.85" stroke-dasharray="2 5"/>
-            <path d="M34 34L36 40L42 42L36 44L34 50L32 44L26 42L32 40L34 34Z" stroke="#C9A45A" stroke-width="1"/>
-          </svg>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px;position:relative;z-index:1;">
-            <div>
-              <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;color:#C9A45A;font-weight:500;">
-                <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/><path d="M18 4l.6 1.9L20.5 6.5l-1.9.6L18 9l-.6-1.9-1.9-.6 1.9-.6L18 4z"/></svg>
-                <span>9:30 PM · Bedtime Barrier Recovery</span>
-              </span>
-              <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;color:#F4EFE8;">Evening Recovery Sequence</h2>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:4px 10px 4px 4px;background:rgba(244,239,232,0.07);border:1px solid rgba(201,164,90,0.32);flex-shrink:0;">
-              <img src="/public/editorial-woman-evening.jpg" alt="Evening bedtime barrier recovery ritual" width="44" height="44" style="width:44px;height:44px;object-fit:cover;object-position:center 22%;display:block;" loading="lazy" />
-              <div style="line-height:1.25;">
-                <div class="mono" style="font-size:0.7rem;color:#C9A45A;font-weight:600;letter-spacing:0.03em;">NOCTURNAL</div>
-                <div style="font-size:0.76rem;color:#B5ACA3;">Barrier Seal</div>
-              </div>
-            </div>
+          <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:112px;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse 68% 95% at 80% 12%, rgba(201,164,90,0.28) 0%, rgba(142,110,56,0.12) 52%, transparent 84%),linear-gradient(90deg, rgba(24,20,18,0.15) 0%, rgba(201,164,90,0.16) 100%);-webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.68) 55%, transparent 100%);mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.68) 55%, transparent 100%);">
+            <svg width="100%" height="112" viewBox="0 0 640 112" preserveAspectRatio="xMidYMin slice" fill="none">
+              <defs>
+                <radialGradient id="pmMoonGlow" cx="78%" cy="28%" r="48%">
+                  <stop offset="0%" stop-color="#C9A45A" stop-opacity="0.38"/>
+                  <stop offset="55%" stop-color="#C9A45A" stop-opacity="0.12"/>
+                  <stop offset="100%" stop-color="#C9A45A" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <rect width="640" height="112" fill="url(#pmMoonGlow)"/>
+              <path d="M-20 88 Q 280 38 660 80" stroke="#C9A45A" stroke-opacity="0.22" stroke-width="1.15"/>
+              <path d="M-20 102 Q 310 56 660 96" stroke="#C9A45A" stroke-opacity="0.14" stroke-width="0.95" stroke-dasharray="3 6"/>
+              <path d="M518 16C504.5 16 493.5 27 493.5 40.5C493.5 54 504.5 65 518 65C524 65 529.4 62.8 533.6 59.4C524.8 61.3 515.7 55.8 513.8 47C511.9 38.2 517.4 29.1 526.2 27.2C523.6 20.5 521 16 518 16Z" fill="#C9A45A" fill-opacity="0.24" stroke="#C9A45A" stroke-opacity="0.55" stroke-width="1.3"/>
+              <circle cx="514" cy="40" r="36" stroke="#C9A45A" stroke-opacity="0.22" stroke-width="0.95" stroke-dasharray="2 5"/>
+              <path d="M446 22L448 27L453 29L448 31L446 36L444 31L439 29L444 27L446 22Z" fill="#C9A45A" fill-opacity="0.45"/>
+              <path d="M568 20L569.2 23.5L572.7 24.7L569.2 25.9L568 29.4L566.8 25.9L563.3 24.7L566.8 23.5L568 20Z" fill="#C9A45A" fill-opacity="0.4"/>
+              <circle cx="388" cy="28" r="1.4" fill="#C9A45A" fill-opacity="0.45"/>
+              <circle cx="418" cy="44" r="1.2" fill="#C9A45A" fill-opacity="0.35"/>
+              <circle cx="586" cy="48" r="1.4" fill="#C9A45A" fill-opacity="0.4"/>
+            </svg>
+          </div>
+          <div style="margin-bottom:16px;position:relative;z-index:1;">
+            <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;color:#C9A45A;font-weight:500;">
+              <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/><path d="M18 4l.6 1.9L20.5 6.5l-1.9.6L18 9l-.6-1.9-1.9-.6 1.9-.6L18 4z"/></svg>
+              <span>9:30 PM · Bedtime Barrier Recovery</span>
+            </span>
+            <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;color:#F4EFE8;">Evening Recovery Sequence</h2>
           </div>
           <div style="position:relative;z-index:1;">
             ${celeb.pmSteps.map((s) => `<div style="padding:13px 16px;background:rgba(244,239,232,0.08);border-left:2.5px solid rgba(201,164,90,0.5);margin-bottom:9px;"><strong style="display:block;font-size:0.93rem;margin-bottom:3px;color:#F4EFE8;">${escapeHtml(s.step)}</strong><span style="font-size:0.86rem;color:#B5ACA3;line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
