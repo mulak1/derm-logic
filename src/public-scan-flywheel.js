@@ -292,20 +292,15 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   const cat = getFlywheelCatalog(cfg.moduleId);
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const podium = ledger.slice(0, 3);
-  const medals = ['Rank 01 · Hall of Fame Leader', 'Rank 02 · Verified Runner-Up', 'Rank 03 · Barrier Benchmark'];
-  const podiumHtml = podium.map((item, idx) => `<div style="background:var(--bg-oat);padding:28px 30px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;">
+  const medals = ['Brightening & Firming Split', 'Gentle Retinoid Buffer', 'Redness & Pore Calming'];
+  const podiumHtml = podium.map((item, idx) => `<div style="background:var(--bg-oat);padding:32px 34px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;">
     <div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;">
-        <span style="font-size:13px;font-weight:500;letter-spacing:0.03em;color:${idx === 0 ? 'var(--rose-brand)' : 'var(--text-secondary)'};">${medals[idx]}</span>
-        <span class="badge-safe mono">${esc(item.grade)} · ${item.score}/100</span>
-      </div>
-      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-family:var(--font-display);font-size:1.45rem;font-weight:400;line-height:1.2;color:var(--text-primary);text-decoration:none;display:block;margin-bottom:6px;">${esc(fmtRoutineTitle(item.target))}</a>
-      <div class="mono" style="font-size:14px;font-weight:500;color:var(--rose-brand);margin-bottom:10px;">${esc(item.kpi1)} · ${esc(item.kpi2)}</div>
-      <div style="width:100%;height:4px;background:var(--bg-surface);overflow:hidden;margin-bottom:12px;"><div style="width:${item.score}%;height:100%;background:var(--sage-safe);"></div></div>
-      <p style="font-size:15px;color:var(--text-secondary);margin:0;line-height:1.55;">${esc(item.cnnReadout)}</p>
+      <div class="mono" style="font-size:14.5px;font-weight:500;color:var(--sage-safe);margin-bottom:12px;">${item.score} / 100 Harmony · ${medals[idx]}</div>
+      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-family:var(--font-display);font-size:1.45rem;font-weight:400;line-height:1.25;color:var(--text-primary);text-decoration:none;display:block;margin-bottom:10px;">${esc(fmtRoutineTitle(item.target))}</a>
+      <p style="font-size:16px;color:var(--text-secondary);margin:0;line-height:1.6;">${esc(item.issue)}. ${esc(item.cnnReadout)}.</p>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;font-size:14px;">
-      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:var(--rose-brand);font-weight:500;text-decoration:none;">Open Ritual Dossier →</a>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;font-size:14.5px;">
+      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:var(--rose-brand);font-weight:500;text-decoration:none;">Read step-by-step routine →</a>
       <a href="/badge/${esc(encodeURIComponent(item.target))}.svg" target="_blank" rel="noopener" style="color:var(--text-muted);text-decoration:underline;font-size:13px;">Live SVG Badge</a>
     </div>
   </div>`).join('');
@@ -315,12 +310,12 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
     const barColor = isTop ? 'var(--sage-safe)' : (item.score >= 75 ? 'var(--honey-warn)' : 'var(--rose-brand)');
     const rowTier = isTop ? 'fame' : 'fix';
     return `<tr data-lb-tier="${rowTier}" data-lb-text="${esc((item.target + ' ' + fmtRoutineTitle(item.target) + ' ' + item.kpi1 + ' ' + item.kpi2 + ' ' + item.cnnReadout + ' ' + item.issue).toLowerCase())}">
-    <td class="mono" style="font-weight:500;">#${idx + 1}</td>
-    <th scope="row" style="text-align:left;font-weight:500;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:var(--text-primary);font-weight:500;text-decoration:none;display:block;">${esc(fmtRoutineTitle(item.target))}</a><span class="mono" style="font-size:12.5px;color:var(--text-muted);font-weight:400;">${esc(item.target)}</span></th>
-    <td style="min-width:165px;"><div style="display:flex;align-items:center;gap:10px;"><span class="mono" style="font-weight:500;color:${barColor};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:4px;background:var(--bg-surface);overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
-    <td class="mono" style="font-size:14.5px;font-weight:400;">${esc(item.kpi1)} · ${esc(item.kpi2)}</td>
-    <td style="font-size:15px;color:var(--text-secondary);">${esc(item.cnnReadout)}</td>
-    <td><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:14px;font-weight:500;color:${barColor};text-decoration:none;white-space:nowrap;">${isTop ? 'View Dossier' : 'View Fix Plan'} →</a></td>
+    <td class="mono" style="font-weight:500;">${idx + 1}</td>
+    <th scope="row" style="text-align:left;font-weight:500;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:var(--text-primary);font-weight:500;text-decoration:none;display:block;font-size:16px;">${esc(fmtRoutineTitle(item.target))}</a></th>
+    <td style="min-width:150px;"><span class="mono" style="font-weight:500;color:${barColor};font-size:15px;">${item.score} / 100 (${esc(item.grade)})</span></td>
+    <td style="font-size:15px;color:var(--text-secondary);">${esc(item.kpi2)}</td>
+    <td style="font-size:15.5px;color:var(--text-primary);">${esc(item.issue)}</td>
+    <td><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:14.5px;font-weight:500;color:${barColor};text-decoration:none;white-space:nowrap;">${isTop ? 'Read Guide' : 'See Fix Plan'} →</a></td>
   </tr>`;
   }).join('');
 

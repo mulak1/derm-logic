@@ -278,9 +278,9 @@ const VERTICAL_CONFIGS = {
       { key: 'Tretinoin + Benzoyl Peroxide', label: 'Tret + BPO' }, { key: 'Fungal-Safe Barrier Care', label: 'Fungal-Safe' }, { key: 'Glass Skin Hydration', label: 'Glass Skin' }
     ],
     coMarketingPills: [
-      { key: 'sephora', label: 'pH Clash Risk', rowText: 'Formulation Alert: Mixing low-pH direct acids (pH 3.2) with neutral peptides (pH 6.0) causes rapid hydrolysis.' },
-      { key: 'dermstore', label: 'Retinoid Oxidation', rowText: 'Formulation Alert: Combining unencapsulated retinoids with peroxides or low-pH acids triggers barrier stinging.' },
-      { key: 'ultrasun', label: 'Pore-Safety Check', rowText: 'Formulation Alert: Heavy esters (Isopropyl Myristate & Coconut Alkanes) trap heat under active serums.' }
+      { key: 'sephora', label: 'Acid + Peptide Clash', rowText: 'When you layer an acidic Vitamin C serum (pH 3.2) right under Copper Peptides (pH 6.2), both bottles lose potency and leave your skin feeling tight. Use Vitamin C in the morning and Peptides at night.' },
+      { key: 'dermstore', label: 'Retinoid Pacing', rowText: 'Applying prescription Tretinoin or Retinol on the same night as exfoliating acids or Benzoyl Peroxide strips your moisture barrier. Alternate them across a calm 4-night recovery schedule.' },
+      { key: 'ultrasun', label: 'Pore-Safe Bases', rowText: 'Heavy cream bases containing Isopropyl Myristate or coconut esters can trap heat and trigger small bumps under active serums. Pair strong actives with a breathable gel-cream.' }
     ],
     affiliates: [
       { title: 'SkinCeuticals C E Ferulic (Dermstore)', badge: 'Morning Vitamin C Pick', cpa: 'Shop Authorized Clinical', url: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/' },
@@ -295,13 +295,13 @@ const VERTICAL_CONFIGS = {
       summary: 'Calculates free-acid bio-availability, Cu2+/Retinoid redox inactivation, and 4-night skin-cycling schedules.'
     },
     deliverableFiles: [
-      { file: 'am-pm-vanity-card-9x16.pdf', size: '48.2 KB', schema: '9:16 Phone & Print Card', status: 'VALID' },
-      { file: '4-night-skin-cycling.ics', size: '3.1 KB', schema: 'Apple & Google Calendar', status: 'VALID' },
-      { file: 'non-comedogenic-swaps.csv', size: '5.5 KB', schema: 'Pore-Safe Product Swaps', status: 'VALID' }
+      { file: 'am-pm-vanity-card-9x16.pdf', label: '9:16 Phone Lock-Screen Card', desc: 'Morning & night bottle order with wait times', size: '48.2 KB', schema: '9:16 Phone & Print Card', status: 'VALID' },
+      { file: '4-night-skin-cycling.ics', label: '4-Night Skin-Cycling Calendar', desc: 'Exfoliation, retinoid & recovery night reminders', size: '3.1 KB', schema: 'Apple & Google Calendar', status: 'VALID' },
+      { file: 'non-comedogenic-swaps.csv', label: 'Barrier-Safe Swap Guide', desc: 'Pore-safe alternatives at Dermstore & Sephora', size: '5.5 KB', schema: 'Pore-Safe Product Swaps', status: 'VALID' }
     ],
     remediationDiff: {
-      beforeLine: 'Diagnosis: Active pH clash (ΔpH 2.8) & serum oxidation detected · Current Harmony: 20/100',
-      afterLine: 'Resolution: Morning Vitamin C + Bedtime Copper Peptides & 4-Night Cycling · Post-Fix: 96/100',
+      beforeLine: 'Why your shelf stings (20/100 Harmony): Layering acidic Vitamin C (pH 3.2) with Copper Peptides or Retinoids in the same evening cancels out both serums and strips your moisture barrier.',
+      afterLine: 'Your corrected order (96/100 Harmony): Vitamin C moves to morning protection, while Copper Peptides and Retinoids alternate across a gentle 4-night recovery rhythm.',
       roiBadge: 'Saves $182+ in Wasted Serums'
     }
   },

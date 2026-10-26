@@ -812,47 +812,43 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const top3 = ledger.filter((s) => s.score >= 85).slice(0, 3);
   const fix2 = ledger.filter((s) => s.score < 80).slice(0, 2);
-  const fmtMap = { 'VitC-AM-Peptides-PM': 'Vitamin C (AM) + Peptides (PM)', 'Ceramide-Tretinoin-Buffer': 'Ceramide Buffer + Tretinoin', 'Azelaic15-Niacinamide5': 'Azelaic 15% + Niacinamide 5%', 'BHA2-SnailMucin-Stack': '2% BHA + Snail Mucin Essence', 'VitC+Cu': 'Vitamin C + Copper Peptides', 'Tret+BPO': 'Tretinoin + Benzoyl Peroxide', 'TikTok': '7-Active Acid & Retinol Stack' };
-  const fmtTarget = (raw) => fmtMap[raw] || String(raw || '').replace(/VitC/g, 'Vitamin C').replace(/\+Cu/g, ' + Copper Peptides').replace(/Tret\+BPO/g, 'Tretinoin + Benzoyl Peroxide').replace(/Azelaic15/g, 'Azelaic 15%').replace(/Niacinamide5/g, 'Niacinamide 5%').replace(/-/g, ' ');
-  const medals = [
-    { icon: 'Rank 01 · Verified Ritual', bg: t.subtleBg, border: t.border, text: t.brandPrimary },
-    { icon: 'Rank 02 · Barrier Safe', bg: t.subtleBg, border: t.border, text: t.textSecondary },
-    { icon: 'Rank 03 · Harmonized Stack', bg: t.subtleBg, border: t.border, text: t.textSecondary }
-  ];
-  const podiumCards = top3.map((s, i) => {
-    const m = medals[i] || medals[2];
-    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:22px 24px;background:${t.canvasBg};text-decoration:none;color:${t.textPrimary};">
+  const copyMap = {
+    'VitC-AM-Peptides-PM': { tag: 'Brightening & Firming Split', title: 'Vitamin C in the Morning, Copper Peptides at Night', desc: 'Keeps acidic Vitamin C (pH 3.2) and Copper Peptides (pH 6.2) twelve hours apart so neither bottle oxidizes or stings.' },
+    'Ceramide-Tretinoin-Buffer': { tag: 'Gentle Retinoid Buffer', title: 'Ceramide Cream Buffer Before Rx Tretinoin', desc: 'Applies a lipid-rich ceramide moisturizer twenty minutes before Tretinoin 0.05% to prevent flaking and tightness.' },
+    'Azelaic15-Niacinamide5': { tag: 'Redness & Pore Calming', title: 'Azelaic Acid 15% Layered with Niacinamide 5%', desc: 'Pairs two soothing actives that share a gentle pH 5.0 window—calming redness and congestion without flushing.' },
+    'VitC+Cu': { tag: 'Common Shelf Clash', title: 'Vitamin C + Copper Peptides in the Same Routine', desc: 'Copper ions oxidize L-Ascorbic Acid on contact. Separate into morning and bedtime steps →' },
+    'Tret+BPO': { tag: 'High Irritation Risk', title: 'Rx Tretinoin + Benzoyl Peroxide Layered Together', desc: 'Peroxide cancels over 80% of Tretinoin potency in two hours. See the safe alternating schedule →' }
+  };
+  const podiumCards = top3.map((s) => {
+    const c = copyMap[s.target] || { tag: 'Verified Ritual', title: s.target, desc: `${s.kpi1} · ${s.kpi2}` };
+    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:34px 32px;background:${t.subtleBg};text-decoration:none;color:${t.textPrimary};">
       <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
-          <span style="padding:3px 9px;background:${m.bg};color:${m.text};font-size:12.5px;font-weight:600;">${m.icon}</span>
-          <span class="eb-tabular" style="padding:3px 10px;background:${t.safeSoftBg};color:${t.safeColor};font-size:13px;font-weight:600;">Grade ${escHtml(s.grade)} · ${s.score}/100</span>
-        </div>
-        <div style="font-family:${t.fontDisplay};font-size:1.3rem;font-weight:400;color:${t.textPrimary};margin-bottom:6px;line-height:1.25;">${escHtml(fmtTarget(s.target))}</div>
-        <div style="font-size:14px;color:${t.textSecondary};margin-bottom:14px;">${escHtml(s.kpi1)} · ${escHtml(s.kpi2)}</div>
+        <div class="eb-tabular" style="color:${t.safeColor};font-size:14.5px;font-weight:500;margin-bottom:12px;">${s.score} / 100 Harmony · ${escHtml(c.tag)}</div>
+        <h3 style="font-family:${t.fontDisplay};font-size:1.45rem;font-weight:400;color:${t.textPrimary};margin:0 0 12px 0;line-height:1.28;max-width:none;">${escHtml(c.title)}</h3>
+        <p style="font-size:16.5px;color:${t.textSecondary};line-height:1.62;margin:0 0 24px 0;">${escHtml(c.desc)}</p>
       </div>
-      <div>
-        <div style="width:100%;height:4px;background:${t.subtleBg};overflow:hidden;margin-bottom:10px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:${t.brandPrimary};font-weight:500;"><span>Inspect Layering Dossier</span><span>→</span></div>
-      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:14.5px;color:${t.brandPrimary};font-weight:500;padding-top:12px;"><span>Read step-by-step routine</span><span>→</span></div>
     </a>`;
   }).join('');
-  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:7px;padding:6px 12px;background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;"><span>${escHtml(fmtTarget(s.target))}</span><span class="eb-tabular" style="font-weight:600;">Grade ${escHtml(s.grade)} (${s.score}/100) →</span></a>`).join('');
+  const fixCards = fix2.map((s) => {
+    const c = copyMap[s.target] || { tag: 'Shelf Clash', title: s.target, desc: `${s.issue} →` };
+    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:flex;flex-direction:column;gap:6px;padding:24px 28px;background:${t.brandSoftBg};text-decoration:none;color:${t.textPrimary};">
+      <div class="eb-tabular" style="font-size:14px;font-weight:500;color:${t.brandPrimary};">${escHtml(c.tag)} · ${s.score} / 100 Harmony</div>
+      <div style="font-family:${t.fontDisplay};font-size:1.25rem;font-weight:400;color:${t.textPrimary};line-height:1.3;">${escHtml(c.title)}</div>
+      <div style="font-size:15.5px;color:${t.textSecondary};line-height:1.55;">${escHtml(c.desc)}</div>
+    </a>`;
+  }).join('');
 
-  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Routine Harmony Leaderboard" style="margin:56px auto;font-family:${t.fontSans};">
-    <div class="eb-panel-card" style="margin:0;padding:30px 32px;background:${t.cardBg};">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:22px;">
-        <div>
-          <span style="font-size:13.5px;font-weight:500;letter-spacing:0.03em;color:${t.brandPrimary};">Public Formulation Archive · Verified Shelf Scans</span>
-          <h2 style="margin:6px 0 0 0;max-width:none;font-size:clamp(1.65rem,2.3vw,2.15rem);font-family:${t.fontDisplay};font-weight:300;color:${t.textPrimary};letter-spacing:-0.02em;">Routine Harmony Leaderboard</h2>
-        </div>
-        <a href="/leaderboard" style="padding:11px 20px;background:${t.brandPrimary};color:#FAF6F0;font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap;">Explore Full Routine Leaderboard →</a>
+  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Routine Harmony Leaderboard" style="margin:88px auto;font-family:${t.fontSans};">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:32px;">
+      <div>
+        <h2 style="margin:0 0 10px 0;max-width:none;font-size:clamp(1.85rem,2.7vw,2.45rem);font-family:${t.fontDisplay};font-weight:300;color:${t.textPrimary};letter-spacing:-0.02em;">Proven routines that layer without irritation.</h2>
+        <p style="margin:0;font-size:18px;color:${t.textSecondary};max-width:62ch;line-height:1.55;">Compare our highest-scoring morning and night combinations—or inspect the most common shelf clashes below.</p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;margin-bottom:18px;">${podiumCards}</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:14px;">
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><span style="font-size:14px;font-weight:500;color:${t.textSecondary};">Common Shelf Clashes Analysed:</span>${fixPills}</div>
-        <a href="/leaderboard" style="font-size:14px;font-weight:500;color:${t.brandPrimary};text-decoration:underline;white-space:nowrap;">Browse all ${ledger.length} ranked routines →</a>
-      </div>
+      <a href="/leaderboard" style="padding:12px 22px;background:${t.brandPrimary};color:#FAF6F0;font-size:14.5px;font-weight:500;text-decoration:none;white-space:nowrap;">View All ${ledger.length} Ranked Routines →</a>
     </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-bottom:24px;">${podiumCards}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;">${fixCards}</div>
   </section>`;
 }
 
