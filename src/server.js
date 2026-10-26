@@ -212,33 +212,7 @@ app.get('/terms', (req, res) => {
   res.status(200).type('html').send(renderLegalPage({ type: 'terms' }));
 });
 
-// 6. XML Sitemap (/sitemap.xml), Robots (/robots.txt), and LLM Discovery (/llms.txt, /llms-full.txt)
-app.get('/sitemap.xml', (req, res) => {
-  const seoPages = getAllSeoPages();
-  const baseUrl = PUBLIC_URL;
-  const today = new Date().toISOString().split('T')[0];
-  const staticUrls = ['/', '/lp', '/directory', '/privacy', '/terms'];
-  const urlsXml = [
-    ...staticUrls.map((u) => `  <url><loc>${baseUrl}${u}</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>`),
-    ...seoPages.map((p) => `  <url><loc>${baseUrl}/seo/${p.slug}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>`)
-  ].join('\n');
-
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urlsXml}
-</urlset>`;
-  res.status(200).type('application/xml').send(xml);
-});
-
-app.get('/robots.txt', (req, res) => {
-  const txt = `User-agent: *
-Allow: /
-Disallow: /api/
-
-Sitemap: ${PUBLIC_URL}/sitemap.xml
-`;
-  res.status(200).type('text/plain').send(txt);
-});
+// 6. XML Sitemap (/sitemap.xml), Robots (/robots.txt), and LLM Discovery (/llms.txt, /llms-full.txt) are mounted by attachExactBaselinePack in exact-baseline-seo.js.
 
 app.get('/llms.txt', (req, res) => {
   const seoPages = getAllSeoPages();

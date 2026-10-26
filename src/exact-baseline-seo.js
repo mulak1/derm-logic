@@ -69,7 +69,9 @@ function loadVerticalSeoCatalog(cfg, srcDir) {
       const catPath = path.join(srcDir, 'pseo-catalog.js');
       if (fs.existsSync(catPath)) {
         const mod = require(catPath);
-        const list = [...(mod.PAIR_SEO_SEEDS || []), ...(mod.PRODUCT_SEO_SEEDS || [])];
+        const list = typeof mod.buildSeoPagesCatalog === 'function'
+          ? mod.buildSeoPagesCatalog()
+          : [...(mod.PAIR_SEO_SEEDS || []), ...(mod.PRODUCT_SEO_SEEDS || [])];
         for (const p of list) {
           const cleanTitle = typeof mod.cleanHumanTitle === 'function' ? mod.cleanHumanTitle(p.title || p.slug) : String(p.title || p.slug);
           entries.push({
@@ -317,6 +319,10 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       'Allow: /feed.json',
       'Disallow: /buy/',
       'Disallow: /api/buy/',
+      'Disallow: /*?preset=*',
+      'Disallow: /*?products=*',
+      'Disallow: /*?inci=*',
+      'Disallow: /*?ref=*',
       '',
       botStanzas,
       `Host: ${cfg.domain}`,
