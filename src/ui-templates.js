@@ -143,6 +143,10 @@ const SHARED_CSS = `
   .editorial-photo-shell { background: var(--bg-oat); padding: 10px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
   .editorial-photo-inner { overflow: hidden; position: relative; height: 205px; flex: 1; background: var(--bg-porcelain); }
   .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .editorial-photo-diptych { display: grid; grid-template-columns: 1.32fr 0.88fr; gap: 8px; height: 215px; flex: 1; }
+  .editorial-photo-diptych .editorial-photo-inner { height: 100%; }
+  .vessel-photo-frame { background: var(--bg-oat); padding: 6px; margin-bottom: 14px; }
+  .vessel-photo-frame img { width: 100%; height: 172px; object-fit: cover; display: block; }
   .editorial-photo-caption { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: var(--step-small); color: var(--text-secondary); }
 
   /* Interactive Shelf Audit Workbench ([data-ui]) */
