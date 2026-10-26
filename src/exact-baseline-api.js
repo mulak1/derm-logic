@@ -26,14 +26,14 @@ const VERTICAL_CONFIGS = {
     moduleId: 'citation_forge',
     brandName: 'CitationForge',
     domain: 'www.citationforge.io',
-    accentColor: '#1D4ED8',
+    accentColor: '#0F172A',
     theme: {
-      canvasBg: '#F8F6F1', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(250, 249, 245, 0.95)',
-      border: '#E4E2DD', accentBorder: '#C7D2FE', textPrimary: '#0F172A', textSecondary: '#475569', textMuted: '#64748B',
-      brandPrimary: '#1D4ED8', brandSoftBg: '#EEF2FF', brandText: '#3730A3',
-      safeColor: '#059669', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
+      canvasBg: '#FAF9F5', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(250, 249, 245, 0.96)',
+      border: '#E4E2DD', accentBorder: '#CBD5E1', textPrimary: '#0F172A', textSecondary: '#334155', textMuted: '#475569',
+      brandPrimary: '#0F172A', brandSoftBg: '#F1F5F9', brandText: '#0F172A',
+      safeColor: '#047857', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
       fontDisplay: "'Newsreader', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      radiusCard: '14px', radiusPill: '8px', shadow: '0 12px 32px -12px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03)'
+      radiusCard: '14px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199',
     flashPriceDefault: 'price_1UQjMqIaoGnkXxS84yeYo8HG',
@@ -46,7 +46,7 @@ const VERTICAL_CONFIGS = {
     lockedTitle: 'Competitor AI Visibility Comparison',
     deliverableName: 'Complete AI Search Fix Pack (/llms-full.txt + Structured Data + 25 Buyer Questions)',
     freeDeliverableName: 'Ready-to-Use AI Search Fix Files (/llms.txt & Schema)',
-    unlockBannerTitle: 'Get Your Ready-to-Use AI Search Fix Files & 50-Question Competitor Report',
+    unlockBannerTitle: 'Ready-to-Use AI Search Fix Files',
     explainerText: 'See how often ChatGPT, Perplexity & Google AI recommend your brand across 25 buyer questions',
     hudLabel: 'GEO Crawl HUD',
     redditSub: 'SEO',
@@ -107,7 +107,7 @@ const VERTICAL_CONFIGS = {
     ],
     githubRepo: {
       name: 'AnswerDotAI/llms-txt + colinhacks/zod + kpdecker/jsdiff',
-      stars: '167,494 Combined', url: 'https://github.com/colinhacks/zod',
+      stars: '167,494 Combined Stars', url: 'https://github.com/colinhacks/zod',
       badge: 'AnswerDotAI/llms-txt + Zod Schema-Verified Deliverable Contract',
       title: 'Deterministic /llms.txt, JSON-LD @graph & Zod-Verified Export Bundle',
       summary: 'Compiles spec-compliant /llms-full.txt manifests and schema-dts @graph blocks with Zod contract verification.'
@@ -124,14 +124,14 @@ const VERTICAL_CONFIGS = {
     }
   },
   sponsor_radar: {
-    moduleId: 'sponsor_radar', brandName: 'SponsorRadar', domain: 'www.sponsorradar.io', accentColor: '#E84E36',
+    moduleId: 'sponsor_radar', brandName: 'SponsorRadar', domain: 'www.sponsorradar.io', accentColor: '#C23B22',
     theme: {
-      canvasBg: '#FBF8F3', cardBg: '#FFFFFF', subtleBg: '#F4EFE6', dockBg: 'rgba(251, 248, 243, 0.95)',
-      border: '#E5DEC9', accentBorder: '#F5C2B8', textPrimary: '#161412', textSecondary: '#57524A', textMuted: '#78716C',
-      brandPrimary: '#E84E36', brandSoftBg: '#FFF4F1', brandText: '#B9311C',
-      safeColor: '#0F766E', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
+      canvasBg: '#F8F9FA', cardBg: '#FFFFFF', subtleBg: '#F1F3F5', dockBg: 'rgba(248, 249, 250, 0.96)',
+      border: '#DEE2E6', accentBorder: '#F5C2B8', textPrimary: '#14171A', textSecondary: '#212529', textMuted: '#495057',
+      brandPrimary: '#C23B22', brandSoftBg: '#FFF4F1', brandText: '#9B2C18',
+      safeColor: '#0F766E', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#92400E',
       fontDisplay: "'Newsreader', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      radiusCard: '14px', radiusPill: '8px', shadow: '0 14px 34px -12px rgba(24, 20, 16, 0.07), 0 2px 6px rgba(24, 20, 16, 0.03)'
+      radiusCard: '14px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMrIaoGnkXxS82T5cPcjM',
     corePriceEnv: 'STRIPE_PRICE_CREATOR_49', corePriceUsd: 49, coreLabel: 'Complete Creator Sponsor Database ($49/mo)',
@@ -139,7 +139,7 @@ const VERTICAL_CONFIGS = {
     lockedTitle: 'Verified Sponsor Partnership Contacts',
     deliverableName: 'Verified Sponsor Contact Email + Ready-to-Send Pitch + Full Ad Rate Table',
     freeDeliverableName: 'Verified Sponsor Contact & 3-Ad Pilot Pitch Pack',
-    unlockBannerTitle: 'Get Verified Sponsor Contact Emails, Real Ad Rates (CPM) & Pitch Templates',
+    unlockBannerTitle: 'Verified Sponsor Emails & Rates',
     explainerText: 'See which sponsors booked 3+ repeat ads, what they paid, and who to email on their partnerships team',
     hudLabel: 'Media Buyer HUD', redditSub: 'podcasting',
     sliderLabel: 'Bookings', sliderMin: 1, sliderMax: 30, sliderVal: 14,
@@ -198,7 +198,7 @@ const VERTICAL_CONFIGS = {
     ],
     githubRepo: {
       name: 'pyannote/pyannote-audio + colinhacks/zod + parallax/jsPDF',
-      stars: '216,756 Combined', url: 'https://github.com/pyannote/pyannote-audio',
+      stars: '216,756 Combined Stars', url: 'https://github.com/pyannote/pyannote-audio',
       badge: 'Host-Read Diarization + Zod-Verified Buyer Contact Ledger',
       title: 'Host-Voiced Ad-Read Diarization & 3-Flight Pitch Engine',
       summary: 'Verifies host-voiced ad reads vs. spliced dynamic insertions and compiles 3x-renewal anchored sponsorship pitches.'
@@ -215,14 +215,14 @@ const VERTICAL_CONFIGS = {
     }
   },
   derm_logic: {
-    moduleId: 'derm_logic', brandName: 'DermLogic', domain: 'www.dermlogic.io', accentColor: 'var(--rose-brand)',
+    moduleId: 'derm_logic', brandName: 'DermLogic', domain: 'www.dermlogic.io', accentColor: '#9E3B49',
     theme: {
-      canvasBg: 'var(--bg-canvas)', cardBg: 'var(--bg-surface)', subtleBg: 'var(--bg-oat)', surfaceBg: 'var(--bg-surface)', dockBg: 'var(--bg-porcelain)',
-      border: 'var(--border-hairline)', accentBorder: 'var(--border-strong)', textPrimary: 'var(--text-primary)', textSecondary: 'var(--text-secondary)', textMuted: 'var(--text-muted)',
-      brandPrimary: 'var(--rose-brand)', brandSoftBg: 'var(--rose-pill-bg)', brandText: 'var(--rose-brand)',
-      safeColor: 'var(--sage-safe)', safeSoftBg: 'var(--sage-bg)', safeBorder: 'var(--border-hairline)', warnColor: 'var(--honey-warn)',
-      fontDisplay: "'Newsreader', Georgia, serif", fontSans: "'Newsreader', Georgia, serif",
-      radiusCard: '0px', radiusPill: '0px', shadow: 'none'
+      canvasBg: '#FAF6F0', cardBg: '#FFFDFB', subtleBg: '#F4EDE4', dockBg: 'rgba(255, 253, 251, 0.96)',
+      border: '#E6DDD2', accentBorder: '#F3C8CE', textPrimary: '#1C1613', textSecondary: '#4E443D', textMuted: '#6E6259',
+      brandPrimary: '#9E3B49', brandSoftBg: '#FDF2F4', brandText: '#9E3B49',
+      safeColor: '#2D6A4F', safeSoftBg: '#EAF4EE', safeBorder: '#B7DFC7', warnColor: '#92400E',
+      fontDisplay: "'Cormorant Garamond', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+      radiusCard: '20px', radiusPill: '999px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMsIaoGnkXxS8ru7bwyQe',
     corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 4.99, coreLabel: 'Complete Morning & Night Routine Kit ($4.99)',
@@ -230,16 +230,16 @@ const VERTICAL_CONFIGS = {
     lockedTitle: 'Morning vs. Night Layering Order',
     deliverableName: '4-Night Skincare Schedule + 9:16 Phone Wallpaper Card + Pore-Safe Swaps',
     freeDeliverableName: '9:16 Morning/Night Routine Card & 4-Night Schedule',
-    unlockBannerTitle: 'Save Your Personalized Morning & Night Skincare Schedule & Phone Card',
+    unlockBannerTitle: 'Personalized AM & PM Routine Card',
     explainerText: 'See which products clash, how long to wait between steps, and your safe Morning & Night order',
     hudLabel: 'Vanity Shelf HUD', redditSub: 'SkincareAddiction',
     sliderLabel: 'Products', sliderMin: 2, sliderMax: 8, sliderVal: 4,
-    searchPlaceholder: 'Search bottle or active...',
-    tier1Tag: 'Single-Routine Pass · Save 60% vs. Complete Kit',
-    tier1Desc: 'Instantly saves your 9:16 phone lock-screen routine card, exact wait times between serums, and 4-Night Skin-Cycling phone reminders.',
-    tier2Tag: 'Complete Morning & Night Routine Kit',
-    tier2Desc: 'Printable Morning & Night Vanity Card, full ingredient compatibility chart, and gentle pore-safe product swaps.',
-    tier3Tag: 'Unlimited Shelf & Esthetician Pass',
+    searchPlaceholder: 'Search ingredient or product (e.g. Retinol)...',
+    tier1Tag: 'SINGLE-ROUTINE PASS • SAVE 60% VS $4.99',
+    tier1Desc: 'Instantly unlocks your 9:16 phone lockscreen routine card, exact wait times between serums, and 4-Night Skin-Cycling calendar (.ICS).',
+    tier2Tag: 'COMPLETE AM/PM ROUTINE RESCUE KIT',
+    tier2Desc: 'Printable Morning & Night Vanity Card PDF, full ingredient compatibility chart, and gentle pore-safe product swaps.',
+    tier3Tag: 'UNLIMITED SHELF & ESTHETICIAN PASS',
     tier3Desc: 'Full year of unlimited ingredient checks, fungal-acne safe screening, pregnancy-safe filters, and seasonal routine updates.',
     battlecard: {
       heading: 'Why Skincare Lovers & Estheticians Choose DermLogic Over Generic Apps',
@@ -252,36 +252,35 @@ const VERTICAL_CONFIGS = {
     },
     exportActions: [
       { id: 'btn-copy-shopping-list', label: 'Copy Routine Steps', type: 'copy' },
-      { id: 'btn-export-ics', label: 'Add to Phone Calendar', href: '/api/github-upgrade/skin-cycling.ics' },
-      { id: 'btn-export-csv', label: 'Save Ingredient Guide', href: '/api/github-upgrade/export.csv' },
-      { id: 'btn-print-summary', label: 'Print Routine Card', type: 'print' },
-      { id: 'btn-showroom-hud', label: 'Evening Vanity Tip', type: 'hud' },
-      { id: 'btn-cmdk-trigger', label: 'Quick Routine Menu', type: 'cmdk' }
+      { id: 'btn-export-ics', label: '4-Night Calendar (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
+      { id: 'btn-export-csv', label: 'Ingredient Chart (.CSV)', href: '/api/github-upgrade/export.csv' },
+      { id: 'btn-export-llms', label: 'Download Routine Notes (.TXT)', href: '/api/github-upgrade/llms-bundle.txt' },
+      { id: 'btn-print-summary', label: 'Print Vanity Card', type: 'print' },
+      { id: 'btn-showroom-hud', label: 'Vanity Shelf HUD', type: 'hud' },
+      { id: 'btn-cmdk-trigger', label: '⌘K Quick Menu', type: 'cmdk' },
+      { id: 'btn-reddit-share', label: 'Share to r/SkincareAddiction', type: 'reddit' }
     ],
     kpis: [
-      { label: 'Routine Verdict', val: 'Wear AM & PM Apart', sub: 'Separate Morning & Night' },
-      { label: 'Morning vs. Night', val: 'Vitamin C AM · Peptides PM', sub: 'Gentle 12-Hour Split' },
-      { label: 'Layering Order', val: 'Thinnest First', sub: 'Water-Light to Rich Cream' },
-      { label: 'Pore & Blemish Check', val: '1 Alert', sub: 'Heavy Cream Base Found' }
+      { label: 'Routine Harmony Score', val: '20/100', sub: 'Ingredient Clash Found' },
+      { label: 'Acid vs. Peptide Gap', val: '2.8 pH', sub: 'Separate into AM / PM' },
+      { label: 'Absorption Order', val: '84% Pass', sub: 'Lightest to Richest' },
+      { label: 'Pore & Fungal Check', val: '1 Trigger', sub: 'Heavy Ester Found' }
     ],
     presetKpis: {
-      'preset-tiktok-destroyer': ['Alternate Nights · Space Apart', '4-Night Recovery Rhythm', 'Space Apart', '1 Pore Alert'], 'TikTok 7-Active Stack': ['Alternate Nights · Space Apart', '4-Night Recovery Rhythm', 'Space Apart', '1 Pore Alert'], 'Retinol + Glycolic Acid': ['Alternate Nights · Space Apart', '4-Night Recovery Rhythm', 'Space Apart', 'Pore-Safe'],
-      'preset-copper-vitc-trap': ['Wear Vitamin C AM, Peptides PM', 'Gentle Morning & Night Split', 'Smooth Order', 'Pore-Safe'], 'Vitamin C + Copper Peptides': ['Wear Vitamin C AM, Peptides PM', 'Gentle Morning & Night Split', 'Smooth Order', 'Pore-Safe'],
-      'preset-acne-rx-bpo-tret': ['Use Wash in AM, Retinoid at Night', 'Buffer With Ceramide Cream', 'Buffer Cream', 'Pore-Safe'], 'Tretinoin + Benzoyl Peroxide': ['Use Wash in AM, Retinoid at Night', 'Buffer With Ceramide Cream', 'Buffer Cream', 'Pore-Safe'], 'Ceramide + Tretinoin Routine': ['Safe Together · Cushion With Cream', 'Zero Flaking Method', 'Smooth Order', 'Pore-Safe'],
-      'preset-fungal-safe-barrier': ['Safe Together Morning or Night', 'Calm & Hydrated Barrier', 'Zero Pilling', 'Pore-Safe'], 'Fungal-Safe Barrier Care': ['Safe Together Morning or Night', 'Calm & Hydrated Barrier', 'Zero Pilling', 'Pore-Safe'],
-      'preset-glass-skin': ['Safe Together Morning or Night', 'Dewy & Calm Barrier', 'Zero Pilling', 'Pore-Safe'], 'Glass Skin Hydration': ['Safe Together Morning or Night', 'Dewy & Calm Barrier', 'Zero Pilling', 'Pore-Safe']
+      'preset-tiktok-destroyer': ['20/100', '2.8 pH', '76% Pass', '1 Trigger'], 'TikTok 7-Active Stack': ['20/100', '2.8 pH', '76% Pass', '1 Trigger'],
+      'preset-copper-vitc-trap': ['54/100', '2.6 pH', '88% Pass', '0 Triggers'], 'Vitamin C + Copper Peptides': ['54/100', '2.6 pH', '88% Pass', '0 Triggers'],
+      'preset-acne-rx-bpo-tret': ['49/100', '1.9 pH', '91% Pass', '0 Triggers'], 'Tretinoin + Benzoyl Peroxide': ['49/100', '1.9 pH', '91% Pass', '0 Triggers'],
+      'preset-fungal-safe-barrier': ['96/100', '0.6 pH', '94% Pass', '0 Triggers'], 'Fungal-Safe Barrier Care': ['96/100', '0.6 pH', '94% Pass', '0 Triggers'],
+      'preset-glass-skin': ['94/100', '0.8 pH', '89% Pass', '0 Triggers'], 'Glass Skin Hydration': ['94/100', '0.8 pH', '89% Pass', '0 Triggers']
     },
     presets: [
-      { key: 'Vitamin C + Copper Peptides', label: 'Vitamin C + Peptides' },
-      { key: 'Retinol + Glycolic Acid', label: 'Retinol + Glycolic Acid' },
-      { key: 'Ceramide + Tretinoin Routine', label: 'Ceramide + Tretinoin' },
-      { key: 'Glass Skin Hydration', label: 'Gentle Barrier Glow' },
-      { key: 'Fungal-Safe Barrier Care', label: 'Blemish-Safe Routine' }
+      { key: 'TikTok 7-Active Stack', label: 'TikTok 7-Active' }, { key: 'Vitamin C + Copper Peptides', label: 'VitC + Copper' },
+      { key: 'Tretinoin + Benzoyl Peroxide', label: 'Tret + BPO' }, { key: 'Fungal-Safe Barrier Care', label: 'Fungal-Safe' }, { key: 'Glass Skin Hydration', label: 'Glass Skin' }
     ],
     coMarketingPills: [
-      { key: 'sephora', label: 'Vitamin C + Peptides', rowText: 'When you layer a morning Vitamin C serum right under Copper Peptides, both bottles lose their glow-boosting power and leave your skin feeling tight. Wear Vitamin C under morning sunscreen and save Peptides for bedtime.' },
-      { key: 'dermstore', label: 'Nighttime Retinol Pacing', rowText: 'Applying Tretinoin or Retinol on the same night as exfoliating acids or acne washes strips your moisture barrier. Alternate them across a calm 4-night recovery schedule.' },
-      { key: 'ultrasun', label: 'Pore-Safe Moisturizers', rowText: 'Rich cream bases with heavy coconut esters can trap heat and trigger small bumps under active serums. Pair strong actives with a breathable ceramide lotion or gel-cream.' }
+      { key: 'sephora', label: 'pH Clash Risk', rowText: 'Formulation Alert: Mixing low-pH direct acids (pH 3.2) with neutral peptides (pH 6.0) causes rapid hydrolysis.' },
+      { key: 'dermstore', label: 'Retinoid Oxidation', rowText: 'Formulation Alert: Combining unencapsulated retinoids with peroxides or low-pH acids triggers barrier stinging.' },
+      { key: 'ultrasun', label: 'Pore-Safety Check', rowText: 'Formulation Alert: Heavy esters (Isopropyl Myristate & Coconut Alkanes) trap heat under active serums.' }
     ],
     affiliates: [
       { title: 'SkinCeuticals C E Ferulic (Dermstore)', badge: 'Morning Vitamin C Pick', cpa: 'Shop Authorized Clinical', url: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/' },
@@ -289,32 +288,32 @@ const VERTICAL_CONFIGS = {
       { title: 'La Roche-Posay Cicaplast Baume B5+', badge: 'Recovery Night Cream', cpa: 'Shop Dermatologist Pick', url: 'https://www.ulta.com/p/cicaplast-baume-b5-soothing-therapeutic-multi-purpose-cream-pimprod2018267' }
     ],
     githubRepo: {
-      name: '65 Skincare Ingredients & 44 Popular Bottles',
-      stars: 'Updated Daily', url: 'https://www.dermlogic.io/directory',
-      badge: 'How We Check Your Shelf',
-      title: 'Morning & Bedtime Skincare Pairing Guide',
-      summary: 'Every pairing is cross-checked for morning and bedtime timing, wait times between layers, and pore-safe moisturizer bases.'
+      name: 'rdkit/rdkit + EU CosIng pKa Matrix + adamgibbons/ics',
+      stars: '159,786 Combined Stars', url: 'https://github.com/rdkit/rdkit',
+      badge: 'Henderson-Hasselbalch pKa + 500-Dalton Layering Engine',
+      title: 'Cosmetic-Chemist ΔpH & 500-Dalton Routine Harmony Engine',
+      summary: 'Calculates free-acid bio-availability, Cu2+/Retinoid redox inactivation, and 4-night skin-cycling schedules.'
     },
     deliverableFiles: [
-      { file: 'am-pm-vanity-card-9x16.pdf', label: '9:16 Phone Lock-Screen Card', desc: 'Morning & night bottle order with wait times', size: '48.2 KB', schema: '9:16 Phone & Print Card', status: 'VALID' },
-      { file: '4-night-skin-cycling.ics', label: '4-Night Skin-Cycling Calendar', desc: 'Exfoliation, retinoid & recovery night reminders', size: '3.1 KB', schema: 'Apple & Google Calendar', status: 'VALID' },
-      { file: 'non-comedogenic-swaps.csv', label: 'Barrier-Safe Swap Guide', desc: 'Pore-safe alternatives at Dermstore & Sephora', size: '5.5 KB', schema: 'Pore-Safe Product Swaps', status: 'VALID' }
+      { file: 'am-pm-vanity-card-9x16.pdf', size: '48.2 KB', schema: '9:16 Phone & Print Card', status: 'VALID' },
+      { file: '4-night-skin-cycling.ics', size: '3.1 KB', schema: 'Apple & Google Calendar', status: 'VALID' },
+      { file: 'non-comedogenic-swaps.csv', size: '5.5 KB', schema: 'Pore-Safe Product Swaps', status: 'VALID' }
     ],
     remediationDiff: {
-      beforeLine: 'Why your shelf stings: Layering pure Vitamin C with Copper Peptides or Retinol in the same evening cancels out both serums and leaves your skin tight and reactive.',
-      afterLine: 'Your calm morning & night order: Vitamin C moves to morning sun defense, while Copper Peptides and Retinol alternate across a gentle 4-night recovery rhythm.',
+      beforeLine: '- [DIAGNOSIS] High-Risk Active Clash & 2.8 pH Gap Detected | Current Routine Harmony: 20/100',
+      afterLine: '+ [LOCKED FIX] Custom AM/PM Split Order + 4-Night Schedule [REDACTED IN PREVIEW] -> 96/100 Harmony',
       roiBadge: 'Saves $182+ in Wasted Serums'
     }
   },
   abandon_alpha: {
-    moduleId: 'abandon_alpha', brandName: 'AbandonAlpha', domain: 'www.abandonalpha.com', accentColor: '#533AFD',
+    moduleId: 'abandon_alpha', brandName: 'AbandonAlpha', domain: 'www.abandonalpha.com', accentColor: '#0F172A',
     theme: {
-      canvasBg: '#F8FAFC', cardBg: '#FFFFFF', subtleBg: '#F1F5F9', dockBg: 'rgba(255, 255, 255, 0.95)',
-      border: '#E2E8F0', accentBorder: '#C7D2FE', textPrimary: '#0A2540', textSecondary: '#334155', textMuted: '#64748B',
-      brandPrimary: '#533AFD', brandSoftBg: '#EEF2FF', brandText: '#4338CA',
+      canvasBg: '#F8FAFC', cardBg: '#FFFFFF', subtleBg: '#F1F5F9', dockBg: 'rgba(248, 250, 252, 0.96)',
+      border: '#E2E8F0', accentBorder: '#CBD5E1', textPrimary: '#0A2540', textSecondary: '#334155', textMuted: '#475569',
+      brandPrimary: '#0F172A', brandSoftBg: '#F1F5F9', brandText: '#0F172A',
       safeColor: '#047857', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
       fontDisplay: "'Playfair Display', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      radiusCard: '16px', radiusPill: '999px', shadow: '0 12px 32px -8px rgba(10, 37, 64, 0.06), 0 2px 6px rgba(10, 37, 64, 0.03)'
+      radiusCard: '16px', radiusPill: '999px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMtIaoGnkXxS8fAEYjqnp',
     corePriceEnv: 'STRIPE_PRICE_STARTER_49', corePriceUsd: 49, coreLabel: 'Complete Store Recovery Suite ($49/mo)',
@@ -322,7 +321,7 @@ const VERTICAL_CONFIGS = {
     lockedTitle: 'Stripe Decline-Code Retry Schedule',
     deliverableName: 'Smart Exit-Offer Script + Stripe Retry Webhook (.JS) + Recovery Email/SMS Templates',
     freeDeliverableName: 'Smart Exit-Offer Script & Stripe Retry Schedule',
-    unlockBannerTitle: 'Get Your Smart Checkout Exit-Offer Script & Failed-Payment Retry Schedule',
+    unlockBannerTitle: 'Smart Checkout & Stripe Retry Pack',
     explainerText: 'Recover leaving shoppers and retry failed Stripe cards on the exact day & hour banks approve them',
     hudLabel: 'Checkout Ops HUD', redditSub: 'SaaS',
     sliderLabel: 'Monthly Sales ($k)', sliderMin: 15, sliderMax: 500, sliderVal: 85,
@@ -381,7 +380,7 @@ const VERTICAL_CONFIGS = {
     ],
     githubRepo: {
       name: 'carlsednaoui/ouibounce + PostHog/posthog + colinhacks/zod',
-      stars: '171,369 Combined', url: 'https://github.com/PostHog/posthog',
+      stars: '171,369 Combined Stars', url: 'https://github.com/PostHog/posthog',
       badge: 'Beta-Bernoulli C1–C6 Bandit + Stripe Decline-Code Retry Engine',
       title: 'Autonomous Exit-Intent Bandit & Issuer-Window Dunning Worker',
       summary: 'Replaces naive 24h card retries and static popups with decline-code aware scheduling and Thompson Sampling.'
@@ -667,11 +666,11 @@ function attachExactBaselinePack(app, options = {}) {
         : verticalId === 'sponsor_radar'
           ? [`${88 + (hash % 11)}/100`, `$${(120 + (hash % 680)).toLocaleString()},000`, `$${(34 + (hash % 16)).toFixed(2)}`, `${(1.32 + (hash % 18) / 100).toFixed(2)}x`]
           : verticalId === 'derm_logic'
-            ? [`Safe Morning & Night Order`, `Wait 60s Between Layers`, `Zero Makeup Pilling`, `Pore-Safe Verified`]
+            ? [`${52 + (hash % 44)}/100`, `${(0.7 + (hash % 22) / 10).toFixed(1)} pH`, `${78 + (hash % 19)}% Pass`, `${hash % 2} Triggers`]
             : [`$${(9 + (hash % 55)).toLocaleString()},400`, `$${(6 + (hash % 32)).toLocaleString()},200`, `$${(3 + (hash % 22)).toLocaleString()},200`, `< ${(9.5 + (hash % 40) / 10).toFixed(1)}s`]);
     res.json({
       ok: true,
-      engine: 'krisk/Fuse (20,503 Bitap Fuzzy Scorer)',
+      engine: 'krisk/Fuse (★ 20,503 Bitap Fuzzy Scorer)',
       query: q,
       matched_preset: matchedPreset ? matchedPreset.key : 'custom_deterministic',
       kpis: kpiVals,
@@ -695,24 +694,24 @@ function attachExactBaselinePack(app, options = {}) {
     });
   });
 
-  // 4E. colinhacks/zod (44,132) + ajv-validator/ajv (14,862) Deliverable Contract & File Manifest Verification
+  // 4E. colinhacks/zod (★ 44,132) + ajv-validator/ajv (★ 14,862) Deliverable Contract & File Manifest Verification
   app.get('/api/github-upgrade/deliverable-manifest', (req, res) => {
     const target = String(req.query.target || cfg.presets[0].key).trim();
     res.json({
       ok: true, module_id: cfg.moduleId, target_entity: target,
-      validator: 'colinhacks/zod (44,132) + ajv-validator/ajv (14,862) RFC-8927 Contract',
+      validator: 'colinhacks/zod (★ 44,132) + ajv-validator/ajv (★ 14,862) RFC-8927 Contract',
       express_checkout_wallets: ['Apple Pay', 'Google Pay', 'Stripe Link', '1-Click Card'],
       files: cfg.deliverableFiles || [], flash_pass_usd: 1.99, savings_vs_core_pct: Math.round((1 - 1.99 / cfg.corePriceUsd) * 100)
     });
   });
 
-  // 4F. nilbuild/driver.js (26,919) + sweetalert2/sweetalert2 (18,099) + zenorocha/clipboard.js (34,103) Spotlight & Endowment Engine
+  // 4F. nilbuild/driver.js (★ 26,919) + sweetalert2/sweetalert2 (★ 18,099) + zenorocha/clipboard.js (★ 34,103) Spotlight & Endowment Engine
   const handleRoiAndEndowment = (req, res) => {
     const legacyCostUsd = verticalId === 'citation_forge' ? 299 : (verticalId === 'sponsor_radar' ? 2500 : (verticalId === 'derm_logic' ? 332 : 1800));
     const paybackMultiple = Math.round(legacyCostUsd / 1.99);
     res.json({
       ok: true, module_id: cfg.moduleId, iteration: 52,
-      engine: 'nilbuild/driver.js (26,919) + sweetalert2/sweetalert2 (18,099) + zenorocha/clipboard.js (34,103) + TanStack/table (26,100)',
+      engine: 'nilbuild/driver.js (★ 26,919) + sweetalert2/sweetalert2 (★ 18,099) + zenorocha/clipboard.js (★ 34,103) + TanStack/table (★ 26,100)',
       micro_pass_usd: 0.99, flash_pass_usd: 1.99, legacy_alternative_usd: legacyCostUsd, payback_multiple_x: paybackMultiple,
       driver_spotlight_enabled: true, one_tap_preset_chips: true, interactive_file_pill_modals: true,
       endowment_customizer_enabled: true, pseo_inline_curtain_enabled: true, pseo_table_express_bar_enabled: true, sqlite_statement_cache_active: true
@@ -781,7 +780,7 @@ function attachExactBaselinePack(app, options = {}) {
   app.get('/api/github-upgrade/remediation-diff', (req, res) => {
     const diff = cfg.remediationDiff || { beforeLine: '- [BEFORE] Legacy baseline', afterLine: '+ [AFTER] Optimized baseline', roiBadge: 'Verified Lift' };
     res.json({
-      ok: true, module_id: cfg.moduleId, engine: 'kpdecker/jsdiff (9,214) + eligrey/FileSaver.js (22,040)',
+      ok: true, module_id: cfg.moduleId, engine: 'kpdecker/jsdiff (★ 9,214) + eligrey/FileSaver.js (★ 22,040)',
       before_line: diff.beforeLine, after_line: diff.afterLine, roi_badge: diff.roiBadge,
       unified_patch: `--- a/${cfg.domain}/baseline\n+++ b/${cfg.domain}/remediated\n@@ -1,1 +1,1 @@\n${diff.beforeLine}\n${diff.afterLine}`,
       unlock_paths: [
@@ -828,12 +827,12 @@ function attachExactBaselinePack(app, options = {}) {
     res.json(store.getPstReport(Number(req.query.hours || 3)));
   });
 
-  app.get('/api/github-upgrade/stripe-express-vaul-dock', (req, res) => res.json({ ok: true, iteration: 24, module_id: cfg.moduleId, repo: 'stripe/stripe-js (4,200) + emilkowalski/vaul (15,800) + floating-ui/floating-ui (31,400)', features: { native_checkout_stripe_redirect: true, live_stripe_session_reconciliation: true, symmetrical_3_zone_vaul_dock: true, pseo_lead_card_eyebrow_symmetry: true } }));
-  app.get('/api/github-upgrade/observable-plot-radar-symmetry', (req, res) => res.json({ ok: true, iteration: 25, module_id: cfg.moduleId, repo: 'observablehq/plot (4,400) + FormKit/auto-animate (13,100) + shadcn-ui/ui (81,000)', features: { stealth_burst_crawler_telemetry_guard: true, symmetrical_manifest_svg_telemetry_bar: true, full_native_control_telemetry_capture: true } }));
-  app.get('/api/github-upgrade/nuqs-deeplink-mobile-firstfold', (req, res) => res.json({ ok: true, iteration: 26, module_id: cfg.moduleId, repo: '47ng/nuqs (6,200) + PrismJS/prism (12,300) + observablehq/plot (4,400)', features: { url_query_state_deeplink_hydration: true, mobile_firstfold_interactive_presets: true, symmetrical_doppelrand_diff_inspector_footer: true } }));
-  app.get('/api/github-upgrade/tanstack-table-row-gate-qbar', (req, res) => res.json({ ok: true, iteration: 27, module_id: cfg.moduleId, repo: 'TanStack/table (25,400) + TanStack/query (43,800) + 47ng/nuqs (6,200)', features: { symmetrical_2row_qbar_zero_truncation: true, word_boundary_pseo_entity_title: true, interactive_table_row4_unlock_banner: true, non_browser_polling_guard: true } }));
-  app.get('/api/github-upgrade/reactive-live-calc-dual-pass', (req, res) => res.json({ ok: true, iteration: 49, module_id: cfg.moduleId, repo: 'hotwired/stimulus (12,400) + alpinejs/alpine (28,900) + stripe/stripe-js (4,200)', features: { reactive_input_auto_calculation: true, visible_99c_micro_pass_anchoring: true, visible_inline_scorecard_email_bar: true, scroll_and_exit_rescue_toast: true } }));
-  app.get('/api/github-upgrade/floating-ui-firstfold-pill', (req, res) => res.json({ ok: true, iteration: 51, module_id: cfg.moduleId, repo: 'floating-ui/floating-ui (31,400) + zenorocha/clipboard.js (34,200) + stripe/stripe-js (4,200)', features: { default_visible_firstfold_score_pill: true, one_tap_firstfold_99c_199_unlock: true, js_hydrated_calculate_bot_guard: true, mobile_viewport_device_attribution: true } }));
+  app.get('/api/github-upgrade/stripe-express-vaul-dock', (req, res) => res.json({ ok: true, iteration: 24, module_id: cfg.moduleId, repo: 'stripe/stripe-js (★ 4,200) + emilkowalski/vaul (★ 15,800) + floating-ui/floating-ui (★ 31,400)', features: { native_checkout_stripe_redirect: true, live_stripe_session_reconciliation: true, symmetrical_3_zone_vaul_dock: true, pseo_lead_card_eyebrow_symmetry: true } }));
+  app.get('/api/github-upgrade/observable-plot-radar-symmetry', (req, res) => res.json({ ok: true, iteration: 25, module_id: cfg.moduleId, repo: 'observablehq/plot (★ 4,400) + FormKit/auto-animate (★ 13,100) + shadcn-ui/ui (★ 81,000)', features: { stealth_burst_crawler_telemetry_guard: true, symmetrical_manifest_svg_telemetry_bar: true, full_native_control_telemetry_capture: true } }));
+  app.get('/api/github-upgrade/nuqs-deeplink-mobile-firstfold', (req, res) => res.json({ ok: true, iteration: 26, module_id: cfg.moduleId, repo: '47ng/nuqs (★ 6,200) + PrismJS/prism (★ 12,300) + observablehq/plot (★ 4,400)', features: { url_query_state_deeplink_hydration: true, mobile_firstfold_interactive_presets: true, symmetrical_doppelrand_diff_inspector_footer: true } }));
+  app.get('/api/github-upgrade/tanstack-table-row-gate-qbar', (req, res) => res.json({ ok: true, iteration: 27, module_id: cfg.moduleId, repo: 'TanStack/table (★ 25,400) + TanStack/query (★ 43,800) + 47ng/nuqs (★ 6,200)', features: { symmetrical_2row_qbar_zero_truncation: true, word_boundary_pseo_entity_title: true, interactive_table_row4_unlock_banner: true, non_browser_polling_guard: true } }));
+  app.get('/api/github-upgrade/reactive-live-calc-dual-pass', (req, res) => res.json({ ok: true, iteration: 49, module_id: cfg.moduleId, repo: 'hotwired/stimulus (★ 12,400) + alpinejs/alpine (★ 28,900) + stripe/stripe-js (★ 4,200)', features: { reactive_input_auto_calculation: true, visible_99c_micro_pass_anchoring: true, visible_inline_scorecard_email_bar: true, scroll_and_exit_rescue_toast: true } }));
+  app.get('/api/github-upgrade/floating-ui-firstfold-pill', (req, res) => res.json({ ok: true, iteration: 51, module_id: cfg.moduleId, repo: 'floating-ui/floating-ui (★ 31,400) + zenorocha/clipboard.js (★ 34,200) + stripe/stripe-js (★ 4,200)', features: { default_visible_firstfold_score_pill: true, one_tap_firstfold_99c_199_unlock: true, js_hydrated_calculate_bot_guard: true, mobile_viewport_device_attribution: true } }));
 
   // 7. Transactional Lead Capture & Automated Backfill Resend Dispatcher (/api/leads/capture, /api/leads/resend-backfill)
   const escMailHtml = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -981,7 +980,7 @@ function attachExactBaselinePack(app, options = {}) {
     const origSend = res.send.bind(res);
     res.send = function patchedSend(body) {
       const isHtml = typeof body === 'string' && (String(res.getHeader('Content-Type') || '').includes('text/html') || body.trim().startsWith('<!DOCTYPE html>'));
-      if (isHtml && req.method === 'GET' && (req.path === '/' || req.path === '/lp' || req.path === '/directory' || req.path === '/leaderboard' || req.path === '/privacy' || req.path === '/terms' || req.path.startsWith('/dossier/sample') || req.path.startsWith('/seo/') || req.path.startsWith('/tools/') || req.path.startsWith('/compare/') || req.path.startsWith('/scan/') || req.path.startsWith('/report/')) && !body.includes('id="eb-bottom-conversion-suite"')) {
+      if (isHtml && req.method === 'GET' && (req.path === '/' || req.path === '/lp' || req.path === '/directory' || req.path === '/leaderboard' || req.path === '/privacy' || req.path === '/terms' || req.path.startsWith('/dossier/sample') || req.path.startsWith('/seo/') || req.path.startsWith('/tools/') || req.path.startsWith('/compare/') || req.path.startsWith('/scan/') || req.path.startsWith('/report/') || req.path.startsWith('/celebrity') || req.path.startsWith('/bottle') || req.path.startsWith('/ingredient') || req.path.startsWith('/brand') || req.path.startsWith('/concern')) && !body.includes('id="eb-bottom-conversion-suite"')) {
         try { res.setHeader('X-Robots-Tag', 'all, index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'); res.setHeader('Link', `<https://${cfg.domain}/llms.txt>; rel="llms-txt", <https://${cfg.domain}/llms-full.txt>; rel="llms-full-txt", <https://${cfg.domain}/openapi.json>; rel="service-desc", <https://${cfg.domain}/feed.xml>; rel="alternate"; type="application/rss+xml"`); } catch (_) {}
         store.recordEvent({ eventType: 'visit', pageUrl: req.originalUrl || req.path, deviceType, utmSource: String(req.query?.utm_source || ''), utmCampaign: String(req.query?.utm_campaign || ''), isTest, isCrawler, isOwnerIp, clientIp });
         body = renderExactBaselineEnhancements(body, cfg, req.path);

@@ -4,16 +4,16 @@ const fs = require('fs');
 const path = require('path');
 const { getGrowthConfig, getAllGrowthUrls } = require('./autonomous-growth-engine');
 const { loadPublicScanLedger } = require('./public-scan-flywheel');
-
+const { getAllSemanticHubUrls } = require('./seo-hubs');
 
 /**
  * ExactBaseline Universal Search Engine, Mobile-First Indexing & AI Answer-Engine (GEO/AEO) Suite
  * Synthesizes high-star GitHub patterns across all 4 Studio sites:
- *  - AnswerDotAI/llms-txt (2,661) & mendableai/firecrawl (191,999): /llms.txt, /llms-full.txt, /.well-known/llms.txt & .md URL twins (/seo/:slug.md)
- *  - unclecode/crawl4ai (85,643) & AgriciDaniel/claude-seo (19,026): High token-signal Markdown twins, SpeakableSpecification & Answer-First @graph
- *  - google/schema-dts (1,250): Unified @graph JSON-LD (Organization, WebSite, SpeakableSpecification, BreadcrumbList, ItemList, Dataset, SoftwareApplication, FAQPage)
- *  - ekalinin/sitemap.js (1,711): Segmented XML sitemaps (/sitemap-index.xml, /sitemap-pages.xml, /sitemap-seo.xml, /sitemap-images.xml with <image:image>)
- *  - unjs/unhead (1,310) & iamcal/oembed (1,453): Canonical/OG localhost normalizer, HTTP X-Robots-Tag & Link headers, oEmbed 1.0 JSON, and 1-Click Mobile Crawl Mesh
+ *  - AnswerDotAI/llms-txt (★ 2,661) & mendableai/firecrawl (★ 191,999): /llms.txt, /llms-full.txt, /.well-known/llms.txt & .md URL twins (/seo/:slug.md)
+ *  - unclecode/crawl4ai (★ 85,643) & AgriciDaniel/claude-seo (★ 19,026): High token-signal Markdown twins, SpeakableSpecification & Answer-First @graph
+ *  - google/schema-dts (★ 1,250): Unified @graph JSON-LD (Organization, WebSite, SpeakableSpecification, BreadcrumbList, ItemList, Dataset, SoftwareApplication, FAQPage)
+ *  - ekalinin/sitemap.js (★ 1,711): Segmented XML sitemaps (/sitemap-index.xml, /sitemap-pages.xml, /sitemap-seo.xml, /sitemap-images.xml with <image:image>)
+ *  - unjs/unhead (★ 1,310) & iamcal/oembed (★ 1,453): Canonical/OG localhost normalizer, HTTP X-Robots-Tag & Link headers, oEmbed 1.0 JSON, and 1-Click Mobile Crawl Mesh
  */
 
 const AI_CRAWLER_AGENTS = [
@@ -69,15 +69,12 @@ function loadVerticalSeoCatalog(cfg, srcDir) {
       const catPath = path.join(srcDir, 'pseo-catalog.js');
       if (fs.existsSync(catPath)) {
         const mod = require(catPath);
-        const list = typeof mod.buildSeoPagesCatalog === 'function'
-          ? mod.buildSeoPagesCatalog()
-          : [...(mod.PAIR_SEO_SEEDS || []), ...(mod.PRODUCT_SEO_SEEDS || [])];
+        const list = [...(mod.PAIR_SEO_SEEDS || []), ...(mod.PRODUCT_SEO_SEEDS || [])];
         for (const p of list) {
-          const cleanTitle = typeof mod.cleanHumanTitle === 'function' ? mod.cleanHumanTitle(p.title || p.slug) : String(p.title || p.slug);
           entries.push({
             slug: p.slug,
-            title: cleanTitle,
-            category: p.category || p.pageType || 'Active Pairing Guide',
+            title: String(p.title || p.slug),
+            category: p.category || p.pageType || 'Clinical INCI & pH Compatibility',
             summary: String(p.summary || p.conflictHighlights || cfg.explainerText).slice(0, 158)
           });
         }
@@ -175,7 +172,8 @@ function buildLlmsTxtContent(cfg, seoEntries) {
     }),
     '',
     `## All ${seoEntries.length} Indexed Programmatic SEO Benchmarks & Playbooks (/seo/:slug & .md Twins)`,
-    ...seoEntries.map((item) => `- [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${item.summary}`)
+    ...seoEntries.map((item) => `- [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${item.summary}`),
+    ...(cfg.moduleId === 'derm_logic' ? ['', '## Celebrity Skincare Shelves, Cult Bottles, Ingredients, Brands & Concerns', ...getAllSemanticHubUrls(host).map((u) => `- [${u.title}](${u.loc})`)] : [])
   ];
   return lines.join('\n');
 }
@@ -299,9 +297,7 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
     const botStanzas = AI_CRAWLER_AGENTS.map((bot) => `User-agent: ${bot}\nAllow: /\nAllow: /seo/\nAllow: /scan/\nAllow: /leaderboard\nAllow: /tools/\nAllow: /compare/\nAllow: /llms.txt\nAllow: /llms-full.txt\nAllow: /openapi.json\nDisallow: /buy/\nDisallow: /api/buy/\n`).join('\n');
     const txt = [
       'User-agent: *',
-      'Allow: /',
-      'Allow: /seo/',
-      'Allow: /scan/',
+      'Allow: /', 'Allow: /seo/', 'Allow: /celebrity', 'Allow: /bottle', 'Allow: /ingredient', 'Allow: /brand', 'Allow: /concern', 'Allow: /scan/',
       'Allow: /leaderboard',
       'Allow: /tools/',
       'Allow: /compare/',
@@ -319,10 +315,6 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       'Allow: /feed.json',
       'Disallow: /buy/',
       'Disallow: /api/buy/',
-      'Disallow: /*?preset=*',
-      'Disallow: /*?products=*',
-      'Disallow: /*?inci=*',
-      'Disallow: /*?ref=*',
       '',
       botStanzas,
       `Host: ${cfg.domain}`,
@@ -413,7 +405,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       img: `${hostUrl}/api/og?slug=${encodeURIComponent(e.slug)}`,
       title: e.title
     }));
-    const all = [...staticUrls, ...seoUrls];
+    const hubUrls = (includeStatic && cfg.moduleId === 'derm_logic') ? getAllSemanticHubUrls(hostUrl) : [];
+    const all = [...staticUrls, ...hubUrls, ...seoUrls];
     const body = all.map((u) => {
       const imgBlock = u.img
         ? `\n    <image:image>\n      <image:loc>${escXml(u.img)}</image:loc>\n      <image:title>${escXml(u.title || cfg.brandName)}</image:title>\n    </image:image>`
@@ -514,13 +507,13 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       module_id: cfg.moduleId,
       domain: cfg.domain,
       github_standards: [
-        'AnswerDotAI/llms-txt (2,661): /llms.txt, /.well-known/llms.txt & .md URL Twins (/seo/:slug.md)',
-        'mendableai/firecrawl (191,999): /llms-full.txt Complete Inline RAG Corpus',
-        'unclecode/crawl4ai (85,643): High-Signal Markdown Twins & Semantic Tables',
-        'AgriciDaniel/claude-seo (19,026): Answer-First Lead, SpeakableSpecification & Visible FAQ Parity',
-        'google/schema-dts (1,250): Unified @graph JSON-LD (8 Linked Entities)',
-        'ekalinin/sitemap.js (1,711): Segmented Sitemaps + Image OG Sitemaps',
-        'unjs/unhead (1,310) + iamcal/oembed (1,453): Canonical Normalizer, X-Robots-Tag & oEmbed 1.0'
+        'AnswerDotAI/llms-txt (★ 2,661): /llms.txt, /.well-known/llms.txt & .md URL Twins (/seo/:slug.md)',
+        'mendableai/firecrawl (★ 191,999): /llms-full.txt Complete Inline RAG Corpus',
+        'unclecode/crawl4ai (★ 85,643): High-Signal Markdown Twins & Semantic Tables',
+        'AgriciDaniel/claude-seo (★ 19,026): Answer-First Lead, SpeakableSpecification & Visible FAQ Parity',
+        'google/schema-dts (★ 1,250): Unified @graph JSON-LD (8 Linked Entities)',
+        'ekalinin/sitemap.js (★ 1,711): Segmented Sitemaps + Image OG Sitemaps',
+        'unjs/unhead (★ 1,310) + iamcal/oembed (★ 1,453): Canonical Normalizer, X-Robots-Tag & oEmbed 1.0'
       ],
       explicit_ai_bots_allowed: AI_CRAWLER_AGENTS.length,
       indexed_pseo_pages: entries.length,
@@ -536,9 +529,9 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 9,
       module_id: cfg.moduleId,
       github_repos: [
-        'resend/react-email (15,400+) & nodemailer/nodemailer (16,600+): Inline Diagnostic Scorecard & Permalink Saver + Post-Lead VIP 99¢ One-Time Offer (OTO)',
-        'PrismJS/prism (12,300+) & floating-ui/floating-ui (31,400+): Interactive 3-File Tab Preview Switcher (__ebSelectManifestFile) & Dynamic Single-File 99¢ Pass',
-        'carlosedna/ouibounce (5,400+): Mobile Scroll-Depth + 12s Dwell Rescue Toast Trigger'
+        'resend/react-email (★ 15,400+) & nodemailer/nodemailer (★ 16,600+): Inline Diagnostic Scorecard & Permalink Saver + Post-Lead VIP 99¢ One-Time Offer (OTO)',
+        'PrismJS/prism (★ 12,300+) & floating-ui/floating-ui (★ 31,400+): Interactive 3-File Tab Preview Switcher (__ebSelectManifestFile) & Dynamic Single-File 99¢ Pass',
+        'carlosedna/ouibounce (★ 5,400+): Mobile Scroll-Depth + 12s Dwell Rescue Toast Trigger'
       ],
       features: {
         inline_scorecard_saver: true,
@@ -556,8 +549,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 10,
       module_id: cfg.moduleId,
       github_repos: [
-        'TanStack/table (28,492) & javve/list.js (11,207): Interactive Table Filter, Sort & Quick-Calculate Bar (#eb-tanstack-table-bar) on / and /seo/:slug',
-        'ghosh/Micromodal (3,659) & floating-ui/floating-ui (31,400+): Clickable Blurred Deliverable & Row Hotspots (.eb-blurred-deliverable) + Inline Popover Scorecard OTO'
+        'TanStack/table (★ 28,492) & javve/list.js (★ 11,207): Interactive Table Filter, Sort & Quick-Calculate Bar (#eb-tanstack-table-bar) on / and /seo/:slug',
+        'ghosh/Micromodal (★ 3,659) & floating-ui/floating-ui (★ 31,400+): Clickable Blurred Deliverable & Row Hotspots (.eb-blurred-deliverable) + Inline Popover Scorecard OTO'
       ],
       features: {
         tanstack_table_filter_bar: true,
@@ -575,8 +568,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 11,
       module_id: cfg.moduleId,
       github_repos: [
-        'emilkowalski/vaul (15,000+) & emilkowalski/sonner (11,500+): Post-Calculation Spotlight & Action Drawer (__ebTriggerPostCalcSpotlight) with 99¢ Single-File Pass & 1-Tap Scorecard Email Saver',
-        'TanStack/table (28,492) & AnswerDotAI/llms-txt (2,661): Above-the-Fold /seo/:slug Quick-Action & Custom Benchmark Strip (#eb-pseo-quick-bar) below Lead Paragraph'
+        'emilkowalski/vaul (★ 15,000+) & emilkowalski/sonner (★ 11,500+): Post-Calculation Spotlight & Action Drawer (__ebTriggerPostCalcSpotlight) with 99¢ Single-File Pass & 1-Tap Scorecard Email Saver',
+        'TanStack/table (★ 28,492) & AnswerDotAI/llms-txt (★ 2,661): Above-the-Fold /seo/:slug Quick-Action & Custom Benchmark Strip (#eb-pseo-quick-bar) below Lead Paragraph'
       ],
       features: {
         pseo_above_fold_quick_bar: true,
@@ -594,8 +587,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 12,
       module_id: cfg.moduleId,
       github_repos: [
-        'ag-grid/ag-grid (12,800+) & SortableJS/Sortable (29,500+): Context-Aware Clicked Row Inspector in Floating Gate Popover (__ebOpenFloatingGate) + Zeigarnik Row #4 On-Screen Reciprocity Reveal',
-        'PostHog/posthog (24,800+) & stripe/stripe-js (1,900+): Interactive Payback & ROI Scale Pills (__ebSetCurtainRoiScale) + Instant Browser Unblur Guarantee Badge'
+        'ag-grid/ag-grid (★ 12,800+) & SortableJS/Sortable (★ 29,500+): Context-Aware Clicked Row Inspector in Floating Gate Popover (__ebOpenFloatingGate) + Zeigarnik Row #4 On-Screen Reciprocity Reveal',
+        'PostHog/posthog (★ 24,800+) & stripe/stripe-js (★ 1,900+): Interactive Payback & ROI Scale Pills (__ebSetCurtainRoiScale) + Instant Browser Unblur Guarantee Badge'
       ],
       features: {
         clicked_row_context_popover: true,
@@ -613,8 +606,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 13,
       module_id: cfg.moduleId,
       github_repos: [
-        'algolia/autocomplete (4,000+) & jaywcjlove/hotkeys-js (6,900+): Universal Above-the-Fold Quick-Action, 1-Tap Preset & Inline Row #4 Reciprocity Strip (#eb-pseo-quick-bar) across /, /lp, /directory, and /seo/:slug',
-        'PostHog/posthog (24,800+) & stripe/stripe-js (1,900+): Above-the-Fold Inline Email Capture (#eb-quick-inline-form) + 1-Tap 99¢ Single-File Pass'
+        'algolia/autocomplete (★ 4,000+) & jaywcjlove/hotkeys-js (★ 6,900+): Universal Above-the-Fold Quick-Action, 1-Tap Preset & Inline Row #4 Reciprocity Strip (#eb-pseo-quick-bar) across /, /lp, /directory, and /seo/:slug',
+        'PostHog/posthog (★ 24,800+) & stripe/stripe-js (★ 1,900+): Above-the-Fold Inline Email Capture (#eb-quick-inline-form) + 1-Tap 99¢ Single-File Pass'
       ],
       features: {
         universal_above_fold_quick_bar: true,
@@ -632,8 +625,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 14,
       module_id: cfg.moduleId,
       github_repos: [
-        'shadcn-ui/ui (82,000+) & radix-ui/primitives (16,500+): First-Scroll Above-Table Deliverable Curtain Placement + Interactive 3-File Tab Switcher & 1-Tap Row #4 Email Focus',
-        'pillarjs/path-to-regexp (7,300+) & sindresorhus/slugify (2,400+): Fuzzy / Markdown-Sanitized /seo/* Canonical 301 Recovery Middleware'
+        'shadcn-ui/ui (★ 82,000+) & radix-ui/primitives (★ 16,500+): First-Scroll Above-Table Deliverable Curtain Placement + Interactive 3-File Tab Switcher & 1-Tap Row #4 Email Focus',
+        'pillarjs/path-to-regexp (★ 7,300+) & sindresorhus/slugify (★ 2,400+): Fuzzy / Markdown-Sanitized /seo/* Canonical 301 Recovery Middleware'
       ],
       features: {
         first_scroll_above_table_curtain: true,
@@ -651,8 +644,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 15,
       module_id: cfg.moduleId,
       github_repos: [
-        'Hotwired/Turbo (28,900+) & alpinejs/alpine (28,800+): First-Screen Hero-Lead-Adjacent Deliverable Curtain Placement (y = 480px–760px on / and /seo/:slug) + Instant In-Place Live KPI Readout (#eb-quick-live-readout)',
-        'github/auto-complete-element (4,600+) & LeaVerou/awesomplete (9,900+): Zero-Typing Mobile/Desktop Native <datalist> Instant Benchmark Selector (#eb-entity-datalist)'
+        'Hotwired/Turbo (★ 28,900+) & alpinejs/alpine (★ 28,800+): First-Screen Hero-Lead-Adjacent Deliverable Curtain Placement (y = 480px–760px on / and /seo/:slug) + Instant In-Place Live KPI Readout (#eb-quick-live-readout)',
+        'github/auto-complete-element (★ 4,600+) & LeaVerou/awesomplete (★ 9,900+): Zero-Typing Mobile/Desktop Native <datalist> Instant Benchmark Selector (#eb-entity-datalist)'
       ],
       features: {
         hero_lead_adjacent_firstfold_curtain: true,
@@ -670,8 +663,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 16,
       module_id: cfg.moduleId,
       github_repos: [
-        'formkit/auto-animate (12,800+) & TanStack/query (43,000+): Post-Calculation Results-Adjacent Action Bar (#eb-postcalc-inline-cta) mounted directly above native calculator output + synchronized KPI/entity spotlight',
-        'downshift-js/downshift (11,900+) & algolia/autocomplete (4,000+): 1-Tap Email Domain Auto-Chip Completer (.eb-domain-chip: @gmail.com, @icloud.com, @outlook.com) for zero-friction mobile/desktop lead capture'
+        'formkit/auto-animate (★ 12,800+) & TanStack/query (★ 43,000+): Post-Calculation Results-Adjacent Action Bar (#eb-postcalc-inline-cta) mounted directly above native calculator output + synchronized KPI/entity spotlight',
+        'downshift-js/downshift (★ 11,900+) & algolia/autocomplete (★ 4,000+): 1-Tap Email Domain Auto-Chip Completer (.eb-domain-chip: @gmail.com, @icloud.com, @outlook.com) for zero-friction mobile/desktop lead capture'
       ],
       features: {
         postcalc_results_adjacent_action_bar: true,
@@ -688,8 +681,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 17,
       module_id: cfg.moduleId,
       github_repos: [
-        'Hotwired/Stimulus (12,800+) & radix-ui/primitives (16,500+): De-Stacked Hero Architecture on / + Score-Adjacent In-Results Action Bar (#eb-postcalc-inline-cta mounted directly below .score-strip / .metric-duo)',
-        'withastro/astro (49,000+) & preactjs/signals (4,500+): Persona-Matched Vertical Lead Magnet & 99¢ Micro-Pass Copy (PERSONA dictionary) + Auto-Init Fetch Toast Suppression Guard (window.__ebUserInteracted)'
+        'Hotwired/Stimulus (★ 12,800+) & radix-ui/primitives (★ 16,500+): De-Stacked Hero Architecture on / + Score-Adjacent In-Results Action Bar (#eb-postcalc-inline-cta mounted directly below .score-strip / .metric-duo)',
+        'withastro/astro (★ 49,000+) & preactjs/signals (★ 4,500+): Persona-Matched Vertical Lead Magnet & 99¢ Micro-Pass Copy (PERSONA dictionary) + Auto-Init Fetch Toast Suppression Guard (window.__ebUserInteracted)'
       ],
       features: {
         destacked_hero_layout_on_home: true,
@@ -719,7 +712,7 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       dossier_image: '/public/editorial-dossier.jpg',
       github_repos: [
         'high-end-visual-design (soft-skill) & design-taste-frontend (taste-skill): Double-Bezel (Doppelrand) Nested Hardware-Glass Visual Showcases (#eb-doppelrand-hero-card & #eb-curtain-dossier-card) with bespoke art-directed studio photography',
-        'lovell/sharp (29,600+) & CaliCastle/zola-theme: Sub-190KB compressed progressive JPEG visual anchors with frosted-glass telemetry captions and cubic-bezier(0.32,0.72,0,1) hover physics'
+        'lovell/sharp (★ 29,600+) & CaliCastle/zola-theme: Sub-190KB compressed progressive JPEG visual anchors with frosted-glass telemetry captions and cubic-bezier(0.32,0.72,0,1) hover physics'
       ],
       features: {
         doppelrand_hero_visual_anchor: true,
@@ -736,8 +729,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 19,
       module_id: cfg.moduleId,
       github_repos: [
-        'floating-ui/floating-ui (32,754): Interactive Floating Frosted-Glass Telemetry Pill (#eb-hero-sparkline-pill) + Dynamic Dossier File-Format Loupe Badge (#eb-dossier-format-pill)',
-        'recharts/recharts (27,636) & tremorlabs/tremor (3,667): Inline SVG Bezier Sparkline Micro-Visualization with 1-Tap Scenario Simulation & Unblurred Table Row 1–3 Live Benchmark Trigger (tr[data-eb-live-row])'
+        'floating-ui/floating-ui (★ 32,754): Interactive Floating Frosted-Glass Telemetry Pill (#eb-hero-sparkline-pill) + Dynamic Dossier File-Format Loupe Badge (#eb-dossier-format-pill)',
+        'recharts/recharts (★ 27,636) & tremorlabs/tremor (★ 3,667): Inline SVG Bezier Sparkline Micro-Visualization with 1-Tap Scenario Simulation & Unblurred Table Row 1–3 Live Benchmark Trigger (tr[data-eb-live-row])'
       ],
       features: {
         floating_svg_sparkline_pill: true,
@@ -755,7 +748,7 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 20,
       module_id: cfg.moduleId,
       github_repos: [
-        'shadcn-ui/ui (82,000+) & radix-ui/primitives (16,500+): Balanced 2-Column Hero & Bento Spatial Architecture, Zero H1-to-Subhead Interruptions, and 1:1:1 Horizontal Baseline Symmetry across all 3 Pricing Tier Cards (.eb-tier-card)',
+        'shadcn-ui/ui (★ 82,000+) & radix-ui/primitives (★ 16,500+): Balanced 2-Column Hero & Bento Spatial Architecture, Zero H1-to-Subhead Interruptions, and 1:1:1 Horizontal Baseline Symmetry across all 3 Pricing Tier Cards (.eb-tier-card)',
         'high-end-visual-design (soft-skill) & emil-design-eng: Symmetrical 2-Column pSEO Hero Split (#eb-pseo-hero-split: 1.35fr 1fr), Full-Width Deliverable Curtain Placement, and Uncluttered 230px Dossier Studio Preview (#eb-curtain-dossier-card)'
       ],
       features: {
@@ -775,8 +768,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 21,
       module_id: cfg.moduleId,
       github_repos: [
-        'framer/motion (26,400+) & radix-ui/primitives (16,500+): Native .hero-split Aware pSEO 2-Column Symmetry (zero nested splits on AbandonAlpha /seo/:slug) + Full-Height Executive Summary Lead Card (.eb-pseo-lead-card) on SponsorRadar & DermLogic /seo/:slug',
-        'tanstack/table (26,100+) & AnswerDotAI/llms-txt: Deduplicated Single-Bar pSEO Benchmark Header (#eb-pseo-quick-bar) + Expanded Headless/Verifier Crawler Classifier (CRAWLER_UA_REGEX)'
+        'framer/motion (★ 26,400+) & radix-ui/primitives (★ 16,500+): Native .hero-split Aware pSEO 2-Column Symmetry (zero nested splits on AbandonAlpha /seo/:slug) + Full-Height Executive Summary Lead Card (.eb-pseo-lead-card) on SponsorRadar & DermLogic /seo/:slug',
+        'tanstack/table (★ 26,100+) & AnswerDotAI/llms-txt: Deduplicated Single-Bar pSEO Benchmark Header (#eb-pseo-quick-bar) + Expanded Headless/Verifier Crawler Classifier (CRAWLER_UA_REGEX)'
       ],
       features: {
         zero_nested_pseo_hero_splits: true,
@@ -795,8 +788,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       iteration: 22,
       module_id: cfg.moduleId,
       github_repos: [
-        'stripe/stripe-node (4,100+): Dual-Pass Stripe Session Creation with Automatic Inline price_data Retry Fallback & HTTP 303 GET /buy/:tier Direct Payment Redirects',
-        'sendgrid/sendgrid-nodejs (4,050+) & resend/resend-node (2,800+): Transactional HTML + Plain-Text Lead Follow-Up Dispatcher with 1-Click Direct /buy/:tier Checkout Links'
+        'stripe/stripe-node (★ 4,100+): Dual-Pass Stripe Session Creation with Automatic Inline price_data Retry Fallback & HTTP 303 GET /buy/:tier Direct Payment Redirects',
+        'sendgrid/sendgrid-nodejs (★ 4,050+) & resend/resend-node (★ 2,800+): Transactional HTML + Plain-Text Lead Follow-Up Dispatcher with 1-Click Direct /buy/:tier Checkout Links'
       ],
       direct_buy_links: {
         micro_pass_99c: `https://${cfg.domain}/buy/micro_pass`,
@@ -819,43 +812,44 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const top3 = ledger.filter((s) => s.score >= 85).slice(0, 3);
   const fix2 = ledger.filter((s) => s.score < 80).slice(0, 2);
-  const copyMap = {
-    'VitC-AM-Peptides-PM': { tag: 'Brightening & Firming Split', title: 'Vitamin C in the Morning, Copper Peptides at Night', desc: 'Keeps morning Vitamin C and evening Copper Peptides twelve hours apart so neither bottle cancels out or stings.' },
-    'Ceramide-Tretinoin-Buffer': { tag: 'Gentle Retinoid Cushion', title: 'Ceramide Cream Cushion Before Nighttime Tretinoin', desc: 'Applies a soothing ceramide moisturizer twenty minutes before nighttime Tretinoin to prevent flaking and dryness.' },
-    'Azelaic15-Niacinamide5': { tag: 'Redness & Pore Calming', title: 'Azelaic Acid Layered with Soothing Niacinamide', desc: 'Pairs two gentle, redness-calming serums that layer smoothly together without warmth or flushing.' },
-    'VitC+Cu': { tag: 'Common Shelf Clash', title: 'Vitamin C + Copper Peptides in the Same Routine', desc: 'Layering them together cancels out both serums on contact. Separate into morning and bedtime steps →' },
-    'Tret+BPO': { tag: 'High Dryness Risk', title: 'Nighttime Retinol + Benzoyl Peroxide Layered Together', desc: 'Acne washes deactivate nighttime Retinol on contact. See the gentle morning-and-night split →' }
-  };
-  const podiumCards = top3.map((s) => {
-    const c = copyMap[s.target] || { tag: 'Verified Ritual', title: s.target, desc: `${s.kpi1} · ${s.kpi2}` };
-    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:34px 32px;background:${t.subtleBg};text-decoration:none;color:${t.textPrimary};">
+  const medals = [
+    { icon: '#1 LEADER', bg: '#FFFBEB', border: '#FDE68A', text: '#92400E' },
+    { icon: '#2 RUNNER-UP', bg: '#F8FAFC', border: '#CBD5E1', text: '#334155' },
+    { icon: '#3 TOP TIER', bg: '#FFF7ED', border: '#FED7AA', text: '#9A3412' }
+  ];
+  const podiumCards = top3.map((s, i) => {
+    const m = medals[i] || medals[2];
+    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px;border-radius:12px;background:${t.subtleBg};text-decoration:none;color:${t.textPrimary};">
       <div>
-        <div class="eb-tabular" style="color:${t.safeColor};font-size:14.5px;font-weight:500;margin-bottom:12px;">Safe Everyday Routine · ${escHtml(c.tag)}</div>
-        <h3 style="font-family:${t.fontDisplay};font-size:1.45rem;font-weight:400;color:${t.textPrimary};margin:0 0 12px 0;line-height:1.28;max-width:none;">${escHtml(c.title)}</h3>
-        <p style="font-size:16.5px;color:${t.textSecondary};line-height:1.62;margin:0 0 24px 0;">${escHtml(c.desc)}</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="padding:3px 9px;border-radius:999px;background:${m.bg};color:${m.text};font-size:13px;font-weight:800;">${m.icon}</span>
+          <span style="padding:3px 10px;border-radius:999px;background:${t.safeSoftBg};color:${t.safeColor};font-family:${t.fontSans};font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:800;">Grade ${escHtml(s.grade)} · ${s.score}/100</span>
+        </div>
+        <div style="font-size:17px;font-weight:800;color:${t.textPrimary};margin-bottom:4px;">${escHtml(s.target)}</div>
+        <div style="font-size:14px;color:${t.textSecondary};margin-bottom:10px;">${escHtml(s.kpi1)} · ${escHtml(s.kpi2)}</div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;font-size:14.5px;color:${t.brandPrimary};font-weight:500;padding-top:12px;"><span>Read step-by-step routine</span><span>→</span></div>
+      <div>
+        <div style="width:100%;height:7px;background:#E2E8F0;border-radius:999px;overflow:hidden;margin-bottom:6px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};border-radius:999px;"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:${t.brandPrimary};font-weight:700;"><span>View Verified Report</span><span>→</span></div>
+      </div>
     </a>`;
   }).join('');
-  const fixCards = fix2.map((s) => {
-    const c = copyMap[s.target] || { tag: 'Shelf Clash', title: s.target, desc: `${s.issue} →` };
-    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:flex;flex-direction:column;gap:6px;padding:24px 28px;background:${t.brandSoftBg};text-decoration:none;color:${t.textPrimary};">
-      <div class="eb-tabular" style="font-size:14px;font-weight:500;color:${t.brandPrimary};">${escHtml(c.tag)} · Separate Morning &amp; Night</div>
-      <div style="font-family:${t.fontDisplay};font-size:1.25rem;font-weight:400;color:${t.textPrimary};line-height:1.3;">${escHtml(c.title)}</div>
-      <div style="font-size:15.5px;color:${t.textSecondary};line-height:1.55;">${escHtml(c.desc)}</div>
-    </a>`;
-  }).join('');
+  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#FFF1F2;color:#9F1239;font-size:13.5px;font-weight:700;text-decoration:none;"><span>${escHtml(s.target)}</span><span style="font-variant-numeric:tabular-nums;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
 
-  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Routine Harmony Leaderboard" style="margin:36px auto;font-family:${t.fontSans};">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:32px;">
-      <div>
-        <h2 style="margin:0 0 10px 0;max-width:none;font-size:clamp(1.85rem,2.7vw,2.45rem);font-family:${t.fontDisplay};font-weight:300;color:${t.textPrimary};letter-spacing:-0.02em;">Proven routines that layer without irritation.</h2>
-        <p style="margin:0;font-size:18px;color:${t.textSecondary};max-width:62ch;line-height:1.55;">Compare our highest-scoring morning and night combinations—or inspect the most common shelf clashes below.</p>
+  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Industry Leaderboard Podium" style="margin:36px auto;font-family:${t.fontSans};">
+    <div class="eb-panel-card" style="margin:0;padding:24px;background:${t.cardBg};">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <h2 style="margin:0;font-size:22px;font-family:${t.fontDisplay};font-weight:700;color:${t.textPrimary};">Top-Rated Industry Leaders</h2>
+        </div>
+        <a href="/leaderboard" style="padding:9px 18px;border-radius:999px;background:${t.brandPrimary};color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;">Explore Full Interactive Leaderboard →</a>
       </div>
-      <a href="/leaderboard" style="padding:12px 22px;background:${t.brandPrimary};color:#FAF6F0;font-size:14.5px;font-weight:500;text-decoration:none;white-space:nowrap;">View All ${ledger.length} Ranked Routines →</a>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:14px;">${podiumCards}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:12px;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:13.5px;font-weight:700;color:${t.textSecondary};">Common Mistakes Analysed:</span>${fixPills}</div>
+        <a href="/leaderboard" style="font-size:13.5px;font-weight:700;color:${t.brandPrimary};text-decoration:underline;"> Filter all ${ledger.length} ranked benchmarks →</a>
+      </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-bottom:24px;">${podiumCards}</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;">${fixCards}</div>
   </section>`;
 }
 
@@ -864,16 +858,7 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   const entries = Array.isArray(cfg._cachedSeoCatalog) && cfg._cachedSeoCatalog.length > 0 ? cfg._cachedSeoCatalog : [];
   if (entries.length === 0) return '';
   const gCfg = getGrowthConfig(cfg.moduleId);
-  const scanNameMap = {
-    'VitC-AM-Peptides-PM': 'Vitamin C Morning + Copper Peptides Night Routine',
-    'Ceramide-Tretinoin-Buffer': 'Ceramide Cream + Night Retinoid Cushion Routine',
-    'Azelaic15-Niacinamide5': 'Azelaic Acid + Niacinamide Calming Routine',
-    'BHA2-SnailMucin-Stack': '2% BHA Exfoliant + Snail Mucin Hydration Routine',
-    'VitC+Cu': 'Vitamin C + Copper Peptides Same-Night Clash Guide',
-    'Tret+BPO': 'Tretinoin + Benzoyl Peroxide Same-Night Clash Guide',
-    'TikTok': 'Viral 7-Serum Same-Night Routine Clash Guide'
-  };
-  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: scanNameMap[s.target] || `${s.target} Routine Guide`, cat: 'routine-guide' }));
+  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: `${s.target} (${s.grade})`, cat: 'public-scan' }));
   const growthItems = [
     ...gCfg.tools.map((x) => ({ href: `/tools/${x.slug}`, title: x.title, cat: 'interactive-tool' })),
     ...gCfg.comparisons.map((x) => ({ href: `/compare/${x.slug}`, title: x.title, cat: 'comparison' })),
@@ -882,18 +867,18 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   ];
   const pillsHtml = growthItems.map((item) => {
     const active = reqPath === item.href;
-    return `<a href="${escHtml(item.href)}" class="eb-mesh-link" data-mesh-text="${escHtml((item.title + ' ' + item.cat).toLowerCase())}" style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:${active ? t.brandSoftBg : t.surfaceBg};color:${active ? t.brandPrimary : t.textPrimary};font-size:14px;font-weight:${active ? '600' : '400'};text-decoration:none;line-height:1.4;"><span>${escHtml(item.title)}</span></a>`;
+    return `<a href="${escHtml(item.href)}" class="eb-mesh-link" data-mesh-text="${escHtml((item.title + ' ' + item.cat).toLowerCase())}" style="display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;background:${active ? t.brandSoftBg : '#FFFFFF'};color:${active ? t.brandPrimary : t.textPrimary};font-size:16px;font-weight:${active ? '700' : '500'};text-decoration:none;line-height:1.45;"><span>${escHtml(item.title)}</span></a>`;
   }).join('');
 
-  return `<nav id="eb-seo-crawl-mesh" aria-label="${escHtml(cfg.brandName)} Complete ${growthItems.length}-Guide Layering Library" style="margin-top:24px;padding:28px 32px;background:${t.subtleBg};">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
+  return `<nav id="eb-seo-crawl-mesh" aria-label="${escHtml(cfg.brandName)} Complete ${growthItems.length}-Page Programmatic Benchmark &amp; AI Indexing Mesh" style="margin-top:16px;padding:18px;border-radius:${t.radiusCard};background:${t.subtleBg};">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
       <div>
-        <div style="font-size:13.5px;font-weight:500;letter-spacing:0.03em;color:${t.brandPrimary};">Browse All ${growthItems.length} Skincare Pairing &amp; Cult-Bottle Guides</div>
-        <div style="font-size:15px;color:${t.textSecondary};margin-top:4px;">Tap any ingredient pair, cult bottle breakdown, or <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:500;">Ranked Routine</a> to check Morning &amp; Night rules.</div>
+        <div style="font-size:16px;font-weight:700;color:${t.brandPrimary};">Complete ${growthItems.length}-Benchmark Knowledge Graph &amp; AI Crawl Mesh</div>
+        <div style="font-size:16px;color:${t.textSecondary};">1-click access to all ${growthItems.length} verified guides, interactive tools, comparisons, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:700;">Public Leaderboard</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, <a href="/llms-full.txt" style="color:${t.brandPrimary};text-decoration:underline;">Full Knowledge Corpus</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap Index</a>.</div>
       </div>
-      <input type="search" id="eb-mesh-filter-input" aria-label="Search ${growthItems.length} skincare guides" placeholder="Search ${growthItems.length} guides (e.g. Retinol)..." oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:10px 16px;background:${t.surfaceBg};color:${t.textPrimary};font-size:14.5px;min-width:280px;border:none;" />
+      <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="Filter ${growthItems.length} guides by keyword..." oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:7px 12px;border-radius:8px;background:#FFFFFF;color:${t.textPrimary};font-size:16px;min-width:220px;border:none;" />
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;max-height:220px;overflow-y:auto;padding:2px;">${pillsHtml}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow-y:auto;padding:2px;">${pillsHtml}</div>
   </nav>`;
 }
 
@@ -931,7 +916,12 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
         url: hostUrl,
         name: cfg.brandName,
         publisher: { '@id': `${hostUrl}/#organization` },
-        inLanguage: 'en-US'
+        inLanguage: 'en-US',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `${hostUrl}/directory?q={search_term_string}`,
+          'query-input': 'required name=search_term_string'
+        }
       },
       {
         '@type': 'WebPage',
@@ -972,10 +962,16 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
         '@type': 'ItemList',
         '@id': `${canonicalUrl}#itemlist`,
         name: `${cfg.brandName} Top Verified Benchmarks`,
-        itemListElement: entries.slice(0, 10).map((e, idx) => ({ '@type': 'ListItem', position: idx + 1, name: e.title, url: `${hostUrl}/seo/${e.slug}` }))
+        itemListElement: entries.slice(0, 10).map((e, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: e.title,
+          url: `${hostUrl}/seo/${e.slug}`
+        }))
       }
     ]
   };
+
   const headLinks = [
     '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />',
     !/rel=["']canonical["']/i.test(out) ? `<link rel="canonical" href="${canonicalUrl}" />` : '',
@@ -988,8 +984,10 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
     `<script id="eb-schema-dts-graph" type="application/ld+json">${JSON.stringify(schemaGraph)}</script>`,
     `<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-18526471751"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18526471751');</script>`
   ].filter(Boolean).join('\n  ');
+
   if (out.includes('</head>')) out = out.replace('</head>', () => `  ${headLinks}\n</head>`);
   return out;
 }
+
 module.exports = { AI_CRAWLER_AGENTS, CRAWLER_UA_REGEX, loadVerticalSeoCatalog, attachUniversalSeoAndAiRoutes, buildTopLeaderboardPodiumShowcaseHtml, buildMobileSeoCrawlMeshHtml, enhanceHtmlForSearchAndAiBots };
 

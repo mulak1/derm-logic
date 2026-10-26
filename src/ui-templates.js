@@ -264,7 +264,8 @@ function renderHeader(hideNav = false) {
         </a>
         <nav class="nav-links" aria-label="Main Navigation">
           <a href="/#analyzer">Shelf Audit</a>
-          <a href="/#viscosity-sequencer">Four-Night Cycle</a>
+          <a href="/celebrity">Celebrity Shelves</a>
+          <a href="/concern">Skin Concerns</a>
           <a href="/directory">Layering Guides</a>
         </nav>
         <div style="display:flex;align-items:center;gap:10px;">
@@ -309,6 +310,10 @@ function renderFooter() {
           </div>
           <div style="display:flex;gap:24px;flex-wrap:wrap;font-weight:400;font-size:0.9rem;color:var(--ink-on-deep);">
             <a href="/#analyzer">Shelf Audit</a>
+            <a href="/celebrity">Celebrity Shelves</a>
+            <a href="/bottle">Cult Bottles</a>
+            <a href="/ingredient">Ingredients</a>
+            <a href="/concern">Skin Concerns</a>
             <a href="/leaderboard">Routine Leaderboard</a>
             <a href="/directory">Layering Guides</a>
             <a href="/sitemap.xml">XML Sitemap</a>
@@ -915,6 +920,21 @@ const CLIENT_SCRIPT = `
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
     }
+  }
+  function setHeroRitualMode(mode, btn) {
+    const map = {
+      am: { img1: '/public/editorial-woman-morning.jpg', img2: '/public/editorial-dossier.jpg', title: '7:30 AM · Morning Shield & Zero-Pilling Prep', sub: 'Vitamin C (Wait 60s) -> Hydrating Serum -> Barrier Cream -> Broad-Spectrum SPF 50', badge: 'Morning Glow Order', badgeClass: 'badge-safe mono' },
+      pm: { img1: '/public/editorial-woman-evening.jpg', img2: '/public/editorial-vanity-shelf.jpg', title: '9:30 PM · Bedtime Renewal & Ceramide Cushion', sub: 'Oil-to-Milk Cleanse -> Dry-Skin Retinoid or Peptide -> 3:1:1 Ceramide Barrier Seal', badge: 'Bedtime Recovery', badgeClass: 'badge-safe mono' },
+      clash: { img1: '/public/editorial-dossier.jpg', img2: '/public/editorial-vanity-shelf.jpg', title: 'Why $182 Serums Cancel on Contact', sub: 'Pure Vitamin C (pH 3.2) + Copper Peptides or Retinol + Benzoyl Peroxide deactivate each other', badge: 'Separate AM & PM', badgeClass: 'badge-clash mono' }
+    };
+    const cfg = map[mode] || map.am, tEl = document.getElementById('heroDiptychTitle'), sEl = document.getElementById('heroDiptychSub'), bEl = document.getElementById('heroDiptychBadge'), i1 = document.getElementById('heroDiptychImg1'), i2 = document.getElementById('heroDiptychImg2');
+    if (tEl) tEl.textContent = cfg.title;
+    if (sEl) sEl.textContent = cfg.sub;
+    if (bEl) { bEl.textContent = cfg.badge; bEl.className = cfg.badgeClass; }
+    if (i1) i1.src = cfg.img1;
+    if (i2) i2.src = cfg.img2;
+    document.querySelectorAll('#heroRitualToggleBar .vanity-light-btn').forEach((b) => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+    if (btn) { btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); }
   }
   function startViscosityTimer(seconds, btn) {
     if (!btn || btn.dataset.running === '1') return;
