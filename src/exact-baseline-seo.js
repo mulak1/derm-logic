@@ -840,7 +840,7 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
     </a>`;
   }).join('');
 
-  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Routine Harmony Leaderboard" style="margin:88px auto;font-family:${t.fontSans};">
+  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Routine Harmony Leaderboard" style="margin:36px auto;font-family:${t.fontSans};">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:32px;">
       <div>
         <h2 style="margin:0 0 10px 0;max-width:none;font-size:clamp(1.85rem,2.7vw,2.45rem);font-family:${t.fontDisplay};font-weight:300;color:${t.textPrimary};letter-spacing:-0.02em;">Proven routines that layer without irritation.</h2>
