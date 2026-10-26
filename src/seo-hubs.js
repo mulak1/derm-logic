@@ -254,7 +254,7 @@ function renderShell({ title, description, canonicalPath, breadcrumbs, faqItems,
 function renderSiloNavStrip(activeSilo) {
   const celebCount = getAllCelebrityRoutines().length;
   const silos = [
-    { id: 'celebrity', href: '/celebrity', label: `Celebrity Shelves (${celebCount})` },
+    { id: 'celebrity', href: '/celebrity', label: `Iconic Routines (${celebCount})` },
     { id: 'concern', href: '/concern', label: 'Skin Concerns (8)' },
     { id: 'bottle', href: '/bottle', label: 'Cult Bottles (44)' },
     { id: 'ingredient', href: '/ingredient', label: 'Active Ingredients (65)' },
@@ -293,13 +293,13 @@ function renderCelebrityIndexPage() {
   const bodyHtml = `<section class="section-block" style="padding-top:16px;">
     <div class="container">
       ${renderSiloNavStrip('celebrity')}
-      <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Celebrity Skincare Shelves, Bottles &amp; Layering Order (${celebs.length} Shelves)</h1>
+      <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Iconic Routines: Celebrity Bottles &amp; Morning/Night Layering (${celebs.length} Routines)</h1>
       <p class="hero-sub" style="margin-bottom:18px;">
         Every serum, barrier cream, and SPF spotted in public vanity tours and beauty interviews—analyzed for pH harmony, morning vs. bedtime timing, and gentle drugstore dupes.
       </p>
       <div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div>
-          <span class="badge-safe mono" style="margin-right:8px;">+1 New Celebrity Shelf Every Day</span>
+          <span class="badge-safe mono" style="margin-right:8px;">+1 New Iconic Routine Every Day</span>
           <span style="font-size:0.9rem;color:var(--text-primary);">Today’s Featured Addition: <a href="/celebrity/${escapeHtml(latestDaily.slug)}" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">${escapeHtml(latestDaily.name)} (${escapeHtml(latestDaily.moniker)})</a></span>
         </div>
         ${drip.nextQueued ? `<span class="mono" style="font-size:0.8rem;color:var(--text-secondary);">Tomorrow’s Queued Shelf: ${escapeHtml(drip.nextQueued.name)} (${drip.remainingCount} in daily queue)</span>` : ''}
@@ -309,10 +309,10 @@ function renderCelebrityIndexPage() {
   </section>`;
 
   return renderShell({
-    title: 'Celebrity Skincare Routines, Bottles & Layering Order (2026) | DermLogic',
-    description: 'Explore verified celebrity skincare shelves—Hailey Bieber, Sydney Sweeney, Sofia Richie Grainge, Margot Robbie, Zendaya & more—with exact bottle layering order and dupes.',
+    title: 'Iconic Routines: Celebrity Skincare Bottles & Layering Order (2026) | DermLogic',
+    description: 'Explore verified celebrity skincare routines—Hailey Bieber, Sydney Sweeney, Sofia Richie Grainge, Margot Robbie, Zendaya & more—with exact bottle layering order and dupes.',
     canonicalPath: '/celebrity',
-    breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Skincare Library', href: '/directory' }, { label: 'Celebrity Shelves', href: '/celebrity' }],
+    breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Skincare Library', href: '/directory' }, { label: 'Iconic Routines', href: '/celebrity' }],
     faqItems: [
       { q: 'How does DermLogic verify celebrity skincare shelves?', a: 'We cross-reference public vanity interviews (Vogue Beauty Secrets, Harper’s Bazaar Go To Bed With Me, Into The Gloss) with our 44-bottle INCI & pH database.' },
       { q: 'Can I load a celebrity routine directly into the Routine Harmony Checker?', a: 'Yes—tap "Load Shelf in Checker" on any celebrity card to test how their bottles interact with your own products.' }
@@ -416,7 +416,7 @@ function renderCelebrityDetailPage(celeb) {
       <h2 class="serif-display" style="font-size:1.55rem;margin-bottom:12px;">Key Active Ingredients in This Routine</h2>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px;">${activePills}</div>
 
-      <h2 class="serif-display" style="font-size:1.55rem;margin-bottom:14px;">Explore More Celebrity Skincare Shelves</h2>
+      <h2 class="serif-display" style="font-size:1.55rem;margin-bottom:14px;">Explore More Iconic Routines</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;">
         ${otherCelebs.map((o) => `<a href="/celebrity/${escapeHtml(o.slug)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:18px 20px;text-decoration:none;"><strong class="serif-display" style="font-size:1.2rem;display:block;margin-bottom:4px;">${escapeHtml(o.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(o.moniker)} &rarr;</span></a>`).join('')}
       </div>
@@ -429,7 +429,7 @@ function renderCelebrityDetailPage(celeb) {
     canonicalPath: `/celebrity/${celeb.slug}`,
     breadcrumbs: [
       { label: 'DermLogic', href: '/' },
-      { label: 'Celebrity Shelves', href: '/celebrity' },
+      { label: 'Iconic Routines', href: '/celebrity' },
       { label: celeb.name, href: `/celebrity/${celeb.slug}` }
     ],
     faqItems: [
@@ -514,7 +514,7 @@ function renderBottleDetailPage(prod) {
         ${actives.map((a) => `<a href="/ingredient/${escapeHtml(a.id)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:18px 20px;text-decoration:none;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);">pH ${a.phMin}–${a.phMax} · Comedogenic ${a.comedogenicity}/5</span><strong class="serif-display" style="font-size:1.22rem;display:block;margin:4px 0;">${escapeHtml(a.commonName)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(a.functionRole)} &rarr;</span></a>`).join('')}
       </div>
 
-      ${celebUsers.length > 0 ? `<h2 class="serif-display" style="font-size:1.6rem;margin-bottom:12px;">Spotted on Celebrity Skincare Shelves</h2>
+      ${celebUsers.length > 0 ? `<h2 class="serif-display" style="font-size:1.6rem;margin-bottom:12px;">Spotted in Iconic Routines</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:24px;">
         ${celebUsers.map((c) => `<a href="/celebrity/${escapeHtml(c.slug)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;text-decoration:none;"><span class="badge-safe mono" style="margin-bottom:6px;display:inline-block;">${escapeHtml(c.skinProfile)}</span><strong class="serif-display" style="font-size:1.25rem;display:block;margin-bottom:4px;">${escapeHtml(c.name)}</strong><span style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(c.moniker)} &rarr;</span></a>`).join('')}
       </div>` : ''}
@@ -582,7 +582,7 @@ function renderIngredientDetailPage(ing) {
         ${bottles.length > 0 ? bottles.map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;text-decoration:none;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);">${escapeHtml(b.brand)} · pH ${b.ph} · $${b.priceUsd}</span><strong class="serif-display" style="font-size:1.22rem;display:block;margin:4px 0;">${escapeHtml(b.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(b.summary)}</span></a>`).join('') : `<div style="padding:18px;background:var(--bg-surface);">Paste "${escapeHtml(ing.inciName)}" into our <a href="/#analyzer" style="color:var(--rose-brand);text-decoration:underline;">INCI Analyzer</a> to test any custom bottle.</div>`}
       </div>
 
-      ${celebs.length > 0 ? `<h2 class="serif-display" style="font-size:1.6rem;margin-bottom:14px;">Celebrity Shelves Using ${escapeHtml(ing.commonName)}</h2>
+      ${celebs.length > 0 ? `<h2 class="serif-display" style="font-size:1.6rem;margin-bottom:14px;">Iconic Routines Using ${escapeHtml(ing.commonName)}</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
         ${celebs.map((c) => `<a href="/celebrity/${escapeHtml(c.slug)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:18px 20px;text-decoration:none;"><strong class="serif-display" style="font-size:1.22rem;display:block;margin-bottom:4px;">${escapeHtml(c.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(c.moniker)} &rarr;</span></a>`).join('')}
       </div>` : ''}
@@ -695,7 +695,7 @@ function renderConcernDetailPage(concern) {
         ${bottles.map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;text-decoration:none;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);">${escapeHtml(b.brand)} · pH ${b.ph} · $${b.priceUsd}</span><strong class="serif-display" style="font-size:1.22rem;display:block;margin:4px 0;">${escapeHtml(b.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(b.summary)}</span></a>`).join('')}
       </div>
 
-      ${celebs.length > 0 ? `<h2 class="serif-display" style="font-size:1.55rem;margin-bottom:12px;">Celebrity Shelves Following This Philosophy</h2>
+      ${celebs.length > 0 ? `<h2 class="serif-display" style="font-size:1.55rem;margin-bottom:12px;">Iconic Routines Following This Philosophy</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;">
         ${celebs.map((c) => `<a href="/celebrity/${escapeHtml(c.slug)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:18px 20px;text-decoration:none;"><strong class="serif-display" style="font-size:1.2rem;display:block;margin-bottom:4px;">${escapeHtml(c.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(c.moniker)} &rarr;</span></a>`).join('')}
       </div>` : ''}

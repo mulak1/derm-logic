@@ -264,7 +264,7 @@ function renderHeader(hideNav = false) {
         </a>
         <nav class="nav-links" aria-label="Main Navigation">
           <a href="/#analyzer">Shelf Audit</a>
-          <a href="/celebrity">Celebrity Shelves</a>
+          <a href="/celebrity">Iconic Routines</a>
           <a href="/concern">Skin Concerns</a>
           <a href="/directory">Layering Guides</a>
         </nav>
@@ -310,7 +310,7 @@ function renderFooter() {
           </div>
           <div style="display:flex;gap:24px;flex-wrap:wrap;font-weight:400;font-size:0.9rem;color:var(--ink-on-deep);">
             <a href="/#analyzer">Shelf Audit</a>
-            <a href="/celebrity">Celebrity Shelves</a>
+            <a href="/celebrity">Iconic Routines</a>
             <a href="/bottle">Cult Bottles</a>
             <a href="/ingredient">Ingredients</a>
             <a href="/concern">Skin Concerns</a>
