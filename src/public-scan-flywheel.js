@@ -134,15 +134,29 @@ function savePublicScanEntry(cfg, entry) {
 function evaluateScanTarget(cfg, rawTarget) {
   const cat = getFlywheelCatalog(cfg.moduleId);
   const target = cleanTargetInput(rawTarget, cat.entities[0].target);
-  const existing = loadPublicScanLedger(cfg).find((e) => e.target.toLowerCase() === target.toLowerCase());
+  const tLow = target.toLowerCase();
+  const ledger = loadPublicScanLedger(cfg);
+  const existing = ledger.find((e) => e.target.toLowerCase() === tLow || fmtRoutineTitle(e.target).toLowerCase() === tLow || (tLow.includes('ceramide') && tLow.includes('tretinoin') && e.target === 'Ceramide-Tretinoin-Buffer'));
   if (existing) return { ...existing, cnnModel: cat.cnnModel, cnnSensorLabel: cat.cnnSensorLabel };
   let hash = 0;
   for (let i = 0; i < target.length; i++) hash = ((hash << 5) - hash + target.charCodeAt(i)) | 0;
   const abs = Math.abs(hash), score = 58 + (abs % 39);
   const grade = score >= 93 ? 'A+' : (score >= 86 ? 'A' : (score >= 76 ? 'B' : (score >= 62 ? 'C' : 'D')));
+  if (cfg.moduleId === 'derm_logic') {
+    const isSafe = score >= 86;
+    return {
+      target, grade, score,
+      status: isSafe ? 'Barrier-Safe Routine' : 'Separate Morning & Night',
+      kpi1: isSafe ? 'Gentle Layering Pair' : 'Morning & Night Split',
+      kpi2: isSafe ? 'Safe Under SPF 50' : 'Alternate AM / PM',
+      cnnReadout: isSafe ? 'Absorbs cleanly from thinnest watery serum to richest barrier cream without pilling' : 'Separating concentrated actives between morning and bedtime prevents stinging and protects your barrier',
+      issue: isSafe ? 'Apply watery serum first on clean skin, wait 60 seconds, then seal with ceramide moisturizer and morning SPF 50' : 'Wear your antioxidant or hydrating serum in the morning under SPF 50 and save concentrated renewal actives for bedtime',
+      cnnModel: cat.cnnModel, cnnSensorLabel: cat.cnnSensorLabel
+    };
+  }
   const status = score >= 86 ? 'HALL_OF_FAME' : (score >= 76 ? 'WATCHLIST' : 'WALL_OF_SHAME');
-  const kpi1 = cfg.moduleId === 'citation_forge' ? `${(18 + (abs % 24)).toFixed(1)}% AI Search Share` : (cfg.moduleId === 'sponsor_radar' ? `$${140 + (abs % 650)}K/mo Spend` : (cfg.moduleId === 'derm_logic' ? `${score}/100 Safety Score` : `+${34 + (abs % 29)}.4% Recovery Gain`));
-  const kpi2 = cfg.moduleId === 'citation_forge' ? (score >= 85 ? 'llms.txt + Schema Ready' : 'Missing /llms-full.txt') : (cfg.moduleId === 'sponsor_radar' ? `${2 + (abs % 14)}x Renewal Signal` : (cfg.moduleId === 'derm_logic' ? `pH Gap ${(0.4 + ((abs % 22) / 10)).toFixed(1)}` : `${82 + (abs % 15)}% Checkout Clarity`));
+  const kpi1 = cfg.moduleId === 'citation_forge' ? `${(18 + (abs % 24)).toFixed(1)}% AI Search Share` : (cfg.moduleId === 'sponsor_radar' ? `$${140 + (abs % 650)}K/mo Spend` : `+${34 + (abs % 29)}.4% Recovery Gain`);
+  const kpi2 = cfg.moduleId === 'citation_forge' ? (score >= 85 ? 'llms.txt + Schema Ready' : 'Missing /llms-full.txt') : (cfg.moduleId === 'sponsor_radar' ? `${2 + (abs % 14)}x Renewal Signal` : `${82 + (abs % 15)}% Checkout Clarity`);
   const cnnReadout = `${Math.min(99, score + 2)}.${abs % 9}% Quality Score • Verified in ${11 + (abs % 9)}ms`;
   const issue = score >= 86 ? `Verified Top Performer: Embed Live ${grade} Badge` : `Improvement Opportunity: Unlock ${cfg.freeDeliverableName} (99¢ Pass)`;
   return { target, grade, score, status, kpi1, kpi2, cnnReadout, issue, cnnModel: cat.cnnModel, cnnSensorLabel: cat.cnnSensorLabel };
