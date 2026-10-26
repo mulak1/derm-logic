@@ -109,7 +109,19 @@ function loadPublicScanLedger(cfg) {
     if (fs.existsSync(filePath)) {
       const parsed = filterClean(JSON.parse(fs.readFileSync(filePath, 'utf8')) || []).map((item) => {
         const seedMatch = cat.entities.find((e) => e.target.toLowerCase() === String(item.target || '').toLowerCase());
-        return seedMatch ? { ...item, ...seedMatch } : item;
+        if (seedMatch) return { ...item, ...seedMatch };
+        if (cfg.moduleId === 'derm_logic' && /^(WALL_OF_SHAME|HALL_OF_FAME|WATCHLIST)$/.test(String(item.status || ''))) {
+          const isSafe = (item.score || 0) >= 86;
+          return {
+            ...item,
+            status: isSafe ? 'Barrier-Safe Routine' : 'Separate Morning & Night',
+            kpi1: isSafe ? 'Gentle Layering Pair' : 'Morning & Night Split',
+            kpi2: isSafe ? 'Safe Under SPF 50' : 'Alternate AM / PM',
+            cnnReadout: isSafe ? 'Absorbs cleanly from thinnest watery serum to richest barrier cream without pilling' : 'Separating concentrated actives between morning and bedtime prevents stinging and protects your barrier',
+            issue: isSafe ? 'Apply watery serum first on clean skin, wait 60 seconds, then seal with ceramide moisturizer and morning SPF 50' : 'Wear your antioxidant or hydrating serum in the morning under SPF 50 and save concentrated renewal actives for bedtime'
+          };
+        }
+        return item;
       });
       if (Array.isArray(parsed) && parsed.length > 0) return (MEM_SCAN_LEDGERS[cfg.moduleId] = parsed);
     }
@@ -243,6 +255,39 @@ const DERM_SCAN_ENRICHMENTS = {
     amStepCopy: 'Keep mornings focused on hydration: pat Snail Mucin Essence onto freshly rinsed, damp skin, wait 45 seconds, and seal with a lightweight moisturizer and broad-spectrum SPF 50.',
     pmStepCopy: 'On exfoliation nights, swipe 2% BHA across dry congested areas and wait 10 minutes. Lightly dampen skin with thermal water, press in 2 pumps of Snail Mucin Essence, and finish with moisturizer.',
     cycleStepCopy: 'Limit 2% BHA to 2 or 3 nights per week (Night 1 of your 4-night cycle), while enjoying Snail Mucin Essence every morning and every recovery night.'
+  },
+  'VitC+Cu': {
+    leadSummary: 'Pure 15% Vitamin C (L-Ascorbic Acid) and 1% Copper Peptides cancel each other out when layered in the same routine. Splitting them into morning and bedtime slots restores 100% of their brightening and firming power.',
+    barrierMetric: 'Split AM / PM to Prevent Oxidation',
+    waitRule: 'Separate by 12 hours: wear Vitamin C in the morning under SPF 50 and save Copper Peptides for your evening repair routine',
+    amFocus: '15% L-Ascorbic Acid serum on clean, dry morning skin (wait 60s), followed by moisturizer and SPF 50+',
+    pmFocus: '1% Copper Peptide serum on lightly damp evening skin, sealed under a 3:1:1 ceramide barrier cream',
+    chemistNote: 'When applied back-to-back, copper ions rapidly oxidize unstable L-Ascorbic Acid while low-pH acid degrades delicate peptide bonds. Separating them morning and night solves the clash completely.',
+    amStepCopy: 'Apply 4 drops of 15% Vitamin C serum to dry skin after your morning rinse. Give it 60 seconds to absorb before layering moisturizer and broad-spectrum SPF 50+.',
+    pmStepCopy: 'After evening cleansing, leave skin slightly damp and press 3 drops of Copper Peptide serum across your face and neck, then seal with a soothing ceramide cream.',
+    cycleStepCopy: 'Wear Vitamin C every morning and use Copper Peptides on your recovery nights (Nights 3 and 4 of your 4-night schedule) when you are not applying exfoliating acids.'
+  },
+  'Tret+BPO': {
+    leadSummary: 'Applying leave-on Benzoyl Peroxide and prescription Tretinoin 0.05% at the same time oxidizes the retinoid and triggers severe peeling. Separating them between morning wash and bedtime cream keeps skin clear and calm.',
+    barrierMetric: 'Separate AM Wash & PM Retinoid',
+    waitRule: 'Never layer leave-on Benzoyl Peroxide over Tretinoin; use a rinse-off BPO cleanser in the morning and Tretinoin buffered with ceramides at night',
+    amFocus: 'Short-contact Benzoyl Peroxide wash (rinse thoroughly after 60s), hydrating serum, ceramide lotion, and SPF 50+',
+    pmFocus: 'Gentle non-foaming cleanse, thin ceramide buffer (wait 20m), and pea-sized Tretinoin 0.05%',
+    chemistNote: 'Benzoyl Peroxide is a strong oxidizing agent that breaks down Tretinoin on contact. Switching BPO to the morning routine preserves full retinoid strength at night without burning your moisture barrier.',
+    amStepCopy: 'Use your Benzoyl Peroxide cleanser in the morning shower for 60 seconds and rinse completely. Follow immediately with a hydrating serum, barrier lotion, and broad-spectrum SPF 50+.',
+    pmStepCopy: 'Wash with a plain, non-medicated cream cleanser at night. Apply a light ceramide layer, wait 20 minutes until skin is dry, and dot on a pea-sized amount of Tretinoin 0.05%.',
+    cycleStepCopy: 'Alternate Tretinoin every second or third night and dedicate at least two nights per week solely to ceramide, squalane, and panthenol barrier recovery.'
+  },
+  'TikTok': {
+    leadSummary: 'Stacking multiple exfoliating acids (AHA/BHA) and retinol in a single 7-step evening routine strips the stratum corneum and triggers redness, stinging, and breakouts. A 4-night skin-cycling schedule rescues your barrier.',
+    barrierMetric: 'Switch to 4-Night Skin Cycling',
+    waitRule: 'Use only one concentrated active per evening and dedicate two consecutive nights per cycle to pure ceramide and peptide recovery',
+    amFocus: 'Lukewarm water rinse, soothing panthenol or centella serum, ceramide cream, and mineral SPF 50',
+    pmFocus: 'Night 1: Gentle Exfoliant · Night 2: Retinoid · Nights 3 & 4: Pure Ceramide & Peptide Recovery',
+    chemistNote: 'Combining low-pH glycolic/salicylic acids with retinoids on the same night multiplies transepidermal water loss and compromises lipid organization without speeding up results.',
+    amStepCopy: 'Keep every morning calm and consistent: rinse with lukewarm water, press in a hydrating serum on damp skin, and finish with ceramide moisturizer and SPF 50.',
+    pmStepCopy: 'Instead of layering acids and retinol together, pick one focus per evening: exfoliate on Night 1, apply your retinoid on Night 2, and rest your skin with rich ceramides on Nights 3 and 4.',
+    cycleStepCopy: 'If your skin currently feels tight or stings when applying moisturizer, pause all acids and retinoids for 5 to 7 nights and use only cleanser, panthenol serum, and ceramide cream.'
   }
 };
 
