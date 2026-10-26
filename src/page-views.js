@@ -81,10 +81,10 @@ function getRoutineSlotRecommendation(ing) {
 function renderPorcelainSwatchCards(ingList) {
   return `<div class="porcelain-swatch-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px;margin-bottom:28px;">${(ingList || []).slice(0, 3).map((ing) => {
     const slot = getRoutineSlotRecommendation(ing);
-    const step = Number(ing.molecularWeightDa) < 200 ? 'First · Water-Light' : (Number(ing.molecularWeightDa) < 500 ? 'Second · Bounce Serum' : 'Third · Velvet Seal');
-    const feel = Number(ing.phMin) < 4.0 ? 'Active Tingle (Wait 60s)' : 'Cushion-Soft & Calm';
+    const step = Number(ing.molecularWeightDa) < 200 ? 'First · Water-Light' : (Number(ing.molecularWeightDa) < 500 ? 'Second · Silky Serum' : 'Third · Velvet Seal');
+    const feel = Number(ing.phMin) < 4.0 ? 'Gentle tingle · Wait 60s' : 'Cushion-soft & calm';
     const pore = ing.comedogenicity === 0 ? '0/5 Pore-Safe' : `Low (${ing.comedogenicity}/5)`;
-    return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;justify-content:space-between;gap:14px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Formulation Swatch</span><span class="badge-safe mono">${pore}</span></div><h3 class="serif-display" style="font-size:1.5rem;margin-bottom:14px;">${escapeHtml(ing.commonName)}</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">When to Use</div><div style="font-size:0.9rem;font-weight:500;margin-top:2px;">${slot.split('(')[0].trim()}</div></div><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Layering Step</div><div style="font-size:0.9rem;font-weight:500;margin-top:2px;">${step}</div></div></div></div><div style="font-size:0.88rem;color:var(--text-secondary);padding-top:8px;"><strong>Skin Feel:</strong> ${feel} · <span class="mono">pH ${ing.phMin}–${ing.phMax}</span></div></div>`;
+    return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;justify-content:space-between;gap:14px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Daily Active Note</span><span class="badge-safe mono">${pore}</span></div><h3 class="serif-display" style="font-size:1.36rem;line-height:1.24;margin-bottom:14px;">${escapeHtml(ing.commonName)}</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">When to Apply</div><div style="font-size:0.9rem;font-weight:500;margin-top:3px;white-space:nowrap;">${slot.split('(')[0].trim()}</div></div><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Texture Weight</div><div style="font-size:0.9rem;font-weight:500;margin-top:3px;white-space:nowrap;">${step}</div></div></div></div><div style="font-size:0.86rem;color:var(--text-secondary);padding-top:8px;white-space:nowrap;"><strong>On your skin:</strong> ${feel} · <span class="mono">pH ${ing.phMin}–${ing.phMax}</span></div></div>`;
   }).join('')}</div>`;
 }
 
@@ -151,19 +151,19 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     ...seoPages.filter((p) => p.pageType === 'product_teardown').slice(0, 3)
   ];
 
-  const featuredSeoLinks = featuredSeoPages.map((p, idx) => `
+  const featuredSeoLinks = featuredSeoPages.map((p) => `
     <div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:26px 28px;justify-content:space-between;gap:14px;">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-          <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">Dossier 0${idx + 1} · ${escapeHtml(p.category)}</span>
+          <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(p.category)}</span>
           <span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))} · ${p.compatibilityScore}/100</span>
         </div>
         <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.38rem;line-height:1.22;color:var(--text-primary);margin-bottom:10px;">${escapeHtml(p.title)}</a>
         <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;">${escapeHtml(p.summary)}</p>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;gap:8px;flex-wrap:wrap;">
-        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.86rem;color:var(--rose-brand);font-weight:500;">Read Layering Dossier &rarr;</a>
-        <a href="/api/affiliate?product=${escapeHtml((p.presetProducts && p.presetProducts[0]) || 'skinceuticals-ce-ferulic')}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" style="margin:0;">Verified Retailer &rarr;</a>
+        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.86rem;color:var(--rose-brand);font-weight:500;">Read Pairing Guide &rarr;</a>
+        <a href="/api/affiliate?product=${escapeHtml((p.presetProducts && p.presetProducts[0]) || 'skinceuticals-ce-ferulic')}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" style="margin:0;">Shop Bottle &rarr;</a>
       </div>
     </div>
   `).join('');
@@ -225,10 +225,10 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       <div class="container">
         <div style="max-width:64ch;margin-bottom:24px;">
           <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:10px;">
-            Stinging Is Not Proof That a Serum Works
+            Stinging is not proof that a serum works.
           </h2>
-          <p style="color:var(--text-secondary);font-size:var(--step-body);">
-            When your skin stings even from plain water, you do not need a chemistry lecture. You need gentle texture pacing, ninety-second wait discipline, and four-night barrier rest.
+          <p style="color:var(--text-secondary);font-size:var(--step-body);line-height:1.6;">
+            When your skin feels tight, flushed, or tender even from plain water, your products are fighting each other on the surface. Three small shifts in morning and night timing restore calm, dewy comfort.
           </p>
         </div>
 
@@ -236,92 +236,106 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div class="z-vessel-left">
             <div class="porcelain-vessel-core">
               <div>
-                <div class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;margin-bottom:10px;">
-                  The Sensory Fatigue Mirror Moment
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+                  <span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Morning vs. Night</span>
+                  <span class="badge-clash mono">Cancels Out · pH 3.2 vs 6.2</span>
                 </div>
-                <blockquote class="serif-italic" style="font-size:1.45rem;line-height:1.32;color:var(--text-primary);margin-bottom:14px;">
-                  “My face is tight, shiny, and stinging from layering too many actives. Why did my $182 Vitamin C stop working when I added Copper Peptides?”
+                <h3 class="serif-display" style="font-size:1.48rem;line-height:1.22;margin-bottom:12px;">Vitamin C in the Morning, Copper Peptides at Bedtime</h3>
+                <blockquote class="serif-italic" style="font-size:1.05rem;line-height:1.5;color:var(--text-primary);background:var(--bg-canvas);padding:14px 16px;margin-bottom:12px;">
+                  “Why did my $182 Vitamin C stop brightening and start stinging the week I added Copper Peptides?”
                 </blockquote>
-                <div class="badge-clash mono" style="margin-bottom:10px;">Cancels Out · pH 3.2 vs pH 6.2</div>
-                <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;margin-bottom:14px;">
-                  <strong>Plain-English Diagnosis:</strong> Pure Vitamin C needs an acidic pH (3.2), while Copper Peptides need a neutral pH (6.2). Layering them in the same step oxidizes both bottles on contact. Use Vitamin C in the <strong>Morning</strong> and Copper Peptides at <strong>Bedtime</strong>.
+                <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;">
+                  Pure Vitamin C needs an acidic pH (3.2) to absorb, while Copper Peptides rest at a neutral pH (6.2). Layering them in the same routine oxidizes both serums on contact. Keep Vitamin C for morning sun defense and save peptides for bedtime repair.
                 </p>
               </div>
-              <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:9px 16px;">Shop Verified AM Vitamin C &amp; PM Peptides (Dermstore) &rarr;</a>
+              <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;white-space:nowrap;">Shop Morning Vitamin C at Dermstore &rarr;</a>
             </div>
           </div>
 
           <div class="z-vessel-center">
             <div class="porcelain-vessel-core">
               <div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;">
-                  <span class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;">Thinnest to Thickest</span>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+                  <span class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;">90-Second Absorption</span>
                   <span class="badge-safe mono">Zero Makeup Pilling</span>
                 </div>
-                <h3 class="serif-display" style="font-size:1.85rem;margin-bottom:6px;">Viscosity &amp; Wait-Time Sequencer</h3>
-                <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.55;">
-                  Follow this droplet weight order—and tap any timer below at your bathroom sink so layers never roll off:
+                <h3 class="serif-display" style="font-size:1.48rem;line-height:1.22;margin-bottom:12px;">Let Acid Toners Dry Before Applying Niacinamide</h3>
+                <blockquote class="serif-italic" style="font-size:1.05rem;line-height:1.5;color:var(--text-primary);background:var(--bg-canvas);padding:14px 16px;margin-bottom:12px;">
+                  “Waiting ninety seconds after my exfoliating toner stopped my cheeks from flushing warm and kept my concealer from rolling off.”
+                </blockquote>
+                <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;">
+                  Pressing Niacinamide or rich creams straight over damp Glycolic or Salicylic Acid shifts skin pH too abruptly—triggering a warm niacin flush and causing silicone primers or morning SPF to pill along your jawline.
                 </p>
-
-                <ul class="viscosity-seq-list">
-                  <li class="viscosity-seq-item">
-                    <div>
-                      <strong style="font-size:0.95rem;color:var(--text-primary);">First · Water-Light Mist / Essence</strong>
-                      <div style="font-size:0.82rem;color:var(--text-secondary);">Apply to damp skin right after cleansing</div>
-                    </div>
-                    <span class="wait-timer-btn mono" style="cursor:default;">No Wait</span>
-                  </li>
-                  <li class="viscosity-seq-item">
-                    <div>
-                      <strong style="font-size:0.95rem;color:var(--text-primary);">Second · Bounce Serum (Peptides / HA)</strong>
-                      <div style="font-size:0.82rem;color:var(--text-secondary);">Press gently with palms; never rub in circles</div>
-                    </div>
-                    <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(45, this)">Start 45s Timer</button>
-                  </li>
-                  <li class="viscosity-seq-item">
-                    <div>
-                      <strong style="font-size:0.95rem;color:var(--text-primary);">Third · Velvet Ceramide Cream</strong>
-                      <div style="font-size:0.82rem;color:var(--text-secondary);">Seals hydration inside the lipid barrier</div>
-                    </div>
-                    <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(60, this)">Start 60s Timer</button>
-                  </li>
-                  <li class="viscosity-seq-item">
-                    <div>
-                      <strong style="font-size:0.95rem;color:var(--text-primary);">Fourth · Pure Squalane Oil / SPF Seal</strong>
-                      <div style="font-size:0.82rem;color:var(--text-secondary);">Pat 2 drops over dry cheeks (or SPF in AM)</div>
-                    </div>
-                    <span class="wait-timer-btn mono" style="cursor:default;">Final Step</span>
-                  </li>
-                </ul>
               </div>
-              <a href="/buy/micro_pass?source=viscosity_sequencer" class="btn-primary" style="width:100%;justify-content:space-between;">
-                <span>Save Vanity Mirror Lock-Screen Card ($1.99)</span>
-                <span class="btn-icon-circle">&rarr;</span>
-              </a>
+              <a href="/buy/micro_pass?source=viscosity_sequencer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;white-space:nowrap;">Get Lock-Screen Routine Card ($1.99) &rarr;</a>
             </div>
           </div>
 
           <div class="z-vessel-right">
             <div class="porcelain-vessel-core">
               <div>
-                <div class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;margin-bottom:10px;">
-                  Medicine Cabinet Save Card · 11:00 PM Proof
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+                  <span class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;">Nighttime Barrier Cushion</span>
+                  <span class="badge-safe mono">Stops Retinoid Flaking</span>
                 </div>
-                <h3 class="serif-display" style="font-size:1.55rem;margin-bottom:10px;">Benzoyl Peroxide &amp; Retinol Separation</h3>
-                <p style="font-size:0.92rem;line-height:1.58;font-style:italic;color:var(--text-primary);background:var(--bg-canvas);padding:14px 16px;margin-bottom:12px;">
-                  “I printed the 4-night gentle cycling card and taped it inside my medicine cabinet. Moving Benzoyl Peroxide to morning and Retinol to bedtime stopped my winter flaking in 4 days.”
+                <h3 class="serif-display" style="font-size:1.48rem;line-height:1.22;margin-bottom:12px;">Separate Acne Washes From Your Nighttime Retinol</h3>
+                <blockquote class="serif-italic" style="font-size:1.05rem;line-height:1.5;color:var(--text-primary);background:var(--bg-canvas);padding:14px 16px;margin-bottom:12px;">
+                  “Moving Benzoyl Peroxide to the shower and buffering Tretinoin over ceramide cream calmed the peeling around my mouth in four days.”
+                </blockquote>
+                <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;">
+                  Benzoyl Peroxide releases oxygen that deactivates over 80% of Retinol and Tretinoin on contact. Use washes in the morning, and cushion your nighttime retinoid with a 3:1:1 ceramide cream to protect your barrier.
                 </p>
-                <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;margin-bottom:12px;">
-                  <strong>Why it matters:</strong> Benzoyl Peroxide releases oxygen that wipes out 80%+ of Retinol on contact, while heavy base esters (Isopropyl Myristate 5/5) trap sweat and clog pores.
-                </p>
-                <details style="margin-bottom:12px;padding:12px 14px;background:var(--bg-canvas);font-size:0.84rem;color:var(--text-secondary);">
-                  <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);">Optional Lab Footnote: Ceramide 3:1:1 Molar Ratio</summary>
-                  <div style="padding-top:6px;">Physiological 3:1:1 ratio of Ceramides NP/AP, Cholesterol, and Fatty Acids accelerates stratum corneum recovery within 72 hours.</div>
-                </details>
               </div>
-              <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:9px 16px;">Shop Pore-Safe 3:1:1 Ceramide Cream (Sephora) &rarr;</a>
+              <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;white-space:nowrap;">Shop Ceramide Cream at Sephora &rarr;</a>
             </div>
           </div>
+        </div>
+
+        <div class="sink-pacing-panel">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;">
+            <div>
+              <div class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;margin-bottom:4px;">Thinnest to Richest · Bathroom Sink Pacing</div>
+              <h3 class="serif-display" style="font-size:1.55rem;">Tap a timer between layers so your skincare absorbs cleanly.</h3>
+            </div>
+            <a href="/buy/micro_pass?source=viscosity_sequencer" class="btn-primary">
+              <span>Save Routine to Phone Lock Screen ($1.99)</span>
+              <span class="btn-icon-circle">&rarr;</span>
+            </a>
+          </div>
+          <ul class="viscosity-seq-list">
+            <li class="viscosity-seq-item">
+              <div>
+                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 1 · Water-Light</div>
+                <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);display:block;margin-bottom:4px;">Mist or Toning Essence</strong>
+                <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Press onto damp skin right after cleansing while pores are receptive.</div>
+              </div>
+              <span class="wait-timer-btn mono" style="cursor:default;">Apply Immediately</span>
+            </li>
+            <li class="viscosity-seq-item">
+              <div>
+                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 2 · Treatment Drop</div>
+                <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);display:block;margin-bottom:4px;">Vitamin C or Peptide Serum</strong>
+                <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Pat gently with warm palms—give pH-dependent actives time to settle.</div>
+              </div>
+              <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(45, this)">Start 45s Timer</button>
+            </li>
+            <li class="viscosity-seq-item">
+              <div>
+                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 3 · Velvet Cushion</div>
+                <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);display:block;margin-bottom:4px;">Ceramide Barrier Cream</strong>
+                <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Locks in hydration and cushions dry corners before nighttime retinoids.</div>
+              </div>
+              <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(60, this)">Start 60s Timer</button>
+            </li>
+            <li class="viscosity-seq-item">
+              <div>
+                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 4 · Final Seal</div>
+                <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);display:block;margin-bottom:4px;">Morning SPF or Facial Oil</strong>
+                <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Let moisturizer set for one minute so sunscreen or oil never pills.</div>
+              </div>
+              <span class="wait-timer-btn mono" style="cursor:default;">Final Protective Layer</span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -329,9 +343,9 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     <section class="section-block" id="actives-matrix">
       <div id="inci-table"></div>
       <div class="container">
-        <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:8px;">Sixty-five actives, measured by pH and molecular weight.</h2>
+        <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:8px;">Know what is inside every bottle on your vanity.</h2>
         <p style="color:var(--text-secondary);font-size:var(--step-body);margin-bottom:20px;max-width:65ch;">
-          Inspect formulation swatch cards for our signature actives, then browse the clinical ingredient index below to check pore-safety scores and wait times.
+          Explore how everyday skincare actives behave on your skin—whether they clog pores, whether they tingle, and when in your routine they belong.
         </p>
         ${homeSwatchesHtml}
         <div class="table-wrap">
@@ -384,8 +398,8 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       <div class="container">
         <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
           <div>
-            <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:4px;">Selected Formulation Dossiers</h2>
-            <p style="color:var(--text-secondary);font-size:var(--step-small);">Six essential active-pairing and cult-bottle breakdowns from our 72-dossier clinical archive.</p>
+            <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:4px;">Popular Bottle &amp; Serum Pairing Guides</h2>
+            <p style="color:var(--text-secondary);font-size:var(--step-small);">Six everyday layering questions answered in plain English from our 72-guide library.</p>
           </div>
           <a href="/directory" class="btn-primary"><span>Explore All ${seoPages.length} Layering Guides</span><span class="btn-icon-circle">&rarr;</span></a>
         </div>
