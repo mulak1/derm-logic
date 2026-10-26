@@ -36,7 +36,7 @@ const CONCERN_HUBS = [
     slug: 'pregnancy-safe-retinol-swaps-routine',
     title: 'Pregnancy-Safe Skincare Routine & Retinol Swaps',
     badge: '100% Retinoid-Free',
-    heroImg: '/public/editorial-woman-morning.jpg',
+    heroImg: '/public/routines/selena-dewy-bounce.jpg',
     summary: 'Gentle, OB-approved swaps for Tretinoin, Retinol, Salicylic Acid peels, and Hydroquinone, using Azelaic Acid 15%, Bakuchiol, Peptides, and Vitamin C.',
     steps: [
       '1. Swap nighttime Tretinoin or Retinol for Copper Peptides + Bakuchiol to maintain bounce and firmness.',
@@ -100,7 +100,7 @@ const CONCERN_HUBS = [
     slug: 'rosacea-perioral-dermatitis-calm-routine',
     title: 'Rosacea & Perioral Dermatitis Calm Routine',
     badge: 'Zero-Flush Protocol',
-    heroImg: '/public/editorial-woman-morning.jpg',
+    heroImg: '/public/routines/sofia-mist.jpg',
     summary: 'Calm persistent cheek redness, warm flushing, and bumps around the mouth with Hypochlorous Acid, 15% Azelaic Acid, Centella, and Zinc Oxide SPF.',
     steps: [
       '1. Spritz Hypochlorous Acid mist onto clean skin and wait 10 full minutes for it to dry before touching serums.',
@@ -116,7 +116,7 @@ const CONCERN_HUBS = [
     slug: 'hormonal-acne-benzoyl-peroxide-tretinoin-split',
     title: 'Hormonal Acne Routine: How to Use Benzoyl Peroxide & Tretinoin',
     badge: 'AM / PM Oxidation Split',
-    heroImg: '/public/editorial-woman-evening.jpg',
+    heroImg: '/public/routines/madison-cleanse.jpg',
     summary: 'Clear deep chin and jawline blemishes without burning your barrier or letting Benzoyl Peroxide cancel out your nighttime Tretinoin.',
     steps: [
       '1. Morning: Use a 4%–10% Benzoyl Peroxide wash in the shower for 90 seconds, rinse thoroughly, and apply Niacinamide + SPF.',
@@ -132,7 +132,7 @@ const CONCERN_HUBS = [
     slug: 'post-flight-winter-moisture-sandwich-slugging',
     title: 'Post-Flight & Winter Moisture Sandwich (Safe Slugging Guide)',
     badge: 'Overnight Dewy Recovery',
-    heroImg: '/public/editorial-vanity-shelf.jpg',
+    heroImg: '/public/routines/margot-post-flight.jpg',
     summary: 'Restore parched cabin-air or winter-chapped skin overnight using damp-skin humectants, 3:1:1 ceramides, and targeted balm sealing without chemical burns.',
     steps: [
       '1. Press Hyaluronic Acid, Snail Mucin, and Copper Peptides onto mist-dampened skin.',

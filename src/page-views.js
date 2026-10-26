@@ -276,7 +276,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div class="z-vessel-center">
             <div class="porcelain-vessel-core">
               <div>
-                <div class="vessel-photo-frame"><img src="/public/editorial-vanity-shelf.jpg" alt="Woman's hand beside whipped barrier cream, rose serum dropper, and golden serum drops on travertine" loading="lazy" /></div>
+                <div class="vessel-photo-frame"><img src="/public/routines/emily-french-pharmacy.jpg" alt="Woman in linen robe pressing soothing toner into her cheek at a sunlit marble bathroom sink" style="object-position:center 24%;" loading="lazy" /></div>
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
                   <span class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;">90-Second Absorption</span>
                   <span class="badge-safe mono">Zero Makeup Pilling</span>
@@ -456,7 +456,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           <div class="hero-photo-col">
             <div class="editorial-photo-shell">
               <div class="editorial-photo-inner" style="min-height:240px;height:100%;flex:1;">
-                <img src="/public/editorial-serum.jpg" alt="Atelier Céramique stoneware vessels, peptide dropper on warm bisque" fetchpriority="high" />
+                <img src="/public/editorial-vanity-shelf.jpg" alt="Atelier Céramique stoneware vessels and golden serum dropper on travertine tray" fetchpriority="high" />
               </div>
               <div class="editorial-photo-caption">
                 <span>Daylight Gallery &amp; 11 PM Vanity Ready</span>
