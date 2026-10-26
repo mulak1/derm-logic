@@ -215,14 +215,14 @@ const VERTICAL_CONFIGS = {
     }
   },
   derm_logic: {
-    moduleId: 'derm_logic', brandName: 'DermLogic', domain: 'www.dermlogic.io', accentColor: '#9E3B49',
+    moduleId: 'derm_logic', brandName: 'DermLogic', domain: 'www.dermlogic.io', accentColor: 'var(--rose-brand)',
     theme: {
-      canvasBg: '#FAF6F0', cardBg: '#FFFDFB', subtleBg: '#F4EDE4', dockBg: 'rgba(255, 253, 251, 0.96)',
-      border: '#E6DDD2', accentBorder: '#F3C8CE', textPrimary: '#1C1613', textSecondary: '#4E443D', textMuted: '#6E6259',
-      brandPrimary: '#9E3B49', brandSoftBg: '#FDF2F4', brandText: '#9E3B49',
-      safeColor: '#2D6A4F', safeSoftBg: '#EAF4EE', safeBorder: '#B7DFC7', warnColor: '#92400E',
-      fontDisplay: "'Cormorant Garamond', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      radiusCard: '20px', radiusPill: '999px', shadow: 'none'
+      canvasBg: 'var(--bg-canvas)', cardBg: 'var(--bg-surface)', subtleBg: 'var(--bg-oat)', surfaceBg: 'var(--bg-surface)', dockBg: 'var(--bg-porcelain)',
+      border: 'var(--border-hairline)', accentBorder: 'var(--border-strong)', textPrimary: 'var(--text-primary)', textSecondary: 'var(--text-secondary)', textMuted: 'var(--text-muted)',
+      brandPrimary: 'var(--rose-brand)', brandSoftBg: 'var(--rose-pill-bg)', brandText: 'var(--rose-brand)',
+      safeColor: 'var(--sage-safe)', safeSoftBg: 'var(--sage-bg)', safeBorder: 'var(--border-hairline)', warnColor: 'var(--honey-warn)',
+      fontDisplay: "'Newsreader', Georgia, serif", fontSans: "'Newsreader', Georgia, serif",
+      radiusCard: '0px', radiusPill: '0px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMsIaoGnkXxS8ru7bwyQe',
     corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 4.99, coreLabel: 'Complete Morning & Night Routine Kit ($4.99)',
@@ -300,9 +300,9 @@ const VERTICAL_CONFIGS = {
       { file: 'non-comedogenic-swaps.csv', size: '5.5 KB', schema: 'Pore-Safe Product Swaps', status: 'VALID' }
     ],
     remediationDiff: {
-      beforeLine: '- [DIAGNOSIS] High-Risk Active Clash & 2.8 pH Gap Detected | Current Routine Harmony: 20/100',
-      afterLine: '+ [LOCKED FIX] Custom AM/PM Split Order + 4-Night Schedule [REDACTED IN PREVIEW] -> 96/100 Harmony',
-      roiBadge: 'Saves $182+ in Wasted Serums'
+      beforeLine: 'Morning (7:30 AM): Gentle Rinse → Antioxidant / Hydrating Serum (Wait 60s) → Moisturizer & Broad-Spectrum SPF 50',
+      afterLine: 'Bedtime (9:30 PM): Gentle Cleanser → Targeted Night Treatment (4-Night Cycle) → 3:1:1 Ceramide Barrier Cream',
+      roiBadge: '9:16 Phone Card + 4-Night Calendar'
     }
   },
   abandon_alpha: {
@@ -980,7 +980,7 @@ function attachExactBaselinePack(app, options = {}) {
     const origSend = res.send.bind(res);
     res.send = function patchedSend(body) {
       const isHtml = typeof body === 'string' && (String(res.getHeader('Content-Type') || '').includes('text/html') || body.trim().startsWith('<!DOCTYPE html>'));
-      if (isHtml && req.method === 'GET' && (req.path === '/' || req.path === '/lp' || req.path === '/directory' || req.path === '/leaderboard' || req.path === '/privacy' || req.path === '/terms' || req.path.startsWith('/dossier/sample') || req.path.startsWith('/seo/') || req.path.startsWith('/tools/') || req.path.startsWith('/compare/') || req.path.startsWith('/scan/') || req.path.startsWith('/report/') || req.path.startsWith('/celebrity') || req.path.startsWith('/bottle') || req.path.startsWith('/ingredient') || req.path.startsWith('/brand') || req.path.startsWith('/concern')) && !body.includes('id="eb-bottom-conversion-suite"')) {
+      if (isHtml && req.method === 'GET' && (req.path === '/' || req.path === '/lp' || req.path === '/directory' || req.path === '/leaderboard' || req.path === '/privacy' || req.path === '/terms' || req.path.startsWith('/dossier/sample') || req.path.startsWith('/seo/') || req.path.startsWith('/tools/') || req.path.startsWith('/compare/') || req.path.startsWith('/scan/') || req.path.startsWith('/report/')) && !body.includes('id="eb-bottom-conversion-suite"')) {
         try { res.setHeader('X-Robots-Tag', 'all, index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'); res.setHeader('Link', `<https://${cfg.domain}/llms.txt>; rel="llms-txt", <https://${cfg.domain}/llms-full.txt>; rel="llms-full-txt", <https://${cfg.domain}/openapi.json>; rel="service-desc", <https://${cfg.domain}/feed.xml>; rel="alternate"; type="application/rss+xml"`); } catch (_) {}
         store.recordEvent({ eventType: 'visit', pageUrl: req.originalUrl || req.path, deviceType, utmSource: String(req.query?.utm_source || ''), utmCampaign: String(req.query?.utm_campaign || ''), isTest, isCrawler, isOwnerIp, clientIp });
         body = renderExactBaselineEnhancements(body, cfg, req.path);

@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { getGrowthConfig, getAllGrowthUrls } = require('./autonomous-growth-engine');
 const { loadPublicScanLedger } = require('./public-scan-flywheel');
-const { getAllSemanticHubUrls } = require('./seo-hubs');
+
 
 /**
  * ExactBaseline Universal Search Engine, Mobile-First Indexing & AI Answer-Engine (GEO/AEO) Suite
@@ -172,8 +172,7 @@ function buildLlmsTxtContent(cfg, seoEntries) {
     }),
     '',
     `## All ${seoEntries.length} Indexed Programmatic SEO Benchmarks & Playbooks (/seo/:slug & .md Twins)`,
-    ...seoEntries.map((item) => `- [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${item.summary}`),
-    ...(cfg.moduleId === 'derm_logic' ? ['', '## Celebrity Skincare Shelves, Cult Bottles, Ingredients, Brands & Concerns', ...getAllSemanticHubUrls(host).map((u) => `- [${u.title}](${u.loc})`)] : [])
+    ...seoEntries.map((item) => `- [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${item.summary}`)
   ];
   return lines.join('\n');
 }
@@ -297,7 +296,9 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
     const botStanzas = AI_CRAWLER_AGENTS.map((bot) => `User-agent: ${bot}\nAllow: /\nAllow: /seo/\nAllow: /scan/\nAllow: /leaderboard\nAllow: /tools/\nAllow: /compare/\nAllow: /llms.txt\nAllow: /llms-full.txt\nAllow: /openapi.json\nDisallow: /buy/\nDisallow: /api/buy/\n`).join('\n');
     const txt = [
       'User-agent: *',
-      'Allow: /', 'Allow: /seo/', 'Allow: /celebrity', 'Allow: /bottle', 'Allow: /ingredient', 'Allow: /brand', 'Allow: /concern', 'Allow: /scan/',
+      'Allow: /',
+      'Allow: /seo/',
+      'Allow: /scan/',
       'Allow: /leaderboard',
       'Allow: /tools/',
       'Allow: /compare/',
@@ -405,8 +406,7 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       img: `${hostUrl}/api/og?slug=${encodeURIComponent(e.slug)}`,
       title: e.title
     }));
-    const hubUrls = (includeStatic && cfg.moduleId === 'derm_logic') ? getAllSemanticHubUrls(hostUrl) : [];
-    const all = [...staticUrls, ...hubUrls, ...seoUrls];
+    const all = [...staticUrls, ...seoUrls];
     const body = all.map((u) => {
       const imgBlock = u.img
         ? `\n    <image:image>\n      <image:loc>${escXml(u.img)}</image:loc>\n      <image:title>${escXml(u.title || cfg.brandName)}</image:title>\n    </image:image>`
@@ -916,12 +916,7 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
         url: hostUrl,
         name: cfg.brandName,
         publisher: { '@id': `${hostUrl}/#organization` },
-        inLanguage: 'en-US',
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: `${hostUrl}/directory?q={search_term_string}`,
-          'query-input': 'required name=search_term_string'
-        }
+        inLanguage: 'en-US'
       },
       {
         '@type': 'WebPage',

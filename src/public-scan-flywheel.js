@@ -231,22 +231,6 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
       <span class="${scan.score >= 86 ? 'badge-safe' : 'badge-clash'} mono" style="font-size:0.9rem;padding:8px 16px;">${esc(scan.kpi1)} · ${esc(scan.kpi2)}</span>
     </div>
     <section style="margin-top:20px;">${renderScanCnnOverlaySvg(cfg, scan, badgeColor)}</section>
-    <div id="eb-scan-purest-cta-bar" style="margin-top:20px;padding:18px 26px;background:var(--bg-oat);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
-      <div style="font-size:15.5px;font-weight:400;color:var(--text-primary);flex:1;min-width:280px;"><strong>${esc(humanTitle)}</strong> Routine Kit (<span class="mono" style="color:var(--rose-brand);font-weight:500;">${esc(scan.kpi1)}</span>) · 9:16 Phone Lock-Screen Card + 4-Night Calendar Reminders</div>
-      <a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" onclick="if(window.__ebTrack)window.__ebTrack('view_paywall',{source:'scan_first_fold',target:'${esc(scan.target)}'})" class="btn btn-primary" style="white-space:nowrap;">Save Complete Routine Kit ($1.99) →</a>
-    </div>
-    <script>window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.kpi1+' • '+s.cnnReadout;var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target+' Routine Guide';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val');if(r1)r1.textContent=s.kpi1;if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.status;if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};</script>
-    <section id="eb-onnx-cnn-workbench" style="background:var(--bg-oat);color:var(--text-primary);padding:20px 26px;margin-top:16px;display:flex;flex-direction:column;gap:12px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-        <span style="font-size:14px;font-weight:500;color:var(--rose-brand);">Compare Another Routine Pairing</span>
-        <div id="eb-live-cnn-readout" class="mono" style="font-size:14px;color:var(--sage-safe);font-weight:500;">${esc(humanTitle)} · ${esc(scan.kpi1)} · ${esc(scan.kpi2)}</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        ${cat.entities.slice(0, 4).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:8px 14px;border:none;background:var(--bg-surface);color:var(--text-primary);font-family:var(--font-sans);font-size:14px;font-weight:500;cursor:pointer;">${esc(fmtRoutineTitle(e.target))}</button>`).join('')}
-        <input id="eb-cnn-wb-input" type="text" placeholder="Enter routine or ingredient pair..." aria-label="Custom routine pairing" class="input-box" style="flex:1;min-width:170px;padding:8px 12px;font-size:14px;background:var(--bg-surface);" />
-        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" class="btn btn-primary" style="padding:8px 16px;font-size:14px;white-space:nowrap;">Check Pairing →</button>
-      </div>
-    </section>
     <section class="table-wrap" style="background:var(--bg-oat);padding:28px 32px;margin-top:24px;">
       <h2 style="font-size:clamp(1.45rem,2.1vw,1.9rem);margin:0 0 16px 0;">Morning &amp; Bedtime Layering Summary</h2>
       <table aria-label="${esc(humanTitle)} Layering Summary" style="width:100%;border-collapse:collapse;">
@@ -255,8 +239,8 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
           <tr><th scope="row" style="text-align:left;font-weight:500;">Morning vs. Night Pairing</th><td id="eb-scan-r1-val" class="mono" style="font-weight:500;">${esc(scan.kpi1)}</td><td id="eb-scan-r1-act">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="font-weight:500;color:${scan.score >= 86 ? 'var(--sage-safe)' : 'var(--rose-brand)'};">${scan.score >= 86 ? 'Barrier-Safe' : 'Separate AM/PM'}</td></tr>
           <tr><th scope="row" style="text-align:left;font-weight:500;">Skin Comfort &amp; Pacing</th><td id="eb-scan-r2-val" class="mono" style="font-weight:500;">${esc(scan.kpi2)}</td><td>Give 60 seconds between watery serums and rich creams</td><td style="font-weight:500;color:var(--sage-safe);">Gentle</td></tr>
           <tr><th scope="row" style="text-align:left;font-weight:500;">Moisture Barrier Effect</th><td id="eb-scan-r3-val" class="mono" style="font-weight:500;">${esc(scan.cnnReadout)}</td><td>Top morning serums with broad-spectrum SPF 30–50+</td><td style="font-weight:500;color:var(--sage-safe);">Checked</td></tr>
-          <tr id="eb-scan-row4-tr"><th scope="row" style="text-align:left;font-weight:500;">Row #4 Step-by-Step Wait Times</th><td id="eb-scan-row4-val" class="mono">Included in Routine Kit</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-Part Routine Kit ($1.99) →</a></td><td id="eb-scan-row4-status" style="font-weight:500;">Preview</td></tr>
-          <tr><th scope="row" style="text-align:left;font-weight:500;">Row #5 4-Night Skin-Cycling Schedule</th><td class="mono">Included in Routine Kit</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-Part Routine Kit ($1.99) →</a></td><td style="font-weight:500;">Preview</td></tr>
+          <tr id="eb-scan-row4-tr"><th scope="row" style="text-align:left;font-weight:500;">Step-by-Step Wait Times</th><td id="eb-scan-row4-val" class="mono">60s Serum-to-Cream Cushion</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-Part Routine Kit ($1.99) →</a></td><td id="eb-scan-row4-status" style="font-weight:500;color:var(--sage-safe);">Included</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">4-Night Skin-Cycling Schedule</th><td class="mono">Exfoliate · Retinoid · 2 Recovery Nights</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save 9:16 Phone Card &amp; .ICS Calendar ($1.99) →</a></td><td style="font-weight:500;color:var(--sage-safe);">Included</td></tr>
         </tbody>
       </table>
       <div id="eb-inline-row4-unlock" style="margin-top:18px;padding:16px 20px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
@@ -316,6 +300,18 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
         </div>
       </div>
     </article>
+    <script>window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.kpi1+' • '+s.cnnReadout;var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target;var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val');if(r1)r1.textContent=s.kpi1;if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.status;if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(window.__ebMountDeliverableCurtain)window.__ebMountDeliverableCurtain(s.target,s.kpi1+' · '+s.kpi2,'Routine Verdict ('+s.target+'): '+s.kpi1+' — '+s.cnnReadout);if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};</script>
+    <section id="eb-onnx-cnn-workbench" style="background:var(--bg-oat);color:var(--text-primary);padding:20px 26px;margin-top:24px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <span style="font-size:14px;font-weight:500;color:var(--rose-brand);">Compare Another Routine Pairing</span>
+        <div id="eb-live-cnn-readout" class="mono" style="font-size:14px;color:var(--sage-safe);font-weight:500;">${esc(humanTitle)} · ${esc(scan.kpi1)} · ${esc(scan.kpi2)}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        ${cat.entities.slice(0, 4).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:8px 14px;border:none;background:var(--bg-surface);color:var(--text-primary);font-family:var(--font-sans);font-size:14px;font-weight:500;cursor:pointer;">${esc(fmtRoutineTitle(e.target))}</button>`).join('')}
+        <input id="eb-cnn-wb-input" type="text" placeholder="Enter routine or ingredient pair..." aria-label="Custom routine pairing" class="input-box" style="flex:1;min-width:170px;padding:8px 12px;font-size:14px;background:var(--bg-surface);" />
+        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" class="btn btn-primary" style="padding:8px 16px;font-size:14px;white-space:nowrap;">Check Pairing →</button>
+      </div>
+    </section>
     <details style="background:var(--bg-oat);padding:18px 24px;margin-top:20px;">
       <summary style="cursor:pointer;font-size:15px;font-weight:500;color:var(--text-primary);">Esthetician Notes &amp; Shareable Routine Link</summary>
       <div style="margin-top:12px;">
