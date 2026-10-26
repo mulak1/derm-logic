@@ -494,7 +494,7 @@ function buildClientRuntimeScript(cfg) {
     }
     var h1Node = document.getElementById('eb-scan-h1') || document.querySelector('main h1, article h1, h1');
     if (h1Node && !window.__ebActiveEntity && (isPseoOrDir || (pName !== '/' && !isHubOrDir))) {
-      var rawH1 = (h1Node.textContent || '').replace(/\\s+/g, ' ').trim().split(/\\s*[–|:]\\s*/)[0];
+      var rawH1 = (h1Node.textContent || '').replace(/\\s+/g, ' ').trim().split(/\\s*[–|:?]\\s*/)[0].replace(/^Can You (?:Mix|Layer|Use)\\s+/i, '');
       if (rawH1.length > 48) rawH1 = rawH1.slice(0, 48).replace(/\\s+\\S*$/, '');
       window.__ebActiveEntity = rawH1.replace(/[,;:\\s]+$/, '');
     }
@@ -556,7 +556,7 @@ function buildClientRuntimeScript(cfg) {
         if (window.__ebPaywallObserver) window.__ebPaywallObserver.observe(pcCta);
       }
     }
-    var wbAnchor = document.getElementById('eb-onnx-cnn-workbench'), tBarAnchor = document.getElementById('eb-tanstack-table-bar'), homeFullGrid = !isPseoOrDir ? document.querySelector('main .bento-grid, main .hero-split, main .hero-grid') : null;
+    var wbAnchor = document.getElementById('eb-onnx-cnn-workbench'), tBarAnchor = document.getElementById('eb-tanstack-table-bar'), homeFullGrid = !isPseoOrDir ? document.querySelector('main .bento-grid, main .checker-split, main .hero-split, main .hero-grid') : null;
     var seoTargetEl = isPseoOrDir ? (existingHeroSplit || document.getElementById('eb-pseo-hero-split') || document.querySelector('main .table-wrap, article .table-wrap, main .posterior-table-wrap') || tBarAnchor || targetEl) : null;
     var mountAnchor = isPseoOrDir ? seoTargetEl : (wbAnchor || homeFullGrid || tBarAnchor || targetEl || document.getElementById('eb-doppelrand-hero-card'));
     if (!mountAnchor) return;
