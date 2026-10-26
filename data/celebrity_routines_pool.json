@@ -5,7 +5,8 @@
     "moniker": "The Micellar Double-Cleanse & Vitamin C Tour Shelf",
     "skinProfile": "Combination, Travel-Stressed & High-Definition Glow",
     "sourceNote": "Vogue Beauty Secrets & World Tour Vanity Breakdown",
-    "heroImg": "/public/editorial-woman-morning.jpg",
+    "heroImg": "/public/routines/dua-micellar.jpg",
+    "imgPos": "50% 26%",
     "signatureLook": "Fresh, camera-ready Mediterranean glow after 14-hour flights and stage lighting",
     "summary": "Dua Lipa protects her barrier across global tour flights by removing stage makeup with Bioderma Sensibio H2O Micellar Water, washing with a creamy barrier cleanser, and layering potent Vitamin C + E + Retinol-ester antioxidants under rich renewal cream.",
     "amSteps": [
@@ -33,7 +34,8 @@
     "moniker": "The Post-Dermatitis Milky Cleanse & B5 Barrier Shelf",
     "skinProfile": "Sensitive, Perioral-Dermatitis Prone & Minimalist",
     "sourceNote": "Vogue Beauty Secrets & Minimalist Barrier Reset",
-    "heroImg": "/public/editorial-woman-evening.jpg",
+    "heroImg": "/public/editorial-vanity-shelf.jpg",
+    "imgPos": "50% 50%",
     "signatureLook": "Clear, calm, zero-irritation skin after recovering from over-exfoliation dermatitis",
     "summary": "After experiencing perioral dermatitis from stacking too many active serums at once, Olivia Rodrigo stripped her routine down to three calm steps: a milky non-foaming lotion cleanser, Hyaluronic Acid 2% + B5 on damp skin, and gua sha lymphatic drainage.",
     "amSteps": [
@@ -61,7 +63,8 @@
     "moniker": "The 2% BHA, 20% Niacinamide & Adaptogen Moisture Shelf",
     "skinProfile": "Combination, Runway-Congested & Skin-Cycling Focused",
     "sourceNote": "Vogue Beauty Secrets & Runway Skin-Cycling Routine",
-    "heroImg": "/public/editorial-woman-morning.jpg",
+    "heroImg": "/public/editorial-serum.jpg",
+    "imgPos": "50% 50%",
     "signatureLook": "Refined, poreless runway texture with plush adaptogen moisture",
     "summary": "Kaia Gerber keeps fashion-week congestion at bay by pairing an antioxidant green-tea cleanser with Paula’s Choice 2% BHA Liquid Exfoliant, 20% Niacinamide pore treatment, and an adaptogen deep moisture cream under invisible SPF.",
     "amSteps": [
@@ -89,7 +92,8 @@
     "moniker": "The Cetaphil, Ceramidin & Winter Barrier Cushion Shelf",
     "skinProfile": "Dry, Winter-Chapped & Postpartum Sensitive",
     "sourceNote": "Vogue Beauty Secrets & Drugstore-Meets-Ceramide Routine",
-    "heroImg": "/public/editorial-woman-evening.jpg",
+    "heroImg": "/public/editorial-hero.jpg",
+    "imgPos": "50% 42%",
     "signatureLook": "Supple, golden-hour sunlit skin that never flakes in cold New York winters",
     "summary": "Gigi Hadid mixes $12 drugstore gentle cleansers with rich Korean 5-ceramide barrier creams (Dr. Jart+ Ceramidin) and botanical facial oils—proving that calm, deeply moisturized skin beats harsh 10-step acid routines.",
     "amSteps": [
@@ -117,7 +121,8 @@
     "moniker": "The Late-Night Tour Recovery, Vitamin C & Crème Barrier Shelf",
     "skinProfile": "Combination, Late-Night Dehydrated & High-Glow",
     "sourceNote": "Vogue Beauty Secrets & Post-Show Tour Recovery",
-    "heroImg": "/public/editorial-woman-morning.jpg",
+    "heroImg": "/public/routines/emily-french-pharmacy.jpg",
+    "imgPos": "50% 25%",
     "signatureLook": "High-gloss, wide-awake morning skin after 3 AM club and arena sets",
     "summary": "To revive tired skin after late-night shows, Charli XCX uses micellar water, brightening Vitamin C + PHAs in the morning, hyaluronic eye recovery, and ultra-rich barrier creams under lightweight SPF 50.",
     "amSteps": [
@@ -145,7 +150,8 @@
     "moniker": "The Porcelain Dewy Cream, Hyaluronic & Microcurrent Shelf",
     "skinProfile": "Fair, Sensitive & Redness-Prone Porcelain Skin",
     "sourceNote": "Vogue Beauty Secrets & Bridgerton Porcelain Glow Prep",
-    "heroImg": "/public/editorial-woman-evening.jpg",
+    "heroImg": "/public/routines/sofia-mist.jpg",
+    "imgPos": "50% 28%",
     "signatureLook": "Luminous, plump, rose-petal porcelain cheeks with zero redness",
     "summary": "Nicola Coughlan preps her fair, sensitive skin with mineral thermal water mist, conductive Hyaluronic Acid serum for microcurrent toning, melting peony eye balm, and Japanese purple-rice dewy barrier cream.",
     "amSteps": [
@@ -173,7 +179,8 @@
     "moniker": "The Zero-Pilling Lipikar Barrier & Hyperpigmentation-Safe Shelf",
     "skinProfile": "Melanin-Rich, Combination & Post-Blemish Mark Prone",
     "sourceNote": "Vogue Beauty Secrets & No-Pilling Date-Night Prep",
-    "heroImg": "/public/editorial-woman-morning.jpg",
+    "heroImg": "/public/routines/simone-glow.jpg",
+    "imgPos": "50% 22%",
     "signatureLook": "Velvet-smooth, even-toned glass skin that never pills or leaves a white cast",
     "summary": "Simone Ashley shared her iconic makeup-artist secret in Vogue: using La Roche-Posay Lipikar / Cicaplast Niacinamide + Shea barrier lotion on her face so foundation never pills, paired with invisible SPF 40 and gentle brightening actives.",
     "amSteps": [
@@ -201,7 +208,8 @@
     "moniker": "The Red-Carpet Magic Niacinamide, Vitamin C & Mineral SPF Shelf",
     "skinProfile": "Normal-to-Dry, Event-Prepped & Radiance-Focused",
     "sourceNote": "Red-Carpet Aesthetician Prep & Everyday SPF Routine",
-    "heroImg": "/public/editorial-woman-evening.jpg",
+    "heroImg": "/public/routines/zendaya-calm-balm.jpg",
+    "imgPos": "50% 24%",
     "signatureLook": "Plump, lit-from-within awards-season radiance with zero ashiness",
     "summary": "Ayo Edebiri’s skincare prep revolves around layered humectant mists, Niacinamide + Polyglutamic + Golden Vitamin C crystal elixirs, rich peptide-ceramide magic creams, and daily La Roche-Posay SPF 50.",
     "amSteps": [

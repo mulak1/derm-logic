@@ -274,7 +274,7 @@ function renderCelebrityIndexPage() {
     const preloadHref = `/?products=${encodeURIComponent(c.productIds.join(','))}#analyzer`;
     return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
       <div>
-        <div class="vessel-photo-frame" style="height:185px;margin-bottom:12px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} skincare routine vanity shelf" loading="lazy" /></div>
+        <div class="vessel-photo-frame" style="height:215px;margin-bottom:12px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} skincare routine vanity shelf" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};" /></div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
           <span class="badge-safe mono">${escapeHtml(c.skinProfile)}</span>
           <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">${c.isDailyRelease ? 'New Daily Drop · ' : ''}${c.productIds.length} Verified Bottles</span>
@@ -369,7 +369,7 @@ function renderCelebrityDetailPage(celeb) {
         <div class="hero-photo-col">
           <div class="editorial-photo-shell">
             <div class="editorial-photo-inner" style="height:320px;">
-              <img src="${escapeHtml(celeb.heroImg)}" alt="${escapeHtml(celeb.name)} skincare vanity ritual" style="width:100%;height:100%;object-fit:cover;" />
+              <img src="${escapeHtml(celeb.heroImg)}" alt="${escapeHtml(celeb.name)} skincare vanity ritual" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(celeb.imgPos || '50% 25%')};" />
             </div>
             <div class="editorial-photo-caption">
               <div>

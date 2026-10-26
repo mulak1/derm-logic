@@ -73,7 +73,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Rosacea-Safe Minimalist & Hypochlorous Mist Shelf',
     skinProfile: 'Sensitive, Rosacea-Prone & Postpartum Reactive',
     sourceNote: 'Vogue Beauty Secrets & Minimalist Barrier Routine',
-    heroImg: '/public/editorial-woman-morning.jpg',
+    heroImg: '/public/routines/sofia-mist.jpg',
+    imgPos: '50% 28%',
     signatureLook: 'Calm, porcelain-smooth quiet-luxury skin with zero flushing',
     summary: 'To keep rosacea and hormonal breakouts calm, Sofia Richie Grainge uses a $7 non-comedogenic cleanser, purifying Hypochlorous Acid mist, restorative zinc/cica barrier cream under makeup, and mineral SPF 50.',
     amSteps: [
@@ -101,7 +102,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The French Pharmacy & Biologique Recherche P50 Shelf',
     skinProfile: 'Normal-to-Combination & Texture-Focused',
     sourceNote: 'Vogue Beauty Secrets & French Pharmacy Staples',
-    heroImg: '/public/editorial-woman-evening.jpg',
+    heroImg: '/public/routines/emily-french-pharmacy.jpg',
+    imgPos: '50% 25%',
     signatureLook: 'Luminous, poreless editorial skin powered by French pharmacy classics',
     summary: 'Emily Ratajkowski swears by French pharmacy staples: Bioderma Sensibio H2O micellar water, Biologique Recherche Lotion P50 exfoliating toner, soothing Snail Mucin essence, and rich protective healing balms.',
     amSteps: [
@@ -129,7 +131,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Stage-Proof Soft-Glam & Blemish-Safe Prep Shelf',
     skinProfile: 'Combination, Stage-Makeup Heavy & Blemish-Prone',
     sourceNote: 'Red-Carpet Makeup Artist Prep & Tour Skincare Routine',
-    heroImg: '/public/editorial-woman-morning.jpg',
+    heroImg: '/public/routines/sabrina-soft-glam.jpg',
+    imgPos: '50% 26%',
     signatureLook: 'Velvety, pore-blurred porcelain base that holds blush for 12 hours without caking',
     summary: 'Wearing heavy stage and red-carpet makeup every night requires ultra-gentle, non-pilling prep: Sabrina Carpenter’s routine focuses on gentle pH-balanced cleansing, soothing heartleaf/niacinamide hydration, and silicone-free ceramide moisture.',
     amSteps: [
@@ -157,7 +160,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The PanOxyl Blemish-Clearing & Whipped Ceramide Shelf',
     skinProfile: 'Acne-Prone, Combination & Barrier-Conscious',
     sourceNote: 'Vogue Beauty Secrets Acne-Clearing Routine',
-    heroImg: '/public/editorial-woman-evening.jpg',
+    heroImg: '/public/routines/madison-cleanse.jpg',
+    imgPos: '50% 24%',
     signatureLook: 'Clear, glass-smooth skin that balances acne washes with rich ceramide recovery',
     summary: 'Madison Beer openly shared how she cleared her breakouts by pairing a Benzoyl Peroxide foaming wash (PanOxyl) with milky hydrating toners and rich whipped ceramide moisturizers—never letting peroxide dry out her barrier.',
     amSteps: [
@@ -185,7 +189,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Eczema-Safe "Less Is More" Calming Shelf',
     skinProfile: 'Sensitive, Eczema-Prone & Reactive',
     sourceNote: 'Harper’s Bazaar & Minimalist Sensitive-Skin Philosophy',
-    heroImg: '/public/editorial-vanity-shelf.jpg',
+    heroImg: '/public/routines/zendaya-calm-balm.jpg',
+    imgPos: '50% 24%',
     signatureLook: 'Naturally radiant, calm complexion with zero over-exfoliation',
     summary: 'Zendaya has shared that overloading her shelf with 10 steps triggers eczema flare-ups. Her routine focuses on soothing, fragrance-free hydration, Vitamin E antioxidant care, lightweight gel moisture, and targeted balm slugging.',
     amSteps: [
@@ -213,7 +218,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Post-Flight BHA Pad & Peptide Luxe Shelf',
     skinProfile: 'Normal-to-Dry, Frequent Flyer & Red-Carpet Ready',
     sourceNote: 'Harper’s Bazaar & Post-Flight Skincare Routine',
-    heroImg: '/public/editorial-woman-morning.jpg',
+    heroImg: '/public/routines/margot-post-flight.jpg',
+    imgPos: '50% 22%',
     signatureLook: 'Bright, lifted, camera-ready skin even after 14-hour international flights',
     summary: 'Margot Robbie is disciplined about immediate post-flight cleansing, swiping a Salicylic/Glycolic complexion pad to prevent travel breakouts, misting with hydrating hydrosols, and sealing with rich peptide-caviar moisture.',
     amSteps: [
@@ -241,7 +247,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Dewy Hyaluronic, Niacinamide & Mineral SPF Shelf',
     skinProfile: 'Sensitive, Lupus-Conscious & Moisture-First',
     sourceNote: 'Vogue Beauty Secrets & Dewy Prep Routine',
-    heroImg: '/public/editorial-woman-morning.jpg',
+    heroImg: '/public/routines/selena-dewy-bounce.jpg',
+    imgPos: '50% 25%',
     signatureLook: 'Plump, cushiony dewy skin that stays comfortable all day',
     summary: 'Selena Gomez prioritizes gentle serum-first makeup removal, lactic/hyaluronic dewy serums, rich ceramide-hyaluronic creams, and daily mineral sunscreen.',
     amSteps: [
@@ -269,7 +276,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Porcelain Sun-Shield, Facial Massage & Peptide Shelf',
     skinProfile: 'Fair, Photo-Sensitive & Firmness-Focused',
     sourceNote: 'Vogue Beauty Secrets & Dermatologist Sun-Defense Routine',
-    heroImg: '/public/editorial-woman-evening.jpg',
+    heroImg: '/public/routines/anne-massage.jpg',
+    imgPos: '50% 22%',
     signatureLook: 'Timeless, porcelain-clear skin protected by strict daily Vitamin C + SPF 50',
     summary: 'Anne Hathaway credits her porcelain complexion to religious daily SPF 50+, antioxidant Vitamin C serums, lymphatic facial massage, and gentle evening retinal/peptide renewal.',
     amSteps: [
@@ -297,7 +305,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Acne-Safe Model Shelf: Niacinamide SPF & Retinoid Pacing',
     skinProfile: 'Acne-Prone, Oily-Combination & Fungal-Acne Conscious',
     sourceNote: 'Vogue Beauty Secrets & Dermatologist Acne Protocol',
-    heroImg: '/public/editorial-vanity-shelf.jpg',
+    heroImg: '/public/routines/kendall-guasha.jpg',
+    imgPos: '50% 22%',
     signatureLook: 'Clear, balanced, non-greasy glow that never triggers studio-light breakouts',
     summary: 'Kendall Jenner manages acne-prone skin by doing Gua Sha massage before cleansing (so facial oils never stay on pores), wearing EltaMD UV Clear SPF 46 (with 5% Niacinamide), and pacing prescription retinoids at night.',
     amSteps: [
@@ -325,7 +334,8 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Fungal-Acne Safe & Non-Comedogenic Luxury Shelf',
     skinProfile: 'Breakout-Prone Yet Dehydrated ("Dry-Congested")',
     sourceNote: 'Rose Inc Founder & Non-Comedogenic Bathroom Shelf Audit',
-    heroImg: '/public/editorial-woman-morning.jpg',
+    heroImg: '/public/routines/rosie-rosewater.jpg',
+    imgPos: '50% 72%',
     signatureLook: 'Lit-from-within editorial cheek glow with zero clogged pores',
     summary: 'Rosie Huntington-Whiteley is famous for checking every bottle on her shelf for pore-clogging oils and fungal-acne triggers—relying on Bioderma Micellar, BHA/AHA resurfacing, and squalane-based hydration.',
     amSteps: [
@@ -351,6 +361,26 @@ const CELEBRITY_ROUTINES = [
 
 const DRIP_EPOCH_ISO = '2026-10-25';
 
+const ROUTINE_IMAGE_GALLERY = [
+  { heroImg: '/public/editorial-woman-morning.jpg', imgPos: '50% 25%' },
+  { heroImg: '/public/editorial-woman-evening.jpg', imgPos: '50% 25%' },
+  { heroImg: '/public/routines/sofia-mist.jpg', imgPos: '50% 28%' },
+  { heroImg: '/public/routines/emily-french-pharmacy.jpg', imgPos: '50% 25%' },
+  { heroImg: '/public/routines/sabrina-soft-glam.jpg', imgPos: '50% 26%' },
+  { heroImg: '/public/routines/madison-cleanse.jpg', imgPos: '50% 24%' },
+  { heroImg: '/public/routines/zendaya-calm-balm.jpg', imgPos: '50% 24%' },
+  { heroImg: '/public/routines/margot-post-flight.jpg', imgPos: '50% 22%' },
+  { heroImg: '/public/routines/selena-dewy-bounce.jpg', imgPos: '50% 25%' },
+  { heroImg: '/public/routines/anne-massage.jpg', imgPos: '50% 22%' },
+  { heroImg: '/public/routines/kendall-guasha.jpg', imgPos: '50% 22%' },
+  { heroImg: '/public/routines/rosie-rosewater.jpg', imgPos: '50% 72%' },
+  { heroImg: '/public/routines/dua-micellar.jpg', imgPos: '50% 26%' },
+  { heroImg: '/public/editorial-vanity-shelf.jpg', imgPos: '50% 50%' },
+  { heroImg: '/public/editorial-serum.jpg', imgPos: '50% 50%' },
+  { heroImg: '/public/editorial-hero.jpg', imgPos: '50% 42%' },
+  { heroImg: '/public/routines/simone-glow.jpg', imgPos: '50% 22%' }
+];
+
 function getDailyDripInfo() {
   const customPath = path.join(__dirname, '..', 'data', 'celebrity_routines_custom.json');
   const poolPath = path.join(__dirname, '..', 'data', 'celebrity_routines_pool.json');
@@ -358,7 +388,12 @@ function getDailyDripInfo() {
   let pool = [];
   try { if (fs.existsSync(customPath)) custom = JSON.parse(fs.readFileSync(customPath, 'utf8')); } catch (_) {}
   try { if (fs.existsSync(poolPath)) pool = JSON.parse(fs.readFileSync(poolPath, 'utf8')); } catch (_) {}
-  const customSlugs = new Set((Array.isArray(custom) ? custom : []).map((c) => c && c.slug).filter(Boolean));
+  const poolBySlug = new Map((Array.isArray(pool) ? pool : []).map((p) => [p.slug, p]));
+  const normalizedCustom = (Array.isArray(custom) ? custom : []).map((c) => {
+    const fromPool = c && c.slug ? poolBySlug.get(c.slug) : null;
+    return fromPool ? { ...c, heroImg: fromPool.heroImg, imgPos: fromPool.imgPos } : c;
+  });
+  const customSlugs = new Set(normalizedCustom.map((c) => c && c.slug).filter(Boolean));
   const elapsedDays = Math.max(1, Math.floor((Date.now() - Date.parse(DRIP_EPOCH_ISO)) / 86400000));
   const unlockedFromPool = (Array.isArray(pool) ? pool : []).slice(0, elapsedDays).map((item, idx) => ({
     ...item,
@@ -367,7 +402,7 @@ function getDailyDripInfo() {
   }));
   const remainingQueue = (Array.isArray(pool) ? pool : []).filter((p) => !customSlugs.has(p.slug)).slice(elapsedDays);
   return {
-    custom: Array.isArray(custom) ? custom : [],
+    custom: normalizedCustom,
     unlockedFromPool,
     nextQueued: remainingQueue[0] || null,
     remainingCount: remainingQueue.length
@@ -402,7 +437,13 @@ function getAllCelebrityRoutines() {
   for (const item of [...CELEBRITY_ROUTINES, ...unlockedFromPool, ...custom]) {
     if (item && item.slug && !seen.has(item.slug)) {
       seen.add(item.slug);
-      list.push(item);
+      const idx = list.length;
+      const fallback = ROUTINE_IMAGE_GALLERY[idx % ROUTINE_IMAGE_GALLERY.length];
+      list.push({
+        ...item,
+        heroImg: item.heroImg || fallback.heroImg,
+        imgPos: item.imgPos || fallback.imgPos
+      });
     }
   }
   return list;
