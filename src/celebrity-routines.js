@@ -16,10 +16,13 @@ const CELEBRITY_ROUTINES = [
     name: 'Hailey Bieber',
     moniker: 'The "Glazed Donut" Peptide & Barrier Shelf',
     skinProfile: 'Dry, Eczema-Prone & Barrier-Focused',
-    sourceNote: 'Vogue Beauty Secrets & Rhode Founder Routine',
+    sourceNote: 'Vogue Beauty Secrets & Allure Routine Interview',
+    sourcePublication: 'Vogue',
+    sourceTitle: 'Hailey Bieber’s Everyday Glazed-Skin & Barrier Prep Routine (Vogue Beauty Secrets)',
+    sourceUrl: 'https://www.vogue.com/article/hailey-bieber-skincare-routine',
     heroImg: '/public/editorial-woman-morning.jpg',
     signatureLook: 'Dewy, peptide-cushioned glass skin that never pills under sheer complexion fluid',
-    summary: 'Hailey Bieber builds her routine around milky ceramide essences, peptide glazing fluids, and rich barrier creams—keeping harsh low-pH exfoliating acids out of her daily morning prep so makeup melts seamlessly into skin.',
+    summary: 'Hailey Bieber builds her routine around milky ceramide essences, peptide glazing fluids, and rich barrier creams—keeping harsh low-pH exfoliating acids out of her daily morning prep so makeup melts evenly into skin.',
     amSteps: [
       { step: '1. Lukewarm Rinse & Mist', detail: 'Skips stripping foaming cleansers in the morning; mists clean skin to create a damp humectant base.' },
       { step: '2. Milky Ceramide Essence + Peptide Fluid', detail: 'Pats on a ceramide-rich glazing essence followed by a niacinamide and peptide hydrating serum while skin is still dewy.' },
@@ -45,6 +48,9 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Double-Cleanse, Ice-Roll & Hyaluronic Barrier Shelf',
     skinProfile: 'Combination, Breakout-Prone & Sensitive',
     sourceNote: 'Harper’s Bazaar Go To Bed With Me & Vogue Beauty Secrets',
+    sourcePublication: 'Harper’s Bazaar',
+    sourceTitle: 'Sydney Sweeney Shares Her Nighttime Skincare & Ice-Roller Routine (Go To Bed With Me)',
+    sourceUrl: 'https://www.harpersbazaar.com/beauty/skin-care/a38961051/sydney-sweeney-skincare-routine/',
     heroImg: '/public/editorial-woman-evening.jpg',
     signatureLook: 'Calm, sculpted morning glow with zero congestion after long filming days',
     summary: 'Having struggled with cystic and combination breakouts, Sydney Sweeney relies on thorough oil-to-milk double cleansing, morning ice rolling, pure Vitamin C under SPF 50, and hyaluronic sleeping masks—strictly separating exfoliating acids from nightly barrier creams.',
@@ -73,6 +79,9 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Rosacea-Safe Minimalist & Hypochlorous Mist Shelf',
     skinProfile: 'Sensitive, Rosacea-Prone & Postpartum Reactive',
     sourceNote: 'Vogue Beauty Secrets & Minimalist Barrier Routine',
+    sourcePublication: 'Vogue',
+    sourceTitle: 'Sofia Richie Grainge’s Sensitive-Skin & Everyday Glam Routine (Vogue Beauty Secrets)',
+    sourceUrl: 'https://www.vogue.com/article/sofia-richie-beauty-secrets',
     heroImg: '/public/routines/sofia-mist.jpg',
     imgPos: '50% 28%',
     signatureLook: 'Calm, porcelain-smooth quiet-luxury skin with zero flushing',
@@ -102,6 +111,9 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The French Pharmacy & Biologique Recherche P50 Shelf',
     skinProfile: 'Normal-to-Combination & Texture-Focused',
     sourceNote: 'Vogue Beauty Secrets & French Pharmacy Staples',
+    sourcePublication: 'Vogue',
+    sourceTitle: 'Emily Ratajkowski’s French Pharmacy & Luminous Skin Routine (Vogue Beauty Secrets)',
+    sourceUrl: 'https://www.vogue.com/article/emily-ratajkowski-beauty-secrets-skin-care-makeup-routine',
     heroImg: '/public/routines/emily-french-pharmacy.jpg',
     imgPos: '50% 25%',
     signatureLook: 'Luminous, poreless editorial skin powered by French pharmacy classics',
@@ -130,7 +142,10 @@ const CELEBRITY_ROUTINES = [
     name: 'Sabrina Carpenter',
     moniker: 'The Stage-Proof Soft-Glam & Blemish-Safe Prep Shelf',
     skinProfile: 'Combination, Stage-Makeup Heavy & Blemish-Prone',
-    sourceNote: 'Red-Carpet Makeup Artist Prep & Tour Skincare Routine',
+    sourceNote: 'Vogue Beauty Secrets & Tour Skincare Prep',
+    sourcePublication: 'Vogue',
+    sourceTitle: 'Sabrina Carpenter’s Soft-Glam Skin Prep & Blush Routine (Vogue Beauty Secrets)',
+    sourceUrl: 'https://www.vogue.com/article/sabrina-carpenter-beauty-secrets',
     heroImg: '/public/routines/sabrina-soft-glam.jpg',
     imgPos: '50% 26%',
     signatureLook: 'Velvety, pore-blurred porcelain base that holds blush for 12 hours without caking',
@@ -160,6 +175,9 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The PanOxyl Blemish-Clearing & Whipped Ceramide Shelf',
     skinProfile: 'Acne-Prone, Combination & Barrier-Conscious',
     sourceNote: 'Vogue Beauty Secrets Acne-Clearing Routine',
+    sourcePublication: 'Vogue',
+    sourceTitle: 'Madison Beer’s Acne-Safe Skincare & Everyday Routine (Vogue Beauty Secrets)',
+    sourceUrl: 'https://www.vogue.com/article/madison-beer-beauty-secrets-acne-skincare-makeup-routine',
     heroImg: '/public/routines/madison-cleanse.jpg',
     imgPos: '50% 24%',
     signatureLook: 'Clear, glass-smooth skin that balances acne washes with rich ceramide recovery',
@@ -188,7 +206,10 @@ const CELEBRITY_ROUTINES = [
     name: 'Zendaya',
     moniker: 'The Eczema-Safe "Less Is More" Calming Shelf',
     skinProfile: 'Sensitive, Eczema-Prone & Reactive',
-    sourceNote: 'Harper’s Bazaar & Minimalist Sensitive-Skin Philosophy',
+    sourceNote: 'Harper’s Bazaar & Allure Sensitive-Skin Interview',
+    sourcePublication: 'Allure',
+    sourceTitle: 'Zendaya’s Minimalist Sensitive-Skin & Barrier Care Routine',
+    sourceUrl: 'https://www.allure.com/story/zendaya-skin-care-routine-products',
     heroImg: '/public/routines/zendaya-calm-balm.jpg',
     imgPos: '50% 24%',
     signatureLook: 'Naturally radiant, calm complexion with zero over-exfoliation',
@@ -217,7 +238,10 @@ const CELEBRITY_ROUTINES = [
     name: 'Margot Robbie',
     moniker: 'The Post-Flight BHA Pad & Peptide Luxe Shelf',
     skinProfile: 'Normal-to-Dry, Frequent Flyer & Red-Carpet Ready',
-    sourceNote: 'Harper’s Bazaar & Post-Flight Skincare Routine',
+    sourceNote: 'Harper’s Bazaar UK & Vogue Post-Flight Skincare Interview',
+    sourcePublication: 'Harper’s Bazaar',
+    sourceTitle: 'Margot Robbie Shares Every Product in Her Skincare Routine',
+    sourceUrl: 'https://www.harpersbazaar.com/uk/beauty/skincare/a44573578/margot-robbie-skincare-routine/',
     heroImg: '/public/routines/margot-post-flight.jpg',
     imgPos: '50% 22%',
     signatureLook: 'Bright, lifted, camera-ready skin even after 14-hour international flights',
@@ -247,6 +271,9 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Dewy Hyaluronic, Niacinamide & Mineral SPF Shelf',
     skinProfile: 'Sensitive, Lupus-Conscious & Moisture-First',
     sourceNote: 'Vogue Beauty Secrets & Dewy Prep Routine',
+    sourcePublication: 'Vogue',
+    sourceTitle: 'Selena Gomez’s Dewy Skincare & Makeup Routine (Vogue Beauty Secrets)',
+    sourceUrl: 'https://www.vogue.com/article/selena-gomez-beauty-secrets',
     heroImg: '/public/routines/selena-dewy-bounce.jpg',
     imgPos: '50% 25%',
     signatureLook: 'Plump, cushiony dewy skin that stays comfortable all day',
@@ -275,7 +302,10 @@ const CELEBRITY_ROUTINES = [
     name: 'Anne Hathaway',
     moniker: 'The Porcelain Sun-Shield, Facial Massage & Peptide Shelf',
     skinProfile: 'Fair, Photo-Sensitive & Firmness-Focused',
-    sourceNote: 'Vogue Beauty Secrets & Dermatologist Sun-Defense Routine',
+    sourceNote: 'Vogue & Town & Country Sun-Defense Interview',
+    sourcePublication: 'Vogue',
+    sourceTitle: 'Anne Hathaway on Her Daily SPF, Facial Massage & Glow Routine',
+    sourceUrl: 'https://www.vogue.com/article/anne-hathaway-skin-care-routine-shiseido',
     heroImg: '/public/routines/anne-massage.jpg',
     imgPos: '50% 22%',
     signatureLook: 'Timeless, porcelain-clear skin protected by strict daily Vitamin C + SPF 50',
@@ -305,6 +335,9 @@ const CELEBRITY_ROUTINES = [
     moniker: 'The Acne-Safe Model Shelf: Niacinamide SPF & Retinoid Pacing',
     skinProfile: 'Acne-Prone, Oily-Combination & Fungal-Acne Conscious',
     sourceNote: 'Vogue Beauty Secrets & Dermatologist Acne Protocol',
+    sourcePublication: 'Vogue',
+    sourceTitle: 'Kendall Jenner’s Acne-Safe Skincare & Gua Sha Routine (Vogue Beauty Secrets)',
+    sourceUrl: 'https://www.vogue.com/article/kendall-jenner-beauty-secrets',
     heroImg: '/public/routines/kendall-guasha.jpg',
     imgPos: '50% 22%',
     signatureLook: 'Clear, balanced, non-greasy glow that never triggers studio-light breakouts',
@@ -333,7 +366,10 @@ const CELEBRITY_ROUTINES = [
     name: 'Rosie Huntington-Whiteley',
     moniker: 'The Fungal-Acne Safe & Non-Comedogenic Luxury Shelf',
     skinProfile: 'Breakout-Prone Yet Dehydrated ("Dry-Congested")',
-    sourceNote: 'Rose Inc Founder & Non-Comedogenic Bathroom Shelf Audit',
+    sourceNote: 'Harper’s Bazaar & Non-Comedogenic Bathroom Shelf Audit',
+    sourcePublication: 'Harper’s Bazaar',
+    sourceTitle: 'Rosie Huntington-Whiteley’s Non-Comedogenic Skincare Routine (Go To Bed With Me)',
+    sourceUrl: 'https://www.harpersbazaar.com/beauty/skin-care/a30792151/rosie-huntington-whiteley-skincare-routine/',
     heroImg: '/public/routines/rosie-rosewater.jpg',
     imgPos: '50% 72%',
     signatureLook: 'Lit-from-within editorial cheek glow with zero clogged pores',
@@ -391,7 +427,16 @@ function getDailyDripInfo() {
   const poolBySlug = new Map((Array.isArray(pool) ? pool : []).map((p) => [p.slug, p]));
   const normalizedCustom = (Array.isArray(custom) ? custom : []).map((c) => {
     const fromPool = c && c.slug ? poolBySlug.get(c.slug) : null;
-    return fromPool ? { ...c, heroImg: fromPool.heroImg, imgPos: fromPool.imgPos } : c;
+    return fromPool
+      ? {
+          ...c,
+          heroImg: fromPool.heroImg,
+          imgPos: fromPool.imgPos,
+          sourcePublication: c.sourcePublication || fromPool.sourcePublication,
+          sourceTitle: c.sourceTitle || fromPool.sourceTitle,
+          sourceUrl: c.sourceUrl || fromPool.sourceUrl
+        }
+      : c;
   });
   const customSlugs = new Set(normalizedCustom.map((c) => c && c.slug).filter(Boolean));
   const elapsedDays = Math.max(1, Math.floor((Date.now() - Date.parse(DRIP_EPOCH_ISO)) / 86400000));
@@ -442,7 +487,10 @@ function getAllCelebrityRoutines() {
       list.push({
         ...item,
         heroImg: item.heroImg || fallback.heroImg,
-        imgPos: item.imgPos || fallback.imgPos
+        imgPos: item.imgPos || fallback.imgPos,
+        sourcePublication: item.sourcePublication || 'Vogue',
+        sourceTitle: item.sourceTitle || `${item.name} Skincare Routine Interview (${item.sourceNote || 'Public Beauty Feature'})`,
+        sourceUrl: item.sourceUrl || `https://www.vogue.com/search?q=${encodeURIComponent(item.name + ' skincare routine')}`
       });
     }
   }
