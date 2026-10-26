@@ -13,6 +13,7 @@ const {
 } = require('./ui-templates');
 
 const { CLINICAL_INGREDIENTS } = require('./clinical-data');
+const { getAllCelebrityRoutines } = require('./celebrity-routines');
 
 function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdObjects, hideNav, bodyHtml }) {
   const baseUrl = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://www.dermlogic.io').replace(/\/$/, '');
@@ -200,7 +201,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px;background:var(--bg-oat);">
               <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">44</div><div style="font-size:0.78rem;color:var(--text-secondary);">Popular Serums &amp; Creams</div></div>
               <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">65</div><div style="font-size:0.78rem;color:var(--text-secondary);">Skincare Ingredients</div></div>
-              <div><div class="mono" style="font-size:1.15rem;color:var(--rose-brand);font-weight:500;">12</div><div style="font-size:0.78rem;color:var(--text-secondary);"><a href="/celebrity" style="text-decoration:underline;">Celebrity Shelves</a></div></div>
+              <div><div class="mono" style="font-size:1.15rem;color:var(--rose-brand);font-weight:500;">${getAllCelebrityRoutines().length}</div><div style="font-size:0.78rem;color:var(--text-secondary);"><a href="/celebrity" style="text-decoration:underline;">Celebrity Shelves (+1/day)</a></div></div>
             </div>
           </div>
           <div class="hero-photo-col">
@@ -551,7 +552,7 @@ function renderDirectoryPage({ seoPages }) {
           Find out which serums belong in the morning, which belong at bedtime, how long to wait between layers, and whether your favorite bottles and ingredients are safe for breakout-prone pores.
         </p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;background:var(--bg-surface);margin-bottom:16px;" role="navigation" aria-label="Semantic Skincare Silo Hubs">
-          <a href="/celebrity" class="affiliate-link-pill mono">Celebrity Shelves (12) &rarr;</a>
+          <a href="/celebrity" class="affiliate-link-pill mono">Celebrity Shelves (${getAllCelebrityRoutines().length}) &rarr;</a>
           <a href="/concern" class="affiliate-link-pill mono">Skin Concerns (8) &rarr;</a>
           <a href="/bottle" class="affiliate-link-pill mono">Cult Bottles (44) &rarr;</a>
           <a href="/ingredient" class="affiliate-link-pill mono">Active Ingredients (65) &rarr;</a>

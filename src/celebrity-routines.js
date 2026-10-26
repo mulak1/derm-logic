@@ -349,17 +349,57 @@ const CELEBRITY_ROUTINES = [
   }
 ];
 
-function getAllCelebrityRoutines() {
+const DRIP_EPOCH_ISO = '2026-10-25';
+
+function getDailyDripInfo() {
   const customPath = path.join(__dirname, '..', 'data', 'celebrity_routines_custom.json');
+  const poolPath = path.join(__dirname, '..', 'data', 'celebrity_routines_pool.json');
   let custom = [];
-  try {
-    if (fs.existsSync(customPath)) {
-      custom = JSON.parse(fs.readFileSync(customPath, 'utf8'));
-    }
-  } catch (_) {}
+  let pool = [];
+  try { if (fs.existsSync(customPath)) custom = JSON.parse(fs.readFileSync(customPath, 'utf8')); } catch (_) {}
+  try { if (fs.existsSync(poolPath)) pool = JSON.parse(fs.readFileSync(poolPath, 'utf8')); } catch (_) {}
+  const customSlugs = new Set((Array.isArray(custom) ? custom : []).map((c) => c && c.slug).filter(Boolean));
+  const elapsedDays = Math.max(1, Math.floor((Date.now() - Date.parse(DRIP_EPOCH_ISO)) / 86400000));
+  const unlockedFromPool = (Array.isArray(pool) ? pool : []).slice(0, elapsedDays).map((item, idx) => ({
+    ...item,
+    isDailyRelease: idx === Math.min(elapsedDays - 1, pool.length - 1),
+    releasedDayIndex: idx + 1
+  }));
+  const remainingQueue = (Array.isArray(pool) ? pool : []).filter((p) => !customSlugs.has(p.slug)).slice(elapsedDays);
+  return {
+    custom: Array.isArray(custom) ? custom : [],
+    unlockedFromPool,
+    nextQueued: remainingQueue[0] || null,
+    remainingCount: remainingQueue.length
+  };
+}
+
+function advanceCelebrityShelfByOneDay() {
+  const customPath = path.join(__dirname, '..', 'data', 'celebrity_routines_custom.json');
+  const poolPath = path.join(__dirname, '..', 'data', 'celebrity_routines_pool.json');
+  let custom = [];
+  let pool = [];
+  try { if (fs.existsSync(customPath)) custom = JSON.parse(fs.readFileSync(customPath, 'utf8')); } catch (_) {}
+  try { if (fs.existsSync(poolPath)) pool = JSON.parse(fs.readFileSync(poolPath, 'utf8')); } catch (_) {}
+  const existingSlugs = new Set([
+    ...CELEBRITY_ROUTINES.map((c) => c.slug),
+    ...getDailyDripInfo().unlockedFromPool.map((c) => c.slug),
+    ...(Array.isArray(custom) ? custom.map((c) => c.slug) : [])
+  ]);
+  const nextItem = (Array.isArray(pool) ? pool : []).find((p) => p && p.slug && !existingSlugs.has(p.slug));
+  if (!nextItem) return { added: false, item: null, total: getAllCelebrityRoutines().length };
+  const stamped = { ...nextItem, isDailyRelease: true, releasedAt: new Date().toISOString().split('T')[0] };
+  const updated = [...(Array.isArray(custom) ? custom : []), stamped];
+  fs.mkdirSync(path.dirname(customPath), { recursive: true });
+  fs.writeFileSync(customPath, JSON.stringify(updated, null, 2), 'utf8');
+  return { added: true, item: stamped, total: getAllCelebrityRoutines().length };
+}
+
+function getAllCelebrityRoutines() {
+  const { custom, unlockedFromPool } = getDailyDripInfo();
   const seen = new Set();
   const list = [];
-  for (const item of [...CELEBRITY_ROUTINES, ...(Array.isArray(custom) ? custom : [])]) {
+  for (const item of [...CELEBRITY_ROUTINES, ...unlockedFromPool, ...custom]) {
     if (item && item.slug && !seen.has(item.slug)) {
       seen.add(item.slug);
       list.push(item);
@@ -370,5 +410,7 @@ function getAllCelebrityRoutines() {
 
 module.exports = {
   CELEBRITY_ROUTINES,
-  getAllCelebrityRoutines
+  getAllCelebrityRoutines,
+  getDailyDripInfo,
+  advanceCelebrityShelfByOneDay
 };

@@ -11,7 +11,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { getAllCelebrityRoutines } = require('./celebrity-routines');
+const { getAllCelebrityRoutines, getDailyDripInfo, advanceCelebrityShelfByOneDay } = require('./celebrity-routines');
 const { CLINICAL_INGREDIENTS, CULT_PRODUCTS } = require('./clinical-data');
 const { escapeHtml, SHARED_CSS, CLIENT_SCRIPT, renderHeader, renderFooter } = require('./ui-templates');
 
@@ -252,8 +252,9 @@ function renderShell({ title, description, canonicalPath, breadcrumbs, faqItems,
 }
 
 function renderSiloNavStrip(activeSilo) {
+  const celebCount = getAllCelebrityRoutines().length;
   const silos = [
-    { id: 'celebrity', href: '/celebrity', label: 'Celebrity Shelves (12)' },
+    { id: 'celebrity', href: '/celebrity', label: `Celebrity Shelves (${celebCount})` },
     { id: 'concern', href: '/concern', label: 'Skin Concerns (8)' },
     { id: 'bottle', href: '/bottle', label: 'Cult Bottles (44)' },
     { id: 'ingredient', href: '/ingredient', label: 'Active Ingredients (65)' },
@@ -267,6 +268,8 @@ function renderSiloNavStrip(activeSilo) {
 
 function renderCelebrityIndexPage() {
   const celebs = getAllCelebrityRoutines();
+  const drip = getDailyDripInfo();
+  const latestDaily = celebs.filter((c) => c.isDailyRelease).slice(-1)[0] || celebs[celebs.length - 1];
   const cards = celebs.map((c) => {
     const preloadHref = `/?products=${encodeURIComponent(c.productIds.join(','))}#analyzer`;
     return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
@@ -274,7 +277,7 @@ function renderCelebrityIndexPage() {
         <div class="vessel-photo-frame" style="height:185px;margin-bottom:12px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} skincare routine vanity shelf" loading="lazy" /></div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
           <span class="badge-safe mono">${escapeHtml(c.skinProfile)}</span>
-          <span class="mono" style="font-size:0.78rem;color:var(--text-secondary);">${c.productIds.length} Verified Bottles</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">${c.isDailyRelease ? 'New Daily Drop · ' : ''}${c.productIds.length} Verified Bottles</span>
         </div>
         <a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.45rem;color:var(--text-primary);margin-bottom:4px;">${escapeHtml(c.name)}</a>
         <div class="serif-italic" style="font-size:0.98rem;color:var(--rose-brand);margin-bottom:8px;">${escapeHtml(c.moniker)}</div>
@@ -290,10 +293,17 @@ function renderCelebrityIndexPage() {
   const bodyHtml = `<section class="section-block" style="padding-top:16px;">
     <div class="container">
       ${renderSiloNavStrip('celebrity')}
-      <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Celebrity Skincare Shelves, Bottles &amp; Layering Order</h1>
-      <p class="hero-sub" style="margin-bottom:26px;">
+      <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Celebrity Skincare Shelves, Bottles &amp; Layering Order (${celebs.length} Shelves)</h1>
+      <p class="hero-sub" style="margin-bottom:18px;">
         Every serum, barrier cream, and SPF spotted in public vanity tours and beauty interviews—analyzed for pH harmony, morning vs. bedtime timing, and gentle drugstore dupes.
       </p>
+      <div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div>
+          <span class="badge-safe mono" style="margin-right:8px;">+1 New Celebrity Shelf Every Day</span>
+          <span style="font-size:0.9rem;color:var(--text-primary);">Today’s Featured Addition: <a href="/celebrity/${escapeHtml(latestDaily.slug)}" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">${escapeHtml(latestDaily.name)} (${escapeHtml(latestDaily.moniker)})</a></span>
+        </div>
+        ${drip.nextQueued ? `<span class="mono" style="font-size:0.8rem;color:var(--text-secondary);">Tomorrow’s Queued Shelf: ${escapeHtml(drip.nextQueued.name)} (${drip.remainingCount} in daily queue)</span>` : ''}
+      </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;">${cards}</div>
     </div>
   </section>`;
@@ -765,10 +775,15 @@ function attachSemanticSeoHubs(app, render404Page) {
     res.status(200).type('html').send(renderConcernDetailPage(concern));
   });
 
-  // Iterative Celebrity Shelf Discovery & Augmentation Endpoint (/api/celebrity-shelves)
+  // Iterative Celebrity Shelf Discovery & Daily +1 Augmentation Endpoint (/api/celebrity-shelves)
   app.get('/api/celebrity-shelves', (req, res) => {
     const list = getAllCelebrityRoutines();
-    res.status(200).json({ ok: true, count: list.length, shelves: list });
+    const drip = getDailyDripInfo();
+    res.status(200).json({ ok: true, count: list.length, dailyQueueRemaining: drip.remainingCount, nextQueued: drip.nextQueued ? drip.nextQueued.slug : null, shelves: list });
+  });
+  app.post('/api/celebrity-shelves/advance-day', (req, res) => {
+    const result = advanceCelebrityShelfByOneDay();
+    res.status(200).json({ ok: true, ...result });
   });
 }
 

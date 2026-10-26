@@ -1,0 +1,226 @@
+[
+  {
+    "slug": "dua-lipa",
+    "name": "Dua Lipa",
+    "moniker": "The Micellar Double-Cleanse & Vitamin C Tour Shelf",
+    "skinProfile": "Combination, Travel-Stressed & High-Definition Glow",
+    "sourceNote": "Vogue Beauty Secrets & World Tour Vanity Breakdown",
+    "heroImg": "/public/editorial-woman-morning.jpg",
+    "signatureLook": "Fresh, camera-ready Mediterranean glow after 14-hour flights and stage lighting",
+    "summary": "Dua Lipa protects her barrier across global tour flights by removing stage makeup with Bioderma Sensibio H2O Micellar Water, washing with a creamy barrier cleanser, and layering potent Vitamin C + E + Retinol-ester antioxidants under rich renewal cream.",
+    "amSteps": [
+      { "step": "1. Creamy Non-Foaming Morning Wash", "detail": "Cleanses gently without stripping lipids after dry hotel or cabin air." },
+      { "step": "2. Potent L-Ascorbic Acid Antioxidant Serum", "detail": "Applies iS Clinical Pro-Heal / 15% Vitamin C serum onto dry skin and waits 60 seconds." },
+      { "step": "3. Supercharged Peptide-Ceramide Cream + SPF 50", "detail": "Seals hydration with a barrier-rebalancing cream and invisible SPF 50." }
+    ],
+    "pmSteps": [
+      { "step": "1. Bioderma Micellar Water + Cream Cleanse", "detail": "Soaks cotton pads in Sensibio H2O to dissolve waterproof eye and stage makeup first." },
+      { "step": "2. Niacinamide & Hyaluronic Rebalancing Drop", "detail": "Replenishes water reserves on damp skin before heavy occlusives." },
+      { "step": "3. Overnight Renewal Barrier Cushion", "detail": "Locks in bounce with ceramides and squalane." }
+    ],
+    "clashWarning": "Because Dua uses a low-pH L-Ascorbic Acid serum in the morning, never layer Copper Peptides or Benzoyl Peroxide in the same routine window—wait 60 seconds before applying moisturizer.",
+    "dupeSwap": {
+      "luxury": "iS Clinical Pro-Heal Serum ($158) + Luxury Renewal Cream ($95)",
+      "gentleDupe": "Timeless 20% Vitamin C + E Ferulic ($26) + Aestura Atobarrier 365 Cream ($32)",
+      "savingsNote": "Saves $195 while preserving 15–20% L-Ascorbic antioxidant defense"
+    },
+    "productIds": ["skinceuticals-ce-ferulic", "aestura-atobarrier-365", "lrp-cicaplast-baume-b5", "boj-relief-sun-spf50"],
+    "activeIds": ["l-ascorbic-acid", "hyaluronic-acid", "ceramide-np", "niacinamide", "panthenol"]
+  },
+  {
+    "slug": "olivia-rodrigo",
+    "name": "Olivia Rodrigo",
+    "moniker": "The Post-Dermatitis Milky Cleanse & B5 Barrier Shelf",
+    "skinProfile": "Sensitive, Perioral-Dermatitis Prone & Minimalist",
+    "sourceNote": "Vogue Beauty Secrets & Minimalist Barrier Reset",
+    "heroImg": "/public/editorial-woman-evening.jpg",
+    "signatureLook": "Clear, calm, zero-irritation skin after recovering from over-exfoliation dermatitis",
+    "summary": "After experiencing perioral dermatitis from stacking too many active serums at once, Olivia Rodrigo stripped her routine down to three calm steps: a milky non-foaming lotion cleanser, Hyaluronic Acid 2% + B5 on damp skin, and gua sha lymphatic drainage.",
+    "amSteps": [
+      { "step": "1. Milky Lotion Cleanse", "detail": "Washes with a sulfate-free milky lotion cleanser that never leaves cheeks tight." },
+      { "step": "2. Hyaluronic Acid 2% + Panthenol B5 on Damp Skin", "detail": "Presses 3 drops of The Ordinary Hyaluronic Acid + B5 onto mist-dampened skin." },
+      { "step": "3. Soothing Zinc Mineral SPF 46", "detail": "Protects reactive skin around the mouth and nose with sheer Zinc Oxide SPF." }
+    ],
+    "pmSteps": [
+      { "step": "1. Gentle Milky Double Wash", "detail": "Removes sunscreen and lip tint without harsh foaming surfactants." },
+      { "step": "2. Panthenol B5 + Centella Calm Layer", "detail": "Skips glycolic and salicylic acids completely when skin feels reactive." },
+      { "step": "3. Lightweight Ceramide Lotion (Zero Heavy Slugging)", "detail": "Uses breathable ceramide hydration so heat never gets trapped around the mouth." }
+    ],
+    "clashWarning": "If you are prone to perioral dermatitis like Olivia, avoid heavy overnight petrolatum slugging and strong low-pH AHA peels—trapped heat and acid stings trigger flare-ups around the nose and mouth.",
+    "dupeSwap": {
+      "luxury": "Dr. Barbara Sturm Hyaluronic Serum ($320) + Milky Cleanser ($75)",
+      "gentleDupe": "The Ordinary Hyaluronic Acid 2% + B5 ($10) + La Roche-Posay Cicaplast B5+ ($18)",
+      "savingsNote": "Saves $367 with identical multi-weight sodium hyaluronate and 5% Panthenol"
+    },
+    "productIds": ["to-hyaluronic-acid-2-b5", "lrp-cicaplast-baume-b5", "eltamd-uv-clear-spf46", "tower28-sos-spray"],
+    "activeIds": ["hyaluronic-acid", "panthenol", "centella-asiatica", "zinc-oxide", "niacinamide"]
+  },
+  {
+    "slug": "kaia-gerber",
+    "name": "Kaia Gerber",
+    "moniker": "The 2% BHA, 20% Niacinamide & Adaptogen Moisture Shelf",
+    "skinProfile": "Combination, Runway-Congested & Skin-Cycling Focused",
+    "sourceNote": "Vogue Beauty Secrets & Runway Skin-Cycling Routine",
+    "heroImg": "/public/editorial-woman-morning.jpg",
+    "signatureLook": "Refined, poreless runway texture with plush adaptogen moisture",
+    "summary": "Kaia Gerber keeps fashion-week congestion at bay by pairing an antioxidant green-tea cleanser with Paula’s Choice 2% BHA Liquid Exfoliant, 20% Niacinamide pore treatment, and an adaptogen deep moisture cream under invisible SPF.",
+    "amSteps": [
+      { "step": "1. Antioxidant Green Tea Gel Cleanse", "detail": "Removes overnight oil gently without disrupting skin pH." },
+      { "step": "2. Niacinamide Pore-Refining Serum", "detail": "Smooths T-zone texture and balances oil under makeup." },
+      { "step": "3. Adaptogen Moisture Cream + Invisible SPF", "detail": "Waits 60 seconds before applying primer-like sunscreen." }
+    ],
+    "pmSteps": [
+      { "step": "1. Thorough Makeup Melt & Cleanse", "detail": "Clears heavy runway foundation and eye makeup." },
+      { "step": "2. Paula’s Choice 2% BHA Liquid (Wait 90s)", "detail": "Swipes oil-soluble Salicylic Acid across congested zones and waits 90 seconds before Niacinamide." },
+      { "step": "3. Adaptogen & Ceramide Night Cushion", "detail": "Seals moisture with squalane, pentapeptides, and ceramides." }
+    ],
+    "clashWarning": "Crucial timing rule on Kaia’s shelf: let Paula’s Choice 2% BHA (pH 3.5) absorb for 90 full seconds before applying 20% Niacinamide—stacking high-strength Niacinamide onto wet acid can cause a warm nicotinic acid flush.",
+    "dupeSwap": {
+      "luxury": "Paula’s Choice 20% Niacinamide ($54) + Adaptogen Cream ($58)",
+      "gentleDupe": "Paula’s Choice 2% BHA ($35) + The Ordinary Niacinamide 10% + Zinc ($6)",
+      "savingsNote": "Saves $71 while keeping pore-clearing BHA + Niacinamide synergy"
+    },
+    "productIds": ["paulas-choice-2-bha", "to-niacinamide-10-zinc-1", "aestura-atobarrier-365", "boj-relief-sun-spf50"],
+    "activeIds": ["salicylic-acid", "niacinamide", "zinc-pca", "squalane", "ceramide-np"]
+  },
+  {
+    "slug": "gigi-hadid",
+    "name": "Gigi Hadid",
+    "moniker": "The Cetaphil, Ceramidin & Winter Barrier Cushion Shelf",
+    "skinProfile": "Dry, Winter-Chapped & Postpartum Sensitive",
+    "sourceNote": "Vogue Beauty Secrets & Drugstore-Meets-Ceramide Routine",
+    "heroImg": "/public/editorial-woman-evening.jpg",
+    "signatureLook": "Supple, golden-hour sunlit skin that never flakes in cold New York winters",
+    "summary": "Gigi Hadid mixes $12 drugstore gentle cleansers with rich Korean 5-ceramide barrier creams (Dr. Jart+ Ceramidin) and botanical facial oils—proving that calm, deeply moisturized skin beats harsh 10-step acid routines.",
+    "amSteps": [
+      { "step": "1. Gentle Non-Stripping Lotion Wash", "detail": "Uses a classic fragrance-free drugstore lotion cleanser." },
+      { "step": "2. Hydrating Essence + Ceramidin Barrier Cream", "detail": "Layers a 5-ceramide + panthenol cream to lock in moisture before cold outdoor shoots." },
+      { "step": "3. Dewy Broad-Spectrum SPF 50", "detail": "Finishes with a luminous, non-drying sunscreen." }
+    ],
+    "pmSteps": [
+      { "step": "1. Gentle Double Cleanse", "detail": "Melts away sunscreen and bronzer without scrubbing." },
+      { "step": "2. Gentle Lactic or Peptide Night Renewal", "detail": "Uses hydrating peptides or mild lactic acid instead of harsh peeling solutions." },
+      { "step": "3. Rich Ceramide Cream + Botanical Oil Press", "detail": "Presses 2 drops of nourishing oil over her ceramide moisturizer to seal hydration." }
+    ],
+    "clashWarning": "Always apply water-based serums and ceramide creams BEFORE pressing on facial oils—applying facial oil first creates an occlusive seal that blocks watery serums from absorbing.",
+    "dupeSwap": {
+      "luxury": "Dr. Jart+ Ceramidin Skin Barrier Cream ($48) + Botanical Serum ($65)",
+      "gentleDupe": "Aestura Atobarrier 365 Cream ($32) + Stratia Lipid Gold ($28)",
+      "savingsNote": "Saves $53 with pharmaceutical-grade 3:1:1 ceramides, cholesterol, and fatty acids"
+    },
+    "productIds": ["aestura-atobarrier-365", "stratia-lipid-gold", "lrp-cicaplast-baume-b5", "boj-relief-sun-spf50"],
+    "activeIds": ["ceramide-np", "panthenol", "cholesterol", "squalane", "hyaluronic-acid"]
+  },
+  {
+    "slug": "charli-xcx",
+    "name": "Charli XCX",
+    "moniker": "The Late-Night Tour Recovery, Vitamin C & Crème Barrier Shelf",
+    "skinProfile": "Combination, Late-Night Dehydrated & High-Glow",
+    "sourceNote": "Vogue Beauty Secrets & Post-Show Tour Recovery",
+    "heroImg": "/public/editorial-woman-morning.jpg",
+    "signatureLook": "High-gloss, wide-awake morning skin after 3 AM club and arena sets",
+    "summary": "To revive tired skin after late-night shows, Charli XCX uses micellar water, brightening Vitamin C + PHAs in the morning, hyaluronic eye recovery, and ultra-rich barrier creams under lightweight SPF 50.",
+    "amSteps": [
+      { "step": "1. Refreshing Citrus / Micellar Cleanse", "detail": "Wakes up dull skin gently without harsh physical scrubs." },
+      { "step": "2. Brightening Vitamin C Serum", "detail": "Applies Vitamin C serum across cheekbones and under-eyes to erase late-night fatigue." },
+      { "step": "3. Rich Moisturizing Cream + Weightless SPF 50", "detail": "Waits 60 seconds so rich cream settles before applying fluid SPF 50." }
+    ],
+    "pmSteps": [
+      { "step": "1. Micellar Water + Gel Double Cleanse", "detail": "Sweeps away heavy eyeliner and sweat immediately after coming off stage." },
+      { "step": "2. Soothing Hyaluronic & Niacinamide Drench", "detail": "Rehydrates parched skin with multi-weight humectants." },
+      { "step": "3. Ultra-Rich Barrier Cream Seal", "detail": "Cushions cheeks with a rich moisturizing cream overnight." }
+    ],
+    "clashWarning": "When using an exfoliating AHA/PHA cleanser or toner before Vitamin C, keep night retinoids on separate evenings so your moisture barrier stays glossy rather than flaky.",
+    "dupeSwap": {
+      "luxury": "La Mer Crème de la Mer ($200) + Sturm Eye Cream ($145)",
+      "gentleDupe": "Dieux Instant Angel Lipid Cream ($45) + Sunday Riley C.E.O. 15% Vitamin C ($85)",
+      "savingsNote": "Saves $215 with superior biomimetic lipid ratios and stable 15% THD Ascorbate"
+    },
+    "productIds": ["sunday-riley-ceo-15", "dieux-instant-angel", "to-hyaluronic-acid-2-b5", "boj-relief-sun-spf50"],
+    "activeIds": ["thd-ascorbate", "hyaluronic-acid", "ceramide-np", "squalane", "panthenol"]
+  },
+  {
+    "slug": "nicola-coughlan",
+    "name": "Nicola Coughlan",
+    "moniker": "The Porcelain Dewy Cream, Hyaluronic & Microcurrent Shelf",
+    "skinProfile": "Fair, Sensitive & Redness-Prone Porcelain Skin",
+    "sourceNote": "Vogue Beauty Secrets & Bridgerton Porcelain Glow Prep",
+    "heroImg": "/public/editorial-woman-evening.jpg",
+    "signatureLook": "Luminous, plump, rose-petal porcelain cheeks with zero redness",
+    "summary": "Nicola Coughlan preps her fair, sensitive skin with mineral thermal water mist, conductive Hyaluronic Acid serum for microcurrent toning, melting peony eye balm, and Japanese purple-rice dewy barrier cream.",
+    "amSteps": [
+      { "step": "1. Thermal Mineral Water Mist", "detail": "Dampens clean skin with mineral mist so humectants draw in maximum water." },
+      { "step": "2. Pure Hyaluronic Acid Serum", "detail": "Applies a generous layer of Hyaluronic Acid 2% + B5 for plumpness and glide." },
+      { "step": "3. Dewy Ceramide Cream + SPF 50+", "detail": "Seals hydration with a dewy ceramide cream and high-UVA sunscreen." }
+    ],
+    "pmSteps": [
+      { "step": "1. Cream-to-Oil Gentle Cleanse", "detail": "Dissolves studio makeup without tugging delicate cheek capillaries." },
+      { "step": "2. Calming Azelaic Acid or Peptide Serum", "detail": "Keeps rosacea-prone redness calm with gentle, neutral-pH actives." },
+      { "step": "3. Dewy Skin Cream & Silk Eye Cushion", "detail": "Locks in moisture overnight." }
+    ],
+    "clashWarning": "Never apply Hyaluronic Acid onto bone-dry skin in a dry room without sealing it under a ceramide cream—unsealed hyaluronic acid can pull water out of fair, sensitive skin.",
+    "dupeSwap": {
+      "luxury": "Tatcha The Dewy Skin Cream ($72) + Silk Peony Eye Cream ($64)",
+      "gentleDupe": "The Ordinary Hyaluronic Acid 2% + B5 ($10) + Aestura Atobarrier 365 ($32)",
+      "savingsNote": "Saves $94 while delivering 24-hour dewy ceramide + hyaluronic bounce"
+    },
+    "productIds": ["to-hyaluronic-acid-2-b5", "aestura-atobarrier-365", "finacea-15-azelaic", "boj-relief-sun-spf50"],
+    "activeIds": ["hyaluronic-acid", "ceramide-np", "azelaic-acid", "panthenol", "squalane"]
+  },
+  {
+    "slug": "simone-ashley",
+    "name": "Simone Ashley",
+    "moniker": "The Zero-Pilling Lipikar Barrier & Hyperpigmentation-Safe Shelf",
+    "skinProfile": "Melanin-Rich, Combination & Post-Blemish Mark Prone",
+    "sourceNote": "Vogue Beauty Secrets & No-Pilling Date-Night Prep",
+    "heroImg": "/public/editorial-woman-morning.jpg",
+    "signatureLook": "Velvet-smooth, even-toned glass skin that never pills or leaves a white cast",
+    "summary": "Simone Ashley shared her iconic makeup-artist secret in Vogue: using La Roche-Posay Lipikar / Cicaplast Niacinamide + Shea barrier lotion on her face so foundation never pills, paired with invisible SPF 40 and gentle brightening actives.",
+    "amSteps": [
+      { "step": "1. Energizing Gel Cleanse & Cool Rinse", "detail": "Refreshes skin in the morning without stripping natural oils." },
+      { "step": "2. Niacinamide + Tranexamic Brightening Layer", "detail": "Evens out tone gently without harsh bleaching agents." },
+      { "step": "3. La Roche-Posay Barrier Lotion + Invisible SPF", "detail": "Warms barrier lotion between palms and waits 60s before invisible sunscreen." }
+    ],
+    "pmSteps": [
+      { "step": "1. Double Cleanse", "detail": "Melts away sunscreen and long-wear complexion products." },
+      { "step": "2. Gentle Enzyme / Mandelic Polish (2x/Week)", "detail": "Uses melanin-safe gentle exfoliation rather than high-strength 30% glycolic peels." },
+      { "step": "3. Niacinamide + Ceramide Barrier Seal", "detail": "Cushions skin overnight with 4% Niacinamide and shea lipids." }
+    ],
+    "clashWarning": "For melanin-rich skin, avoid stacking high-strength Glycolic Acid with Retinoids on the same night—over-exfoliation triggers inflammation and post-inflammatory hyperpigmentation (dark marks).",
+    "dupeSwap": {
+      "luxury": "La Mer Energizing Cleanser ($105) + Luxury Brightening Serum ($110)",
+      "gentleDupe": "Topicals Faded Serum ($38) + La Roche-Posay Cicaplast / Lipikar B5+ ($18)",
+      "savingsNote": "Saves $159 with melanin-safe Tranexamic + Azelaic + Niacinamide brightening"
+    },
+    "productIds": ["topicals-faded-serum", "lrp-cicaplast-baume-b5", "boj-relief-sun-spf50", "to-niacinamide-10-zinc-1"],
+    "activeIds": ["tranexamic-acid", "niacinamide", "azelaic-acid", "panthenol", "ceramide-np"]
+  },
+  {
+    "slug": "ayo-edebiri",
+    "name": "Ayo Edebiri",
+    "moniker": "The Red-Carpet Magic Niacinamide, Vitamin C & Mineral SPF Shelf",
+    "skinProfile": "Normal-to-Dry, Event-Prepped & Radiance-Focused",
+    "sourceNote": "Red-Carpet Aesthetician Prep & Everyday SPF Routine",
+    "heroImg": "/public/editorial-woman-evening.jpg",
+    "signatureLook": "Plump, lit-from-within awards-season radiance with zero ashiness",
+    "summary": "Ayo Edebiri’s skincare prep revolves around layered humectant mists, Niacinamide + Polyglutamic + Golden Vitamin C crystal elixirs, rich peptide-ceramide magic creams, and daily La Roche-Posay SPF 50.",
+    "amSteps": [
+      { "step": "1. Hydrating Essence Mist on Clean Skin", "detail": "Floods skin with lightweight humectants before touching thicker serums." },
+      { "step": "2. Niacinamide + Golden Vitamin C Elixir", "detail": "Presses brightening Niacinamide and stable Vitamin C serum into cheekbones." },
+      { "step": "3. Peptide Cushion Cream + Anthelios SPF 50", "detail": "Waits 60 seconds before sealing with broad-spectrum SPF 50." }
+    ],
+    "pmSteps": [
+      { "step": "1. Gentle Balm-to-Milk Cleanse", "detail": "Removes red-carpet glam and waterproof mascara gently." },
+      { "step": "2. Multi-Peptide + Hyaluronic Recovery", "detail": "Restores bounce with signal peptides and hyaluronic acid." },
+      { "step": "3. Rich Lipid Night Cream", "detail": "Seals moisture overnight so skin wakes up camera-ready." }
+    ],
+    "clashWarning": "Give rich peptide and hyaluronic creams 60–90 seconds to absorb before applying fluid SPF 50—rushing sunscreen over damp rich cream is the #1 cause of red-carpet foundation pilling.",
+    "dupeSwap": {
+      "luxury": "Charlotte Tilbury Magic Serum ($85) + Magic Cream ($100)",
+      "gentleDupe": "The Ordinary Multi-Peptide + HA ($19) + Dieux Instant Angel ($45)",
+      "savingsNote": "Saves $121 with fragrance-free peptides, niacinamide, and biomimetic lipids"
+    },
+    "productIds": ["to-buffet-copper-peptides", "dieux-instant-angel", "sunday-riley-ceo-15", "boj-relief-sun-spf50"],
+    "activeIds": ["niacinamide", "thd-ascorbate", "copper-tripeptide-1", "hyaluronic-acid", "ceramide-np"]
+  }
+]
