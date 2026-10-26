@@ -184,21 +184,132 @@ function renderAnsiTerminalScorecard(cfg, scan) {
   ].join('\n');
 }
 
+const SCAN_ROUTINE_PHOTOS = [
+  '/public/routines/zendaya-calm-balm.jpg',
+  '/public/routines/rosie-rosewater.jpg',
+  '/public/routines/emily-french-pharmacy.jpg',
+  '/public/routines/kendall-guasha.jpg',
+  '/public/routines/dua-micellar.jpg',
+  '/public/routines/selena-dewy-bounce.jpg',
+  '/public/routines/margot-post-flight.jpg',
+  '/public/routines/anne-massage.jpg',
+  '/public/routines/sabrina-soft-glam.jpg',
+  '/public/routines/sofia-mist.jpg',
+  '/public/routines/simone-glow.jpg',
+  '/public/routines/madison-cleanse.jpg'
+];
+
+const DERM_SCAN_ENRICHMENTS = {
+  'Ceramide-Tretinoin-Buffer': {
+    leadSummary: 'Pair a 3:1:1 ceramide barrier cream with prescription Tretinoin 0.05% using the 20-minute sandwich buffer so sensitive skin builds retinoid tolerance without redness or flaking.',
+    barrierMetric: '3:1:1 Lipid-Ceramide Cushion',
+    waitRule: 'Wait 15 to 20 minutes after applying your first ceramide layer so skin is completely dry before dotting on a pea-sized amount of Tretinoin',
+    amFocus: 'Lukewarm water rinse, soothing ceramide lotion on damp skin, and broad-spectrum SPF 50+ to protect newly renewed skin cells',
+    pmFocus: 'Thin ceramide base layer (wait 20m) followed by pea-sized Tretinoin 0.05% and a final ceramide seal around dry corners',
+    chemistNote: 'Damp skin accelerates retinoid penetration and triggers peeling; laying down a thin ceramide film first slows delivery into a steady overnight release.',
+    amStepCopy: 'Skip harsh foaming cleansers in the morning. Rinse with lukewarm water, press a lightweight ceramide lotion onto damp skin, and wait 60 seconds before applying broad-spectrum SPF 50+.',
+    pmStepCopy: 'After evening cleansing, smooth a thin layer of ceramide cream over your face and neck and let it dry for 20 minutes. Dot a pea-sized amount of Tretinoin 0.05% across forehead, cheeks, and chin, then seal with a second light layer of moisturizer.',
+    cycleStepCopy: 'Start Tretinoin every third night for your first two weeks, filling the in-between recovery nights with pure peptide and ceramide hydration before stepping up to every other night.'
+  },
+  'VitC-AM-Peptides-PM': {
+    leadSummary: 'Keep L-Ascorbic Acid in your morning sun-defense slot and Copper Peptides in your evening repair slot so both formulas work at full strength without canceling each other out.',
+    barrierMetric: 'Optimal pH Window Preserved',
+    waitRule: 'Give morning Vitamin C 60 seconds to absorb on clean, dry skin before layering moisturizer and SPF 50+',
+    amFocus: '15% L-Ascorbic Acid serum on dry skin after cleansing, followed by barrier moisturizer and broad-spectrum SPF 50+',
+    pmFocus: 'Multi-peptide + copper peptide serum on slightly damp skin after evening cleansing, sealed with ceramide cream',
+    chemistNote: 'Copper ions oxidize pure Vitamin C when layered together; separating them by 12 hours preserves daytime antioxidant defense and nighttime collagen signaling.',
+    amStepCopy: 'Apply 4 to 5 drops of Vitamin C serum onto dry skin first thing in the morning. Wait 60 seconds for the low-pH formula to settle before smoothing on moisturizer and SPF 50+.',
+    pmStepCopy: 'In the evening, mist or pat skin lightly damp and press 3 to 4 drops of Copper Peptide serum across face and neck, then lock in overnight bounce with a lipid barrier cream.',
+    cycleStepCopy: 'Use Vitamin C every morning under sunscreen and alternate your bedtime Copper Peptide serum with gentle exfoliation or retinoid nights across a calm 4-night rhythm.'
+  },
+  'Azelaic15-Niacinamide5': {
+    leadSummary: 'Combine soothing 5% Niacinamide with 15% Azelaic Acid in a calm, non-stinging sequence that visibly evens out post-blemish redness and refines pore texture.',
+    barrierMetric: 'pH 5.0–6.0 Comfort Zone',
+    waitRule: 'Pat watery Niacinamide serum onto clean skin first and let it settle for 60 seconds before smoothing Azelaic Acid suspension on top',
+    amFocus: '5% Niacinamide serum followed by a thin layer of Azelaic Acid and tinted mineral SPF 50 to calm daytime flush',
+    pmFocus: 'Niacinamide + Azelaic Acid pair sealed under a fragrance-free ceramide recovery cream',
+    chemistNote: 'Both actives thrive in a gentle mid-range pH window, making them one of the safest same-routine pairs for rosacea-prone or blemish-prone skin.',
+    amStepCopy: 'After a gentle cleanse, press 3 drops of 5% Niacinamide serum into skin, wait 60 seconds, smooth a pea-sized amount of Azelaic Acid over redness-prone zones, and finish with mineral SPF 50.',
+    pmStepCopy: 'Repeat your Niacinamide-then-Azelaic sequence at bedtime on nights when you are not using retinoids, sealing with a rich ceramide cream to prevent any chalky dry-down.',
+    cycleStepCopy: 'Safe for daily morning or evening wear; on nights you use a prescription retinoid, keep Azelaic Acid in your morning routine so your evening stays simple.'
+  },
+  'BHA2-SnailMucin-Stack': {
+    leadSummary: 'Unclog congested pores with 2% Salicylic Acid (BHA) and immediately cushion the skin barrier with hydrating Snail Mucin Essence using a simple 10-minute dry-down step.',
+    barrierMetric: 'Oil-Soluble Pore Clearing + Humectant Cushion',
+    waitRule: 'Give 2% BHA 10 full minutes on dry skin to work inside pores before misting lightly and patting on Snail Mucin Essence',
+    amFocus: 'Hydrating Snail Mucin Essence on damp skin under lightweight gel moisturizer and SPF 50',
+    pmFocus: '2% BHA liquid on dry T-zone (wait 10m), followed by Snail Mucin Essence and barrier cream (2 to 3 nights per week)',
+    chemistNote: 'Salicylic acid is oil-soluble and clears sebum inside the pore lining, while glycoprotein-rich snail mucin replenishes surface water so skin never feels tight or stripped.',
+    amStepCopy: 'Keep mornings focused on hydration: pat Snail Mucin Essence onto freshly rinsed, damp skin, wait 45 seconds, and seal with a lightweight moisturizer and broad-spectrum SPF 50.',
+    pmStepCopy: 'On exfoliation nights, swipe 2% BHA across dry congested areas and wait 10 minutes. Lightly dampen skin with thermal water, press in 2 pumps of Snail Mucin Essence, and finish with moisturizer.',
+    cycleStepCopy: 'Limit 2% BHA to 2 or 3 nights per week (Night 1 of your 4-night cycle), while enjoying Snail Mucin Essence every morning and every recovery night.'
+  }
+};
+
+function getDermScanEnrichment(scan) {
+  const t = String(scan.target || '');
+  let hash = 0;
+  for (let i = 0; i < t.length; i++) hash = ((hash << 5) - hash + t.charCodeAt(i)) | 0;
+  const idx = Math.abs(hash) % SCAN_ROUTINE_PHOTOS.length;
+  const photos = [
+    SCAN_ROUTINE_PHOTOS[idx],
+    SCAN_ROUTINE_PHOTOS[(idx + 4) % SCAN_ROUTINE_PHOTOS.length],
+    SCAN_ROUTINE_PHOTOS[(idx + 8) % SCAN_ROUTINE_PHOTOS.length]
+  ];
+  if (DERM_SCAN_ENRICHMENTS[t]) return { ...DERM_SCAN_ENRICHMENTS[t], photos };
+  const isSafe = scan.score >= 86;
+  return {
+    leadSummary: isSafe
+      ? 'Layer your formulas from thinnest watery serum to richest barrier cream with a 60-second dry-down pause so every active absorbs cleanly without pilling.'
+      : 'Separate these concentrated actives between your morning sun-protection routine and your bedtime repair routine so neither bottle loses potency or stings your skin.',
+    barrierMetric: isSafe ? 'Balanced pH & Lipid Cushion' : 'AM / PM Separation Recommended',
+    waitRule: isSafe
+      ? 'Allow 60 seconds between watery serums and rich moisturizers so layers never roll or pill under sunscreen'
+      : 'Keep low-pH brightening or exfoliating steps 12 hours apart from evening retinoids and delicate peptides',
+    amFocus: 'Gentle rinse, daytime antioxidant or hydrating serum (60s wait), lightweight moisturizer, and broad-spectrum SPF 50+',
+    pmFocus: `${scan.issue}, followed 60 seconds later by a soothing 3:1:1 ceramide barrier cream`,
+    chemistNote: isSafe
+      ? 'Matching compatible pH windows and spacing layers by 60 seconds prevents surface tackiness and keeps the stratum corneum calm.'
+      : 'Stacking incompatible pH levels or multiple strong actives in the same routine triggers barrier transepidermal water loss; splitting AM and PM restores harmony.',
+    amStepCopy: 'After a lukewarm morning rinse, apply your daytime antioxidant or hydrating serum to dry skin. Wait 60 seconds before smoothing on moisturizer and broad-spectrum SPF 30–50+.',
+    pmStepCopy: `In your evening routine, follow the golden rule for this pairing: ${scan.issue.charAt(0).toLowerCase() + scan.issue.slice(1)}. Seal overnight moisture with a soothing ceramide cream.`,
+    cycleStepCopy: 'Give your skin barrier room to breathe by rotating active nights: Night 1 gentle exfoliant, Night 2 retinoid renewal, and Nights 3 & 4 pure peptide and ceramide hydration.',
+    photos
+  };
+}
+
 function renderScanCnnOverlaySvg(cfg, scan) {
   const isHigh = scan.score >= 86;
   const strokeCol = isHigh ? '#235340' : '#7A2332';
   const softBg = isHigh ? 'var(--sage-bg)' : 'var(--berry-bg)';
   const statusPill = isHigh ? 'Gentle & Barrier-Safe' : 'Separate Morning & Night';
-  return `<div role="region" aria-label="Routine Compatibility Summary for ${esc(fmtRoutineTitle(scan.target))}" style="background:var(--bg-oat);padding:26px 30px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px;align-items:center;">
-    <div style="background:var(--bg-surface);padding:22px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;border-left:3px solid ${strokeCol};">
-      <span class="mono" style="font-size:13px;color:var(--text-secondary);font-weight:500;">Routine Verdict</span>
-      <div class="serif-display" style="font-size:1.38rem;color:${strokeCol};font-weight:400;line-height:1.2;">${esc(scan.kpi1)}</div>
-      <span class="mono" style="font-size:13px;padding:4px 10px;background:${softBg};color:${strokeCol};font-weight:500;align-self:flex-start;">${statusPill}</span>
+  const info = getDermScanEnrichment(scan);
+  return `<style>.scan-verdict-blueprint{background:var(--bg-oat);padding:26px 30px;display:grid;grid-template-columns:220px minmax(0,1fr) 220px;gap:24px;align-items:stretch;}@media(max-width:900px){.scan-verdict-blueprint{grid-template-columns:1fr;padding:20px;}}</style>
+  <div role="region" aria-label="Routine Compatibility Summary for ${esc(fmtRoutineTitle(scan.target))}" class="scan-verdict-blueprint">
+    <div style="background:var(--bg-surface);padding:22px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;border-left:3px solid ${strokeCol};">
+      <div>
+        <span class="mono" style="font-size:13px;color:var(--text-secondary);font-weight:500;display:block;margin-bottom:6px;">Routine Verdict</span>
+        <div class="serif-display" style="font-size:1.38rem;color:${strokeCol};font-weight:400;line-height:1.2;">${esc(scan.kpi1)}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <span class="mono" style="font-size:13px;padding:4px 10px;background:${softBg};color:${strokeCol};font-weight:500;align-self:flex-start;">${statusPill}</span>
+        <span style="font-size:13.5px;color:var(--text-secondary);line-height:1.4;">${esc(info.barrierMetric)}</span>
+      </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;min-width:0;">
-      <div class="mono" style="font-size:13.5px;color:var(--rose-brand);font-weight:500;">${esc(scan.cnnSensorLabel || 'Morning & Night Skincare Compatibility Check')} · ${esc(scan.kpi2)}</div>
-      <div class="serif-display" style="font-size:1.45rem;color:var(--text-primary);font-weight:400;line-height:1.28;">${esc(scan.cnnReadout)}</div>
-      <div style="font-size:15.5px;color:var(--text-secondary);line-height:1.55;"><strong style="color:var(--text-primary);font-weight:500;">How to wear it:</strong> ${esc(scan.issue)}.</div>
+    <div style="display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;">
+      <div>
+        <div class="mono" style="font-size:13.5px;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">${esc(scan.cnnSensorLabel || 'Morning & Night Skincare Compatibility Check')} · ${esc(scan.kpi2)}</div>
+        <div class="serif-display" style="font-size:1.42rem;color:var(--text-primary);font-weight:400;line-height:1.26;margin-bottom:8px;">${esc(scan.cnnReadout)}</div>
+        <div style="font-size:15px;color:var(--text-secondary);line-height:1.55;"><strong style="color:var(--text-primary);font-weight:500;">How to wear it:</strong> ${esc(scan.issue)}.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;padding-top:6px;">
+        <div style="background:var(--bg-surface);padding:10px 14px;font-size:13.5px;color:var(--text-secondary);line-height:1.45;"><strong style="color:var(--sage-safe);display:block;font-size:12.5px;margin-bottom:2px;">MORNING SLOT (7:30 AM)</strong>${esc(info.amFocus)}</div>
+        <div style="background:var(--bg-surface);padding:10px 14px;font-size:13.5px;color:var(--text-secondary);line-height:1.45;"><strong style="color:var(--rose-brand);display:block;font-size:12.5px;margin-bottom:2px;">BEDTIME SLOT (9:30 PM)</strong>${esc(info.pmFocus)}</div>
+      </div>
+    </div>
+    <div style="background:var(--bg-surface);padding:8px;display:flex;flex-direction:column;justify-content:space-between;">
+      <img src="${esc(info.photos[0])}" alt="${esc(fmtRoutineTitle(scan.target))} editorial vanity ritual" loading="eager" style="width:100%;height:156px;object-fit:cover;display:block;" />
+      <div class="mono" style="font-size:12px;color:var(--text-secondary);padding:6px 4px 2px;display:flex;justify-content:space-between;"><span>Atelier Ritual</span><span style="color:${strokeCol};font-weight:500;">Grade ${esc(scan.grade)}</span></div>
     </div>
   </div>`;
 }
@@ -211,6 +322,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
   const ledger = loadPublicScanLedger(cfg).slice(0, 8);
   const recentLinks = ledger.map((item) => `<a href="/scan/${esc(encodeURIComponent(item.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:8px 15px;background:var(--bg-oat);font-size:14.5px;font-weight:400;color:var(--text-primary);text-decoration:none;"><span>${esc(fmtRoutineTitle(item.target))}</span><span class="mono" style="color:${item.score >= 86 ? 'var(--sage-safe)' : 'var(--rose-brand)'};font-weight:500;">${item.score >= 86 ? 'Barrier-Safe' : 'Split AM/PM'}</span></a>`).join(' ');
   const humanTitle = fmtRoutineTitle(scan.target);
+  const info = getDermScanEnrichment(scan);
 
   return `<!DOCTYPE html>
 <html lang="en" data-theme="day">
@@ -240,7 +352,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
       <div>
         <h1 id="eb-scan-h1" class="hero-h1" style="margin:0 0 12px 0;">${esc(humanTitle)}</h1>
-        <p class="pseo-lead hero-sub" style="margin:0;">Step-by-step morning and bedtime layering guide for <strong id="eb-scan-lead-target">${esc(humanTitle)}</strong> (<strong id="eb-scan-lead-grade">${esc(scan.kpi1)}</strong>). ${esc(scan.cnnReadout)}.</p>
+        <p class="pseo-lead hero-sub" style="margin:0;max-width:68ch;">Step-by-step morning and bedtime layering guide for <strong id="eb-scan-lead-target">${esc(humanTitle)}</strong> (<strong id="eb-scan-lead-grade">${esc(scan.kpi1)}</strong>). ${esc(info.leadSummary)}</p>
       </div>
       <span class="${scan.score >= 86 ? 'badge-safe' : 'badge-clash'} mono" style="font-size:0.9rem;padding:8px 16px;">${esc(scan.kpi1)} · ${esc(scan.kpi2)}</span>
     </div>
@@ -251,8 +363,8 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
         <thead><tr><th scope="col">What We Checked</th><th scope="col">How It Behaves</th><th scope="col">How to Wear It</th><th scope="col">Routine Fit</th></tr></thead>
         <tbody id="prompt-matrix-tbody">
           <tr><th scope="row" style="text-align:left;font-weight:500;">Morning vs. Night Pairing</th><td id="eb-scan-r1-val" class="mono" style="font-weight:500;">${esc(scan.kpi1)}</td><td id="eb-scan-r1-act">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="font-weight:500;color:${scan.score >= 86 ? 'var(--sage-safe)' : 'var(--rose-brand)'};">${scan.score >= 86 ? 'Barrier-Safe' : 'Separate AM/PM'}</td></tr>
-          <tr><th scope="row" style="text-align:left;font-weight:500;">Skin Comfort &amp; Pacing</th><td id="eb-scan-r2-val" class="mono" style="font-weight:500;">${esc(scan.kpi2)}</td><td>Give 60 seconds between watery serums and rich creams</td><td style="font-weight:500;color:var(--sage-safe);">Gentle</td></tr>
-          <tr><th scope="row" style="text-align:left;font-weight:500;">Moisture Barrier Effect</th><td id="eb-scan-r3-val" class="mono" style="font-weight:500;">${esc(scan.cnnReadout)}</td><td>Top morning serums with broad-spectrum SPF 30–50+</td><td style="font-weight:500;color:var(--sage-safe);">Checked</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Skin Comfort &amp; Pacing</th><td id="eb-scan-r2-val" class="mono" style="font-weight:500;">${esc(scan.kpi2)}</td><td>${esc(info.waitRule)}</td><td style="font-weight:500;color:var(--sage-safe);">Gentle</td></tr>
+          <tr><th scope="row" style="text-align:left;font-weight:500;">Moisture Barrier Effect</th><td id="eb-scan-r3-val" class="mono" style="font-weight:500;">${esc(info.barrierMetric)}</td><td>${esc(info.chemistNote)}</td><td style="font-weight:500;color:var(--sage-safe);">Checked</td></tr>
           <tr id="eb-scan-row4-tr"><th scope="row" style="text-align:left;font-weight:500;">Step-by-Step Wait Times</th><td id="eb-scan-row4-val" class="mono">60s Serum-to-Cream Cushion</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save Complete 3-Part Routine Kit ($1.99) →</a></td><td id="eb-scan-row4-status" style="font-weight:500;color:var(--sage-safe);">Included</td></tr>
           <tr><th scope="row" style="text-align:left;font-weight:500;">4-Night Skin-Cycling Schedule</th><td class="mono">Exfoliate · Retinoid · 2 Recovery Nights</td><td><a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="color:var(--rose-brand);font-weight:500;">Save 9:16 Phone Card &amp; .ICS Calendar ($1.99) →</a></td><td style="font-weight:500;color:var(--sage-safe);">Included</td></tr>
         </tbody>
@@ -268,7 +380,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
         <div style="flex:1 1 520px;max-width:64ch;">
           <div class="mono" style="font-size:13.5px;font-weight:500;color:var(--rose-brand);margin-bottom:6px;">Step-by-Step Bathroom Vanity Guide · Zero Pilling &amp; Zero Stinging</div>
           <h2 style="font-size:clamp(1.5rem,2.1vw,1.9rem);margin:0 0 10px 0;font-weight:400;max-width:none;">How to Layer ${esc(humanTitle)} Without Irritation</h2>
-          <p style="font-size:16px;color:var(--text-secondary);margin:0;line-height:1.62;">${scan.score < 86 ? `When two concentrated formulas clash on contact, waiting a few minutes isn't enough; separating them between morning sun defense and bedtime repair keeps both bottles at full strength while protecting your moisture barrier.` : `Applying your bottles from thinnest watery serum to richest barrier cream, with a brief 60-second dry-down window between steps, lets every active absorb cleanly without tightness or sunscreen pilling.`}</p>
+          <p style="font-size:16px;color:var(--text-secondary);margin:0;line-height:1.62;">${scan.score < 86 ? `When two concentrated formulas clash on contact, waiting a few minutes isn't enough; separating them between morning sun defense and bedtime repair keeps both bottles at full strength while protecting your moisture barrier.` : `Applying your bottles from thinnest watery serum to richest barrier cream, with the right dry-down window between steps, lets every active absorb cleanly without tightness or sunscreen pilling.`}</p>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:14px 18px;background:var(--bg-surface);">
           <span class="mono" style="font-size:13px;color:var(--sage-safe);font-weight:500;">7:30 AM Morning Shield · 9:30 PM Bedtime Repair</span>
@@ -278,37 +390,37 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;align-items:stretch;">
         <div style="padding:22px 24px;background:var(--bg-surface);display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
           <div>
-            <div style="overflow:hidden;margin-bottom:14px;background:var(--bg-oat);"><img src="/public/editorial-woman-morning.jpg" alt="Morning skincare layering at sunlit vanity" loading="lazy" style="width:100%;height:148px;object-fit:cover;object-position:center 28%;display:block;" /></div>
+            <div style="overflow:hidden;margin-bottom:14px;background:var(--bg-oat);"><img src="${esc(info.photos[1])}" alt="Morning skincare layering at sunlit vanity" loading="lazy" style="width:100%;height:156px;object-fit:cover;object-position:center 35%;display:block;" /></div>
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
               <span class="mono" style="font-size:13px;font-weight:500;color:var(--rose-brand);">1. Morning Order (7:30 AM)</span>
               <span class="badge-safe mono" style="font-size:12px;padding:2px 8px;">Protect &amp; Glow</span>
             </div>
-            <div class="serif-display" style="font-size:1.25rem;color:var(--text-primary);margin-bottom:8px;line-height:1.28;">Antioxidant Serum Under Broad-Spectrum SPF</div>
-            <p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0;">After a gentle lukewarm rinse, pat your morning brightening or hydrating serum onto dry skin. Give it <strong>60 seconds</strong> to settle so your moisturizer and <strong>SPF 30–50+</strong> glide on smoothly under makeup without pilling.</p>
+            <div class="serif-display" style="font-size:1.25rem;color:var(--text-primary);margin-bottom:8px;line-height:1.28;">Daytime Prep &amp; Broad-Spectrum SPF</div>
+            <p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0;">${esc(info.amStepCopy)}</p>
           </div>
           <a href="/leaderboard" class="mono" style="font-size:13.5px;color:var(--rose-brand);font-weight:500;text-decoration:none;padding-top:8px;">Compare Ranked Morning &amp; Night Routines &rarr;</a>
         </div>
         <div style="padding:22px 24px;background:var(--bg-surface);display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
           <div>
-            <div style="overflow:hidden;margin-bottom:14px;background:var(--bg-oat);"><img src="/public/editorial-woman-evening.jpg" alt="Evening barrier repair skincare ritual" loading="lazy" style="width:100%;height:148px;object-fit:cover;object-position:center 25%;display:block;" /></div>
+            <div style="overflow:hidden;margin-bottom:14px;background:var(--bg-oat);"><img src="${esc(info.photos[2])}" alt="Evening barrier repair skincare ritual" loading="lazy" style="width:100%;height:156px;object-fit:cover;object-position:center 35%;display:block;" /></div>
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
               <span class="mono" style="font-size:13px;font-weight:500;color:var(--rose-brand);">2. Bedtime Order (9:30 PM)</span>
               <span class="badge-safe mono" style="font-size:12px;padding:2px 8px;">Repair &amp; Cushion</span>
             </div>
-            <div class="serif-display" style="font-size:1.25rem;color:var(--text-primary);margin-bottom:8px;line-height:1.28;">Night Renewal Cushioned With Ceramide Cream</div>
-            <p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0;">${esc(scan.issue)}. Wait 60 seconds after applying your evening treatment, then seal in overnight moisture with a soothing <strong>ceramide barrier cream</strong> to prevent dryness or flaking.</p>
+            <div class="serif-display" style="font-size:1.25rem;color:var(--text-primary);margin-bottom:8px;line-height:1.28;">Night Renewal Cushioned With Ceramides</div>
+            <p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0;">${esc(info.pmStepCopy)}</p>
           </div>
           <a href="/directory" class="mono" style="font-size:13.5px;color:var(--rose-brand);font-weight:500;text-decoration:none;padding-top:8px;">Browse All 318 Pairing &amp; Bottle Guides &rarr;</a>
         </div>
         <div style="padding:22px 24px;background:var(--bg-surface);display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
           <div>
-            <div style="overflow:hidden;margin-bottom:14px;background:var(--bg-oat);"><img src="/public/editorial-vanity-shelf.jpg" alt="Organized porcelain bathroom vanity shelf" loading="lazy" style="width:100%;height:148px;object-fit:cover;object-position:center 50%;display:block;" /></div>
+            <div style="overflow:hidden;margin-bottom:14px;background:var(--bg-oat);"><img src="/public/editorial-vanity-shelf.jpg" alt="Organized porcelain bathroom vanity shelf" loading="lazy" style="width:100%;height:156px;object-fit:cover;object-position:center 50%;display:block;" /></div>
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
               <span class="mono" style="font-size:13px;font-weight:500;color:var(--sage-safe);">3. Weekly Pacing Rhythm</span>
               <span class="badge-safe mono" style="font-size:12px;padding:2px 8px;">4-Night Cycle</span>
             </div>
-            <div class="serif-display" style="font-size:1.25rem;color:var(--text-primary);margin-bottom:8px;line-height:1.28;">Never Stack Strong Acids &amp; Retinoids Same-Night</div>
-            <p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0;">Give your skin barrier room to breathe by rotating active nights: <strong>Night 1</strong> gentle exfoliant, <strong>Night 2</strong> retinoid renewal, and <strong>Nights 3 &amp; 4</strong> pure peptide and ceramide hydration.</p>
+            <div class="serif-display" style="font-size:1.25rem;color:var(--text-primary);margin-bottom:8px;line-height:1.28;">Balanced Active &amp; Recovery Nights</div>
+            <p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0;">${esc(info.cycleStepCopy)}</p>
           </div>
           <a href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" class="mono" style="font-size:13.5px;color:var(--rose-brand);font-weight:500;text-decoration:none;padding-top:8px;">Save 9:16 Phone Card &amp; Calendar ($1.99) &rarr;</a>
         </div>

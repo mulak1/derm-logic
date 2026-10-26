@@ -176,9 +176,9 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     <h3 style="margin:0 0 12px 0;font-size:19px;font-family:${t.fontDisplay};font-weight:600;color:${t.textPrimary};">${esc(bc.heading)}</h3>
     <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:16px;text-align:left;color:${t.textPrimary};"><thead><tr style="border-bottom:1px solid ${t.border};color:${t.textMuted};background:${t.subtleBg};"><th style="padding:10px 12px;">What Matters</th><th style="padding:10px 12px;color:${t.brandPrimary};">${esc(cfg.brandName)}</th><th style="padding:10px 12px;">${esc(bc.colLegacy)}</th><th style="padding:10px 12px;">${esc(bc.colManual)}</th></tr></thead><tbody>${battlecardRowsHtml}</tbody></table></div>
   </div>
-  <div id="eb-export-utility-bar" class="eb-panel-card">
+  <div id="eb-export-utility-bar" class="eb-panel-card" style="${reqPath && reqPath.startsWith('/scan/') ? 'display:none;' : ''}">
     <div class="stat-pill-locked" id="summary-report-card" style="margin-bottom:10px;border:none;">
-      <div class="eb-locked-top"><span style="font-size:16px;font-weight:700;color:${t.brandText};">${esc(cfg.lockedTitle)}: Quick Tips by Channel</span><button type="button" id="btn-inline-aisle-peek" class="store-preview-pill" onclick="window.__ebTogglePeekDrawer()">Show / Hide Tip ▾</button></div>
+      <div class="eb-locked-top"><span style="font-size:16px;font-weight:700;color:${t.brandText};">${esc(cfg.lockedTitle)}${cfg.moduleId === 'derm_logic' ? '' : ': Quick Tips by Channel'}</span><button type="button" id="btn-inline-aisle-peek" class="store-preview-pill" onclick="window.__ebTogglePeekDrawer()">Show / Hide Tip ▾</button></div>
       <div class="eb-store-pills">${pillsHtml}</div>
       <div id="inline-aisle-peek-drawer"><div id="eb-peek-row-text" style="font-weight:500;">${esc(cfg.coMarketingPills[0].rowText)}</div></div>
     </div>
@@ -210,10 +210,10 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     <button type="button" id="btn-popover-micro-pass" onclick="window.__ebCheckout('micro_pass')" style="width:100%;padding:7px 12px;border-radius:${t.radiusPill};background:#FFFFFF;color:${t.brandPrimary};border:none;font-weight:600;font-size:13px;">Or Single File Only: 99¢</button>
   </div>
   <form id="eb-popover-scorecard-form" onsubmit="return window.__ebSaveInlineScorecard(event, 'eb-popover-scorecard-email', 'eb-popover-scorecard-form')" style="margin-top:8px;padding-top:8px;">
-    <div style="font-size:13px;font-weight:600;color:${t.textSecondary};margin-bottom:4px;">Want a free sample first? Reveal Row #4 on-screen + email 1-Page Summary:</div>
+    <div style="font-size:13px;font-weight:600;color:${t.textSecondary};margin-bottom:4px;">Want a free sample first? Email your Morning &amp; Bedtime Summary:</div>
     <div style="display:grid;grid-template-columns:1fr auto;gap:5px;">
-      <input type="email" id="eb-popover-scorecard-email" placeholder="Your email to reveal Row #4..." required style="padding:5px 8px;border-radius:7px;background:#FFFFFF;color:${t.textPrimary};font-size:13px;border:none;" />
-      <button type="submit" style="padding:5px 9px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};border:none;font-weight:700;font-size:13px;">Reveal Row #4 →</button>
+      <input type="email" id="eb-popover-scorecard-email" placeholder="Your email for AM/PM summary..." required style="padding:5px 8px;border-radius:7px;background:#FFFFFF;color:${t.textPrimary};font-size:13px;border:none;" />
+      <button type="submit" style="padding:5px 9px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};border:none;font-weight:700;font-size:13px;">Send Summary →</button>
     </div>
   </form>
 </div>
@@ -221,18 +221,18 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
 <!-- Exit-Intent Spotlight Toast (#eb-ouibounce-toast) -->
 <div id="eb-ouibounce-toast" role="dialog" aria-label="Send 1-Page Summary Before Leaving">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-    <span id="eb-ouibounce-title" style="font-size:13px;font-weight:700;color:${t.brandPrimary};">Save Your Results Before Leaving</span>
+    <span id="eb-ouibounce-title" style="font-size:13px;font-weight:700;color:${t.brandPrimary};">${cfg.moduleId === 'derm_logic' ? 'Save Your Routine Card Before Leaving' : 'Save Your Results Before Leaving'}</span>
     <button type="button" onclick="try{localStorage.setItem('eb_toast_dismissed_ts',String(Date.now()));}catch(_){}document.getElementById('eb-ouibounce-toast').style.display='none'" style="background:none;border:none;color:${t.textMuted};font-size:14px;">Close</button>
   </div>
-  <p id="eb-ouibounce-desc" style="font-size:13px;color:${t.textSecondary};margin:0 0 6px 0;line-height:1.4;">Email yourself the 1-Page Summary &amp; reveal Row #4 free, or grab the complete 3-file bundle for <strong>$1.99</strong>:</p>
-  <div id="eb-objection-poll-strip" style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;align-items:center;"><span style="font-size:13px;font-weight:700;color:${t.textMuted};">Quick feedback:</span><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('just_browsing', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">Just checking rates</button><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('need_agency_depth', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">Need Agency / Direct proof</button><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('skip_card', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">No card right now</button></div>
+  <p id="eb-ouibounce-desc" style="font-size:13px;color:${t.textSecondary};margin:0 0 6px 0;line-height:1.4;">${cfg.moduleId === 'derm_logic' ? 'Email yourself the free Morning &amp; Bedtime summary, or save the complete 3-part Routine Kit for <strong>$1.99</strong>:' : 'Email yourself the 1-Page Summary &amp; reveal Row #4 free, or grab the complete 3-file bundle for <strong>$1.99</strong>:'}</p>
+  <div id="eb-objection-poll-strip" style="${cfg.moduleId === 'derm_logic' ? 'display:none;' : 'display:flex;'}gap:4px;flex-wrap:wrap;margin-bottom:7px;align-items:center;"><span style="font-size:13px;font-weight:700;color:${t.textMuted};">Quick feedback:</span><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('just_browsing', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">Just checking rates</button><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('need_agency_depth', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">Need Agency / Direct proof</button><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('skip_card', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">No card right now</button></div>
   <form onsubmit="return window.__ebSendExitSummary(event)" style="display:grid;grid-template-columns:1fr auto;gap:6px;margin-bottom:8px;">
-    <input type="email" id="eb-ouibounce-email" placeholder="Your email (Reveal Row #4)..." required style="padding:6px 9px;border-radius:7px;background:#FFFFFF;color:${t.textPrimary};font-size:13px;border:none;" />
+    <input type="email" id="eb-ouibounce-email" placeholder="${cfg.moduleId === 'derm_logic' ? 'Your email for AM/PM summary...' : 'Your email (Reveal Row #4)...'}" required style="padding:6px 9px;border-radius:7px;background:#FFFFFF;color:${t.textPrimary};font-size:13px;border:none;" />
     <button type="submit" id="btn-ouibounce-submit" style="padding:6px 11px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13px;font-weight:700;border:none;">Send Summary →</button>
   </form>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-    <button type="button" id="btn-toast-micro-pass" onclick="window.__ebCheckout('micro_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:#FFFFFF;color:${t.brandPrimary};border:none;font-weight:600;font-size:13px;">Single File (99¢)</button>
-    <button type="button" onclick="window.__ebCheckout('flash_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;">Full Bundle ($1.99) →</button>
+    <button type="button" id="btn-toast-micro-pass" onclick="window.__ebCheckout('micro_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:#FFFFFF;color:${t.brandPrimary};border:none;font-weight:600;font-size:13px;">${cfg.moduleId === 'derm_logic' ? '9:16 Card (99¢)' : 'Single File (99¢)'}</button>
+    <button type="button" onclick="window.__ebCheckout('flash_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;">${cfg.moduleId === 'derm_logic' ? 'Complete Kit ($1.99) →' : 'Full Bundle ($1.99) →'}</button>
   </div>
 </div>
 
@@ -451,8 +451,8 @@ function buildClientRuntimeScript(cfg) {
           window.__ebLastCurtainPreview = pre.textContent;
         }
         var btn = document.getElementById('btn-curtain-flash-pass'), pcBtn = document.getElementById('btn-postcalc-flash-pass');
-        if (btn) btn.textContent = CFG.moduleId === 'derm_logic' ? ('Save ' + q.slice(0, 18) + ' Kit ($1.99 →)') : ('Unlock Custom ' + q.slice(0, 16) + ' Pack ($1.99 Stripe Express →)');
-        if (pcBtn) pcBtn.textContent = 'Unlock ' + q.slice(0, 14) + ' Fix Pack ($1.99) →';
+        if (btn) btn.textContent = CFG.moduleId === 'derm_logic' ? 'Save Complete Routine Kit ($1.99) →' : ('Unlock Custom ' + q.slice(0, 16) + ' Pack ($1.99 Stripe Express →)');
+        if (pcBtn) pcBtn.textContent = CFG.moduleId === 'derm_logic' ? 'Save Complete Routine Kit ($1.99) →' : ('Unlock ' + q.slice(0, 14) + ' Fix Pack ($1.99) →');
         window.__ebTriggerPostCalcSpotlight(q);
       }).catch(function(){});
   };
@@ -563,10 +563,10 @@ function buildClientRuntimeScript(cfg) {
     var fInit = (CFG.deliverableFiles && CFG.deliverableFiles[0]) || { file: 'bundle.txt', size: '4.2 KB' }, f1 = (CFG.deliverableFiles && CFG.deliverableFiles[1]) || fInit, f2 = (CFG.deliverableFiles && CFG.deliverableFiles[2]) || fInit;
     var activeEnt = window.__ebActiveEntity || (isDerm ? 'Morning & Night Routine' : ((CFG.presets && CFG.presets[0] && CFG.presets[0].label) || CFG.brandName));
     var scanR1 = document.getElementById('eb-scan-r1-val'), scanAct = document.getElementById('eb-scan-r1-act'), scanR3 = document.getElementById('eb-scan-r3-val'), scanGrade = document.getElementById('eb-scan-lead-grade');
-    var diagLine1 = customDiagLine || (isDerm && scanR1 ? ('Routine Verdict (' + activeEnt + '): ' + scanR1.textContent + (scanR3 ? ' · ' + scanR3.textContent : '')) : CFG.remDiff.beforeLine);
-    var diagLine2 = isDerm && scanAct ? ('How to Wear It: ' + scanAct.textContent + ' (Wait 60s between layers, finish morning with SPF 30–50+)') : CFG.remDiff.afterLine;
+    var diagLine1 = customDiagLine || (isDerm ? ('1. 9:16 Phone Lock-Screen Card (PDF): Step-by-step 7:30 AM & 9:30 PM order with 60s wait intervals for ' + activeEnt) : CFG.remDiff.beforeLine);
+    var diagLine2 = isDerm ? ('2. 4-Night Skin-Cycling Calendar (.ICS): Night 1 Exfoliate · Night 2 Retinoid · Nights 3 & 4 Ceramide Recovery reminders') : CFG.remDiff.afterLine;
     var previewLines = isDerm
-      ? ('Included in Your Routine Kit: 9:16 Phone Lock-Screen Card · 4-Night Skin-Cycling Calendar · Pore-Safe Product Swaps')
+      ? ('3. Pore-Safe Product Swaps (.CSV): Non-comedogenic (0–1 rating) & barrier-safe companions (' + (scanR1 ? scanR1.textContent : 'Verified Fit') + ')')
       : ('// [LOCKED DELIVERABLE MANIFEST • ' + activeEnt + ']\\n//   1. ' + fInit.file + ' (' + fInit.size + ')   2. ' + f1.file + ' (' + f1.size + ')   3. ' + f2.file + ' (' + f2.size + ')\\n// Exact production script, retry windows & configuration redacted until unlocked ($1.99 Pass)');
     var existingCurtain = document.getElementById('eb-deliverable-curtain'), entityTag = window.__ebActiveEntity ? (' (' + window.__ebActiveEntity + ')') : (isDerm ? '' : (' (Sample: ' + activeEnt + ')'));
     var curtainHdrText = isDerm ? ('Personalized Morning & Bedtime Routine Kit' + entityTag) : (window.__ebUserInteracted ? 'Diagnostic Ready for ' + activeEnt + ': Unlock Your 3-File Fix Pack' : 'Diagnostic Summary & Locked 3-File Fix Pack' + entityTag);
@@ -577,8 +577,8 @@ function buildClientRuntimeScript(cfg) {
       var hdrSpan = document.getElementById('eb-curtain-title-span'), rBadge = document.getElementById('eb-curtain-roi-badge'), cBtn = document.getElementById('btn-curtain-flash-pass'), pcBtn = document.getElementById('btn-postcalc-flash-pass');
       if (hdrSpan) hdrSpan.textContent = curtainHdrText;
       if (rBadge) rBadge.textContent = curtainBadgeText;
-      if (cBtn && window.__ebActiveEntity) cBtn.textContent = (isDerm ? 'Save ' : 'Unlock ') + window.__ebActiveEntity.slice(0, 16) + ' ($1.99)';
-      if (pcBtn && window.__ebUserInteracted && window.__ebActiveEntity) pcBtn.textContent = 'Unlock ' + window.__ebActiveEntity.slice(0, 14) + ' Fix Pack ($1.99) →';
+      if (cBtn && window.__ebActiveEntity) cBtn.textContent = isDerm ? 'Save Complete Routine Kit ($1.99) →' : ('Unlock ' + window.__ebActiveEntity.slice(0, 16) + ' ($1.99)');
+      if (pcBtn && window.__ebUserInteracted && window.__ebActiveEntity) pcBtn.textContent = isDerm ? 'Save Complete Routine Kit ($1.99) →' : ('Unlock ' + window.__ebActiveEntity.slice(0, 14) + ' Fix Pack ($1.99) →');
       return;
     }
     var dermTabTitles = ['1. 9:16 Lock-Screen Card (PDF)', '2. 4-Night Skin-Cycling (.ICS)', '3. Pore-Safe Swaps (.CSV)'];
@@ -601,10 +601,10 @@ function buildClientRuntimeScript(cfg) {
       + '<div style="flex:1;min-width:240px;"><div style="font-size:15.5px;font-weight:600;color:' + CFG.theme.textPrimary + ';line-height:1.35;">' + PERSONA.lossHook + '</div><div style="font-size:13px;color:' + CFG.theme.textMuted + ';margin-top:3px;">One-time pass (never a subscription) · Instant Apple Pay / Stripe download · 30-day guarantee</div></div>'
       + '<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">'
       + '<button type="button" id="btn-curtain-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\')" style="padding:11px 16px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.subtleBg + ';color:' + CFG.theme.textPrimary + ';border:none;font-weight:600;font-size:13.5px;cursor:pointer;white-space:nowrap;">' + PERSONA.microBtn + '</button>'
-      + '<button type="button" id="btn-curtain-flash-pass" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="padding:11px 20px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;border:none;font-weight:600;font-size:14px;white-space:nowrap;">' + (window.__ebActiveEntity ? ((isDerm ? 'Save ' : 'Unlock ') + String(window.__ebActiveEntity).replace(/[<>"']/g, '').slice(0, 16) + ' ($1.99)') : (isDerm ? 'Save 3-Part Routine Kit ($1.99) →' : 'Unlock 3-File Pack ($1.99) →')) + '</button>'
+      + '<button type="button" id="btn-curtain-flash-pass" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="padding:11px 20px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;border:none;font-weight:600;font-size:14px;white-space:nowrap;">' + (isDerm ? 'Save Complete Routine Kit ($1.99) →' : (window.__ebActiveEntity ? ('Unlock ' + String(window.__ebActiveEntity).replace(/[<>"']/g, '').slice(0, 16) + ' ($1.99)') : 'Unlock 3-File Pack ($1.99) →')) + '</button>'
       + '</div></div>'
       + '<div id="eb-click-trigger-bar" style="display:none;"><span>One-time $1.99 payment (never a subscription) • No account or password required</span><span>Instant browser download via Apple Pay / Stripe • 30-day money-back guarantee</span></div>'
-      + '<form id="eb-save-scorecard-bar" onsubmit="return window.__ebSaveInlineScorecard(event)" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px;padding:10px 14px;border-radius:' + CFG.theme.radiusCard + ';background:' + CFG.theme.subtleBg + ';"><span style="font-size:13.5px;font-weight:500;color:' + CFG.theme.textSecondary + ';">' + (isDerm ? 'Want a free copy first? Email your routine summary:' : 'Save Diagnostic + 1-Click Pass Link:') + '</span><span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;flex:1;min-width:260px;justify-content:flex-end;"><input type="email" id="eb-inline-scorecard-email" placeholder="' + PERSONA.leadPh + '" style="flex:1;min-width:175px;max-width:220px;padding:7px 12px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.textPrimary + ';font-size:13.5px;border:1px solid ' + CFG.theme.border + ';" /><span style="display:inline-flex;gap:4px;align-items:center;">' + domChipsHtml + '</span><button type="submit" id="btn-save-scorecard" style="padding:7px 14px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandSoftBg + ';color:' + CFG.theme.brandPrimary + ';border:none;font-weight:600;font-size:13.5px;cursor:pointer;white-space:nowrap;">' + PERSONA.leadBtn + ' →</button></span></form>';
+      + '<form id="eb-save-scorecard-bar" onsubmit="return window.__ebSaveInlineScorecard(event)" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px;padding:10px 14px;border-radius:' + CFG.theme.radiusCard + ';background:' + CFG.theme.subtleBg + ';"><span style="font-size:13.5px;font-weight:500;color:' + CFG.theme.textSecondary + ';">' + (isDerm ? 'Want a free copy first? Email your routine summary:' : 'Save Diagnostic + 1-Click Pass Link:') + '</span><span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;flex:1;min-width:260px;justify-content:flex-end;"><input type="email" id="eb-inline-scorecard-email" placeholder="' + PERSONA.leadPh + '" style="flex:1;min-width:175px;max-width:220px;padding:7px 12px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.textPrimary + ';font-size:13.5px;border:1px solid ' + CFG.theme.border + ';" /><span style="display:' + (isDerm ? 'none' : 'inline-flex') + ';gap:4px;align-items:center;">' + domChipsHtml + '</span><button type="submit" id="btn-save-scorecard" style="padding:7px 14px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandSoftBg + ';color:' + CFG.theme.brandPrimary + ';border:none;font-weight:600;font-size:13.5px;cursor:pointer;white-space:nowrap;">' + PERSONA.leadBtn + ' →</button></span></form>';
     var lbShowcase = !isPseoOrDir ? document.getElementById('eb-leaderboard-home-showcase') : null;
     if (mountAnchor.parentNode) {
       if (mountAnchor === tBarAnchor || mountAnchor === targetEl) mountAnchor.parentNode.insertBefore(curtain, mountAnchor);

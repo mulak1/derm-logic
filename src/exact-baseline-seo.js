@@ -854,11 +854,12 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
 }
 
 function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
-  const t = cfg.theme;
+  const t = cfg.theme, isDerm = cfg.moduleId === 'derm_logic';
   const entries = Array.isArray(cfg._cachedSeoCatalog) && cfg._cachedSeoCatalog.length > 0 ? cfg._cachedSeoCatalog : [];
   if (entries.length === 0) return '';
   const gCfg = getGrowthConfig(cfg.moduleId);
-  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: `${s.target} (${s.grade})`, cat: 'public-scan' }));
+  const fmtScanLbl = (raw) => ({ 'VitC-AM-Peptides-PM': 'Vitamin C (AM) + Copper Peptides (PM)', 'Ceramide-Tretinoin-Buffer': 'Ceramide Buffer + Tretinoin 0.05%', 'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5%', 'BHA2-SnailMucin-Stack': '2% BHA + Snail Mucin Essence', 'VitC+Cu': 'Vitamin C 15% + Copper Peptides 1%', 'Tret+BPO': 'Rx Tretinoin 0.05% + Benzoyl Peroxide', 'TikTok': '7-Active Acid & Retinol Stack' }[raw] || raw);
+  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: isDerm ? fmtScanLbl(s.target) : `${s.target} (${s.grade})`, cat: 'public-scan' }));
   const growthItems = [
     ...gCfg.tools.map((x) => ({ href: `/tools/${x.slug}`, title: x.title, cat: 'interactive-tool' })),
     ...gCfg.comparisons.map((x) => ({ href: `/compare/${x.slug}`, title: x.title, cat: 'comparison' })),
@@ -873,10 +874,10 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   return `<nav id="eb-seo-crawl-mesh" aria-label="${escHtml(cfg.brandName)} Complete ${growthItems.length}-Page Programmatic Benchmark &amp; AI Indexing Mesh" style="margin-top:16px;padding:18px;border-radius:${t.radiusCard};background:${t.subtleBg};">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
       <div>
-        <div style="font-size:16px;font-weight:700;color:${t.brandPrimary};">Complete ${growthItems.length}-Benchmark Knowledge Graph &amp; AI Crawl Mesh</div>
-        <div style="font-size:16px;color:${t.textSecondary};">1-click access to all ${growthItems.length} verified guides, interactive tools, comparisons, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:700;">Public Leaderboard</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, <a href="/llms-full.txt" style="color:${t.brandPrimary};text-decoration:underline;">Full Knowledge Corpus</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap Index</a>.</div>
+        <div style="font-size:16px;font-weight:700;color:${t.brandPrimary};">${isDerm ? `Complete Skincare Layering &amp; Routine Guide Directory (${growthItems.length} Guides)` : `Complete ${growthItems.length}-Benchmark Knowledge Graph &amp; AI Crawl Mesh`}</div>
+        <div style="font-size:16px;color:${t.textSecondary};">1-click access to all ${growthItems.length} verified guides, interactive tools, comparisons, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:700;">${isDerm ? 'Routine Leaderboard' : 'Public Leaderboard'}</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, <a href="/llms-full.txt" style="color:${t.brandPrimary};text-decoration:underline;">Full Knowledge Corpus</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap Index</a>.</div>
       </div>
-      <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="Filter ${growthItems.length} guides by keyword..." oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:7px 12px;border-radius:8px;background:#FFFFFF;color:${t.textPrimary};font-size:16px;min-width:220px;border:none;" />
+      <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="${isDerm ? 'Search routine guides...' : `Filter ${growthItems.length} guides...`}" oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:7px 14px;border-radius:8px;background:#FFFFFF;color:${t.textPrimary};font-size:15px;min-width:250px;border:none;" />
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow-y:auto;padding:2px;">${pillsHtml}</div>
   </nav>`;
