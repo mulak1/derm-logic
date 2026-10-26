@@ -725,6 +725,23 @@ const PRODUCT_SEO_SEEDS = [
   }
 ];
 
+function cleanHumanTitle(rawTitle) {
+  return String(rawTitle || '')
+    .replace(/Chelation\s*&\s*Redox\s*Alert/gi, 'Why They Cancel Out & Morning/Night Split')
+    .replace(/Oxidative\s*Degradation\s*&\s*Rescue\s*Schedule/gi, 'Why They Cancel Out & Safe Night Routine')
+    .replace(/ΔpH\s*\d+(?:\.\d+)?\s*Nicotinic\s*Flushing\s*Analysis/gi, 'How to Layer Without Redness or Pilling')
+    .replace(/ΔpH\s*\d+(?:\.\d+)?\s*Conflict\s*&\s*AM\/PM\s*Split\s*Guide/gi, 'Morning vs. Night Layering Guide')
+    .replace(/Acidic\s*Hydroquinone\s*Hydrolysis/gi, 'Gentle Wait-Time Rules')
+    .replace(/Competitive\s*Cu2\+\s*Chelation/gi, 'Why They Cancel Out on Contact')
+    .replace(/Epidermal\s*Staining\s*&\s*Oxidation/gi, 'How to Prevent Skin Staining & Irritation')
+    .replace(/Pro-Collagen\s*Type\s*I\s*Fibroblast\s*Synergy/gi, 'Soothing Morning Glow Pairing')
+    .replace(/Erythema\s*&\s*Peeling\s*Risk/gi, 'How to Clear Breakouts Without Peeling')
+    .replace(/pH\s*2\.7\s*Penetration\s*vs\s*ΔpH\s*Conflicts/gi, 'Morning Layering & Sensitive-Skin Guide')
+    .replace(/INCI\s*Teardown/gi, 'Bottle Breakdown')
+    .replace(/INCI\s*Analysis/gi, 'Formula Guide')
+    .replace(/Synergy/gi, 'Pairing');
+}
+
 function formatMetaDescription(rawText, maxLen = 155) {
   const clean = String(rawText || '').replace(/\s+/g, ' ').trim();
   if (clean.length <= maxLen) return clean;
@@ -784,9 +801,9 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
     pages.push({
       slug: item.slug,
       pageType: 'active_pair',
-      title: item.title,
+      title: cleanHumanTitle(item.title),
       metaDescription: formatMetaDescription(baseSummary, 155),
-      category: item.category,
+      category: 'Active Pairing Guide',
       verdict: item.verdict,
       compatibilityScore: item.compatibilityScore,
       deltaPh: item.deltaPh,
@@ -845,9 +862,9 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
     pages.push({
       slug: item.slug,
       pageType: 'product_teardown',
-      title: item.title,
+      title: cleanHumanTitle(item.title),
       metaDescription: formatMetaDescription(rawProdMeta, 155),
-      category: 'Product INCI Teardown',
+      category: 'Cult Bottle Guide',
       verdict: prod && prod.ph <= 3.8 ? 'LOW_PH_ACTIVE' : 'CLINICAL_TEARDOWN',
       compatibilityScore: prod && prod.ph <= 3.8 ? 64 : 86,
       deltaPh: prod ? Number(Math.abs(5.5 - prod.ph).toFixed(1)) : 0.5,
@@ -888,5 +905,6 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
 module.exports = {
   PAIR_SEO_SEEDS,
   PRODUCT_SEO_SEEDS,
+  cleanHumanTitle,
   buildSeoPagesCatalog
 };

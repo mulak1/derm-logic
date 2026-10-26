@@ -64,9 +64,49 @@ function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdO
 function formatVerdictLabel(verdict) {
   const v = String(verdict || '');
   if (v === 'CRITICAL_CLASH') return 'Cancels on Contact';
-  if (v === 'MODERATE_CAUTION') return 'Space Apart (Wait Buffer)';
+  if (v === 'MODERATE_CAUTION') return 'Space Apart';
   if (v === 'SAFE_SYNERGY') return 'Safe Together';
+  if (v === 'SAFE_WITH_WAIT' || v === 'WAIT_15_MIN' || v === 'ALTERNATE_OR_WAIT') return 'Wait 10m Between';
+  if (v === 'SAFE_WITH_BUFFER') return 'Buffer With Cream';
+  if (v === 'SPLIT_AM_PM') return 'Morning & Night Split';
+  if (v === 'LOW_PH_ACTIVE') return 'Wait 60s After';
+  if (v === 'CLINICAL_TEARDOWN') return 'Bottle Guide';
   return v.replace(/_/g, ' ');
+}
+
+function getFriendlyBenefit(ing) {
+  if (!ing) return 'Supports a calm, hydrated moisture barrier.';
+  const id = String(ing.id || '');
+  const map = {
+    'l-ascorbic-acid': 'Brightens dullness, fades dark spots, and shields skin under morning SPF. Keep separate from Copper Peptides and Benzoyl Peroxide.',
+    'thd-ascorbate': 'A silky, oil-soluble Vitamin C that brightens and firms without the low-pH tingle of traditional L-Ascorbic Acid.',
+    '3-o-ethyl-ascorbic-acid': 'A stable, gentle Vitamin C alternative that evens out skin tone and layers smoothly with hydrating serums.',
+    'sodium-ascorbyl-phosphate': 'A soothing, water-light Vitamin C derivative that calms blemish-prone skin at a comfortable neutral pH.',
+    'ferulic-acid': 'Boosts the sun-shielding power of Vitamin C and Vitamin E while keeping brightening serums fresh.',
+    'tocopherol': 'Nourishes dry skin and partners with morning Vitamin C to soften fine lines and support lipid recovery.',
+    'resveratrol': 'An evening antioxidant that calms stressed skin overnight and supports natural firmness.',
+    'coenzyme-q10': 'Energizes tired skin and helps protect delicate areas against daily sun stress.',
+    'tretinoin': 'Prescription-strength nighttime renewal for smooth texture and clear pores. Always apply over a dry, cream-buffered barrier.',
+    'retinaldehyde': 'Fast-acting nighttime Vitamin A that smooths fine lines with less flaking than prescription retinoids.',
+    'retinol': 'Classic nighttime renewal for fine lines and uneven tone. Keep away from Benzoyl Peroxide and exfoliating acids on the same night.',
+    'adapalene': 'Targeted nighttime retinoid that keeps pores clear. Even though it is stable, buffer with moisturizer to prevent dryness.',
+    'glycolic-acid': ' Polishes dull surface texture for an overnight glow. Give it 60 seconds to dry, and never stack with Retinol on the same night.',
+    'lactic-acid': 'Gently smooths rough patches while drawing moisture into dry or sensitive skin.',
+    'mandelic-acid': 'A slow-absorbing, gentle exfoliating acid ideal for reactive or deeper skin tones.',
+    'salicylic-acid': 'Clears oil and congestion deep inside pores. Alternate nights with Retinol so your skin never feels tight or flaky.',
+    'niacinamide': 'Calms redness, balances oil, and strengthens your moisture barrier morning or night.',
+    'copper-tripeptide-1': 'Supports bounce and skin repair at bedtime. Never layer directly with pure Vitamin C or strong exfoliating acids.',
+    'azelaic-acid': 'Calms redness, rosacea warmth, and lingering post-blemish marks without sensitizing your barrier.',
+    'hyaluronic-acid': 'Draws water into damp skin for instant plumpness. Let it dry completely before applying nighttime Tretinoin.'
+  };
+  if (map[id]) return map[id].trim();
+  return String(ing.clinicalMechanism || '')
+    .replace(/stratum corneum/gi, 'skin surface')
+    .replace(/transepidermal water loss \(TEWL\)|TEWL/gi, 'moisture loss')
+    .replace(/erythema/gi, 'redness')
+    .replace(/xerosis/gi, 'dryness and flaking')
+    .replace(/corneodesmosomes|corneocytes/gi, 'dead surface cells')
+    .replace(/keratolytic/gi, 'pore-smoothing');
 }
 
 function getRoutineSlotRecommendation(ing) {
@@ -126,12 +166,12 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
 
     return `
     <tr>
-      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(ing.category || 'Targeted active')}</span></td>
+      <td><strong style="color:var(--text-primary);">${escapeHtml(ing.commonName)}</strong><br/><span style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(ing.functionRole || ing.category || 'Targeted active')}</span></td>
       <td>${poreClogText}</td>
       <td>${sensitivityText}</td>
       <td style="font-size:0.86rem;color:var(--text-primary);">${routineSlot}</td>
       <td class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${textureOrder}</td>
-      <td style="color:var(--text-secondary);font-size:0.86rem;">${escapeHtml(ing.clinicalMechanism)}</td>
+      <td style="color:var(--text-secondary);font-size:0.88rem;line-height:1.5;">${escapeHtml(getFriendlyBenefit(ing))}</td>
     </tr>`;
   }).join('');
 
@@ -450,7 +490,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
               </div>
               <div class="editorial-photo-caption">
                 <span>Daylight Gallery &amp; 11 PM Vanity Ready</span>
-                <span class="badge-clash mono">ΔpH Check</span>
+                <span class="badge-clash mono">Morning &amp; Night Check</span>
               </div>
             </div>
           </div>
@@ -464,31 +504,27 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
         <div class="z-cascade-stage">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
-              <div class="mono" style="color:var(--rose-brand);font-size:0.8rem;font-weight:500;margin-bottom:6px;">Why 68% of Routines Sting or Pill</div>
-              <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:6px;">The Copper Peptide + Vitamin C Trap</h3>
-              <p style="color:var(--text-secondary);font-size:0.88rem;">Layering Copper Peptides 1% (pH 6.2) with 15% L-Ascorbic Acid (pH 3.2) triggers copper-ion oxidation, turning $200+ of serums into inactive pro-oxidants on your skin.</p>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--rose-brand);font-size:0.84rem;font-weight:500;">Morning vs. Night</span><span class="badge-clash mono">Split AM / PM</span></div>
+              <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">The Copper Peptide + Vitamin C Trap</h3>
+              <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Layering Copper Peptides 1% (pH 6.2) with 15% Vitamin C (pH 3.2) oxidizes both serums on contact—leaving your skin tight and dull. Use Vitamin C in the morning and peptides at night.</p>
             </div>
-            <span class="badge-clash mono" style="align-self:flex-start;margin-top:10px;">Split AM / PM</span>
+            <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;">Shop Morning Vitamin C at Dermstore &rarr;</a>
           </div></div>
           <div class="z-vessel-center"><div class="porcelain-vessel-core">
             <div>
-              <div class="mono" style="color:var(--sage-safe);font-size:0.8rem;font-weight:500;margin-bottom:6px;">Thinnest to Thickest · Viscosity Sequencer</div>
-              <h3 class="serif-display" style="font-size:1.65rem;margin-bottom:6px;">Droplet Wait-Time Pacing</h3>
-              <ul class="viscosity-seq-list">
-                <li class="viscosity-seq-item"><span><strong>First · Essence / Toner</strong> (Damp skin)</span><span class="wait-timer-btn mono">Immediate</span></li>
-                <li class="viscosity-seq-item"><span><strong>Second · Bounce Peptide Serum</strong></span><button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(45, this)">45s Timer</button></li>
-                <li class="viscosity-seq-item"><span><strong>Third · Velvet Ceramide Cream</strong></span><button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(60, this)">60s Timer</button></li>
-              </ul>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--sage-safe);font-size:0.84rem;font-weight:500;">90-Second Absorption</span><span class="badge-safe mono">Zero Pilling</span></div>
+              <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">Let Acid Toners Dry Before Niacinamide</h3>
+              <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Applying Niacinamide or rich creams straight over damp Glycolic or Salicylic Acid shifts skin pH too quickly—triggering warm redness and causing morning sunscreen to pill.</p>
             </div>
-            <a href="/buy/flash_pass?source=lp_cascade" class="btn-primary" style="width:100%;justify-content:space-between;"><span>Save 9:16 Lock-Screen Card ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a>
+            <a href="/buy/flash_pass?source=lp_cascade" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;">Save 9:16 Lock-Screen Card ($1.99) &rarr;</a>
           </div></div>
           <div class="z-vessel-right"><div class="porcelain-vessel-core">
             <div>
-              <div class="mono" style="color:var(--honey-warn);font-size:0.8rem;font-weight:500;margin-bottom:6px;">The Prescription Cream Paradox</div>
-              <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:6px;">Benzoyl Peroxide Degrades Tretinoin</h3>
-              <p style="color:var(--text-secondary);font-size:0.88rem;">Applying Benzoyl Peroxide alongside Tretinoin or Retinol oxidizes the retinoid molecule while generic cream bases clog pores with Isopropyl Myristate (5/5 pore risk).</p>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--sage-safe);font-size:0.84rem;font-weight:500;">Nighttime Cushion</span><span class="badge-safe mono">4-Night Cycle</span></div>
+              <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">Keep Acne Washes Away From Retinol</h3>
+              <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Benzoyl Peroxide releases oxygen that wipes out over 80% of Tretinoin and Retinol potency on contact. Use peroxide washes in the morning and cushion retinoids over ceramide cream at night.</p>
             </div>
-            <span class="badge-safe mono" style="align-self:flex-start;margin-top:10px;">4-Night Cycling Ready</span>
+            <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;">Shop Ceramide Cream at Sephora &rarr;</a>
           </div></div>
         </div>
       </div>
@@ -521,13 +557,13 @@ function renderDirectoryPage({ seoPages }) {
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
           <span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))} · ${p.compatibilityScore}/100</span>
-          <span class="mono" style="font-size:0.86rem;color:var(--text-secondary);">ΔpH ${p.deltaPh}</span>
+          <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">pH Gap ${p.deltaPh}</span>
         </div>
         <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-size:1.38rem;font-weight:400;line-height:1.22;margin-bottom:10px;color:var(--text-primary);">${escapeHtml(p.title)}</a>
         <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;margin-bottom:12px;">${escapeHtml(p.summary)}</p>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;gap:8px;flex-wrap:wrap;">
-        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.86rem;color:var(--rose-brand);font-weight:500;">Read Layering Dossier &rarr;</a>
+        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.86rem;color:var(--rose-brand);font-weight:500;">Read Pairing Guide &rarr;</a>
         <a href="/api/affiliate?product=${escapeHtml(prodId)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop at ${partnerLabel} &rarr;</a>
       </div>
     </div>`;
@@ -536,9 +572,9 @@ function renderDirectoryPage({ seoPages }) {
   const bodyHtml = `
     <section class="section-block" style="padding-top:36px;">
       <div class="container">
-        <h1 class="hero-h1" style="font-size:clamp(2.4rem,4.2vw,3.8rem);margin-bottom:14px;">Skincare Active-Ingredient Harmony &amp; Cult-Product INCI Directory</h1>
+        <h1 class="hero-h1" style="font-size:clamp(2.4rem,4.2vw,3.8rem);margin-bottom:14px;">Skincare Pairing &amp; Cult-Bottle Library</h1>
         <p class="hero-sub" style="margin-bottom:24px;">
-          Every pairing and cult formula is housed in a dedicated formulation dossier with plain-English morning and bedtime separation rules, droplet wait-time sequencers, and pore-safety scores.
+          Find out which serums belong in the morning, which belong at bedtime, how long to wait between layers, and whether your favorite bottles are safe for breakout-prone pores.
         </p>
 
         <div id="dir-apothecary-vault-bar" data-ui="directory-filter-bar" style="padding:18px 22px;background:var(--bg-oat);margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
@@ -546,9 +582,9 @@ function renderDirectoryPage({ seoPages }) {
             <button type="button" class="vanity-light-btn mono dir-vault-pill active" aria-pressed="true" onclick="window.__dlFilterVault('all',this)">All ${seoPages.length} Guides</button>
             <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('clash',this)">Do Not Mix (${clashCount})</button>
             <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('safe',this)">Safe Together (${safeCount})</button>
-            <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('product',this)">Cult Product Breakdowns (${productPages.length})</button>
+            <button type="button" class="vanity-light-btn mono dir-vault-pill" aria-pressed="false" onclick="window.__dlFilterVault('product',this)">Cult Bottle Guides (${productPages.length})</button>
           </div>
-          <input type="search" id="dir-vault-search" aria-label="Search layering guides" placeholder="Search Retinol, Copper Peptides, Vitamin C..." oninput="window.__dlSearchVault(this.value)" class="input-box" style="max-width:310px;padding:10px 16px;font-size:0.92rem;" />
+          <input type="search" id="dir-vault-search" aria-label="Search layering guides" placeholder="Search Retinol, Copper Peptides, Vitamin C..." oninput="window.__dlSearchVault(this.value)" class="input-box" style="max-width:340px;padding:10px 16px;font-size:0.9rem;" />
         </div>
         <script>
           window.__dlVaultTag='all';
@@ -571,12 +607,12 @@ function renderDirectoryPage({ seoPages }) {
           window.__dlSearchVault=function(){window.__dlApplyVault();};
         </script>
 
-        <h2 class="serif-display" style="font-size:1.85rem;margin:28px 0 16px;">Active-Ingredient Layering &amp; Compatibility Guides (${pairPages.length})</h2>
+        <h2 class="serif-display" style="font-size:1.85rem;margin:28px 0 16px;">Active Serum &amp; Ingredient Pairing Guides (${pairPages.length})</h2>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;">
           ${renderCardList(pairPages)}
         </div>
 
-        <h2 class="serif-display" style="font-size:1.85rem;margin:48px 0 16px;">Cult-Product INCI Teardowns &amp; Ritual Guides (${productPages.length})</h2>
+        <h2 class="serif-display" style="font-size:1.85rem;margin:48px 0 16px;">Cult Bottle Breakdowns &amp; Routine Guides (${productPages.length})</h2>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;">
           ${renderCardList(productPages)}
         </div>
@@ -664,59 +700,108 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.8vw,3.4rem);">${escapeHtml(page.title)}</h1>
         <p class="hero-sub" style="margin-bottom:20px;">${escapeHtml(page.summary)}</p>
 
-        <div class="z-cascade-stage" style="margin-bottom:28px;">
+        <div class="z-cascade-stage" style="margin-bottom:24px;">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
-              <div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;margin-bottom:6px;">Do They Cancel Out?</div>
-              <div class="serif-display" style="font-size:1.4rem;font-weight:400;margin-bottom:8px;">${escapeHtml(page.conflictType)}</div>
-              <p style="font-size:0.86rem;color:var(--text-secondary);margin-bottom:10px;">Recommended Routine Spacing: <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">[Locked in Free Preview · Save Exact Wait Timer ($1.99)]</a></p>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
+                <span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Do They Cancel Out?</span>
+                <span class="${page.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono">pH Gap ${page.deltaPh}</span>
+              </div>
+              <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">${escapeHtml(page.conflictType)}</h3>
+              <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(page.summary)}</p>
             </div>
-            <span class="${page.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono" style="align-self:flex-start;">ΔpH ${page.deltaPh} Gap</span>
+            <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 14px;white-space:nowrap;">Save Lock-Screen Routine Card ($1.99) &rarr;</a>
           </div></div>
           <div class="z-vessel-center"><div class="porcelain-vessel-core">
             <div>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;">
-                <span class="mono" style="font-size:0.78rem;color:var(--sage-safe);font-weight:500;">Viscosity &amp; Wait-Time Sequencer</span>
-                <span class="badge-safe mono">Zero Pilling</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
+                <span class="mono" style="font-size:0.82rem;color:var(--sage-safe);font-weight:500;">Morning Routine Rule</span>
+                <span class="badge-safe mono">Under SPF</span>
               </div>
-              <h3 class="serif-display" style="font-size:1.55rem;margin-bottom:4px;">Droplet Absorption Pacing</h3>
-              <ul class="viscosity-seq-list" style="margin:8px 0 12px;">
-                <li class="viscosity-seq-item"><span><strong>Morning Ritual Step</strong></span><a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;text-decoration:underline;">Save AM Order ($1.99)</a></li>
-                <li class="viscosity-seq-item"><span><strong>Active Serum Buffer</strong></span><button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(45, this)">Start 45s Timer</button></li>
-                <li class="viscosity-seq-item"><span><strong>Barrier Cream Seal</strong></span><button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(60, this)">Start 60s Timer</button></li>
-              </ul>
+              <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Wear in Daylight</h3>
+              <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(page.amRule || 'Apply water-light serums first on clean skin, give 60 seconds to absorb, and seal with broad-spectrum SPF 50.')} Pat onto clean, dry skin after cleansing, let it settle for 60 seconds so the pH stays stable, then finish with lightweight moisturizer and SPF 30–50+.</p>
             </div>
-            <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="btn-primary" style="width:100%;justify-content:space-between;"><span>Save 9:16 Lock-Screen Card ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a>
+            <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 14px;white-space:nowrap;">Shop Verified Bottle at Dermstore &rarr;</a>
           </div></div>
           <div class="z-vessel-right"><div class="porcelain-vessel-core">
             <div>
-              <div class="mono" style="font-size:0.8rem;color:var(--honey-warn);font-weight:500;margin-bottom:6px;">Bedtime Four-Night Cycling</div>
-              <div class="serif-display" style="font-size:1.4rem;font-weight:400;margin-bottom:8px;">Evening Barrier Recovery</div>
-              <p style="font-size:0.86rem;color:var(--text-secondary);margin-bottom:10px;">Four-Night Schedule &rarr; <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="mono" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">[Locked in Free Preview · Save 4-Night Bedtime Calendar ($1.99)]</a></p>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
+                <span class="mono" style="font-size:0.82rem;color:var(--honey-warn);font-weight:500;">Bedtime Recovery Rule</span>
+                <span class="badge-safe mono">11 PM Vanity</span>
+              </div>
+              <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Layer at Bedtime</h3>
+              <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(page.pmRule || 'Alternate strong actives across a calm 4-night recovery rhythm and cushion with a 3:1:1 ceramide barrier cream.')} Apply from thinnest watery essence to richest cream, and cushion sensitive areas around the corners of your nose and mouth with a barrier moisturizer.</p>
             </div>
-            <span class="badge-safe mono" style="align-self:flex-start;">3000K Vanity Ready</span>
+            <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 14px;white-space:nowrap;">Shop Barrier-Safe Option at Sephora &rarr;</a>
           </div></div>
         </div>
 
-        <div id="pseo-dermlogic-inline-calc" data-ui="pseo-savings-calculator" style="margin-bottom:28px;padding:12px;background:var(--bg-oat);">
-          <div class="porcelain-vessel-core" style="padding:20px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+        <div class="sink-pacing-panel" style="margin-top:0;margin-bottom:28px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;">
+            <div>
+              <div class="mono" style="font-size:0.82rem;color:var(--sage-safe);font-weight:500;margin-bottom:4px;">Thinnest to Richest · Bathroom Sink Pacing</div>
+              <h3 class="serif-display" style="font-size:1.48rem;">Tap a timer between layers so your skincare absorbs cleanly.</h3>
+            </div>
+            <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="btn-primary">
+              <span>Save 9:16 Lock-Screen Card ($1.99)</span>
+              <span class="btn-icon-circle">&rarr;</span>
+            </a>
+          </div>
+          <ul class="viscosity-seq-list">
+            <li class="viscosity-seq-item">
               <div>
-                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">Skincare Savings &amp; Harmony Calculator</div>
-                <h2 class="serif-display" style="font-size:1.45rem;margin:2px 0 0;">Tap Your Skin Type to Check Potential Product Inactivation for ${escapeHtml(searchIntentSubject)}</h2>
+                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 1 · Water-Light</div>
+                <strong class="serif-display" style="font-size:1.15rem;color:var(--text-primary);display:block;margin-bottom:4px;">Mist or Toning Essence</strong>
+                <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.45;">Press onto damp skin right after cleansing.</div>
+              </div>
+              <span class="wait-timer-btn mono" style="cursor:default;">Apply Immediately</span>
+            </li>
+            <li class="viscosity-seq-item">
+              <div>
+                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 2 · Active Serum</div>
+                <strong class="serif-display" style="font-size:1.15rem;color:var(--text-primary);display:block;margin-bottom:4px;">First Treatment Drop</strong>
+                <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.45;">Let pH-sensitive serums settle before your next layer.</div>
+              </div>
+              <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(45, this)">Start 45s Timer</button>
+            </li>
+            <li class="viscosity-seq-item">
+              <div>
+                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 3 · Velvet Cushion</div>
+                <strong class="serif-display" style="font-size:1.15rem;color:var(--text-primary);display:block;margin-bottom:4px;">Ceramide Barrier Cream</strong>
+                <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.45;">Seals hydration and buffers nighttime retinoids.</div>
+              </div>
+              <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(60, this)">Start 60s Timer</button>
+            </li>
+            <li class="viscosity-seq-item">
+              <div>
+                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 4 · Final Seal</div>
+                <strong class="serif-display" style="font-size:1.15rem;color:var(--text-primary);display:block;margin-bottom:4px;">Morning SPF or Facial Oil</strong>
+                <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.45;">Wait one minute so sunscreen or makeup never pills.</div>
+              </div>
+              <span class="wait-timer-btn mono" style="cursor:default;">Final Protective Layer</span>
+            </li>
+          </ul>
+        </div>
+
+        <div id="pseo-dermlogic-inline-calc" data-ui="pseo-savings-calculator" style="margin-bottom:28px;padding:12px;background:var(--bg-oat);">
+          <div class="porcelain-vessel-core" style="padding:24px 28px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
+              <div>
+                <div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">Shelf Value &amp; Comfort Check</div>
+                <h2 class="serif-display" style="font-size:1.5rem;margin:4px 0 0;font-weight:400;">Tap your skin type to see how much serum value you save with ${escapeHtml(searchIntentSubject)}</h2>
               </div>
               <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <button type="button" class="btn-secondary mono" style="padding:6px 12px;font-size:0.8rem;" onclick="window.__dlCalcPseoSkin(180,1.35,'sensitive_rosacea')">Sensitive / Rosacea ($180/yr)</button>
-                <button type="button" class="btn-secondary mono" style="padding:6px 12px;font-size:0.8rem;" onclick="window.__dlCalcPseoSkin(240,1.25,'dry_compromised')">Dry / Compromised ($240/yr)</button>
-                <button type="button" class="btn-secondary mono" style="padding:6px 12px;font-size:0.8rem;" onclick="window.__dlCalcPseoSkin(320,1.0,'balanced_combo')">Balanced / Combo ($320/yr)</button>
-                <button type="button" class="btn-secondary mono" style="padding:6px 12px;font-size:0.8rem;" onclick="window.__dlCalcPseoSkin(480,1.45,'oily_acne_stack')">5+ Active Stack ($480/yr)</button>
+                <button type="button" class="btn-secondary mono" style="padding:8px 14px;font-size:0.82rem;" onclick="window.__dlCalcPseoSkin(180,1.35,'sensitive_rosacea')">Sensitive / Rosacea</button>
+                <button type="button" class="btn-secondary mono" style="padding:8px 14px;font-size:0.82rem;" onclick="window.__dlCalcPseoSkin(240,1.25,'dry_compromised')">Dry / Barrier-Stressed</button>
+                <button type="button" class="btn-secondary mono" style="padding:8px 14px;font-size:0.82rem;" onclick="window.__dlCalcPseoSkin(320,1.0,'balanced_combo')">Balanced / Combination</button>
+                <button type="button" class="btn-secondary mono" style="padding:8px 14px;font-size:0.82rem;" onclick="window.__dlCalcPseoSkin(480,1.45,'oily_acne_stack')">Blemish-Prone (5+ Serums)</button>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;background:var(--bg-canvas);padding:14px;">
-              <div><div class="mono" style="font-size:0.76rem;color:var(--text-secondary);">Est. Wasted Value / Yr</div><div id="pseo-dl-waste-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--rose-brand);">$${Math.round(240 * Math.max(0.22, (100 - (Number(page.compatibilityScore) || 55)) / 100))}/yr Lost</div></div>
-              <div><div class="mono" style="font-size:0.76rem;color:var(--text-secondary);">Recommended Routine Spacing</div><div id="pseo-dl-buffer-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--text-primary);">${Number(page.deltaPh) >= 1.5 ? '20 Min / AM-PM Split' : '10 Min Wait Buffer'}</div></div>
-              <div><div class="mono" style="font-size:0.76rem;color:var(--text-secondary);">Post-Fix Harmony Score</div><div id="pseo-dl-harmony-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--sage-safe);">96/100 Verified</div></div>
-              <div style="display:flex;align-items:center;"><a href="/buy/micro_pass?source=pseo_inline_calc&amp;guide=${encodeURIComponent(page.slug)}" class="btn-primary mono" style="padding:10px 14px;font-size:0.82rem;text-decoration:none;display:inline-block;">Save 99¢ AM/PM Card &rarr;</a></div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;background:var(--bg-canvas);padding:16px 20px;">
+              <div><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Saved From Neutralizing</div><div id="pseo-dl-waste-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--rose-brand);">$${Math.round(240 * Math.max(0.22, (100 - (Number(page.compatibilityScore) || 55)) / 100))}/yr Saved</div></div>
+              <div><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Ideal Routine Spacing</div><div id="pseo-dl-buffer-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--text-primary);">${Number(page.deltaPh) >= 1.5 ? 'Morning & Night Split' : 'Wait 60s Between'}</div></div>
+              <div><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Harmony After Fix</div><div id="pseo-dl-harmony-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--sage-safe);">96/100 Calm</div></div>
+              <div style="display:flex;align-items:center;"><a href="/buy/micro_pass?source=pseo_inline_calc&amp;guide=${encodeURIComponent(page.slug)}" class="btn-primary mono" style="padding:10px 16px;font-size:0.84rem;text-decoration:none;display:inline-block;">Save 99¢ Routine Card &rarr;</a></div>
             </div>
           </div>
           <script>
@@ -724,9 +809,9 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               var baseLoss = Math.max(0.22, (100 - ${Number(page.compatibilityScore) || 55}) / 100);
               var wasted = Math.round(spend * Math.min(0.88, baseLoss * mult));
               var wEl = document.getElementById('pseo-dl-waste-out'), bEl = document.getElementById('pseo-dl-buffer-out'), hEl = document.getElementById('pseo-dl-harmony-out');
-              if (wEl) wEl.textContent = '$' + wasted + '/yr Lost';
-              if (bEl) bEl.textContent = mult >= 1.3 ? 'Alternate Nights (4-Night Cycle)' : '20 Min Wait + AM/PM Split';
-              if (hEl) hEl.textContent = (mult >= 1.3 ? '98/100' : '96/100') + ' Verified';
+              if (wEl) wEl.textContent = '$' + wasted + '/yr Saved';
+              if (bEl) bEl.textContent = mult >= 1.3 ? 'Alternate Nights (4-Night Cycle)' : 'Morning & Night Split';
+              if (hEl) hEl.textContent = (mult >= 1.3 ? '98/100' : '96/100') + ' Calm';
               try { fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'calculate', page_url: window.location.pathname, meta: { trigger: 'pseo_inline_skin_calc', profile: profile, spend: spend, wasted_usd: wasted, slug: '${escapeHtml(page.slug)}' } }) }).catch(function(){}); } catch (_) {}
             };
           </script>
@@ -797,7 +882,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
 
     <section class="section-block-alt">
       <div class="container">
-        <h2 class="serif-display" style="font-size:1.95rem;margin-bottom:16px;">Esthetician &amp; Cosmetic Chemist FAQ</h2>
+        <h2 class="serif-display" style="font-size:1.95rem;margin-bottom:16px;">Common Questions About This Pairing</h2>
         ${faqHtml}
 
         <h3 class="serif-display" style="font-size:1.55rem;margin:34px 0 14px;">Related Skincare Layering Guides</h3>

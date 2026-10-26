@@ -71,10 +71,11 @@ function loadVerticalSeoCatalog(cfg, srcDir) {
         const mod = require(catPath);
         const list = [...(mod.PAIR_SEO_SEEDS || []), ...(mod.PRODUCT_SEO_SEEDS || [])];
         for (const p of list) {
+          const cleanTitle = typeof mod.cleanHumanTitle === 'function' ? mod.cleanHumanTitle(p.title || p.slug) : String(p.title || p.slug);
           entries.push({
             slug: p.slug,
-            title: String(p.title || p.slug),
-            category: p.category || p.pageType || 'Clinical INCI & pH Compatibility',
+            title: cleanTitle,
+            category: p.category || p.pageType || 'Active Pairing Guide',
             summary: String(p.summary || p.conflictHighlights || cfg.explainerText).slice(0, 158)
           });
         }
@@ -857,7 +858,16 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   const entries = Array.isArray(cfg._cachedSeoCatalog) && cfg._cachedSeoCatalog.length > 0 ? cfg._cachedSeoCatalog : [];
   if (entries.length === 0) return '';
   const gCfg = getGrowthConfig(cfg.moduleId);
-  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: `${s.target} (${s.grade})`, cat: 'public-scan' }));
+  const scanNameMap = {
+    'VitC-AM-Peptides-PM': 'Vitamin C Morning + Copper Peptides Night (96/100)',
+    'Ceramide-Tretinoin-Buffer': 'Ceramide Cream + Night Retinoid Sandwich (95/100)',
+    'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5% Routine (95/100)',
+    'BHA2-SnailMucin-Stack': '2% BHA Liquid + Snail Mucin Hydration (93/100)',
+    'VitC+Cu': 'Vitamin C + Copper Peptides Same-Night Clash (44/100)',
+    'Tret+BPO': 'Tretinoin + Benzoyl Peroxide Same-Night Clash (38/100)',
+    'TikTok': 'Viral 7-Serum Same-Night Routine Clash (28/100)'
+  };
+  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: scanNameMap[s.target] || `${s.target} (${s.score}/100)`, cat: 'routine-guide' }));
   const growthItems = [
     ...gCfg.tools.map((x) => ({ href: `/tools/${x.slug}`, title: x.title, cat: 'interactive-tool' })),
     ...gCfg.comparisons.map((x) => ({ href: `/compare/${x.slug}`, title: x.title, cat: 'comparison' })),
@@ -866,18 +876,18 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   ];
   const pillsHtml = growthItems.map((item) => {
     const active = reqPath === item.href;
-    return `<a href="${escHtml(item.href)}" class="eb-mesh-link" data-mesh-text="${escHtml((item.title + ' ' + item.cat).toLowerCase())}" style="display:inline-flex;align-items:center;gap:5px;padding:7px 13px;background:${active ? t.brandSoftBg : t.surfaceBg};color:${active ? t.brandPrimary : t.textPrimary};font-size:13.5px;font-weight:${active ? '600' : '400'};text-decoration:none;line-height:1.35;"><span>${escHtml(item.title)}</span></a>`;
+    return `<a href="${escHtml(item.href)}" class="eb-mesh-link" data-mesh-text="${escHtml((item.title + ' ' + item.cat).toLowerCase())}" style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:${active ? t.brandSoftBg : t.surfaceBg};color:${active ? t.brandPrimary : t.textPrimary};font-size:14px;font-weight:${active ? '600' : '400'};text-decoration:none;line-height:1.4;"><span>${escHtml(item.title)}</span></a>`;
   }).join('');
 
-  return `<nav id="eb-seo-crawl-mesh" aria-label="${escHtml(cfg.brandName)} Complete ${growthItems.length}-Page Programmatic Benchmark &amp; AI Indexing Mesh" style="margin-top:24px;padding:26px 28px;background:${t.subtleBg};">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+  return `<nav id="eb-seo-crawl-mesh" aria-label="${escHtml(cfg.brandName)} Complete ${growthItems.length}-Guide Layering Library" style="margin-top:24px;padding:28px 32px;background:${t.subtleBg};">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
       <div>
-        <div style="font-size:13.5px;font-weight:500;letter-spacing:0.03em;color:${t.brandPrimary};">Complete ${growthItems.length}-Dossier Layering Archive &amp; Ingredient Index</div>
-        <div style="font-size:14.5px;color:${t.textSecondary};margin-top:4px;">Direct access to all ${growthItems.length} verified pairing guides, calculators, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:500;">Routine Leaderboard</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap</a>.</div>
+        <div style="font-size:13.5px;font-weight:500;letter-spacing:0.03em;color:${t.brandPrimary};">Browse All ${growthItems.length} Skincare Pairing &amp; Cult-Bottle Guides</div>
+        <div style="font-size:15px;color:${t.textSecondary};margin-top:4px;">Tap any ingredient pair, cult bottle breakdown, or <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:500;">Ranked Routine</a> to check Morning &amp; Night rules.</div>
       </div>
-      <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="Filter ${growthItems.length} guides by ingredient..." oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:9px 14px;background:${t.surfaceBg};color:${t.textPrimary};font-size:14px;min-width:240px;border:none;" />
+      <input type="search" id="eb-mesh-filter-input" aria-label="Search ${growthItems.length} skincare guides" placeholder="Search ${growthItems.length} guides (e.g. Retinol)..." oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:10px 16px;background:${t.surfaceBg};color:${t.textPrimary};font-size:14.5px;min-width:280px;border:none;" />
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;max-height:220px;overflow-y:auto;padding:2px;">${pillsHtml}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;max-height:220px;overflow-y:auto;padding:2px;">${pillsHtml}</div>
   </nav>`;
 }
 
