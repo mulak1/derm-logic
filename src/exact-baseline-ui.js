@@ -48,7 +48,8 @@ function buildExactBaselineStyles(cfg) {
   #eb-curtain-visual-split { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 36px; align-items: stretch; margin: 0; }
   #eb-floating-gate-popover { display: none; position: fixed; z-index: 9998; width: 360px; max-width: calc(100vw - 24px); background: ${t.cardBg}; color: ${t.textPrimary}; padding: 20px; font-family: ${t.fontSans}; text-transform: none !important; }
   #eb-bottom-conversion-suite { margin: 72px auto 96px auto; font-family: ${t.fontSans}; text-transform: none !important; }
-  .eb-panel-card { background: ${t.cardBg}; color: ${t.textPrimary}; padding: 38px 42px; margin-bottom: 36px; }
+  .container .container, main.container > #eb-bottom-conversion-suite { padding-left: 0 !important; padding-right: 0 !important; max-width: 100% !important; width: 100% !important; }
+  .eb-panel-card { background: ${t.cardBg}; color: ${t.textPrimary}; padding: 32px 32px; margin-bottom: 36px; }
   .eb-gbb-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 20px; align-items: stretch; }
   .eb-tier-card { background: ${t.canvasBg}; padding: 24px 26px; display: flex; flex-direction: column; justify-content: space-between; color: ${t.textPrimary}; }
   .eb-tier-card.featured { background: ${t.brandSoftBg}; position: relative; }
