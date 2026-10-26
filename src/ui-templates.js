@@ -654,28 +654,28 @@ function renderAnalysisResultHtml(res) {
 
       <div style="display:flex;flex-direction:column;gap:14px;">
         <div style="display:grid;grid-template-columns:1fr;gap:14px;width:100%;" id="appleWalletCardPreview">
-          <div style="padding:18px 20px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
-            <div>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                <span class="mono" style="font-size:0.8rem;font-weight:500;color:var(--honey-warn);">Morning Routine Order</span>
-                <span class="badge-safe mono" style="font-size:0.76rem;padding:2px 8px;">No Pilling Under Makeup</span>
+          <div style="padding:18px 20px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
+            <svg aria-hidden="true" width="110" height="110" viewBox="0 0 120 120" fill="none" style="position:absolute;top:-20px;right:-20px;pointer-events:none;opacity:0.1;"><circle cx="60" cy="60" r="24" stroke="#A46B1D" stroke-width="1.3"/><circle cx="60" cy="60" r="40" stroke="#A46B1D" stroke-width="0.9" stroke-dasharray="3 4"/><path d="M60 8V22M60 98V112M8 60H22M98 60H112M23 23L33 33M87 87L97 97M97 23L87 33M33 87L23 97" stroke="#A46B1D" stroke-width="1.2" stroke-linecap="round"/></svg>
+            <div style="position:relative;z-index:1;">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;">
+                <div><span class="mono" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:500;color:var(--honey-warn);"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg>Morning Routine Order</span><div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-top:3px;">Brighten &amp; Protect in Daylight</div></div>
+                <div style="display:inline-flex;align-items:center;gap:8px;padding:3px 9px 3px 3px;background:var(--bg-surface);border:1px solid rgba(164,107,29,0.22);flex-shrink:0;"><img src="/public/editorial-woman-morning.jpg" alt="Daylight routine" width="34" height="34" style="width:34px;height:34px;object-fit:cover;object-position:center 20%;display:block;" loading="lazy" /><span class="badge-safe mono" style="font-size:0.74rem;padding:2px 7px;">No Pilling</span></div>
               </div>
-              <div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-bottom:10px;">Brighten &amp; Protect in Daylight</div>
               ${amStepsHtml}
             </div>
-            <div style="font-size:0.84rem;color:var(--text-secondary);margin-top:6px;">Wait 60 seconds before applying sunscreen so makeup glides on smoothly.</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);margin-top:6px;position:relative;z-index:1;">Wait 60 seconds before applying sunscreen so makeup glides on smoothly.</div>
           </div>
 
-          <div style="padding:18px 20px;background:#181412;color:#F4EFE8;display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
-            <div>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                <span class="mono" style="font-size:0.8rem;font-weight:500;color:#C9A45A;">Bedtime Routine Order</span>
-                <span class="mono" style="font-size:0.76rem;padding:2px 8px;background:rgba(244,239,232,0.12);color:#F4EFE8;">Evening Recovery</span>
+          <div style="padding:18px 20px;background:#181412;color:#F4EFE8;display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
+            <svg aria-hidden="true" width="110" height="110" viewBox="0 0 120 120" fill="none" style="position:absolute;top:-16px;right:-16px;pointer-events:none;opacity:0.13;"><path d="M74 28C57.4 28 44 41.4 44 58C44 74.6 57.4 88 74 88C81.2 88 87.8 85.4 93 81.2C82.4 83.6 71.2 76.8 68.8 66.2C66.4 55.6 73.2 44.4 83.8 42C80.7 33.8 77.6 28 74 28Z" stroke="#C9A45A" stroke-width="1.3"/><circle cx="60" cy="60" r="44" stroke="#C9A45A" stroke-width="0.85" stroke-dasharray="2 5"/></svg>
+            <div style="position:relative;z-index:1;">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;">
+                <div><span class="mono" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:500;color:#C9A45A;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/><path d="M18 4l.6 1.9L20.5 6.5l-1.9.6L18 9l-.6-1.9-1.9-.6 1.9-.6L18 4z"/></svg>Bedtime Routine Order</span><div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-top:3px;color:#F4EFE8;">Overnight Renewal &amp; Moisture Cushion</div></div>
+                <div style="display:inline-flex;align-items:center;gap:8px;padding:3px 9px 3px 3px;background:rgba(244,239,232,0.08);border:1px solid rgba(201,164,90,0.32);flex-shrink:0;"><img src="/public/editorial-woman-evening.jpg" alt="Evening recovery" width="34" height="34" style="width:34px;height:34px;object-fit:cover;object-position:center 22%;display:block;" loading="lazy" /><span class="mono" style="font-size:0.74rem;padding:2px 7px;color:#F4EFE8;">Recovery</span></div>
               </div>
-              <div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-bottom:10px;color:#F4EFE8;">Overnight Renewal &amp; Moisture Cushion</div>
               ${pmStepsHtml}
             </div>
-            <button type="button" class="btn-primary" style="width:100%;font-size:0.86rem;padding:11px 14px;margin-top:10px;background:#C9A45A;color:#0C0A08;white-space:normal;text-align:center;" onclick="openCheckoutModal('onetime_499')">
+            <button type="button" class="btn-primary" style="width:100%;font-size:0.86rem;padding:11px 14px;margin-top:10px;background:#C9A45A;color:#0C0A08;white-space:normal;text-align:center;" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass')}else{openCheckoutModal('onetime_499')}">
               <span>Save Morning &amp; Bedtime Lock-Screen Card ($1.99)</span>
               <span class="btn-icon-circle">&rarr;</span>
             </button>

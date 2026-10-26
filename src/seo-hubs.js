@@ -254,7 +254,7 @@ function renderShell({ title, description, canonicalPath, breadcrumbs, faqItems,
 function renderSiloNavStrip(activeSilo) {
   const celebCount = getAllCelebrityRoutines().length;
   const silos = [
-    { id: 'celebrity', href: '/celebrity', label: `Iconic Routines (${celebCount})` },
+    { id: 'celebrity', href: '/celebrity', label: 'Iconic Routines' },
     { id: 'concern', href: '/concern', label: 'Skin Concerns (8)' },
     { id: 'bottle', href: '/bottle', label: 'Cult Bottles (44)' },
     { id: 'ingredient', href: '/ingredient', label: 'Active Ingredients (65)' },
@@ -296,7 +296,7 @@ function renderCelebrityIndexPage() {
   const bodyHtml = `<section class="section-block" style="padding-top:16px;">
     <div class="container">
       ${renderSiloNavStrip('celebrity')}
-      <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Iconic Routines: Celebrity Bottles &amp; Morning/Night Layering (${celebs.length} Routines)</h1>
+      <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Iconic Routines: Celebrity Bottles &amp; Morning/Night Layering</h1>
       <p class="hero-sub" style="margin-bottom:18px;">
         Every serum, barrier cream, and SPF spotted in public vanity tours and beauty interviews, analyzed for pH harmony, morning vs. bedtime timing, and gentle drugstore dupes.
       </p>
@@ -401,15 +401,57 @@ function renderCelebrityDetailPage(celeb) {
       </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:28px;">
-        <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:24px 26px;">
-          <span class="mono" style="font-size:0.82rem;color:var(--honey-warn);font-weight:500;">7:30 AM · Morning Prep Under Makeup</span>
-          <h2 class="serif-display" style="font-size:1.45rem;margin:6px 0 14px;">Morning Layering Sequence</h2>
-          ${celeb.amSteps.map((s) => `<div style="padding:12px 14px;background:var(--bg-surface);margin-bottom:8px;"><strong style="display:block;font-size:0.92rem;margin-bottom:3px;">${escapeHtml(s.step)}</strong><span style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(s.detail)}</span></div>`).join('')}
+        <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;position:relative;overflow:hidden;">
+          <svg aria-hidden="true" width="148" height="148" viewBox="0 0 120 120" fill="none" style="position:absolute;top:-22px;right:-22px;pointer-events:none;opacity:0.12;">
+            <circle cx="60" cy="60" r="24" stroke="#A46B1D" stroke-width="1.25"/>
+            <circle cx="60" cy="60" r="40" stroke="#A46B1D" stroke-width="0.9" stroke-dasharray="3 4"/>
+            <path d="M60 8V22M60 98V112M8 60H22M98 60H112M23 23L33 33M87 87L97 97M97 23L87 33M33 87L23 97" stroke="#A46B1D" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px;position:relative;z-index:1;">
+            <div>
+              <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--honey-warn);font-weight:500;">
+                <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg>
+                <span>7:30 AM · Morning Prep Under Makeup</span>
+              </span>
+              <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;">Morning Layering Sequence</h2>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:4px 10px 4px 4px;background:var(--bg-surface);border:1px solid rgba(164,107,29,0.22);flex-shrink:0;">
+              <img src="/public/editorial-woman-morning.jpg" alt="Morning daylight skincare application" width="44" height="44" style="width:44px;height:44px;object-fit:cover;object-position:center 20%;display:block;" loading="lazy" />
+              <div style="line-height:1.25;">
+                <div class="mono" style="font-size:0.7rem;color:var(--honey-warn);font-weight:600;letter-spacing:0.03em;">DAYLIGHT</div>
+                <div style="font-size:0.76rem;color:var(--text-secondary);">Under SPF 50</div>
+              </div>
+            </div>
+          </div>
+          <div style="position:relative;z-index:1;">
+            ${celeb.amSteps.map((s) => `<div style="padding:13px 16px;background:var(--bg-surface);border-left:2.5px solid rgba(164,107,29,0.45);margin-bottom:9px;"><strong style="display:block;font-size:0.93rem;margin-bottom:3px;">${escapeHtml(s.step)}</strong><span style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
+          </div>
         </div>
-        <div class="porcelain-vessel-core" style="background:#181412;color:#F4EFE8;padding:24px 26px;">
-          <span class="mono" style="font-size:0.82rem;color:#C9A45A;font-weight:500;">9:30 PM · Bedtime Barrier Recovery</span>
-          <h2 class="serif-display" style="font-size:1.45rem;margin:6px 0 14px;color:#F4EFE8;">Evening Recovery Sequence</h2>
-          ${celeb.pmSteps.map((s) => `<div style="padding:12px 14px;background:rgba(244,239,232,0.08);margin-bottom:8px;"><strong style="display:block;font-size:0.92rem;margin-bottom:3px;color:#F4EFE8;">${escapeHtml(s.step)}</strong><span style="font-size:0.86rem;color:#B5ACA3;">${escapeHtml(s.detail)}</span></div>`).join('')}
+        <div class="porcelain-vessel-core" style="background:#181412;color:#F4EFE8;padding:26px 28px;position:relative;overflow:hidden;">
+          <svg aria-hidden="true" width="148" height="148" viewBox="0 0 120 120" fill="none" style="position:absolute;top:-18px;right:-18px;pointer-events:none;opacity:0.14;">
+            <path d="M74 28C57.4 28 44 41.4 44 58C44 74.6 57.4 88 74 88C81.2 88 87.8 85.4 93 81.2C82.4 83.6 71.2 76.8 68.8 66.2C66.4 55.6 73.2 44.4 83.8 42C80.7 33.8 77.6 28 74 28Z" stroke="#C9A45A" stroke-width="1.25"/>
+            <circle cx="60" cy="60" r="44" stroke="#C9A45A" stroke-width="0.85" stroke-dasharray="2 5"/>
+            <path d="M34 34L36 40L42 42L36 44L34 50L32 44L26 42L32 40L34 34Z" stroke="#C9A45A" stroke-width="1"/>
+          </svg>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px;position:relative;z-index:1;">
+            <div>
+              <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;color:#C9A45A;font-weight:500;">
+                <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/><path d="M18 4l.6 1.9L20.5 6.5l-1.9.6L18 9l-.6-1.9-1.9-.6 1.9-.6L18 4z"/></svg>
+                <span>9:30 PM · Bedtime Barrier Recovery</span>
+              </span>
+              <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;color:#F4EFE8;">Evening Recovery Sequence</h2>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:4px 10px 4px 4px;background:rgba(244,239,232,0.07);border:1px solid rgba(201,164,90,0.32);flex-shrink:0;">
+              <img src="/public/editorial-woman-evening.jpg" alt="Evening bedtime barrier recovery ritual" width="44" height="44" style="width:44px;height:44px;object-fit:cover;object-position:center 22%;display:block;" loading="lazy" />
+              <div style="line-height:1.25;">
+                <div class="mono" style="font-size:0.7rem;color:#C9A45A;font-weight:600;letter-spacing:0.03em;">NOCTURNAL</div>
+                <div style="font-size:0.76rem;color:#B5ACA3;">Barrier Seal</div>
+              </div>
+            </div>
+          </div>
+          <div style="position:relative;z-index:1;">
+            ${celeb.pmSteps.map((s) => `<div style="padding:13px 16px;background:rgba(244,239,232,0.08);border-left:2.5px solid rgba(201,164,90,0.5);margin-bottom:9px;"><strong style="display:block;font-size:0.93rem;margin-bottom:3px;color:#F4EFE8;">${escapeHtml(s.step)}</strong><span style="font-size:0.86rem;color:#B5ACA3;line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
+          </div>
         </div>
       </div>
 
