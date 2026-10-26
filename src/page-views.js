@@ -286,7 +286,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                   “Waiting ninety seconds after my exfoliating toner stopped my cheeks from flushing warm and kept my concealer from rolling off.”
                 </blockquote>
                 <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;">
-                  Pressing Niacinamide or rich creams straight over damp Glycolic or Salicylic Acid overwhelms sensitive skin—triggering a warm flush on your cheeks and causing morning sunscreen or primer to pill along your jawline.
+                  Pressing Niacinamide or rich creams straight over damp Glycolic or Salicylic Acid overwhelms sensitive skin, triggering a warm flush on your cheeks and causing morning sunscreen or primer to pill along your jawline.
                 </p>
               </div>
               <a href="/buy/micro_pass?source=viscosity_sequencer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;text-align:center;">Get Lock-Screen Routine Card ($1.99) &rarr;</a>
@@ -338,7 +338,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
               <div>
                 <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 2 · Treatment Drop</div>
                 <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);display:block;margin-bottom:4px;">Vitamin C or Peptide Serum</strong>
-                <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Pat gently with warm palms—give pH-dependent actives time to settle.</div>
+                <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Pat gently with warm palms and give pH-dependent actives time to settle.</div>
               </div>
               <button type="button" class="wait-timer-btn mono" onclick="startViscosityTimer(45, this)">Start 45s Timer</button>
             </li>
@@ -370,7 +370,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div>
             <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:8px;">Know what is inside every bottle on your vanity.</h2>
             <p style="color:var(--text-secondary);font-size:var(--step-body);margin-bottom:14px;max-width:62ch;">
-              Explore how everyday skincare actives behave on your skin—whether they clog pores, whether they tingle, and when in your routine they belong.
+              Explore how everyday skincare actives behave on your skin: whether they clog pores, whether they tingle, and when in your routine they belong.
             </p>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <span class="badge-safe mono">0/5 Pore-Safe Swaps</span>
@@ -455,7 +455,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           </div>
           <div class="hero-photo-col">
             <div class="editorial-photo-shell">
-              <div class="editorial-photo-inner" style="aspect-ratio:16/10;">
+              <div class="editorial-photo-inner" style="min-height:240px;height:100%;flex:1;">
                 <img src="/public/editorial-serum.jpg" alt="Atelier Céramique stoneware vessels, peptide dropper on warm bisque" fetchpriority="high" />
               </div>
               <div class="editorial-photo-caption">
@@ -476,7 +476,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
             <div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--rose-brand);font-size:0.84rem;font-weight:500;">Morning vs. Night</span><span class="badge-clash mono">Split AM / PM</span></div>
               <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">The Copper Peptide + Vitamin C Trap</h3>
-              <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Layering Copper Peptides 1% (pH 6.2) with 15% Vitamin C (pH 3.2) oxidizes both serums on contact—leaving your skin tight and dull. Use Vitamin C in the morning and peptides at night.</p>
+              <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Layering Copper Peptides 1% (pH 6.2) with 15% Vitamin C (pH 3.2) oxidizes both serums on contact, leaving your skin tight and dull. Use Vitamin C in the morning and peptides at night.</p>
             </div>
             <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;">Shop Morning Vitamin C at Dermstore &rarr;</a>
           </div></div>
@@ -484,7 +484,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
             <div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--sage-safe);font-size:0.84rem;font-weight:500;">90-Second Absorption</span><span class="badge-safe mono">Zero Pilling</span></div>
               <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">Let Acid Toners Dry Before Niacinamide</h3>
-              <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Applying Niacinamide or rich creams straight over damp Glycolic or Salicylic Acid shifts skin pH too quickly—triggering warm redness and causing morning sunscreen to pill.</p>
+              <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Applying Niacinamide or rich creams straight over damp Glycolic or Salicylic Acid shifts skin pH too quickly, triggering warm redness and causing morning sunscreen to pill.</p>
             </div>
             <a href="/buy/flash_pass?source=lp_cascade" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;">Save 9:16 Lock-Screen Card ($1.99) &rarr;</a>
           </div></div>
@@ -594,7 +594,7 @@ function renderDirectoryPage({ seoPages }) {
 
         <script>
           window.__dlVaultTag='all';
-          window.__dlTagLabels={all:'All Skincare Layering, Bottle & Ingredient Guides',pair:'Active Serum & Ingredient Pairing Guides',clash:'Do Not Mix — Separate Morning & Night',timer:'Wait or Buffer Between Layers',safe:'Safe Together — Layer in the Same Routine',product:'Cult Bottle Breakdowns & Routine Guides',ingredient:'Single-Ingredient Pore-Safety & Layering Guides'};
+          window.__dlTagLabels={all:'All Skincare Layering, Bottle & Ingredient Guides',pair:'Active Serum & Ingredient Pairing Guides',clash:'Do Not Mix · Separate Morning & Night',timer:'Wait or Buffer Between Layers',safe:'Safe Together · Layer in the Same Routine',product:'Cult Bottle Breakdowns & Routine Guides',ingredient:'Single-Ingredient Pore-Safety & Layering Guides'};
           window.__dlApplyVault=function(){
             var q=((document.getElementById('dir-vault-search')||{}).value||'').toLowerCase(),tag=window.__dlVaultTag,totalVis=0,secs=document.querySelectorAll('.dir-vault-section'),visSecs=0;
             for(var s=0;s<secs.length;s++){

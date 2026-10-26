@@ -22,7 +22,7 @@ const CELEBRITY_ROUTINES = [
     sourceUrl: 'https://www.vogue.com/article/hailey-bieber-skincare-routine',
     heroImg: '/public/editorial-woman-morning.jpg',
     signatureLook: 'Dewy, peptide-cushioned glass skin that never pills under sheer complexion fluid',
-    summary: 'Hailey Bieber builds her routine around milky ceramide essences, peptide glazing fluids, and rich barrier creams—keeping harsh low-pH exfoliating acids out of her daily morning prep so makeup melts evenly into skin.',
+    summary: 'Hailey Bieber builds her routine around milky ceramide essences, peptide glazing fluids, and rich barrier creams, keeping harsh low-pH exfoliating acids out of her daily morning prep so makeup melts evenly into skin.',
     amSteps: [
       { step: '1. Lukewarm Rinse & Mist', detail: 'Skips stripping foaming cleansers in the morning; mists clean skin to create a damp humectant base.' },
       { step: '2. Milky Ceramide Essence + Peptide Fluid', detail: 'Pats on a ceramide-rich glazing essence followed by a niacinamide and peptide hydrating serum while skin is still dewy.' },
@@ -33,7 +33,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Peptide Serum (No Acids Same-Night)', detail: 'Applies Copper & Signal Peptides on calm, non-acidic skin so peptide bonds stay intact overnight.' },
       { step: '3. Rich Ceramide Cushion & Spot Glaze', detail: 'Locks in moisture with a 3:1:1 ceramide cream and presses a pea-sized balm over dry cheekbones.' }
     ],
-    clashWarning: 'Never layer Hailey’s signature Peptide Glazing serums directly over Glycolic Acid 7% or pure L-Ascorbic Acid (pH 3.2) in the same step—low pH breaks fragile peptide chains and causes tightness.',
+    clashWarning: 'Never layer Hailey’s signature Peptide Glazing serums directly over Glycolic Acid 7% or pure L-Ascorbic Acid (pH 3.2) in the same step; low pH breaks fragile peptide chains and causes tightness.',
     dupeSwap: {
       luxury: 'SkinCeuticals C E Ferulic ($182) + Luxury Peptide Serum ($68)',
       gentleDupe: 'The Ordinary Multi-Peptide + HA ($19) + Aestura Atobarrier 365 Cream ($32)',
@@ -53,7 +53,7 @@ const CELEBRITY_ROUTINES = [
     sourceUrl: 'https://www.harpersbazaar.com/beauty/skin-care/a38961051/sydney-sweeney-skincare-routine/',
     heroImg: '/public/editorial-woman-evening.jpg',
     signatureLook: 'Calm, sculpted morning glow with zero congestion after long filming days',
-    summary: 'Having struggled with cystic and combination breakouts, Sydney Sweeney relies on thorough oil-to-milk double cleansing, morning ice rolling, pure Vitamin C under SPF 50, and hyaluronic sleeping masks—strictly separating exfoliating acids from nightly barrier creams.',
+    summary: 'Having struggled with cystic and combination breakouts, Sydney Sweeney relies on thorough oil-to-milk double cleansing, morning ice rolling, pure Vitamin C under SPF 50, and hyaluronic sleeping masks, strictly separating exfoliating acids from nightly barrier creams.',
     amSteps: [
       { step: '1. Gentle Cleanse & Morning Ice Roll', detail: 'Always glides her ice roller over freshly cleansed skin (never over dirty skin) to calm morning puffiness and redness.' },
       { step: '2. Pure Vitamin C Serum (SkinCeuticals C E Ferulic)', detail: 'Pats 4 drops of 15% L-Ascorbic Acid + Ferulic Acid onto dry skin for antioxidant brightness.' },
@@ -96,7 +96,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Azelaic Acid or Soothing Centella', detail: 'Applies rosacea-friendly Azelaic Acid or Centella Asiatica instead of harsh glycolic peels.' },
       { step: '3. Restorative Barrier Balm Seal', detail: 'Cushions reactive areas with Panthenol B5 and zinc restorative cream.' }
     ],
-    clashWarning: 'Crucial rule from Sofia’s shelf: Hypochlorous Acid mist MUST dry completely (5–10 minutes) before applying Vitamin C, Retinol, or Peptides—otherwise it oxidizes and deactivates your serums on contact.',
+    clashWarning: 'Crucial rule from Sofia’s shelf: Hypochlorous Acid mist MUST dry completely (5–10 minutes) before applying Vitamin C, Retinol, or Peptides; otherwise it oxidizes and deactivates your serums on contact.',
     dupeSwap: {
       luxury: 'Hydrinity Hyacyn Mist ($60) + Luxury Barrier Balm ($58)',
       gentleDupe: 'Tower 28 SOS Hypochlorous Spray ($28) + La Roche-Posay Cicaplast Baume B5+ ($18)',
@@ -125,7 +125,7 @@ const CELEBRITY_ROUTINES = [
     ],
     pmSteps: [
       { step: '1. Thorough Micellar + Gel Cleanse', detail: 'Removes all traces of city pollution and makeup.' },
-      { step: '2. Biologique Recherche Lotion P50 (Press, Don’t Swipe)', detail: 'Presses P50 acid toner into skin with a cotton pad 2–3 nights a week—never on the same night as Retinol.' },
+      { step: '2. Biologique Recherche Lotion P50 (Press, Don’t Swipe)', detail: 'Presses P50 acid toner into skin with a cotton pad 2–3 nights a week, never on the same night as Retinol.' },
       { step: '3. Snail Mucin + Cicaplast / Healing Balm Cushion', detail: 'Waits 10 minutes after P50, then floods skin with Snail Mucin and seals with a restorative balm.' }
     ],
     clashWarning: 'Biologique Recherche Lotion P50 has an ultra-low pH (~3.0). Never layer Copper Peptides, Tretinoin, or Vitamin C in the same evening as Lotion P50.',
@@ -160,7 +160,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Hydrating Snail & Peptide Essence', detail: 'Replenishes water content lost under hot stage lights.' },
       { step: '3. Breathable Ceramide PM Lotion', detail: 'Locks in moisture with a non-comedogenic niacinamide + ceramide night lotion.' }
     ],
-    clashWarning: 'Avoid applying heavy occlusive balms or high-strength Glycolic Acid right before stage or daytime makeup—it causes foundation and cream blush to separate and pill.',
+    clashWarning: 'Avoid applying heavy occlusive balms or high-strength Glycolic Acid right before stage or daytime makeup, as it causes foundation and cream blush to separate and pill.',
     dupeSwap: {
       luxury: 'Luxury Makeup-Prep Serum ($85) + Designer Cream ($95)',
       gentleDupe: 'Anua Heartleaf 77% Toner ($20) + CeraVe PM Facial Moisturizing Lotion ($16)',
@@ -181,7 +181,7 @@ const CELEBRITY_ROUTINES = [
     heroImg: '/public/routines/madison-cleanse.jpg',
     imgPos: '50% 24%',
     signatureLook: 'Clear, glass-smooth skin that balances acne washes with rich ceramide recovery',
-    summary: 'Madison Beer openly shared how she cleared her breakouts by pairing a Benzoyl Peroxide foaming wash (PanOxyl) with milky hydrating toners and rich whipped ceramide moisturizers—never letting peroxide dry out her barrier.',
+    summary: 'Madison Beer openly shared how she cleared her breakouts by pairing a Benzoyl Peroxide foaming wash (PanOxyl) with milky hydrating toners and rich whipped ceramide moisturizers, never letting peroxide dry out her barrier.',
     amSteps: [
       { step: '1. Short-Contact Benzoyl Peroxide Wash (PanOxyl)', detail: 'Massages PanOxyl wash onto blemish-prone zones for 60 seconds, then rinses thoroughly with lukewarm water.' },
       { step: '2. Milky Ceramide & Hyaluronic Toner', detail: 'Immediately floods clean skin with hydrating toner to counteract dryness.' },
@@ -192,7 +192,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Adapalene / Retinoid (Buffered)', detail: 'Applies a pea-sized retinoid over a thin layer of moisturizer on alternate nights.' },
       { step: '3. Whipped Ceramide Barrier Cream', detail: 'Finishes with a rich 3:1:1 ceramide and marula/squalane barrier cream.' }
     ],
-    clashWarning: 'Never leave Benzoyl Peroxide on the skin at the same time as Tretinoin, Retinol, or Vitamin C—peroxide oxidizes and wipes out retinoid and Vitamin C potency on contact. Keep PanOxyl as a rinse-off morning wash.',
+    clashWarning: 'Never leave Benzoyl Peroxide on the skin at the same time as Tretinoin, Retinol, or Vitamin C; peroxide oxidizes and wipes out retinoid and Vitamin C potency on contact. Keep PanOxyl as a rinse-off morning wash.',
     dupeSwap: {
       luxury: 'Drunk Elephant Lala Retro Cream ($64) + Luxury Blemish Serum ($72)',
       gentleDupe: 'PanOxyl 10% Wash ($12) + Differin Adapalene 0.1% ($16) + Aestura Atobarrier 365 ($32)',
@@ -222,9 +222,9 @@ const CELEBRITY_ROUTINES = [
     pmSteps: [
       { step: '1. Gentle Makeup Melt & Rinse', detail: 'Dissolves filming makeup without harsh scrubbing.' },
       { step: '2. Barrier-Repairing Ceramide + Vitamin E Layer', detail: 'Replenishes dry zones with soothing lipids and Panthenol B5.' },
-      { step: '3. Targeted Balm Seal on Dry Patches', detail: 'Presses healing balm onto lips, brows, and dry cheek patches—never over active acids.' }
+      { step: '3. Targeted Balm Seal on Dry Patches', detail: 'Presses healing balm onto lips, brows, and dry cheek patches, never over active acids.' }
     ],
-    clashWarning: 'If you have eczema-prone skin like Zendaya, never layer occlusive slugging balms over Glycolic, Lactic, or Salicylic Acid—trapping acids under a heavy balm magnifies irritation 3x.',
+    clashWarning: 'If you have eczema-prone skin like Zendaya, never layer occlusive slugging balms over Glycolic, Lactic, or Salicylic Acid; trapping acids under a heavy balm magnifies irritation 3x.',
     dupeSwap: {
       luxury: 'Luxury Soothing Serum ($90) + Designer Recovery Balm ($65)',
       gentleDupe: 'La Roche-Posay Cicaplast Baume B5+ ($18) + CeraVe PM Lotion ($16)',
@@ -256,7 +256,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. BHA Salicylic Complexion Sweep (2–3x/Week)', detail: 'Clears congested pores after long wear, waiting 10 minutes before creams.' },
       { step: '3. Rich Peptide & Ceramide Night Cream', detail: 'Restores bounce and elasticity overnight.' }
     ],
-    clashWarning: 'On nights you swipe a Salicylic/Glycolic acid pad, skip Copper Peptides and Retinol—save firming peptides for your non-exfoliating recovery nights.',
+    clashWarning: 'On nights you swipe a Salicylic/Glycolic acid pad, skip Copper Peptides and Retinol, and save firming peptides for your non-exfoliating recovery nights.',
     dupeSwap: {
       luxury: 'La Prairie Luxe Cream ($595) + Complexion Pads ($52)',
       gentleDupe: 'Paula’s Choice 2% BHA ($35) + Dieux Instant Angel Lipid Cream ($45)',
@@ -288,7 +288,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Calming Niacinamide & Tranexamic Brightening', detail: 'Evens skin tone gently without harsh hydroquinone or high-acid peels.' },
       { step: '3. Rich Dewy Barrier Cream', detail: 'Seals in moisture for overnight recovery.' }
     ],
-    clashWarning: 'If your dewy serum contains Lactic Acid (AHA), do not stack it with Retinol or Tretinoin in the same evening—use Lactic Acid on Night 1 and Retinoids on Night 2.',
+    clashWarning: 'If your dewy serum contains Lactic Acid (AHA), do not stack it with Retinol or Tretinoin in the same evening. Use Lactic Acid on Night 1 and Retinoids on Night 2.',
     dupeSwap: {
       luxury: 'La Mer The Concentrate ($425) + Tatcha Dewy Skin Cream ($72)',
       gentleDupe: 'Sunday Riley Good Genes ($85) or COSRX Snail 96 ($25) + Aestura Atobarrier 365 ($32)',
@@ -320,7 +320,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Crystal Retinal or Firming Peptides (Alternating)', detail: 'Alternates gentle Retinaldehyde nights with Copper Peptide firming nights.' },
       { step: '3. Lipid-Rich Barrier Cream', detail: 'Locks in overnight hydration with ceramide and squalane moisture.' }
     ],
-    clashWarning: 'Never mix morning Vitamin C (pH 3.2) with evening Copper Peptides or Retinaldehyde—keep Vitamin C strictly in your morning SPF ritual and alternate Retinal and Peptides at night.',
+    clashWarning: 'Never mix morning Vitamin C (pH 3.2) with evening Copper Peptides or Retinaldehyde. Keep Vitamin C strictly in your morning SPF ritual and alternate Retinal and Peptides at night.',
     dupeSwap: {
       luxury: 'SkinCeuticals C E Ferulic ($182) + Shiseido Vital Perfection ($140)',
       gentleDupe: 'Timeless 20% Vitamin C ($26) + Medik8 Crystal Retinal 6 ($85) + Beauty of Joseon SPF 50 ($18)',
@@ -373,7 +373,7 @@ const CELEBRITY_ROUTINES = [
     heroImg: '/public/routines/rosie-rosewater.jpg',
     imgPos: '50% 72%',
     signatureLook: 'Lit-from-within editorial cheek glow with zero clogged pores',
-    summary: 'Rosie Huntington-Whiteley is famous for checking every bottle on her shelf for pore-clogging oils and fungal-acne triggers—relying on Bioderma Micellar, BHA/AHA resurfacing, and squalane-based hydration.',
+    summary: 'Rosie Huntington-Whiteley is famous for checking every bottle on her shelf for pore-clogging oils and fungal-acne triggers, relying on Bioderma Micellar, BHA/AHA resurfacing, and squalane-based hydration.',
     amSteps: [
       { step: '1. Rosewater / Micellar Refresh', detail: 'Avoids harsh morning stripping; refreshes with micellar water and mist.' },
       { step: '2. Brightening Vitamin C + Squalane Hydration', detail: 'Layers lightweight antioxidant protection with 100% pore-safe squalane.' },
@@ -384,7 +384,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Glycolic / Lactic Resurfacing (2x/Week)', detail: 'Uses controlled AHA/BHA toning to keep texture smooth.' },
       { step: '3. Squalane + Ceramide Barrier Cushion', detail: 'Hydrates deeply without heavy coconut alkanes or isopropyl myristate.' }
     ],
-    clashWarning: 'Do not layer Glycolic/Lactic resurfacing toners on the same night as Retinaldehyde or Tretinoin—alternate them on a 4-night cycle.',
+    clashWarning: 'Do not layer Glycolic/Lactic resurfacing toners on the same night as Retinaldehyde or Tretinoin; alternate them on a 4-night cycle.',
     dupeSwap: {
       luxury: 'Biologique Recherche P50 ($115) + Luxury Squalane Serum ($82)',
       gentleDupe: 'Paula’s Choice 2% BHA ($35) + Malezia 5% Urea Moisturizer ($26)',

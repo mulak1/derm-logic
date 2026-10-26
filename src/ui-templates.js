@@ -103,7 +103,7 @@ const SHARED_CSS = `
   button, select, textarea, input { font: inherit; color: inherit; }
   .container { max-width: 1360px; margin: 0 auto; padding: 0 var(--margin); }
 
-  /* Header — Editorial Gallery & Nocturnal Vanity Switcher */
+  /* Header: Editorial Gallery & Nocturnal Vanity Switcher */
   .site-header { background: var(--bg-canvas); position: sticky; top: 0; z-index: 40; transition: background-color 320ms var(--ease-spring); }
   .nav-inner { min-height: 76px; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
   .brand-logo-link { display: inline-flex; align-items: center; gap: 10px; font-size: 1.375rem; font-weight: 400; letter-spacing: -0.02em; color: var(--text-primary); text-decoration: none; transition: opacity 180ms ease-out; }
@@ -116,7 +116,7 @@ const SHARED_CSS = `
   .vanity-light-btn.active { background: var(--rose-brand); color: var(--accent-ink); }
   .vanity-light-btn:active { transform: scale(0.97); }
 
-  /* Buttons — Square editorial luxury blocks */
+  /* Buttons: Square editorial luxury blocks */
   .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--rose-brand); color: var(--accent-ink); font-weight: 500; font-size: var(--step-small); padding: 12px 22px; min-height: 44px; border: none; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, opacity 180ms ease-out, background-color 200ms ease-out; }
   .btn-primary:hover { opacity: 0.92; }
   .btn-primary:active { transform: scale(0.97); }
@@ -131,7 +131,7 @@ const SHARED_CSS = `
   .affiliate-micro-link { display: inline-block; margin-top: 4px; font-size: 0.82rem; font-weight: 500; color: var(--sage-safe); text-decoration: underline; text-underline-offset: 3px; }
   .affiliate-micro-link:hover { color: var(--rose-brand); }
 
-  /* Hero — Uneven Editorial Gallery & Nocturnal Plinth */
+  /* Hero: Uneven Editorial Gallery & Nocturnal Plinth */
   .hero-section { padding: 12px 0 18px; }
   .editorial-top-banner { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: stretch; margin-bottom: 16px; }
   .hero-copy-col { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; }
@@ -141,9 +141,9 @@ const SHARED_CSS = `
   .hero-h1-line2 { display: block; padding-left: 5vw; }
   .hero-sub { color: var(--text-secondary); font-size: var(--step-lead); line-height: 1.38; max-width: 54ch; margin-bottom: 12px; }
   .editorial-photo-shell { background: var(--bg-oat); padding: 10px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-  .editorial-photo-inner { overflow: hidden; position: relative; height: 205px; flex: 1; background: var(--bg-porcelain); }
+  .editorial-photo-inner { overflow: hidden; position: relative; min-height: 205px; height: 100%; flex: 1; background: var(--bg-porcelain); }
   .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .editorial-photo-diptych { display: grid; grid-template-columns: 1.32fr 0.88fr; gap: 8px; height: 215px; flex: 1; }
+  .editorial-photo-diptych { display: grid; grid-template-columns: 1.32fr 0.88fr; gap: 8px; min-height: 215px; height: 100%; flex: 1; }
   .editorial-photo-diptych .editorial-photo-inner { height: 100%; }
   .vessel-photo-frame { background: var(--bg-oat); padding: 6px; margin-bottom: 14px; }
   .vessel-photo-frame img { width: 100%; height: 172px; object-fit: cover; display: block; }
@@ -472,7 +472,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
                 <button type="button" class="btn-secondary" style="padding:6px 12px;font-size:0.82rem;min-height:34px;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Sample</button>
               </div>
               <textarea id="rawInciTextarea" class="textarea-box mono" rows="3" style="flex:1;min-height:76px;" placeholder="e.g., Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate...">${escapeHtml(initialRawInci || '')}</textarea>
-              <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:8px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients — helpful before buying a new moisturizer or foundation.</div>
+              <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:8px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients, helpful before buying a new moisturizer or foundation.</div>
             </div>
           </div>
 
@@ -568,7 +568,7 @@ function renderAnalysisResultHtml(res) {
 
   const conflictsHtml = res.conflicts.length === 0
     ? `<div style="padding:18px 20px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.94rem;line-height:1.58;margin-bottom:10px;">
-         <div class="serif-display" style="font-size:1.25rem;color:var(--sage-safe);margin-bottom:4px;">Pure Shelf Harmony — Every Bottle Works Together</div>
+         <div class="serif-display" style="font-size:1.25rem;color:var(--sage-safe);margin-bottom:4px;">Pure Shelf Harmony · Every Bottle Works Together</div>
          <div>Your selected bottles layer smoothly with zero stinging, canceling out, or makeup pilling. Apply from thinnest watery serum to richest moisturizer, and give each layer 60 seconds to settle.</div>
        </div>`
     : primaryConflicts.map(renderSingleConflictCard).join('') + (extraConflicts.length > 0 ? `

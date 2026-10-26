@@ -492,7 +492,7 @@ function buildClientRuntimeScript(cfg) {
     }
     var h1Node = document.getElementById('eb-scan-h1') || document.querySelector('main h1, article h1, h1');
     if (h1Node && !window.__ebActiveEntity && (isPseoOrDir || (pName !== '/' && !isHubOrDir))) {
-      var rawH1 = (h1Node.textContent || '').replace(/\\s+/g, ' ').trim().split(/\\s*[—–|:]\\s*/)[0];
+      var rawH1 = (h1Node.textContent || '').replace(/\\s+/g, ' ').trim().split(/\\s*[–|:]\\s*/)[0];
       if (rawH1.length > 48) rawH1 = rawH1.slice(0, 48).replace(/\\s+\\S*$/, '');
       window.__ebActiveEntity = rawH1.replace(/[,;:\\s]+$/, '');
     }
@@ -561,7 +561,7 @@ function buildClientRuntimeScript(cfg) {
     var fInit = (CFG.deliverableFiles && CFG.deliverableFiles[0]) || { file: 'bundle.txt', size: '4.2 KB' }, f1 = (CFG.deliverableFiles && CFG.deliverableFiles[1]) || fInit, f2 = (CFG.deliverableFiles && CFG.deliverableFiles[2]) || fInit;
     var activeEnt = window.__ebActiveEntity || (isDerm ? 'Morning & Night Routine' : ((CFG.presets && CFG.presets[0] && CFG.presets[0].label) || CFG.brandName));
     var scanR1 = document.getElementById('eb-scan-r1-val'), scanAct = document.getElementById('eb-scan-r1-act'), scanR3 = document.getElementById('eb-scan-r3-val'), scanGrade = document.getElementById('eb-scan-lead-grade');
-    var diagLine1 = customDiagLine || (isDerm && scanR1 ? ('Routine Verdict (' + activeEnt + '): ' + scanR1.textContent + (scanR3 ? ' — ' + scanR3.textContent : '')) : CFG.remDiff.beforeLine);
+    var diagLine1 = customDiagLine || (isDerm && scanR1 ? ('Routine Verdict (' + activeEnt + '): ' + scanR1.textContent + (scanR3 ? ' · ' + scanR3.textContent : '')) : CFG.remDiff.beforeLine);
     var diagLine2 = isDerm && scanAct ? ('How to Wear It: ' + scanAct.textContent + ' (Wait 60s between layers, finish morning with SPF 30–50+)') : CFG.remDiff.afterLine;
     var previewLines = isDerm
       ? ('Included in Your $1.99 Routine Kit (' + activeEnt + '):\\n  1. ' + fInit.file + ' (9:16 Phone Lock-Screen Card)   2. ' + f1.file + ' (4-Night Calendar)   3. ' + f2.file + ' (Pore-Safe Swaps)')
@@ -661,7 +661,7 @@ function buildClientRuntimeScript(cfg) {
     var dPill = document.getElementById('eb-dossier-format-pill');
     if (dPill) { dPill.textContent = f.file + ' (' + f.size + ')'; dPill.style.transform = 'scale(1.06)'; setTimeout(function() { dPill.style.transform = 'scale(1)'; }, 180); }
     var prevBox = document.getElementById('eb-prism-proof-preview');
-    if (prevBox) prevBox.textContent = CFG.moduleId === 'derm_logic' ? ('Selected File: ' + f.file + ' (' + f.size + ' — ' + (f.schema || 'Routine Guide') + ')\\n' + CFG.remDiff.beforeLine + '\\n' + CFG.remDiff.afterLine + '\\nIncluded in the $1.99 Single-Routine Pass for ' + (window.__ebActiveEntity || CFG.brandName)) : ('// [SELECTED FILE: ' + f.file + ' (' + f.size + ') • ' + (f.schema || 'Verified Contract') + ']\\n' + CFG.remDiff.beforeLine + '\\n' + CFG.remDiff.afterLine + '\\n// Target: ' + (window.__ebActiveEntity || CFG.brandName) + ' • Exact production file contents locked until $1.99 Express Pass checkout');
+    if (prevBox) prevBox.textContent = CFG.moduleId === 'derm_logic' ? ('Selected File: ' + f.file + ' (' + f.size + ' · ' + (f.schema || 'Routine Guide') + ')\\n' + CFG.remDiff.beforeLine + '\\n' + CFG.remDiff.afterLine + '\\nIncluded in the $1.99 Single-Routine Pass for ' + (window.__ebActiveEntity || CFG.brandName)) : ('// [SELECTED FILE: ' + f.file + ' (' + f.size + ') • ' + (f.schema || 'Verified Contract') + ']\\n' + CFG.remDiff.beforeLine + '\\n' + CFG.remDiff.afterLine + '\\n// Target: ' + (window.__ebActiveEntity || CFG.brandName) + ' • Exact production file contents locked until $1.99 Express Pass checkout');
     var microBtn = document.getElementById('btn-curtain-micro-pass');
     if (microBtn) microBtn.textContent = 'Download ' + f.file + ' (99¢)';
     var popMicroBtn = document.getElementById('btn-popover-micro-pass');

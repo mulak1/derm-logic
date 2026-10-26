@@ -22,7 +22,7 @@
       { "step": "2. Niacinamide & Hyaluronic Rebalancing Drop", "detail": "Replenishes water reserves on damp skin before heavy occlusives." },
       { "step": "3. Overnight Renewal Barrier Cushion", "detail": "Locks in bounce with ceramides and squalane." }
     ],
-    "clashWarning": "Because Dua uses a low-pH L-Ascorbic Acid serum in the morning, never layer Copper Peptides or Benzoyl Peroxide in the same routine window—wait 60 seconds before applying moisturizer.",
+    "clashWarning": "Because Dua uses a low-pH L-Ascorbic Acid serum in the morning, never layer Copper Peptides or Benzoyl Peroxide in the same routine window; wait 60 seconds before applying moisturizer.",
     "dupeSwap": {
       "luxury": "iS Clinical Pro-Heal Serum ($158) + Luxury Renewal Cream ($95)",
       "gentleDupe": "Timeless 20% Vitamin C + E Ferulic ($26) + Aestura Atobarrier 365 Cream ($32)",
@@ -54,7 +54,7 @@
       { "step": "2. Panthenol B5 + Centella Calm Layer", "detail": "Skips glycolic and salicylic acids completely when skin feels reactive." },
       { "step": "3. Lightweight Ceramide Lotion (Zero Heavy Slugging)", "detail": "Uses breathable ceramide hydration so heat never gets trapped around the mouth." }
     ],
-    "clashWarning": "If you are prone to perioral dermatitis like Olivia, avoid heavy overnight petrolatum slugging and strong low-pH AHA peels—trapped heat and acid stings trigger flare-ups around the nose and mouth.",
+    "clashWarning": "If you are prone to perioral dermatitis like Olivia, avoid heavy overnight petrolatum slugging and strong low-pH AHA peels; trapped heat and acid stings trigger flare-ups around the nose and mouth.",
     "dupeSwap": {
       "luxury": "Dr. Barbara Sturm Hyaluronic Serum ($320) + Milky Cleanser ($75)",
       "gentleDupe": "The Ordinary Hyaluronic Acid 2% + B5 ($10) + La Roche-Posay Cicaplast B5+ ($18)",
@@ -86,7 +86,7 @@
       { "step": "2. Paula’s Choice 2% BHA Liquid (Wait 90s)", "detail": "Swipes oil-soluble Salicylic Acid across congested zones and waits 90 seconds before Niacinamide." },
       { "step": "3. Adaptogen & Ceramide Night Cushion", "detail": "Seals moisture with squalane, pentapeptides, and ceramides." }
     ],
-    "clashWarning": "Crucial timing rule on Kaia’s shelf: let Paula’s Choice 2% BHA (pH 3.5) absorb for 90 full seconds before applying 20% Niacinamide—stacking high-strength Niacinamide onto wet acid can cause a warm nicotinic acid flush.",
+    "clashWarning": "Crucial timing rule on Kaia’s shelf: let Paula’s Choice 2% BHA (pH 3.5) absorb for 90 full seconds before applying 20% Niacinamide. Stacking high-strength Niacinamide onto wet acid can cause a warm nicotinic acid flush.",
     "dupeSwap": {
       "luxury": "Paula’s Choice 20% Niacinamide ($54) + Adaptogen Cream ($58)",
       "gentleDupe": "Paula’s Choice 2% BHA ($35) + The Ordinary Niacinamide 10% + Zinc ($6)",
@@ -107,7 +107,7 @@
     "heroImg": "/public/editorial-hero.jpg",
     "imgPos": "50% 42%",
     "signatureLook": "Supple, golden-hour sunlit skin that never flakes in cold New York winters",
-    "summary": "Gigi Hadid mixes $12 drugstore gentle cleansers with rich Korean 5-ceramide barrier creams (Dr. Jart+ Ceramidin) and botanical facial oils—proving that calm, deeply moisturized skin beats harsh 10-step acid routines.",
+    "summary": "Gigi Hadid mixes $12 drugstore gentle cleansers with rich Korean 5-ceramide barrier creams (Dr. Jart+ Ceramidin) and botanical facial oils, proving that calm, deeply moisturized skin beats harsh 10-step acid routines.",
     "amSteps": [
       { "step": "1. Gentle Non-Stripping Lotion Wash", "detail": "Uses a classic fragrance-free drugstore lotion cleanser." },
       { "step": "2. Hydrating Essence + Ceramidin Barrier Cream", "detail": "Layers a 5-ceramide + panthenol cream to lock in moisture before cold outdoor shoots." },
@@ -118,7 +118,7 @@
       { "step": "2. Gentle Lactic or Peptide Night Renewal", "detail": "Uses hydrating peptides or mild lactic acid instead of harsh peeling solutions." },
       { "step": "3. Rich Ceramide Cream + Botanical Oil Press", "detail": "Presses 2 drops of nourishing oil over her ceramide moisturizer to seal hydration." }
     ],
-    "clashWarning": "Always apply water-based serums and ceramide creams BEFORE pressing on facial oils—applying facial oil first creates an occlusive seal that blocks watery serums from absorbing.",
+    "clashWarning": "Always apply water-based serums and ceramide creams BEFORE pressing on facial oils; applying facial oil first creates an occlusive seal that blocks watery serums from absorbing.",
     "dupeSwap": {
       "luxury": "Dr. Jart+ Ceramidin Skin Barrier Cream ($48) + Botanical Serum ($65)",
       "gentleDupe": "Aestura Atobarrier 365 Cream ($32) + Stratia Lipid Gold ($28)",
@@ -182,7 +182,7 @@
       { "step": "2. Calming Azelaic Acid or Peptide Serum", "detail": "Keeps rosacea-prone redness calm with gentle, neutral-pH actives." },
       { "step": "3. Dewy Skin Cream & Silk Eye Cushion", "detail": "Locks in moisture overnight." }
     ],
-    "clashWarning": "Never apply Hyaluronic Acid onto bone-dry skin in a dry room without sealing it under a ceramide cream—unsealed hyaluronic acid can pull water out of fair, sensitive skin.",
+    "clashWarning": "Never apply Hyaluronic Acid onto bone-dry skin in a dry room without sealing it under a ceramide cream; unsealed hyaluronic acid can pull water out of fair, sensitive skin.",
     "dupeSwap": {
       "luxury": "Tatcha The Dewy Skin Cream ($72) + Silk Peony Eye Cream ($64)",
       "gentleDupe": "The Ordinary Hyaluronic Acid 2% + B5 ($10) + Aestura Atobarrier 365 ($32)",
@@ -214,7 +214,7 @@
       { "step": "2. Gentle Enzyme / Mandelic Polish (2x/Week)", "detail": "Uses melanin-safe gentle exfoliation rather than high-strength 30% glycolic peels." },
       { "step": "3. Niacinamide + Ceramide Barrier Seal", "detail": "Cushions skin overnight with 4% Niacinamide and shea lipids." }
     ],
-    "clashWarning": "For melanin-rich skin, avoid stacking high-strength Glycolic Acid with Retinoids on the same night—over-exfoliation triggers inflammation and post-inflammatory hyperpigmentation (dark marks).",
+    "clashWarning": "For melanin-rich skin, avoid stacking high-strength Glycolic Acid with Retinoids on the same night; over-exfoliation triggers inflammation and post-inflammatory hyperpigmentation (dark marks).",
     "dupeSwap": {
       "luxury": "La Mer Energizing Cleanser ($105) + Luxury Brightening Serum ($110)",
       "gentleDupe": "Topicals Faded Serum ($38) + La Roche-Posay Cicaplast / Lipikar B5+ ($18)",
@@ -246,7 +246,7 @@
       { "step": "2. Multi-Peptide + Hyaluronic Recovery", "detail": "Restores bounce with signal peptides and hyaluronic acid." },
       { "step": "3. Rich Lipid Night Cream", "detail": "Seals moisture overnight so skin wakes up camera-ready." }
     ],
-    "clashWarning": "Give rich peptide and hyaluronic creams 60–90 seconds to absorb before applying fluid SPF 50—rushing sunscreen over damp rich cream is the #1 cause of red-carpet foundation pilling.",
+    "clashWarning": "Give rich peptide and hyaluronic creams 60–90 seconds to absorb before applying fluid SPF 50; rushing sunscreen over damp rich cream is the #1 cause of red-carpet foundation pilling.",
     "dupeSwap": {
       "luxury": "Charlotte Tilbury Magic Serum ($85) + Magic Cream ($100)",
       "gentleDupe": "The Ordinary Multi-Peptide + HA ($19) + Dieux Instant Angel ($45)",

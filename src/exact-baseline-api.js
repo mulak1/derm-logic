@@ -919,9 +919,9 @@ function attachExactBaselinePack(app, options = {}) {
 
     store.recordEvent({ eventType: 'checkout_intent', pageUrl: String(req.body?.pageUrl || req.originalUrl || '/'), deviceType, isTest, isCrawler, isOwnerIp, clientIp, meta: { tier: tierName, sku, price_usd: priceUsd, method: req.method, has_referer: hasSameRef, target: rawTarget, vid } });
 
-    const baseUrl = `https://${cfg.domain}`, stripeKey = process.env.STRIPE_SECRET_KEY || '', targetPrefix = rawTarget ? `${rawTarget} — ` : '';
+    const baseUrl = `https://${cfg.domain}`, stripeKey = process.env.STRIPE_SECRET_KEY || '', targetPrefix = rawTarget ? `${rawTarget} · ` : '';
     let checkoutUrl = `https://checkout.stripe.com/c/pay/cs_live_${cfg.moduleId}_${tierName}_${Date.now()}`, sessionId = `cs_live_${cfg.moduleId}_${Date.now()}`;
-    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? 'Instant 15-Brand Campaign & Lookalike Pass ($1 Trial)' : (isFlash ? `${cfg.freeDeliverableName || 'Full 85-Brand Vault & .EML Pack'} ($1.99)` : (isUpgradeFlash ? 'CFO Moneyball Media Plan & Agency Rep Vault ($27.01 — $1.99 Pass Credit Applied)' : (isPlaybook ? 'CFO Moneyball Media Plan & Agency Rep Vault ($29)' : (isPro ? cfg.proLabel : cfg.coreLabel))))}`;
+    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? 'Instant 15-Brand Campaign & Lookalike Pass ($1 Trial)' : (isFlash ? `${cfg.freeDeliverableName || 'Full 85-Brand Vault & .EML Pack'} ($1.99)` : (isUpgradeFlash ? 'CFO Moneyball Media Plan & Agency Rep Vault ($27.01, $1.99 Pass Credit Applied)' : (isPlaybook ? 'CFO Moneyball Media Plan & Agency Rep Vault ($29)' : (isPro ? cfg.proLabel : cfg.coreLabel))))}`;
     const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList}. One-time payment, never renews.`;
 
     const buildInlineParams = () => {

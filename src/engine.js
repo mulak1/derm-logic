@@ -575,7 +575,7 @@ function redactRoutineAnalysisForPreview(result) {
     previewLocked: true,
     conflicts: (result.conflicts || []).map((c) => ({
       ...c,
-      resolution: '[LOCKED IN FREE PREVIEW — Unlock $1.99 Personalized AM/PM + 4-Night Skin-Cycling Calendar (/buy/flash_pass)]',
+      resolution: '[LOCKED IN FREE PREVIEW · Unlock $1.99 Personalized AM/PM + 4-Night Skin-Cycling Calendar (/buy/flash_pass)]',
       waitMinutes: null,
       waitMinutesLocked: 'Locked in Free Preview ($1.99 Ritual Pack)'
     })),
@@ -587,7 +587,7 @@ function redactRoutineAnalysisForPreview(result) {
               ? s
               : {
                   ...s,
-                  title: '[LOCKED IN FREE PREVIEW — Unlock Exact AM Layering Sequence & Wait-Time Buffer ($1.99)]',
+                  title: '[LOCKED IN FREE PREVIEW · Unlock Exact AM Layering Sequence & Wait-Time Buffer ($1.99)]',
                   wait: 'Locked ($1.99)',
                   locked: true
                 }
@@ -598,13 +598,13 @@ function redactRoutineAnalysisForPreview(result) {
                   ...n,
                   steps: [
                     n.steps && n.steps[0] ? n.steps[0] : 'pH 5.5 Cleanser',
-                    '[LOCKED IN FREE PREVIEW — Unlock Exact PM Active & Ceramide Sandwich Order ($1.99)]'
+                    '[LOCKED IN FREE PREVIEW · Unlock Exact PM Active & Ceramide Sandwich Order ($1.99)]'
                   ]
                 }
               : {
                   ...n,
-                  focus: '[LOCKED IN FREE PREVIEW — Unlock 4-Night Skin-Cycling Calendar ($1.99)]',
-                  steps: ['[LOCKED IN FREE PREVIEW — Unlock $1.99 Ritual Pack (/buy/flash_pass)]'],
+                  focus: '[LOCKED IN FREE PREVIEW · Unlock 4-Night Skin-Cycling Calendar ($1.99)]',
+                  steps: ['[LOCKED IN FREE PREVIEW · Unlock $1.99 Ritual Pack (/buy/flash_pass)]'],
                   locked: true
                 }
           )

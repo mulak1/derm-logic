@@ -37,7 +37,7 @@ const CONCERN_HUBS = [
     title: 'Pregnancy-Safe Skincare Routine & Retinol Swaps',
     badge: '100% Retinoid-Free',
     heroImg: '/public/editorial-woman-morning.jpg',
-    summary: 'Gentle, OB-approved swaps for Tretinoin, Retinol, Salicylic Acid peels, and Hydroquinone—using Azelaic Acid 15%, Bakuchiol, Peptides, and Vitamin C.',
+    summary: 'Gentle, OB-approved swaps for Tretinoin, Retinol, Salicylic Acid peels, and Hydroquinone, using Azelaic Acid 15%, Bakuchiol, Peptides, and Vitamin C.',
     steps: [
       '1. Swap nighttime Tretinoin or Retinol for Copper Peptides + Bakuchiol to maintain bounce and firmness.',
       '2. Replace Hydroquinone and strong BHA peels with 15% Azelaic Acid to calm melasma and hormonal breakouts.',
@@ -69,7 +69,7 @@ const CONCERN_HUBS = [
     title: '72-Hour Damaged Skin Barrier Reset (When Water Stings)',
     badge: 'Emergency Barrier Rescue',
     heroImg: '/public/editorial-vanity-shelf.jpg',
-    summary: 'What to put on your face when you over-exfoliated with Glycolic Acid, BHA, and Retinol—and even plain lukewarm water makes your cheeks flush and sting.',
+    summary: 'What to put on your face when you over-exfoliated with Glycolic Acid, BHA, and Retinol, and even plain lukewarm water makes your cheeks flush and sting.',
     steps: [
       '1. Pause all Vitamin C, AHAs, BHAs, Retinoids, and foaming cleansers for 72 hours.',
       '2. Mist clean skin with soothing Hypochlorous Acid or thermal water, followed by Panthenol B5 + Centella.',
@@ -107,7 +107,7 @@ const CONCERN_HUBS = [
       '2. Smooth a pea-sized drop of 15% Azelaic Acid or Centella Asiatica over redness-prone cheeks.',
       '3. Protect daily with sheer mineral Zinc Oxide SPF 46+ (avoid heat-trapping heavy petrolatum slugs).'
     ],
-    avoidNote: 'Avoid heavy overnight petrolatum slugging over rosacea or perioral dermatitis—trapped heat intensifies flushing.',
+    avoidNote: 'Avoid heavy overnight petrolatum slugging over rosacea or perioral dermatitis; trapped heat intensifies flushing.',
     productIds: ['tower28-sos-spray', 'finacea-15-azelaic', 'lrp-cicaplast-baume-b5', 'eltamd-uv-clear-spf46'],
     activeIds: ['hypochlorous-acid', 'azelaic-acid', 'centella-asiatica', 'zinc-oxide'],
     celebSlugs: ['sofia-richie-grainge', 'margot-robbie', 'sabrina-carpenter']
@@ -123,7 +123,7 @@ const CONCERN_HUBS = [
       '2. Evening: Cleanse gently, buffer with ceramide lotion, and apply Tretinoin 0.05% or Adapalene 0.1%.',
       '3. Off-Nights: Give skin 2 recovery nights per week with Panthenol B5 and Snail Mucin.'
     ],
-    avoidNote: 'Never layer leave-on Benzoyl Peroxide cream on top of Tretinoin at bedtime—peroxide oxidizes retinoic acid on contact.',
+    avoidNote: 'Never layer leave-on Benzoyl Peroxide cream on top of Tretinoin at bedtime; peroxide oxidizes retinoic acid on contact.',
     productIds: ['panoxyl-10-bpo-wash', 'rx-tretinoin-005', 'aestura-atobarrier-365', 'eltamd-uv-clear-spf46'],
     activeIds: ['benzoyl-peroxide', 'tretinoin', 'niacinamide', 'ceramide-np'],
     celebSlugs: ['kendall-jenner', 'sydney-sweeney', 'rosie-huntington-whiteley']
@@ -133,13 +133,13 @@ const CONCERN_HUBS = [
     title: 'Post-Flight & Winter Moisture Sandwich (Safe Slugging Guide)',
     badge: 'Overnight Dewy Recovery',
     heroImg: '/public/editorial-vanity-shelf.jpg',
-    summary: 'Restore parched cabin-air or winter-chapped skin overnight using damp-skin humectants, 3:1:1 ceramides, and targeted balm sealing—without chemical burns.',
+    summary: 'Restore parched cabin-air or winter-chapped skin overnight using damp-skin humectants, 3:1:1 ceramides, and targeted balm sealing without chemical burns.',
     steps: [
       '1. Press Hyaluronic Acid, Snail Mucin, and Copper Peptides onto mist-dampened skin.',
       '2. Layer a rich 3:1:1 Ceramide + Cholesterol cream to replenish lost intercellular lipids.',
       '3. Press a whisper-thin veil of Panthenol B5 balm only over dry cheekbones and under-eyes on active-free nights.'
     ],
-    avoidNote: 'Never slug with occlusive balm on top of Glycolic Acid, BHA, or Tretinoin—sealing strong actives in drives irritation 4x deeper.',
+    avoidNote: 'Never slug with occlusive balm on top of Glycolic Acid, BHA, or Tretinoin; sealing strong actives in drives irritation 4x deeper.',
     productIds: ['cosrx-snail-96-mucin', 'to-buffet-copper-peptides', 'dieux-instant-angel', 'lrp-cicaplast-baume-b5'],
     activeIds: ['hyaluronic-acid', 'copper-tripeptide-1', 'ceramide-np', 'panthenol'],
     celebSlugs: ['hailey-bieber', 'emily-ratajkowski', 'anne-hathaway']
@@ -298,7 +298,7 @@ function renderCelebrityIndexPage() {
       ${renderSiloNavStrip('celebrity')}
       <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Iconic Routines: Celebrity Bottles &amp; Morning/Night Layering (${celebs.length} Routines)</h1>
       <p class="hero-sub" style="margin-bottom:18px;">
-        Every serum, barrier cream, and SPF spotted in public vanity tours and beauty interviews—analyzed for pH harmony, morning vs. bedtime timing, and gentle drugstore dupes.
+        Every serum, barrier cream, and SPF spotted in public vanity tours and beauty interviews, analyzed for pH harmony, morning vs. bedtime timing, and gentle drugstore dupes.
       </p>
       <div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 20px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div>
@@ -319,12 +319,12 @@ function renderCelebrityIndexPage() {
 
   return renderShell({
     title: 'Iconic Routines: Celebrity Skincare Bottles & Layering Order (2026) | DermLogic',
-    description: 'Explore verified celebrity skincare routines—Hailey Bieber, Sydney Sweeney, Sofia Richie Grainge, Margot Robbie, Zendaya & more—with exact bottle layering order and dupes.',
+    description: 'Explore verified celebrity skincare routines (Hailey Bieber, Sydney Sweeney, Sofia Richie Grainge, Margot Robbie, Zendaya & more) with exact bottle layering order and dupes.',
     canonicalPath: '/celebrity',
     breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Skincare Library', href: '/directory' }, { label: 'Iconic Routines', href: '/celebrity' }],
     faqItems: [
       { q: 'How does DermLogic verify celebrity skincare shelves?', a: 'We cross-reference public vanity interviews (Vogue Beauty Secrets, Harper’s Bazaar Go To Bed With Me, Into The Gloss) with our 44-bottle INCI & pH database.' },
-      { q: 'Can I load a celebrity routine directly into the Routine Harmony Checker?', a: 'Yes—tap "Load Shelf in Checker" on any celebrity card to test how their bottles interact with your own products.' }
+      { q: 'Can I load a celebrity routine directly into the Routine Harmony Checker?', a: 'Yes, tap "Load Shelf in Checker" on any celebrity card to test how their bottles interact with your own products.' }
     ],
     bodyHtml
   });
@@ -367,7 +367,7 @@ function renderCelebrityDetailPage(celeb) {
               <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:0.8rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Source Credit: ${escapeHtml(celeb.sourcePublication)} (${escapeHtml(celeb.sourceNote)}) &#8599;</a>
             </div>
             <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.8vw,3.3rem);margin-bottom:10px;">${escapeHtml(celeb.name)} Skincare Routine, Bottles &amp; Layering Order</h1>
-            <div class="serif-italic" style="font-size:1.22rem;color:var(--rose-brand);margin-bottom:12px;">${escapeHtml(celeb.moniker)} — ${escapeHtml(celeb.signatureLook)}</div>
+            <div class="serif-italic" style="font-size:1.22rem;color:var(--rose-brand);margin-bottom:12px;">${escapeHtml(celeb.moniker)} · ${escapeHtml(celeb.signatureLook)}</div>
             <p class="hero-sub" style="margin-bottom:18px;">${escapeHtml(celeb.summary)}</p>
             <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
               <a href="${preloadHref}" class="btn-primary"><span>Pre-Load ${escapeHtml(celeb.name)}’s Shelf in Checker</span><span class="btn-icon-circle">&rarr;</span></a>
@@ -386,7 +386,7 @@ function renderCelebrityDetailPage(celeb) {
         </div>
         <div class="hero-photo-col">
           <div class="editorial-photo-shell">
-            <div class="editorial-photo-inner" style="height:390px;max-height:420px;flex:1;">
+            <div class="editorial-photo-inner" style="min-height:390px;height:100%;flex:1;">
               <img src="${escapeHtml(celeb.heroImg)}" alt="Illustrative skincare ritual for ${escapeHtml(celeb.name)} routine commentary" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(celeb.imgPos || '50% 25%')};" />
             </div>
             <div class="editorial-photo-caption">
@@ -629,7 +629,7 @@ function renderBrandIndexPage() {
 
   return renderShell({
     title: 'Skincare Brands Directory: pH, Layering Order & Cult Bottles | DermLogic',
-    description: 'Browse clinical skincare brands—SkinCeuticals, The Ordinary, La Roche-Posay, Aestura, Paula’s Choice, Medik8 & more—by bottle pH and routine compatibility.',
+    description: 'Browse clinical skincare brands (SkinCeuticals, The Ordinary, La Roche-Posay, Aestura, Paula’s Choice, Medik8 & more) by bottle pH and routine compatibility.',
     canonicalPath: '/brand',
     breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Skincare Library', href: '/directory' }, { label: 'Skincare Brands', href: '/brand' }],
     faqItems: [],
@@ -677,7 +677,7 @@ function renderConcernIndexPage() {
     canonicalPath: '/concern',
     breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Skincare Library', href: '/directory' }, { label: 'Skin Concerns', href: '/concern' }],
     faqItems: [],
-    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('concern')}<h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.5rem);margin-bottom:12px;">Skin Concerns &amp; Step-by-Step Routine Protocols</h1><p class="hero-sub" style="margin-bottom:26px;">Targeted routines for real-life vanity emergencies—from concealer pilling at 7:30 AM to over-exfoliated barriers and pregnancy-safe swaps.</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;">${cards}</div></div></section>`
+    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('concern')}<h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.5rem);margin-bottom:12px;">Skin Concerns &amp; Step-by-Step Routine Protocols</h1><p class="hero-sub" style="margin-bottom:26px;">Targeted routines for real-life vanity emergencies, from concealer pilling at 7:30 AM to over-exfoliated barriers and pregnancy-safe swaps.</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;">${cards}</div></div></section>`
   });
 }
 

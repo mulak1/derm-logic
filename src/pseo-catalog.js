@@ -712,7 +712,7 @@ const PRODUCT_SEO_SEEDS = [
     slug: 'malezia-5-urea-moisturizer-fungal-acne-analysis',
     productId: 'malezia-5-urea-moisturizer',
     title: 'Malezia 5% Urea Moisturizer INCI Teardown: 100% Malassezia-Safe Emollient Architecture',
-    conflictHighlights: 'Formulated exclusively with Caprylic/Capric Triglyceride (C8/C10), 5% Urea, Dimethicone, and Hyaluronic Acid—zero C12–C24 fatty acid esters.',
+    conflictHighlights: 'Formulated exclusively with Caprylic/Capric Triglyceride (C8/C10), 5% Urea, Dimethicone, and Hyaluronic Acid, with zero C12–C24 fatty acid esters.',
     companionProductIds: ['nizoral-ketoconazole-1', 'paulas-choice-2-bha', 'skin1004-centella-ampoule']
   },
   {
@@ -792,18 +792,18 @@ function toPlainConsumerPair(item, ingA, ingB) {
   const score = Number(item.compatibilityScore) || 50;
   if (score < 45) {
     return {
-      conflictType: 'Cancels Out Potency & Triggers Redness — Separate Morning & Night',
+      conflictType: 'Cancels Out Potency & Triggers Redness · Separate Morning & Night',
       summary: `Do not layer ${nameA} and ${nameB} at the same time. Applying them back-to-back weakens both formulas and can cause redness, stinging, or flaking. Use one in your morning routine and the other at bedtime.`
     };
   }
   if (score < 78) {
     return {
-      conflictType: 'Can Over-Exfoliate Sensitive Skin — Alternate Nights or Wait',
+      conflictType: 'Can Over-Exfoliate Sensitive Skin · Alternate Nights or Wait',
       summary: `Take care when pairing ${nameA} and ${nameB} in the same routine. Stacking both at once can overwhelm your moisture barrier and trigger dryness or tightness. Alternate nights or wait ${item.waitTimeMinutes >= 60 ? 'until bedtime' : `${item.waitTimeMinutes} minutes`} between layers.`
     };
   }
   return {
-    conflictType: 'Gentle & Hydrating Together — Layer Thinnest to Thickest',
+    conflictType: 'Gentle & Hydrating Together · Layer Thinnest to Thickest',
     summary: `Yes, you can safely layer ${nameA} and ${nameB} in the same skincare routine. Apply the lighter, watery serum first, let it settle for 60 seconds, and smooth the richer formula on top for a calm, hydrated moisture barrier.`
   };
 }
@@ -813,12 +813,12 @@ function toPlainConsumerProduct(item, prod) {
   const ph = prod ? prod.ph : 5.0;
   if (ph <= 3.8) {
     return {
-      conflictType: 'Potent Brightening & Exfoliating Formula — Give 60 Seconds to Absorb',
+      conflictType: 'Potent Brightening & Exfoliating Formula · Give 60 Seconds to Absorb',
       summary: `${label} is a concentrated treatment designed for fast brightening and smoothing. Pat onto clean, dry skin, give it 60 seconds to settle, and avoid layering it in the same routine with Copper Peptides or night Retinoids.`
     };
   }
   return {
-    conflictType: 'Barrier-Friendly Formula — Everyday Morning & Night Guide',
+    conflictType: 'Barrier-Friendly Formula · Everyday Morning & Night Guide',
     summary: `${label} fits smoothly into most daily routines. Check the guide below to see whether to wear it in the morning or at bedtime, how long to wait between layers, and whether it is safe for breakout-prone pores.`
   };
 }
