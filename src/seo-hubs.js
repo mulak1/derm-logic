@@ -282,7 +282,7 @@ function renderCelebrityIndexPage() {
         <a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.45rem;color:var(--text-primary);margin-bottom:4px;">${escapeHtml(c.name)}</a>
         <div class="serif-italic" style="font-size:0.98rem;color:var(--rose-brand);margin-bottom:8px;">${escapeHtml(c.moniker)}</div>
         <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.55;margin-bottom:10px;">${escapeHtml(c.summary)}</p>
-        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.45;padding:8px 10px;background:var(--bg-surface);">
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.42;padding:7px 10px;background:var(--bg-surface);">
           Public Source: <a href="${escapeHtml(c.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(c.sourcePublication)} (${escapeHtml(c.sourceNote)}) &#8599;</a> · Independent analysis; not endorsed or verified by ${escapeHtml(c.name)}.
         </div>
       </div>
@@ -307,9 +307,9 @@ function renderCelebrityIndexPage() {
         </div>
         ${drip.nextQueued ? `<span class="mono" style="font-size:0.8rem;color:var(--text-secondary);">Tomorrow’s Queued Routine: ${escapeHtml(drip.nextQueued.name)} (${drip.remainingCount} in daily queue)</span>` : ''}
       </div>
-      <div id="celebrity-index-editorial-disclosure" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:16px 20px;margin-bottom:24px;gap:6px;">
-        <div class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">Editorial Independence, Non-Endorsement &amp; Source Attribution</div>
-        <p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.55;margin:0;">
+      <div id="celebrity-index-editorial-disclosure" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:12px 16px;margin-bottom:22px;gap:4px;">
+        <div class="mono" style="font-size:11.5px;color:var(--rose-brand);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">Editorial Independence, Non-Endorsement &amp; Source Attribution</div>
+        <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.48;margin:0;">
           <strong>Public Information &amp; Non-Endorsement Notice:</strong> None of the individuals featured below have endorsed, verified, or sponsored DermLogic, this formulation analysis, or any third-party brands and chemist dupes compared here. Each breakdown is compiled strictly from publicly available interviews (<em>Vogue Beauty Secrets</em>, <em>Harper’s Bazaar Go To Bed With Me</em>, <em>Allure</em>) with direct credit and links to the original source article on every routine card and daily update. Photography is illustrative.
         </p>
       </div>
@@ -373,12 +373,12 @@ function renderCelebrityDetailPage(celeb) {
               <a href="${preloadHref}" class="btn-primary"><span>Pre-Load ${escapeHtml(celeb.name)}’s Shelf in Checker</span><span class="btn-icon-circle">&rarr;</span></a>
               <a href="/buy/flash_pass" class="btn-secondary"><span>Save 9:16 Lock-Screen Card ($1.99)</span></a>
             </div>
-            <div id="editorial-source-attribution" style="background:var(--bg-surface);padding:14px 18px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
-                <span class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">Editorial Independence &amp; Source Attribution</span>
-                <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:0.78rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Read Original ${escapeHtml(celeb.sourcePublication)} Feature &#8599;</a>
+            <div id="editorial-source-attribution" style="background:var(--bg-surface);padding:11px 14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
+                <span class="mono" style="font-size:11px;color:var(--rose-brand);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">Editorial Independence &amp; Source Attribution</span>
+                <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:11.5px;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Read Original ${escapeHtml(celeb.sourcePublication)} Feature &#8599;</a>
               </div>
-              <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.52;margin:0;">
+              <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.45;margin:0;">
                 <strong>Non-Endorsement Notice:</strong> ${escapeHtml(celeb.name)} has not endorsed, verified, or sponsored this analysis, nor is ${escapeHtml(celeb.name)} affiliated with DermLogic or supporting any brands or dupes compared here. Compiled from public reporting in <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(celeb.sourceTitle)} (${escapeHtml(celeb.sourcePublication)}) &#8599;</a> for independent educational formulation commentary.
               </p>
             </div>
@@ -592,13 +592,15 @@ function renderBottleDetailPage(prod) {
     </div>
   </section>`;
 
+  const inciCount = String(prod.inciList || '').split(',').filter(Boolean).length;
   return renderShell({
-    title: `${prod.brand} ${prod.name}: Layering Order, pH ${prod.ph}, Clashes & Dupes | DermLogic`,
-    description: `How to layer ${prod.brand} ${prod.name} (pH ${prod.ph}, $${prod.priceUsd}): morning vs. night order, what not to mix, celebrity shelves, and dupes.`,
+    title: `${prod.brand} ${prod.name}: pH ${prod.ph}, Full INCI (${inciCount}), Layering & Dupes | DermLogic`,
+    description: `Verified pH ${prod.ph} & full INCI ingredient list (${inciCount} ingredients) for ${prod.brand} ${prod.name} ($${prod.priceUsd}): AM/PM layering order, what not to mix, and chemist dupes.`,
     canonicalPath: `/bottle/${prod.id}`,
     breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Cult Bottles', href: '/bottle' }, { label: `${prod.brand} ${prod.name}`, href: `/bottle/${prod.id}` }],
     faqItems: [
       { q: `What is the pH of ${prod.brand} ${prod.name}?`, a: `${prod.brand} ${prod.name} is formulated at pH ${prod.ph} with primary actives ${actives.map((a) => a.commonName).join(', ')}.` },
+      { q: `What is the full INCI ingredient list of ${prod.brand} ${prod.name}?`, a: `${prod.brand} ${prod.name} (pH ${prod.ph}, ${inciCount} ingredients) contains: ${prod.inciList}.` },
       { q: `When should I apply ${prod.brand} ${prod.name} in my routine?`, a: `${timingSlot}. ${prod.summary}` }
     ],
     bodyHtml
@@ -661,8 +663,8 @@ function renderIngredientDetailPage(ing) {
   </section>`;
 
   return renderShell({
-    title: `${ing.commonName} (${ing.inciName}): pH ${ing.phMin}–${ing.phMax}, Layering & Bottles | DermLogic`,
-    description: `Complete layering guide for ${ing.commonName}: optimal pH ${ing.phMin}–${ing.phMax}, ${ing.comedogenicity}/5 pore-safety score, compatible bottles, and celebrity routines.`,
+    title: `${ing.commonName} (${ing.inciName}): pH ${ing.phMin}–${ing.phMax}, Comedogenic (${ing.comedogenicity}/5) & Layering | DermLogic`,
+    description: `Can you layer ${ing.commonName} (${ing.inciName})? Verified pH ${ing.phMin}–${ing.phMax}, pore-clogging rating (${ing.comedogenicity}/5), fungal-acne status (${ing.malasseziaTrigger ? 'Trigger' : '100% Safe'}), and ${bottles.length} cult bottles.`,
     canonicalPath: `/ingredient/${ing.id}`,
     breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Active Ingredients', href: '/ingredient' }, { label: ing.commonName, href: `/ingredient/${ing.id}` }],
     faqItems: [
