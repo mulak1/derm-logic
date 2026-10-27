@@ -169,7 +169,7 @@ function findDupeForProduct(prod) {
   const pool = primaryMatch.length > 0 ? primaryMatch : (sameCat.length > 0 ? sameCat : CULT_PRODUCTS.filter((p) => p.id !== prod.id));
   const cheaper = pool.filter((p) => p.priceUsd < prod.priceUsd).sort((a, b) => a.priceUsd - b.priceUsd);
   if (cheaper.length > 0) return { type: 'Budget-Friendly Dupe', bottle: cheaper[0], diffUsd: prod.priceUsd - cheaper[0].priceUsd };
-  const stepUp = pool.sort((a, b) => b.priceUsd - a.priceUsd)[0] || CULT_PRODUCTS[0];
+  const stepUp = [...pool].sort((a, b) => b.priceUsd - a.priceUsd)[0] || CULT_PRODUCTS[0];
   return { type: 'Luxury Counterpart', bottle: stepUp, diffUsd: Math.abs(prod.priceUsd - stepUp.priceUsd) };
 }
 
@@ -235,7 +235,7 @@ function renderShell({ title, description, canonicalPath, breadcrumbs, faqItems,
   <meta property="og:image" content="${baseUrl}/api/og?slug=${encodeURIComponent(canonicalPath.replace(/\//g, '-').slice(1) || 'home')}" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
-  <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })}</script>
+  <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')}</script>
   <script>try{if(localStorage.getItem('dermlogic_vanity_theme')==='night')document.documentElement.setAttribute('data-theme','night');}catch(_){}</script>
   <style>${SHARED_CSS}</style>
 </head>
@@ -969,6 +969,8 @@ function attachSemanticSeoHubs(app, render404Page) {
     res.status(200).json({ ok: true, count: list.length, dailyQueueRemaining: drip.remainingCount, nextQueued: drip.nextQueued ? drip.nextQueued.slug : null, shelves: list });
   });
   app.post('/api/celebrity-shelves/advance-day', (req, res) => {
+    const adminKey = process.env.ADMIN_API_KEY;
+    if (adminKey && req.headers['x-admin-key'] !== adminKey) return res.status(403).json({ ok: false, error: 'Unauthorized' });
     const result = advanceCelebrityShelfByOneDay();
     res.status(200).json({ ok: true, ...result });
   });

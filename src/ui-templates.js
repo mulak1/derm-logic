@@ -305,16 +305,6 @@ function renderFooter() {
         <div class="footer-wordmark">DermLogic</div>
       </div>
     </footer>
-    <!-- Sovrn //Commerce Automated Affiliate Monetization -->
-    <script type="text/javascript">
-      var vglnk = { key: '${process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || 'ea3d7b74c5752fd817f896be27cd1a01'}' };
-      (function(d, t) {
-        if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' || window.location.hostname === '0.0.0.0' || navigator.webdriver) return;
-        var s = d.createElement(t); s.type = 'text/javascript'; s.async = true;
-        s.src = '//cdn.viglink.com/api/vglnk.js';
-        var r = d.getElementsByTagName(t)[0]; r.parentNode.insertBefore(s, r);
-      }(document, 'script'));
-    </script>
   `;
 }
 
@@ -438,7 +428,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
             <div>
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                <span class="mono" style="font-size:0.88rem;font-weight:500;color:var(--text-secondary);">Or load a common bathroom shelf preset:</span>
+                <span class="mono" style="font-size:0.88rem;font-weight:500;color:var(--text-secondary);">Or load a popular serum routine template (auto-splits AM &amp; PM order):</span>
               </div>
               <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">
                 ${presetButtonsHtml}
@@ -492,7 +482,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           <input type="text" name="website_hp" id="checkoutHoneypot" style="display:none !important" tabindex="-1" autocomplete="off" />
           <div style="margin-bottom:10px;">
             <label class="field-label" for="checkoutEmailInput">Email for Instant Ritual Delivery</label>
-            <input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="patient@dermlogic.io" />
+            <input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="reader@dermlogic.io" />
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
             <label class="prod-check-item selected" id="planOption499" onclick="selectCheckoutPlan('onetime_499')">
@@ -530,7 +520,7 @@ function renderSingleConflictCard(c) {
       <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;margin-bottom:10px;">${escapeHtml(cleanMechanism)}</p>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <span class="mono" style="font-size:0.82rem;color:var(--text-muted);">${timingTip}</span>
-        <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Fix &rarr;</a>
+        <a href="/api/affiliate?product=aestura-atobarrier-365&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Fix &rarr;</a>
       </div>
     </div>
   `;
@@ -633,8 +623,12 @@ function renderAnalysisResultHtml(res) {
           </div>
         </div>
 
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:12px;">
+          <div style="padding:10px 12px;background:var(--bg-canvas);border-left:2.5px solid var(--honey-warn);"><div class="mono" style="font-size:0.72rem;color:var(--honey-warn);font-weight:600;margin-bottom:2px;">&#9728; MORNING SERUM ORDER (AM)</div><div style="font-size:0.83rem;color:var(--text-primary);line-height:1.35;">1. Rinse &rarr; 2. <strong>${escapeHtml(amSerum ? fmtProd(amSerum) : 'Vitamin C / Hydrating Serum')}</strong> (wait 60s) &rarr; 3. SPF 50</div></div>
+          <div style="padding:10px 12px;background:#181412;color:#F4EFE8;border-left:2.5px solid #C9A45A;"><div class="mono" style="font-size:0.72rem;color:#E5C67E;font-weight:600;margin-bottom:2px;">&#9790; BEDTIME ROTATION (PM)</div><div style="font-size:0.83rem;color:#F4EFE8;line-height:1.35;">Night 1: <strong>${escapeHtml(pmExfol ? fmtProd(pmExfol) : 'Acid Polish')}</strong> &middot; Night 2: <strong>${escapeHtml(pmRetin ? fmtProd(pmRetin) : pmPept ? fmtProd(pmPept) : 'Retinoid / Peptide')}</strong> &middot; Seal: Ceramide</div></div>
+        </div>
+
         <div id="conflictsListArea">${conflictsHtml}</div>
-        <div id="walletConflicts" style="display:none;"></div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:14px;">
@@ -660,7 +654,7 @@ function renderAnalysisResultHtml(res) {
               </div>
               ${pmStepsHtml}
             </div>
-            <button type="button" class="btn-primary" style="width:100%;font-size:0.86rem;padding:11px 14px;margin-top:10px;background:#C9A45A;color:#0C0A08;white-space:normal;text-align:center;" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass')}else{openCheckoutModal('onetime_499')}">
+            <button type="button" class="btn-primary" style="width:100%;font-size:0.86rem;padding:11px 14px;margin-top:10px;background:#C9A45A;color:#0C0A08;white-space:normal;text-align:center;" onclick="openCheckoutModal('onetime_499')">
               <span>Save Morning &amp; Bedtime Lock-Screen Card ($1.99)</span>
               <span class="btn-icon-circle">&rarr;</span>
             </button>
@@ -887,12 +881,19 @@ const CLIENT_SCRIPT = `
       });
       const res = await resp.json();
       const box = document.getElementById('checkoutSuccessBox');
+      if (!resp.ok || !res || !res.order) {
+        if (box) { box.style.display = 'block'; box.textContent = (res && res.error) || 'Unable to prepare checkout right now. Please try again.'; }
+        return;
+      }
+      const safeOrderId = String(res.order.order_id || '').replace(/[<>"'&]/g, '');
+      const safeMsg = String(res.message || '').replace(/[<>"'&]/g, '');
+      const safeDl = String(res.downloadUrl || '/buy/complete_dossier').replace(/[<>"']/g, '');
       if (box) {
         box.style.display = 'block';
-        box.innerHTML = '<strong>Order ' + res.order.order_id + ' Ready:</strong> ' + res.message + ' <br/><a href="' + (res.downloadUrl || '/buy/complete_dossier') + '" class="mono" style="font-size:0.84rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Proceed to Stripe Checkout / Download (' + res.downloadUrl + ') &rarr;</a>';
+        box.innerHTML = '<strong>Order ' + safeOrderId + ' Ready:</strong> ' + safeMsg + ' <br/><a href="' + safeDl + '" class="mono" style="font-size:0.84rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Proceed to Stripe Checkout / Download (' + safeDl + ') &rarr;</a>';
       }
-      fireMetaCapiEvent('Purchase', res.order.amount_cents / 100, { order_id: res.order.order_id, plan_id: planId });
-      if (!navigator.webdriver && res.downloadUrl && res.downloadUrl.startsWith('https://checkout.stripe.com')) window.location.href = res.downloadUrl;
+      fireMetaCapiEvent('Purchase', (res.order.amount_cents || 499) / 100, { order_id: safeOrderId, plan_id: planId });
+      if (!navigator.webdriver && safeDl.startsWith('https://checkout.stripe.com')) window.location.href = safeDl;
     } catch (e) {
       console.error('Checkout error:', e);
     } finally {
