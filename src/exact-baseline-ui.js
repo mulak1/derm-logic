@@ -70,7 +70,7 @@ function buildExactBaselineStyles(cfg) {
   .eb-locked-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
   .eb-store-pills { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
   .store-preview-pill { padding: 5px 11px; border-radius: ${t.radiusPill}; font-size: 13px; font-weight: 600; background: #FFFFFF; color: ${t.textSecondary}; border: none; }
-  .store-preview-pill.active { background: ${t.brandPrimary}; color: #FFFFFF; }
+  .store-preview-pill.active, .eb-manifest-pill.active, #preset-chips .preset-chip.active { background: ${t.brandPrimary} !important; color: #FFFFFF !important; font-weight: 700 !important; }
   #inline-aisle-peek-drawer { display: block; font-size: 16px; padding: 10px 14px; border-radius: ${t.radiusCard}; background: #FFFFFF; color: ${t.textPrimary}; border: none; line-height: 1.55; }
   #lead-squeeze-card { background: ${t.subtleBg}; border: none; border-radius: ${t.radiusCard}; padding: 10px 12px; }
   #prog-instant-action-strip { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
@@ -438,13 +438,13 @@ function buildClientRuntimeScript(cfg) {
       if (hdr) hdr.textContent = CFG.moduleId === 'derm_logic' ? ('Personalized Morning & Bedtime Routine Kit (' + q + ')') : (PERSONA.curTitle + ' for ' + q);
       if (badgeEl && !customBadge && data && data.kpis && data.kpis[0]) badgeEl.textContent = CFG.moduleId === 'derm_logic' ? ('Routine Check: ' + data.kpis[0] + ' · Protects $165 Serums') : ('Estimated Impact: ' + data.kpis[0]);
       if (qRd && data && data.kpis) { qRd.style.display = 'inline-flex'; qRd.style.alignItems = 'center'; qRd.style.justifyContent = 'space-between'; qRd.style.gap = '8px'; qRd.innerHTML = '<span>' + q.slice(0, 22).replace(/[<>"']/g, '') + ': ' + data.kpis.slice(0, 2).join(' · ') + '</span><button type="button" onclick="var c=document.getElementById(\\\'radar-results-container\\\')||document.getElementById(\\\'eb-deliverable-curtain\\\');if(c&&c.scrollIntoView)c.scrollIntoView({behavior:\\\'smooth\\\',block:\\\'start\\\'});" style="padding:4px 10px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;border:none;font-size:13px;font-weight:700;cursor:pointer;">View Live Table ↓</button>'; }
-      var pills = document.getElementById('eb-manifest-pills-left') || document.getElementById('eb-zod-manifest-pills');
-      if (pills && CFG.deliverableFiles) pills.innerHTML = CFG.deliverableFiles.map(function(f, idx) { var lbl = f.label || f.file; return '<span class="eb-manifest-pill" data-file="' + f.file + '" onclick="window.__ebSelectManifestFile(' + idx + ', this)" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;padding:7px 14px;border-radius:' + CFG.theme.radiusPill + ';background:' + (idx === 0 ? CFG.theme.brandSoftBg : CFG.theme.subtleBg) + ';color:' + (idx === 0 ? CFG.theme.brandPrimary : CFG.theme.textPrimary) + ';"><span>' + lbl + '</span></span>'; }).join('');
+      var pills = document.getElementById('eb-manifest-pills-left') || document.getElementById('eb-zod-manifest-pills'), actTab = window.__ebActiveTabIdx || 0;
+      if (pills && CFG.deliverableFiles) pills.innerHTML = CFG.deliverableFiles.map(function(f, idx) { var lbl = f.label || f.file, act = idx === actTab; return '<span class="eb-manifest-pill' + (act ? ' active' : '') + '" data-file="' + f.file + '" aria-selected="' + (act ? 'true' : 'false') + '" onclick="window.__ebSelectManifestFile(' + idx + ', this)" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:' + (act ? '700' : '600') + ';padding:7px 14px;border-radius:' + CFG.theme.radiusPill + ';background:' + (act ? CFG.theme.brandPrimary : CFG.theme.subtleBg) + ';color:' + (act ? '#FFFFFF' : CFG.theme.textPrimary) + ';"><span>' + lbl + '</span></span>'; }).join('');
       var pre = document.getElementById('eb-prism-proof-preview');
       if (pre && data) {
         pre.setAttribute('data-demo-open', '0');
         var incList = (CFG.deliverableFiles || []).map(function(f) { return f.label || f.file; }).join(' · ');
-        pre.textContent = CFG.moduleId === 'derm_logic' ? window.__ebGetDermCtx(0).preview : ((customDiagLine || CFG.remDiff.beforeLine) + '\\n\\n' + CFG.remDiff.afterLine + '\\n\\nIncluded in your $1.99 pack for ' + q + ': ' + incList + '.');
+        pre.textContent = CFG.moduleId === 'derm_logic' ? window.__ebGetDermCtx(actTab).preview : (actTab > 0 && CFG.deliverableFiles && CFG.deliverableFiles[actTab] ? ('Selected File: ' + (CFG.deliverableFiles[actTab].label || CFG.deliverableFiles[actTab].file) + '\\nWhat is inside: ' + (CFG.deliverableFiles[actTab].schema || 'Ready-to-use file') + '.\\n\\n' + CFG.remDiff.afterLine + '\\n\\nIncluded in the $1.99 pack for ' + q + ' (or download this single file for 99¢).') : ((customDiagLine || CFG.remDiff.beforeLine) + '\\n\\n' + CFG.remDiff.afterLine + '\\n\\nIncluded in your $1.99 pack for ' + q + ': ' + incList + '.'));
         window.__ebLastCurtainPreview = pre.textContent;
       }
       var btn = document.getElementById('btn-curtain-flash-pass'), pcBtn = document.getElementById('btn-postcalc-flash-pass');
@@ -570,16 +570,17 @@ function buildClientRuntimeScript(cfg) {
     var curtainLossHook = isDerm && dermCtx ? dermCtx.hook : PERSONA.lossHook;
     if (existingCurtain) {
       var prevBox = document.getElementById('eb-prism-proof-preview');
-      if (prevBox) { prevBox.setAttribute('data-demo-open', '0'); prevBox.textContent = fullInitPreview; window.__ebLastCurtainPreview = prevBox.textContent; }
+      if (prevBox && !(window.__ebActiveTabIdx > 0)) { prevBox.setAttribute('data-demo-open', '0'); prevBox.textContent = fullInitPreview; window.__ebLastCurtainPreview = prevBox.textContent; }
       var hdrSpan = document.getElementById('eb-curtain-title-span'), rBadge = document.getElementById('eb-curtain-roi-badge'), lHook = document.getElementById('eb-curtain-loss-hook'), cBtn = document.getElementById('btn-curtain-flash-pass'), pcBtn = document.getElementById('btn-postcalc-flash-pass');
       if (hdrSpan) hdrSpan.textContent = curtainHdrText;
       if (rBadge) rBadge.textContent = curtainBadgeText;
       if (lHook) lHook.textContent = curtainLossHook;
       if (cBtn) cBtn.textContent = isDerm ? 'Save Complete Routine Kit ($1.99) →' : 'Get All 3 Files ($1.99) →';
       if (pcBtn && window.__ebUserInteracted && window.__ebActiveEntity) pcBtn.textContent = isDerm ? 'Save Complete Routine Kit ($1.99) →' : ('Get ' + window.__ebActiveEntity.slice(0, 14) + ' Pack ($1.99) →');
+      if (window.__ebActiveTabIdx > 0) window.__ebSelectManifestFile(window.__ebActiveTabIdx);
       return;
     }
-    var filesHtml = (CFG.deliverableFiles || []).map(function(f, idx) { var tabTitle = f.label || f.file; return '<span class="eb-manifest-pill" data-file="' + f.file + '" onclick="window.__ebSelectManifestFile(' + idx + ', this)" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;padding:7px 14px;border-radius:' + CFG.theme.radiusPill + ';background:' + (idx === 0 ? CFG.theme.brandSoftBg : CFG.theme.subtleBg) + ';color:' + (idx === 0 ? CFG.theme.brandPrimary : CFG.theme.textPrimary) + ';"><span>' + tabTitle + '</span></span>'; }).join('');
+    var filesHtml = (CFG.deliverableFiles || []).map(function(f, idx) { var tabTitle = f.label || f.file, act = idx === (window.__ebActiveTabIdx || 0); return '<span class="eb-manifest-pill' + (act ? ' active' : '') + '" data-file="' + f.file + '" aria-selected="' + (act ? 'true' : 'false') + '" onclick="window.__ebSelectManifestFile(' + idx + ', this)" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:' + (act ? '700' : '600') + ';padding:7px 14px;border-radius:' + CFG.theme.radiusPill + ';background:' + (act ? CFG.theme.brandPrimary : CFG.theme.subtleBg) + ';color:' + (act ? '#FFFFFF' : CFG.theme.textPrimary) + ';"><span>' + tabTitle + '</span></span>'; }).join('');
     var chipsHtml = (CFG.presets || []).map(function(p) { return '<button type="button" class="eb-curtain-preset-chip" onclick="window.__ebCompileCustomCurtain(\\\'' + p.key + '\\\')" style="padding:4px 9px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.subtleBg + ';color:' + CFG.theme.textSecondary + ';font-size:13px;font-weight:600;cursor:pointer;border:none;">' + p.label + '</button>'; }).join('');
     var domChipsHtml = ['@gmail.com', '@icloud.com', '@outlook.com'].map(function(d) { return '<button type="button" class="eb-domain-chip" onclick="window.__ebFillEmailDomain(\\\'eb-inline-scorecard-email\\\', \\\'' + d + '\\\', \\\'eb-save-scorecard-bar\\\')">' + d + '</button>'; }).join('');
     var footerNote = isDerm ? 'Tap any tab above to preview how your selected bottles are scheduled' : 'Click any file tab above to see what is inside each download', demoBtnText = 'Preview a sample file';
@@ -652,8 +653,11 @@ function buildClientRuntimeScript(cfg) {
     var allPills = document.querySelectorAll('#eb-zod-manifest-pills .eb-manifest-pill');
     for (var p = 0; p < allPills.length; p++) {
       var active = p === idx;
-      allPills[p].style.background = active ? CFG.theme.brandSoftBg : CFG.theme.subtleBg;
-      allPills[p].style.color = active ? CFG.theme.brandPrimary : CFG.theme.textPrimary;
+      allPills[p].classList.toggle('active', active);
+      allPills[p].setAttribute('aria-selected', active ? 'true' : 'false');
+      allPills[p].style.background = active ? CFG.theme.brandPrimary : CFG.theme.subtleBg;
+      allPills[p].style.color = active ? '#FFFFFF' : CFG.theme.textPrimary;
+      allPills[p].style.fontWeight = active ? '700' : '600';
     }
     var fTitle = f.label || f.file;
     var dPill = document.getElementById('eb-dossier-format-pill');
@@ -916,8 +920,7 @@ function buildClientRuntimeScript(cfg) {
     if (!confirmed && (cBar || pBar)) {
       window.__ebPendingTier = cleanTier;
       ['eb-cmdk-modal', 'eb-floating-gate-popover', 'eb-ouibounce-toast'].forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
-      var pre = document.getElementById('eb-prism-proof-preview'), pBtn = document.getElementById('btn-peek-sample-demo'), cBtn = document.getElementById('btn-confirm-purchase-stripe'), cTitle = document.getElementById('eb-buy-preview-title'), cSub = document.getElementById('eb-buy-preview-sub'), pBox = document.getElementById('eb-pricing-preview-box'), pTitle = document.getElementById('eb-pricing-preview-title'), pConfirmBtn = document.getElementById('btn-pricing-confirm-stripe');
-      if (pre && pre.getAttribute('data-demo-open') !== '1') window.__ebToggleSampleDemo(pBtn);
+      var pre = document.getElementById('eb-prism-proof-preview'), cBtn = document.getElementById('btn-confirm-purchase-stripe'), cTitle = document.getElementById('eb-buy-preview-title'), cSub = document.getElementById('eb-buy-preview-sub'), pBox = document.getElementById('eb-pricing-preview-box'), pTitle = document.getElementById('eb-pricing-preview-title'), pConfirmBtn = document.getElementById('btn-pricing-confirm-stripe');
       if (pre) pre.setAttribute('data-buy-preview-active', '1');
       var priceLbl = cleanTier === 'micro_pass' ? '99¢' : (cleanTier === 'complete_dossier' ? ('$' + CFG.corePriceUsd) : (cleanTier === 'pro_b2b' ? ('$' + CFG.proPriceUsd) : '$1.99'));
       var itemLbl = cleanTier === 'micro_pass' ? PERSONA.microBtn.split(' (')[0] : (cleanTier === 'complete_dossier' ? (CFG.coreLabel || PERSONA.dossierTag).split(' (')[0] : (cleanTier === 'pro_b2b' ? 'Pro Suite' : PERSONA.dossierTag));
@@ -926,7 +929,7 @@ function buildClientRuntimeScript(cfg) {
       if (cSub) cSub.textContent = 'Review the live sample preview above, then click Confirm Purchase to complete checkout via Apple Pay or card.';
       if (cBtn) cBtn.textContent = 'Confirm Purchase (' + priceLbl + ') →';
       if (cBar) cBar.style.display = 'flex';
-      if (pBox) pBox.textContent = (pre && pre.textContent) ? pre.textContent : ('Sample Preview — ' + itemLbl + ' (' + priceLbl + '): ' + ((CFG.deliverableFiles || []).map(function(f){ return f.label || f.file; }).join(' · ') || CFG.deliverableName));
+      if (pBox) pBox.textContent = (pre && pre.textContent) ? pre.textContent : ('Sample Preview · ' + itemLbl + ' (' + priceLbl + '): ' + ((CFG.deliverableFiles || []).map(function(f){ return f.label || f.file; }).join(' · ') || CFG.deliverableName));
       if (pTitle) pTitle.textContent = stepTxt;
       if (pConfirmBtn) pConfirmBtn.textContent = 'Confirm Purchase (' + priceLbl + ') →';
       if (pBar) pBar.style.display = 'block';

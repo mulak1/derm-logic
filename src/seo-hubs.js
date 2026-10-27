@@ -330,6 +330,47 @@ function renderCelebrityIndexPage() {
   });
 }
 
+const CELEB_STEP_BOTTLES = {
+  'hailey-bieber': { am: ['Rhode Glazing Mist + Thermal Water', 'The Ordinary Multi-Peptide + Copper Peptides 1%', 'Aestura Atobarrier 365 + EltaMD UV Clear SPF 46'], pm: ['Rhode Pineapple Refresh Cleanser', 'The Ordinary Multi-Peptide + Copper Peptides 1%', 'Aestura Atobarrier 365 + La Roche-Posay Cicaplast Baume B5+'] },
+  'sydney-sweeney': { am: ['La Roche-Posay Toleriane Cleanser', 'SkinCeuticals C E Ferulic 15% Vitamin C', 'COSRX Snail 96 Mucin + Beauty of Joseon Relief Sun SPF 50'], pm: ['Caudalie Vinoclean Cleansing Oil', 'COSRX Advanced Snail 96 Mucin Essence', 'Aestura Atobarrier 365 Cream'] },
+  'sofia-richie-grainge': { am: ['Vanicream Gentle Facial Cleanser', 'Tower 28 SOS Daily Rescue Facial Spray', 'La Roche-Posay Cicaplast Baume B5+ + EltaMD UV Clear SPF 46'], pm: ['Vanicream Gentle Facial Cleanser', 'Finacea 15% Azelaic Acid Foam', 'La Roche-Posay Cicaplast Baume B5+'] },
+  'emily-ratajkowski': { am: ['Bioderma Sensibio H2O Micellar Water', 'COSRX Advanced Snail 96 Mucin Essence', 'Beauty of Joseon Relief Sun SPF 50+'], pm: ['Bioderma Sensibio H2O Micellar Water', 'Biologique Recherche Lotion P50 1970', 'COSRX Snail 96 Mucin + La Roche-Posay Cicaplast Baume B5+'] },
+  'sabrina-carpenter': { am: ['Vanicream Gentle Facial Cleanser', 'Anua Heartleaf 77% Soothing Toner', 'CeraVe PM Lotion + EltaMD UV Clear SPF 46'], pm: ['Bioderma Sensibio H2O + Paula’s Choice 2% BHA', 'Anua Heartleaf 77% Soothing Toner', 'CeraVe PM Facial Moisturizing Lotion'] },
+  'madison-beer': { am: ['PanOxyl 10% Benzoyl Peroxide Foaming Wash', 'Anua Heartleaf 77% Soothing Toner', 'Aestura Atobarrier 365 + EltaMD UV Clear SPF 46'], pm: ['Vanicream Gentle Facial Cleanser', 'Differin Adapalene Gel 0.1%', 'Aestura Atobarrier 365 Hydro Cera-HA Cream'] },
+  'zendaya': { am: ['Bioderma Sensibio H2O Micellar Water', 'Anua Heartleaf 77% Soothing Toner', 'CeraVe PM Lotion + EltaMD UV Clear SPF 46'], pm: ['Bioderma Sensibio H2O Micellar Water', 'CeraVe PM Facial Moisturizing Lotion', 'La Roche-Posay Cicaplast Baume B5+'] },
+  'margot-robbie': { am: ['La Prairie Foam Cleanser + Caudalie Elixir', 'SkinCeuticals C E Ferulic 15% Vitamin C', 'Dieux Instant Angel + Beauty of Joseon Relief Sun SPF 50'], pm: ['Bioderma Sensibio H2O Micellar Water', 'Paula’s Choice 2% BHA Liquid Exfoliant', 'Dieux Skin Instant Angel Lipid Rich Moisturizer'] },
+  'selena-gomez': { am: ['Vanicream Gentle Facial Cleanser', 'Sunday Riley Good Genes Lactic Acid + COSRX Snail 96', 'Aestura Atobarrier 365 + Beauty of Joseon SPF 50'], pm: ['Bioderma Sensibio H2O Micellar Water', 'COSRX Advanced Snail 96 Mucin Power Essence', 'Aestura Atobarrier 365 Hydro Cera-HA Cream'] },
+  'anne-hathaway': { am: ['Cetaphil Gentle Skin Cleanser', 'SkinCeuticals C E Ferulic 15% Vitamin C', 'Beauty of Joseon Relief Sun Rice + Probiotics SPF 50'], pm: ['Cetaphil Gentle Skin Cleanser', 'Medik8 Crystal Retinal 6 / The Ordinary Copper Peptides 1%', 'Dieux Skin Instant Angel Barrier Cream'] },
+  'kendall-jenner': { am: ['Vanicream Gentle Facial Cleanser', 'CeraVe PM Facial Moisturizing Lotion', 'EltaMD UV Clear Broad-Spectrum SPF 46'], pm: ['Vanicream Gentle Facial Cleanser', 'Rx Tretinoin 0.05% Cream', 'Malezia 5% Urea Moisturizer'] },
+  'rosie-huntington-whiteley': { am: ['Bioderma Sensibio H2O + Caudalie Beauty Elixir', 'Malezia 5% Urea Moisturizer + Pure Squalane', 'EltaMD UV Clear Broad-Spectrum SPF 46'], pm: ['Bioderma Sensibio H2O + iS Clinical Cleansing Complex', 'Biologique Recherche Lotion P50 1970', 'Dieux Skin Instant Angel Lipid Rich Moisturizer'] }
+};
+
+function formatStepWithBottle(stepStr, idx, isPm, bottles, celeb) {
+  const cleanBase = String(stepStr || '').replace(/\s*\((?:Wait[^)]*|[^)]*Week|No Acids[^)]*|Press[^)]*|Buffered|Alternating)\)/gi, (m) => m);
+  const mapped = CELEB_STEP_BOTTLES[celeb.slug] && CELEB_STEP_BOTTLES[celeb.slug][isPm ? 'pm' : 'am'] && CELEB_STEP_BOTTLES[celeb.slug][isPm ? 'pm' : 'am'][idx];
+  const fallbackBottle = !isPm
+    ? (idx === 0 ? (bottles.find((b) => /wash|cleans|mist|toner/i.test(b.category + ' ' + b.name)) || bottles[0]) : idx === 1 ? (bottles.find((b) => /serum|essence|toner|acid/i.test(b.category + ' ' + b.name)) || bottles[1] || bottles[0]) : (bottles.find((b) => /spf|sun|moistur|cream/i.test(b.category + ' ' + b.name)) || bottles[bottles.length - 1]))
+    : (idx === 0 ? (bottles.find((b) => /wash|cleans|toner/i.test(b.category + ' ' + b.name)) || bottles[0]) : idx === 1 ? (bottles.find((b) => /retin|acid|peptid|bha|p50|acne/i.test(b.category + ' ' + b.name)) || bottles[0]) : (bottles.find((b) => /cream|moistur|baume|angel|atobarrier|lotion/i.test(b.category + ' ' + b.name)) || bottles[bottles.length - 1]));
+  const bottleLabel = mapped || (fallbackBottle ? `${fallbackBottle.brand} ${fallbackBottle.name.replace(/\s*\([^)]*\)/g, '')}` : '');
+  if (!bottleLabel) return cleanBase;
+  const stripped = cleanBase.replace(/\s*\((?:SkinCeuticals[^)]+|PanOxyl[^)]+|5%\s*Niacinamide)\)/gi, '').trim();
+  return `${stripped} (${bottleLabel})`;
+}
+
+function renderBottleVesselSvg(b) {
+  const cat = ((b.category || '') + ' ' + (b.name || '')).toLowerCase();
+  if (/toner|exfoli|p50|bha|glycolic|mist|spray|essence|snail|micellar/.test(cat)) {
+    return `<svg aria-hidden="true" width="46" height="52" viewBox="0 0 46 52" fill="none"><ellipse cx="23" cy="47" rx="13" ry="2.5" fill="#A46B1D" fill-opacity="0.14"/><rect x="18" y="6" width="10" height="7" rx="1.5" fill="#E9E2D7" stroke="#7D5116" stroke-width="1.3"/><path d="M16 13H30L33 19V43C33 44.6 31.7 46 30 46H16C14.3 46 13 44.6 13 43V19L16 13Z" fill="#FAF6F0" stroke="#7D5116" stroke-width="1.35"/><path d="M14 25H32V43C32 44 31 45 30 45H16C15 45 14 44 14 43V25Z" fill="#F3EAD8" fill-opacity="0.85"/><rect x="16" y="23" width="14" height="14" fill="#FFFFFF" stroke="#7D5116" stroke-opacity="0.5" stroke-width="0.9"/><line x1="19" y1="28" x2="27" y2="28" stroke="#7D5116" stroke-width="1.1"/><line x1="20" y1="32" x2="26" y2="32" stroke="#7D5116" stroke-opacity="0.65" stroke-width="0.9"/></svg>`;
+  }
+  if (/spf|sun|uv|tretinoin|adapalene|differin|finacea|wash|panoxyl|effaclar/.test(cat)) {
+    return `<svg aria-hidden="true" width="46" height="52" viewBox="0 0 46 52" fill="none"><ellipse cx="23" cy="47" rx="13" ry="2.5" fill="#264C3C" fill-opacity="0.14"/><path d="M12 9H34L31 37H15L12 9Z" fill="#FAF6F0" stroke="#264C3C" stroke-width="1.35" stroke-linejoin="round"/><line x1="12" y1="12.5" x2="34" y2="12.5" stroke="#264C3C" stroke-width="1.1"/><rect x="15" y="18" width="16" height="12" fill="#E4EDE8" stroke="#264C3C" stroke-opacity="0.45" stroke-width="0.9"/><line x1="18" y1="22" x2="28" y2="22" stroke="#264C3C" stroke-width="1.1"/><line x1="19" y1="26" x2="27" y2="26" stroke="#264C3C" stroke-opacity="0.65" stroke-width="0.9"/><rect x="18" y="37" width="10" height="8" rx="1.5" fill="#E9E2D7" stroke="#264C3C" stroke-width="1.3"/></svg>`;
+  }
+  if (/cream|moistur|baume|angel|atobarrier|urea|lotion/.test(cat)) {
+    return `<svg aria-hidden="true" width="46" height="52" viewBox="0 0 46 52" fill="none"><ellipse cx="23" cy="46" rx="16" ry="3" fill="#7A2332" fill-opacity="0.12"/><path d="M13 18C16 13 21 11 24 14C27 11 31 13 33 18" stroke="#7A2332" stroke-opacity="0.55" stroke-width="1.3" stroke-linecap="round"/><rect x="9" y="17" width="28" height="6" rx="2" fill="#E9E2D7" stroke="#7A2332" stroke-width="1.3"/><rect x="7" y="23" width="32" height="21" rx="4" fill="#FAF6F0" stroke="#7A2332" stroke-width="1.35"/><rect x="12" y="28" width="22" height="10" fill="#EFE5E7" stroke="#7A2332" stroke-opacity="0.45" stroke-width="0.9"/><line x1="16" y1="32" x2="30" y2="32" stroke="#7A2332" stroke-width="1.1"/><line x1="18" y1="35" x2="28" y2="35" stroke="#7A2332" stroke-opacity="0.6" stroke-width="0.9"/></svg>`;
+  }
+  return `<svg aria-hidden="true" width="46" height="52" viewBox="0 0 46 52" fill="none"><ellipse cx="23" cy="47" rx="13" ry="2.5" fill="#7A2332" fill-opacity="0.14"/><path d="M20 9C20 6.8 21.3 5 23 5C24.7 5 26 6.8 26 9V13H20V9Z" fill="#7A2332" fill-opacity="0.22" stroke="#7A2332" stroke-width="1.25"/><rect x="17" y="13" width="12" height="4" rx="1" fill="#E9E2D7" stroke="#7A2332" stroke-width="1.25"/><path d="M16 17H30L33 23V43C33 44.7 31.7 46 30 46H16C14.3 46 13 44.7 13 43V23L16 17Z" fill="#FAF6F0" stroke="#7A2332" stroke-width="1.35"/><rect x="16" y="25" width="14" height="14" fill="#EFE5E7" stroke="#7A2332" stroke-opacity="0.5" stroke-width="0.9"/><line x1="23" y1="17" x2="23" y2="25" stroke="#7A2332" stroke-opacity="0.45" stroke-width="1.1"/><line x1="19" y1="30" x2="27" y2="30" stroke="#7A2332" stroke-width="1.1"/><line x1="20" y1="34" x2="26" y2="34" stroke="#7A2332" stroke-opacity="0.65" stroke-width="0.9"/></svg>`;
+}
+
 function renderCelebrityDetailPage(celeb) {
   const preloadHref = `/?products=${encodeURIComponent(celeb.productIds.join(','))}#analyzer`;
   const bottles = celeb.productIds.map((id) => CULT_PRODUCTS.find((p) => p.id === id)).filter(Boolean);
@@ -338,7 +379,7 @@ function renderCelebrityDetailPage(celeb) {
 
   const bottleCards = bottles.map((b) => {
     const partner = b.priceUsd >= 50 ? 'dermstore' : 'sephora';
-    return `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
+    return `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;position:relative;">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
           <a href="/brand/${slugifyBrand(b.brand)}" class="mono" style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(b.brand)}</a>
@@ -347,9 +388,12 @@ function renderCelebrityDetailPage(celeb) {
         <a href="/bottle/${escapeHtml(b.id)}" class="serif-display" style="display:block;font-size:1.22rem;color:var(--text-primary);margin-bottom:6px;">${escapeHtml(b.name)}</a>
         <p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(b.summary)}</p>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:6px;">
-        <a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">Bottle Breakdown &rarr;</a>
-        <a href="/api/affiliate?product=${escapeHtml(b.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ($${b.priceUsd}) &rarr;</a>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-top:6px;">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:7px;">
+          <a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">Bottle Breakdown &rarr;</a>
+          <a href="/api/affiliate?product=${escapeHtml(b.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ($${b.priceUsd}) &rarr;</a>
+        </div>
+        <div style="width:54px;height:60px;background:var(--bg-oat);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="${escapeHtml(b.brand)} ${escapeHtml(b.name)}">${renderBottleVesselSvg(b)}</div>
       </div>
     </div>`;
   }).join('');
@@ -400,7 +444,7 @@ function renderCelebrityDetailPage(celeb) {
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:28px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:44px;">
         <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;position:relative;overflow:hidden;">
           <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:112px;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse 68% 95% at 80% 10%, rgba(214,152,58,0.28) 0%, rgba(232,190,118,0.12) 52%, transparent 82%),linear-gradient(90deg, rgba(255,248,234,0.5) 0%, rgba(222,168,84,0.22) 100%);-webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 55%, transparent 100%);mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 55%, transparent 100%);">
             <svg width="100%" height="112" viewBox="0 0 640 112" preserveAspectRatio="xMidYMin slice" fill="none">
@@ -428,7 +472,7 @@ function renderCelebrityDetailPage(celeb) {
             <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;">Morning Layering Sequence</h2>
           </div>
           <div style="position:relative;z-index:1;">
-            ${celeb.amSteps.map((s) => `<div style="padding:13px 16px;background:var(--bg-surface);border-left:2.5px solid rgba(164,107,29,0.45);margin-bottom:9px;"><strong style="display:block;font-size:0.93rem;margin-bottom:3px;">${escapeHtml(s.step)}</strong><span style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
+            ${celeb.amSteps.map((s, idx) => `<div style="padding:13px 16px;background:var(--bg-surface);border-left:2.5px solid rgba(164,107,29,0.45);margin-bottom:9px;"><strong style="display:block;font-size:0.93rem;margin-bottom:3px;">${escapeHtml(formatStepWithBottle(s.step, idx, false, bottles, celeb))}</strong><span style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
           </div>
         </div>
         <div class="porcelain-vessel-core" style="background:#181412;color:#F4EFE8;padding:26px 28px;position:relative;overflow:hidden;">
@@ -461,28 +505,68 @@ function renderCelebrityDetailPage(celeb) {
             <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;color:#F4EFE8;">Evening Recovery Sequence</h2>
           </div>
           <div style="position:relative;z-index:1;">
-            ${celeb.pmSteps.map((s) => `<div style="padding:13px 16px;background:rgba(244,239,232,0.08);border-left:2.5px solid rgba(201,164,90,0.5);margin-bottom:9px;"><strong style="display:block;font-size:0.93rem;margin-bottom:3px;color:#F4EFE8;">${escapeHtml(s.step)}</strong><span style="font-size:0.86rem;color:#B5ACA3;line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
+            ${celeb.pmSteps.map((s, idx) => `<div style="padding:13px 16px;background:rgba(244,239,232,0.08);border-left:2.5px solid rgba(201,164,90,0.5);margin-bottom:9px;"><strong style="display:block;font-size:0.93rem;margin-bottom:3px;color:#F4EFE8;">${escapeHtml(formatStepWithBottle(s.step, idx, true, bottles, celeb))}</strong><span style="font-size:0.86rem;color:#B5ACA3;line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
           </div>
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:32px;">
-        <div class="porcelain-vessel-core" style="background:var(--berry-bg);padding:22px 24px;">
-          <span class="badge-clash mono" style="margin-bottom:8px;display:inline-block;">Critical Layering Rule</span>
-          <h3 class="serif-display" style="font-size:1.3rem;margin-bottom:8px;">What Never to Mix on ${escapeHtml(celeb.name)}’s Shelf</h3>
-          <p style="font-size:0.92rem;color:var(--text-primary);line-height:1.58;">${escapeHtml(celeb.clashWarning)}</p>
+      <h2 class="serif-display" style="font-size:1.75rem;margin-bottom:16px;">Bottles on ${escapeHtml(celeb.name)}’s Vanity Shelf</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-bottom:44px;">${bottleCards}</div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:44px;">
+        <div class="porcelain-vessel-core" style="background:linear-gradient(155deg,#FAF2F3 0%,#F5E6E8 100%);padding:26px 28px;position:relative;overflow:hidden;border:1px solid rgba(139,38,53,0.18);">
+          <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:96px;pointer-events:none;background:radial-gradient(ellipse 65% 90% at 84% 12%,rgba(139,38,53,0.14) 0%,transparent 75%);">
+            <svg width="100%" height="96" viewBox="0 0 560 96" preserveAspectRatio="xMaxYMin slice" fill="none">
+              <circle cx="486" cy="34" r="24" stroke="#8B2635" stroke-opacity="0.22" stroke-width="1.2" stroke-dasharray="3 4"/>
+              <circle cx="458" cy="46" r="20" stroke="#8B2635" stroke-opacity="0.18" stroke-width="1.1"/>
+              <path d="M466 30L478 50M478 30L466 50" stroke="#8B2635" stroke-opacity="0.34" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;position:relative;z-index:1;">
+            <span class="badge-clash mono" style="display:inline-flex;align-items:center;gap:6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Critical Layering Rule
+            </span>
+            <span class="mono" style="font-size:0.72rem;color:var(--berry-clash);letter-spacing:0.06em;text-transform:uppercase;">· pH Barrier Guardrail</span>
+          </div>
+          <h3 class="serif-display" style="font-size:1.38rem;margin:0 0 12px;position:relative;z-index:1;">What Never to Mix on ${escapeHtml(celeb.name)}’s Shelf</h3>
+          <div style="background:rgba(255,255,255,0.72);border-left:3px solid var(--berry-clash);border-radius:10px;padding:14px 16px;margin-bottom:14px;position:relative;z-index:1;">
+            <p style="font-size:0.91rem;color:var(--text-primary);line-height:1.6;margin:0;">${escapeHtml(celeb.clashWarning)}</p>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;color:var(--text-secondary);position:relative;z-index:1;">
+            <span class="mono">Wait Window: 15 to 20 mins or Alternate PM</span>
+            <a href="${preloadHref}" class="mono" style="color:var(--berry-clash);font-weight:600;text-decoration:none;">Test Shelf Harmony &rarr;</a>
+          </div>
         </div>
-        <div class="porcelain-vessel-core" style="background:var(--sage-bg);padding:22px 24px;">
-          <span class="badge-safe mono" style="margin-bottom:8px;display:inline-block;">Chemist Dupe Comparison</span>
-          <h3 class="serif-display" style="font-size:1.3rem;margin-bottom:8px;">Luxury Shelf vs. Barrier-Identical Swap</h3>
-          <div style="font-size:0.88rem;margin-bottom:6px;"><strong>Luxury Original:</strong> ${escapeHtml(celeb.dupeSwap.luxury)}</div>
-          <div style="font-size:0.88rem;margin-bottom:6px;"><strong>Chemist Dupe:</strong> ${escapeHtml(celeb.dupeSwap.gentleDupe)}</div>
-          <div class="mono" style="font-size:0.82rem;color:var(--sage-safe);font-weight:500;">${escapeHtml(celeb.dupeSwap.savingsNote)}</div>
+        <div class="porcelain-vessel-core" style="background:linear-gradient(155deg,#F2F6F3 0%,#E5EFE8 100%);padding:26px 28px;position:relative;overflow:hidden;border:1px solid rgba(46,90,68,0.18);">
+          <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:96px;pointer-events:none;background:radial-gradient(ellipse 65% 90% at 84% 12%,rgba(46,90,68,0.14) 0%,transparent 75%);">
+            <svg width="100%" height="96" viewBox="0 0 560 96" preserveAspectRatio="xMaxYMin slice" fill="none">
+              <rect x="448" y="18" width="22" height="36" rx="5" stroke="#2E5A44" stroke-opacity="0.22" stroke-width="1.2"/>
+              <rect x="486" y="18" width="22" height="36" rx="5" stroke="#2E5A44" stroke-opacity="0.32" stroke-width="1.2" fill="#2E5A44" fill-opacity="0.08"/>
+              <path d="M474 36H482" stroke="#2E5A44" stroke-opacity="0.4" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;position:relative;z-index:1;">
+            <span class="badge-safe mono" style="display:inline-flex;align-items:center;gap:6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Chemist Dupe Comparison
+            </span>
+            <span class="mono" style="font-size:0.72rem;color:var(--sage-safe);letter-spacing:0.06em;text-transform:uppercase;">· INCI Match Audit</span>
+          </div>
+          <h3 class="serif-display" style="font-size:1.38rem;margin:0 0 12px;position:relative;z-index:1;">Luxury Shelf vs. Barrier-Identical Swap</h3>
+          <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:12px;position:relative;z-index:1;">
+            <div style="background:rgba(255,255,255,0.62);border:1px solid rgba(28,25,23,0.08);border-radius:10px;padding:10px 13px;">
+              <span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:2px;">Luxury Original</span>
+              <strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.luxury)}</strong>
+            </div>
+            <div style="background:rgba(255,255,255,0.86);border:1px solid rgba(46,90,68,0.26);border-left:3px solid var(--sage-safe);border-radius:10px;padding:10px 13px;">
+              <span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--sage-safe);margin-bottom:2px;">Chemist Barrier-Identical Swap</span>
+              <strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong>
+            </div>
+          </div>
+          <div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;background:rgba(46,90,68,0.09);padding:7px 11px;border-radius:999px;display:inline-block;position:relative;z-index:1;">${escapeHtml(celeb.dupeSwap.savingsNote)}</div>
         </div>
       </div>
-
-      <h2 class="serif-display" style="font-size:1.75rem;margin-bottom:14px;">Bottles on ${escapeHtml(celeb.name)}’s Vanity Shelf</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px;">${bottleCards}</div>
 
       <h2 class="serif-display" style="font-size:1.55rem;margin-bottom:12px;">Key Active Ingredients in This Routine</h2>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px;">${activePills}</div>
