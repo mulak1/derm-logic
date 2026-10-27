@@ -419,7 +419,9 @@ const ROUTINE_IMAGE_GALLERY = [
 
 function getDailyDripInfo() {
   const customPath = path.join(__dirname, '..', 'data', 'celebrity_routines_custom.json');
-  const poolPath = path.join(__dirname, '..', 'data', 'celebrity_routines_pool.json');
+  const poolPath = fs.existsSync(path.join(__dirname, 'celebrity-routines-pool.json'))
+    ? path.join(__dirname, 'celebrity-routines-pool.json')
+    : path.join(__dirname, '..', 'data', 'celebrity_routines_pool.json');
   let custom = [];
   let pool = [];
   try { if (fs.existsSync(customPath)) custom = JSON.parse(fs.readFileSync(customPath, 'utf8')); } catch (_) {}
@@ -456,7 +458,9 @@ function getDailyDripInfo() {
 
 function advanceCelebrityShelfByOneDay() {
   const customPath = path.join(__dirname, '..', 'data', 'celebrity_routines_custom.json');
-  const poolPath = path.join(__dirname, '..', 'data', 'celebrity_routines_pool.json');
+  const poolPath = fs.existsSync(path.join(__dirname, 'celebrity-routines-pool.json'))
+    ? path.join(__dirname, 'celebrity-routines-pool.json')
+    : path.join(__dirname, '..', 'data', 'celebrity_routines_pool.json');
   let custom = [];
   let pool = [];
   try { if (fs.existsSync(customPath)) custom = JSON.parse(fs.readFileSync(customPath, 'utf8')); } catch (_) {}
