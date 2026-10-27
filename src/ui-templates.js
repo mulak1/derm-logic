@@ -1,9 +1,4 @@
-/**
- * DermLogic (#4): Taste-Skill v2.1.5 Combined Day/Night Editorial Gallery & Nocturnal Apothecary UI
- * - Day Mode (`:root`): Warm Silk & Bisque Editorial Gallery (#F4EFE8 ground, #E9E2D7 stone, #181412 ink, #7A2332 Rose-Burgundy action)
- * - Night Mode (`body.vanity-night`): 3000K Nocturnal Apothecary Plinth (#0C0A08 ground, #181512 stone, #F5F1EB ink, #C9A45A Champagne Gold action)
- * - Typography: Newsreader optical serif (weights 300/400/500) + tabular-nums for all metrics/prices/pH values.
- */
+const { CULT_PRODUCTS } = require('./clinical-data');
 
 function escapeHtml(str) {
   if (str == null) return '';
@@ -105,7 +100,7 @@ const SHARED_CSS = `
 
   /* Header: Editorial Gallery & Nocturnal Vanity Switcher */
   .site-header { background: var(--bg-canvas); position: sticky; top: 0; z-index: 40; transition: background-color 320ms var(--ease-spring); }
-  .nav-inner { min-height: 70px; padding: 12px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: nowrap; }
+  .nav-inner { min-height: 70px; padding-top: 12px; padding-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: nowrap; }
   .brand-logo-link { display: inline-flex; align-items: center; gap: 8px; font-size: 1.24rem; font-weight: 400; letter-spacing: -0.02em; color: var(--text-primary); text-decoration: none; white-space: nowrap; transition: opacity 180ms ease-out; }
   .brand-logo-link:hover { opacity: 0.78; }
   .nav-links { display: flex; align-items: center; gap: 16px; font-size: 0.92rem; font-weight: 400; color: var(--text-secondary); flex-wrap: nowrap; }
@@ -237,24 +232,12 @@ const SHARED_CSS = `
 `;
 
 function renderHeader(hideNav = false) {
+  const lightPill = `<div class="vanity-light-pill" id="vanityLightToggle" role="group" aria-label="Ambient Lighting Mode" title="Switch between bright daylight and warm evening lighting">
+    <button type="button" class="vanity-light-btn active" data-theme-mode="day" aria-pressed="true" onclick="setAtelierVanityLight('day', this)">&#9728; Daylight</button>
+    <button type="button" class="vanity-light-btn" data-theme-mode="night" aria-pressed="false" onclick="setAtelierVanityLight('night', this)">&#9790; Night Mode</button>
+  </div>`;
   if (hideNav) {
-    return `
-      <header class="site-header">
-        <div class="container nav-inner">
-          <a href="/" class="brand-logo-link" aria-label="DermLogic Home">
-            ${BRAND_LOGO_SVG}
-            <span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span>
-          </a>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div class="vanity-light-pill" id="vanityLightToggle" role="group" aria-label="Day and Night Vanity Mode">
-              <button type="button" class="vanity-light-btn active" data-theme-mode="day" aria-pressed="true" onclick="setAtelierVanityLight('day', this)">Daylight Gallery</button>
-              <button type="button" class="vanity-light-btn" data-theme-mode="night" aria-pressed="false" onclick="setAtelierVanityLight('night', this)">11 PM Vanity</button>
-            </div>
-            <a href="/#analyzer" class="btn-primary"><span>Check My Shelf</span><span class="btn-icon-circle">&rarr;</span></a>
-          </div>
-        </div>
-      </header>
-    `;
+    return `<header class="site-header"><div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span></a><div style="display:flex;align-items:center;gap:10px;">${lightPill}<a href="/#analyzer" class="btn-primary"><span>Check My Shelf</span><span class="btn-icon-circle">&rarr;</span></a></div></div></header>`;
   }
   return `
     <header class="site-header">
@@ -270,12 +253,9 @@ function renderHeader(hideNav = false) {
           <a href="/directory">Layering Guides</a>
         </nav>
         <div style="display:flex;align-items:center;gap:10px;">
-          <div class="vanity-light-pill" id="vanityLightToggle" role="group" aria-label="Day and Night Vanity Mode">
-            <button type="button" class="vanity-light-btn active" data-theme-mode="day" onclick="setAtelierVanityLight('day', this)">Daylight Gallery</button>
-            <button type="button" class="vanity-light-btn" data-theme-mode="night" onclick="setAtelierVanityLight('night', this)">11 PM Vanity</button>
-          </div>
-          <a href="/buy/micro_pass?source=nav_cta" class="btn-primary" style="padding:9px 14px;font-size:0.88rem;">
-            <span>Save Routine ($1.99)</span>
+          ${lightPill}
+          <a href="/#analyzer" class="btn-primary" style="padding:9px 14px;font-size:0.88rem;">
+            <span>Check My Shelf</span>
             <span class="btn-icon-circle">&rarr;</span>
           </a>
         </div>
@@ -303,7 +283,7 @@ function renderFooter() {
           <div style="max-width:52ch;">
             <a href="/" class="brand-logo-link" aria-label="DermLogic Home" style="margin-bottom:8px;color:var(--ink-on-deep);">
               ${BRAND_LOGO_SVG}
-              <span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);">Formulation Atelier</span></span>
+              <span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:#E8C6B0;">Formulation Atelier</span></span>
             </a>
             <p style="color:#B5ACA3;font-size:0.9rem;">
               Cosmetic-chemist verified pH windows, peptide &amp; Vitamin C compatibility, pore-safety, and four-night skin-cycling rituals. Reader-supported formulation lab: verified links to Sephora &amp; Dermstore may earn an affiliate commission.
@@ -402,12 +382,11 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
   const creamCount = products.filter((p) => getTexGroup(p) === 'cream_retinol').length;
   const productCheckboxesHtml = products.map((prod) => {
     const isChecked = selectedSet.has(prod.id);
-    const partner = prod.priceUsd >= 50 ? 'Dermstore' : 'Sephora';
-    const partnerSlug = partner.toLowerCase();
     const texGroup = getTexGroup(prod);
     const roleTag = categoryLabelMap[prod.category] || 'Daily Skincare';
     const cleanProdName = shortNameMap[prod.id] || String(prod.name || '').replace(/\s*\([^)]*\)/g, '');
     const searchBlob = (prod.brand + ' ' + prod.name + ' ' + (prod.category || '') + ' ' + (prod.inciList || '') + ' ' + (prod.summary || '')).toLowerCase();
+    const fitHint = /Retinoid/i.test(prod.category) ? 'Night-Only Active' : /Exfoliating|Acne/i.test(prod.category) ? 'Night 1 Polish' : /Antioxidant|Brightening/i.test(prod.category) ? 'Morning Glow Safe' : /Sunscreen/i.test(prod.category) ? 'Zero-Pilling SPF' : /Peptide|Hydrating/i.test(prod.category) ? '0/5 Pore-Safe' : 'Ceramide Barrier Seal';
     return `<label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}" data-search="${escapeHtml(searchBlob)}">
         <input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" />
         <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
@@ -416,7 +395,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             <strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:1.02rem;font-weight:400;line-height:1.2;margin-bottom:4px;">${escapeHtml(cleanProdName)}</strong>
             <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${roleTag} · $${prod.priceUsd}</span>
           </span>
-          <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partnerSlug}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-micro-link mono" style="margin-top:auto;" onclick="event.stopPropagation()">Shop at ${partner} &rarr;</a>
+          <span class="mono" style="font-size:0.73rem;color:var(--text-secondary);margin-top:auto;">pH ${prod.ph} · ${fitHint}</span>
         </span>
       </label>`;
   }).join('') + `<div id="shelfEmptyState" style="display:none;grid-column:1/-1;padding:16px;background:var(--bg-canvas);font-size:0.88rem;color:var(--text-secondary);text-align:center;">No bottle matched that search. <button type="button" class="btn-secondary" style="padding:5px 12px;min-height:30px;font-size:0.82rem;margin-left:6px;" onclick="const q=document.getElementById('productFilterInput').value;const ta=document.getElementById('rawInciTextarea');if(ta&&q){ta.value=q;runRoutineAnalysis();}">Check as Ingredient Below &rarr;</button></div>`;
@@ -429,7 +408,10 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           <div style="flex:1;display:flex;flex-direction:column;min-height:0;gap:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
               <span class="mono" style="font-size:0.9rem;color:var(--rose-brand);font-weight:500;">Bathroom Vanity Shelf Builder</span>
-              <span class="badge-safe mono" id="shelfCountBadge">${products.length} Popular Bottles</span>
+              <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 9px;font-size:0.74rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-weight:500;" onclick="clearRoutineSelection()">Clear ${selectedSet.size} Demo Bottles &times;</button>
+                <span class="badge-safe mono" id="shelfCountBadge">${products.length} Popular Bottles</span>
+              </div>
             </div>
 
             <div id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Texture">
@@ -588,39 +570,42 @@ function renderAnalysisResultHtml(res) {
         </details>
       ` : ''));
 
-  const amFallbacks = [
-    'Gentle Morning Cleanse on Damp Skin',
-    'Vitamin C or Hydrating Serum Layer (Wait 60s)',
-    'Barrier Moisturizer & Broad-Spectrum SPF 50'
+  const matchedProds = (res.matchedProductIds || []).map((id) => CULT_PRODUCTS.find((p) => p.id === id)).filter(Boolean);
+  const fmtProd = (p) => p ? `${p.brand} ${String(p.name || '').replace(/\s*\([^)]*\)/g, '')}` : '';
+  const isHarshActive = (p) => /tretinoin|retinal|retinol|adapalene|differin|bha|glycolic|lactic|p50|babyfacial|exfoli|bpo|effaclar/i.test((p.category || '') + ' ' + p.name);
+  const amCleanse = matchedProds.find((p) => /cleanse|wash|micellar|mist|spray/i.test((p.category || '') + ' ' + p.name));
+  const amSerum = matchedProds.find((p) => /vitamin c|ferulic|ceo|melano|niacinamide|snail|hyalu|azelaic|faded/i.test((p.category || '') + ' ' + p.name)) || matchedProds.find((p) => !isHarshActive(p));
+  const amShield = matchedProds.find((p) => !isHarshActive(p) && /spf|sun|uv|moistur|barrier|baume|angel|atobarrier|urea|lipid|cicaplast/i.test((p.category || '') + ' ' + p.name));
+  const pmExfol = matchedProds.find((p) => /bha|glycolic|lactic|p50|babyfacial|exfoli|bpo|effaclar/i.test((p.category || '') + ' ' + p.name));
+  const pmRetin = matchedProds.find((p) => /tretinoin|retinal|retinol|adapalene|differin/i.test((p.category || '') + ' ' + p.name));
+  const pmPept = matchedProds.find((p) => /copper|peptide|buffet|snail|hyalu/i.test((p.category || '') + ' ' + p.name));
+  const pmCream = matchedProds.find((p) => !isHarshActive(p) && /moistur|barrier|baume|angel|atobarrier|urea|lipid|cicaplast/i.test((p.category || '') + ' ' + p.name));
+
+  const amDynamicSteps = [
+    `Gentle Morning Cleanse (${amCleanse ? fmtProd(amCleanse) : 'Lukewarm Water or Micellar Rinse'})`,
+    `Morning Antioxidant & Hydration (${amSerum ? fmtProd(amSerum) : 'Vitamin C or Hydrating Serum'})`,
+    `Barrier Seal & Sun Protection (${amShield ? fmtProd(amShield) : 'Ceramide Cream + Broad-Spectrum SPF 50'})`
   ];
-  const amStepsHtml = (res.schedule.amSteps || []).slice(0, 3).map((s, idx) => {
-    const rawStep = String(s.title || '').replace(/^pH\s*[\d.]+\s*/i, '');
-    const cleanStepTitle = rawStep.includes('[LOCKED') ? amFallbacks[idx] || amFallbacks[1] : rawStep;
-    return `
+  const amStepsHtml = amDynamicSteps.map((stepTitle, idx) => `
     <div style="padding:9px 12px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;">
       <div style="min-width:0;font-size:0.88rem;line-height:1.38;">
-        <strong style="color:var(--text-primary);">${idx + 1}. ${escapeHtml(cleanStepTitle)}</strong>
+        <strong style="color:var(--text-primary);">${idx + 1}. ${escapeHtml(stepTitle)}</strong>
       </div>
       <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? 'Apply First' : idx === 1 ? 'Wait 60s' : 'Morning SPF'}</span>
-    </div>`;
-  }).join('');
+    </div>`).join('');
 
-  const pmFallbacks = [
-    'Gentle Evening Cleanse & Damp-Skin Prep',
-    'Targeted Night Active (Exfoliant or Retinoid)',
-    'Peptide Serum & Ceramide Barrier Cushion'
+  const pmDynamicSteps = [
+    `Evening Cleanse & Night 1 Exfoliation (${pmExfol ? fmtProd(pmExfol) : 'Gentle Cleanser + Acid Toner Night 1'})`,
+    `Night 2 Retinoid or Peptide Renewal (${pmRetin ? fmtProd(pmRetin) : pmPept ? fmtProd(pmPept) : 'Pea-Sized Retinoid or Peptide Serum'})`,
+    `Nights 3 & 4 Ceramide Barrier Cushion (${pmCream ? fmtProd(pmCream) : '3:1:1 Ceramide Recovery Cream'})`
   ];
-  const pmStepsHtml = (res.schedule.pmCycling || []).slice(0, 3).map((n, idx) => {
-    const rawNight = String((n.steps && (n.steps[idx] || n.steps[0])) || '').replace(/^pH\s*[\d.]+\s*/i, '');
-    const cleanNightStep = (!rawNight || rawNight.includes('[LOCKED')) ? pmFallbacks[idx] || pmFallbacks[2] : rawNight;
-    return `
+  const pmStepsHtml = pmDynamicSteps.map((nightStep, idx) => `
     <div style="padding:9px 12px;background:rgba(244,239,232,0.08);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;">
       <div style="min-width:0;font-size:0.88rem;line-height:1.38;color:#F4EFE8;">
-        <strong>${idx + 1}. ${escapeHtml(cleanNightStep)}</strong>
+        <strong>${idx + 1}. ${escapeHtml(nightStep)}</strong>
       </div>
-      <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:#7A2332;color:#F4EFE8;font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? 'Apply First' : idx === 1 ? 'Alternate Nights' : 'Barrier Seal'}</span>
-    </div>`;
-  }).join('');
+      <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:#7A2332;color:#F4EFE8;font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? 'Night 1 Polish' : idx === 1 ? 'Night 2 Renew' : 'Every Night Seal'}</span>
+    </div>`).join('');
 
   return `
     <div class="porcelain-vessel-core" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
@@ -683,10 +668,10 @@ function renderAnalysisResultHtml(res) {
         </div>
 
         <div style="padding:14px 16px;background:var(--bg-canvas);display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-          <div><div class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;">Night 1 · Polish</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Gentle Exfoliant</div></div>
-          <div><div class="mono" style="font-size:0.76rem;color:var(--honey-warn);font-weight:500;">Night 2 · Renew</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Retinol / Tretinoin</div></div>
-          <div><div class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:500;">Night 3 · Soothe</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Peptide Serum</div></div>
-          <div><div class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:500;">Night 4 · Cushion</div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;">Ceramide Cream</div></div>
+          <div><div class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;">Night 1 · Polish</div><div style="font-size:0.82rem;color:var(--text-primary);margin-top:2px;">${escapeHtml(pmExfol ? fmtProd(pmExfol) : 'Gentle Exfoliant')}</div></div>
+          <div><div class="mono" style="font-size:0.76rem;color:var(--honey-warn);font-weight:500;">Night 2 · Renew</div><div style="font-size:0.82rem;color:var(--text-primary);margin-top:2px;">${escapeHtml(pmRetin ? fmtProd(pmRetin) : 'Retinol / Tretinoin')}</div></div>
+          <div><div class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:500;">Night 3 · Soothe</div><div style="font-size:0.82rem;color:var(--text-primary);margin-top:2px;">${escapeHtml(pmPept ? fmtProd(pmPept) : 'Peptide Serum')}</div></div>
+          <div><div class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:500;">Night 4 · Cushion</div><div style="font-size:0.82rem;color:var(--text-primary);margin-top:2px;">${escapeHtml(pmCream ? fmtProd(pmCream) : 'Ceramide Cream')}</div></div>
         </div>
       </div>
     </div>
@@ -822,6 +807,8 @@ const CLIENT_SCRIPT = `
   }
   async function runRoutineAnalysis(presetSlug) {
     const checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map((cb) => cb.value);
+    const clrBtn = document.getElementById('topClearShelfBtn');
+    if (clrBtn) { clrBtn.style.display = checked.length ? 'inline-block' : 'none'; clrBtn.innerHTML = 'Clear ' + checked.length + ' Selected &times;'; }
     const skinType = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
     const rawInciText = (document.getElementById('rawInciTextarea') || {}).value || '';
     try {
@@ -935,8 +922,8 @@ const CLIENT_SCRIPT = `
   }
   function setHeroRitualMode(mode, btn) {
     const map = {
-      am: { img1: '/public/editorial-woman-morning.jpg', img2: '/public/editorial-dossier.jpg', title: '7:30 AM · Morning Shield & Zero-Pilling Prep', sub: 'Vitamin C (Wait 60s) -> Hydrating Serum -> Barrier Cream -> Broad-Spectrum SPF 50', badge: 'Morning Glow Order', badgeClass: 'badge-safe mono' },
-      pm: { img1: '/public/editorial-woman-evening.jpg', img2: '/public/editorial-vanity-shelf.jpg', title: '9:30 PM · Bedtime Renewal & Ceramide Cushion', sub: 'Oil-to-Milk Cleanse -> Dry-Skin Retinoid or Peptide -> 3:1:1 Ceramide Barrier Seal', badge: 'Bedtime Recovery', badgeClass: 'badge-safe mono' },
+      am: { img1: '/public/editorial-woman-morning.jpg', img2: '/public/editorial-dossier.jpg', title: '7:30 AM · Morning Shield & Zero-Pilling Prep', sub: 'Vitamin C (Wait 60s) · Hydrating Serum · Barrier Cream · Broad-Spectrum SPF 50', badge: 'Morning Glow Order', badgeClass: 'badge-safe mono' },
+      pm: { img1: '/public/editorial-woman-evening.jpg', img2: '/public/editorial-vanity-shelf.jpg', title: '9:30 PM · Bedtime Renewal & Ceramide Cushion', sub: 'Oil-to-Milk Cleanse · Dry-Skin Retinoid or Peptide · 3:1:1 Ceramide Barrier Seal', badge: 'Bedtime Recovery', badgeClass: 'badge-safe mono' },
       clash: { img1: '/public/editorial-dossier.jpg', img2: '/public/editorial-vanity-shelf.jpg', title: 'Why $182 Serums Cancel on Contact', sub: 'Pure Vitamin C (pH 3.2) + Copper Peptides or Retinol + Benzoyl Peroxide deactivate each other', badge: 'Separate AM & PM', badgeClass: 'badge-clash mono' }
     };
     const cfg = map[mode] || map.am, tEl = document.getElementById('heroDiptychTitle'), sEl = document.getElementById('heroDiptychSub'), bEl = document.getElementById('heroDiptychBadge'), i1 = document.getElementById('heroDiptychImg1'), i2 = document.getElementById('heroDiptychImg2');

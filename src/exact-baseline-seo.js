@@ -384,12 +384,18 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
   });
 
   // 3. ekalinin/sitemap.js Segmented & Image-Enriched XML Sitemaps (strictly canonical 200 OK HTML URLs)
+  const getSemanticHubUrls = () => {
+    try { const sh = require(path.join(srcDir, 'seo-hubs.js')); if (typeof sh.getAllSemanticHubUrls === 'function') return sh.getAllSemanticHubUrls(hostUrl); } catch (_) {}
+    return [];
+  };
   const buildSitemapXml = (entries, includeStatic = true) => {
     const g = getGrowthConfig(cfg.moduleId);
+    const hubUrls = includeStatic ? getSemanticHubUrls() : [];
     const growthUrls = includeStatic ? [
       ...g.tools.map((t) => ({ loc: `${hostUrl}/tools/${escXml(t.slug)}`, priority: '0.9', changefreq: 'weekly', img: `${hostUrl}/api/og/scorecard?target=${encodeURIComponent(t.target)}`, title: t.title })),
       ...g.comparisons.map((c) => ({ loc: `${hostUrl}/compare/${escXml(c.slug)}`, priority: '0.9', changefreq: 'weekly', img: `${hostUrl}/api/og/scorecard?target=${encodeURIComponent(c.target)}`, title: c.title })),
-      ...loadPublicScanLedger(cfg).slice(0, 16).map((s) => ({ loc: `${hostUrl}/scan/${escXml(encodeURIComponent(s.target))}`, priority: '0.85', changefreq: 'daily', img: `${hostUrl}/api/badge/cnn/${encodeURIComponent(s.target)}.svg`, title: `${s.target}: ${cfg.brandName} Audit (${s.grade})` }))
+      ...loadPublicScanLedger(cfg).slice(0, 16).map((s) => ({ loc: `${hostUrl}/scan/${escXml(encodeURIComponent(s.target))}`, priority: '0.85', changefreq: 'daily', img: `${hostUrl}/api/badge/cnn/${encodeURIComponent(s.target)}.svg`, title: `${s.target}: ${cfg.brandName} Audit (${s.grade})` })),
+      ...hubUrls
     ] : [];
     const staticUrls = includeStatic ? [
       { loc: `${hostUrl}/`, priority: '1.0', changefreq: 'daily', img: `${hostUrl}/api/og?slug=home`, title: `${cfg.brandName}: Official Workbench` },
@@ -433,46 +439,23 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
   app.get(['/api/oembed', '/.well-known/oembed.json'], (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     const targetUrl = String(req.query.url || `${hostUrl}/`);
-    res.json({
-      version: '1.0',
-      type: 'rich',
-      provider_name: cfg.brandName,
-      provider_url: hostUrl,
-      title: `${cfg.brandName}: ${cfg.explainerText.slice(0, 90)}`,
-      author_name: `${cfg.brandName} Research`,
-      author_url: hostUrl,
-      thumbnail_url: `${hostUrl}/api/og?slug=home`,
-      thumbnail_width: 1200,
-      thumbnail_height: 630,
-      width: 800,
-      height: 450,
-      target_url: targetUrl,
-      html: `<iframe src="${hostUrl}/embed" width="800" height="450" style="border:1px solid #E2E8F0;border-radius:12px;" loading="lazy" title="${escHtml(cfg.brandName)}"></iframe>`
-    });
+    res.json({ version: '1.0', type: 'rich', provider_name: cfg.brandName, provider_url: hostUrl, title: `${cfg.brandName}: ${cfg.explainerText.slice(0, 90)}`, author_name: `${cfg.brandName} Research`, author_url: hostUrl, thumbnail_url: `${hostUrl}/api/og?slug=home`, thumbnail_width: 1200, thumbnail_height: 630, width: 800, height: 450, target_url: targetUrl, html: `<iframe src="${hostUrl}/embed" width="800" height="450" style="border:1px solid #E2E8F0;border-radius:12px;" loading="lazy" title="${escHtml(cfg.brandName)}"></iframe>` });
   });
 
   app.get('/manifest.webmanifest', (req, res) => {
-    res.status(200).type('application/manifest+json; charset=utf-8').json({
-      name: cfg.brandName,
-      short_name: cfg.brandName,
-      description: cfg.explainerText,
-      start_url: '/',
-      display: 'browser',
-      background_color: cfg.theme.canvasBg,
-      theme_color: cfg.theme.brandPrimary,
-      icons: [{ src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' }]
-    });
+    res.status(200).type('application/manifest+json; charset=utf-8').json({ name: cfg.brandName, short_name: cfg.brandName, description: cfg.explainerText, start_url: '/', display: 'browser', background_color: cfg.theme.canvasBg, theme_color: cfg.theme.brandPrimary, icons: [{ src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' }] });
   });
 
-  // 5. Multi-Engine IndexNow Full 86+ URL Batch Push + WebSub Hub Ping & SEO Status API
+  // 5. Multi-Engine IndexNow Full URL Batch Push + WebSub Hub Ping & SEO Status API
   const getFullCanonicalUrlList = () => {
-    const entries = getEntries(), scanItems = loadPublicScanLedger(cfg).slice(0, 16);
+    const entries = getEntries(), scanItems = loadPublicScanLedger(cfg).slice(0, 16), hubUrls = getSemanticHubUrls();
     return [
       `${hostUrl}/`, `${hostUrl}/directory`, `${hostUrl}/leaderboard`, `${hostUrl}/leaderboard.md`, `${hostUrl}/lp`,
       `${hostUrl}/llms.txt`, `${hostUrl}/llms-full.txt`, `${hostUrl}/index.md`,
       `${hostUrl}/sitemap-index.xml`, `${hostUrl}/sitemap.xml`, `${hostUrl}/sitemap-scans.xml`, `${hostUrl}/feed.xml`,
       ...scanItems.map((s) => `${hostUrl}/scan/${encodeURIComponent(s.target)}`),
       ...getAllGrowthUrls(cfg),
+      ...hubUrls.map((u) => u.loc),
       ...entries.map((e) => `${hostUrl}/seo/${e.slug}`),
       ...entries.slice(0, 20).map((e) => `${hostUrl}/seo/${e.slug}.md`)
     ];
@@ -808,46 +791,65 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
 }
 
 function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
-  const t = cfg.theme;
+  const t = cfg.theme, isDerm = cfg.moduleId === 'derm_logic';
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const top3 = ledger.filter((s) => s.score >= 85).slice(0, 3);
   const fix2 = ledger.filter((s) => s.score < 80).slice(0, 2);
-  const medals = [
+  const dermTitleMap = {
+    'VitC-AM-Peptides-PM': 'Vitamin C in the Morning + Copper Peptides at Bedtime',
+    'Ceramide-Tretinoin-Buffer': 'Ceramide Cream Buffer + Nighttime Tretinoin 0.05%',
+    'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5% Calming Pair',
+    'VitC+Cu': 'Vitamin C + Copper Peptides Same-Night',
+    'Tret+BPO': 'Tretinoin + Benzoyl Peroxide Same-Night'
+  };
+  const dermSubMap = {
+    'VitC-AM-Peptides-PM': 'SkinCeuticals C E Ferulic AM · Copper Peptides PM · Safe Under SPF',
+    'Ceramide-Tretinoin-Buffer': 'Aestura 3:1:1 Ceramide Cushion · Stops Retinoid Peeling Around Mouth',
+    'Azelaic15-Niacinamide5': 'Everyday Rosacea & Blemish Safe · Zero Pore-Clogging Oils'
+  };
+  const medals = isDerm ? [
+    { icon: '#1 GOLD STANDARD', bg: '#FAF6F0', border: '#D5CCC0', text: '#7A2332' },
+    { icon: '#2 BARRIER FAVORITE', bg: '#FAF6F0', border: '#D5CCC0', text: '#264C3C' },
+    { icon: '#3 REDNESS & PORE SAFE', bg: '#FAF6F0', border: '#D5CCC0', text: '#7D5116' }
+  ] : [
     { icon: '#1 LEADER', bg: '#FFFBEB', border: '#FDE68A', text: '#92400E' },
     { icon: '#2 RUNNER-UP', bg: '#F8FAFC', border: '#CBD5E1', text: '#334155' },
     { icon: '#3 TOP TIER', bg: '#FFF7ED', border: '#FED7AA', text: '#9A3412' }
   ];
   const podiumCards = top3.map((s, i) => {
     const m = medals[i] || medals[2];
-    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px;border-radius:12px;background:${t.subtleBg};text-decoration:none;color:${t.textPrimary};">
+    const cardTitle = isDerm ? (dermTitleMap[s.target] || s.target) : s.target;
+    const cardSub = isDerm ? (dermSubMap[s.target] || `${s.kpi1} · ${s.kpi2}`) : `${s.kpi1} · ${s.kpi2}`;
+    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px;border-radius:${t.radiusCard};background:${t.subtleBg};text-decoration:none;color:${t.textPrimary};">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
-          <span style="padding:3px 9px;border-radius:999px;background:${m.bg};color:${m.text};font-size:13px;font-weight:800;">${m.icon}</span>
-          <span style="padding:3px 10px;border-radius:999px;background:${t.safeSoftBg};color:${t.safeColor};font-family:${t.fontSans};font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:800;">Grade ${escHtml(s.grade)} · ${s.score}/100</span>
+          <span style="padding:3px 9px;border-radius:${t.radiusPill};background:${m.bg};color:${m.text};font-size:12px;font-weight:700;letter-spacing:0.02em;">${m.icon}</span>
+          <span style="padding:3px 10px;border-radius:${t.radiusPill};background:${t.safeSoftBg};color:${t.safeColor};font-family:${t.fontSans};font-variant-numeric:tabular-nums;font-size:13px;font-weight:700;">${isDerm ? `${s.score}/100 Harmony` : `Grade ${escHtml(s.grade)} · ${s.score}/100`}</span>
         </div>
-        <div style="font-size:17px;font-weight:800;color:${t.textPrimary};margin-bottom:4px;">${escHtml(s.target)}</div>
-        <div style="font-size:14px;color:${t.textSecondary};margin-bottom:10px;">${escHtml(s.kpi1)} · ${escHtml(s.kpi2)}</div>
+        <div style="font-size:17px;font-family:${isDerm ? t.fontDisplay : t.fontSans};font-weight:${isDerm ? '500' : '800'};color:${t.textPrimary};margin-bottom:5px;line-height:1.28;">${escHtml(cardTitle)}</div>
+        <div style="font-size:13.5px;color:${t.textSecondary};margin-bottom:12px;line-height:1.45;">${escHtml(cardSub)}</div>
       </div>
       <div>
-        <div style="width:100%;height:7px;background:#E2E8F0;border-radius:999px;overflow:hidden;margin-bottom:6px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};border-radius:999px;"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:${t.brandPrimary};font-weight:700;"><span>View Verified Report</span><span>→</span></div>
+        <div style="width:100%;height:6px;background:rgba(24,20,18,0.08);border-radius:${t.radiusPill};overflow:hidden;margin-bottom:8px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};border-radius:${t.radiusPill};"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:${t.brandPrimary};font-weight:600;"><span>${isDerm ? 'See Layering Breakdown' : 'View Verified Report'}</span><span>→</span></div>
       </div>
     </a>`;
   }).join('');
-  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#FFF1F2;color:#9F1239;font-size:13.5px;font-weight:700;text-decoration:none;"><span>${escHtml(s.target)}</span><span style="font-variant-numeric:tabular-nums;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
+  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:${t.radiusPill};background:#FFF1F2;color:#9F1239;font-size:13px;font-weight:600;text-decoration:none;"><span>${escHtml(isDerm ? (dermTitleMap[s.target] || s.target) : s.target)}</span><span style="font-variant-numeric:tabular-nums;">${isDerm ? `Cancels Out (${s.score}/100)` : `Grade ${escHtml(s.grade)} (${s.score}/100)`}</span><span>See Fix →</span></a>`).join('');
 
-  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Industry Leaderboard Podium" style="margin:36px auto;font-family:${t.fontSans};">
+  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Verified Routine Pairings" style="margin:36px auto;font-family:${t.fontSans};">
     <div class="eb-panel-card" style="margin:0;padding:24px;background:${t.cardBg};">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
         <div>
-          <h2 style="margin:0;font-size:22px;font-family:${t.fontDisplay};font-weight:700;color:${t.textPrimary};">Top-Rated Industry Leaders</h2>
+          <h2 style="margin:0;font-size:23px;font-family:${t.fontDisplay};font-weight:${isDerm ? '400' : '700'};color:${t.textPrimary};">${isDerm ? 'Gold-Standard Routine Pairings' : 'Top-Rated Industry Leaders'}</h2>
+          ${isDerm ? `<div style="font-size:13.5px;color:${t.textSecondary};margin-top:3px;">Cosmetic-chemist verified combinations that absorb cleanly with zero stinging or makeup pilling</div>` : ''}
         </div>
-        <a href="/leaderboard" style="padding:9px 18px;border-radius:999px;background:${t.brandPrimary};color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;">Explore Full Interactive Leaderboard →</a>
+        <a href="/leaderboard" style="padding:9px 18px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">${isDerm ? 'Explore All Tested Routines →' : 'Explore Full Interactive Leaderboard →'}</a>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:14px;">${podiumCards}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:12px;">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:13.5px;font-weight:700;color:${t.textSecondary};">Common Mistakes Analysed:</span>${fixPills}</div>
-        <a href="/leaderboard" style="font-size:13.5px;font-weight:700;color:${t.brandPrimary};text-decoration:underline;"> Filter all ${ledger.length} ranked benchmarks →</a>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:13.5px;font-weight:600;color:${t.textSecondary};">${isDerm ? 'Clashes to Avoid Same-Night:' : 'Common Mistakes Analysed:'}</span>${fixPills}</div>
+        <a href="/leaderboard" style="font-size:13.5px;font-weight:600;color:${t.brandPrimary};text-decoration:underline;">${isDerm ? `Compare all ${ledger.length} tested routine pairings →` : `Filter all ${ledger.length} ranked benchmarks →`}</a>
       </div>
     </div>
   </section>`;
@@ -860,15 +862,20 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   const gCfg = getGrowthConfig(cfg.moduleId);
   const fmtScanLbl = (raw) => ({ 'VitC-AM-Peptides-PM': 'Vitamin C (AM) + Copper Peptides (PM)', 'Ceramide-Tretinoin-Buffer': 'Ceramide Buffer + Tretinoin 0.05%', 'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5%', 'BHA2-SnailMucin-Stack': '2% BHA + Snail Mucin Essence', 'VitC+Cu': 'Vitamin C 15% + Copper Peptides 1%', 'Tret+BPO': 'Rx Tretinoin 0.05% + Benzoyl Peroxide', 'TikTok': '7-Active Acid & Retinol Stack' }[raw] || raw);
   const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: isDerm ? fmtScanLbl(s.target) : `${s.target} (${s.grade})`, cat: 'public-scan' }));
+  let semanticItems = [];
+  if (isDerm) {
+    try { const sh = require(path.join(__dirname, 'seo-hubs.js')); if (typeof sh.getAllSemanticHubUrls === 'function') semanticItems = sh.getAllSemanticHubUrls('').map((u) => ({ href: u.loc, title: u.title, cat: 'semantic-hub' })); } catch (_) {}
+  }
   const growthItems = [
     ...gCfg.tools.map((x) => ({ href: `/tools/${x.slug}`, title: x.title, cat: 'interactive-tool' })),
     ...gCfg.comparisons.map((x) => ({ href: `/compare/${x.slug}`, title: x.title, cat: 'comparison' })),
     ...scanItems,
+    ...semanticItems,
     ...entries.map((item) => ({ href: `/seo/${item.slug}`, title: item.title, cat: item.category || 'guide' }))
   ];
   const pillsHtml = growthItems.map((item) => {
     const active = reqPath === item.href;
-    return `<a href="${escHtml(item.href)}" class="eb-mesh-link" data-mesh-text="${escHtml((item.title + ' ' + item.cat).toLowerCase())}" style="display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;background:${active ? t.brandSoftBg : '#FFFFFF'};color:${active ? t.brandPrimary : t.textPrimary};font-size:16px;font-weight:${active ? '700' : '500'};text-decoration:none;line-height:1.45;"><span>${escHtml(item.title)}</span></a>`;
+    return `<a href="${escHtml(item.href)}" class="eb-mesh-link" data-mesh-text="${escHtml((item.title + ' ' + item.cat).toLowerCase())}" style="display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:${t.radiusPill};background:${active ? t.brandSoftBg : '#FFFFFF'};color:${active ? t.brandPrimary : t.textPrimary};font-size:16px;font-weight:${active ? '700' : '500'};text-decoration:none;line-height:1.45;"><span>${escHtml(item.title)}</span></a>`;
   }).join('');
 
   return `<nav id="eb-seo-crawl-mesh" aria-label="${escHtml(cfg.brandName)} Complete ${growthItems.length}-Page Programmatic Benchmark &amp; AI Indexing Mesh" style="margin-top:16px;padding:18px;border-radius:${t.radiusCard};background:${t.subtleBg};">
@@ -877,7 +884,7 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
         <div style="font-size:16px;font-weight:700;color:${t.brandPrimary};">${isDerm ? `Complete Skincare Layering &amp; Routine Guide Directory (${growthItems.length} Guides)` : `Complete ${growthItems.length}-Benchmark Knowledge Graph &amp; AI Crawl Mesh`}</div>
         <div style="font-size:16px;color:${t.textSecondary};">1-click access to all ${growthItems.length} verified guides, interactive tools, comparisons, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:700;">${isDerm ? 'Routine Leaderboard' : 'Public Leaderboard'}</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, <a href="/llms-full.txt" style="color:${t.brandPrimary};text-decoration:underline;">Full Knowledge Corpus</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap Index</a>.</div>
       </div>
-      <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="${isDerm ? 'Search routine guides...' : `Filter ${growthItems.length} guides...`}" oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:7px 14px;border-radius:8px;background:#FFFFFF;color:${t.textPrimary};font-size:15px;min-width:250px;border:none;" />
+      <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="${isDerm ? 'Search routine guides...' : `Filter ${growthItems.length} guides...`}" oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:7px 14px;border-radius:${t.radiusCard};background:#FFFFFF;color:${t.textPrimary};font-size:15px;min-width:250px;border:none;" />
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow-y:auto;padding:2px;">${pillsHtml}</div>
   </nav>`;

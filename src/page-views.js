@@ -193,15 +193,15 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                 <a href="/celebrity" class="btn-secondary"><span>Explore Iconic Routines</span></a>
               </div>
               <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px;background:var(--bg-surface);margin-bottom:10px;font-size:0.8rem;">
-                <div><strong class="mono" style="color:var(--rose-brand);display:block;">1. Tap Your Bottles</strong><span style="color:var(--text-secondary);">30s shelf or INCI check</span></div>
-                <div><strong class="mono" style="color:var(--sage-safe);display:block;">2. Free AM/PM Split</strong><span style="color:var(--text-secondary);">Spot clashes &amp; wait times</span></div>
-                <div><strong class="mono" style="color:var(--text-primary);display:block;">3. Save Counter Card</strong><span style="color:var(--text-secondary);">9:16 phone lock-screen</span></div>
+                <div><strong class="mono" style="color:var(--rose-brand);display:block;">1. Tap Your Bottles</strong><span style="color:var(--text-secondary);">Pick serums or paste a label</span></div>
+                <div><strong class="mono" style="color:var(--sage-safe);display:block;">2. Instant Clash Check</strong><span style="color:var(--text-secondary);">See what stings or cancels out</span></div>
+                <div><strong class="mono" style="color:var(--text-primary);display:block;">3. Morning &amp; Night Order</strong><span style="color:var(--text-secondary);">Exact wait times &amp; 4-night plan</span></div>
               </div>
             </div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px;background:var(--bg-oat);">
               <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">44</div><div style="font-size:0.78rem;color:var(--text-secondary);">Popular Serums &amp; Creams</div></div>
               <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">65</div><div style="font-size:0.78rem;color:var(--text-secondary);">Skincare Ingredients</div></div>
-              <div><div class="mono" style="font-size:1.15rem;color:var(--rose-brand);font-weight:500;">${getAllCelebrityRoutines().length}</div><div style="font-size:0.78rem;color:var(--text-secondary);"><a href="/celebrity" style="text-decoration:underline;">Iconic Routines (+1/day)</a></div></div>
+              <div><div class="mono" style="font-size:1.15rem;color:var(--rose-brand);font-weight:500;">Daily</div><div style="font-size:0.78rem;color:var(--text-secondary);"><a href="/celebrity" style="text-decoration:underline;">Iconic Routines (+1/day)</a></div></div>
             </div>
           </div>
           <div class="hero-photo-col">
@@ -222,7 +222,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
               <div class="editorial-photo-caption">
                 <div>
                   <strong id="heroDiptychTitle" class="serif-display" style="font-size:1.08rem;color:var(--text-primary);">7:30 AM · Morning Shield &amp; Zero-Pilling Prep</strong>
-                  <div id="heroDiptychSub" style="color:var(--text-secondary);font-size:0.8rem;">Vitamin C (Wait 60s) -&gt; Hydrating Serum -&gt; Barrier Cream -&gt; Broad-Spectrum SPF 50</div>
+                  <div id="heroDiptychSub" style="color:var(--text-secondary);font-size:0.8rem;">Vitamin C (Wait 60s) &middot; Hydrating Serum &middot; Barrier Cream &middot; Broad-Spectrum SPF 50</div>
                 </div>
                 <span id="heroDiptychBadge" class="badge-safe mono">Morning Glow Order</span>
               </div>
@@ -309,7 +309,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                   Benzoyl Peroxide releases oxygen that wipes out over 80% of Retinol and Tretinoin on contact. Use blemish washes in the morning, and cushion your nighttime retinoid over a rich ceramide cream to protect your moisture barrier.
                 </p>
               </div>
-              <a href="/api/affiliate?product=aestura-atobarrier-365-cream&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;text-align:center;">Shop Ceramide Cream at Sephora &rarr;</a>
+              <a href="/api/affiliate?product=aestura-atobarrier-365&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;text-align:center;">Shop Ceramide Cream at Sephora &rarr;</a>
             </div>
           </div>
         </div>
@@ -552,7 +552,7 @@ function renderDirectoryPage({ seoPages }) {
           Find out which serums belong in the morning, which belong at bedtime, how long to wait between layers, and whether your favorite bottles and ingredients are safe for breakout-prone pores.
         </p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;background:var(--bg-surface);margin-bottom:16px;" role="navigation" aria-label="Semantic Skincare Silo Hubs">
-          <a href="/celebrity" class="affiliate-link-pill mono">Iconic Routines (${getAllCelebrityRoutines().length}) &rarr;</a>
+          <a href="/celebrity" class="affiliate-link-pill mono">Iconic Routines &rarr;</a>
           <a href="/concern" class="affiliate-link-pill mono">Skin Concerns (8) &rarr;</a>
           <a href="/bottle" class="affiliate-link-pill mono">Cult Bottles (44) &rarr;</a>
           <a href="/ingredient" class="affiliate-link-pill mono">Active Ingredients (65) &rarr;</a>
@@ -924,9 +924,10 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
     </section>
   `;
 
+  const verdictTag = formatVerdictLabel(page.verdict);
   return renderBaseDocument({
-    title: `${page.title} | DermLogic`,
-    description: page.metaDescription,
+    title: `${page.title} (${verdictTag} · ${page.compatibilityScore || 92}/100) | DermLogic`,
+    description: `${verdictTag} (${page.compatibilityScore || 92}/100 Harmony, ΔpH ${page.deltaPh != null ? page.deltaPh : '0.4'}): ${page.metaDescription || page.summary}`,
     canonicalPath: `/seo/${page.slug}`,
     ogSlug: page.slug,
     jsonLdObjects: jsonLd,
