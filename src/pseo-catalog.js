@@ -774,7 +774,12 @@ function cleanHumanTitle(rawTitle) {
 }
 
 function cleanIngName(rawName) {
-  return String(rawName || '').replace(/\s*\([^)]*\)/g, '').trim();
+  return String(rawName || '')
+    .replace(/\s*\([^)]*\)/g, '')
+    .replace(/Ceramide NP \/ AP \/ EOP Complex/gi, 'Ceramides')
+    .replace(/Hyaluronic Acid \/ Sodium Hyaluronate/gi, 'Hyaluronic Acid')
+    .replace(/Gluconolactone/gi, 'PHA (Gluconolactone)')
+    .trim();
 }
 
 function formatMetaDescription(rawText, maxLen = 155) {
@@ -789,22 +794,31 @@ function formatMetaDescription(rawText, maxLen = 155) {
 function toPlainConsumerPair(item, ingA, ingB) {
   const nameA = cleanIngName(ingA ? ingA.commonName : item.activeA);
   const nameB = cleanIngName(ingB ? ingB.commonName : item.activeB);
+  const roleA = ingA && ingA.functionRole ? ingA.functionRole.toLowerCase() : 'active serum';
+  const roleB = ingB && ingB.functionRole ? ingB.functionRole.toLowerCase() : 'treatment';
+  const phNote = ingA && ingB ? `(pH ${ingA.phMin} vs. pH ${ingB.phMin})` : '';
   const score = Number(item.compatibilityScore) || 50;
+  if (String(item.slug || '').includes('adapalene') && String(item.slug || '').includes('benzoyl-peroxide')) {
+    return {
+      conflictType: 'Chemically Stable Together (Epiduo Rule) · Buffer With Moisturizer',
+      summary: 'Unlike Retinol and Tretinoin, Adapalene 0.1% is chemically stable alongside Benzoyl Peroxide (the exact pairing inside prescription Epiduo), so neither bottle cancels the other out. However, layering both doubles dryness and peeling: apply a thin layer of ceramide cream first (the Sandwich Method) or use Benzoyl Peroxide as a morning wash.'
+    };
+  }
   if (score < 45) {
     return {
       conflictType: 'Cancels Out Potency & Triggers Redness · Separate Morning & Night',
-      summary: `Do not layer ${nameA} and ${nameB} at the same time. Applying them back-to-back weakens both formulas and can cause redness, stinging, or flaking. Use one in your morning routine and the other at bedtime.`
+      summary: `Do not layer ${nameA} and ${nameB} ${phNote} in the same step. Combining this ${roleA} directly with a ${roleB} weakens active potency and triggers stinging or barrier flushing. Wear one in your morning SPF routine and save the other for bedtime.`
     };
   }
   if (score < 78) {
     return {
-      conflictType: 'Can Over-Exfoliate Sensitive Skin · Alternate Nights or Wait',
-      summary: `Take care when pairing ${nameA} and ${nameB} in the same routine. Stacking both at once can overwhelm your moisture barrier and trigger dryness or tightness. Alternate nights or wait ${item.waitTimeMinutes >= 60 ? 'until bedtime' : `${item.waitTimeMinutes} minutes`} between layers.`
+      conflictType: 'Can Over-Exfoliate Sensitive Skin · Alternate Nights or Buffer',
+      summary: `Space apart ${nameA} (${roleA}) and ${nameB} (${roleB}) ${phNote}. Stacking both back-to-back can strip protective skin lipids and cause tightness around the nose and mouth. ${item.waitTimeMinutes >= 60 ? 'Alternate them on separate nights' : `Wait ${item.waitTimeMinutes || 10} minutes for full dry-down between layers`} and cushion with ceramide cream.`
     };
   }
   return {
-    conflictType: 'Gentle & Hydrating Together · Layer Thinnest to Thickest',
-    summary: `Yes, you can safely layer ${nameA} and ${nameB} in the same skincare routine. Apply the lighter, watery serum first, let it settle for 60 seconds, and smooth the richer formula on top for a calm, hydrated moisture barrier.`
+    conflictType: 'Gentle & Hydrating Together · Layer Thinnest to Richest',
+    summary: `${nameA} (${roleA}) and ${nameB} (${roleB}) work harmoniously in the same routine ${phNote}. Smooth the lighter water-based layer onto clean skin first, allow 60 seconds to absorb, and seal with the richer formula to keep your moisture barrier calm and bouncy.`
   };
 }
 
