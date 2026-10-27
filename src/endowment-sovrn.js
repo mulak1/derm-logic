@@ -207,7 +207,7 @@ function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShel
     </div>
     <div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;">
       <label for="shelfNameInput" class="mono" style="font-size:0.76rem;color:var(--text-secondary);white-space:nowrap;">Routine Title:</label>
-      <input id="shelfNameInput" type="text" maxlength="44" class="input-box" style="padding:7px 11px;font-size:0.84rem;" placeholder="e.g., Kados or Maya's Evening Ritual (Optional)" value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(typeof runRoutineAnalysis==='function')runRoutineAnalysis(null,true);}" />
+      <input id="shelfNameInput" type="text" maxlength="44" class="input-box" style="padding:7px 11px;font-size:0.84rem;" placeholder="e.g., Maya's Evening Ritual (Optional)" value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(typeof runRoutineAnalysis==='function')runRoutineAnalysis(null,true);}" />
     </div>
     <div id="analyzeBtnFeedback" role="status" aria-live="polite" style="display:none;padding:8px 11px;background:var(--sage-bg);color:var(--sage-safe);border-left:3px solid var(--sage-safe);font-size:0.8rem;font-weight:500;line-height:1.38;"></div>
   </div>`;
@@ -709,6 +709,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     var amItem = hasShelf ? (names.find(function(n) { return /vitamin c|ferulic|melano|spf|mist|urea/i.test(n); }) || names[0]) : 'Morning Vitamin C Serum';
     var pmItemA = hasShelf ? (names.find(function(n) { return /bha|glycolic|lactic|babyfacial|bpo|benzoyl|effaclar/i.test(n); }) || names[1] || names[0]) : 'Direct Acid Exfoliant';
     var pmItemB = hasShelf ? (names.find(function(n) { return /tretinoin|retinal|copper|peptide|faded/i.test(n); }) || names[names.length - 1]) : 'Night Retinoid / Peptide';
+    var safeText = function(s) { return String(s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
     var titleText = isDemo ? 'Sample 9:16 Lock-Screen Card &amp; 4-Night Schedule' : (hasShelf ? ('Your ' + names.length + ' Checked Bottles ($' + usd + ' Shelf)') : 'Custom Morning &amp; Bedtime Routine Preview');
     var pillText = idx === 1 ? '4-Night .ICS Calendar' : (idx === 2 ? 'Pore &amp; pH Swap Sheet' : '9:16 Phone Card + PDF');
 
@@ -720,7 +721,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
           '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">1080 &times; 1920 PNG</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">4-Night Calendar (.ICS):</strong> 9:00 PM alerts for Night 1 (' + pmItemA.replace(/[<>]/g, '') + ') vs. Night 2 (' + pmItemB.replace(/[<>]/g, '') + ')</div>' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">4-Night Calendar (.ICS):</strong> 9:00 PM alerts for Night 1 (' + safeText(pmItemA) + ') vs. Night 2 (' + safeText(pmItemB) + ')</div>' +
           '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Apple &amp; Google Cal</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
@@ -730,11 +731,11 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     } else if (idx === 1) {
       rowsHtml =
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">Night 1 (Exfoliate):</strong> ' + amItem.replace(/[<>]/g, '') + ' in AM &middot; <strong>' + pmItemA.replace(/[<>]/g, '') + '</strong> at 9:30 PM</div>' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">Night 1 (Exfoliate):</strong> ' + safeText(amItem) + ' in AM &middot; <strong>' + safeText(pmItemA) + '</strong> at 9:30 PM</div>' +
           '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Wait 60s</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">Night 2 (Renew):</strong> <strong>' + pmItemB.replace(/[<>]/g, '') + '</strong> on dry skin + Ceramide Buffer</div>' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">Night 2 (Renew):</strong> <strong>' + safeText(pmItemB) + '</strong> on dry skin + Ceramide Buffer</div>' +
           '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">9:00 PM Alert</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
@@ -748,17 +749,17 @@ const ENDOWMENT_CLIENT_SCRIPT = `
           '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">0/5 Pore-Safe</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">1-to-1 Barrier Swaps:</strong> Budget &amp; clinical alternatives that layer with <strong>' + amItem.replace(/[<>]/g, '') + '</strong> without pilling</div>' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">1-to-1 Barrier Swaps:</strong> Budget &amp; clinical alternatives that layer with <strong>' + safeText(amItem) + '</strong> without pilling</div>' +
           '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">.CSV Included</span>' +
         '</div>';
     } else {
       rowsHtml =
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">7:30 AM Morning Shield:</strong> Gentle Rinse &rarr; <strong>' + amItem.replace(/[<>]/g, '') + '</strong> &rarr; 60s pH Wait &rarr; SPF 50</div>' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">7:30 AM Morning Shield:</strong> Gentle Rinse &rarr; <strong>' + safeText(amItem) + '</strong> &rarr; 60s pH Wait &rarr; SPF 50</div>' +
           '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">Wait 60s &middot; pH 3.2</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">9:30 PM Night 1 vs. Night 2:</strong> Splits <strong>' + pmItemA.replace(/[<>]/g, '') + '</strong> and <strong>' + pmItemB.replace(/[<>]/g, '') + '</strong> across alternating nights</div>' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">9:30 PM Night 1 vs. Night 2:</strong> Splits <strong>' + safeText(pmItemA) + '</strong> and <strong>' + safeText(pmItemB) + '</strong> across alternating nights</div>' +
           '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Zero Clash Split</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
