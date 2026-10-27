@@ -109,7 +109,7 @@ function getConflictSafeSwap(conflict) {
 function renderAboveFoldSovrnDisclosureBar() {
   return `<div id="sovrn-ftc-disclosure-bar" role="region" aria-label="Editorial and Affiliate Disclosure" style="background:var(--bg-oat);border-bottom:1px solid var(--border-hairline);padding:6px 0;font-size:0.78rem;color:var(--text-secondary);">
     <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <span><strong class="mono" style="color:var(--rose-brand);font-weight:600;">Editorial &amp; FTC Disclosure:</strong> DermLogic is an independent cosmetic-chemistry publication reviewed by our Formulation &amp; Esthetics Board. Outbound links to Sephora, Dermstore, Ulta &amp; Amazon may earn an affiliate commission via Sovrn Commerce at no extra cost to you.</span>
+      <span><strong class="mono" style="color:var(--rose-brand);font-weight:600;">Editorial &amp; FTC Disclosure:</strong> DermLogic is an independent cosmetic-chemistry publication reviewed by our Formulation &amp; Esthetics Board. When you shop through retail links on our site, we may earn an affiliate commission at no extra cost to you.</span>
       <span style="display:inline-flex;gap:12px;flex-wrap:wrap;font-weight:500;">
         <a href="/editorial-policy" class="mono" style="color:var(--rose-brand);text-decoration:underline;">Editorial &amp; Testing Policy</a>
         <a href="/editorial-policy#affiliate-disclosure" class="mono" style="color:var(--text-primary);text-decoration:underline;">Affiliate Disclosure</a>
