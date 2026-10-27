@@ -722,7 +722,7 @@ function renderEditorialPolicyPage({ renderBaseDocument }) {
               DermLogic Atelier C&eacute;ramique is an independent skincare formulation and routine-compatibility publication. Every ingredient pairing guide, cult bottle teardown, and 4-night skin-cycling schedule is authored and audited against peer-reviewed cosmetic chemistry literature:
             </p>
             <ul style="padding-left:20px;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;">
-              <li><strong>Dr. Camille Laurent, PhD (Cosmetic Formulation Lead):</strong> Specializes in Henderson-Hasselbalch $\\text{p}K_a$ free-acid bioavailability, L-Ascorbic Acid oxidation kinetics, and peptide chelation stability.</li>
+              <li><strong>Dr. Camille Laurent, PhD (Cosmetic Formulation Lead):</strong> Specializes in Henderson-Hasselbalch p<em>K</em><sub>a</sub> free-acid bioavailability, L-Ascorbic Acid oxidation kinetics, and peptide chelation stability.</li>
               <li><strong>Elena Rostova, LE (Senior Licensed Master Esthetician):</strong> Specializes in post-retinoid barrier recovery, perioral dermatitis protocols, and 3:1:1 ceramide-cholesterol-fatty acid lipid ratios.</li>
               <li><strong>Primary Scientific Sources:</strong> European Commission CosIng Annex Database, <em>Journal of Investigative Dermatology</em> (500-Dalton Rule &amp; stratum corneum pH gradients), and <em>International Journal of Cosmetic Science</em>.</li>
             </ul>
