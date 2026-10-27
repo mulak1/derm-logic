@@ -283,7 +283,7 @@ const VERTICAL_CONFIGS = {
       { key: 'ultrasun', label: 'Pore-Safety Check', rowText: 'Formulation Alert: Heavy esters (Isopropyl Myristate & Coconut Alkanes) trap heat under active serums.' }
     ],
     affiliates: [
-      { title: 'SkinCeuticals C E Ferulic (Dermstore)', badge: 'Morning Vitamin C Pick', cpa: 'Shop Authorized Clinical', url: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/' },
+      { title: 'SkinCeuticals C E Ferulic (Dermstore)', badge: 'Morning Vitamin C Pick', cpa: 'Shop Authorized Clinical', url: 'https://sovrn.co/n3acz14' },
       { title: "Paula's Choice 2% BHA Liquid (Sephora)", badge: 'Exfoliating Night Pick', cpa: 'Shop Verified Formula', url: 'https://www.sephora.com/product/skin-perfecting-2-bha-liquid-exfoliant-P469502' },
       { title: 'La Roche-Posay Cicaplast Baume B5+', badge: 'Recovery Night Cream', cpa: 'Shop Dermatologist Pick', url: 'https://www.ulta.com/p/cicaplast-baume-b5-soothing-therapeutic-multi-purpose-cream-pimprod2018267' }
     ],

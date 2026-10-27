@@ -16,7 +16,7 @@ function escapeHtml(str) {
 }
 
 const DIRECT_MERCHANT_URLS = {
-  'skinceuticals-ce-ferulic': { url: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/', retailer: 'Dermstore', partner: 'dermstore' },
+  'skinceuticals-ce-ferulic': { url: 'https://sovrn.co/n3acz14', directMerchantUrl: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-30ml/11289609/', retailer: 'Dermstore', partner: 'dermstore' },
   'paulas-choice-2-bha': { url: 'https://www.sephora.com/product/skin-perfecting-2-bha-liquid-exfoliant-P469502', retailer: 'Sephora', partner: 'sephora' },
   'lrp-cicaplast-baume-b5': { url: 'https://www.ulta.com/p/cicaplast-baume-b5-soothing-therapeutic-multi-purpose-cream-pimprod2018267', retailer: 'Ulta Beauty', partner: 'dermstore' },
   'aestura-atobarrier-365': { url: 'https://www.sephora.com/product/atobarrier365-cream-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515494', retailer: 'Sephora', partner: 'sephora' },

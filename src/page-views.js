@@ -307,7 +307,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                   Pure Vitamin C needs a tangy, low-pH environment to absorb, while Copper Peptides rest at a calm, neutral level. Layering them together cancels out both serums on contact. Keep Vitamin C for morning sun defense and save peptides for bedtime repair.
                 </p>
               </div>
-              <a href="https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/" data-sovrn-beacon="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore&format=json" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;text-align:center;">Shop Morning Vitamin C at Dermstore &rarr;</a>
+              <a href="https://sovrn.co/n3acz14" data-merchant-url="https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-30ml/11289609/" data-sovrn-beacon="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore&format=json" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;text-align:center;">Shop Morning Vitamin C at Dermstore &rarr;</a>
             </div>
           </div>
 
