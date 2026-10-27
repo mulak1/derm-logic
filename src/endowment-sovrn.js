@@ -198,27 +198,22 @@ function renderPersonalizedResultsHeaderHtml(res) {
 }
 
 function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShelfName = '') {
-  return `<div id="endowmentPersonalizationBar" style="padding:14px 16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;border-left:2.5px solid var(--rose-brand);">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-      <span class="mono" style="font-size:0.8rem;font-weight:600;color:var(--rose-brand);line-height:1.3;">Step 2 · Personalize Your Climate &amp; Vanity Ritual Card</span>
-      <span id="shelfDraftSavedBadge" class="mono" style="font-size:0.74rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:500;">✓ Shelf Auto-Saved in Browser</span>
+  return `<div id="endowmentPersonalizationBar" style="padding:14px 16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+      <span class="field-label" style="margin:0;font-size:0.88rem;">Personalize Your Climate &amp; Lock-Screen Card</span>
+      <span id="shelfDraftSavedBadge" class="badge-safe mono" style="font-size:0.72rem;padding:2px 8px;">✓ Shelf Auto-Saved</span>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;align-items:flex-start;">
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <label for="shelfNameInput" class="mono" style="display:block;font-size:0.75rem;color:var(--text-secondary);line-height:1.35;">Monogram Your Routine &amp; 9:16 Card</label>
-        <input id="shelfNameInput" type="text" maxlength="44" class="input-box" style="padding:8px 10px;font-size:0.85rem;" placeholder="e.g., Kados or Maya's Evening Ritual" value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(typeof runRoutineAnalysis==='function')runRoutineAnalysis(null,true);}" />
-      </div>
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <span class="mono" style="display:block;font-size:0.75rem;color:var(--text-secondary);line-height:1.35;">Climate &amp; Barrier Mode (Adjusts Wait Times)</span>
-        <div id="climateContextPills" role="group" aria-label="Climate and Barrier Context" style="display:flex;gap:5px;flex-wrap:wrap;">
-          <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="padding:5px 9px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry Heat</button>
-          <button type="button" class="vanity-light-btn mono ${initialClimate === 'humid_oily' ? 'active' : ''}" data-climate="humid_oily" aria-pressed="${initialClimate === 'humid_oily' ? 'true' : 'false'}" style="padding:5px 9px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('humid_oily', this)">Humid / Dewy</button>
-          <button type="button" class="vanity-light-btn mono ${initialClimate === 'retinoid_retinization' ? 'active' : ''}" data-climate="retinoid_retinization" aria-pressed="${initialClimate === 'retinoid_retinization' ? 'true' : 'false'}" style="padding:5px 9px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('retinoid_retinization', this)">Retinoid Purge</button>
-          <button type="button" class="vanity-light-btn mono ${initialClimate === 'pregnancy_nursing' ? 'active' : ''}" data-climate="pregnancy_nursing" aria-pressed="${initialClimate === 'pregnancy_nursing' ? 'true' : 'false'}" style="padding:5px 9px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('pregnancy_nursing', this)">Pregnancy-Safe</button>
-        </div>
-      </div>
+    <div id="climateContextPills" role="group" aria-label="Climate and Barrier Context" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;background:var(--bg-oat);padding:4px;">
+      <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry Heat</button>
+      <button type="button" class="vanity-light-btn mono ${initialClimate === 'humid_oily' ? 'active' : ''}" data-climate="humid_oily" aria-pressed="${initialClimate === 'humid_oily' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('humid_oily', this)">Humid / Dewy</button>
+      <button type="button" class="vanity-light-btn mono ${initialClimate === 'retinoid_retinization' ? 'active' : ''}" data-climate="retinoid_retinization" aria-pressed="${initialClimate === 'retinoid_retinization' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('retinoid_retinization', this)">Retinoid Purge</button>
+      <button type="button" class="vanity-light-btn mono ${initialClimate === 'pregnancy_nursing' ? 'active' : ''}" data-climate="pregnancy_nursing" aria-pressed="${initialClimate === 'pregnancy_nursing' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('pregnancy_nursing', this)">Pregnancy-Safe</button>
     </div>
-    <div id="analyzeBtnFeedback" role="status" aria-live="polite" style="display:none;padding:9px 12px;background:var(--sage-bg);color:var(--sage-safe);border-left:3px solid var(--sage-safe);font-size:0.82rem;font-weight:500;line-height:1.4;"></div>
+    <div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;">
+      <label for="shelfNameInput" class="mono" style="font-size:0.76rem;color:var(--text-secondary);white-space:nowrap;">Routine Title:</label>
+      <input id="shelfNameInput" type="text" maxlength="44" class="input-box" style="padding:7px 11px;font-size:0.84rem;" placeholder="e.g., Kados or Maya's Evening Ritual (Optional)" value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(typeof runRoutineAnalysis==='function')runRoutineAnalysis(null,true);}" />
+    </div>
+    <div id="analyzeBtnFeedback" role="status" aria-live="polite" style="display:none;padding:8px 11px;background:var(--sage-bg);color:var(--sage-safe);border-left:3px solid var(--sage-safe);font-size:0.8rem;font-weight:500;line-height:1.38;"></div>
   </div>`;
 }
 
@@ -226,43 +221,41 @@ function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Va
   const conflictCount = (res.conflicts || []).length;
   const wastedUsd = res.wastedShelfValueUsd || 0;
   return `
-    <div id="beforeAfterSplitBar" style="padding:10px 12px;background:var(--bg-canvas);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+    <div style="padding:14px 16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:12px;">
+      <div id="beforeAfterSplitBar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--border-hairline);">
+        <span id="beforeAfterStatusText" style="font-size:0.82rem;color:var(--text-secondary);"><strong style="color:var(--sage-safe);">✓ Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)</span>
+        <div class="vanity-light-pill" role="group" aria-label="Compare Before Clashing Stack vs After Fixed Split" style="padding:3px;gap:3px;">
+          <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.73rem;padding:4px 9px;min-height:26px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Fixed Split (96/100)</button>
+          <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.73rem;padding:4px 9px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} &middot; -$${wastedUsd})</button>
+        </div>
+      </div>
+
       <div>
-        <span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;display:block;">Instant Routine Comparison</span>
-        <span id="beforeAfterStatusText" style="font-size:0.82rem;color:var(--text-secondary);">Viewing: <strong>DermLogic Fixed AM/PM Split (96/100 Harmony · $0 Wasted)</strong></span>
-      </div>
-      <div class="vanity-light-pill" role="group" aria-label="Compare Before Clashing Stack vs After Fixed Split">
-        <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.75rem;padding:4px 9px;min-height:28px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Fixed AM/PM Split (96/100)</button>
-        <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.75rem;padding:4px 9px;min-height:28px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed Stack (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} · -$${wastedUsd})</button>
-      </div>
-    </div>
-
-    <div style="padding:14px 16px;background:var(--bg-canvas);">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
-        <div class="mono" style="font-size:0.76rem;color:var(--text-secondary);font-weight:600;letter-spacing:0.03em;text-transform:uppercase;">4-Night Bedtime Rotation &middot; Skin-Cycling Plan</div>
-        <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Unlock Full 4-Night .ICS + Step 3 Seal (99&cent;) &rarr;</a>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;">
-        <div style="padding:8px 10px;background:var(--bg-surface);"><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;">${escapeHtml(n1Label)}</div><div style="font-size:0.85rem;color:var(--text-primary);margin-top:2px;line-height:1.35;">${escapeHtml(n1Val)}</div></div>
-        <div style="padding:8px 10px;background:var(--bg-surface);"><div class="mono" style="font-size:0.8rem;color:var(--honey-warn);font-weight:600;">${escapeHtml(n2Label)}</div><div style="font-size:0.85rem;color:var(--text-primary);margin-top:2px;line-height:1.35;">${escapeHtml(n2Val)}</div></div>
-        <div style="padding:8px 10px;background:var(--bg-surface);border-left:2px solid var(--rose-brand);"><div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">${escapeHtml(n3Label)}</div><div class="dl-gated-night-val" data-unlocked-text="${escapeHtml(n3Val)}" style="font-size:0.83rem;color:var(--text-secondary);margin-top:2px;line-height:1.35;">${escapeHtml(n3Val)} &middot; <span class="mono" style="color:var(--rose-brand);font-weight:600;">[Exact Dry-Down in 99&cent; Card]</span></div></div>
-        <div style="padding:8px 10px;background:var(--bg-surface);border-left:2px solid var(--rose-brand);"><div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">Night 4 &middot; Cushion</div><div class="dl-gated-night-val" data-unlocked-text="${escapeHtml(n4Val)}" style="font-size:0.83rem;color:var(--text-secondary);margin-top:2px;line-height:1.35;">${escapeHtml(n4Val)} &middot; <span class="mono" style="color:var(--rose-brand);font-weight:600;">[Barrier Seal Ratio in 99&cent; Card]</span></div></div>
-      </div>
-    </div>
-
-    <div id="lockScreenCanvasSection" style="padding:14px 16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-        <div>
-          <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;display:block;">9:16 Bathroom Mirror Phone Lock-Screen Wallpaper Preview</span>
-          <span style="font-size:0.8rem;color:var(--text-secondary);">Live monogrammed card updates as you type. Free preview includes diagonal watermark; 99&cent; pass downloads high-res unwatermarked PNG.</span>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+          <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);font-weight:600;letter-spacing:0.02em;text-transform:uppercase;">4-Night Bedtime Rotation</span>
+          <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:500;text-decoration:underline;white-space:nowrap;">Add 4-Night .ICS Calendar (99&cent;) &rarr;</a>
         </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 11px;min-height:32px;font-size:0.76rem;" onclick="window.__dlCopyRedditRoutineHelp(this)">Copy [Routine Help] Post for Reddit</button>
-          <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:6px 12px;min-height:32px;font-size:0.76rem;" onclick="window.__dlDownloadOrUnlockWallpaper()">Download 9:16 Wallpaper PNG (99&cent;) &rarr;</button>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
+          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;white-space:nowrap;">${escapeHtml(n1Label)}</span><span class="mono" style="font-size:0.69rem;color:var(--text-muted);white-space:nowrap;">Wait 60s</span></div><div style="font-size:0.83rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n1Val)}</div></div>
+          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.76rem;color:var(--honey-warn);font-weight:600;white-space:nowrap;">${escapeHtml(n2Label)}</span><span class="mono" style="font-size:0.69rem;color:var(--text-muted);white-space:nowrap;">Dry Skin</span></div><div style="font-size:0.83rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n2Val)}</div></div>
+          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;white-space:nowrap;">${escapeHtml(n3Label)}</span><span class="mono dl-gated-night-val" data-unlocked-text="Damp Seal" style="font-size:0.69rem;color:var(--sage-safe);white-space:nowrap;">Barrier Rest</span></div><div style="font-size:0.83rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n3Val)}</div></div>
+          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;white-space:nowrap;">Night 4 &middot; Seal</span><span class="mono dl-gated-night-val" data-unlocked-text="3:1:1 Lipids" style="font-size:0.69rem;color:var(--sage-safe);white-space:nowrap;">3:1:1 Lipids</span></div><div style="font-size:0.83rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n4Val)}</div></div>
         </div>
       </div>
-      <div style="display:flex;justify-content:center;background:var(--bg-oat);padding:10px;">
-        <canvas id="lockScreenWallpaperCanvas" width="360" height="640" style="width:198px;height:352px;max-width:100%;background:#181412;display:block;"></canvas>
+
+      <div id="lockScreenCanvasSection" style="padding:12px 14px;background:var(--bg-surface);display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px;align-items:center;">
+        <canvas id="lockScreenWallpaperCanvas" width="360" height="640" onclick="window.__dlDownloadOrUnlockWallpaper()" title="Click to download 9:16 Lock-Screen Routine Card" style="width:84px;height:149px;background:#181412;display:block;cursor:pointer;box-shadow:0 4px 12px rgba(12,10,8,0.14);"></canvas>
+        <div style="min-width:0;display:flex;flex-direction:column;gap:6px;">
+          <div>
+            <span class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:600;display:block;text-transform:uppercase;letter-spacing:0.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">9:16 Lock-Screen Card &amp; Reddit Summary</span>
+            <div class="serif-display" style="font-size:1.08rem;color:var(--text-primary);line-height:1.22;margin-top:2px;">Save your custom AM &amp; PM order to your phone.</div>
+            <div style="font-size:0.78rem;color:var(--text-secondary);line-height:1.36;margin-top:2px;">Live monogrammed card updates as you type. Download the 9:16 PNG or copy your Reddit summary.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:center;margin-top:2px;">
+            <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:6px 8px;min-height:32px;font-size:0.72rem;white-space:nowrap;justify-content:center;" onclick="window.__dlDownloadOrUnlockWallpaper()">Save 9:16 PNG (99&cent;) &rarr;</button>
+            <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 8px;min-height:32px;font-size:0.72rem;white-space:nowrap;justify-content:center;" onclick="window.__dlCopyRedditRoutineHelp(this)">Copy Reddit Summary</button>
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -489,11 +482,16 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     var wUsd = res.wastedShelfValueUsd || 0;
     if (st) {
       st.innerHTML = window.__dlViewMode === 'clash'
-        ? 'Viewing: <strong style="color:var(--berry-clash);">Unfixed Same-Night Stack (' + cCount + ' Clashes · -$' + wUsd + ' Serum Value at Risk)</strong>'
-        : 'Viewing: <strong style="color:var(--sage-safe);">DermLogic Fixed AM/PM Split (96/100 Harmony · $0 Wasted)</strong>';
+        ? '<strong style="color:var(--berry-clash);">Unfixed Stack</strong> &middot; ' + cCount + ' Clashes (-$' + wUsd + ' Serum Value at Risk)'
+        : '<strong style="color:var(--sage-safe);">✓ Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)';
     }
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();
+  };
+
+  window.__dlCleanCanvasStep = function(raw) {
+    var s = String(raw || '').replace(/\\s*\\([^)]*$/, '').replace(/\\s*\\([^)]*\\)/g, '').trim();
+    return s.length > 34 ? (s.slice(0, 33) + '...') : s;
   };
 
   window.__dlRenderWallpaperCanvas = function() {
@@ -513,64 +511,66 @@ const ENDOWMENT_CLIENT_SCRIPT = `
 
     ctx.fillStyle = '#C9A45A';
     ctx.font = '600 11px Georgia, serif';
-    ctx.fillText('DERMLOGIC · FORMULATION ATELIER', 26, 40);
+    ctx.fillText('DERMLOGIC · FORMULATION ATELIER', 26, 42);
 
     ctx.fillStyle = '#F4EFE8';
-    ctx.font = 'bold 18px Georgia, serif';
-    ctx.fillText(shelfName.slice(0, 28), 26, 68);
+    ctx.font = 'bold 19px Georgia, serif';
+    ctx.fillText(shelfName.slice(0, 26), 26, 70);
 
     ctx.fillStyle = '#B5ACA3';
-    ctx.font = '12px Georgia, serif';
-    ctx.fillText(climateTxt, 26, 88);
+    ctx.font = '12.5px Georgia, serif';
+    ctx.fillText(climateTxt, 26, 92);
 
     var cards = document.querySelectorAll('#appleWalletCardPreview strong');
     var steps = [];
     for (var i = 0; i < cards.length; i++) {
-      steps.push(cards[i].textContent.trim().slice(0, 42));
+      steps.push(window.__dlCleanCanvasStep(cards[i].textContent));
     }
     if (steps.length === 0) {
       steps = ['1. Gentle Morning Cleanse', '2. Morning Vitamin C (Wait 60s)', '3. Barrier Seal + SPF 50', '1. Evening Cleanse', '2. Night Active / Peptide', '3. 3:1:1 Ceramide Cushion'];
     }
 
     ctx.fillStyle = '#EFE5E7';
-    ctx.font = 'bold 12px Georgia, serif';
-    ctx.fillText('7:30 AM · MORNING SHIELD ORDER', 26, 124);
+    ctx.font = 'bold 12.5px Georgia, serif';
+    ctx.fillText('7:30 AM · MORNING SHIELD', 26, 132);
     ctx.fillStyle = '#F4EFE8';
-    ctx.font = '12px Georgia, serif';
+    ctx.font = '13px Georgia, serif';
     for (var a = 0; a < Math.min(3, steps.length); a++) {
-      ctx.fillText(steps[a], 26, 148 + a * 24);
+      ctx.fillText(steps[a], 26, 158 + a * 26);
     }
 
     ctx.fillStyle = '#C9A45A';
-    ctx.font = 'bold 12px Georgia, serif';
-    ctx.fillText('9:30 PM · BEDTIME RECOVERY ORDER', 26, 240);
+    ctx.font = 'bold 12.5px Georgia, serif';
+    ctx.fillText('9:30 PM · BEDTIME RECOVERY', 26, 256);
     ctx.fillStyle = '#F4EFE8';
-    ctx.font = '12px Georgia, serif';
+    ctx.font = '13px Georgia, serif';
     for (var p = 3; p < Math.min(6, steps.length); p++) {
-      ctx.fillText(steps[p], 26, 264 + (p - 3) * 24);
+      ctx.fillText(steps[p], 26, 282 + (p - 3) * 26);
     }
 
     ctx.fillStyle = '#88C4A6';
-    ctx.font = 'bold 12px Georgia, serif';
-    ctx.fillText('4-NIGHT SKIN-CYCLING ROTATION', 26, 360);
+    ctx.font = 'bold 12.5px Georgia, serif';
+    ctx.fillText('4-NIGHT SKIN-CYCLING PLAN', 26, 380);
     ctx.fillStyle = '#B5ACA3';
-    ctx.font = '11.5px Georgia, serif';
-    ctx.fillText('Night 1: Gentle Acid Polish · Wait 60s', 26, 384);
-    ctx.fillText('Night 2: Retinoid Renewal · Cream Buffer', 26, 406);
-    ctx.fillText('Night 3: Peptide & Barrier Recovery', 26, 428);
-    ctx.fillText('Night 4: 3:1:1 Ceramide Cushion Seal', 26, 450);
+    ctx.font = '12.5px Georgia, serif';
+    ctx.fillText('Night 1: Gentle Acid Polish · Wait 60s', 26, 406);
+    ctx.fillText('Night 2: Retinoid Renewal · Cream Buffer', 26, 430);
+    ctx.fillText('Night 3: Peptide & Barrier Recovery', 26, 454);
+    ctx.fillText('Night 4: 3:1:1 Ceramide Cushion Seal', 26, 478);
 
     var unlocked = Boolean(window.__ebIsUnlocked);
     if (!unlocked) {
-      ctx.save();
-      ctx.translate(w / 2, h / 2);
-      ctx.rotate(-Math.PI / 5);
-      ctx.fillStyle = 'rgba(201, 164, 90, 0.22)';
-      ctx.font = 'bold 21px Georgia, serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('DERMLOGIC.IO PREVIEW', 0, -10);
-      ctx.fillText('UNLOCK 99¢ CLEAN CARD', 0, 18);
-      ctx.restore();
+      ctx.fillStyle = 'rgba(201, 164, 90, 0.16)';
+      ctx.fillRect(24, 524, w - 48, 52);
+      ctx.strokeStyle = 'rgba(201, 164, 90, 0.55)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(24, 524, w - 48, 52);
+      ctx.fillStyle = '#C9A45A';
+      ctx.font = 'bold 12px Georgia, serif';
+      ctx.fillText('DERMLOGIC.IO FREE PREVIEW', 38, 546);
+      ctx.fillStyle = '#F4EFE8';
+      ctx.font = '11.5px Georgia, serif';
+      ctx.fillText('Tap to download unwatermarked 9:16 PNG (99¢)', 38, 564);
     } else {
       var dlBtn = document.getElementById('btnDownloadLockScreenPng');
       if (dlBtn) dlBtn.textContent = 'Download Clean 9:16 PNG ↓';

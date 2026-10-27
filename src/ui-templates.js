@@ -169,7 +169,7 @@ const SHARED_CSS = `
   .preset-chip strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-primary); font-family: 'Newsreader', Georgia, serif; font-size: 1rem; font-weight: 400; line-height: 1.25; white-space: normal; }
   .preset-chip span { display: block; color: var(--rose-brand); font-size: 0.8rem; font-weight: 500; line-height: 1.3; white-space: normal; }
   .field-label { display: block; font-size: 0.9rem; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
-  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: 138px; gap: 10px; flex: 0 0 606px; height: 606px; min-height: 606px; max-height: 606px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 12px; background: var(--bg-canvas); margin-bottom: 14px; align-content: start; }
+  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: 138px; gap: 10px; flex: 1 1 0px; height: 0; min-height: 540px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 12px; background: var(--bg-canvas); margin-bottom: 14px; align-content: start; }
   .prod-check-item { display: flex; align-items: stretch; gap: 10px; padding: 12px 14px; height: 138px; background: var(--bg-surface); cursor: pointer; font-size: 0.88rem; transition: background-color 180ms ease-out; overflow: hidden; }
   .prod-check-item.selected { background: var(--rose-pill-bg); }
   .prod-check-item input { margin-top: 2px; align-self: flex-start; accent-color: var(--rose-brand); flex-shrink: 0; }
@@ -223,6 +223,7 @@ const SHARED_CSS = `
     .editorial-top-banner { grid-template-columns: 1fr; row-gap: 24px; }
     .hero-title-block, .hero-copy-col, .hero-photo-col { grid-column: 1 / -1 !important; }
     .hero-grid, .z-cascade-stage, .bento-grid-3 { grid-template-columns: 1fr; }
+    .product-selector-grid { max-height: 560px; }
     .viscosity-seq-list { grid-template-columns: repeat(2, 1fr); }
     .hero-h1-line2 { padding-left: 6vw; }
     .nav-inner { flex-wrap: wrap; }
@@ -341,8 +342,8 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
   return `
     <div id="checker"></div>
     <div class="hero-grid" id="analyzer">
-      <div class="grader-card" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
-        <div class="porcelain-vessel-core" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:16px;">
+      <div class="grader-card" style="display:flex;flex-direction:column;">
+        <div class="porcelain-vessel-core" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:16px;">
           <div style="flex:1;display:flex;flex-direction:column;min-height:0;gap:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
               <span class="mono" style="font-size:0.9rem;color:var(--rose-brand);font-weight:500;">Bathroom Vanity Shelf Builder</span>
@@ -383,14 +384,14 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               </div>
             </div>
 
-            <div style="flex:1;display:flex;flex-direction:column;padding:16px 18px;background:var(--bg-canvas);">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
-                <label class="field-label" for="rawInciTextarea" style="margin:0;font-size:0.9rem;">Paste Any Ingredient List for a Pore-Clogging &amp; Blemish Check</label>
-                <button type="button" class="btn-secondary" style="padding:6px 12px;font-size:0.82rem;min-height:34px;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Sample</button>
+            <div style="flex:0 0 auto;display:flex;flex-direction:column;padding:12px 14px;background:var(--bg-canvas);">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;">
+                <label class="field-label" for="rawInciTextarea" style="margin:0;font-size:0.84rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Paste Ingredient List (Pore-Clogging Check)</label>
+                <button type="button" class="btn-secondary" style="padding:4px 10px;font-size:0.76rem;min-height:28px;flex-shrink:0;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Sample</button>
               </div>
-              <textarea id="rawInciTextarea" class="textarea-box mono" rows="3" style="flex:1;min-height:76px;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="e.g., Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate...">${escapeHtml(initialRawInci || '')}</textarea>
-              <div id="rawInciFeedbackBox" style="margin-top:8px;"></div>
-              <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:6px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients, helpful before buying a new moisturizer or foundation.</div>
+              <textarea id="rawInciTextarea" class="textarea-box mono" rows="3" style="flex:0 0 auto;height:78px;min-height:78px;max-height:130px;resize:vertical;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="e.g., Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate...">${escapeHtml(initialRawInci || '')}</textarea>
+              <div id="rawInciFeedbackBox" style="margin-top:6px;"></div>
+              <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:5px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients before you buy a new moisturizer.</div>
             </div>
             ${renderPersonalizationBarHtml('indoor_dry', '')}
           </div>
@@ -458,15 +459,18 @@ function renderSingleConflictCard(c) {
   const nameB = String(c.ingredientB || c.inciB || '').replace(/\s*\([^)]*\)/g, '');
   const cleanTitle = String(c.title || '').replace(/\s*\(pH[^)]*\)/gi, '');
   const cleanMechanism = String(c.mechanism || '').replace(/\s*\(pH[^)]*\)/gi, '').replace(/\blow-pH\s+/gi, '');
-  const howToFix = String(c.resolution || (isCritical ? 'Use one bottle in the morning and the other at bedtime.' : 'Apply a ceramide moisturizer first (Sandwich Method) or alternate nights.')).trim();
+  const rawRes = String(c.resolution || '').trim();
+  const howToFix = (!rawRes || /LOCKED IN FREE PREVIEW/i.test(rawRes))
+    ? (isCritical ? 'Use one bottle in the morning (7:30 AM) and the other at bedtime (9:30 PM) so they never cancel on contact.' : 'Apply a ceramide moisturizer first (Sandwich Method) or alternate across your 4-night cycle.')
+    : rawRes;
   const timingTip = isCritical ? 'Separate Morning & Night' : 'Alternate Nights or Buffer First';
   const swap = getConflictSafeSwap(c);
-  return `<div class="conflict-card ${escapeHtml(c.severity)}">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;"><span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono">${badgeLabel}</span><span class="mono" style="font-size:0.86rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</span></div>
-      <div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(cleanTitle)}</div>
-      <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.54;margin-bottom:8px;">${escapeHtml(cleanMechanism)}</p>
-      <div style="padding:8px 11px;background:rgba(255,255,255,0.62);border-left:2.5px solid ${isCritical ? 'var(--berry-clash)' : 'var(--honey-warn)'};font-size:0.84rem;line-height:1.42;color:var(--text-primary);margin-bottom:8px;"><strong>How to Fix:</strong> ${escapeHtml(howToFix)}<div class="mono" style="margin-top:4px;font-size:0.78rem;color:var(--sage-safe);">${escapeHtml(swap.freeFix)}</div></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span class="mono" style="font-size:0.78rem;color:var(--text-muted);">${timingTip}</span><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div>
+  return `<div class="conflict-card ${escapeHtml(c.severity)}" style="padding:13px 15px;margin-bottom:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;"><span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono">${badgeLabel}</span><span class="mono" style="font-size:0.84rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</span></div>
+      <div class="serif-display" style="font-size:1.18rem;font-weight:400;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(cleanTitle)}</div>
+      <p style="color:var(--text-secondary);font-size:0.86rem;line-height:1.48;margin-bottom:7px;">${escapeHtml(cleanMechanism)}</p>
+      <div style="padding:7px 10px;background:rgba(255,255,255,0.66);border-left:2.5px solid ${isCritical ? 'var(--berry-clash)' : 'var(--honey-warn)'};font-size:0.82rem;line-height:1.4;color:var(--text-primary);margin-bottom:7px;"><strong>How to Fix:</strong> ${escapeHtml(howToFix)}<div class="mono" style="margin-top:3px;font-size:0.76rem;color:var(--sage-safe);">${escapeHtml(swap.freeFix)}</div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span class="mono" style="font-size:0.76rem;color:var(--text-muted);">${timingTip}</span><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div>
     </div>`;
 }
 
@@ -477,8 +481,8 @@ function renderAnalysisResultHtml(res) {
   const badgeClass = isCritical ? 'badge-clash' : isWarn ? 'badge-warn' : 'badge-safe';
   const topVerdictText = res.conflicts.length === 0 ? 'Safe Everyday Routine · Zero Clashes' : res.verdictLabel;
 
-  const primaryConflicts = res.conflicts.slice(0, 2);
-  const extraConflicts = res.conflicts.slice(2);
+  const primaryConflicts = res.conflicts.slice(0, 1);
+  const extraConflicts = res.conflicts.slice(1);
   const rawTxt = String(res.rawInciText || '').trim();
   const pMatched = res.pastedMatched || [];
   const pCloggers = pMatched.filter((m) => m.comedogenicity >= 2 || m.malasseziaTrigger);
