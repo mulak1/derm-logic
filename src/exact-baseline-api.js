@@ -17,7 +17,7 @@ const { CRAWLER_UA_REGEX, loadVerticalSeoCatalog, attachUniversalSeoAndAiRoutes 
 const { attachAutonomousGrowthEngine } = require('./autonomous-growth-engine');
 
 const INDEXNOW_KEY = process.env.INDEXNOW_KEY || 'b25e791e2b694f4c9c57d8e20ad8d904';
-const SOVRN_COMMERCE_KEY = process.env.SOVRN_COMMERCE_KEY || 'ea3d7b74c5752fd817f896be27cd1a01';
+const SOVRN_COMMERCE_KEY = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || '77092b74b2ef39a0fcc70907f5f6216d';
 const SOVRN_SECRET_KEY = process.env.SOVRN_SECRET_KEY || '';
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 

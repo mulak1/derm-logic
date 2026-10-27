@@ -341,7 +341,7 @@ app.get('/api/affiliate', (req, res) => {
       ? `https://www.amazon.com/s?k=${queryTerm}&tag=${affTag}`
       : `https://www.dermstore.com/elysium.search?search=${queryTerm}`;
 
-  const sovrnKey = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || process.env.VIGLINK_API_KEY || 'ea3d7b74c5752fd817f896be27cd1a01';
+  const sovrnKey = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || process.env.VIGLINK_API_KEY || '77092b74b2ef39a0fcc70907f5f6216d';
   const destinationUrl = `https://redirect.viglink.com?key=${encodeURIComponent(sovrnKey)}&u=${encodeURIComponent(rawMerchantUrl)}&cuid=${encodeURIComponent(productId)}`;
 
   recordMetaEvent({

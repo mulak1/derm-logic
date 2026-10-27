@@ -8,7 +8,7 @@
 
 const { CULT_PRODUCTS, CLINICAL_INGREDIENTS } = require('./clinical-data');
 
-const SOVRN_KEY = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || process.env.VIGLINK_API_KEY || 'ea3d7b74c5752fd817f896be27cd1a01';
+const SOVRN_KEY = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || process.env.VIGLINK_API_KEY || '77092b74b2ef39a0fcc70907f5f6216d';
 
 function escapeHtml(str) {
   if (str == null) return '';
