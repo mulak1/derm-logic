@@ -686,6 +686,143 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     }
   };
 
+  window.__dlUpgradeCurtainPreview = function(tabOverride, forceDemo) {
+    var pre = document.getElementById('eb-prism-proof-preview');
+    if (!pre) return;
+    var isDemo = typeof forceDemo === 'boolean' ? forceDemo : (pre.getAttribute('data-demo-open') === '1');
+    var idx = typeof tabOverride === 'number' ? tabOverride : (window.__ebActiveTabIdx || 0);
+    var checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked'));
+    var names = [];
+    var totalUsd = 0;
+    checked.forEach(function(inp) {
+      var lbl = inp.closest ? inp.closest('.prod-check-item') : null;
+      var st = lbl ? lbl.querySelector('strong') : null;
+      var mn = lbl ? lbl.querySelectorAll('.mono') : [];
+      if (st && st.textContent) names.push(st.textContent.trim());
+      for (var i = 0; i < mn.length; i++) {
+        var d = (mn[i].textContent || '').split('$')[1];
+        if (d && parseInt(d, 10) > 0) totalUsd += parseInt(d, 10);
+      }
+    });
+    var hasShelf = names.length > 0;
+    var usd = totalUsd > 0 ? totalUsd : 165;
+    var amItem = hasShelf ? (names.find(function(n) { return /vitamin c|ferulic|melano|spf|mist|urea/i.test(n); }) || names[0]) : 'Morning Vitamin C Serum';
+    var pmItemA = hasShelf ? (names.find(function(n) { return /bha|glycolic|lactic|babyfacial|bpo|benzoyl|effaclar/i.test(n); }) || names[1] || names[0]) : 'Direct Acid Exfoliant';
+    var pmItemB = hasShelf ? (names.find(function(n) { return /tretinoin|retinal|copper|peptide|faded/i.test(n); }) || names[names.length - 1]) : 'Night Retinoid / Peptide';
+    var titleText = isDemo ? 'Sample 9:16 Lock-Screen Card &amp; 4-Night Schedule' : (hasShelf ? ('Your ' + names.length + ' Checked Bottles ($' + usd + ' Shelf)') : 'Custom Morning &amp; Bedtime Routine Preview');
+    var pillText = idx === 1 ? '4-Night .ICS Calendar' : (idx === 2 ? 'Pore &amp; pH Swap Sheet' : '9:16 Phone Card + PDF');
+
+    var rowsHtml = '';
+    if (isDemo) {
+      rowsHtml =
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">9:16 Lock-Screen Wallpaper (PNG):</strong> Instant AM/PM bathroom checklist sized for iPhone &amp; Android</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">1080 &times; 1920 PNG</span>' +
+        '</div>' +
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">4-Night Calendar (.ICS):</strong> 9:00 PM alerts for Night 1 (' + pmItemA.replace(/[<>]/g, '') + ') vs. Night 2 (' + pmItemB.replace(/[<>]/g, '') + ')</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Apple &amp; Google Cal</span>' +
+        '</div>' +
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Pore-Safe Swaps (.CSV):</strong> 1-to-1 non-comedogenic &amp; budget alternatives for your $' + usd + ' shelf</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3 Files in 1 Pack</span>' +
+        '</div>';
+    } else if (idx === 1) {
+      rowsHtml =
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">Night 1 (Exfoliate):</strong> ' + amItem.replace(/[<>]/g, '') + ' in AM &middot; <strong>' + pmItemA.replace(/[<>]/g, '') + '</strong> at 9:30 PM</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Wait 60s</span>' +
+        '</div>' +
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">Night 2 (Renew):</strong> <strong>' + pmItemB.replace(/[<>]/g, '') + '</strong> on dry skin + Ceramide Buffer</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">9:00 PM Alert</span>' +
+        '</div>' +
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Nights 3 &amp; 4 (Recovery):</strong> Zero acids or retinoids &middot; 3:1:1 Ceramide Cushion</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">Barrier Rest</span>' +
+        '</div>';
+    } else if (idx === 2) {
+      rowsHtml =
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Pore-Safety Audit:</strong> Screens your ' + (hasShelf ? (names.length + ' selected bottles') : 'routine') + ' against 65 pore-clogging esters &amp; waxes</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">0/5 Pore-Safe</span>' +
+        '</div>' +
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">1-to-1 Barrier Swaps:</strong> Budget &amp; clinical alternatives that layer with <strong>' + amItem.replace(/[<>]/g, '') + '</strong> without pilling</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">.CSV Included</span>' +
+        '</div>';
+    } else {
+      rowsHtml =
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">7:30 AM Morning Shield:</strong> Gentle Rinse &rarr; <strong>' + amItem.replace(/[<>]/g, '') + '</strong> &rarr; 60s pH Wait &rarr; SPF 50</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">Wait 60s &middot; pH 3.2</span>' +
+        '</div>' +
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">9:30 PM Night 1 vs. Night 2:</strong> Splits <strong>' + pmItemA.replace(/[<>]/g, '') + '</strong> and <strong>' + pmItemB.replace(/[<>]/g, '') + '</strong> across alternating nights</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Zero Clash Split</span>' +
+        '</div>' +
+        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Every Night Barrier Seal:</strong> 3:1:1 Ceramide recovery cream locks in hydration without clogging pores</div>' +
+          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3:1:1 Lipid Seal</span>' +
+        '</div>';
+    }
+
+    pre.innerHTML =
+      '<div class="dl-curtain-rich-card" style="display:flex;flex-direction:column;gap:8px;width:100%;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-bottom:6px;border-bottom:1px solid var(--border-hairline);">' +
+          '<span class="serif-display" style="font-size:1.12rem;color:var(--text-primary);font-weight:400;">' + titleText + '</span>' +
+          '<span class="mono" style="font-size:0.73rem;padding:3px 9px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;">' + pillText + '</span>' +
+        '</div>' +
+        rowsHtml +
+      '</div>';
+    if (!pre.__dlObserved && typeof MutationObserver === 'function') {
+      pre.__dlObserved = true;
+      var obs = new MutationObserver(function() {
+        if (!pre.querySelector('.dl-curtain-rich-card')) {
+          window.__dlUpgradeCurtainPreview(window.__ebActiveTabIdx || 0);
+        }
+      });
+      obs.observe(pre, { childList: true });
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      window.__dlUpgradeCurtainPreview();
+      if (typeof window.__ebRefreshDermCurtain === 'function') {
+        var origRefresh = window.__ebRefreshDermCurtain;
+        window.__ebRefreshDermCurtain = function(tIdx) {
+          origRefresh(tIdx);
+          window.__dlUpgradeCurtainPreview(tIdx);
+        };
+      }
+      if (typeof window.__ebSelectManifestFile === 'function') {
+        var origSelect = window.__ebSelectManifestFile;
+        window.__ebSelectManifestFile = function(tIdx, pillEl) {
+          origSelect(tIdx, pillEl);
+          window.__dlUpgradeCurtainPreview(tIdx, false);
+        };
+      }
+      if (typeof window.__ebToggleSampleDemo === 'function') {
+        var origDemo = window.__ebToggleSampleDemo;
+        window.__ebToggleSampleDemo = function(btn) {
+          origDemo(btn);
+          var pre = document.getElementById('eb-prism-proof-preview');
+          var isDemo = pre && pre.getAttribute('data-demo-open') === '1';
+          window.__dlUpgradeCurtainPreview(window.__ebActiveTabIdx || 0, isDemo);
+        };
+      }
+      if (typeof window.__ebMountDeliverableCurtain === 'function') {
+        var origMount = window.__ebMountDeliverableCurtain;
+        window.__ebMountDeliverableCurtain = function(a, b, c) {
+          origMount(a, b, c);
+          window.__dlUpgradeCurtainPreview(window.__ebActiveTabIdx || 0);
+        };
+      }
+    }, 30);
+    setTimeout(function() { window.__dlUpgradeCurtainPreview(); }, 250);
+  });
+
   document.addEventListener('click', function(e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href*="products="]') : null;
     if (!a) return;
