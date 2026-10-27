@@ -611,14 +611,14 @@ function renderAnalysisResultHtml(res) {
     'Peptide Serum & Ceramide Barrier Cushion'
   ];
   const pmStepsHtml = (res.schedule.pmCycling || []).slice(0, 3).map((n, idx) => {
-    const rawNight = String((n.steps && n.steps[0]) || '').replace(/^pH\s*[\d.]+\s*/i, '');
+    const rawNight = String((n.steps && (n.steps[idx] || n.steps[0])) || '').replace(/^pH\s*[\d.]+\s*/i, '');
     const cleanNightStep = (!rawNight || rawNight.includes('[LOCKED')) ? pmFallbacks[idx] || pmFallbacks[2] : rawNight;
     return `
     <div style="padding:9px 12px;background:rgba(244,239,232,0.08);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;">
       <div style="min-width:0;font-size:0.88rem;line-height:1.38;color:#F4EFE8;">
-        <strong>${escapeHtml(n.night.split('·')[0].trim())}:</strong> ${escapeHtml(cleanNightStep)}
+        <strong>${idx + 1}. ${escapeHtml(cleanNightStep)}</strong>
       </div>
-      <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:#7A2332;color:#F4EFE8;font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? '45s Wait' : 'Alternate Nights'}</span>
+      <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:#7A2332;color:#F4EFE8;font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? 'Apply First' : idx === 1 ? 'Alternate Nights' : 'Barrier Seal'}</span>
     </div>`;
   }).join('');
 
@@ -657,9 +657,9 @@ function renderAnalysisResultHtml(res) {
           <div style="padding:18px 20px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
             <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:96px;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse 68% 95% at 80% 10%, rgba(214,152,58,0.25) 0%, rgba(232,190,118,0.1) 52%, transparent 82%),linear-gradient(90deg, rgba(255,248,234,0.45) 0%, rgba(222,168,84,0.2) 100%);-webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 55%, transparent 100%);mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 55%, transparent 100%);"><svg width="100%" height="96" viewBox="0 0 520 96" preserveAspectRatio="xMidYMin slice" fill="none"><path d="M-10 78 Q 220 38 540 72" stroke="#A46B1D" stroke-opacity="0.22" stroke-width="1.15"/><circle cx="420" cy="28" r="19" fill="#E3A84B" fill-opacity="0.22" stroke="#A46B1D" stroke-opacity="0.4" stroke-width="1.25"/><circle cx="420" cy="28" r="34" stroke="#A46B1D" stroke-opacity="0.2" stroke-width="0.95" stroke-dasharray="3 5"/><path d="M420 2V9M420 47V54M388 28H395M445 28H452M397 5L402 10M438 46L443 51M443 5L438 10M402 46L397 51" stroke="#A46B1D" stroke-opacity="0.28" stroke-width="1.1" stroke-linecap="round"/></svg></div>
             <div style="position:relative;z-index:1;">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;">
-                <div><span class="mono" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:500;color:var(--honey-warn);"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg>Morning Routine Order</span><div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-top:3px;">Brighten &amp; Protect in Daylight</div></div>
-                <span class="badge-safe mono" style="font-size:0.74rem;padding:2px 8px;">No Pilling Under Makeup</span>
+              <div style="margin-bottom:10px;">
+                <span class="mono" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:500;color:var(--honey-warn);"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg>Morning Routine Order</span>
+                <div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-top:3px;">Brighten &amp; Protect in Daylight</div>
               </div>
               ${amStepsHtml}
             </div>
@@ -669,9 +669,9 @@ function renderAnalysisResultHtml(res) {
           <div style="padding:18px 20px;background:#181412;color:#F4EFE8;display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
             <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:96px;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse 68% 95% at 80% 12%, rgba(201,164,90,0.26) 0%, rgba(142,110,56,0.11) 52%, transparent 84%),linear-gradient(90deg, rgba(24,20,18,0.15) 0%, rgba(201,164,90,0.15) 100%);-webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 55%, transparent 100%);mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 55%, transparent 100%);"><svg width="100%" height="96" viewBox="0 0 520 96" preserveAspectRatio="xMidYMin slice" fill="none"><path d="M-10 74 Q 220 34 540 68" stroke="#C9A45A" stroke-opacity="0.22" stroke-width="1.15"/><path d="M424 12C412 12 402 22 402 34C402 46 412 56 424 56C429.4 56 434.2 54 438 51C430 52.7 421.8 47.7 420 39.8C418.4 31.8 423.4 23.6 431.4 22C429 16 426.7 12 424 12Z" fill="#C9A45A" fill-opacity="0.24" stroke="#C9A45A" stroke-opacity="0.55" stroke-width="1.25"/><circle cx="420" cy="34" r="32" stroke="#C9A45A" stroke-opacity="0.2" stroke-width="0.95" stroke-dasharray="2 5"/><path d="M362 18L363.6 22L367.6 23.6L363.6 25.2L362 29.2L360.4 25.2L356.4 23.6L360.4 22L362 18Z" fill="#C9A45A" fill-opacity="0.45"/></svg></div>
             <div style="position:relative;z-index:1;">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;">
-                <div><span class="mono" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:500;color:#C9A45A;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/><path d="M18 4l.6 1.9L20.5 6.5l-1.9.6L18 9l-.6-1.9-1.9-.6 1.9-.6L18 4z"/></svg>Bedtime Routine Order</span><div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-top:3px;color:#F4EFE8;">Overnight Renewal &amp; Moisture Cushion</div></div>
-                <span class="mono" style="font-size:0.74rem;padding:2px 8px;background:rgba(244,239,232,0.1);color:#F4EFE8;">Evening Recovery</span>
+              <div style="margin-bottom:10px;">
+                <span class="mono" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:500;color:#C9A45A;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/><path d="M18 4l.6 1.9L20.5 6.5l-1.9.6L18 9l-.6-1.9-1.9-.6 1.9-.6L18 4z"/></svg>Bedtime Routine Order</span>
+                <div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-top:3px;color:#F4EFE8;">Overnight Renewal &amp; Moisture Cushion</div>
               </div>
               ${pmStepsHtml}
             </div>
