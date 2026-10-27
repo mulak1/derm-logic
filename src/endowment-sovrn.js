@@ -629,6 +629,67 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     }
   };
 
+  window.__dlIngProductMap = {
+    'l-ascorbic-acid': 'skinceuticals-ce-ferulic',
+    'copper-tripeptide-1': 'to-buffet-copper-peptides',
+    'tretinoin': 'rx-tretinoin-005',
+    'niacinamide': 'glossier-super-pure',
+    'glycolic-acid': 'to-glycolic-7-toner',
+    'hyaluronic-acid': 'torriden-dive-in-serum',
+    'azelaic-acid': 'paulas-choice-azelaic-boost',
+    'salicylic-acid': 'paulas-choice-2-bha',
+    'retinol': 'cerave-resurfacing-retinol',
+    'ceramide-np': 'aestura-atobarrier-365',
+    'adapalene': 'differin-adapalene-01',
+    'lactic-acid': 'sunday-riley-good-genes'
+  };
+
+  window.__dlClickIngredientRow = function(ingId, ingName, trEl, ev) {
+    if (ev && ev.target && ev.target.closest && ev.target.closest('a[href]')) return;
+    var pop = document.getElementById('eb-floating-gate-popover');
+    if (pop) pop.style.display = 'none';
+    document.querySelectorAll('tr.dl-ing-row').forEach(function(r) {
+      r.style.background = '';
+      var b = r.querySelector('.dl-row-test-btn');
+      if (b) b.innerHTML = '+ Test in My Shelf &uarr;';
+    });
+    if (trEl) {
+      trEl.style.background = 'var(--sage-bg)';
+      var btn = trEl.querySelector('.dl-row-test-btn');
+      if (btn) btn.innerHTML = '✓ Added to Shelf &middot; Viewing Above &uarr;';
+    }
+    var mappedProdId = window.__dlIngProductMap[ingId] || '';
+    var cb = mappedProdId ? document.querySelector('input[name="routineProduct"][value="' + mappedProdId + '"]') : null;
+    if (cb) {
+      cb.checked = true;
+      var lbl = cb.closest('.prod-check-item');
+      var grid = document.getElementById('productSelectorGrid');
+      if (lbl) {
+        lbl.classList.add('selected');
+        var pill = lbl.querySelector('span.mono');
+        if (pill) {
+          pill.textContent = 'Selected';
+          pill.style.background = 'var(--rose-brand)';
+          pill.style.color = 'var(--accent-ink)';
+        }
+        if (grid) grid.prepend(lbl);
+      }
+    } else if (ingName) {
+      var ta = document.getElementById('rawInciTextarea');
+      if (ta) {
+        var cur = ta.value.trim();
+        if (cur.toLowerCase().indexOf(String(ingName).toLowerCase()) === -1) {
+          ta.value = cur ? (cur + ', ' + ingName) : ingName;
+        }
+      }
+    }
+    if (typeof runRoutineAnalysis === 'function') {
+      runRoutineAnalysis(null, true);
+    } else if (ingId) {
+      window.location.href = '/ingredient/' + encodeURIComponent(ingId);
+    }
+  };
+
   document.addEventListener('click', function(e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href*="products="]') : null;
     if (!a) return;

@@ -260,6 +260,16 @@ async function runVerification() {
     const canvasExists = await page.locator('#lockScreenWallpaperCanvas').count();
     assert.strictEqual(canvasExists, 1, '9:16 HTML5 lock-screen canvas must be present');
 
+    // Verify clicking Row #4 (Niacinamide) in #actives-matrix never opens #eb-floating-gate-popover and cleanly tests the ingredient in the shelf
+    const blurredTableRowsCount = await page.locator('#actives-matrix tr.eb-blurred-deliverable').count();
+    assert.strictEqual(blurredTableRowsCount, 0, 'Zero rows in #actives-matrix should have .eb-blurred-deliverable');
+    await page.click('#actives-matrix tr[data-ing-id="niacinamide"] .dl-row-test-btn');
+    await page.waitForTimeout(180);
+    const popoverVisible = await page.locator('#eb-floating-gate-popover').isVisible();
+    assert.strictEqual(popoverVisible, false, '#eb-floating-gate-popover must NEVER pop up over ingredient rows');
+    const rowBtnText = await page.textContent('#actives-matrix tr[data-ing-id="niacinamide"] .dl-row-test-btn');
+    assert(rowBtnText.includes('Added to Shelf'), `Expected clicked ingredient row button to confirm "Added to Shelf", got "${rowBtnText}"`);
+
     const savedStateBeforeRedirect = await page.evaluate(() => JSON.parse(localStorage.getItem('dermlogic_shelf_state_v1') || '{}'));
     assert.strictEqual(savedStateBeforeRedirect.shelfName, 'Maya Evening Protocol', 'localStorage must persist shelfName');
     assert.strictEqual(savedStateBeforeRedirect.climateMode, 'retinoid_retinization', 'localStorage must persist climateMode');

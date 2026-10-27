@@ -458,7 +458,7 @@ function buildClientRuntimeScript(cfg) {
     if (CFG.moduleId === 'sponsor_radar') { var nd = document.getElementById('res-dm-email'); if (nd && nd.textContent.indexOf('@') !== -1 && nd.textContent.indexOf('***') === -1) { nd.setAttribute('data-raw-email', nd.textContent); var parts = nd.textContent.trim().split('@'); nd.textContent = '[verified-buyer]***@' + (parts[1] || 'brand.com').slice(0, 18) + ' + Agency Desk'; } }
     var isPseoOrDir = pName.indexOf('/seo/') === 0 || pName.indexOf('/tools/') === 0 || pName.indexOf('/compare/') === 0 || pName === '/directory';
     var tbody = document.getElementById('prompt-matrix-tbody') || document.getElementById('res-placements-tbody') || document.querySelector('main table tbody, article table tbody');
-    if (tbody && !window.__ebIsUnlocked && !(isDerm && document.getElementById('eb-inline-row4-unlock'))) {
+    if (tbody && !window.__ebIsUnlocked && !isDerm) {
       var trs = tbody.querySelectorAll('tr');
       for (var r0 = 0; r0 < Math.min(3, trs.length); r0++) {
         if (!trs[r0].hasAttribute('data-eb-live-row')) {
@@ -542,7 +542,7 @@ function buildClientRuntimeScript(cfg) {
     }
     var scoreAnchor = document.querySelector('#liveResultsContainer .score-strip, .telemetry-card .metric-duo, #results-panel .kpi-grid, #radar-results-container .kpi-grid, .panel-elevated .telemetry-grid');
     if ((scoreAnchor || targetEl) && !window.__ebIsUnlocked && !isPseoOrDir) {
-      if (targetEl) targetEl.classList.add('eb-blurred-deliverable');
+      if (targetEl && !isDerm) targetEl.classList.add('eb-blurred-deliverable');
       if (!document.getElementById('eb-postcalc-inline-cta')) {
         var pcCta = document.createElement('div'); pcCta.id = 'eb-postcalc-inline-cta';
         pcCta.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;margin:10px 0;border-radius:10px;background:' + CFG.theme.brandSoftBg + ';font-family:' + CFG.theme.fontSans + ';';
@@ -728,7 +728,7 @@ function buildClientRuntimeScript(cfg) {
   document.addEventListener('click', function(e) {
     var nativeCkBtn = e.target && e.target.closest ? e.target.closest('button[onclick*="startCheckout"]') : null;
     if (nativeCkBtn) { var cEmail = document.getElementById('checkout-email'); if (cEmail && (!cEmail.value || cEmail.value.indexOf('@') === -1)) cEmail.value = 'express-checkout@' + CFG.domain.replace('www.', ''); }
-    if (window.__ebIsUnlocked) return;
+    if (window.__ebIsUnlocked || CFG.moduleId === 'derm_logic') return;
     var btn = e.target && e.target.closest ? e.target.closest('.eb-blurred-deliverable, .pitch-box a[href*="#pricing"], #copy-artifact-btn, #download-artifact-btn, #copy-code-btn, #copy-sdk-btn, button[onclick*="copyCompiledCode"], button[onclick*="downloadCompiledFile"], button[onclick*="copyPitchEmail"]') : null;
     if (!btn) return;
     e.preventDefault(); e.stopPropagation(); window.__ebOpenFloatingGate(btn);
