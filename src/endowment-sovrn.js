@@ -141,27 +141,84 @@ function renderSovrnVglnkScript() {
 </script>`;
 }
 
-function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShelfName = '') {
-  return `<div id="endowmentPersonalizationBar" style="padding:12px 14px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;border-left:2.5px solid var(--rose-brand);">
+function getClimateProtocolMeta(climateMode) {
+  const map = {
+    retinoid_retinization: {
+      badge: 'Retinoid Purge Protocol Active',
+      shortLabel: 'Retinoid Purge Mode',
+      waitBadge: 'Wait 15m · Dry Skin',
+      pmNote: 'Sandwich Method: Apply thin ceramide layer first, wait 15m, apply pea-sized retinoid, then seal with barrier cream.',
+      rule: '15-Minute Dry-Skin Buffer + Ceramide Sandwich Method applied to Bedtime Routine to stop flaking and retinization sting.'
+    },
+    pregnancy_nursing: {
+      badge: 'Pregnancy-Safe Filter Active',
+      shortLabel: 'Pregnancy-Safe Mode',
+      waitBadge: 'Swap Retinoids',
+      pmNote: 'Pregnancy-Safe Note: Pause Tretinoin, Retinol & Adapalene; substitute Azelaic Acid 15% or Bakuchiol peptide serum.',
+      rule: 'Retinoids (Tretinoin, Retinol, Adapalene) and high-dose Salicylic Acid are flagged for swap to Azelaic Acid 15% + Bakuchiol.'
+    },
+    humid_oily: {
+      badge: 'Humid / Dewy Climate Protocol',
+      shortLabel: 'Humid / Dewy Mode',
+      waitBadge: 'Wait 90s · Gel Dry-Down',
+      pmNote: 'Humid Climate Note: Use water-light gel-creams at night and allow 90s full absorption before morning SPF 50.',
+      rule: '90-second water-light serum dry-down applied before SPF 50 to prevent humid-weather shine and makeup pilling.'
+    },
+    indoor_dry: {
+      badge: 'AC / Dry Heat Barrier Protocol',
+      shortLabel: 'AC / Dry Heat Mode',
+      waitBadge: 'Seal in 60s · Damp Skin',
+      pmNote: 'AC / Dry Heat Note: Mist skin before humectant serums and lock in within 60 seconds using a 3:1:1 ceramide cream.',
+      rule: 'Apply watery humectants on mist-dampened skin and seal within 60 seconds with a 3:1:1 ceramide barrier cream.'
+    }
+  };
+  return map[climateMode] || map.indoor_dry;
+}
+
+function formatMonogramHeading(shelfName) {
+  const clean = String(shelfName || '').trim();
+  if (!clean) return 'Your Custom AM & PM Vanity Routine';
+  if (/routine|ritual|shelf/i.test(clean)) return clean;
+  if (/s$/i.test(clean)) return `${clean}' Custom AM & PM Routine`;
+  return `${clean}'s Custom AM & PM Routine`;
+}
+
+function renderPersonalizedResultsHeaderHtml(res) {
+  const shelfName = String((res && res.shelfName) || '').trim();
+  const climateMode = String((res && res.climateMode) || 'indoor_dry').trim();
+  const meta = getClimateProtocolMeta(climateMode);
+  const heading = formatMonogramHeading(shelfName);
+  return `<div id="personalizedRoutineBanner" style="padding:12px 15px;background:var(--bg-canvas);border-left:3px solid var(--rose-brand);margin-bottom:12px;display:flex;flex-direction:column;gap:4px;">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-      <span class="mono" style="font-size:0.8rem;font-weight:600;color:var(--rose-brand);">Step 2 · Personalize Your Climate &amp; Vanity Ritual Card</span>
-      <span id="shelfDraftSavedBadge" class="mono" style="font-size:0.74rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:500;"> Shelf Auto-Saved in Browser</span>
+      <strong id="personalizedRoutineTitle" class="serif-display" style="font-size:1.22rem;color:var(--text-primary);font-weight:600;">${escapeHtml(heading)}</strong>
+      <span id="personalizedClimateBadge" class="badge-safe mono" style="font-size:0.74rem;padding:3px 9px;">${escapeHtml(meta.badge)}</span>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;align-items:center;">
-      <div>
-        <label for="shelfNameInput" class="mono" style="display:block;font-size:0.74rem;color:var(--text-secondary);margin-bottom:3px;">Monogram Your 9:16 Lock-Screen Card (or Client Name)</label>
-        <input id="shelfNameInput" type="text" maxlength="44" class="input-box" style="padding:7px 10px;font-size:0.84rem;" placeholder="e.g., Maya's Evening Barrier Ritual" value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" />
+    <div id="personalizedClimateRule" style="font-size:0.83rem;color:var(--text-secondary);line-height:1.42;">${escapeHtml(meta.rule)}</div>
+  </div>`;
+}
+
+function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShelfName = '') {
+  return `<div id="endowmentPersonalizationBar" style="padding:14px 16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;border-left:2.5px solid var(--rose-brand);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+      <span class="mono" style="font-size:0.8rem;font-weight:600;color:var(--rose-brand);line-height:1.3;">Step 2 · Personalize Your Climate &amp; Vanity Ritual Card</span>
+      <span id="shelfDraftSavedBadge" class="mono" style="font-size:0.74rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:500;">✓ Shelf Auto-Saved in Browser</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;align-items:flex-start;">
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <label for="shelfNameInput" class="mono" style="display:block;font-size:0.75rem;color:var(--text-secondary);line-height:1.35;">Monogram Your Routine &amp; 9:16 Card</label>
+        <input id="shelfNameInput" type="text" maxlength="44" class="input-box" style="padding:8px 10px;font-size:0.85rem;" placeholder="e.g., Kados or Maya's Evening Ritual" value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(typeof runRoutineAnalysis==='function')runRoutineAnalysis(null,true);}" />
       </div>
-      <div>
-        <span class="mono" style="display:block;font-size:0.74rem;color:var(--text-secondary);margin-bottom:3px;">Climate &amp; Barrier Context (Adjusts Wait Times)</span>
-        <div id="climateContextPills" role="group" aria-label="Climate and Barrier Context" style="display:flex;gap:4px;flex-wrap:wrap;">
-          <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="padding:4px 8px;font-size:0.74rem;min-height:28px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry Heat</button>
-          <button type="button" class="vanity-light-btn mono ${initialClimate === 'humid_oily' ? 'active' : ''}" data-climate="humid_oily" aria-pressed="${initialClimate === 'humid_oily' ? 'true' : 'false'}" style="padding:4px 8px;font-size:0.74rem;min-height:28px;" onclick="window.__dlSetClimate('humid_oily', this)">Humid / Dewy</button>
-          <button type="button" class="vanity-light-btn mono ${initialClimate === 'retinoid_retinization' ? 'active' : ''}" data-climate="retinoid_retinization" aria-pressed="${initialClimate === 'retinoid_retinization' ? 'true' : 'false'}" style="padding:4px 8px;font-size:0.74rem;min-height:28px;" onclick="window.__dlSetClimate('retinoid_retinization', this)">Retinoid Purge</button>
-          <button type="button" class="vanity-light-btn mono ${initialClimate === 'pregnancy_nursing' ? 'active' : ''}" data-climate="pregnancy_nursing" aria-pressed="${initialClimate === 'pregnancy_nursing' ? 'true' : 'false'}" style="padding:4px 8px;font-size:0.74rem;min-height:28px;" onclick="window.__dlSetClimate('pregnancy_nursing', this)">Pregnancy-Safe</button>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <span class="mono" style="display:block;font-size:0.75rem;color:var(--text-secondary);line-height:1.35;">Climate &amp; Barrier Mode (Adjusts Wait Times)</span>
+        <div id="climateContextPills" role="group" aria-label="Climate and Barrier Context" style="display:flex;gap:5px;flex-wrap:wrap;">
+          <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="padding:5px 9px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry Heat</button>
+          <button type="button" class="vanity-light-btn mono ${initialClimate === 'humid_oily' ? 'active' : ''}" data-climate="humid_oily" aria-pressed="${initialClimate === 'humid_oily' ? 'true' : 'false'}" style="padding:5px 9px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('humid_oily', this)">Humid / Dewy</button>
+          <button type="button" class="vanity-light-btn mono ${initialClimate === 'retinoid_retinization' ? 'active' : ''}" data-climate="retinoid_retinization" aria-pressed="${initialClimate === 'retinoid_retinization' ? 'true' : 'false'}" style="padding:5px 9px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('retinoid_retinization', this)">Retinoid Purge</button>
+          <button type="button" class="vanity-light-btn mono ${initialClimate === 'pregnancy_nursing' ? 'active' : ''}" data-climate="pregnancy_nursing" aria-pressed="${initialClimate === 'pregnancy_nursing' ? 'true' : 'false'}" style="padding:5px 9px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('pregnancy_nursing', this)">Pregnancy-Safe</button>
         </div>
       </div>
     </div>
+    <div id="analyzeBtnFeedback" role="status" aria-live="polite" style="display:none;padding:9px 12px;background:var(--sage-bg);color:var(--sage-safe);border-left:3px solid var(--sage-safe);font-size:0.82rem;font-weight:500;line-height:1.4;"></div>
   </div>`;
 }
 
@@ -269,6 +326,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
           b.setAttribute('aria-pressed', act ? 'true' : 'false');
         });
       }
+      if (window.__dlSyncPersonalizedHeaderDom) window.__dlSyncPersonalizedHeaderDom();
       if (!hasExplicitProducts || isCheckoutReturn) {
         if (saved.skinType) {
           var skinSel = document.getElementById('skinTypeSelect');
@@ -304,6 +362,49 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     setTimeout(function() { if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas(); }, 80);
   };
 
+  window.__dlFormatMonogramHeading = function(name) {
+    var clean = String(name || '').trim();
+    if (!clean) return 'Your Custom AM & PM Vanity Routine';
+    if (/routine|ritual|shelf/i.test(clean)) return clean;
+    if (/s$/i.test(clean)) return clean + "' Custom AM & PM Routine";
+    return clean + "'s Custom AM & PM Routine";
+  };
+
+  window.__dlClimateMetaMap = {
+    retinoid_retinization: {
+      badge: 'Retinoid Purge Protocol Active',
+      shortLabel: 'Retinoid Purge Mode',
+      rule: '15-Minute Dry-Skin Buffer + Ceramide Sandwich Method applied to Bedtime Routine to stop flaking and retinization sting.'
+    },
+    pregnancy_nursing: {
+      badge: 'Pregnancy-Safe Filter Active',
+      shortLabel: 'Pregnancy-Safe Mode',
+      rule: 'Retinoids (Tretinoin, Retinol, Adapalene) and high-dose Salicylic Acid are flagged for swap to Azelaic Acid 15% + Bakuchiol.'
+    },
+    humid_oily: {
+      badge: 'Humid / Dewy Climate Protocol',
+      shortLabel: 'Humid / Dewy Mode',
+      rule: '90-second water-light serum dry-down applied before SPF 50 to prevent humid-weather shine and makeup pilling.'
+    },
+    indoor_dry: {
+      badge: 'AC / Dry Heat Barrier Protocol',
+      shortLabel: 'AC / Dry Heat Mode',
+      rule: 'Apply watery humectants on mist-dampened skin and seal within 60 seconds with a 3:1:1 ceramide barrier cream.'
+    }
+  };
+
+  window.__dlSyncPersonalizedHeaderDom = function() {
+    var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim();
+    var cMode = window.__dlClimateMode || 'indoor_dry';
+    var meta = window.__dlClimateMetaMap[cMode] || window.__dlClimateMetaMap.indoor_dry;
+    var titleEl = document.getElementById('personalizedRoutineTitle');
+    var badgeEl = document.getElementById('personalizedClimateBadge');
+    var ruleEl = document.getElementById('personalizedClimateRule');
+    if (titleEl) titleEl.textContent = window.__dlFormatMonogramHeading(shelfName);
+    if (badgeEl) badgeEl.textContent = meta.badge;
+    if (ruleEl) ruleEl.textContent = meta.rule;
+  };
+
   window.__dlSetClimate = function(climate, btn) {
     window.__dlClimateMode = climate || 'indoor_dry';
     document.querySelectorAll('#climateContextPills button[data-climate]').forEach(function(b) {
@@ -314,13 +415,66 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
     }
+    window.__dlSyncPersonalizedHeaderDom();
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();
+    if (typeof runRoutineAnalysis === 'function') {
+      runRoutineAnalysis(null, false);
+    }
   };
 
   window.__dlUpdatePersonalization = function() {
+    window.__dlSyncPersonalizedHeaderDom();
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();
+    if (window.__dlNameTimer) clearTimeout(window.__dlNameTimer);
+    window.__dlNameTimer = setTimeout(function() {
+      if (typeof runRoutineAnalysis === 'function') runRoutineAnalysis(null, false);
+    }, 420);
+  };
+
+  window.__dlAfterRoutineAnalysis = function(data, isExplicitClick) {
+    window.__dlSyncPersonalizedHeaderDom();
+    window.__dlSaveShelfState();
+    window.__dlRenderWallpaperCanvas();
+    var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim();
+    var cMode = window.__dlClimateMode || 'indoor_dry';
+    var meta = window.__dlClimateMetaMap[cMode] || window.__dlClimateMetaMap.indoor_dry;
+    var checkedCount = document.querySelectorAll('input[name="routineProduct"]:checked').length;
+    var cCount = ((data && data.conflicts) || []).length;
+    var fb = document.getElementById('analyzeBtnFeedback');
+    if (fb && (isExplicitClick || shelfName || cMode !== 'indoor_dry')) {
+      fb.style.display = 'block';
+      var who = shelfName ? (shelfName + "'s Routine") : 'Your Routine';
+      var clashSummary = cCount === 0 ? '0 Active Clashes' : (cCount + (cCount === 1 ? ' Clash Separated AM/PM' : ' Clashes Separated AM/PM'));
+      fb.innerHTML = '✓ <strong>' + who.replace(/[<>"'&]/g, '') + ' Checked (' + checkedCount + ' Bottles)</strong> &middot; ' + meta.shortLabel + ' Applied &middot; ' + clashSummary + ' &middot; <a href="#liveResultsContainer" onclick="var el=document.getElementById(\\'liveResultsContainer\\');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:\\'smooth\\',block:\\'start\\'});return false;" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;">Jump to Updated Routine &rarr;</a>';
+    }
+    if (isExplicitClick) {
+      var btn = document.getElementById('analyzeBtn');
+      if (btn) {
+        if (window.__dlBtnResetTimer) clearTimeout(window.__dlBtnResetTimer);
+        var btnLabel = shelfName ? ('✓ ' + shelfName.slice(0, 18).replace(/[<>"'&]/g, '') + "'s Shelf Checked · View Routine") : ('✓ Shelf Checked (' + checkedCount + ' Bottles) · Routine Updated');
+        btn.style.background = 'var(--sage-safe)';
+        btn.innerHTML = '<span>' + btnLabel + '</span><span class="btn-icon-circle">&uarr;</span>';
+        window.__dlBtnResetTimer = setTimeout(function() {
+          btn.style.background = '';
+          btn.innerHTML = '<span>Check My Bathroom Shelf</span><span class="btn-icon-circle">&rarr;</span>';
+        }, 2600);
+      }
+      var container = document.getElementById('liveResultsContainer');
+      if (container) {
+        container.style.transition = 'box-shadow 0.35s ease, outline 0.35s ease';
+        container.style.outline = '2px solid var(--rose-brand)';
+        container.style.boxShadow = '0 0 0 5px rgba(122, 35, 50, 0.14)';
+        setTimeout(function() {
+          container.style.outline = '';
+          container.style.boxShadow = '';
+        }, 2200);
+        if (!navigator.webdriver && typeof container.scrollIntoView === 'function') {
+          container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
   };
 
   window.__dlToggleBeforeAfter = function(mode, btn) {
@@ -554,6 +708,8 @@ module.exports = {
   DIRECT_MERCHANT_URLS,
   getSovrnMerchantLink,
   getConflictSafeSwap,
+  getClimateProtocolMeta,
+  renderPersonalizedResultsHeaderHtml,
   renderAboveFoldSovrnDisclosureBar,
   renderSovrnVglnkScript,
   renderPersonalizationBarHtml,

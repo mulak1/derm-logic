@@ -374,7 +374,7 @@ app.get('/api/affiliate', (req, res) => {
 
 // 9. Core Deterministic Clinical INCI & Routine Compatibility API (POST /api/analyze-routine)
 app.post('/api/analyze-routine', async (req, res) => {
-  const { skinType, productIds, rawInciText, includeAiNote, renderHtml, unlocked } = req.body || {};
+  const { skinType, productIds, rawInciText, shelfName, climateMode, includeAiNote, renderHtml, unlocked } = req.body || {};
   const rawResult = analyzeRoutine({ skinType, productIds, rawInciText });
 
   if (includeAiNote) {
@@ -382,6 +382,8 @@ app.post('/api/analyze-routine', async (req, res) => {
   }
   const isUnlocked = req.query?.unlocked === '1' || unlocked === true;
   const payload = isUnlocked ? rawResult : redactRoutineAnalysisForPreview(rawResult);
+  payload.shelfName = String(shelfName || '').trim().slice(0, 44);
+  payload.climateMode = String(climateMode || 'indoor_dry').trim();
   if (renderHtml) {
     payload.renderedHtml = renderAnalysisResultHtml(payload);
   }

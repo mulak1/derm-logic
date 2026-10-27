@@ -2,6 +2,7 @@ const { CULT_PRODUCTS } = require('./clinical-data');
 const {
   getSovrnMerchantLink,
   getConflictSafeSwap,
+  renderPersonalizedResultsHeaderHtml,
   renderAboveFoldSovrnDisclosureBar,
   renderSovrnVglnkScript,
   renderPersonalizationBarHtml,
@@ -395,7 +396,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:4px;">
-            <button type="button" id="analyzeBtn" class="btn-primary" style="flex:1;padding:14px 24px;" onclick="runRoutineAnalysis()">
+            <button type="button" id="analyzeBtn" class="btn-primary" style="flex:1;padding:14px 24px;" onclick="runRoutineAnalysis(null, true)">
               <span>Check My Bathroom Shelf</span>
               <span class="btn-icon-circle">&rarr;</span>
             </button>
@@ -531,9 +532,15 @@ function renderAnalysisResultHtml(res) {
       <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? 'Apply First' : idx === 1 ? 'Wait 60s' : 'Morning SPF'}</span>
     </div>`).join('');
 
+  const cMode = String(res.climateMode || 'indoor_dry');
+  const pmStep2Text = cMode === 'pregnancy_nursing'
+    ? `Pregnancy-Safe Renewal (Swap Retinoids for Azelaic Acid 15% or ${pmPept ? fmtProd(pmPept) : 'Bakuchiol Peptide Serum'})`
+    : cMode === 'retinoid_retinization'
+      ? `Retinoid Purge Sandwich (${pmRetin ? fmtProd(pmRetin) : 'Pea-Sized Retinoid'} · Wait 15m After Cleanse + Buffer over Ceramide Cream)`
+      : (pmRetin ? `Active Renewal Layer (${fmtProd(pmRetin)}${bpoProd ? ' · Buffer with Moisturizer' : ''})` : (pmPept ? `Night Peptide & Barrier Serum (${fmtProd(pmPept)})` : 'Active Renewal Layer (Pea-Sized Retinoid or Peptide Serum)'));
   const pmDynamicSteps = [
     pmExfol ? `Evening Cleanse & Night 1 Exfoliation (${fmtProd(pmExfol)})` : (amCleanse && isBpo(amCleanse) ? `Gentle Evening Cleanse (Non-Medicated Wash · Keep ${amCleanse.brand} in AM)` : 'Gentle Evening Cleanse (Micellar Water or Hydrating Cleanser)'),
-    pmRetin ? `Active Renewal Layer (${fmtProd(pmRetin)}${bpoProd ? ' · Buffer with Moisturizer' : ''})` : (pmPept ? `Night Peptide & Barrier Serum (${fmtProd(pmPept)})` : 'Active Renewal Layer (Pea-Sized Retinoid or Peptide Serum)'),
+    pmStep2Text,
     `Ceramide Barrier Cushion (${pmCream ? fmtProd(pmCream) : '3:1:1 Ceramide Recovery Cream'})`
   ];
   const pmStepsHtml = pmDynamicSteps.map((nightStep, idx) => `
@@ -556,6 +563,7 @@ function renderAnalysisResultHtml(res) {
   return `
     <div class="porcelain-vessel-core" style="height:100%;display:flex;flex-direction:column;justify-content:flex-start;gap:14px;">
       <div>
+        ${renderPersonalizedResultsHeaderHtml(res)}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px;">
           <span class="${badgeClass} mono" style="font-size:0.78rem;">${escapeHtml(topVerdictText)}</span>
           <span class="mono" style="font-size:0.78rem;color:var(--text-secondary);">${escapeHtml(poreSummaryText)}</span>
@@ -745,12 +753,14 @@ const CLIENT_SCRIPT = `
     if (el) el.value = '';
     runRoutineAnalysis();
   }
-  async function runRoutineAnalysis(presetSlug) {
+  async function runRoutineAnalysis(presetSlug, isExplicitClick) {
     const checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map((cb) => cb.value);
     const clrBtn = document.getElementById('topClearShelfBtn');
     if (clrBtn) { clrBtn.style.display = checked.length ? 'inline-block' : 'none'; clrBtn.innerHTML = 'Clear ' + checked.length + ' Selected &times;'; }
     const skinType = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
     const rawInciText = (document.getElementById('rawInciTextarea') || {}).value || '';
+    const shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim();
+    const climateMode = window.__dlClimateMode || 'indoor_dry';
     try {
       const u = new URL(window.location.href);
       if (presetSlug) u.searchParams.set('preset', presetSlug);
@@ -765,7 +775,7 @@ const CLIENT_SCRIPT = `
       const resp = await fetch('/api/analyze-routine', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ skinType, productIds: checked, rawInciText, renderHtml: true })
+        body: JSON.stringify({ skinType, productIds: checked, rawInciText, shelfName, climateMode, renderHtml: true })
       });
       const data = await resp.json();
       window.__DERMLOGIC_LAST_RESULT = data;
@@ -774,13 +784,13 @@ const CLIENT_SCRIPT = `
       const fbBox = document.getElementById('rawInciFeedbackBox');
       const pCard = container ? container.querySelector('#pastedInciCard') : null;
       if (fbBox) fbBox.innerHTML = pCard ? pCard.outerHTML : '';
-      if (window.__dlSaveShelfState) window.__dlSaveShelfState();
-      if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas();
+      if (window.__dlAfterRoutineAnalysis) window.__dlAfterRoutineAnalysis(data, Boolean(isExplicitClick));
       fireMetaCapiEvent('Lead', 0, { compatibilityScore: data.compatibilityScore, conflictsCount: (data.conflicts || []).length });
     } catch (e) {
       console.error('Routine analysis error:', e);
-    } finally {
       if (btn) btn.innerHTML = '<span>Check My Bathroom Shelf</span><span class="btn-icon-circle">&rarr;</span>';
+    } finally {
+      if (btn && !isExplicitClick) btn.innerHTML = '<span>Check My Bathroom Shelf</span><span class="btn-icon-circle">&rarr;</span>';
     }
   }
   function openCheckoutModal(planId) {

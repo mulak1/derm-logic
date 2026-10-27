@@ -237,8 +237,22 @@ async function runVerification() {
     assert(conflictCardsCount >= 2, `Expected >=2 rendered conflict cards on DOM, got ${conflictCardsCount}`);
 
     // Verify Layer A & Pivots: Personalization Bar, Before/After Toggle, 9:16 Lock-Screen Canvas & State Persistence across Stripe Return
-    await page.fill('#shelfNameInput', 'Maya Evening Protocol');
+    await page.fill('#shelfNameInput', 'Kados');
     await page.click('#climateContextPills button[data-climate="retinoid_retinization"]');
+    await page.click('#analyzeBtn');
+    await page.waitForTimeout(200);
+    const personalizedHeading = await page.textContent('#personalizedRoutineTitle');
+    const personalizedBadge = await page.textContent('#personalizedClimateBadge');
+    const analyzeFeedbackText = await page.textContent('#analyzeBtnFeedback');
+    const analyzeBtnTextAfterClick = await page.textContent('#analyzeBtn');
+    assert(personalizedHeading.includes('Kados'), `Expected #personalizedRoutineTitle to include Kados, got "${personalizedHeading}"`);
+    assert(personalizedBadge.includes('Retinoid Purge Protocol Active'), `Expected #personalizedClimateBadge to include Retinoid Purge Protocol Active, got "${personalizedBadge}"`);
+    assert(analyzeFeedbackText.includes('Kados') && analyzeFeedbackText.includes('Retinoid Purge Mode Applied'), `Expected #analyzeBtnFeedback to confirm Kados & Retinoid Purge Mode, got "${analyzeFeedbackText}"`);
+    assert(analyzeBtnTextAfterClick.includes('Shelf Checked'), `Expected #analyzeBtn to show confirmation state after click, got "${analyzeBtnTextAfterClick}"`);
+
+    await page.fill('#shelfNameInput', 'Maya Evening Protocol');
+    await page.click('#analyzeBtn');
+    await page.waitForTimeout(180);
     await page.click('#btnViewClashingStack');
     await page.waitForTimeout(120);
     await page.click('#btnViewFixedSplit');
