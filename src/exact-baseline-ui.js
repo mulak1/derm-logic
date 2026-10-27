@@ -452,7 +452,7 @@ function buildClientRuntimeScript(cfg) {
   window.__ebMountDeliverableCurtain = function(entityOverride, customBadge, customDiagLine) {
     if (entityOverride) window.__ebActiveEntity = String(entityOverride);
     var pName = window.location.pathname || '/', isDerm = CFG.moduleId === 'derm_logic';
-    var isHubOrDir = pName === '/directory' || pName === '/leaderboard' || new RegExp('^/(celebrity|bottle|ingredient|brand|concern)(/|$)').test(pName);
+    var isHubOrDir = pName === '/directory' || pName === '/leaderboard' || new RegExp('^/(celebrity|bottle|ingredient|brand|concern|terms|privacy|editorial-policy|404)(/|$)').test(pName);
     if (pName === '/leaderboard' || (isDerm && isHubOrDir)) return;
     var targetEl = document.getElementById('compiler-code-output') || document.getElementById('res-pitch-body') || document.getElementById('out-sdk-snippet') || document.getElementById('walletConflicts') || document.getElementById('appleWalletCardPreview');
     if (CFG.moduleId === 'sponsor_radar') { var nd = document.getElementById('res-dm-email'); if (nd && nd.textContent.indexOf('@') !== -1 && nd.textContent.indexOf('***') === -1) { nd.setAttribute('data-raw-email', nd.textContent); var parts = nd.textContent.trim().split('@'); nd.textContent = '[verified-buyer]***@' + (parts[1] || 'brand.com').slice(0, 18) + ' + Agency Desk'; } }
@@ -978,9 +978,10 @@ function renderExactBaselineEnhancements(html, cfg, reqPath) {
     if (/<main[\s\S]*?<\/section>/i.test(out)) out = out.replace(/(<main[\s\S]*?<\/section>)/i, (m) => `${m}\n${podiumHtml}`);
     else if (/<\/main>/i.test(out)) out = out.replace(/<\/main>/i, (m) => `${podiumHtml}\n${m}`);
   }
-  if (/<\/main>/i.test(out)) out = out.replace(/<\/main>/i, (m) => `${bottomSuite}\n${m}`);
-  else if (out.includes('</body>')) out = out.replace('</body>', () => `${bottomSuite}\n</body>`);
-  else out = `${out}\n${bottomSuite}`;
+  const isLegalRoute = /^\/(terms|privacy|editorial-policy|404)(\/|$)/.test(reqPath || '');
+  if (!isLegalRoute && /<\/main>/i.test(out)) out = out.replace(/<\/main>/i, (m) => `${bottomSuite}\n${m}`);
+  else if (!isLegalRoute && out.includes('</body>')) out = out.replace('</body>', () => `${bottomSuite}\n</body>`);
+  else if (!isLegalRoute) out = `${out}\n${bottomSuite}`;
   return out.includes('</body>') ? out.replace('</body>', () => `${clientJs}\n</body>`) : `${out}\n${clientJs}`;
 }
 function renderEmbedWidgetHtml(cfg) {

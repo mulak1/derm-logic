@@ -947,16 +947,19 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
 function renderLegalPage({ type }) {
   const isPrivacy = type === 'privacy';
   const title = isPrivacy ? 'Privacy Policy | DermLogic Atelier Céramique' : 'Terms of Service & Formulation Disclaimer | DermLogic';
-  const bodyHtml = `<section class="section-block"><div class="container" style="max-width:840px;"><div class="z-vessel-center"><div class="porcelain-vessel-core"><div>
-    <h1 class="hero-h1" style="font-size:2.4rem;margin-bottom:10px;">${isPrivacy ? 'Privacy Policy & Data Governance' : 'Terms of Service & Educational Formulation Disclaimer'}</h1>
-    <p style="color:var(--text-secondary);margin-bottom:18px;">Last Updated: October 14, 2026 · Contact: concierge@dermlogic.io</p>
-    <div class="bento-cell" style="margin-bottom:14px;">
-      <h2 class="serif-display" style="font-size:1.35rem;margin-bottom:6px;">${isPrivacy ? 'Privacy & Routine Preferences' : 'Skincare Routine Educational Scope'}</h2>
-      <p style="color:var(--text-secondary);font-size:0.9rem;">${isPrivacy ? 'DermLogic checks your pasted ingredient lists and bathroom shelf selections to spot serum clashes, pH gaps, and pore-clogging oils. Optional checkout email addresses are used solely to deliver your Routine Ritual PDF and 9:16 Phone Lock-Screen Card.' : 'DermLogic provides cosmetic chemistry guidance (verified skin pH compatibility, active ingredient stability, and pore-safety scores) for educational skincare planning. It does not replace individualized medical diagnosis by a board-certified dermatologist.'}</p>
-    </div>
-    <div class="bento-cell">
-      <h2 class="serif-display" style="font-size:1.35rem;margin-bottom:6px;">${isPrivacy ? 'GDPR / CCPA Rights, Cookie Controls & Retailer Disclosures' : '30-Day Harmony Guarantee & Self-Serve Fulfillment'}</h2>
-      <p style="color:var(--text-secondary);font-size:0.9rem;">${isPrivacy ? 'Visitors may reject non-essential analytics via the Cookie Consent ribbon at any time and request complete deletion of order or telemetry records by emailing concierge@dermlogic.io. Verified retailer links to Dermstore and Sephora include sponsored affiliate tags.' : 'All $1.99 Single-Routine Passes, $4.99 Complete Routine Kits, and $19.99/yr Unlimited Shelf Passes include an unconditional 30-day satisfaction guarantee.'}</p>
+  const bodyHtml = `<section class="section-block" style="padding-top:36px;"><div class="container"><div class="z-vessel-center"><div class="porcelain-vessel-core" style="padding:36px 40px;"><div>
+    <span class="badge-safe mono" style="margin-bottom:10px;">${isPrivacy ? 'Privacy &amp; Data Protection' : 'Terms of Service &amp; Educational Scope'}</span>
+    <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.6vw,3.2rem);margin-bottom:10px;max-width:none;">${isPrivacy ? 'Privacy Policy &amp; Data Governance' : 'Terms of Service &amp; Educational Formulation Disclaimer'}</h1>
+    <p style="color:var(--text-secondary);margin-bottom:24px;max-width:none;">Last Updated: October 27, 2026 &middot; Contact: <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a> &middot; Publication: <strong>https://www.dermlogic.io</strong></p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
+      <div class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;">
+        <h2 class="serif-display" style="font-size:1.4rem;margin-bottom:8px;">${isPrivacy ? '1. Privacy &amp; Routine Preferences' : '1. Skincare Routine Educational Scope'}</h2>
+        <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.62;max-width:none;">${isPrivacy ? 'DermLogic checks your pasted ingredient lists and bathroom shelf selections in real time to spot serum clashes, pH gaps, and pore-clogging oils. Pre-checkout routine selections are stored locally in your browser (localStorage) so your shelf remains intact across sessions. Optional checkout email addresses are used solely to deliver your Routine Ritual PDF and 9:16 Phone Lock-Screen Card.' : 'DermLogic provides cosmetic chemistry guidance (verified skin pH compatibility, active ingredient stability, and EU CosIng pore-safety scores) for educational skincare planning. Content published on DermLogic is authored for informational cosmetic-chemistry purposes and does not replace individualized medical diagnosis or prescription treatment by a board-certified dermatologist.'}</p>
+      </div>
+      <div class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;">
+        <h2 class="serif-display" style="font-size:1.4rem;margin-bottom:8px;">${isPrivacy ? '2. GDPR / CCPA Rights, Cookies &amp; Retail Links' : '2. 30-Day Guarantee, Self-Serve Fulfillment &amp; Retail Links'}</h2>
+        <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.62;max-width:none;">${isPrivacy ? 'Visitors may reject non-essential analytics via the Cookie Consent ribbon at any time and request complete deletion of order or telemetry records by emailing concierge@dermlogic.io. Outbound product links to authorized retailers (including Sephora, Dermstore, Ulta Beauty, and Amazon) include rel="sponsored" attributes and may earn an affiliate commission at no additional cost to you.' : 'All $0.99 Lock-Screen Cards, $1.99 Single-Routine Passes, $4.99 Complete Routine Kits, and $19.99/yr Unlimited Shelf Passes are fulfilled immediately in the browser and include an unconditional 30-day satisfaction guarantee. Outbound links to authorized retail partners may earn an affiliate commission as detailed in our Editorial &amp; FTC Policy.'}</p>
+      </div>
     </div>
   </div></div></div></div></section>`;
   return renderBaseDocument({ title, description: title, canonicalPath: isPrivacy ? '/privacy' : '/terms', ogSlug: type, jsonLdObjects: [], hideNav: false, bodyHtml });

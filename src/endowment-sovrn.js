@@ -710,42 +710,44 @@ const ENDOWMENT_CLIENT_SCRIPT = `
 function renderEditorialPolicyPage({ renderBaseDocument }) {
   const title = 'Editorial Policy, Cosmetic Chemistry Review Board & FTC Affiliate Disclosure | DermLogic';
   const description = 'DermLogic editorial standards, cosmetic chemistry formulation review methodology (Henderson-Hasselbalch pKa, EU CosIng comedogenicity), and FTC / Sovrn Commerce affiliate disclosure.';
-  const bodyHtml = `<section class="section-block" style="padding-top:32px;">
-    <div class="container" style="max-width:920px;">
-      <div class="porcelain-vessel-core" style="padding:32px 36px;background:var(--bg-surface);gap:20px;">
+  const bodyHtml = `<section class="section-block" style="padding-top:36px;">
+    <div class="container">
+      <div class="porcelain-vessel-core" style="padding:36px 40px;background:var(--bg-surface);gap:22px;">
         <div>
           <span class="badge-safe mono" style="margin-bottom:10px;">Editorial Governance &amp; Network Quality Verification</span>
-          <h1 class="hero-h1" style="font-size:clamp(2.1rem,3.6vw,3.1rem);margin-bottom:10px;">Editorial Policy, Formulation Methodology &amp; FTC Affiliate Disclosure</h1>
-          <p style="color:var(--text-secondary);font-size:0.94rem;">Last Reviewed: October 27, 2026 &middot; Editorial Contact: <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a> &middot; Publication Domain: <strong>https://www.dermlogic.io</strong></p>
+          <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.6vw,3.2rem);margin-bottom:10px;max-width:none;">Editorial Policy, Formulation Methodology &amp; FTC Affiliate Disclosure</h1>
+          <p style="color:var(--text-secondary);font-size:0.94rem;max-width:none;">Last Reviewed: October 27, 2026 &middot; Editorial Contact: <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a> &middot; Publication Domain: <strong>https://www.dermlogic.io</strong></p>
         </div>
 
-        <div class="bento-cell" style="background:var(--bg-oat);padding:22px 24px;">
-          <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">1. Cosmetic Chemistry &amp; Esthetics Review Board</h2>
-          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;margin-bottom:10px;">
-            DermLogic Atelier C&eacute;ramique is an independent skincare formulation and routine-compatibility publication. Every ingredient pairing guide, cult bottle teardown, and 4-night skin-cycling schedule is authored and audited against peer-reviewed cosmetic chemistry literature:
-          </p>
-          <ul style="padding-left:20px;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;">
-            <li><strong>Dr. Camille Laurent, PhD (Cosmetic Formulation Lead):</strong> Specializes in Henderson-Hasselbalch $\\text{p}K_a$ free-acid bioavailability, L-Ascorbic Acid oxidation kinetics, and peptide chelation stability.</li>
-            <li><strong>Elena Rostova, LE (Senior Licensed Master Esthetician):</strong> Specializes in post-retinoid barrier recovery, perioral dermatitis protocols, and 3:1:1 ceramide-cholesterol-fatty acid lipid ratios.</li>
-            <li><strong>Primary Scientific Sources:</strong> European Commission CosIng Annex Database, <em>Journal of Investigative Dermatology</em> (500-Dalton Rule &amp; stratum corneum pH gradients), and <em>International Journal of Cosmetic Science</em>.</li>
-          </ul>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px;">
+          <div class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;">
+            <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">1. Cosmetic Chemistry &amp; Esthetics Review Board</h2>
+            <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;margin-bottom:10px;max-width:none;">
+              DermLogic Atelier C&eacute;ramique is an independent skincare formulation and routine-compatibility publication. Every ingredient pairing guide, cult bottle teardown, and 4-night skin-cycling schedule is authored and audited against peer-reviewed cosmetic chemistry literature:
+            </p>
+            <ul style="padding-left:20px;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;">
+              <li><strong>Dr. Camille Laurent, PhD (Cosmetic Formulation Lead):</strong> Specializes in Henderson-Hasselbalch $\\text{p}K_a$ free-acid bioavailability, L-Ascorbic Acid oxidation kinetics, and peptide chelation stability.</li>
+              <li><strong>Elena Rostova, LE (Senior Licensed Master Esthetician):</strong> Specializes in post-retinoid barrier recovery, perioral dermatitis protocols, and 3:1:1 ceramide-cholesterol-fatty acid lipid ratios.</li>
+              <li><strong>Primary Scientific Sources:</strong> European Commission CosIng Annex Database, <em>Journal of Investigative Dermatology</em> (500-Dalton Rule &amp; stratum corneum pH gradients), and <em>International Journal of Cosmetic Science</em>.</li>
+            </ul>
+          </div>
+
+          <div id="affiliate-disclosure" class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;border-left:3px solid var(--rose-brand);">
+            <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">2. FTC &amp; Retail Affiliate Disclosure</h2>
+            <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;margin-bottom:10px;max-width:none;">
+              In compliance with the U.S. Federal Trade Commission (FTC) 16 CFR Part 255 Guides Concerning the Use of Endorsements and Testimonials in Advertising and affiliate network quality guidelines:
+            </p>
+            <ul style="padding-left:20px;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;">
+              <li><strong>Above-the-Fold Disclosure on Every Page:</strong> Every page on DermLogic features a clear, conspicuous disclosure bar at the top of the viewport before any outbound merchant link appears.</li>
+              <li><strong>Authorized Retail Partners:</strong> Outbound product links to authorized retailers including <strong>Sephora</strong>, <strong>Dermstore</strong>, <strong>Ulta Beauty</strong>, and <strong>Amazon</strong> may earn DermLogic a referral commission via Sovrn Commerce (VigLink) or direct merchant programs at zero additional cost to the reader.</li>
+              <li><strong>100% Editorial Independence:</strong> Retailers and skincare brands cannot pay to alter a product&rsquo;s pH readout, comedogenicity score (0 to 5), Malassezia fungal-acne flag, or active conflict verdict. Every clash card always provides a <strong>$0 behavioral timing fix first</strong> alongside optional barrier-safe product swaps.</li>
+            </ul>
+          </div>
         </div>
 
-        <div id="affiliate-disclosure" class="bento-cell" style="background:var(--bg-oat);padding:22px 24px;border-left:3px solid var(--rose-brand);">
-          <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">2. FTC &amp; Sovrn Commerce Affiliate Disclosure</h2>
-          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;margin-bottom:10px;">
-            In compliance with the U.S. Federal Trade Commission (FTC) 16 CFR Part 255 Guides Concerning the Use of Endorsements and Testimonials in Advertising and Sovrn Commerce Network Quality guidelines:
-          </p>
-          <ul style="padding-left:20px;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;">
-            <li><strong>Above-the-Fold Disclosure on Every Page:</strong> Every page on DermLogic features a clear, conspicuous disclosure bar at the top of the viewport before any outbound merchant link appears.</li>
-            <li><strong>Authorized Retail Partners:</strong> Outbound product links to authorized retailers including <strong>Sephora</strong>, <strong>Dermstore</strong>, <strong>Ulta Beauty</strong>, and <strong>Amazon</strong> may earn DermLogic a referral commission via Sovrn Commerce (VigLink) or direct merchant programs at zero additional cost to the reader.</li>
-            <li><strong>100% Editorial Independence:</strong> Retailers and skincare brands cannot pay to alter a product&rsquo;s pH readout, comedogenicity score (0 to 5), Malassezia fungal-acne flag, or active conflict verdict. Every clash card always provides a <strong>$0 behavioral timing fix first</strong> (such as separating conflicting bottles into Morning and Bedtime routines) alongside optional barrier-safe product swaps.</li>
-          </ul>
-        </div>
-
-        <div class="bento-cell" style="background:var(--bg-oat);padding:22px 24px;">
+        <div class="bento-cell" style="background:var(--bg-oat);padding:22px 26px;">
           <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">3. Medical Disclaimer &amp; Publisher Verification</h2>
-          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;">
+          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;max-width:none;">
             Content published on DermLogic is for informational and educational cosmetic-chemistry purposes only and does not constitute medical advice, diagnosis, or prescription dermatology treatment. For affiliate network inquiries, press, or formulation corrections, contact our editorial desk at <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a>.
           </p>
         </div>
