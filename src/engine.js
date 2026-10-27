@@ -429,7 +429,7 @@ function analyzeRoutine(params = {}) {
     if (ing.comedogenicity > 0) {
       weightedComedogenicSum += ing.comedogenicity * posWeight * 7.5;
     }
-    if (ing.comedogenicity >= 2) {
+    if (ing.comedogenicity >= 3 || (ing.comedogenicity === 2 && ing.category === 'emollient_hazard' && item.positionIndex <= 7)) {
       comedogenicFlags.push({
         inciName: ing.inciName,
         commonName: ing.commonName,
@@ -463,10 +463,10 @@ function analyzeRoutine(params = {}) {
   let verdictLabel = 'Calm & Balanced Routine';
   if (criticalCount > 0 || compatibilityScore < 50) {
     verdictStatus = 'CRITICAL_CLASH';
-    verdictLabel = 'Serums Cancel Out · Split Morning & Night';
+    verdictLabel = 'Serums Cancel Out · Split AM & PM';
   } else if (moderateCount > 0 || compatibilityScore < 76) {
     verdictStatus = 'MODERATE_CAUTION';
-    verdictLabel = 'Wait Between Layers · Mild Stinging Risk';
+    verdictLabel = 'Space Apart · Mild Stinging Risk';
   }
 
   // Deterministic AM / PM & 4-Night Skin-Cycling Calendar Synthesis
