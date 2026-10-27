@@ -305,7 +305,6 @@ function renderCelebrityIndexPage() {
           <span class="badge-safe mono" style="margin-right:8px;">+1 New Iconic Routine Every Day</span>
           <span style="font-size:0.9rem;color:var(--text-primary);">Today’s Featured Addition: <a href="/celebrity/${escapeHtml(latestDaily.slug)}" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">${escapeHtml(latestDaily.name)} (${escapeHtml(latestDaily.moniker)})</a> · <a href="${escapeHtml(latestDaily.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:0.78rem;color:var(--text-secondary);text-decoration:underline;">Source: ${escapeHtml(latestDaily.sourcePublication)} &#8599;</a></span>
         </div>
-        ${drip.nextQueued ? `<span class="mono" style="font-size:0.8rem;color:var(--text-secondary);">Tomorrow’s Queued Routine: ${escapeHtml(drip.nextQueued.name)} (${drip.remainingCount} in daily queue)</span>` : ''}
       </div>
       <div id="celebrity-index-editorial-disclosure" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:12px 16px;margin-bottom:22px;gap:4px;">
         <div class="mono" style="font-size:11.5px;color:var(--rose-brand);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">Editorial Independence, Non-Endorsement &amp; Source Attribution</div>
@@ -632,20 +631,27 @@ function renderBottleDetailPage(prod) {
   const partner = prod.priceUsd >= 50 ? 'dermstore' : 'sephora';
   const isNightOnly = prod.category.toLowerCase().includes('retin') || prod.category.toLowerCase().includes('peel') || prod.ph < 3.7 && prod.id.includes('glycolic');
   const timingSlot = isNightOnly ? '9:30 PM · Bedtime Routine Only (Wear SPF Next Morning)' : (prod.ph <= 3.6 ? '7:30 AM · Morning First Layer on Dry Skin (Wait 60s)' : 'Morning & Bedtime Friendly');
+  const shortBottleName = String(prod.name).replace(/\s*\(.*?\)/g, '').trim();
 
   const bodyHtml = `<section class="section-block" style="padding-top:16px;">
     <div class="container">
       ${renderSiloNavStrip('bottle')}
-      <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:28px 32px;margin-bottom:26px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
-          <a href="/brand/${slugifyBrand(prod.brand)}" class="badge-safe mono" style="text-decoration:none;">Brand Hub: ${escapeHtml(prod.brand)} &rarr;</a>
-          <span class="mono" style="font-size:0.86rem;color:var(--rose-brand);font-weight:500;">${escapeHtml(prod.category)} · pH ${prod.ph} · $${prod.priceUsd}</span>
+      <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:28px 32px;margin-bottom:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:center;">
+        <div>
+          <h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,2.9rem);margin-bottom:10px;">${escapeHtml(prod.brand)} ${escapeHtml(shortBottleName)}</h1>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+            <a href="/brand/${slugifyBrand(prod.brand)}" class="badge-safe mono" style="text-decoration:none;">Brand Hub: ${escapeHtml(prod.brand)} &rarr;</a>
+            <span class="mono" style="font-size:0.86rem;color:var(--rose-brand);font-weight:500;">${escapeHtml(prod.category)} · pH ${prod.ph} · $${prod.priceUsd}</span>
+          </div>
+          <p class="hero-sub" style="margin-bottom:18px;">${escapeHtml(prod.summary)}</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="/?products=${escapeHtml(prod.id)}#analyzer" class="btn-primary"><span>Test This Bottle with My Shelf</span><span class="btn-icon-circle">&rarr;</span></a>
+            <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="btn-secondary"><span>Shop at ${partner === 'dermstore' ? 'Dermstore' : 'Sephora'} ($${prod.priceUsd}) &rarr;</span></a>
+          </div>
         </div>
-        <h1 class="hero-h1" style="font-size:clamp(2rem,3.6vw,3.1rem);margin-bottom:12px;">${escapeHtml(prod.brand)} ${escapeHtml(prod.name)}: Layering Order, Clashes &amp; Dupes</h1>
-        <p class="hero-sub" style="margin-bottom:18px;">${escapeHtml(prod.summary)}</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="/?products=${escapeHtml(prod.id)}#analyzer" class="btn-primary"><span>Test This Bottle with My Shelf</span><span class="btn-icon-circle">&rarr;</span></a>
-          <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="btn-secondary"><span>Shop at ${partner === 'dermstore' ? 'Dermstore' : 'Sephora'} ($${prod.priceUsd}) &rarr;</span></a>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <img src="/public/editorial-dossier.jpg" alt="${escapeHtml(prod.brand)} ${escapeHtml(shortBottleName)} formulation lab dossier" loading="eager" style="width:100%;height:190px;object-fit:cover;border-radius:10px;" />
+          <img src="${isNightOnly ? '/public/editorial-woman-evening.jpg' : '/public/editorial-woman-morning.jpg'}" alt="${escapeHtml(prod.brand)} ${escapeHtml(shortBottleName)} vanity layering ritual" loading="lazy" style="width:100%;height:190px;object-fit:cover;border-radius:10px;" />
         </div>
       </div>
 
@@ -723,15 +729,21 @@ function renderIngredientDetailPage(ing) {
   const bodyHtml = `<section class="section-block" style="padding-top:16px;">
     <div class="container">
       ${renderSiloNavStrip('ingredient')}
-      <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:28px 32px;margin-bottom:26px;">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-          <span class="badge-safe mono">Optimal pH ${ing.phMin}–${ing.phMax}</span>
-          <span class="badge-safe mono">Pore-Clog Score: ${ing.comedogenicity}/5</span>
-          <span class="mono" style="font-size:0.82rem;color:var(--text-secondary);">Pregnancy: ${escapeHtml(ing.pregnancySafe)} · Fungal Acne: ${ing.malasseziaTrigger ? 'Trigger' : '100% Safe'}</span>
+      <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:28px 32px;margin-bottom:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:center;">
+        <div>
+          <h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,2.9rem);margin-bottom:10px;">${escapeHtml(ing.commonName)} Layering Guide</h1>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+            <span class="badge-safe mono">Optimal pH ${ing.phMin}–${ing.phMax}</span>
+            <span class="badge-safe mono">Pore-Clog Score: ${ing.comedogenicity}/5</span>
+            <span class="mono" style="font-size:0.82rem;color:var(--text-secondary);">INCI: ${escapeHtml(ing.inciName)} · Fungal Acne: ${ing.malasseziaTrigger ? 'Trigger' : '100% Safe'}</span>
+          </div>
+          <p class="hero-sub" style="margin-bottom:16px;"><strong>Role:</strong> ${escapeHtml(ing.functionRole)}. ${escapeHtml(ing.clinicalMechanism)}</p>
+          <a href="/?inci=${encodeURIComponent(ing.inciName)}#analyzer" class="btn-primary"><span>Test ${escapeHtml(ing.commonName)} in Routine Checker</span><span class="btn-icon-circle">&rarr;</span></a>
         </div>
-        <h1 class="hero-h1" style="font-size:clamp(2rem,3.6vw,3.1rem);margin-bottom:10px;">${escapeHtml(ing.commonName)} (${escapeHtml(ing.inciName)}): Layering &amp; Bottles</h1>
-        <p class="hero-sub" style="margin-bottom:16px;"><strong>Role:</strong> ${escapeHtml(ing.functionRole)}. ${escapeHtml(ing.clinicalMechanism)}</p>
-        <a href="/?inci=${encodeURIComponent(ing.inciName)}#analyzer" class="btn-primary"><span>Test ${escapeHtml(ing.commonName)} in Routine Checker</span><span class="btn-icon-circle">&rarr;</span></a>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <img src="/public/editorial-dossier.jpg" alt="${escapeHtml(ing.commonName)} clinical pH and INCI dossier" loading="eager" style="width:100%;height:185px;object-fit:cover;border-radius:10px;" />
+          <img src="/public/editorial-woman-morning.jpg" alt="${escapeHtml(ing.commonName)} morning and evening routine compatibility" loading="lazy" style="width:100%;height:185px;object-fit:cover;border-radius:10px;" />
+        </div>
       </div>
 
       <h2 class="serif-display" style="font-size:1.6rem;margin-bottom:14px;">Cult Bottles Formulated with ${escapeHtml(ing.commonName)} (${bottles.length})</h2>
@@ -896,25 +908,53 @@ function getAllSemanticHubUrls(hostUrl) {
   return urls;
 }
 
+function findFuzzyItem(list, rawSlug, getSearchText) {
+  const q = String(rawSlug || '').toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '');
+  if (!q) return null;
+  const direct = list.find((item) => item.id === q || item.slug === q || q.startsWith(`${item.id || item.slug}-`) || String(item.id || item.slug).startsWith(`${q}-`));
+  if (direct) return direct;
+  const tokens = q.split('-').filter((t) => t.length > 2);
+  let best = null, bestScore = 0;
+  for (const item of list) {
+    const hay = getSearchText(item).toLowerCase();
+    const score = tokens.reduce((acc, tok) => acc + (hay.includes(tok) ? 1 : 0), 0);
+    if (score > bestScore && score >= Math.min(2, tokens.length)) { best = item; bestScore = score; }
+  }
+  return best;
+}
+
 function attachSemanticSeoHubs(app, render404Page) {
   app.get(['/celebrity', '/celebrities'], (req, res) => res.status(200).type('html').send(renderCelebrityIndexPage()));
   app.get('/celebrity/:slug', (req, res) => {
-    const celeb = getAllCelebrityRoutines().find((c) => c.slug === req.params.slug);
-    if (!celeb) return res.status(404).type('html').send(render404Page ? render404Page() : 'Not found');
+    const celebs = getAllCelebrityRoutines();
+    const celeb = celebs.find((c) => c.slug === req.params.slug);
+    if (!celeb) {
+      const fuzzy = findFuzzyItem(celebs, req.params.slug, (c) => `${c.slug} ${c.name}`);
+      if (fuzzy) return res.redirect(301, `/celebrity/${fuzzy.slug}`);
+      return res.status(404).type('html').send(render404Page ? render404Page() : 'Not found');
+    }
     res.status(200).type('html').send(renderCelebrityDetailPage(celeb));
   });
 
   app.get(['/bottle', '/bottles'], (req, res) => res.status(200).type('html').send(renderBottleIndexPage()));
   app.get('/bottle/:slug', (req, res) => {
     const prod = CULT_PRODUCTS.find((p) => p.id === req.params.slug);
-    if (!prod) return res.status(404).type('html').send(render404Page ? render404Page() : 'Not found');
+    if (!prod) {
+      const fuzzy = findFuzzyItem(CULT_PRODUCTS, req.params.slug, (p) => `${p.id} ${p.brand} ${p.name}`);
+      if (fuzzy) return res.redirect(301, `/bottle/${fuzzy.id}`);
+      return res.status(404).type('html').send(render404Page ? render404Page() : 'Not found');
+    }
     res.status(200).type('html').send(renderBottleDetailPage(prod));
   });
 
   app.get(['/ingredient', '/ingredients'], (req, res) => res.status(200).type('html').send(renderIngredientIndexPage()));
   app.get('/ingredient/:slug', (req, res) => {
     const ing = CLINICAL_INGREDIENTS.find((a) => a.id === req.params.slug);
-    if (!ing) return res.status(404).type('html').send(render404Page ? render404Page() : 'Not found');
+    if (!ing) {
+      const fuzzy = findFuzzyItem(CLINICAL_INGREDIENTS, req.params.slug, (a) => `${a.id} ${a.commonName} ${a.inciName}`);
+      if (fuzzy) return res.redirect(301, `/ingredient/${fuzzy.id}`);
+      return res.status(404).type('html').send(render404Page ? render404Page() : 'Not found');
+    }
     res.status(200).type('html').send(renderIngredientDetailPage(ing));
   });
 
