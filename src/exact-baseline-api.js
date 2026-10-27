@@ -136,60 +136,60 @@ const VERTICAL_CONFIGS = {
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMrIaoGnkXxS82T5cPcjM',
     corePriceEnv: 'STRIPE_PRICE_CREATOR_49', corePriceUsd: 49, coreLabel: 'Complete Creator Sponsor Database ($49/mo)',
     proPriceEnv: 'STRIPE_PRICE_AGENCY_199', proPriceUsd: 199, proLabel: 'Agency & Media-Buyer Pro Feed ($199/mo)',
-    lockedTitle: 'Verified Sponsor Partnership Contacts',
-    deliverableName: 'Verified Sponsor Contact Email + Ready-to-Send Pitch + Full Ad Rate Table',
-    freeDeliverableName: 'Verified Sponsor Contact & 3-Ad Pilot Pitch Pack',
-    unlockBannerTitle: 'Verified Sponsor Emails & Rates',
-    explainerText: 'See which sponsors booked 3+ repeat ads, what they paid, and who to email on their partnerships team',
+    lockedTitle: 'Verified Sponsor & Show Rate-Card Contacts (88 Direct Emails)',
+    deliverableName: '88 Verified Brand & Show Contacts (.CSV) + 96-Flight Rate-Card Floor Ledger (.CSV) + Counter-Offer & Pilot Scripts (.EML)',
+    freeDeliverableName: '88 Brand & Show Contacts + Rate-Card Floor & Counter-Offer Pack',
+    unlockBannerTitle: 'Verified Sponsor Contacts, Show Rate Floors & Counter-Offer Scripts',
+    explainerText: 'See which sponsors renewed 3+ times, audit -18% 3-flight floor CPMs vs. rack rates, and unlock 88 direct buyer & show booking rep emails',
     hudLabel: 'Media Buyer HUD', redditSub: 'podcasting',
     sliderLabel: 'Bookings', sliderMin: 1, sliderMax: 30, sliderVal: 14,
-    searchPlaceholder: 'Search sponsor or show (e.g. HubSpot)...',
-    tier1Tag: 'SINGLE-SPONSOR PITCH PASS • SAVE 96% VS $49',
-    tier1Desc: 'Instantly unlocks the verified partnerships contact email, ready-to-send 3-ad pilot pitch (.EML), and full show rate table (.CSV).',
+    searchPlaceholder: 'Search sponsor or show (e.g. HubSpot, Indie Hackers)...',
+    tier1Tag: 'SINGLE-AUDIT BUYER & CREATOR PASS • SAVE 96% VS $49',
+    tier1Desc: 'Instantly unlocks 88 verified brand buyer & show booking rep emails (.CSV), 96-flight negotiated CPM floor ledger (.CSV), and ready-to-send 3-flight counter-offer & pilot scripts (.EML). Includes Ramp/Brex expense receipt.',
     tier2Tag: 'CREATOR PRO SPONSOR DATABASE',
-    tier2Desc: 'Full access to 42+ active sponsor brands, 46+ top shows, verified partnership contacts, and unlimited pitch templates.',
+    tier2Desc: 'Full access to 42 active sponsor brands, 46 flagship shows, 88 verified contacts, weekly new-sponsor alerts, and unlimited pitch templates.',
     tier3Tag: 'AGENCY & MEDIA BUYER FEED',
-    tier3Desc: '5 team seats, competitor promo-code tracking, negotiated ad rate benchmarks, and instant CSV exports for your CRM.',
+    tier3Desc: '5 team seats, live show rate-card floor benchmarks (-18% vs rack), competitor promo-code tracking, and instant CSV exports for your media plan.',
     battlecard: {
       heading: 'Why Media Buyers & Creators Choose SponsorRadar Over Ad Networks',
       colLegacy: '25%-Fee Ad Networks', colManual: 'Guessing from Media Kits',
       rows: [
-        ['Proof That Ads Actually Convert', 'Shows sponsors that renewed 3 to 24 times on the same show', 'Pushes untested 1-time ad slots', 'No way to know if a sponsor lost money'],
-        ['Direct Sponsor Outreach', 'Verified partnerships email + ready-to-send pitch email', 'Takes 20%–30% commission middleman cut', 'Cold emailing generic info@ addresses'],
-        ['Simple Pricing', '$1.99 Single-Sponsor Pass or $49/mo Creator Pro', 'Takes thousands in commission fees', 'Weeks of listening to episodes by hand']
+        ['Proof That Ads Actually Convert', 'Tracks 96+ placements that renewed 3 to 18 times on the same show', 'Pushes untested 1-time ad slots (68% churn)', 'No way to know if a sponsor lost money'],
+        ['Rate-Card Floor & Direct Contacts', '88 verified buyer/show emails + -18% 3-flight floor counter-offer script', 'Takes 20%–30% middleman commission cut', 'Paying inflated rack rates or cold-emailing info@'],
+        ['Simple Pricing & Expense Receipt', '$1.99 One-Time 3-File Pass or $49–$199/mo Team Feed', 'Takes thousands in agency retainer fees', 'Weeks of manual transcript & promo tracking']
       ]
     },
     exportActions: [
-      { id: 'btn-copy-shopping-list', label: 'Copy Pitch Summary', type: 'copy' },
-      { id: 'btn-export-csv', label: 'Export Ad Rates (.CSV)', href: '/api/github-upgrade/export.csv' },
-      { id: 'btn-export-llms', label: 'Download Pitch Email (.EML)', href: '/api/github-upgrade/pitch.eml' },
-      { id: 'btn-export-ics', label: 'Follow-Up Reminder (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
+      { id: 'btn-copy-shopping-list', label: 'Copy Rate & Pitch Summary', type: 'copy' },
+      { id: 'btn-export-csv', label: 'Export 96-Flight Rates (.CSV)', href: '/api/github-upgrade/export.csv' },
+      { id: 'btn-export-llms', label: 'Download Counter-Offer / Pitch (.EML)', href: '/api/github-upgrade/pitch.eml' },
+      { id: 'btn-export-ics', label: 'Protocol & Rate Dossier (.TXT)', href: '/api/github-upgrade/llms-bundle.txt' },
       { id: 'btn-print-summary', label: 'Print Rate Card PDF', type: 'print' },
       { id: 'btn-showroom-hud', label: 'Media Buyer HUD', type: 'hud' },
       { id: 'btn-cmdk-trigger', label: '⌘K Actions', type: 'cmdk' },
-      { id: 'btn-reddit-share', label: 'Copy Creator Post', type: 'reddit' }
+      { id: 'btn-reddit-share', label: 'Copy Benchmark Post', type: 'reddit' }
     ],
     kpis: [
       { label: 'Repeat Renewal Score', val: '95/100', sub: '3+ Repeat Bookings' },
       { label: 'Est. Monthly Ad Spend', val: '$680,000', sub: 'Across Tracked Shows' },
-      { label: 'Avg Ad Rate (CPM)', val: '$46.50', sub: 'Cost Per 1,000 Listeners' },
-      { label: 'Host-Read Lift', val: '1.44x', sub: 'vs. Pre-Recorded Ads' }
+      { label: 'Rack vs. 3x Floor CPM', val: '$46 / $38', sub: '-18% Negotiated 3-Flight Floor' },
+      { label: 'Host-Read CTR Lift', val: '1.8% CTR', sub: '~$2.11 Implied Floor CPC' }
     ],
     presetKpis: {
-      'ag1': ['98/100', '$1,420,000', '$42.00', '1.48x'], 'AG1': ['98/100', '$1,420,000', '$42.00', '1.48x'],
-      'deel': ['95/100', '$680,000', '$46.50', '1.44x'], 'Deel': ['95/100', '$680,000', '$46.50', '1.44x'],
-      'linear': ['91/100', '$310,000', '$39.00', '1.39x'], 'Linear': ['91/100', '$310,000', '$39.00', '1.39x'],
-      'ramp': ['96/100', '$790,000', '$48.00', '1.46x'], 'Ramp': ['96/100', '$790,000', '$48.00', '1.46x'],
-      'eight-sleep': ['93/100', '$620,000', '$37.50', '1.41x'], 'Eight Sleep': ['93/100', '$620,000', '$37.50', '1.41x']
+      'ag1': ['98/100', '$1,420,000', '$42 / $34', '1.9% CTR'], 'AG1': ['98/100', '$1,420,000', '$42 / $34', '1.9% CTR'],
+      'deel': ['95/100', '$680,000', '$46 / $38', '1.8% CTR'], 'Deel': ['95/100', '$680,000', '$46 / $38', '1.8% CTR'],
+      'linear': ['91/100', '$310,000', '$39 / $32', '1.8% CTR'], 'Linear': ['91/100', '$310,000', '$39 / $32', '1.8% CTR'],
+      'ramp': ['96/100', '$790,000', '$48 / $39', '1.9% CTR'], 'Ramp': ['96/100', '$790,000', '$48 / $39', '1.9% CTR'],
+      'eight-sleep': ['93/100', '$620,000', '$38 / $31', '1.7% CTR'], 'Eight Sleep': ['93/100', '$620,000', '$38 / $31', '1.7% CTR']
     },
     presets: [
       { key: 'AG1', label: 'AG1' }, { key: 'Deel', label: 'Deel' },
       { key: 'Linear', label: 'Linear' }, { key: 'Ramp', label: 'Ramp' }, { key: 'Eight Sleep', label: '8Sleep' }
     ],
     coMarketingPills: [
-      { key: 'spotify', label: 'Podcasts', rowText: 'Podcast Spend Signal: 68% of single-episode test ads churn; 3x+ renewed mid-rolls reveal proven ROI.' },
-      { key: 'youtube', label: 'YouTube Creators', rowText: 'YouTube Spend Signal: Track which sponsors book 3+ consecutive creator integrations vs. 1-off tests.' },
-      { key: 'beehiiv', label: 'Newsletters', rowText: 'Newsletter Spend Signal: Compare verified multi-issue newsletter sponsors and negotiated rate tiers.' }
+      { key: 'spotify', label: 'Podcasts', rowText: 'Podcast Buyer & Creator Signal: 68% of 1-off test ads churn; 3-flight mid-roll commitments clear at -18% below published rack.' },
+      { key: 'youtube', label: 'YouTube Creators', rowText: 'YouTube Integration Signal: Track which sponsors book 3+ consecutive creator integrations and compare implied CPCs.' },
+      { key: 'beehiiv', label: 'Newsletters', rowText: 'Newsletter Rate Signal: Compare primary sponsorship blocks ($26–$42 CPM) and multi-issue discount tiers.' }
     ],
     affiliates: [
       { title: 'Riverside.fm 4K Podcast & Video Studio', badge: 'Creator Studio Pick', cpa: 'Explore Creator Studio', url: 'https://riverside.fm/' },
@@ -199,19 +199,19 @@ const VERTICAL_CONFIGS = {
     githubRepo: {
       name: 'pyannote/pyannote-audio + colinhacks/zod + parallax/jsPDF',
       stars: '216,756 Combined Stars', url: 'https://github.com/pyannote/pyannote-audio',
-      badge: 'Host-Read Diarization + Zod-Verified Buyer Contact Ledger',
-      title: 'Host-Voiced Ad-Read Diarization & 3-Flight Pitch Engine',
-      summary: 'Verifies host-voiced ad reads vs. spliced dynamic insertions and compiles 3x-renewal anchored sponsorship pitches.'
+      badge: 'IAB 30-Day Download + Zod-Verified Buyer & Rate-Card Ledger',
+      title: 'Sponsorship Rate-Card Floor & 3x-Renewal Verification Engine',
+      summary: 'Verifies multi-flight sponsor renewals, promo-code persistence, and -18% 3-flight agency floor CPMs across 42 brands and 46 shows.'
     },
     deliverableFiles: [
-      { file: 'verified-buyer-contacts.csv', label: 'Sponsor Contact Emails (.CSV)', size: '3.8 KB', schema: 'Direct partnerships team emails and decision-maker roles for verified repeat sponsors', status: 'VALID' },
-      { file: '3-flight-anchor-pitch.eml', label: 'Ready-to-Send Pitch (.EML)', size: '2.5 KB', schema: 'Proven 3-episode pilot pitch email template referencing the sponsor’s active shows', status: 'VALID' },
-      { file: '96-flight-cpm-decay.csv', label: 'Show Ad Rates & Renewals (.CSV)', size: '14.2 KB', schema: 'Full table of 96 tracked ad placements, renewal counts, and negotiated CPM rates', status: 'VALID' }
+      { file: 'verified-buyer-contacts.csv', label: '88 Brand & Show Contacts (.CSV)', size: '6.4 KB', schema: '42 Brand Partnerships Leads + 46 Show Booking Rep emails, roles & agency desks', status: 'VALID' },
+      { file: '96-flight-cpm-decay.csv', label: '96-Flight Rate-Card Floor Ledger (.CSV)', size: '14.2 KB', schema: 'Published rack rates vs. -18% 3-flight negotiated floor CPMs, implied CPCs & promo codes', status: 'VALID' },
+      { file: '3-flight-anchor-pitch.eml', label: 'Counter-Offer & Pilot Scripts (.EML)', size: '3.1 KB', schema: 'Media Buyer -18% rate-card counter-offer script (w/ 1.5% CTR make-good) + Creator 3-flight pilot pitch', status: 'VALID' }
     ],
     remediationDiff: {
-      beforeLine: 'What we found: Cold-emailing generic brand addresses gets a 1.1% reply rate, while this sponsor has renewed 3+ times across 14 verified shows.',
-      afterLine: 'How the $1.99 pack helps you close: Gives you the verified partnerships contact email, the exact CPM rates they paid on similar shows, and a ready-to-send 3-episode pilot pitch.',
-      roiBadge: '14 repeat sponsor placements verified'
+      beforeLine: 'What we found: Paying published media-kit rack rates costs +18% to +28% more than the negotiated 3-flight agency floor, while cold-emailing generic info@ addresses gets a 1.1% reply rate.',
+      afterLine: 'How the $1.99 pack pays for itself on 1 booking: Unlocks all 88 verified brand buyer & show booking rep emails (.CSV), the 96-flight negotiated CPM floor ledger (.CSV), and ready-to-send counter-offer & pilot scripts (.EML).',
+      roiBadge: '88 Direct Contacts + -18% Floor Ledger Verified'
     }
   },
   derm_logic: {
@@ -236,11 +236,11 @@ const VERTICAL_CONFIGS = {
     sliderLabel: 'Products', sliderMin: 2, sliderMax: 8, sliderVal: 4,
     searchPlaceholder: 'Search ingredient or product (e.g. Retinol)...',
     tier1Tag: 'SINGLE-ROUTINE PASS • SAVE 60% VS $4.99',
-    tier1Desc: 'Instantly unlocks your 9:16 phone lockscreen routine card, exact wait times between serums, and 4-Night Skin-Cycling calendar (.ICS).',
+    tier1Desc: 'Instantly unlocks your watermark-free 9:16 phone lock-screen routine card, Step 3 barrier seal wait times, and 4-Night Skin-Cycling calendar (.ICS).',
     tier2Tag: 'COMPLETE AM/PM ROUTINE RESCUE KIT',
-    tier2Desc: 'Printable Morning & Night Vanity Card PDF, full ingredient compatibility chart, and gentle pore-safe product swaps.',
+    tier2Desc: 'Printable Morning & Night Vanity Card PDF, full 65-ingredient compatibility chart, and gentle pore-safe product swaps.',
     tier3Tag: 'UNLIMITED SHELF & ESTHETICIAN PASS',
-    tier3Desc: 'Full year of unlimited ingredient checks, fungal-acne safe screening, pregnancy-safe filters, and seasonal routine updates.',
+    tier3Desc: 'Full year of unlimited ingredient checks, client monogrammed routine cards, fungal-acne safe screening, and pregnancy-safe filters.',
     battlecard: {
       heading: 'Why Skincare Lovers & Estheticians Choose DermLogic Over Generic Apps',
       colLegacy: '$150 Derm Visit / Guesswork', colManual: 'Single-Product Barcode Apps',
@@ -251,14 +251,14 @@ const VERTICAL_CONFIGS = {
       ]
     },
     exportActions: [
-      { id: 'btn-copy-shopping-list', label: 'Copy Routine Steps', type: 'copy' },
+      { id: 'btn-copy-shopping-list', label: 'Copy AM/PM Routine', type: 'copy' },
       { id: 'btn-export-ics', label: '4-Night Calendar (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
-      { id: 'btn-export-csv', label: 'Ingredient Chart (.CSV)', href: '/api/github-upgrade/export.csv' },
-      { id: 'btn-export-llms', label: 'Download Routine Notes (.TXT)', href: '/api/github-upgrade/llms-bundle.txt' },
-      { id: 'btn-print-summary', label: 'Print Vanity Card', type: 'print' },
-      { id: 'btn-showroom-hud', label: 'Vanity Shelf HUD', type: 'hud' },
-      { id: 'btn-cmdk-trigger', label: '⌘K Quick Menu', type: 'cmdk' },
-      { id: 'btn-reddit-share', label: 'Share to r/SkincareAddiction', type: 'reddit' }
+      { id: 'btn-export-csv', label: 'Pore-Safe Swaps List', href: '/api/github-upgrade/export.csv' },
+      { id: 'btn-export-llms', label: 'Save Routine Card Notes', href: '/api/github-upgrade/llms-bundle.txt' },
+      { id: 'btn-print-summary', label: 'Print Bathroom Mirror Card', type: 'print' },
+      { id: 'btn-showroom-hud', label: 'Esthetician Notes', type: 'hud' },
+      { id: 'btn-cmdk-trigger', label: 'Quick Routine Menu', type: 'cmdk' },
+      { id: 'btn-reddit-share', label: 'Copy [Routine Help] Post', type: 'reddit' }
     ],
     kpis: [
       { label: 'Routine Harmony Score', val: '20/100', sub: 'Ingredient Clash Found' },
@@ -295,9 +295,9 @@ const VERTICAL_CONFIGS = {
       summary: 'Calculates free-acid bio-availability, Cu2+/Retinoid redox inactivation, and 4-night skin-cycling schedules.'
     },
     deliverableFiles: [
-      { file: 'am-pm-vanity-card-9x16.pdf', label: '9:16 Phone Lock-Screen Card', size: '48.2 KB', schema: 'Step-by-step Morning & Bedtime order tailored to your selected bottles with exact pH dry-down wait times', status: 'VALID' },
-      { file: '4-night-skin-cycling.ics', label: '4-Night Skin-Cycling Schedule', size: '3.1 KB', schema: '1-click Apple & Google Calendar rotation separating your conflicting acids, retinoids, and peptides across 4 nights', status: 'VALID' },
-      { file: 'non-comedogenic-swaps.csv', label: 'Chemist Dupe & Pore-Safe Swaps', size: '5.5 KB', schema: '1-to-1 non-comedogenic, fungal-safe product swaps that layer cleanly with your active serums without pilling', status: 'VALID' }
+      { file: 'am-pm-vanity-card-9x16.pdf', label: 'Phone Routine Card (PDF)', size: '48.2 KB', schema: 'Step-by-step Morning & Bedtime order tailored to your selected bottles with exact pH dry-down wait times', status: 'VALID' },
+      { file: '4-night-skin-cycling.ics', label: '4-Night Calendar (.ICS)', size: '3.1 KB', schema: '1-click Apple & Google Calendar rotation separating your conflicting acids, retinoids, and peptides across 4 nights', status: 'VALID' },
+      { file: 'non-comedogenic-swaps.csv', label: 'Pore-Safe Swaps (.CSV)', size: '5.5 KB', schema: '1-to-1 non-comedogenic, fungal-safe product swaps that layer cleanly with your active serums without pilling', status: 'VALID' }
     ],
     remediationDiff: {
       beforeLine: 'Morning (7:30 AM): Gentle Rinse -> Antioxidant Serum (exact wait time locked in PDF) -> Barrier Moisturizer & SPF 50.',
@@ -653,7 +653,7 @@ function attachExactBaselinePack(app, options = {}) {
 
   // 4C. krisk/Fuse Instant Fuzzy-Search & Custom Scenario Scorer
   app.get('/api/github-upgrade/fuse-search', (req, res) => {
-    const q = String(req.query.q || cfg.presets[0].key).trim();
+    const q = String(req.query.q || cfg.presets[0].key).replace(/[<>"'`]/g, '').trim().slice(0, 80);
     const { isTest, isCrawler } = classifyTrafficRequest(req);
     store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/fuse-search', isTest, isCrawler, meta: { query: q, engine: 'fuse_bitap' } });
     let hash = 0;
@@ -836,14 +836,9 @@ function attachExactBaselinePack(app, options = {}) {
   app.get('/api/github-upgrade/reactive-live-calc-dual-pass', (req, res) => res.json({ ok: true, iteration: 49, module_id: cfg.moduleId, repo: 'hotwired/stimulus (★ 12,400) + alpinejs/alpine (★ 28,900) + stripe/stripe-js (★ 4,200)', features: { reactive_input_auto_calculation: true, visible_99c_micro_pass_anchoring: true, visible_inline_scorecard_email_bar: true, scroll_and_exit_rescue_toast: true } }));
   app.get('/api/github-upgrade/floating-ui-firstfold-pill', (req, res) => res.json({ ok: true, iteration: 51, module_id: cfg.moduleId, repo: 'floating-ui/floating-ui (★ 31,400) + zenorocha/clipboard.js (★ 34,200) + stripe/stripe-js (★ 4,200)', features: { default_visible_firstfold_score_pill: true, one_tap_firstfold_99c_199_unlock: true, js_hydrated_calculate_bot_guard: true, mobile_viewport_device_attribution: true } }));
 
-  // 7. Transactional Lead Capture & Automated Backfill Resend Dispatcher (/api/leads/capture, /api/leads/resend-backfill)
+  // 7. Transactional Lead Capture & Automated Backfill Resend Dispatcher
   const escMailHtml = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  const buildBuyLinks = (email) => ({
-    micro_pass: `https://${cfg.domain}/buy/micro_pass?email=${encodeURIComponent(email)}`,
-    flash_pass: `https://${cfg.domain}/buy/flash_pass?email=${encodeURIComponent(email)}`,
-    complete_dossier: `https://${cfg.domain}/buy/complete_dossier?email=${encodeURIComponent(email)}`,
-    pro_b2b: `https://${cfg.domain}/buy/pro_b2b?email=${encodeURIComponent(email)}`
-  });
+  const buildBuyLinks = (email) => ({ micro_pass: `https://${cfg.domain}/buy/micro_pass?email=${encodeURIComponent(email)}`, flash_pass: `https://${cfg.domain}/buy/flash_pass?email=${encodeURIComponent(email)}`, complete_dossier: `https://${cfg.domain}/buy/complete_dossier?email=${encodeURIComponent(email)}`, pro_b2b: `https://${cfg.domain}/buy/pro_b2b?email=${encodeURIComponent(email)}` });
   async function sendOneClickLeadEmail(email, summaryText, isTest) {
     const links = buildBuyLinks(email), safeSum = escMailHtml(summaryText);
     const textMail = `${summaryText}\n\n1-Click Direct Stripe Checkout Links (No Login Required):\n• 99¢ Single-File Instant Export Pass: ${links.micro_pass}\n• $1.99 Single-Audit Export Bundle (${cfg.freeDeliverableName}): ${links.flash_pass}\n• $${cfg.corePriceUsd} ${cfg.coreLabel}: ${links.complete_dossier}\n• $${cfg.proPriceUsd} ${cfg.proLabel}: ${links.pro_b2b}\n`;
@@ -982,7 +977,7 @@ function attachExactBaselinePack(app, options = {}) {
     const origSend = res.send.bind(res);
     res.send = function patchedSend(body) {
       const isHtml = typeof body === 'string' && (String(res.getHeader('Content-Type') || '').includes('text/html') || body.trim().startsWith('<!DOCTYPE html>'));
-      if (isHtml && req.method === 'GET' && (req.path === '/' || req.path === '/lp' || req.path === '/directory' || req.path === '/leaderboard' || req.path === '/privacy' || req.path === '/terms' || req.path.startsWith('/dossier/sample') || req.path.startsWith('/seo/') || req.path.startsWith('/tools/') || req.path.startsWith('/compare/') || req.path.startsWith('/scan/') || req.path.startsWith('/report/')) && !body.includes('id="eb-bottom-conversion-suite"')) {
+      if ( isHtml && req.method === 'GET' && (req.path === '/' || req.path === '/lp' || req.path === '/directory' || req.path === '/editorial-policy' || req.path === '/about' || req.path === '/leaderboard' || req.path === '/privacy' || req.path === '/terms' || req.path.startsWith('/dossier/sample') || req.path.startsWith('/seo/') || req.path.startsWith('/tools/') || req.path.startsWith('/compare/') || req.path.startsWith('/scan/') || req.path.startsWith('/report/')) && !body.includes('id="eb-bottom-conversion-suite"')) {
         try { res.setHeader('X-Robots-Tag', 'all, index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'); res.setHeader('Link', `<https://${cfg.domain}/llms.txt>; rel="llms-txt", <https://${cfg.domain}/llms-full.txt>; rel="llms-full-txt", <https://${cfg.domain}/openapi.json>; rel="service-desc", <https://${cfg.domain}/feed.xml>; rel="alternate"; type="application/rss+xml"`); } catch (_) {}
         store.recordEvent({ eventType: 'visit', pageUrl: req.originalUrl || req.path, deviceType, utmSource: String(req.query?.utm_source || ''), utmCampaign: String(req.query?.utm_campaign || ''), isTest, isCrawler, isOwnerIp, clientIp });
         body = renderExactBaselineEnhancements(body, cfg, req.path);

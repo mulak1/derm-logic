@@ -607,8 +607,8 @@ function renderBottleDetailPage(prod) {
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <img src="/public/editorial-dossier.jpg" alt="${escapeHtml(prod.brand)} ${escapeHtml(shortBottleName)} formulation lab dossier" loading="eager" style="width:100%;height:190px;object-fit:cover;border-radius:10px;" />
-          <img src="${isNightOnly ? '/public/editorial-woman-evening.jpg' : '/public/editorial-woman-morning.jpg'}" alt="${escapeHtml(prod.brand)} ${escapeHtml(shortBottleName)} vanity layering ritual" loading="lazy" style="width:100%;height:190px;object-fit:cover;border-radius:10px;" />
+          <img src="${isNightOnly ? '/public/editorial-segment-3.jpg' : '/public/editorial-segment-1.jpg'}" alt="${escapeHtml(prod.brand)} ${escapeHtml(shortBottleName)} skincare segment ritual" loading="eager" style="width:100%;height:190px;object-fit:cover;object-position:center 22%;border-radius:10px;" />
+          <img src="${isNightOnly ? '/public/editorial-woman-evening.jpg' : '/public/editorial-woman-morning.jpg'}" alt="${escapeHtml(prod.brand)} ${escapeHtml(shortBottleName)} vanity layering ritual" loading="lazy" style="width:100%;height:190px;object-fit:cover;object-position:center 22%;border-radius:10px;" />
         </div>
       </div>
 
@@ -680,7 +680,7 @@ function renderIngredientDetailPage(ing) {
         <p class="hero-sub" style="margin-bottom:16px;"><strong>Role:</strong> ${escapeHtml(ing.functionRole)}. ${escapeHtml(ing.clinicalMechanism)}</p>
         <a href="/?inci=${encodeURIComponent(ing.inciName)}#analyzer" class="btn-primary"><span>Test ${escapeHtml(ing.commonName)} in Routine Checker</span><span class="btn-icon-circle">&rarr;</span></a>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><img src="/public/editorial-dossier.jpg" alt="${escapeHtml(ing.commonName)} clinical pH and INCI dossier" loading="eager" style="width:100%;height:185px;object-fit:cover;border-radius:10px;" /><img src="/public/editorial-woman-morning.jpg" alt="${escapeHtml(ing.commonName)} morning and evening routine compatibility" loading="lazy" style="width:100%;height:185px;object-fit:cover;border-radius:10px;" /></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><img src="/public/editorial-segment-2.jpg" alt="${escapeHtml(ing.commonName)} clinical pH and INCI consultation" loading="eager" style="width:100%;height:185px;object-fit:cover;object-position:center 22%;border-radius:10px;" /><img src="/public/editorial-woman-morning.jpg" alt="${escapeHtml(ing.commonName)} morning and evening routine compatibility" loading="lazy" style="width:100%;height:185px;object-fit:cover;object-position:center 22%;border-radius:10px;" /></div>
     </div>
     <h2 class="serif-display" style="font-size:1.6rem;margin-bottom:14px;">Cult Bottles Formulated with ${escapeHtml(ing.commonName)} (${bottles.length})</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px;">${bottles.length > 0 ? bottles.map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;text-decoration:none;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);">${escapeHtml(b.brand)} · pH ${b.ph} · $${b.priceUsd}</span><strong class="serif-display" style="font-size:1.22rem;display:block;margin:4px 0;">${escapeHtml(b.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(b.summary)}</span></a>`).join('') : `<div style="padding:18px;background:var(--bg-surface);">Paste "${escapeHtml(ing.inciName)}" into our <a href="/#analyzer" style="color:var(--rose-brand);text-decoration:underline;">INCI Analyzer</a> to test any custom bottle.</div>`}</div>
@@ -807,8 +807,8 @@ function renderConcernDetailPage(concern) {
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <img src="${escapeHtml(concern.heroImg || '/public/editorial-woman-morning.jpg')}" alt="${escapeHtml(concern.title)} skincare ritual" loading="eager" style="width:100%;height:220px;object-fit:cover;border-radius:10px;" />
-          <img src="/public/editorial-dossier.jpg" alt="${escapeHtml(concern.title)} barrier-safe bottles" loading="eager" style="width:100%;height:220px;object-fit:cover;border-radius:10px;" />
+          <img src="${escapeHtml(concern.heroImg || '/public/editorial-woman-morning.jpg')}" alt="${escapeHtml(concern.title)} skincare ritual" loading="eager" style="width:100%;height:220px;object-fit:cover;object-position:center 22%;border-radius:10px;" />
+          <img src="/public/editorial-segment-3.jpg" alt="${escapeHtml(concern.title)} barrier-safe evening routine" loading="eager" style="width:100%;height:220px;object-fit:cover;object-position:center 22%;border-radius:10px;" />
         </div>
       </div>
 

@@ -15,6 +15,7 @@ const {
 const { CLINICAL_INGREDIENTS } = require('./clinical-data');
 const { getAllCelebrityRoutines } = require('./celebrity-routines');
 const { CONCERN_HUBS } = require('./seo-hubs');
+const { renderEditorialPolicyPage } = require('./endowment-sovrn');
 
 function renderHomeSeoDiscoveryBlock() {
   const celebs = getAllCelebrityRoutines().slice(0, 4);
@@ -27,14 +28,14 @@ function renderHomeSeoDiscoveryBlock() {
   ];
   return `<section class="section-block" id="home-discovery-hubs"><div class="container">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
-      <div><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;">Real Routines · Morning &amp; Bedtime Shelves</span><h2 class="serif-display" style="font-size:var(--step-head);margin:4px 0 0;">Iconic Celebrity Serum Routines &amp; Skin Concern Protocols</h2></div>
+      <div><h2 class="serif-display" style="font-size:var(--step-head);margin:0;">Iconic Serum Routines &amp; Guides</h2><p style="color:var(--text-secondary);font-size:var(--step-small);margin-top:4px;">Real morning and bedtime shelves with exact layering order and barrier-safe swaps.</p></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;"><a href="/celebrity" class="btn-secondary" style="padding:9px 16px;font-size:0.84rem;">All Iconic Routines &rarr;</a><a href="/concern" class="btn-secondary" style="padding:9px 16px;font-size:0.84rem;">All 8 Skin Concerns &rarr;</a></div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-bottom:22px;">
-      ${celebs.map((c) => `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;"><div><div class="vessel-photo-frame" style="height:145px;margin-bottom:10px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} serum routine" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};" /></div><span class="badge-safe mono" style="font-size:0.7rem;">${escapeHtml(c.skinProfile)}</span><a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.22rem;color:var(--text-primary);margin:4px 0 2px;">${escapeHtml(c.name)}</a><div class="serif-italic" style="font-size:0.86rem;color:var(--rose-brand);margin-bottom:4px;">${escapeHtml(c.moniker)}</div></div><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;padding-top:6px;border-top:1px solid var(--border-hairline);"><a href="/celebrity/${escapeHtml(c.slug)}" class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;">View AM/PM Order &rarr;</a><a href="/?products=${encodeURIComponent(c.productIds.join(','))}#analyzer" class="affiliate-link-pill mono" style="font-size:0.72rem;padding:4px 9px;">Load Shelf &rarr;</a></div></div>`).join('')}
+      ${celebs.map((c) => `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;"><div><div class="vessel-photo-frame" style="height:145px;margin-bottom:10px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} serum routine" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};" /></div><span class="badge-safe mono" style="font-size:0.82rem;">${escapeHtml(c.skinProfile)}</span><a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.22rem;color:var(--text-primary);margin:4px 0 2px;">${escapeHtml(c.name)}</a><div class="serif-italic" style="font-size:0.86rem;color:var(--rose-brand);margin-bottom:4px;">${escapeHtml(c.moniker)}</div></div><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;padding-top:6px;"><a href="/celebrity/${escapeHtml(c.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">View AM/PM Order &rarr;</a><a href="/?products=${encodeURIComponent(c.productIds.join(','))}#analyzer" class="affiliate-link-pill mono" style="font-size:0.82rem;padding:4px 9px;">Load Shelf &rarr;</a></div></div>`).join('')}
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:24px;">
-      ${concerns.map((cn) => `<a href="/concern/${escapeHtml(cn.slug)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 18px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:8px;"><div><span class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:600;">3-Step Protocol · ${cn.productIds.length} Bottles</span><strong class="serif-display" style="display:block;font-size:1.14rem;color:var(--text-primary);margin:4px 0;">${escapeHtml(cn.title)}</strong><p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.45;margin:0;">${escapeHtml(cn.summary.slice(0, 108))}...</p></div><span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;">See Safe Routine Order &rarr;</span></a>`).join('')}
+      ${concerns.map((cn) => `<a href="/concern/${escapeHtml(cn.slug)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 18px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:8px;"><div><span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:600;">3-Step Protocol · ${cn.productIds.length} Bottles</span><strong class="serif-display" style="display:block;font-size:1.14rem;color:var(--text-primary);margin:4px 0;">${escapeHtml(cn.title)}</strong><p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.45;margin:0;">${escapeHtml(cn.summary.slice(0, 108))}...</p></div><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">See Safe Routine Order &rarr;</span></a>`).join('')}
     </div>
     <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 24px;">
       <h3 class="serif-display" style="font-size:1.4rem;margin:0 0 12px;">Common Questions About Serum Routines &amp; Layering</h3>
@@ -212,7 +213,8 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     ...seoPages.filter((p) => p.pageType === 'product_teardown').slice(0, 2)
   ].slice(0, 6);
 
-  const featuredSeoLinks = featuredSeoPages.map((p) => `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:24px 26px;justify-content:space-between;gap:14px;"><div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--text-secondary);">${escapeHtml(p.category)}</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.34rem;line-height:1.24;color:var(--text-primary);margin-bottom:10px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.58;">${escapeHtml(String(p.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor)[^)]*\)/gi, ''))}</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--border-hairline);gap:8px;flex-wrap:wrap;"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Read Layering Guide &rarr;</a><a href="/?products=${encodeURIComponent((p.presetProducts || ['skinceuticals-ce-ferulic']).join(','))}#analyzer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.76rem;">Test With My Shelf &rarr;</a></div></div>`).join('');
+  const pairPortraits = ['/public/editorial-segment-1.jpg', '/public/editorial-segment-2.jpg', '/public/editorial-segment-3.jpg', '/public/routines/sofia-mist.jpg', '/public/routines/selena-dewy-bounce.jpg', '/public/routines/zendaya-calm-balm.jpg'];
+  const featuredSeoLinks = featuredSeoPages.map((p, idx) => `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;justify-content:space-between;gap:12px;"><div><div style="height:128px;border-radius:8px;overflow:hidden;margin-bottom:12px;"><img src="${pairPortraits[idx % pairPortraits.length]}" alt="${escapeHtml(p.title)}" loading="lazy" style="width:100%;height:128px;object-fit:cover;object-position:center 24%;display:block;" /></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;"><span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(p.category)}</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.3rem;line-height:1.24;color:var(--text-primary);margin-bottom:8px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.56;">${escapeHtml(String(p.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor)[^)]*\)/gi, ''))}</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;gap:8px;flex-wrap:wrap;"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Read Layering Guide &rarr;</a><a href="/?products=${encodeURIComponent((p.presetProducts || ['skinceuticals-ce-ferulic']).join(','))}#analyzer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.84rem;">Test With My Shelf &rarr;</a></div></div>`).join('');
 
   const homeSwatchesHtml = renderPorcelainSwatchCards(prioritizedIngredients.slice(0, 3));
 
@@ -222,44 +224,43 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
         <div id="home-executive-brief" class="editorial-top-banner">
           <div class="hero-copy-col">
             <div>
-              <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px;">Morning &amp; Night Serum Routines &middot; Layering Order &amp; Clash Checker</div>
-              <h1 class="hero-h1"><span class="hero-h1-line1">Quiet your shelf.</span><span class="hero-h1-line2">Perfect your serum routine.</span></h1>
+              <h1 class="hero-h1"><span class="hero-h1-line1">Quiet your shelf.</span><span class="hero-h1-line2">Perfect your routine.</span></h1>
               <p class="hero-sub">Build a chemist-verified morning and bedtime serum routine from the bottles you already own. Check in five seconds which actives cancel on contact, and get the exact thinnest-to-richest layering order for Vitamin C, Copper Peptides, Exfoliants, and Tretinoin.</p>
               <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
                 <a href="#analyzer" class="btn-primary"><span>Build &amp; Check My Serum Routine</span><span class="btn-icon-circle">&rarr;</span></a>
                 <a href="/celebrity" class="btn-secondary"><span>Explore Iconic Serum Routines</span></a>
               </div>
-              <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px;background:var(--bg-surface);margin-bottom:10px;font-size:0.8rem;">
+              <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px;background:var(--bg-surface);margin-bottom:10px;font-size:0.84rem;">
                 <div><strong class="mono" style="color:var(--rose-brand);display:block;">1. Pick Serums or Goal</strong><span style="color:var(--text-secondary);">Tap your bottles or load a routine</span></div>
                 <div><strong class="mono" style="color:var(--sage-safe);display:block;">2. Check Layering Clashes</strong><span style="color:var(--text-secondary);">Spot pH &amp; active conflicts</span></div>
                 <div><strong class="mono" style="color:var(--text-primary);display:block;">3. AM &amp; PM Routine Order</strong><span style="color:var(--text-secondary);">Exact wait times &amp; 4-night plan</span></div>
               </div>
             </div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px;background:var(--bg-oat);">
-              <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">44</div><div style="font-size:0.78rem;color:var(--text-secondary);">Popular Serums &amp; Creams</div></div>
-              <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">65</div><div style="font-size:0.78rem;color:var(--text-secondary);">Skincare Ingredients</div></div>
-              <div><div class="mono" style="font-size:1.15rem;color:var(--rose-brand);font-weight:500;">Daily</div><div style="font-size:0.78rem;color:var(--text-secondary);"><a href="/celebrity" style="text-decoration:underline;">Iconic Routines (+1/day)</a></div></div>
+              <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">44</div><div style="font-size:0.84rem;color:var(--text-secondary);">Popular Serums &amp; Creams</div></div>
+              <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">65</div><div style="font-size:0.84rem;color:var(--text-secondary);">Skincare Ingredients</div></div>
+              <div><div class="mono" style="font-size:1.15rem;color:var(--rose-brand);font-weight:500;">Daily</div><div style="font-size:0.84rem;color:var(--text-secondary);"><a href="/celebrity" style="text-decoration:underline;">Iconic Routines (+1/day)</a></div></div>
             </div>
           </div>
           <div class="hero-photo-col">
             <div class="editorial-photo-shell">
-              <div id="heroRitualToggleBar" class="vanity-light-pill" role="group" aria-label="Preview Morning, Bedtime, or Serum Clash Mode" style="display:flex;width:100%;justify-content:space-between;">
-                <button type="button" class="vanity-light-btn active mono" style="flex:1;font-size:0.78rem;padding:7px 8px;" aria-pressed="true" onclick="setHeroRitualMode('am', this)">7:30 AM · Morning Glow</button>
-                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.78rem;padding:7px 8px;" aria-pressed="false" onclick="setHeroRitualMode('pm', this)">9:30 PM · Bedtime Repair</button>
-                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.78rem;padding:7px 8px;" aria-pressed="false" onclick="setHeroRitualMode('clash', this)">Why Serums Clash</button>
+              <div id="heroRitualToggleBar" class="vanity-light-pill" role="group" aria-label="Preview Morning, Bedtime, or Serum Clash Mode" style="display:flex;width:100%;justify-content:space-between;flex-wrap:wrap;">
+                <button type="button" class="vanity-light-btn active mono" style="flex:1;font-size:0.84rem;padding:7px 8px;" aria-pressed="true" onclick="setHeroRitualMode('am', this)">7:30 AM · Morning</button>
+                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:7px 8px;" aria-pressed="false" onclick="setHeroRitualMode('pm', this)">9:30 PM · Bedtime</button>
+                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:7px 8px;" aria-pressed="false" onclick="setHeroRitualMode('clash', this)">Why Serums Clash</button>
               </div>
               <div class="editorial-photo-diptych">
                 <div class="editorial-photo-inner">
                   <img id="heroDiptychImg1" src="/public/editorial-woman-morning.jpg" alt="Woman in linen robe applying morning Vitamin C serum at a sunlit travertine vanity" style="object-position:center 20%;" fetchpriority="high" />
                 </div>
                 <div class="editorial-photo-inner">
-                  <img id="heroDiptychImg2" src="/public/editorial-dossier.jpg" alt="Golden Vitamin C serum pipette, rose peptide ampoule, and porcelain barrier cream bowl on travertine" style="object-position:center center;" fetchpriority="high" />
+                  <img id="heroDiptychImg2" src="/public/editorial-segment-1.jpg" alt="Radiant woman in oat-linen robe pressing morning Vitamin C serum onto her cheek in warm daylight" style="object-position:center 24%;" fetchpriority="high" />
                 </div>
               </div>
               <div class="editorial-photo-caption">
                 <div>
                   <strong id="heroDiptychTitle" class="serif-display" style="font-size:1.08rem;color:var(--text-primary);">7:30 AM · Morning Shield &amp; Zero-Pilling Prep</strong>
-                  <div id="heroDiptychSub" style="color:var(--text-secondary);font-size:0.8rem;">Vitamin C (Wait 60s) &middot; Hydrating Serum &middot; Barrier Cream &middot; Broad-Spectrum SPF 50</div>
+                  <div id="heroDiptychSub" style="color:var(--text-secondary);font-size:0.84rem;">Vitamin C (Wait 60s) &middot; Hydrating Serum &middot; Barrier Cream &middot; Broad-Spectrum SPF 50</div>
                 </div>
                 <span id="heroDiptychBadge" class="badge-safe mono">Morning Glow Order</span>
               </div>
@@ -278,11 +279,11 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       </div>
     </section>
 
-    <section class="section-block-alt" id="viscosity-sequencer">
+    <section class="section-block-alt" id="viscosity-sequencer" style="padding:36px 0;">
       <div class="container">
-        <div style="max-width:64ch;margin-bottom:24px;">
+        <div style="max-width:64ch;margin-bottom:18px;">
           <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:10px;">
-            Three rules for a morning and night serum routine that actually absorbs.
+            Three rules for morning and night serums.
           </h2>
           <p style="color:var(--text-secondary);font-size:var(--step-body);line-height:1.6;">
             Stinging and pilling are not proof that a serum works: they mean two formulas are fighting on your skin. Follow these three morning and bedtime layering shifts so every active stays potent.
@@ -293,7 +294,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div class="z-vessel-left">
             <div class="porcelain-vessel-core">
               <div>
-                <div class="vessel-photo-frame"><img src="/public/editorial-dossier.jpg" alt="Golden Vitamin C dropper serum and rose peptide ampoule on travertine" loading="lazy" /></div>
+                <div class="vessel-photo-frame"><img src="/public/editorial-segment-3.jpg" alt="Woman at golden-hour vanity mirror smoothing peptide and ceramide serum onto her cheek" style="object-position:center 22%;" loading="lazy" /></div>
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
                   <span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Morning vs. Night</span>
                   <span class="badge-clash mono">Cancels Out · Split AM &amp; PM</span>
@@ -306,7 +307,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                   Pure Vitamin C needs a tangy, low-pH environment to absorb, while Copper Peptides rest at a calm, neutral level. Layering them together cancels out both serums on contact. Keep Vitamin C for morning sun defense and save peptides for bedtime repair.
                 </p>
               </div>
-              <a href="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;text-align:center;">Shop Morning Vitamin C at Dermstore &rarr;</a>
+              <a href="https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/" data-sovrn-beacon="/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore&format=json" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;text-align:center;">Shop Morning Vitamin C at Dermstore &rarr;</a>
             </div>
           </div>
 
@@ -346,7 +347,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                   Benzoyl Peroxide releases oxygen that wipes out over 80% of Retinol and Tretinoin on contact. Use blemish washes in the morning, and cushion your nighttime retinoid over a rich ceramide cream to protect your moisture barrier.
                 </p>
               </div>
-              <a href="/api/affiliate?product=aestura-atobarrier-365&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;text-align:center;">Shop Ceramide Cream at Sephora &rarr;</a>
+              <a href="https://www.sephora.com/product/atobarrier365-cream-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515494" data-sovrn-beacon="/api/affiliate?product=aestura-atobarrier-365&partner=sephora&format=json" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 16px;text-align:center;">Shop Ceramide Cream at Sephora &rarr;</a>
             </div>
           </div>
         </div>
@@ -405,7 +406,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       <div class="container">
         <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,0.65fr);gap:24px;align-items:center;margin-bottom:24px;">
           <div>
-            <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:8px;">Know what is inside every bottle on your vanity.</h2>
+            <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:8px;">Inside every bottle on your shelf.</h2>
             <p style="color:var(--text-secondary);font-size:var(--step-body);margin-bottom:14px;max-width:62ch;">
               Explore how everyday skincare actives behave on your skin: whether they clog pores, whether they tingle, and when in your routine they belong.
             </p>
@@ -416,8 +417,8 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
             </div>
           </div>
           <div class="editorial-photo-shell" style="padding:8px;max-height:200px;overflow:hidden;">
-            <div style="height:142px;max-height:142px;overflow:hidden;"><img src="/public/editorial-vanity-shelf.jpg" alt="Woman's hand beside whipped ceramide cream, rose serum dropper, and golden serum droplets on travertine" style="width:100%;height:142px;object-fit:cover;object-position:center center;display:block;" loading="lazy" /></div>
-            <div class="editorial-photo-caption" style="margin-top:6px;"><span class="mono" style="font-size:0.78rem;">Water-Light Serums to Velvet Creams</span><span class="badge-safe mono">65 Actives</span></div>
+            <div style="height:142px;max-height:142px;overflow:hidden;"><img src="/public/editorial-segment-2.jpg" alt="Mediterranean woman in sunlit limestone studio inspecting amber glass dropper bottle" style="width:100%;height:142px;object-fit:cover;object-position:center 24%;display:block;" loading="lazy" /></div>
+            <div class="editorial-photo-caption" style="margin-top:6px;"><span class="mono" style="font-size:0.84rem;">Water-Light Serums to Velvet Creams</span><span class="badge-safe mono">65 Actives</span></div>
           </div>
         </div>
         ${homeSwatchesHtml}
@@ -791,7 +792,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         <div class="z-cascade-stage" style="margin-bottom:24px;">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/editorial-dossier.jpg" alt="Golden serum pipette and rose glass ampoule on travertine" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/editorial-segment-2.jpg" alt="Woman inspecting serum dropper compatibility in sunlit limestone atelier" style="object-position:center 22%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
                 <span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Do They Cancel Out?</span>
                 <span class="${page.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono">${page.compatibilityScore < 55 ? 'Split AM & PM' : 'Layer Gently'}</span>
@@ -982,4 +983,8 @@ function renderOgSvg(pageOrTitle, subtitle, score, deltaPh) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#F4EFE8"/><rect x="48" y="48" width="1104" height="534" fill="#FAF6F0" stroke="#D5CCC0" stroke-width="2"/><rect x="88" y="92" width="420" height="42" fill="#EFE5E7"/><text x="114" y="119" fill="#7A2332" font-family="Georgia, serif" font-size="16" font-weight="bold">DERMLOGIC · FORMULATION ATELIER</text><text x="88" y="218" fill="#181412" font-family="Georgia, serif" font-size="40" font-weight="bold">${safeTitle}</text><text x="88" y="282" fill="#5C534C" font-family="Georgia, serif" font-size="22">${safeSub}</text><rect x="88" y="355" width="290" height="145" fill="#E9E2D7"/><text x="116" y="400" fill="#5C534C" font-family="Georgia, serif" font-size="15">ROUTINE HARMONY SCORE</text><text x="116" y="466" fill="#264C3C" font-family="Georgia, serif" font-size="50" font-weight="bold">${escapeHtml(safeScore)}</text><rect x="406" y="355" width="280" height="145" fill="#EFE5E7"/><text x="434" y="400" fill="#7A2332" font-family="Georgia, serif" font-size="15">PH DIFFERENTIAL</text><text x="434" y="466" fill="#7A2332" font-family="Georgia, serif" font-size="50" font-weight="bold">${escapeHtml(safeDelta)}</text><rect x="714" y="355" width="388" height="145" fill="#E9E2D7"/><text x="742" y="400" fill="#7A2332" font-family="Georgia, serif" font-size="15">VISCOSITY &amp; WAIT SEQUENCER</text><text x="742" y="452" fill="#181412" font-family="Georgia, serif" font-size="25" font-weight="bold">4-Night Skin Cycling + 9:16 Card</text></svg>`;
 }
 
-module.exports = { renderHomePage, renderPaidSocialLpPage, renderDirectoryPage, renderSeoDetailPage, renderLegalPage, render404Page, renderOgSvg };
+function renderEditorialPolicyRoute() {
+  return renderEditorialPolicyPage({ renderBaseDocument });
+}
+
+module.exports = { renderHomePage, renderPaidSocialLpPage, renderDirectoryPage, renderSeoDetailPage, renderLegalPage, renderEditorialPolicyRoute, render404Page, renderOgSvg };

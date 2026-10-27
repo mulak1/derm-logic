@@ -293,7 +293,7 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
   app.get('/robots.txt', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
     if (isCrawler) store.recordEvent({ eventType: 'crawler_robots', pageUrl: '/robots.txt', isTest, isCrawler });
-    const botStanzas = AI_CRAWLER_AGENTS.map((bot) => `User-agent: ${bot}\nAllow: /\nAllow: /seo/\nAllow: /scan/\nAllow: /leaderboard\nAllow: /tools/\nAllow: /compare/\nAllow: /llms.txt\nAllow: /llms-full.txt\nAllow: /openapi.json\nDisallow: /buy/\nDisallow: /api/buy/\n`).join('\n');
+    const botStanzas = AI_CRAWLER_AGENTS.map((bot) => `User-agent: ${bot}\nAllow: /\nAllow: /seo/\nAllow: /scan/\nAllow: /leaderboard\nAllow: /tools/\nAllow: /compare/\nAllow: /llms.txt\nAllow: /llms-full.txt\nAllow: /openapi.json\nDisallow: /buy/\nDisallow: /api/buy/\nDisallow: /api/affiliate\n`).join('\n');
     const txt = [
       'User-agent: *',
       'Allow: /',
@@ -307,6 +307,7 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       'Allow: /.well-known/ai-plugin.json',
       'Allow: /.well-known/mcp-registry.json',
       'Allow: /directory',
+      'Allow: /editorial-policy',
       'Allow: /lp',
       'Allow: /llms.txt',
       'Allow: /llms-full.txt',
@@ -316,6 +317,7 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       'Allow: /feed.json',
       'Disallow: /buy/',
       'Disallow: /api/buy/',
+      'Disallow: /api/affiliate',
       '',
       botStanzas,
       `Host: ${cfg.domain}`,
@@ -401,6 +403,7 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       { loc: `${hostUrl}/`, priority: '1.0', changefreq: 'daily', img: `${hostUrl}/api/og?slug=home`, title: `${cfg.brandName}: Official Workbench` },
       { loc: `${hostUrl}/leaderboard`, priority: '0.95', changefreq: 'daily', img: `${hostUrl}/api/og?slug=leaderboard`, title: `${cfg.brandName}: Public Hall of Fame & Wall of Shame Leaderboard` },
       { loc: `${hostUrl}/directory`, priority: '0.9', changefreq: 'daily', img: `${hostUrl}/api/og?slug=directory`, title: `${cfg.brandName}: Full 60+ Benchmark Directory` },
+      { loc: `${hostUrl}/editorial-policy`, priority: '0.85', changefreq: 'monthly', title: `${cfg.brandName}: Editorial Policy & FTC Affiliate Disclosure` },
       { loc: `${hostUrl}/lp`, priority: '0.8', changefreq: 'weekly', img: `${hostUrl}/api/og?slug=lp`, title: `${cfg.brandName}: Direct Audit` },
       { loc: `${hostUrl}/dossier/sample`, priority: '0.8', changefreq: 'weekly' },
       ...growthUrls
@@ -791,65 +794,46 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
 }
 
 function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
-  const t = cfg.theme, isDerm = cfg.moduleId === 'derm_logic';
+  const t = cfg.theme;
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const top3 = ledger.filter((s) => s.score >= 85).slice(0, 3);
   const fix2 = ledger.filter((s) => s.score < 80).slice(0, 2);
-  const dermTitleMap = {
-    'VitC-AM-Peptides-PM': 'Vitamin C in the Morning + Copper Peptides at Bedtime',
-    'Ceramide-Tretinoin-Buffer': 'Ceramide Cream Buffer + Nighttime Tretinoin 0.05%',
-    'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5% Calming Pair',
-    'VitC+Cu': 'Vitamin C + Copper Peptides Same-Night',
-    'Tret+BPO': 'Tretinoin + Benzoyl Peroxide Same-Night'
-  };
-  const dermSubMap = {
-    'VitC-AM-Peptides-PM': 'SkinCeuticals C E Ferulic AM · Copper Peptides PM · Safe Under SPF',
-    'Ceramide-Tretinoin-Buffer': 'Aestura 3:1:1 Ceramide Cushion · Stops Retinoid Peeling Around Mouth',
-    'Azelaic15-Niacinamide5': 'Everyday Rosacea & Blemish Safe · Zero Pore-Clogging Oils'
-  };
-  const medals = isDerm ? [
-    { icon: '#1 GOLD STANDARD', bg: '#FAF6F0', border: '#D5CCC0', text: '#7A2332' },
-    { icon: '#2 BARRIER FAVORITE', bg: '#FAF6F0', border: '#D5CCC0', text: '#264C3C' },
-    { icon: '#3 REDNESS & PORE SAFE', bg: '#FAF6F0', border: '#D5CCC0', text: '#7D5116' }
-  ] : [
+  const medals = [
     { icon: '#1 LEADER', bg: '#FFFBEB', border: '#FDE68A', text: '#92400E' },
     { icon: '#2 RUNNER-UP', bg: '#F8FAFC', border: '#CBD5E1', text: '#334155' },
     { icon: '#3 TOP TIER', bg: '#FFF7ED', border: '#FED7AA', text: '#9A3412' }
   ];
   const podiumCards = top3.map((s, i) => {
     const m = medals[i] || medals[2];
-    const cardTitle = isDerm ? (dermTitleMap[s.target] || s.target) : s.target;
-    const cardSub = isDerm ? (dermSubMap[s.target] || `${s.kpi1} · ${s.kpi2}`) : `${s.kpi1} · ${s.kpi2}`;
     return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px;border-radius:${t.radiusCard};background:${t.subtleBg};text-decoration:none;color:${t.textPrimary};">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
-          <span style="padding:3px 9px;border-radius:${t.radiusPill};background:${m.bg};color:${m.text};font-size:12px;font-weight:700;letter-spacing:0.02em;">${m.icon}</span>
-          <span style="padding:3px 10px;border-radius:${t.radiusPill};background:${t.safeSoftBg};color:${t.safeColor};font-family:${t.fontSans};font-variant-numeric:tabular-nums;font-size:13px;font-weight:700;">${isDerm ? `${s.score}/100 Harmony` : `Grade ${escHtml(s.grade)} · ${s.score}/100`}</span>
+          <span style="padding:3px 9px;border-radius:${t.radiusPill};background:${m.bg};color:${m.text};font-size:13px;font-weight:800;">${m.icon}</span>
+          <span style="padding:3px 10px;border-radius:${t.radiusPill};background:${t.safeSoftBg};color:${t.safeColor};font-family:${t.fontSans};font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:800;">Grade ${escHtml(s.grade)} · ${s.score}/100</span>
         </div>
-        <div style="font-size:17px;font-family:${isDerm ? t.fontDisplay : t.fontSans};font-weight:${isDerm ? '500' : '800'};color:${t.textPrimary};margin-bottom:5px;line-height:1.28;">${escHtml(cardTitle)}</div>
-        <div style="font-size:13.5px;color:${t.textSecondary};margin-bottom:12px;line-height:1.45;">${escHtml(cardSub)}</div>
+        <div style="font-size:17px;font-weight:800;color:${t.textPrimary};margin-bottom:4px;">${escHtml(s.target)}</div>
+        <div style="font-size:14px;color:${t.textSecondary};margin-bottom:10px;">${escHtml(s.kpi1)} · ${escHtml(s.kpi2)}</div>
       </div>
       <div>
-        <div style="width:100%;height:6px;background:rgba(24,20,18,0.08);border-radius:${t.radiusPill};overflow:hidden;margin-bottom:8px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};border-radius:${t.radiusPill};"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:${t.brandPrimary};font-weight:600;"><span>${isDerm ? 'See Layering Breakdown' : 'View Verified Report'}</span><span>→</span></div>
+        <div style="width:100%;height:7px;background:#E2E8F0;border-radius:${t.radiusPill};overflow:hidden;margin-bottom:6px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};border-radius:${t.radiusPill};"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:${t.brandPrimary};font-weight:700;"><span>View Verified Report</span><span>→</span></div>
       </div>
     </a>`;
   }).join('');
-  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:${t.radiusPill};background:#FFF1F2;color:#9F1239;font-size:13px;font-weight:600;text-decoration:none;"><span>${escHtml(isDerm ? (dermTitleMap[s.target] || s.target) : s.target)}</span><span style="font-variant-numeric:tabular-nums;">${isDerm ? `Cancels Out (${s.score}/100)` : `Grade ${escHtml(s.grade)} (${s.score}/100)`}</span><span>See Fix →</span></a>`).join('');
+  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:${t.radiusPill};background:#FFF1F2;color:#9F1239;font-size:13.5px;font-weight:700;text-decoration:none;"><span>${escHtml(s.target)}</span><span style="font-variant-numeric:tabular-nums;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
 
-  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Verified Routine Pairings" style="margin:36px auto;font-family:${t.fontSans};">
+  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Industry Leaderboard Podium" style="margin:20px auto;font-family:${t.fontSans};">
     <div class="eb-panel-card" style="margin:0;padding:24px;background:${t.cardBg};">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
         <div>
-          <h2 style="margin:0;font-size:23px;font-family:${t.fontDisplay};font-weight:${isDerm ? '400' : '700'};color:${t.textPrimary};">${isDerm ? 'Gold-Standard Routine Pairings' : 'Top-Rated Industry Leaders'}</h2>
-          ${isDerm ? `<div style="font-size:13.5px;color:${t.textSecondary};margin-top:3px;">Cosmetic-chemist verified combinations that absorb cleanly with zero stinging or makeup pilling</div>` : ''}
+          <h2 style="margin:0;font-size:22px;font-family:${t.fontDisplay};font-weight:700;color:${t.textPrimary};">Top-Rated Industry Leaders</h2>
         </div>
-        <a href="/leaderboard" style="padding:9px 18px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">${isDerm ? 'Explore All Tested Routines →' : 'Explore Full Interactive Leaderboard →'}</a>
+        <a href="/leaderboard" style="padding:9px 18px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;">Explore Full Interactive Leaderboard →</a>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:14px;">${podiumCards}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:12px;">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:13.5px;font-weight:600;color:${t.textSecondary};">${isDerm ? 'Clashes to Avoid Same-Night:' : 'Common Mistakes Analysed:'}</span>${fixPills}</div>
-        <a href="${isDerm ? '/directory' : '/leaderboard'}" style="font-size:13.5px;font-weight:600;color:${t.brandPrimary};text-decoration:underline;">${isDerm ? 'Explore all 318 serum layering &amp; pairing guides →' : `Filter all ${ledger.length} ranked benchmarks →`}</a>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:13.5px;font-weight:700;color:${t.textSecondary};">Common Mistakes Analysed:</span>${fixPills}</div>
+        <a href="/leaderboard" style="font-size:13.5px;font-weight:700;color:${t.brandPrimary};text-decoration:underline;"> Filter all ${ledger.length} ranked benchmarks →</a>
       </div>
     </div>
   </section>`;
@@ -882,7 +866,7 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
       <div>
         <div style="font-size:16px;font-weight:700;color:${t.brandPrimary};">${isDerm ? `Complete Skincare Layering &amp; Routine Guide Directory (${growthItems.length} Guides)` : `Complete ${growthItems.length}-Benchmark Knowledge Graph &amp; AI Crawl Mesh`}</div>
-        <div style="font-size:16px;color:${t.textSecondary};">${isDerm ? `1-click access to all ${growthItems.length} verified guides, <a href="/celebrity" style="color:${t.brandPrimary};text-decoration:underline;font-weight:700;">Iconic Celebrity Routines</a>, <a href="/concern" style="color:${t.brandPrimary};text-decoration:underline;">Skin Concern Protocols</a>, <a href="/bottle" style="color:${t.brandPrimary};text-decoration:underline;">Cult Bottles</a>, and <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;">Tested Routine Leaderboard</a>.` : `1-click access to all ${growthItems.length} verified guides, interactive tools, comparisons, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:700;">Public Leaderboard</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, <a href="/llms-full.txt" style="color:${t.brandPrimary};text-decoration:underline;">Full Knowledge Corpus</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap Index</a>.`}</div>
+        <div style="font-size:16px;color:${t.textSecondary};">1-click access to all ${growthItems.length} verified guides, interactive tools, comparisons, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:700;">${isDerm ? 'Routine Leaderboard' : 'Public Leaderboard'}</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, <a href="/llms-full.txt" style="color:${t.brandPrimary};text-decoration:underline;">Full Knowledge Corpus</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap Index</a>.</div>
       </div>
       <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="${isDerm ? 'Search routine guides...' : `Filter ${growthItems.length} guides...`}" oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:7px 14px;border-radius:${t.radiusCard};background:#FFFFFF;color:${t.textPrimary};font-size:15px;min-width:250px;border:none;" />
     </div>

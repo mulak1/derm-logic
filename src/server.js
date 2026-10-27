@@ -15,6 +15,7 @@ const {
   renderDirectoryPage,
   renderSeoDetailPage,
   renderLegalPage,
+  renderEditorialPolicyRoute,
   render404Page,
   renderOgSvg
 } = require('./page-views');
@@ -212,6 +213,10 @@ app.get('/privacy', (req, res) => {
 
 app.get('/terms', (req, res) => {
   res.status(200).type('html').send(renderLegalPage({ type: 'terms' }));
+});
+
+app.get(['/editorial-policy', '/about', '/affiliate-disclosure'], (req, res) => {
+  res.status(200).type('html').send(renderEditorialPolicyRoute());
 });
 
 // 6. XML Sitemap (/sitemap.xml), Robots (/robots.txt), and LLM Discovery (/llms.txt, /llms-full.txt) are mounted by attachExactBaselinePack in exact-baseline-seo.js.

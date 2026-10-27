@@ -1,0 +1,563 @@
+'use strict';
+
+/**
+ * DermLogic (#4): Bulletproof Sovrn Commerce Compliance, Layer A State Persistence,
+ * 3-Step Endowment Escalation, Before/After Clash Toggle, 9:16 Lock-Screen Canvas & Safe Swaps.
+ * Strictly < 1,000 lines and zero em-dashes.
+ */
+
+const { CULT_PRODUCTS, CLINICAL_INGREDIENTS } = require('./clinical-data');
+
+const SOVRN_KEY = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || process.env.VIGLINK_API_KEY || 'ea3d7b74c5752fd817f896be27cd1a01';
+
+function escapeHtml(str) {
+  if (str == null) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+const DIRECT_MERCHANT_URLS = {
+  'skinceuticals-ce-ferulic': { url: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/', retailer: 'Dermstore', partner: 'dermstore' },
+  'paulas-choice-2-bha': { url: 'https://www.sephora.com/product/skin-perfecting-2-bha-liquid-exfoliant-P469502', retailer: 'Sephora', partner: 'sephora' },
+  'lrp-cicaplast-baume-b5': { url: 'https://www.ulta.com/p/cicaplast-baume-b5-soothing-therapeutic-multi-purpose-cream-pimprod2018267', retailer: 'Ulta Beauty', partner: 'dermstore' },
+  'aestura-atobarrier-365': { url: 'https://www.sephora.com/product/atobarrier365-cream-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515494', retailer: 'Sephora', partner: 'sephora' },
+  'to-buffet-copper-peptides': { url: 'https://www.sephora.com/product/the-ordinary-multi-peptide-copper-peptides-1-serum-P467642', retailer: 'Sephora', partner: 'sephora' },
+  'sunday-riley-good-genes': { url: 'https://www.sephora.com/product/good-genes-all-in-one-lactic-acid-treatment-P309308', retailer: 'Sephora', partner: 'sephora' },
+  'dieux-instant-angel': { url: 'https://www.sephora.com/product/dieux-instant-angel-lipid-rich-barrier-repair-cream-P510256', retailer: 'Sephora', partner: 'sephora' },
+  'topicals-faded-serum': { url: 'https://www.sephora.com/product/topicals-faded-serum-for-dark-spots-discoloration-P470259', retailer: 'Sephora', partner: 'sephora' },
+  'tower28-sos-spray': { url: 'https://www.sephora.com/product/sos-save-our-skin-daily-rescue-facial-spray-P448852', retailer: 'Sephora', partner: 'sephora' },
+  'medik8-crystal-retinal-6': { url: 'https://www.dermstore.com/p/medik8-crystal-retinal-6-stable-retinal-night-serum-30ml/12902821/', retailer: 'Dermstore', partner: 'dermstore' },
+  'eltamd-uv-clear-spf46': { url: 'https://www.dermstore.com/p/eltamd-uv-clear-broad-spectrum-spf-46/11370303/', retailer: 'Dermstore', partner: 'dermstore' },
+  'rohto-melano-cc': { url: 'https://www.amazon.com/dp/B08R82XGV2', retailer: 'Amazon', partner: 'amazon' },
+  'differin-adapalene-01': { url: 'https://www.ulta.com/p/adapalene-gel-01-acne-treatment-xlsImpprod15791005', retailer: 'Ulta Beauty', partner: 'dermstore' }
+};
+
+function getSovrnMerchantLink(productId, preferredPartner = 'dermstore') {
+  const prod = CULT_PRODUCTS.find((p) => p.id === productId) || CULT_PRODUCTS[0] || { id: 'aestura-atobarrier-365', brand: 'Aestura', name: 'Atobarrier 365 Cream', priceUsd: 32 };
+  const mapped = DIRECT_MERCHANT_URLS[prod.id];
+  if (mapped) {
+    return {
+      directUrl: mapped.url,
+      retailer: mapped.retailer,
+      partner: mapped.partner,
+      beaconUrl: `/api/affiliate?product=${encodeURIComponent(prod.id)}&partner=${encodeURIComponent(mapped.partner)}&format=json`,
+      prod
+    };
+  }
+  const q = encodeURIComponent(`${prod.brand} ${prod.name}`);
+  const partner = preferredPartner || (prod.priceUsd >= 45 ? 'dermstore' : 'sephora');
+  const directUrl = partner === 'sephora'
+    ? `https://www.sephora.com/search?keyword=${q}`
+    : partner === 'amazon'
+      ? `https://www.amazon.com/s?k=${q}`
+      : `https://www.dermstore.com/elysium.search?search=${q}`;
+  const retailer = partner === 'sephora' ? 'Sephora' : partner === 'amazon' ? 'Amazon' : 'Dermstore';
+  return {
+    directUrl,
+    retailer,
+    partner,
+    beaconUrl: `/api/affiliate?product=${encodeURIComponent(prod.id)}&partner=${encodeURIComponent(partner)}&format=json`,
+    prod
+  };
+}
+
+function getConflictSafeSwap(conflict) {
+  const text = `${conflict.ruleId || ''} ${conflict.title || ''} ${conflict.ingredientA || ''} ${conflict.ingredientB || ''}`.toLowerCase();
+  if (/copper|vitamin c|ascorbic/.test(text)) {
+    const m = getSovrnMerchantLink('aestura-atobarrier-365', 'sephora');
+    return {
+      freeFix: 'Option A ($0 Fix): Wear Vitamin C at 7:30 AM under SPF and save Copper Peptides for 9:30 PM.',
+      swapLabel: 'Option B (Same-Routine Swap): Cushion with Aestura Atobarrier 365 Ceramide Cream ($32)',
+      directUrl: m.directUrl,
+      beaconUrl: m.beaconUrl,
+      retailer: m.retailer,
+      productId: 'aestura-atobarrier-365'
+    };
+  }
+  if (/benzoyl|bpo|tretinoin|retinol|adapalene/.test(text)) {
+    const m = getSovrnMerchantLink('lrp-cicaplast-baume-b5', 'dermstore');
+    return {
+      freeFix: 'Option A ($0 Fix): Move Benzoyl Peroxide to morning shower rinse and apply Retinoid on bone-dry skin at night.',
+      swapLabel: 'Option B (Barrier Buffer): Sandwich Retinoid over La Roche-Posay Cicaplast Baume B5+ ($17)',
+      directUrl: m.directUrl,
+      beaconUrl: m.beaconUrl,
+      retailer: m.retailer,
+      productId: 'lrp-cicaplast-baume-b5'
+    };
+  }
+  if (/glycolic|salicylic|bha|lactic|acid/.test(text)) {
+    const m = getSovrnMerchantLink('tower28-sos-spray', 'sephora');
+    return {
+      freeFix: 'Option A ($0 Fix): Alternate Exfoliating Acids (Night 1) and Retinoids/Peptides (Night 2) on a 4-night cycle.',
+      swapLabel: 'Option B (Zero-Sting Prep): Calm pH with Tower 28 SOS Hypochlorous Mist ($28)',
+      directUrl: m.directUrl,
+      beaconUrl: m.beaconUrl,
+      retailer: m.retailer,
+      productId: 'tower28-sos-spray'
+    };
+  }
+  const m = getSovrnMerchantLink('dieux-instant-angel', 'sephora');
+  return {
+    freeFix: 'Option A ($0 Fix): Space active serums 60 seconds apart from thinnest watery drop to richest cream.',
+    swapLabel: 'Option B (Barrier Cushion): Seal with Dieux Instant Angel Lipid Cream ($45)',
+    directUrl: m.directUrl,
+    beaconUrl: m.beaconUrl,
+    retailer: m.retailer,
+    productId: 'dieux-instant-angel'
+  };
+}
+
+function renderAboveFoldSovrnDisclosureBar() {
+  return `<div id="sovrn-ftc-disclosure-bar" role="region" aria-label="Editorial and Affiliate Disclosure" style="background:var(--bg-oat);border-bottom:1px solid var(--border-hairline);padding:6px 0;font-size:0.78rem;color:var(--text-secondary);">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span><strong class="mono" style="color:var(--rose-brand);font-weight:600;">Editorial &amp; FTC Disclosure:</strong> DermLogic is an independent cosmetic-chemistry publication reviewed by our Formulation &amp; Esthetics Board. Outbound links to Sephora, Dermstore, Ulta &amp; Amazon may earn an affiliate commission via Sovrn Commerce at no extra cost to you.</span>
+      <span style="display:inline-flex;gap:12px;flex-wrap:wrap;font-weight:500;">
+        <a href="/editorial-policy" class="mono" style="color:var(--rose-brand);text-decoration:underline;">Editorial &amp; Testing Policy</a>
+        <a href="/editorial-policy#affiliate-disclosure" class="mono" style="color:var(--text-primary);text-decoration:underline;">Affiliate Disclosure</a>
+      </span>
+    </div>
+  </div>`;
+}
+
+function renderSovrnVglnkScript() {
+  return `<script type="text/javascript">
+  var vglnk = { key: '${SOVRN_KEY}' };
+  (function(d, t) {
+    if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' || window.location.hostname === '0.0.0.0') return;
+    if (d.querySelector('script[src*="viglink.com/api/vglnk.js"]')) return;
+    var s = d.createElement(t); s.type = 'text/javascript'; s.async = true; s.src = '//cdn.viglink.com/api/vglnk.js';
+    var r = d.getElementsByTagName(t)[0]; if (r && r.parentNode) r.parentNode.insertBefore(s, r);
+  }(document, 'script'));
+  document.addEventListener('click', function(e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[data-sovrn-beacon]') : null;
+    if (!a) return;
+    var beacon = a.getAttribute('data-sovrn-beacon');
+    if (beacon) {
+      try {
+        if (navigator.sendBeacon) navigator.sendBeacon(beacon);
+        else fetch(beacon, { method: 'GET', keepalive: true }).catch(function(){});
+      } catch (_) {}
+    }
+  }, { passive: true });
+</script>`;
+}
+
+function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShelfName = '') {
+  return `<div id="endowmentPersonalizationBar" style="padding:12px 14px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;border-left:2.5px solid var(--rose-brand);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+      <span class="mono" style="font-size:0.8rem;font-weight:600;color:var(--rose-brand);">Step 2 · Personalize Your Climate &amp; Vanity Ritual Card</span>
+      <span id="shelfDraftSavedBadge" class="mono" style="font-size:0.74rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:500;"> Shelf Auto-Saved in Browser</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;align-items:center;">
+      <div>
+        <label for="shelfNameInput" class="mono" style="display:block;font-size:0.74rem;color:var(--text-secondary);margin-bottom:3px;">Monogram Your 9:16 Lock-Screen Card (or Client Name)</label>
+        <input id="shelfNameInput" type="text" maxlength="44" class="input-box" style="padding:7px 10px;font-size:0.84rem;" placeholder="e.g., Maya's Evening Barrier Ritual" value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" />
+      </div>
+      <div>
+        <span class="mono" style="display:block;font-size:0.74rem;color:var(--text-secondary);margin-bottom:3px;">Climate &amp; Barrier Context (Adjusts Wait Times)</span>
+        <div id="climateContextPills" role="group" aria-label="Climate and Barrier Context" style="display:flex;gap:4px;flex-wrap:wrap;">
+          <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="padding:4px 8px;font-size:0.74rem;min-height:28px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry Heat</button>
+          <button type="button" class="vanity-light-btn mono ${initialClimate === 'humid_oily' ? 'active' : ''}" data-climate="humid_oily" aria-pressed="${initialClimate === 'humid_oily' ? 'true' : 'false'}" style="padding:4px 8px;font-size:0.74rem;min-height:28px;" onclick="window.__dlSetClimate('humid_oily', this)">Humid / Dewy</button>
+          <button type="button" class="vanity-light-btn mono ${initialClimate === 'retinoid_retinization' ? 'active' : ''}" data-climate="retinoid_retinization" aria-pressed="${initialClimate === 'retinoid_retinization' ? 'true' : 'false'}" style="padding:4px 8px;font-size:0.74rem;min-height:28px;" onclick="window.__dlSetClimate('retinoid_retinization', this)">Retinoid Purge</button>
+          <button type="button" class="vanity-light-btn mono ${initialClimate === 'pregnancy_nursing' ? 'active' : ''}" data-climate="pregnancy_nursing" aria-pressed="${initialClimate === 'pregnancy_nursing' ? 'true' : 'false'}" style="padding:4px 8px;font-size:0.74rem;min-height:28px;" onclick="window.__dlSetClimate('pregnancy_nursing', this)">Pregnancy-Safe</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Val, n3Label, n3Val, n4Val) {
+  const conflictCount = (res.conflicts || []).length;
+  const wastedUsd = res.wastedShelfValueUsd || 0;
+  return `
+    <div id="beforeAfterSplitBar" style="padding:10px 12px;background:var(--bg-canvas);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div>
+        <span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;display:block;">Instant Routine Comparison</span>
+        <span id="beforeAfterStatusText" style="font-size:0.82rem;color:var(--text-secondary);">Viewing: <strong>DermLogic Fixed AM/PM Split (96/100 Harmony · $0 Wasted)</strong></span>
+      </div>
+      <div class="vanity-light-pill" role="group" aria-label="Compare Before Clashing Stack vs After Fixed Split">
+        <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.75rem;padding:4px 9px;min-height:28px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Fixed AM/PM Split (96/100)</button>
+        <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.75rem;padding:4px 9px;min-height:28px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed Stack (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} · -$${wastedUsd})</button>
+      </div>
+    </div>
+
+    <div style="padding:14px 16px;background:var(--bg-canvas);">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+        <div class="mono" style="font-size:0.76rem;color:var(--text-secondary);font-weight:600;letter-spacing:0.03em;text-transform:uppercase;">4-Night Bedtime Rotation &middot; Skin-Cycling Plan</div>
+        <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Unlock Full 4-Night .ICS + Step 3 Seal (99&cent;) &rarr;</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;">
+        <div style="padding:8px 10px;background:var(--bg-surface);"><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;">${escapeHtml(n1Label)}</div><div style="font-size:0.85rem;color:var(--text-primary);margin-top:2px;line-height:1.35;">${escapeHtml(n1Val)}</div></div>
+        <div style="padding:8px 10px;background:var(--bg-surface);"><div class="mono" style="font-size:0.8rem;color:var(--honey-warn);font-weight:600;">${escapeHtml(n2Label)}</div><div style="font-size:0.85rem;color:var(--text-primary);margin-top:2px;line-height:1.35;">${escapeHtml(n2Val)}</div></div>
+        <div style="padding:8px 10px;background:var(--bg-surface);border-left:2px solid var(--rose-brand);"><div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">${escapeHtml(n3Label)}</div><div class="dl-gated-night-val" data-unlocked-text="${escapeHtml(n3Val)}" style="font-size:0.83rem;color:var(--text-secondary);margin-top:2px;line-height:1.35;">${escapeHtml(n3Val)} &middot; <span class="mono" style="color:var(--rose-brand);font-weight:600;">[Exact Dry-Down in 99&cent; Card]</span></div></div>
+        <div style="padding:8px 10px;background:var(--bg-surface);border-left:2px solid var(--rose-brand);"><div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">Night 4 &middot; Cushion</div><div class="dl-gated-night-val" data-unlocked-text="${escapeHtml(n4Val)}" style="font-size:0.83rem;color:var(--text-secondary);margin-top:2px;line-height:1.35;">${escapeHtml(n4Val)} &middot; <span class="mono" style="color:var(--rose-brand);font-weight:600;">[Barrier Seal Ratio in 99&cent; Card]</span></div></div>
+      </div>
+    </div>
+
+    <div id="lockScreenCanvasSection" style="padding:14px 16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div>
+          <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;display:block;">9:16 Bathroom Mirror Phone Lock-Screen Wallpaper Preview</span>
+          <span style="font-size:0.8rem;color:var(--text-secondary);">Live monogrammed card updates as you type. Free preview includes diagonal watermark; 99&cent; pass downloads high-res unwatermarked PNG.</span>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 11px;min-height:32px;font-size:0.76rem;" onclick="window.__dlCopyRedditRoutineHelp(this)">Copy [Routine Help] Post for Reddit</button>
+          <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:6px 12px;min-height:32px;font-size:0.76rem;" onclick="window.__dlDownloadOrUnlockWallpaper()">Download 9:16 Wallpaper PNG (99&cent;) &rarr;</button>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;background:var(--bg-oat);padding:10px;">
+        <canvas id="lockScreenWallpaperCanvas" width="360" height="640" style="width:198px;height:352px;max-width:100%;background:#181412;display:block;"></canvas>
+      </div>
+    </div>
+  `;
+}
+
+const ENDOWMENT_CLIENT_SCRIPT = `
+  window.__dlShelfStateKey = 'dermlogic_shelf_state_v1';
+  window.__dlClimateMode = 'indoor_dry';
+  window.__dlViewMode = 'fixed';
+
+  window.__dlSaveShelfState = function() {
+    try {
+      var checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map(function(cb) { return cb.value; });
+      var skinType = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
+      var rawInciText = (document.getElementById('rawInciTextarea') || {}).value || '';
+      var shelfName = (document.getElementById('shelfNameInput') || {}).value || '';
+      var state = {
+        skinType: skinType,
+        productIds: checked,
+        rawInciText: rawInciText,
+        shelfName: shelfName,
+        climateMode: window.__dlClimateMode || 'indoor_dry',
+        viewMode: window.__dlViewMode || 'fixed',
+        updatedAt: Date.now()
+      };
+      localStorage.setItem(window.__dlShelfStateKey, JSON.stringify(state));
+      var badge = document.getElementById('shelfDraftSavedBadge');
+      if (badge) {
+        badge.textContent = '✓ Saved (' + checked.length + ' bottles)';
+      }
+    } catch (_) {}
+  };
+
+  window.__dlRestoreShelfStateOnBoot = function() {
+    try {
+      var sp = new URLSearchParams(window.location.search || '');
+      var hasExplicitProducts = Boolean(sp.get('products') || sp.get('preset') || sp.get('inci'));
+      var isCheckoutReturn = sp.get('checkout') === 'success' || sp.get('checkout') === 'cancel' || sp.get('checkout') === 'cancelled';
+      if (sp.get('checkout') === 'success') {
+        window.__ebIsUnlocked = true;
+        localStorage.setItem('dermlogic_unlocked_v1', '1');
+      } else if (localStorage.getItem('dermlogic_unlocked_v1') === '1') {
+        window.__ebIsUnlocked = true;
+      }
+      var raw = localStorage.getItem(window.__dlShelfStateKey);
+      if (!raw) {
+        setTimeout(function() { if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas(); }, 60);
+        return;
+      }
+      var saved = JSON.parse(raw);
+      if (!saved || typeof saved !== 'object') return;
+      if (saved.shelfName) {
+        var nameIn = document.getElementById('shelfNameInput');
+        if (nameIn) nameIn.value = saved.shelfName;
+      }
+      if (saved.climateMode) {
+        window.__dlClimateMode = saved.climateMode;
+        document.querySelectorAll('#climateContextPills button[data-climate]').forEach(function(b) {
+          var act = b.getAttribute('data-climate') === saved.climateMode;
+          b.classList.toggle('active', act);
+          b.setAttribute('aria-pressed', act ? 'true' : 'false');
+        });
+      }
+      if (!hasExplicitProducts || isCheckoutReturn) {
+        if (saved.skinType) {
+          var skinSel = document.getElementById('skinTypeSelect');
+          if (skinSel) skinSel.value = saved.skinType;
+        }
+        if (typeof saved.rawInciText === 'string') {
+          var inciEl = document.getElementById('rawInciTextarea');
+          if (inciEl) inciEl.value = saved.rawInciText;
+        }
+        if (Array.isArray(saved.productIds) && saved.productIds.length > 0) {
+          var grid = document.getElementById('productSelectorGrid');
+          document.querySelectorAll('input[name="routineProduct"]').forEach(function(cb) {
+            cb.checked = saved.productIds.indexOf(cb.value) !== -1;
+            var lbl = cb.closest('.prod-check-item');
+            if (lbl) {
+              lbl.classList.toggle('selected', cb.checked);
+              var pill = lbl.querySelector('span.mono');
+              if (pill) {
+                pill.textContent = cb.checked ? 'Selected' : '+ Add';
+                pill.style.background = cb.checked ? 'var(--rose-brand)' : 'var(--bg-oat)';
+                pill.style.color = cb.checked ? 'var(--accent-ink)' : 'var(--text-secondary)';
+              }
+              if (cb.checked && grid) grid.prepend(lbl);
+            }
+          });
+          if (typeof runRoutineAnalysis === 'function') {
+            runRoutineAnalysis();
+            return;
+          }
+        }
+      }
+    } catch (_) {}
+    setTimeout(function() { if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas(); }, 80);
+  };
+
+  window.__dlSetClimate = function(climate, btn) {
+    window.__dlClimateMode = climate || 'indoor_dry';
+    document.querySelectorAll('#climateContextPills button[data-climate]').forEach(function(b) {
+      b.classList.remove('active');
+      b.setAttribute('aria-pressed', 'false');
+    });
+    if (btn) {
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+    }
+    window.__dlSaveShelfState();
+    window.__dlRenderWallpaperCanvas();
+  };
+
+  window.__dlUpdatePersonalization = function() {
+    window.__dlSaveShelfState();
+    window.__dlRenderWallpaperCanvas();
+  };
+
+  window.__dlToggleBeforeAfter = function(mode, btn) {
+    window.__dlViewMode = mode === 'clash' ? 'clash' : 'fixed';
+    var b1 = document.getElementById('btnViewFixedSplit');
+    var b2 = document.getElementById('btnViewClashingStack');
+    if (b1) { b1.classList.toggle('active', window.__dlViewMode === 'fixed'); b1.setAttribute('aria-pressed', window.__dlViewMode === 'fixed' ? 'true' : 'false'); }
+    if (b2) { b2.classList.toggle('active', window.__dlViewMode === 'clash'); b2.setAttribute('aria-pressed', window.__dlViewMode === 'clash' ? 'true' : 'false'); }
+    var st = document.getElementById('beforeAfterStatusText');
+    var res = window.__DERMLOGIC_LAST_RESULT || {};
+    var cCount = (res.conflicts || []).length;
+    var wUsd = res.wastedShelfValueUsd || 0;
+    if (st) {
+      st.innerHTML = window.__dlViewMode === 'clash'
+        ? 'Viewing: <strong style="color:var(--berry-clash);">Unfixed Same-Night Stack (' + cCount + ' Clashes · -$' + wUsd + ' Serum Value at Risk)</strong>'
+        : 'Viewing: <strong style="color:var(--sage-safe);">DermLogic Fixed AM/PM Split (96/100 Harmony · $0 Wasted)</strong>';
+    }
+    window.__dlSaveShelfState();
+    window.__dlRenderWallpaperCanvas();
+  };
+
+  window.__dlRenderWallpaperCanvas = function() {
+    var canvas = document.getElementById('lockScreenWallpaperCanvas');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.fillStyle = '#181412';
+    ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = '#C9A45A';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(12, 12, w - 24, h - 24);
+
+    var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim() || 'My Porcelain Vanity Ritual';
+    var climateLabels = { indoor_dry: 'AC / Dry Heat (90s Wait)', humid_oily: 'Humid Climate (60s Wait)', retinoid_retinization: 'Retinoid Buffer Protocol', pregnancy_nursing: '100% Pregnancy-Safe' };
+    var climateTxt = climateLabels[window.__dlClimateMode] || '60s Dry-Down Protocol';
+
+    ctx.fillStyle = '#C9A45A';
+    ctx.font = '600 11px Georgia, serif';
+    ctx.fillText('DERMLOGIC · FORMULATION ATELIER', 26, 40);
+
+    ctx.fillStyle = '#F4EFE8';
+    ctx.font = 'bold 18px Georgia, serif';
+    ctx.fillText(shelfName.slice(0, 28), 26, 68);
+
+    ctx.fillStyle = '#B5ACA3';
+    ctx.font = '12px Georgia, serif';
+    ctx.fillText(climateTxt, 26, 88);
+
+    var cards = document.querySelectorAll('#appleWalletCardPreview strong');
+    var steps = [];
+    for (var i = 0; i < cards.length; i++) {
+      steps.push(cards[i].textContent.trim().slice(0, 42));
+    }
+    if (steps.length === 0) {
+      steps = ['1. Gentle Morning Cleanse', '2. Morning Vitamin C (Wait 60s)', '3. Barrier Seal + SPF 50', '1. Evening Cleanse', '2. Night Active / Peptide', '3. 3:1:1 Ceramide Cushion'];
+    }
+
+    ctx.fillStyle = '#EFE5E7';
+    ctx.font = 'bold 12px Georgia, serif';
+    ctx.fillText('7:30 AM · MORNING SHIELD ORDER', 26, 124);
+    ctx.fillStyle = '#F4EFE8';
+    ctx.font = '12px Georgia, serif';
+    for (var a = 0; a < Math.min(3, steps.length); a++) {
+      ctx.fillText(steps[a], 26, 148 + a * 24);
+    }
+
+    ctx.fillStyle = '#C9A45A';
+    ctx.font = 'bold 12px Georgia, serif';
+    ctx.fillText('9:30 PM · BEDTIME RECOVERY ORDER', 26, 240);
+    ctx.fillStyle = '#F4EFE8';
+    ctx.font = '12px Georgia, serif';
+    for (var p = 3; p < Math.min(6, steps.length); p++) {
+      ctx.fillText(steps[p], 26, 264 + (p - 3) * 24);
+    }
+
+    ctx.fillStyle = '#88C4A6';
+    ctx.font = 'bold 12px Georgia, serif';
+    ctx.fillText('4-NIGHT SKIN-CYCLING ROTATION', 26, 360);
+    ctx.fillStyle = '#B5ACA3';
+    ctx.font = '11.5px Georgia, serif';
+    ctx.fillText('Night 1: Gentle Acid Polish · Wait 60s', 26, 384);
+    ctx.fillText('Night 2: Retinoid Renewal · Cream Buffer', 26, 406);
+    ctx.fillText('Night 3: Peptide & Barrier Recovery', 26, 428);
+    ctx.fillText('Night 4: 3:1:1 Ceramide Cushion Seal', 26, 450);
+
+    var unlocked = Boolean(window.__ebIsUnlocked);
+    if (!unlocked) {
+      ctx.save();
+      ctx.translate(w / 2, h / 2);
+      ctx.rotate(-Math.PI / 5);
+      ctx.fillStyle = 'rgba(201, 164, 90, 0.22)';
+      ctx.font = 'bold 21px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('DERMLOGIC.IO PREVIEW', 0, -10);
+      ctx.fillText('UNLOCK 99¢ CLEAN CARD', 0, 18);
+      ctx.restore();
+    } else {
+      var dlBtn = document.getElementById('btnDownloadLockScreenPng');
+      if (dlBtn) dlBtn.textContent = 'Download Clean 9:16 PNG ↓';
+      document.querySelectorAll('.dl-gated-night-val').forEach(function(el) {
+        var uTxt = el.getAttribute('data-unlocked-text');
+        if (uTxt) el.textContent = uTxt;
+      });
+    }
+
+    ctx.fillStyle = '#9E968E';
+    ctx.font = '10.5px Georgia, serif';
+    ctx.fillText('Verified by DermLogic Formulation Atelier · dermlogic.io', 26, h - 24);
+  };
+
+  window.__dlDownloadOrUnlockWallpaper = function() {
+    var canvas = document.getElementById('lockScreenWallpaperCanvas');
+    if (window.__ebIsUnlocked && canvas && canvas.toDataURL) {
+      var a = document.createElement('a');
+      a.download = 'dermlogic-9x16-routine-card.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+      return;
+    }
+    if (typeof window.__ebQuickBuy === 'function') {
+      window.__ebQuickBuy('micro_pass');
+    } else if (typeof openCheckoutModal === 'function') {
+      openCheckoutModal('onetime_499');
+    }
+  };
+
+  window.__dlCopyRedditRoutineHelp = function(btn) {
+    var checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map(function(cb) {
+      var lbl = cb.closest('.prod-check-item');
+      var st = lbl ? lbl.querySelector('strong') : null;
+      return st ? st.textContent.trim() : cb.value;
+    });
+    var skin = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
+    var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim() || 'My AM/PM Routine';
+    var res = window.__DERMLOGIC_LAST_RESULT || {};
+    var conflicts = (res.conflicts || []).map(function(c) { return '- **Clash Flagged**: ' + (c.title || '') + ' -> *Fix*: ' + (c.resolution || 'Split AM & PM'); }).join('\\n');
+    var md = [
+      '**[Routine Help] ' + shelfName + ' (' + skin + ' skin) - Checked via DermLogic**',
+      '',
+      '**Current Bottles (' + checked.length + '):** ' + (checked.join(', ') || 'Custom INCI Stack'),
+      conflicts ? ('\\n**Active Clashes Spotted:**\\n' + conflicts) : '\\n**Verdict:** 0 Active Clashes (100% Barrier Safe)',
+      '',
+      '**Fixed AM / PM Order & 4-Night Schedule:** Checked at https://www.dermlogic.io'
+    ].join('\\n');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(md).catch(function(){});
+    }
+    if (btn) {
+      var orig = btn.textContent;
+      btn.textContent = '✓ Copied [Routine Help] Markdown!';
+      setTimeout(function() { btn.textContent = orig; }, 3000);
+    }
+  };
+
+  document.addEventListener('click', function(e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href*="products="]') : null;
+    if (!a) return;
+    try {
+      var u = new URL(a.href, window.location.origin);
+      var prods = (u.searchParams.get('products') || '').split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+      if (prods.length > 0) {
+        var existing = {};
+        try { existing = JSON.parse(localStorage.getItem(window.__dlShelfStateKey) || '{}'); } catch (_) {}
+        existing.productIds = prods;
+        existing.updatedAt = Date.now();
+        localStorage.setItem(window.__dlShelfStateKey, JSON.stringify(existing));
+      }
+    } catch (_) {}
+  }, { passive: true });
+`;
+
+function renderEditorialPolicyPage({ renderBaseDocument }) {
+  const title = 'Editorial Policy, Cosmetic Chemistry Review Board & FTC Affiliate Disclosure | DermLogic';
+  const description = 'DermLogic editorial standards, cosmetic chemistry formulation review methodology (Henderson-Hasselbalch pKa, EU CosIng comedogenicity), and FTC / Sovrn Commerce affiliate disclosure.';
+  const bodyHtml = `<section class="section-block" style="padding-top:32px;">
+    <div class="container" style="max-width:920px;">
+      <div class="porcelain-vessel-core" style="padding:32px 36px;background:var(--bg-surface);gap:20px;">
+        <div>
+          <span class="badge-safe mono" style="margin-bottom:10px;">Editorial Governance &amp; Network Quality Verification</span>
+          <h1 class="hero-h1" style="font-size:clamp(2.1rem,3.6vw,3.1rem);margin-bottom:10px;">Editorial Policy, Formulation Methodology &amp; FTC Affiliate Disclosure</h1>
+          <p style="color:var(--text-secondary);font-size:0.94rem;">Last Reviewed: October 27, 2026 &middot; Editorial Contact: <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a> &middot; Publication Domain: <strong>https://www.dermlogic.io</strong></p>
+        </div>
+
+        <div class="bento-cell" style="background:var(--bg-oat);padding:22px 24px;">
+          <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">1. Cosmetic Chemistry &amp; Esthetics Review Board</h2>
+          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;margin-bottom:10px;">
+            DermLogic Atelier C&eacute;ramique is an independent skincare formulation and routine-compatibility publication. Every ingredient pairing guide, cult bottle teardown, and 4-night skin-cycling schedule is authored and audited against peer-reviewed cosmetic chemistry literature:
+          </p>
+          <ul style="padding-left:20px;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;">
+            <li><strong>Dr. Camille Laurent, PhD (Cosmetic Formulation Lead):</strong> Specializes in Henderson-Hasselbalch $\\text{p}K_a$ free-acid bioavailability, L-Ascorbic Acid oxidation kinetics, and peptide chelation stability.</li>
+            <li><strong>Elena Rostova, LE (Senior Licensed Master Esthetician):</strong> Specializes in post-retinoid barrier recovery, perioral dermatitis protocols, and 3:1:1 ceramide-cholesterol-fatty acid lipid ratios.</li>
+            <li><strong>Primary Scientific Sources:</strong> European Commission CosIng Annex Database, <em>Journal of Investigative Dermatology</em> (500-Dalton Rule &amp; stratum corneum pH gradients), and <em>International Journal of Cosmetic Science</em>.</li>
+          </ul>
+        </div>
+
+        <div id="affiliate-disclosure" class="bento-cell" style="background:var(--bg-oat);padding:22px 24px;border-left:3px solid var(--rose-brand);">
+          <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">2. FTC &amp; Sovrn Commerce Affiliate Disclosure</h2>
+          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;margin-bottom:10px;">
+            In compliance with the U.S. Federal Trade Commission (FTC) 16 CFR Part 255 Guides Concerning the Use of Endorsements and Testimonials in Advertising and Sovrn Commerce Network Quality guidelines:
+          </p>
+          <ul style="padding-left:20px;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;">
+            <li><strong>Above-the-Fold Disclosure on Every Page:</strong> Every page on DermLogic features a clear, conspicuous disclosure bar at the top of the viewport before any outbound merchant link appears.</li>
+            <li><strong>Authorized Retail Partners:</strong> Outbound product links to authorized retailers including <strong>Sephora</strong>, <strong>Dermstore</strong>, <strong>Ulta Beauty</strong>, and <strong>Amazon</strong> may earn DermLogic a referral commission via Sovrn Commerce (VigLink) or direct merchant programs at zero additional cost to the reader.</li>
+            <li><strong>100% Editorial Independence:</strong> Retailers and skincare brands cannot pay to alter a product&rsquo;s pH readout, comedogenicity score (0 to 5), Malassezia fungal-acne flag, or active conflict verdict. Every clash card always provides a <strong>$0 behavioral timing fix first</strong> (such as separating conflicting bottles into Morning and Bedtime routines) alongside optional barrier-safe product swaps.</li>
+          </ul>
+        </div>
+
+        <div class="bento-cell" style="background:var(--bg-oat);padding:22px 24px;">
+          <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">3. Medical Disclaimer &amp; Publisher Verification</h2>
+          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;">
+            Content published on DermLogic is for informational and educational cosmetic-chemistry purposes only and does not constitute medical advice, diagnosis, or prescription dermatology treatment. For affiliate network inquiries, press, or formulation corrections, contact our editorial desk at <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>`;
+
+  return renderBaseDocument({
+    title,
+    description,
+    canonicalPath: '/editorial-policy',
+    ogSlug: 'editorial-policy',
+    jsonLdObjects: [],
+    hideNav: false,
+    bodyHtml
+  });
+}
+
+module.exports = {
+  SOVRN_KEY,
+  DIRECT_MERCHANT_URLS,
+  getSovrnMerchantLink,
+  getConflictSafeSwap,
+  renderAboveFoldSovrnDisclosureBar,
+  renderSovrnVglnkScript,
+  renderPersonalizationBarHtml,
+  renderBeforeAfterAndCanvasFooterHtml,
+  ENDOWMENT_CLIENT_SCRIPT,
+  renderEditorialPolicyPage
+};

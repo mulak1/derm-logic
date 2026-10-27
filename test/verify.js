@@ -70,6 +70,7 @@ async function runVerification() {
       '/',
       '/lp',
       '/directory',
+      '/editorial-policy',
       '/privacy',
       '/terms',
       '/favicon.svg',
@@ -173,6 +174,8 @@ async function runVerification() {
     // Verify hyperlinked logo & unified header links on /
     const logoHref = await page.getAttribute('header a.brand-logo-link', 'href');
     assert.strictEqual(logoHref, '/', 'Brand logo must link to /');
+    const sovrnBarVisible = await page.locator('#sovrn-ftc-disclosure-bar').isVisible();
+    assert.strictEqual(sovrnBarVisible, true, 'Above-the-fold #sovrn-ftc-disclosure-bar must be visible on /');
     const navLinksCount = await page.locator('header nav.nav-links a').count();
     assert(navLinksCount >= 3, 'Header must contain the unified root-relative links');
     const affLinksCount = await page.locator('a[rel*="sponsored"]').count();
@@ -232,6 +235,28 @@ async function runVerification() {
 
     const conflictCardsCount = await page.locator('.conflict-card').count();
     assert(conflictCardsCount >= 2, `Expected >=2 rendered conflict cards on DOM, got ${conflictCardsCount}`);
+
+    // Verify Layer A & Pivots: Personalization Bar, Before/After Toggle, 9:16 Lock-Screen Canvas & State Persistence across Stripe Return
+    await page.fill('#shelfNameInput', 'Maya Evening Protocol');
+    await page.click('#climateContextPills button[data-climate="retinoid_retinization"]');
+    await page.click('#btnViewClashingStack');
+    await page.waitForTimeout(120);
+    await page.click('#btnViewFixedSplit');
+    await page.waitForTimeout(120);
+    const canvasExists = await page.locator('#lockScreenWallpaperCanvas').count();
+    assert.strictEqual(canvasExists, 1, '9:16 HTML5 lock-screen canvas must be present');
+
+    const savedStateBeforeRedirect = await page.evaluate(() => JSON.parse(localStorage.getItem('dermlogic_shelf_state_v1') || '{}'));
+    assert.strictEqual(savedStateBeforeRedirect.shelfName, 'Maya Evening Protocol', 'localStorage must persist shelfName');
+    assert.strictEqual(savedStateBeforeRedirect.climateMode, 'retinoid_retinization', 'localStorage must persist climateMode');
+    assert(Array.isArray(savedStateBeforeRedirect.productIds) && savedStateBeforeRedirect.productIds.length >= 2, 'localStorage must persist selected productIds');
+
+    // Simulate returning from Stripe checkout (?checkout=success) and assert zero-loss state restoration
+    await page.goto(`${BASE_URL}/?checkout=success&tier=micro_pass`, { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(350);
+    const restoredShelfName = await page.inputValue('#shelfNameInput');
+    assert.strictEqual(restoredShelfName, 'Maya Evening Protocol', 'Shelf name must restore byte-for-byte after Stripe redirect');
+    console.log('6b. Verified Layer A Zero-Loss State Persistence across Stripe redirect + 9:16 Lock-Screen Canvas & Sovrn Disclosure.');
 
     // Scroll back to top before fullPage screenshot so sticky header sits cleanly at top of document
     await page.evaluate(() => window.scrollTo(0, 0));

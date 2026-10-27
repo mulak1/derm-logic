@@ -1,4 +1,13 @@
 const { CULT_PRODUCTS } = require('./clinical-data');
+const {
+  getSovrnMerchantLink,
+  getConflictSafeSwap,
+  renderAboveFoldSovrnDisclosureBar,
+  renderSovrnVglnkScript,
+  renderPersonalizationBarHtml,
+  renderBeforeAfterAndCanvasFooterHtml,
+  ENDOWMENT_CLIENT_SCRIPT
+} = require('./endowment-sovrn');
 
 function escapeHtml(str) {
   if (str == null) return '';
@@ -238,76 +247,15 @@ function renderHeader(hideNav = false) {
     <button type="button" class="vanity-light-btn active" data-theme-mode="day" aria-pressed="true" onclick="setAtelierVanityLight('day', this)">Daylight</button>
     <button type="button" class="vanity-light-btn" data-theme-mode="night" aria-pressed="false" onclick="setAtelierVanityLight('night', this)">Night Mode</button>
   </div>`;
+  const ftcBar = renderAboveFoldSovrnDisclosureBar();
   if (hideNav) {
-    return `<header class="site-header"><div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span></a><div style="display:flex;align-items:center;gap:10px;">${lightPill}<a href="/#analyzer" class="btn-primary"><span>Check My Shelf</span><span class="btn-icon-circle">&rarr;</span></a></div></div></header>`;
+    return `<header class="site-header">${ftcBar}<div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span></a><div style="display:flex;align-items:center;gap:10px;">${lightPill}<a href="/#analyzer" class="btn-primary"><span>Check My Shelf</span><span class="btn-icon-circle">&rarr;</span></a></div></div></header>`;
   }
-  return `
-    <header class="site-header">
-      <div class="container nav-inner">
-        <a href="/" class="brand-logo-link" aria-label="DermLogic Home">
-          ${BRAND_LOGO_SVG}
-          <span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span>
-        </a>
-        <nav class="nav-links" aria-label="Main Navigation">
-          <a href="/#analyzer">Shelf Audit</a>
-          <a href="/celebrity">Iconic Routines</a>
-          <a href="/concern">Skin Concerns</a>
-          <a href="/directory">Layering Guides</a>
-        </nav>
-        <div style="display:flex;align-items:center;gap:10px;">
-          ${lightPill}
-          <a href="/#analyzer" class="btn-primary" style="padding:9px 14px;font-size:0.88rem;">
-            <span>Check My Shelf</span>
-            <span class="btn-icon-circle">&rarr;</span>
-          </a>
-        </div>
-      </div>
-    </header>
-  `;
+  return `<header class="site-header">${ftcBar}<div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span></a><nav class="nav-links" aria-label="Main Navigation"><a href="/#analyzer">Shelf Audit</a><a href="/celebrity">Iconic Routines</a><a href="/concern">Skin Concerns</a><a href="/directory">Layering Guides</a><a href="/editorial-policy">Editorial Policy</a></nav><div style="display:flex;align-items:center;gap:10px;">${lightPill}<a href="/#analyzer" class="btn-primary" style="padding:9px 14px;font-size:0.88rem;"><span>Check My Shelf</span><span class="btn-icon-circle">&rarr;</span></a></div></div></header>`;
 }
 
 function renderFooter() {
-  return `
-    <div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie Consent">
-      <div class="container cookie-banner-inner">
-        <div style="font-size:0.85rem;color:var(--text-secondary);">
-          We use privacy-friendly cookies to remember your skincare routine preferences. See our <a href="/privacy" style="text-decoration:underline;color:var(--rose-brand);">Privacy Policy</a>.
-        </div>
-        <div style="display:flex;gap:8px;">
-          <button type="button" id="cookie-reject" class="btn-secondary" style="padding:6px 14px;font-size:0.8125rem;" onclick="setCookieConsent('rejected')">Reject</button>
-          <button type="button" id="cookie-accept" class="btn-primary" style="padding:6px 16px;font-size:0.8125rem;" onclick="setCookieConsent('accepted')">Accept</button>
-        </div>
-      </div>
-    </div>
-    <footer class="site-footer">
-      <div class="container">
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-start;">
-          <div style="max-width:52ch;">
-            <a href="/" class="brand-logo-link" aria-label="DermLogic Home" style="margin-bottom:8px;color:var(--ink-on-deep);">
-              ${BRAND_LOGO_SVG}
-              <span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:#E8C6B0;">Formulation Atelier</span></span>
-            </a>
-            <p style="color:#B5ACA3;font-size:0.9rem;">
-              Cosmetic-chemist verified pH windows, peptide &amp; Vitamin C compatibility, pore-safety, and four-night skin-cycling rituals. Reader-supported formulation lab: verified links to Sephora &amp; Dermstore may earn an affiliate commission.
-            </p>
-          </div>
-          <div style="display:flex;gap:24px;flex-wrap:wrap;font-weight:400;font-size:0.9rem;color:var(--ink-on-deep);">
-            <a href="/#analyzer">Shelf Audit</a>
-            <a href="/celebrity">Iconic Routines</a>
-            <a href="/bottle">Cult Bottles</a>
-            <a href="/ingredient">Ingredients</a>
-            <a href="/concern">Skin Concerns</a>
-            <a href="/leaderboard">Routine Leaderboard</a>
-            <a href="/directory">Layering Guides</a>
-            <a href="/sitemap.xml">XML Sitemap</a>
-            <a href="/privacy">Privacy Policy</a>
-            <a href="/terms">Terms of Service</a>
-          </div>
-        </div>
-        <div class="footer-wordmark">DermLogic</div>
-      </div>
-    </footer>
-  `;
+  return `<div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie Consent"><div class="container cookie-banner-inner"><div style="font-size:0.85rem;color:var(--text-secondary);">We use privacy-friendly cookies to remember your skincare routine preferences. See our <a href="/privacy" style="text-decoration:underline;color:var(--rose-brand);">Privacy Policy</a> &amp; <a href="/editorial-policy" style="text-decoration:underline;color:var(--rose-brand);">Editorial Policy</a>.</div><div style="display:flex;gap:8px;"><button type="button" id="cookie-reject" class="btn-secondary" style="padding:6px 14px;font-size:0.8125rem;" onclick="setCookieConsent('rejected')">Reject</button><button type="button" id="cookie-accept" class="btn-primary" style="padding:6px 16px;font-size:0.8125rem;" onclick="setCookieConsent('accepted')">Accept</button></div></div></div><footer class="site-footer"><div class="container"><div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-start;"><div style="max-width:52ch;"><a href="/" class="brand-logo-link" aria-label="DermLogic Home" style="margin-bottom:8px;color:var(--ink-on-deep);">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:#E8C6B0;">Formulation Atelier</span></span></a><p style="color:#B5ACA3;font-size:0.9rem;">Cosmetic-chemist verified pH windows, peptide &amp; Vitamin C compatibility, pore-safety, and four-night skin-cycling rituals. Reader-supported formulation lab: verified links to Sephora, Dermstore, Ulta &amp; Amazon may earn an affiliate commission via Sovrn Commerce.</p></div><div style="display:flex;gap:20px;flex-wrap:wrap;font-weight:400;font-size:0.9rem;color:var(--ink-on-deep);"><a href="/#analyzer">Shelf Audit</a><a href="/celebrity">Iconic Routines</a><a href="/bottle">Cult Bottles</a><a href="/ingredient">Ingredients</a><a href="/concern">Skin Concerns</a><a href="/leaderboard">Routine Leaderboard</a><a href="/directory">Layering Guides</a><a href="/editorial-policy">Editorial &amp; FTC Policy</a><a href="/sitemap.xml">XML Sitemap</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div></div><div class="footer-wordmark">DermLogic</div></div></footer>${renderSovrnVglnkScript()}`;
 }
 
 const SHORT_PRODUCT_NAMES = {
@@ -443,6 +391,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               <div id="rawInciFeedbackBox" style="margin-top:8px;"></div>
               <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:6px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients, helpful before buying a new moisturizer or foundation.</div>
             </div>
+            ${renderPersonalizationBarHtml('indoor_dry', '')}
           </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:4px;">
@@ -510,23 +459,14 @@ function renderSingleConflictCard(c) {
   const cleanMechanism = String(c.mechanism || '').replace(/\s*\(pH[^)]*\)/gi, '').replace(/\blow-pH\s+/gi, '');
   const howToFix = String(c.resolution || (isCritical ? 'Use one bottle in the morning and the other at bedtime.' : 'Apply a ceramide moisturizer first (Sandwich Method) or alternate nights.')).trim();
   const timingTip = isCritical ? 'Separate Morning & Night' : 'Alternate Nights or Buffer First';
-  return `
-    <div class="conflict-card ${escapeHtml(c.severity)}">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
-        <span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono">${badgeLabel}</span>
-        <span class="mono" style="font-size:0.86rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</span>
-      </div>
+  const swap = getConflictSafeSwap(c);
+  return `<div class="conflict-card ${escapeHtml(c.severity)}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;"><span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono">${badgeLabel}</span><span class="mono" style="font-size:0.86rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</span></div>
       <div class="serif-display" style="font-size:1.25rem;font-weight:400;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(cleanTitle)}</div>
       <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.54;margin-bottom:8px;">${escapeHtml(cleanMechanism)}</p>
-      <div style="padding:8px 11px;background:rgba(255,255,255,0.62);border-left:2.5px solid ${isCritical ? 'var(--berry-clash)' : 'var(--honey-warn)'};font-size:0.84rem;line-height:1.42;color:var(--text-primary);margin-bottom:10px;">
-        <strong>How to Fix:</strong> ${escapeHtml(howToFix)}
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-        <span class="mono" style="font-size:0.8rem;color:var(--text-muted);">${timingTip}</span>
-        <a href="/api/affiliate?product=aestura-atobarrier-365&partner=dermstore&conflict=${encodeURIComponent(c.ruleId || 'barrier-rescue')}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop Barrier-Safe Fix &rarr;</a>
-      </div>
-    </div>
-  `;
+      <div style="padding:8px 11px;background:rgba(255,255,255,0.62);border-left:2.5px solid ${isCritical ? 'var(--berry-clash)' : 'var(--honey-warn)'};font-size:0.84rem;line-height:1.42;color:var(--text-primary);margin-bottom:8px;"><strong>How to Fix:</strong> ${escapeHtml(howToFix)}<div class="mono" style="margin-top:4px;font-size:0.78rem;color:var(--sage-safe);">${escapeHtml(swap.freeFix)}</div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span class="mono" style="font-size:0.78rem;color:var(--text-muted);">${timingTip}</span><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div>
+    </div>`;
 }
 
 function renderAnalysisResultHtml(res) {
@@ -669,16 +609,7 @@ function renderAnalysisResultHtml(res) {
             </button>
           </div>
         </div>
-
-        <div style="padding:14px 16px;background:var(--bg-canvas);">
-          <div class="mono" style="font-size:0.76rem;color:var(--text-secondary);font-weight:600;margin-bottom:8px;letter-spacing:0.03em;text-transform:uppercase;">4-Night Bedtime Rotation &middot; Skin-Cycling Plan</div>
-          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;">
-            <div style="padding:8px 10px;background:var(--bg-surface);"><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;">${escapeHtml(n1Label)}</div><div style="font-size:0.85rem;color:var(--text-primary);margin-top:2px;line-height:1.35;">${escapeHtml(n1Val)}</div></div>
-            <div style="padding:8px 10px;background:var(--bg-surface);"><div class="mono" style="font-size:0.8rem;color:var(--honey-warn);font-weight:600;">${escapeHtml(n2Label)}</div><div style="font-size:0.85rem;color:var(--text-primary);margin-top:2px;line-height:1.35;">${escapeHtml(n2Val)}</div></div>
-            <div style="padding:8px 10px;background:var(--bg-surface);"><div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">${escapeHtml(n3Label)}</div><div style="font-size:0.85rem;color:var(--text-primary);margin-top:2px;line-height:1.35;">${escapeHtml(n3Val)}</div></div>
-            <div style="padding:8px 10px;background:var(--bg-surface);"><div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">Night 4 &middot; Cushion</div><div style="font-size:0.85rem;color:var(--text-primary);margin-top:2px;line-height:1.35;">${escapeHtml(n4Val)}</div></div>
-          </div>
-        </div>
+        ${renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Val, n3Label, n3Val, n4Val)}
       </div>
     </div>
   `;
@@ -843,6 +774,8 @@ const CLIENT_SCRIPT = `
       const fbBox = document.getElementById('rawInciFeedbackBox');
       const pCard = container ? container.querySelector('#pastedInciCard') : null;
       if (fbBox) fbBox.innerHTML = pCard ? pCard.outerHTML : '';
+      if (window.__dlSaveShelfState) window.__dlSaveShelfState();
+      if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas();
       fireMetaCapiEvent('Lead', 0, { compatibilityScore: data.compatibilityScore, conflictsCount: (data.conflicts || []).length });
     } catch (e) {
       console.error('Routine analysis error:', e);
@@ -982,8 +915,10 @@ const CLIENT_SCRIPT = `
       const banner = document.getElementById('cookieBanner');
       if (banner) banner.style.display = 'block';
     }
+    if (window.__dlRestoreShelfStateOnBoot) window.__dlRestoreShelfStateOnBoot();
     fireMetaCapiEvent('ViewContent', 0, { path: window.location.pathname });
   });
+  ${ENDOWMENT_CLIENT_SCRIPT}
 `;
 
 module.exports = {
