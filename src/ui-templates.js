@@ -415,7 +415,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
       </div>
     </div>
 
-    <div id="checkoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" data-ui="checkout-dialog">
+    <div id="checkoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" data-ui="checkout-dialog" onclick="if(event.target===this)closeCheckoutModal()">
       <div class="modal-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
           <span class="badge-safe mono" id="modalBanditBadge">DermLogic Instant Fulfillment · $1.99 Stripe Express</span>
@@ -426,7 +426,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           Includes your printable 4-Night Skin-Cycling calendar (.ICS), non-comedogenic clean swaps (.CSV), and 9:16 bathroom mirror phone lock-screen card.
         </p>
         <div style="margin-bottom:16px;">
-          <a href="/buy/flash_pass" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none;padding:13px 20px;font-size:0.95rem;">
+          <a href="/buy/flash_pass" onclick="if(window.__dlBuyFromVanity)return window.__dlBuyFromVanity('flash_pass',this);if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none;padding:13px 20px;font-size:0.95rem;">
             <span>Get 3-Card Ritual Dossier ($1.99 Stripe Express)</span>
             <span class="btn-icon-circle">&rarr;</span>
           </a>
@@ -668,11 +668,11 @@ const CLIENT_SCRIPT = `
   window.__DERMLOGIC_LAST_RESULT = null;
   window.__dlSwitchResultStep = function(stepNum) {
     [1, 2, 3].forEach(function(n) {
-      var tab = document.getElementById('dl-res-tab-' + n);
-      var pnl = document.getElementById('dl-res-step-' + n);
+      var tab = document.getElementById('dl-res-tab-' + n), pnl = document.getElementById('dl-res-step-' + n);
       if (tab) tab.classList.toggle('active', n === stepNum);
       if (pnl) pnl.style.display = (n === stepNum) ? 'flex' : 'none';
     });
+    if (stepNum === 3 && window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas();
   };
   function getUtmParams() {
     const p = new URLSearchParams(window.location.search);

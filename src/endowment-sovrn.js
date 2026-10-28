@@ -471,6 +471,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
         ? '<strong style="color:var(--berry-clash);">Unfixed Stack</strong> &middot; ' + cCount + ' Clashes (-$' + wUsd + ' Serum Value at Risk)'
         : '<strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)';
     }
+    if (window.__dlSwitchResultStep) window.__dlSwitchResultStep(window.__dlViewMode === 'clash' ? 1 : 2, true);
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();
   };
@@ -580,10 +581,14 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       a.click();
       return;
     }
-    if (typeof window.__ebQuickBuy === 'function') {
-      window.__ebQuickBuy('micro_pass');
+    var dlBtn = document.getElementById('btnDownloadLockScreenPng');
+    if (dlBtn) dlBtn.textContent = 'Opening Checkout...';
+    if (typeof window.__ebCheckout === 'function') {
+      window.__ebCheckout('micro_pass', true);
     } else if (typeof openCheckoutModal === 'function') {
       openCheckoutModal('onetime_499');
+    } else {
+      window.location.href = '/buy/micro_pass?source=wallpaper_btn';
     }
   };
 

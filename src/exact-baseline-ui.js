@@ -229,8 +229,8 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     <button type="submit" id="btn-ouibounce-submit" style="padding:6px 11px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13px;font-weight:700;border:none;">Send Summary →</button>
   </form>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-    <button type="button" id="btn-toast-micro-pass" onclick="window.__ebCheckout('micro_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:#FFFFFF;color:${t.brandPrimary};border:none;font-weight:600;font-size:13px;">${cfg.moduleId === 'derm_logic' ? '9:16 Card (99¢)' : 'Single File (99¢)'}</button>
-    <button type="button" onclick="window.__ebCheckout('flash_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;">${cfg.moduleId === 'derm_logic' ? 'Complete Kit ($1.99) →' : 'Full Bundle ($1.99) →'}</button>
+    <button type="button" id="btn-toast-micro-pass" onclick="window.__ebCheckout('micro_pass', true)" style="padding:7px 8px;border-radius:${t.radiusPill};background:#FFFFFF;color:${t.brandPrimary};border:none;font-weight:600;font-size:13px;">${cfg.moduleId === 'derm_logic' ? '9:16 Card (99¢)' : 'Single File (99¢)'}</button>
+    <button type="button" onclick="window.__ebCheckout('flash_pass', true)" style="padding:7px 8px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;">${cfg.moduleId === 'derm_logic' ? 'Complete Kit ($1.99) →' : 'Full Bundle ($1.99) →'}</button>
   </div>
 </div>
 
@@ -242,7 +242,7 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
       <button type="button" onclick="document.getElementById('eb-cmdk-modal').style.display='none'" style="background:none;border:none;color:${t.textMuted};font-size:13px;">ESC</button>
     </div>
     <div style="display:grid;gap:6px;">
-      <button type="button" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;" onclick="window.__ebCheckout('flash_pass')"><span>Get Single-Audit Export Pass</span><strong style="color:${t.brandPrimary};">$1.99 →</strong></button>
+      <button type="button" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;" onclick="window.__ebCheckout('flash_pass', true)"><span>Get Single-Audit Export Pass</span><strong style="color:${t.brandPrimary};">$1.99 →</strong></button>
       <a href="/api/github-upgrade/export.csv" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>Download Benchmark .CSV Table</span><strong>.CSV ↗</strong></a>
       <a href="${cfg.moduleId === 'sponsor_radar' ? '/api/github-upgrade/pitch.eml' : '/api/github-upgrade/skin-cycling.ics'}" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>${cfg.moduleId === 'sponsor_radar' ? 'Download Counter-Offer &amp; Pitch (.EML)' : 'Download Schedule (.ICS)'}</span><strong>${cfg.moduleId === 'sponsor_radar' ? '.EML ↗' : '.ICS ↗'}</strong></a>
       <a href="/dossier/sample" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>View Sample Deliverable</span><strong>Open →</strong></a>
@@ -258,10 +258,10 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
   </div>
   <form id="eb-sticky-email-form" onsubmit="return window.__ebSaveInlineScorecard(event, 'eb-sticky-email-input', 'eb-sticky-email-form')" style="display:inline-flex;align-items:center;gap:6px;margin:0;background:${t.subtleBg};padding:3px 5px 3px 10px;border-radius:999px;"><span style="font-size:13px;font-weight:600;color:${t.textSecondary};white-space:nowrap;">Free Row #4 Preview:</span><input type="email" id="eb-sticky-email-input" placeholder="you@email.com" required style="border:none;background:transparent;font-size:13px;color:${t.textPrimary};width:135px;outline:none;" /><button type="submit" id="btn-sticky-email-submit" style="padding:4px 10px;border-radius:999px;background:#FFFFFF;color:${t.brandPrimary};border:none;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">Send ↵</button></form>
   <div style="display:flex;align-items:center;gap:6px;">
-    <button type="button" id="btn-sticky-micro-unlock" class="eb-action-btn" style="background:transparent;color:${t.textSecondary};font-weight:600;border:none;padding:5px 10px;border-radius:${t.radiusPill};font-size:13px;" onclick="window.__ebCheckout('micro_pass')">99¢ File</button>
-    <button type="button" id="btn-sticky-flash-unlock" class="eb-action-btn" style="background:${t.brandPrimary};color:#FFFFFF;font-weight:700;border:none;padding:7px 14px;border-radius:${t.radiusPill};" onclick="window.__ebCheckout('flash_pass')">Get Full Pack ($1.99) →</button>
+    <button type="button" id="btn-sticky-micro-unlock" class="eb-action-btn" style="background:transparent;color:${t.textSecondary};font-weight:600;border:none;padding:5px 10px;border-radius:${t.radiusPill};font-size:13px;" onclick="window.__ebCheckout('micro_pass', true)">99¢ File</button>
+    <button type="button" id="btn-sticky-flash-unlock" class="eb-action-btn" style="background:${t.brandPrimary};color:#FFFFFF;font-weight:700;border:none;padding:7px 14px;border-radius:${t.radiusPill};" onclick="window.__ebCheckout('flash_pass', true)">Get Full Pack ($1.99) →</button>
     <button type="button" id="btn-sticky-dock-close" aria-label="Hide bottom bar" title="Hide bottom bar" onclick="try{sessionStorage.setItem('eb_dock_dismissed','1');}catch(_){}var d=document.getElementById('sticky-mobile-bar');if(d){d.classList.remove('eb-dock-visible');d.style.display='none';}" style="background:transparent;border:none;color:${t.textMuted};font-size:16px;font-weight:700;line-height:1;padding:4px 6px;cursor:pointer;">×</button>
-    <button type="button" id="btn-dock-flash-pass" style="display:none;" onclick="window.__ebCheckout('flash_pass')">Get Full Pack ($1.99)</button>
+    <button type="button" id="btn-dock-flash-pass" style="display:none;" onclick="window.__ebCheckout('flash_pass', true)">Get Full Pack ($1.99)</button>
   </div>
 </div>`;
 }
@@ -918,6 +918,7 @@ function buildClientRuntimeScript(cfg) {
   };
   window.__ebCheckout = function(tier, confirmed) {
     var cleanTier = typeof tier === 'string' ? tier : 'flash_pass', actTarget = window.__ebActiveEntity || (document.getElementById('lookup-query') && document.getElementById('lookup-query').value) || '', cBar = document.getElementById('eb-buy-preview-confirm'), pBar = document.getElementById('eb-pricing-preview-confirm');
+    if (pBar && pBar.style.display === 'block' && window.__ebPendingTier === cleanTier) confirmed = true;
     if (!confirmed && (cBar || pBar)) {
       window.__ebPendingTier = cleanTier;
       ['eb-cmdk-modal', 'eb-floating-gate-popover', 'eb-ouibounce-toast'].forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
@@ -934,8 +935,8 @@ function buildClientRuntimeScript(cfg) {
       if (pTitle) pTitle.textContent = stepTxt;
       if (pConfirmBtn) pConfirmBtn.textContent = 'Confirm Purchase (' + priceLbl + ') →';
       if (pBar) pBar.style.display = 'block';
-      var focusBar = (cBar && pBar) ? (Math.abs(pBar.getBoundingClientRect().top) < Math.abs(cBar.getBoundingClientRect().top) ? pBar : cBar) : (cBar || pBar);
-      if (focusBar) { try { var fRect = focusBar.getBoundingClientRect(); if ((fRect.top < 0 || fRect.bottom > (window.innerHeight || 900)) && focusBar.scrollIntoView) focusBar.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); focusBar.style.boxShadow = '0 0 0 3px ' + CFG.theme.brandPrimary + ', 0 12px 28px rgba(15,23,42,0.14)'; } catch (_) {} }
+      var visC = (cBar && cBar.offsetParent) ? cBar : null, focusBar = (visC && pBar) ? (Math.abs(pBar.getBoundingClientRect().top) < Math.abs(visC.getBoundingClientRect().top) ? pBar : visC) : (visC || pBar);
+      if (focusBar) { try { var fRect = focusBar.getBoundingClientRect(); if ((fRect.top < 0 || fRect.bottom > (window.innerHeight || 900)) && focusBar.scrollIntoView) focusBar.scrollIntoView({ behavior: 'smooth', block: 'center' }); focusBar.style.boxShadow = '0 0 0 3px ' + CFG.theme.brandPrimary + ', 0 12px 28px rgba(15,23,42,0.14)'; } catch (_) {} }
       window.__ebLogEvent('view_paywall', { target: 'buy_preview_step1_' + cleanTier });
       return;
     }
@@ -944,7 +945,7 @@ function buildClientRuntimeScript(cfg) {
     var fbUrl = '/buy/' + encodeURIComponent(cleanTier) + '?vid=' + encodeURIComponent(window.__ebVid || '') + '&target=' + encodeURIComponent(actTarget || '');
     origFetch('/api/calculators/' + CFG.moduleId + '/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).then(function(r) { return r.json(); }).then(function(data) { var targetUrl = data && (data.checkout_url || data.url); window.location.href = targetUrl || fbUrl; }).catch(function(){ window.location.href = fbUrl; });
   };
-  window.__ebQuickBuy = window.__ebCheckout;
+  window.__ebQuickBuy = function(tier) { return window.__ebCheckout(tier, true); };
   var __ebBootAll = function() {
     if (!window.__ebHydratedSent) { window.__ebHydratedSent = true; window.__ebLogEvent('visit_hydrated', { vw: window.innerWidth || 0, vh: window.innerHeight || 0, ref: document.referrer || '' }); }
     try { var curP = window.location.pathname || '/', dirRx = new RegExp('^/(seo|tools|compare|brand|show|fix|routine|ingredient|compatibility|bottle)(/|$)'), actHref = (curP.indexOf('/leaderboard') === 0 || curP.indexOf('/scan/') === 0) ? '/leaderboard' : (curP.indexOf('/celebrity') === 0 ? '/celebrity' : (curP.indexOf('/concern') === 0 ? '/concern' : ((curP === '/directory' || dirRx.test(curP)) ? '/directory' : '/#'))); Array.prototype.slice.call(document.querySelectorAll('header nav a, .mobile-nav-strip a')).forEach(function(a) { if (a.classList.contains('btn') || a.classList.contains('btn-primary')) return; var h = a.getAttribute('href') || ''; a.classList.remove('active', 'eb-nav-active'); a.removeAttribute('aria-current'); if ((actHref === '/#' && (h === '/#radar-tool' || h === '/#grader' || h === '/#analyzer')) || h === actHref) { a.classList.add('eb-nav-active'); a.setAttribute('aria-current', 'page'); } }); } catch (_) {}

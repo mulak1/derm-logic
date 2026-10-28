@@ -379,9 +379,31 @@ async function runVerification() {
     const clashBannerAfterFix = await page.locator('#dl-vanity-clash-banner').isVisible();
     assert.strictEqual(clashBannerAfterFix, false, '1-Tap Fix must resolve the bag clash and hide #dl-vanity-clash-banner');
 
+    // Verify Vanity Bag checkout buttons (#dl-vanity-keep-99c & #dl-vanity-keep-199) fire checkout API & show immediate feedback
+    const vanityCheckoutVerified = await page.evaluate(async () => {
+      window.__ebIsUnlocked = false;
+      let calledTier = null;
+      const origCheckout = window.__ebCheckout;
+      window.__ebCheckout = function(tier, confirmed) {
+        if (confirmed) calledTier = tier;
+      };
+      const btn99 = document.getElementById('dl-vanity-keep-99c');
+      const btn199 = document.getElementById('dl-vanity-keep-199');
+      btn99.click();
+      const firstTier = calledTier;
+      const txt99 = btn99.textContent;
+      btn199.click();
+      const secondTier = calledTier;
+      window.__ebCheckout = origCheckout;
+      return { firstTier, secondTier, txt99 };
+    });
+    assert.strictEqual(vanityCheckoutVerified.firstTier, 'micro_pass', 'Clicking #dl-vanity-keep-99c must call __ebCheckout("micro_pass", true)');
+    assert.strictEqual(vanityCheckoutVerified.secondTier, 'flash_pass', 'Clicking #dl-vanity-keep-199 must call __ebCheckout("flash_pass", true)');
+    assert(vanityCheckoutVerified.txt99.includes('Opening Checkout'), `Expected #dl-vanity-keep-99c to show "Opening Checkout...", got "${vanityCheckoutVerified.txt99}"`);
+
     await page.click('#dl-vanity-drawer-close');
     await page.waitForTimeout(200);
-    console.log('6c. Verified Option 1+2+3 Hybrid Vanity Bag Drawer, 5-Vessel Tray, Clash Engine & 24h Hold.');
+    console.log('6c. Verified Option 1+2+3 Hybrid Vanity Bag Drawer, 5-Vessel Tray, Clash Engine, 24h Hold & Checkout Buttons.');
 
     // Scroll back to top before fullPage screenshot so sticky header sits cleanly at top of document
     await page.evaluate(() => window.scrollTo(0, 0));

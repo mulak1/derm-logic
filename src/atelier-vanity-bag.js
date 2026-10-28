@@ -126,8 +126,8 @@ function renderAtelierVanityDrawerHtml() {
     <button type="button" class="mono" onclick="window.__dlOpenVanityDrawer('toast');document.getElementById('dl-vanity-toast').style.display='none';" style="background:var(--rose-brand);color:var(--accent-ink);border:none;padding:4px 9px;font-size:0.74rem;font-weight:700;cursor:pointer;white-space:nowrap;">Open Bag &rarr;</button>
   </div>
 
-  <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" style="display:none;position:fixed;inset:0;z-index:9996;background:rgba(12,10,8,0.58);align-items:stretch;justify-content:flex-end;">
-    <div id="dl-atelier-vanity-panel" style="width:540px;max-width:100vw;height:100%;background:var(--bg-canvas);color:var(--text-primary);border-left:1px solid var(--border-strong);display:flex;flex-direction:column;justify-content:space-between;overflow-y:auto;padding:20px 24px;gap:12px;">
+  <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" onclick="if(event.target===this)window.__dlCloseVanityDrawer()" style="display:none;position:fixed;inset:0;z-index:9996;background:rgba(12,10,8,0.58);align-items:stretch;justify-content:flex-end;">
+    <div id="dl-atelier-vanity-panel" style="width:540px;max-width:100vw;height:100%;background:var(--bg-canvas);color:var(--text-primary);border-left:1px solid var(--border-strong);display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;padding:20px 24px;gap:12px;">
       
       <!-- Mobile Bottom-Sheet Grab Handle -->
       <div class="dl-mobile-grabber" style="display:none;" onclick="window.__dlCloseVanityDrawer()"></div>
@@ -230,12 +230,12 @@ function renderAtelierVanityDrawerHtml() {
       <div id="dl-dossier-panel-pass" style="display:none;flex-direction:column;gap:8px;"></div>
 
       <!-- Calm Footer -->
-      <div id="dl-vanity-vault-footer" style="padding:12px 14px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;margin-top:auto;">
+      <div id="dl-vanity-vault-footer" style="padding:12px 14px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
         <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:8px;">
-          <a id="dl-vanity-keep-99c" href="/buy/micro_pass?source=vanity_bag_99c" onclick="if(window.__ebQuickBuy){window.__dlCloseVanityDrawer();window.__ebQuickBuy('micro_pass');return false;}" class="btn-primary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.8rem;white-space:nowrap;">
+          <a id="dl-vanity-keep-99c" href="/buy/micro_pass?source=vanity_bag_99c" onclick="return window.__dlBuyFromVanity('micro_pass', this)" class="btn-primary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.8rem;white-space:nowrap;">
             <span>Save 9:16 Phone Card (99&cent;) &rarr;</span>
           </a>
-          <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="if(window.__ebQuickBuy){window.__dlCloseVanityDrawer();window.__ebQuickBuy('flash_pass');return false;}" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;">
+          <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;">
             <span>Complete 3-File Kit ($1.99)</span>
           </a>
         </div>
@@ -752,6 +752,21 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           + '</div>'
           + '</div>';
       }
+    };
+
+    window.__dlBuyFromVanity = function(tier, btnEl) {
+      if (window.__ebIsUnlocked && tier === 'micro_pass' && typeof window.__dlDownloadOrUnlockWallpaper === 'function') {
+        window.__dlDownloadOrUnlockWallpaper();
+        return false;
+      }
+      if (btnEl) { btnEl.style.opacity = '0.85'; btnEl.innerHTML = '<span>Opening Checkout...</span>'; }
+      if (typeof window.__ebCheckout === 'function') { window.__ebCheckout(tier || 'micro_pass', true); return false; }
+      window.location.href = '/buy/' + encodeURIComponent(tier || 'micro_pass') + '?source=vanity_bag';
+      return false;
+    };
+
+    window.__dlQuickAddBottleToBag = function(prodId, btnEl) {
+      return window.__dlToggleBottleInBag(prodId, prodId, '', btnEl);
     };
 
     // Inject "+ Add to Vanity Bag" buttons onto every bottle card across /, /celebrity/*, /bottle/*, /concern/*
