@@ -418,6 +418,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       saveVanityState(st);
       window.__dlRenderVanityDrawer();
       window.__dlRefreshPageAddButtons();
+      if (window.__ebLogEvent) window.__ebLogEvent('vanity_bag_add', { product: prodId, slot: sIdx + 1 });
       showVanityToast('Added to Slot 0' + (sIdx + 1) + ' (' + SLOT_OPTIONS[sIdx].shortSlot + ')');
     };
 
@@ -454,12 +455,14 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       window.__dlVanityState.dossierTab = tabName || 'slots';
       saveVanityState(window.__dlVanityState);
       window.__dlRenderVanityDrawer();
+      if (window.__ebLogEvent) window.__ebLogEvent('vanity_tab_switch', { tab: tabName || 'slots' });
     };
 
     window.__dlFlipPassSide = function(side) {
       window.__dlVanityState.passSide = side === 'pm' ? 'pm' : 'am';
       saveVanityState(window.__dlVanityState);
       window.__dlRenderVanityDrawer();
+      if (window.__ebLogEvent) window.__ebLogEvent('vanity_pass_flip', { side: side || 'am' });
     };
 
     function formatHoldRemaining(expiresAt) {
@@ -886,6 +889,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       saveVanityState(st);
       window.__dlRenderVanityDrawer();
       window.__dlRefreshPageAddButtons();
+      if (window.__ebLogEvent) window.__ebLogEvent('vanity_calibrator', { slot: slotIdx + 1, row: rowNum, value: valId });
     };
 
     window.__dlAddCustomSearchBottle = function() {
