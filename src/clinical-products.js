@@ -485,6 +485,347 @@ const CULT_PRODUCTS = [
     primaryActives: ['squalane', 'bisabolol', 'glycerin'],
     inciList: 'Aqua/Water/Eau, Butylene Glycol, Glycerin, Cococaprylate/Caprate, Squalane, Palmitoyl Grapevine Shoot Extract, Polyglyceryl-3 Distearate, Bisabolol, Glyceryl Stearate Citrate, Tocopheryl Acetate, Parfum',
     summary: 'Viniferine (Palmitoyl Grapevine Shoot Extract) + Squalane + Bisabolol brightener; safe in AM or PM without pH conflict.'
+  },
+  {
+    id: 'round-lab-birch-spf50',
+    brand: 'Round Lab',
+    name: 'Birch Juice Moisturizing Sunscreen SPF 50+ PA++++',
+    category: 'Sunscreen (SPF)',
+    ph: 6.1,
+    priceUsd: 24,
+    primaryActives: ['avobenzone', 'niacinamide', 'hyaluronic-acid', 'allantoin'],
+    inciList: 'Water, Dibutyl Adipate, Propanediol, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Polymethylsilsesquioxane, Ethylhexyl Triazone, Niacinamide, Betula Platyphylla Japonica Juice, Hyaluronic Acid, Allantoin',
+    summary: 'Weightless Korean birch-sap SPF 50+ emulsion with Niacinamide and Hyaluronic Acid; zero white cast across all undertones.'
+  },
+  {
+    id: 'skin1004-hyalu-cica-spf50',
+    brand: 'SKIN1004',
+    name: 'Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF 50+',
+    category: 'Sunscreen (SPF)',
+    ph: 6.2,
+    priceUsd: 19,
+    primaryActives: ['avobenzone', 'centella-asiatica', 'hyaluronic-acid', 'niacinamide'],
+    inciList: 'Water, Dibutyl Adipate, Propanediol, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Polymethylsilsesquioxane, Ethylhexyl Triazone, Niacinamide, Centella Asiatica Extract, Sodium Hyaluronate',
+    summary: 'Ultra-light Centella + Hyaluronic Acid serum-SPF 50+ for redness-prone and sensitive skin.'
+  },
+  {
+    id: 'torriden-dive-in-serum',
+    brand: 'Torriden',
+    name: 'DIVE-IN Low Molecular Hyaluronic Acid Serum',
+    category: 'Barrier Essence',
+    ph: 5.6,
+    priceUsd: 22,
+    primaryActives: ['hyaluronic-acid', 'panthenol', 'allantoin'],
+    inciList: 'Water, Butylene Glycol, Glycerin, Dipropylene Glycol, 1,2-Hexanediol, Panthenol, Sodium Hyaluronate, Hydrolyzed Hyaluronic Acid, Sodium Acetylated Hyaluronate, Allantoin, Trehalose',
+    summary: '5D multi-molecular-weight Hyaluronic Acid + D-Panthenol + Allantoin hydrator; zero conflict with acids, retinoids, or Vitamin C.'
+  },
+  {
+    id: 'haruharu-black-rice-toner',
+    brand: 'Haruharu Wonder',
+    name: 'Black Rice Hyaluronic Toner (Fragrance-Free)',
+    category: 'Soothing Toner',
+    ph: 5.7,
+    priceUsd: 18,
+    primaryActives: ['hyaluronic-acid', 'glycerin'],
+    inciList: 'Water, Betaine, Glycerin, Propanediol, Oryza Sativa (Rice) Extract, Phyllostachys Pubescens Shoot Bark Extract, Aspergillus Ferment, Panax Ginseng Root Extract, Hyaluronic Acid, Beta-Glucan',
+    summary: 'Fermented black rice + Beta-Glucan + Hyaluronic Acid pH 5.7 prep toner for sensitive and barrier-depleted skin.'
+  },
+  {
+    id: 'prequel-gleanser',
+    brand: 'Prequel',
+    name: 'Gleanser Non-Drying Glycerin Cleanser (50% Glycerin)',
+    category: 'Cleanser',
+    ph: 5.4,
+    priceUsd: 18,
+    primaryActives: ['glycerin', 'inulin'],
+    inciList: 'Glycerin (50%), Water, Sodium Cocoyl Glycinate, Cocamidopropyl Hydroxysultaine, Decyl Glucoside, Inulin, Saccharide Isomerate, Aloe Barbadensis Leaf Juice',
+    summary: 'Dermatologist-developed 50% Glycerin humectant cleanser that cleanses without stripping barrier lipids before Tretinoin.'
+  },
+  {
+    id: 'prequel-lucent-c',
+    brand: 'Prequel',
+    name: 'Lucent-C Brightening Vitamin C Serum (15% L-Ascorbic + Ergothioneine)',
+    category: 'Antioxidant Serum',
+    ph: 3.3,
+    priceUsd: 23,
+    primaryActives: ['l-ascorbic-acid', 'ferulic-acid', 'niacinamide'],
+    inciList: 'Water, Ascorbic Acid (15%), Propanediol, Glycerin, Ethoxydiglycol, Ferulic Acid, Ergothioneine, Niacinamide, Tocopherol, Panthenol',
+    summary: 'Clinical pH 3.3 15% L-Ascorbic Acid + Ferulic Acid + Ergothioneine serum; keep separate from Copper Peptides and Benzoyl Peroxide.'
+  },
+  {
+    id: 'naturium-vitamin-c-complex',
+    brand: 'Naturium',
+    name: 'Vitamin C Complex Serum (Encapsulated L-Ascorbic + Sodium Ascorbyl Phosphate)',
+    category: 'Antioxidant Serum',
+    ph: 5.2,
+    priceUsd: 21,
+    primaryActives: ['sodium-ascorbyl-phosphate', 'l-ascorbic-acid', 'hyaluronic-acid', 'tocopherol'],
+    inciList: 'Water, Glycerin, Sodium Ascorbyl Phosphate, Ascorbic Acid, Gold, Glutathione, Sodium Hyaluronate, Tocopherol, Kakadu Plum Extract',
+    summary: 'Buffered pH 5.2 Vitamin C blend designed for sensitive skin that stings from pH 3.2 L-Ascorbic Acid.'
+  },
+  {
+    id: 'naturium-retinaldehyde-005',
+    brand: 'Naturium',
+    name: 'Retinaldehyde Cream Serum 0.05%',
+    category: 'Retinoid',
+    ph: 5.7,
+    priceUsd: 29,
+    primaryActives: ['retinaldehyde', 'squalane', 'glycerin'],
+    inciList: 'Water, Caprylic/Capric Triglyceride, Glycerin, Propanediol, Squalane, Retinal (0.05%), Phospholipids, Astaxanthin, Tocopherol',
+    summary: 'Sustained-release 0.05% Retinaldehyde cream-serum for fine lines and photoaging; apply on dry skin in Slot 05.'
+  },
+  {
+    id: 'naturium-azelaic-emulsion-10',
+    brand: 'Naturium',
+    name: 'Azelaic Acid Emulsion 10% (Bio-Compatible)',
+    category: 'Rosacea & Brightening',
+    ph: 5.2,
+    priceUsd: 20,
+    primaryActives: ['azelaic-acid', 'niacinamide', 'ceramide-np'],
+    inciList: 'Water, Azelaic Acid (10%), Glycerin, Caprylic/Capric Triglyceride, Niacinamide, Ceramide NP, Ectoin, Allantoin',
+    summary: 'Gentle 10% Azelaic Acid + Niacinamide + Ectoin emulsion for redness, sun spots, and pregnancy-safe brightening.'
+  },
+  {
+    id: 'geek-gorgeous-a-game-10',
+    brand: 'Geek & Gorgeous',
+    name: 'A-Game 10 (0.1% Retinaldehyde Emulsion)',
+    category: 'Retinoid',
+    ph: 6.0,
+    priceUsd: 22,
+    primaryActives: ['retinaldehyde', 'panthenol', 'allantoin'],
+    inciList: 'Water, Caprylic/Capric Triglyceride, Oleyl Erucate, Glycerin, Triheptanoin, Cyclodextrin, Cetearyl Olivate, Sorbitan Olivate, Retinal (0.1%), Panthenol, Allantoin',
+    summary: 'High-strength 0.1% cyclodextrin-stabilized Retinaldehyde emulsion for experienced retinoid users.'
+  },
+  {
+    id: 'summer-fridays-jet-lag-mask',
+    brand: 'Summer Fridays',
+    name: 'Jet Lag Mask + Moisturizer (Fragrance-Free)',
+    category: 'Barrier Recovery',
+    ph: 5.6,
+    priceUsd: 49,
+    primaryActives: ['niacinamide', 'panthenol', 'ceramide-np', 'hyaluronic-acid'],
+    inciList: 'Water, Caprylic/Capric Triglyceride, Castanea Sativa Seed Extract, Diheptyl Succinate, Glycerin, Niacinamide, Panthenol, Ceramide NP, Ceramide AP, Sodium Hyaluronate, Allantoin',
+    summary: 'Cushioning Niacinamide + Panthenol + Ceramide overnight recovery mask for Nights 2 and 4 of skin cycling.'
+  },
+  {
+    id: 'tatcha-dewy-skin-cream',
+    brand: 'Tatcha',
+    name: 'The Dewy Skin Cream Plumping & Hydrating Moisturizer',
+    category: 'Barrier Moisturizer',
+    ph: 5.6,
+    priceUsd: 72,
+    primaryActives: ['squalane', 'hyaluronic-acid', 'ceramide-np', 'glycerin'],
+    inciList: 'Aqua/Water/Eau, Saccharomyces/Rice Ferment Filtrate, Glycerin, Propanediol, Dimethicone, Squalane, Behenyl Alcohol, Sodium Hyaluronate, Ceramide NP, Camellia Sinensis Leaf Extract, Parfum',
+    summary: 'Japanese purple rice + Squalane + Hyaluronic Acid rich barrier cream for dry skin.'
+  },
+  {
+    id: 'dr-idriss-major-fade-serum',
+    brand: 'Dr. Idriss',
+    name: 'Major Fade Hyper Serum Dark Spot Treatment',
+    category: 'Brightening Serum',
+    ph: 5.4,
+    priceUsd: 68,
+    primaryActives: ['alpha-arbutin', 'kojic-acid', 'niacinamide', 'glycerin'],
+    inciList: 'Water, Niacinamide, Glycerin, Propanediol, Alpha-Arbutin (2%), Kojic Acid, Diglucosyl Gallic Acid, Licorice Root Extract, Squalane',
+    summary: 'Dermatologist-formulated 2% Alpha-Arbutin + Kojic Acid + Niacinamide serum for stubborn sun spots and melasma.'
+  },
+  {
+    id: 'regimen-lab-wave-serum',
+    brand: 'Regimen Lab',
+    name: 'Wave Serum Next-Gen Multi-Humectant Hydrator',
+    category: 'Barrier Essence',
+    ph: 5.5,
+    priceUsd: 42,
+    primaryActives: ['glycerin', 'urea', 'panthenol', 'hyaluronic-acid'],
+    inciList: 'Water, Glycerin, Pentylene Glycol, Betaine, Urea, Panthenol, Sodium PCA, Trehalose, Sodium Hyaluronate, Allantoin',
+    summary: '35%+ multi-humectant complex (Glycerin, Betaine, Hydroxyethyl Urea, Panthenol); 100% fungal-acne and pore safe.'
+  },
+  {
+    id: 'regimen-lab-level-serum',
+    brand: 'Regimen Lab',
+    name: 'Level Serum Hyperpigmentation & Tone Corrector',
+    category: 'Brightening Serum',
+    ph: 5.5,
+    priceUsd: 46,
+    primaryActives: ['niacinamide', 'tranexamic-acid', 'alpha-arbutin'],
+    inciList: 'Water, Niacinamide (5%), Ethoxydiglycol, Tranexamic Acid (3%), Acetyl Glucosamine (2%), Alpha-Arbutin (2%), Undecylenoyl Phenylalanine, Licorice Root Extract',
+    summary: 'Multi-pathway pigment inhibitor targeting tyrosinase, melanosome transfer, and plasmin; pH 5.5 gentle.'
+  },
+  {
+    id: 'supergoop-unseen-spf50',
+    brand: 'Supergoop!',
+    name: 'Unseen Sunscreen SPF 50 Invisible Velvet Primer',
+    category: 'Sunscreen (SPF)',
+    ph: 6.0,
+    priceUsd: 38,
+    primaryActives: ['avobenzone', 'dimethicone', 'tocopherol'],
+    inciList: 'Isododecane, Dimethicone Crosspolymer, Polymethylsilsesquioxane, Homosalate, Avobenzone, Octisalate, Octocrylene, Meadowfoam Seed Oil, Bisabolol, Tocopherol',
+    summary: '100% invisible anhydrous elastomer-gel SPF 50 that doubles as a soft-matte primer across all skin tones.'
+  },
+  {
+    id: 'ilia-super-serum-skin-tint-spf40',
+    brand: 'ILIA',
+    name: 'Super Serum Skin Tint SPF 40 (Mineral Zinc + Squalane + Niacinamide)',
+    category: 'Sunscreen (SPF)',
+    ph: 6.1,
+    priceUsd: 48,
+    primaryActives: ['zinc-oxide', 'squalane', 'niacinamide', 'hyaluronic-acid'],
+    inciList: 'Zinc Oxide (12.0%), Aqua/Water/Eau, Squalane, Shea Butter Ethyl Esters, Isoamyl Laurate, Polyglyceryl-3 Ricinoleate, Niacinamide, Sodium Hyaluronate, Aloe Barbadensis Leaf',
+    summary: '12% Non-Nano Zinc Oxide + Plant Squalane + Niacinamide + Hyaluronic Acid skin-tint SPF 40 in 30 shade undertones.'
+  },
+  {
+    id: 'vanicream-daily-facial-moisturizer',
+    brand: 'Vanicream',
+    name: 'Daily Facial Moisturizer With Ceramides & Hyaluronic Acid',
+    category: 'Barrier Moisturizer',
+    ph: 5.5,
+    priceUsd: 14,
+    primaryActives: ['squalane', 'ceramide-np', 'hyaluronic-acid', 'glycerin'],
+    inciList: 'Purified Water, Squalane, Glycerin, Pentylene Glycol, Polyglyceryl-2 Stearate, Glyceryl Stearate, Stearyl Alcohol, Hyaluronic Acid, Ceramide EOP, Ceramide NG, Ceramide NP, Ceramide AS, Ceramide AP, Carnosine',
+    summary: '5 key ceramides + Squalane + Hyaluronic Acid without fragrance, lanolin, or parabens; ultra-safe for reactive skin.'
+  },
+  {
+    id: 'cerave-hydrating-cleanser',
+    brand: 'CeraVe',
+    name: 'Hydrating Facial Cleanser (Ceramides + Hyaluronic Acid)',
+    category: 'Cleanser',
+    ph: 5.5,
+    priceUsd: 16,
+    primaryActives: ['ceramide-np', 'hyaluronic-acid', 'cholesterol', 'glycerin'],
+    inciList: 'Aqua/Water/Eau, Glycerin, Cetearyl Alcohol, PEG-40 Stearate, Stearyl Alcohol, Potassium Phosphate, Ceramide NP, Ceramide AP, Ceramide EOP, Carbomer, Glyceryl Stearate, Behentrimonium Methosulfate, Sodium Lauroyl Lactylate, Sodium Hyaluronate, Cholesterol',
+    summary: 'Non-foaming lotion cleanser with Ceramides 1, 3, 6-II and Hyaluronic Acid for dry or retinized skin.'
+  },
+  {
+    id: 'cerave-resurfacing-retinol',
+    brand: 'CeraVe',
+    name: 'Resurfacing Retinol Serum (Encapsulated Retinol + Licorice)',
+    category: 'Retinoid',
+    ph: 5.8,
+    priceUsd: 20,
+    primaryActives: ['retinol', 'niacinamide', 'ceramide-np', 'cholesterol'],
+    inciList: 'Aqua/Water/Eau, Propanediol, Dimethicone, Cetearyl Ethylhexanoate, Niacinamide, Ammonium Polyacryloyldimethyl Taurate, Dipotassium Glycyrrhizate, Hydrogenated Lecithin, Ceramide NP, Ceramide AP, Ceramide EOP, Retinol, Cholesterol',
+    summary: 'Beginner-friendly encapsulated Retinol + Niacinamide + Licorice Root serum for post-blemish marks and texture.'
+  },
+  {
+    id: 'lrp-toleriane-double-repair',
+    brand: 'La Roche-Posay',
+    name: 'Toleriane Double Repair Face Moisturizer (Ceramide-3 + Niacinamide)',
+    category: 'Barrier Moisturizer',
+    ph: 5.6,
+    priceUsd: 23,
+    primaryActives: ['ceramide-np', 'niacinamide', 'glycerin'],
+    inciList: 'Aqua/Water/Eau, Glycerin, Dimethicone, Hydrogenated Polyisobutene, Niacinamide, Ammonium Polyacryloyldimethyl Taurate, Myristyl Myristate, Stearic Acid, Ceramide NP, Potassium Cetyl Phosphate, Glyceryl Stearate SE',
+    summary: 'Prebiotic thermal water + Ceramide-3 + 4% Niacinamide daily barrier cream.'
+  },
+  {
+    id: 'lrp-anthelios-uvmune-400',
+    brand: 'La Roche-Posay',
+    name: 'Anthelios UVMune 400 Invisible Fluid SPF 50+ (Mexoryl 400)',
+    category: 'Sunscreen (SPF)',
+    ph: 6.1,
+    priceUsd: 36,
+    primaryActives: ['avobenzone', 'tocopherol', 'glycerin'],
+    inciList: 'Aqua/Water/Eau, Alcohol Denat., Triethyl Citrate, Diisopropyl Sebacate, Silica, Ethylhexyl Salicylate, Bis-Ethylhexyloxyphenol Methoxyphenyl Triazine, Butyl Methoxydibenzoylmethane, Methoxypropylamino Cyclohexenylidene Ethoxyethylcyanoacetate',
+    summary: 'Ultra-long UVA1 (380-400nm) Mexoryl 400 fluid sunscreen for melasma, sun spots, and photoaging defense.'
+  },
+  {
+    id: 'avene-cicalfate-plus',
+    brand: 'Avene',
+    name: 'Cicalfate+ Restorative Protective Cream (Post-Biotic C+-Restore + Zinc)',
+    category: 'Barrier Recovery',
+    ph: 5.8,
+    priceUsd: 26,
+    primaryActives: ['zinc-oxide', 'glycerin'],
+    inciList: 'Avene Thermal Spring Water, Caprylic/Capric Triglyceride, Mineral Oil, Glycerin, Hydrogenated Vegetable Oil, Zinc Oxide, Propylene Glycol, Polyglyceryl-2 Sesquiisostearate, PEG-22/Dodecyl Glycol Copolymer, Aluminum Sucrose Octasulfate, Copper Sulfate, Zinc Sulfate',
+    summary: 'Occlusive Copper-Zinc Sulfate + postbiotic barrier balm for compromised, peeling, or post-procedure skin.'
+  },
+  {
+    id: 'first-aid-beauty-ultra-repair',
+    brand: 'First Aid Beauty',
+    name: 'Ultra Repair Cream Intense Hydration (0.5% Colloidal Oatmeal)',
+    category: 'Barrier Moisturizer',
+    ph: 5.5,
+    priceUsd: 38,
+    primaryActives: ['ceramide-np', 'squalane', 'allantoin', 'glycerin'],
+    inciList: 'Colloidal Oatmeal 0.50%, Water, Stearic Acid, Glycerin, C12-15 Alkyl Benzoate, Caprylic/Capric Triglyceride, Glyceryl Stearate, Butyrospermum Parkii (Shea) Butter, Dimethicone, Squalane, Allantoin, Ceramide 3',
+    summary: 'OTC 0.5% Colloidal Oatmeal + Shea Butter + Ceramide 3 soothing cream for dry, windburned, or eczema-prone skin.'
+  },
+  {
+    id: 'laneige-cream-skin-toner',
+    brand: 'LANEIGE',
+    name: 'Cream Skin Cerapeptide Refiner Toner & Moisturizer',
+    category: 'Soothing Toner',
+    ph: 5.6,
+    priceUsd: 36,
+    primaryActives: ['ceramide-np', 'squalane', 'glycerin'],
+    inciList: 'Water, Butylene Glycol, Glycerin, Limnanthes Alba (Meadowfoam) Seed Oil, Isopentyldiol, 1,2-Hexanediol, Squalane, Polyglyceryl-10 Stearate, Glyceryl Stearate Citrate, Sodium Stearoyl Glutamate, Inulin Lauryl Carbamate, Ceramide NP, Acetyl Tetrapeptide-11',
+    summary: 'Micro-emulsified Ceramide NP + Acetyl Tetrapeptide-11 + White Leaf Tea milky toner for dry or sensitive morning prep.'
+  },
+  {
+    id: 'im-from-mugwort-essence',
+    brand: "I'm From",
+    name: 'Mugwort Essence (100% Artemisia Princeps Extract)',
+    category: 'Soothing Toner',
+    ph: 5.8,
+    priceUsd: 40,
+    primaryActives: ['centella-asiatica'],
+    inciList: 'Artemisia Princeps Extract (100%)',
+    summary: 'Single-ingredient slow-extracted Korean Mugwort essence that calms flushing, heat, and reactive skin.'
+  },
+  {
+    id: 'byoma-hydrating-milky-toner',
+    brand: 'BYOMA',
+    name: 'Hydrating Milky Toner (Tri-Ceramide + Polyglutamic Acid + Cica)',
+    category: 'Soothing Toner',
+    ph: 5.5,
+    priceUsd: 15,
+    primaryActives: ['ceramide-np', 'cholesterol', 'centella-asiatica', 'panthenol'],
+    inciList: 'Aqua, Glycerin, Butylene Glycol, Squalane, Ceramide NP, Cholesterol, Phytosphingosine, Polyglutamic Acid, Centella Asiatica Extract, Panthenol, Allantoin',
+    summary: 'Accessible Tri-Ceramide + Polyglutamic Acid + Centella milky toner that preps dry skin before serums.'
+  },
+  {
+    id: 'peach-slices-azelaic-10',
+    brand: 'Peach Slices',
+    name: 'Redness Relief Azelaic Acid Serum (10% Azelaic + Panthenol + Cica)',
+    category: 'Rosacea & Brightening',
+    ph: 5.0,
+    priceUsd: 20,
+    primaryActives: ['azelaic-acid', 'panthenol', 'centella-asiatica', 'allantoin'],
+    inciList: 'Water, Azelaic Acid (10%), Propanediol, Glycerin, Butylene Glycol, Panthenol, Centella Asiatica Extract, Madecassoside, Allantoin, Sodium Hyaluronate',
+    summary: '10% Azelaic Acid + Cica + Panthenol redness-relief serum; gentle alternative to stinging low-pH acids.'
+  },
+  {
+    id: 'good-molecules-discoloration-serum',
+    brand: 'Good Molecules',
+    name: 'Discoloration Correcting Serum (3% Tranexamic + 4% Niacinamide)',
+    category: 'Brightening Serum',
+    ph: 5.5,
+    priceUsd: 12,
+    primaryActives: ['tranexamic-acid', 'niacinamide', 'glycerin'],
+    inciList: 'Water, Butylene Glycol, Propanediol, Glycerin, Niacinamide (4%), Cetyl Tranexamate Mesylate (3%), Cetyl Alcohol, Ceramide NP, Sodium Hyaluronate',
+    summary: '3% Cetyl Tranexamate Mesylate + 4% Niacinamide at pH 5.5; layers cleanly under Vitamin C or retinoids.'
+  },
+  {
+    id: 'cosrx-bha-blackhead-liquid',
+    brand: 'COSRX',
+    name: 'BHA Blackhead Power Liquid (4% Betaine Salicylate + Niacinamide)',
+    category: 'Exfoliating Acid',
+    ph: 4.0,
+    priceUsd: 25,
+    primaryActives: ['salicylic-acid', 'niacinamide', 'panthenol', 'hyaluronic-acid'],
+    inciList: 'Salix Alba (Willow) Bark Water, Butylene Glycol, Betaine Salicylate (4%), Niacinamide, 1,2-Hexanediol, Arginine, Panthenol, Sodium Hyaluronate',
+    summary: 'Gentle pH 4.0 4% Betaine Salicylate + Willow Bark pore clarifier for sensitive skin that cannot tolerate pH 3.5 Salicylic Acid.'
+  },
+  {
+    id: 'kiehls-ultra-facial-cream',
+    brand: "Kiehl's",
+    name: 'Ultra Facial Cream with 4.5% Squalane & Glacial Glycoprotein',
+    category: 'Barrier Moisturizer',
+    ph: 5.6,
+    priceUsd: 39,
+    primaryActives: ['squalane', 'glycerin', 'salicylic-acid', 'tocopherol'],
+    inciList: 'Aqua/Water, Glycerin, Dimethicone, Squalane (4.5%), Bis-PEG-18 Methyl Ether Dimethyl Silane, Sucrose Stearate, Stearyl Alcohol, PEG-8 Distearate, Pseudoalteromonas Ferment Extract, Salicylic Acid, Tocopherol',
+    summary: '4.5% olive-derived Squalane + Glacial Glycoprotein daily barrier cream for 24-hour moisture balance.'
   }
 ];
 
@@ -523,9 +864,83 @@ const ROUTINE_PRESETS = [
   }
 ];
 
-module.exports = {
-  CULT_PRODUCTS,
-  ROUTINE_PRESETS
+const VANITY_SLOT_CALIBRATORS = {
+  0: {
+    title: 'Match Slot 01 Prep to Morning Skin State & Wash Type',
+    row1Label: 'Morning Skin State',
+    row1Key: 'prepGoal',
+    row1: [
+      { id: 'redness_sos', label: 'Redness / Post-Workout', pickIdx: 0, note: 'Hypochlorous Mist (pH 4.8): Calms flushing & bacteria. Let dry 45s before Vitamin C.' },
+      { id: 'dry_tight', label: 'Dry / Tight Barrier', pickIdx: 1, note: 'Heartleaf 77% Toner (pH 5.7): Restores hydration without stripping natural lipids.' },
+      { id: 'blemish_prone', label: 'Active Blemishes', pickIdx: 2, note: 'PanOxyl 10% BPO Wash: Rinse 100% clean so residual peroxide never oxidizes AM Vitamin C.' },
+      { id: 'dull_texture', label: 'Rough Texture', pickIdx: 3, note: 'Glycolic 7% Toner (pH 3.6): Resurfaces dull skin, but do not stack directly under Copper Peptides.' }
+    ],
+    row2Label: 'Water & Cleanse Rule',
+    row2Key: 'prepSecond',
+    row2: [
+      { id: 'splash_only', label: 'Water Splash / Mist Only', subNote: 'Preserves overnight lipid mantle for dry or sensitive skin.' },
+      { id: 'gentle_milk', label: 'Gentle Glycerin Wash', subNote: 'Removes evening occlusives without raising skin pH.' },
+      { id: 'active_wash', label: '60s Blemish Wash Contact', subNote: 'Short-contact therapy clears pores with zero leave-on clash.' }
+    ]
+  },
+  1: {
+    title: 'Match Slot 02 Serum to Skin Focus & Sensitivity',
+    row1Label: 'Primary Serum Focus',
+    row1Key: 'serumFocus',
+    row1: [
+      { id: 'sun_spots', label: 'Sun Spots & Radiance', pickIdx: 0, sensitivePickIdx: 3, note: 'Targets dark spots & UV free radicals. Uses 15% Vitamin C (pH 3.2) or pH 5.5 Tranexamic Acid if sensitive.' },
+      { id: 'aging_firmness', label: 'Aging & Firmness', pickIdx: 4, sensitivePickIdx: 4, note: 'Copper Peptides 1% (GHK-Cu + Matrixyl, pH 6.2): Remodels collagen without low-pH acid stinging.' },
+      { id: 'pores_oil', label: 'Pores & Oil Control', pickIdx: 2, sensitivePickIdx: 2, note: 'Niacinamide 10% + Zinc 1% (pH 6.0): Balances sebum and visibly tightens pores under SPF.' },
+      { id: 'stubborn_pigment', label: 'Post-Blemish Marks', pickIdx: 3, sensitivePickIdx: 3, note: 'Topicals Faded (Tranexamic + Azelaic + Kojic, pH 5.5): Fades dark marks with zero acid burn.' }
+    ],
+    row2Label: 'Skin Sensitivity & pH Tolerance',
+    row2Key: 'serumSensitivity',
+    row2: [
+      { id: 'resilient', label: 'Resilient (pH 3.2 Peak)', subNote: 'Tolerates pure L-Ascorbic Acid at pH 3.2 for maximum penetration.' },
+      { id: 'balanced', label: 'Balanced Skin', subNote: 'Wait 60s after serum application before sealing with barrier cream.' },
+      { id: 'sensitive', label: 'Sensitive / Reactive (pH 5.5+)', subNote: 'Avoids pH 3.2 acid sting; switches to pH 5.5+ Tranexamic or Peptide serums.' }
+    ]
+  },
+  2: {
+    title: 'Match Slot 03 Cream to Barrier Need & Texture Weight',
+    row1Label: 'Barrier Focus',
+    row1Key: 'creamFocus',
+    row1: [
+      { id: 'ceramide_repair', label: 'Dry / Flaking (3:1:1 Ceramides)', pickIdx: 0, note: 'Aestura Atobarrier 365 (pH 5.5): Hospital-grade encapsulated ceramide-cholesterol-lipid ratio.' },
+      { id: 'redness_cica', label: 'Sensitive / Redness (B5 Cica)', pickIdx: 3, note: 'Cicaplast Baume B5+ (5% Panthenol + Madecassoside): Calms heat, windburn, and retinoid irritation.' },
+      { id: 'aging_plump', label: 'Plumping & Fine Lines', pickIdx: 1, note: 'Dieux Instant Angel (Lipid + Peptide + Urea): Cushions fine lines and locks in humectants.' },
+      { id: 'pore_safe_light', label: 'Oily / Blemish-Safe', pickIdx: 4, note: 'CeraVe PM / Snail 96: Breathable barrier hydration that will not feel heavy under sunscreen.' }
+    ],
+    row2Label: 'Climate & Texture Weight',
+    row2Key: 'creamWeight',
+    row2: [
+      { id: 'weightless_gel', label: 'Humid / Weightless Essence', subNote: 'Thin humectant layer prevents midday shine.' },
+      { id: 'satin_lotion', label: 'Everyday Velvet Cream', subNote: 'Balanced 3:1:1 lipid seal for morning and evening.' },
+      { id: 'rich_balm', label: 'Dry / Night Sandwich Balm', subNote: 'Buffers Slot 05 retinoids so corners of nose and mouth never peel.' }
+    ]
+  },
+  4: {
+    title: 'Match Slot 05 Night Renewal to Goal & Retinoid Tolerance',
+    row1Label: 'Evening Focus',
+    row1Key: 'pmFocus',
+    row1: [
+      { id: 'fine_lines_aging', label: 'Fine Lines & Aging', pickIdx: 0, gentlePickIdx: 1, note: 'Nightly collagen remodeling with Rx Tretinoin 0.05% or encapsulated Medik8 Crystal Retinal.' },
+      { id: 'sun_spots_redness', label: 'Sun Spots & Rosacea', pickIdx: 6, gentlePickIdx: 6, note: 'Finacea 15% Azelaic Acid (pH 4.9): Fades hyperpigmentation and redness; pregnancy-safe.' },
+      { id: 'clogged_pores', label: 'Clogged Pores & BHA', pickIdx: 2, gentlePickIdx: 4, note: 'Oil-soluble 2% BHA or Differin 0.1% Gel clears congested pores on Nights 1 & 3.' },
+      { id: 'gentle_peptide', label: 'Sensitive / Zero-Peel Peptides', pickIdx: 3, gentlePickIdx: 3, note: 'Copper Peptides 1% (pH 6.2): Repairs firmness overnight with zero retinoid purging.' }
+    ],
+    row2Label: 'Retinoid & Acid Tolerance',
+    row2Key: 'pmTolerance',
+    row2: [
+      { id: 'beginner_sandwich', label: 'Sensitive / Sandwich Buffer', subNote: 'Apply a thin layer of Slot 03 Cream BEFORE and AFTER Slot 05 to block peeling.' },
+      { id: 'cycling_4night', label: '4-Night Skin Cycling', subNote: 'Use Slot 05 on Nights 1 & 3; rest with Ceramides only on Nights 2 & 4.' },
+      { id: 'experienced', label: 'Experienced (Direct on Dry Skin)', subNote: 'Wait 10m after cleansing so damp skin does not accelerate retinoid sting.' }
+    ]
+  }
 };
 
-module.exports = { CULT_PRODUCTS, ROUTINE_PRESETS };
+module.exports = {
+  CULT_PRODUCTS,
+  ROUTINE_PRESETS,
+  VANITY_SLOT_CALIBRATORS
+};

@@ -6,6 +6,7 @@
  * and Mobile Bottom-Sheet Experience.
  * Strictly < 1,000 lines and zero em-dashes.
  */
+const { VANITY_SLOT_CALIBRATORS } = require('./clinical-products');
 
 function renderHeaderVanityBagPill() {
   return `<button type="button" id="dl-header-vanity-pill" class="mono" onclick="window.__dlOpenVanityDrawer('header_pill')" aria-label="Open My 5-Slot Atelier Vanity Bag" style="display:inline-flex;align-items:center;gap:6px;padding:7px 11px;background:var(--rose-pill-bg);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-size:0.8rem;font-weight:600;transition:transform 180ms cubic-bezier(0.22,1,0.36,1),background-color 180ms ease;white-space:nowrap;">
@@ -76,7 +77,7 @@ function renderAtelierVanityDrawerHtml() {
       border-color: var(--berry-clash); background: var(--berry-bg);
     }
     .dl-tray-vessel-btn.is-empty {
-      border: 1px dashed var(--border-strong); opacity: 0.72;
+      border: 1.5px dashed var(--rose-brand); background: var(--bg-canvas); opacity: 1;
     }
     .dl-add-to-bag-btn {
       display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px;
@@ -182,9 +183,10 @@ function renderAtelierVanityDrawerHtml() {
         </button>
       </div>
 
-      <!-- Tab 01 View: Single-Bottle Spotlight Card + Slot 04 Undertone Strip -->
+      <!-- Tab 01 View: Single-Bottle Spotlight Card + Slot-Aware Calibrator Strip -->
       <div id="dl-dossier-panel-slots" style="display:flex;flex-direction:column;gap:10px;">
         <div id="dl-vanity-slots-list" style="display:flex;flex-direction:column;gap:0;"></div>
+        <div id="dl-slot-calibrator-box" style="display:none;padding:12px 14px;background:var(--bg-oat);flex-direction:column;gap:8px;"></div>
 
         <!-- Undertone & Finish Strip (Only shown when inspecting Slot 04 SPF) -->
         <div id="dl-undertone-parent-box" style="padding:12px 14px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
@@ -253,27 +255,12 @@ function renderAtelierVanityDrawerHtml() {
 const ATELIER_VANITY_CLIENT_SCRIPT = `
   (function() {
     var VANITY_STORAGE_KEY = 'dermlogic_vanity_bag_v2';
+    var SLOT_CALIBRATORS = ${JSON.stringify(VANITY_SLOT_CALIBRATORS)};
     var UNDERTONE_META = {
-      cool_rosy: {
-        label: 'Cool Rosy',
-        spfRec: 'Beauty of Joseon Relief Sun SPF 50+ or EltaMD UV Clear (Untinted)',
-        spfNote: 'Cool Rosy Undertone: Avoid yellow-iron-oxide tints that pull orange. Use sheer rice-probiotic or untinted niacinamide SPF 50 with a 60s dry-down before concealer.'
-      },
-      neutral_ivory: {
-        label: 'Neutral Ivory',
-        spfRec: 'Beauty of Joseon Relief Sun SPF 50+ (Zero White-Cast Rice Essence)',
-        spfNote: 'Neutral Undertone: Balances both mineral and hybrid filters. Allow 60 seconds after barrier cream so water-based serums never pill under skin tint.'
-      },
-      warm_olive: {
-        label: 'Warm / Olive',
-        spfRec: 'EltaMD UV Clear SPF 46 or Hybrid Invisible Gel-Serum SPF 50 (Zero White-Cast)',
-        spfNote: 'Warm / Olive Undertone: Uncoated zinc oxide leaves an ashy grey cast on olive skin. Use sheer hybrid or micronized niacinamide SPF 46+ with 90s absorption.'
-      },
-      rich_espresso: {
-        label: 'Deep / Rich',
-        spfRec: 'Beauty of Joseon Relief Sun SPF 50+ (100% Sheer Organic UV Filters)',
-        spfNote: 'Deep / Rich Undertone: Zero-titanium sheer organic UV filters prevent chalky flashback while sealing humectants beneath complexion products.'
-      }
+      cool_rosy: { label: 'Cool Rosy', spfRec: 'Beauty of Joseon Relief Sun SPF 50+ or EltaMD UV Clear (Untinted)', spfNote: 'Cool Rosy Undertone: Avoid yellow-iron-oxide tints that pull orange. Use sheer rice-probiotic or untinted niacinamide SPF 50 with a 60s dry-down before concealer.' },
+      neutral_ivory: { label: 'Neutral Ivory', spfRec: 'Beauty of Joseon Relief Sun SPF 50+ (Zero White-Cast Rice Essence)', spfNote: 'Neutral Undertone: Balances both mineral and hybrid filters. Allow 60 seconds after barrier cream so water-based serums never pill under skin tint.' },
+      warm_olive: { label: 'Warm / Olive', spfRec: 'EltaMD UV Clear SPF 46 or Hybrid Invisible Gel-Serum SPF 50 (Zero White-Cast)', spfNote: 'Warm / Olive Undertone: Uncoated zinc oxide leaves an ashy grey cast on olive skin. Use sheer hybrid or micronized niacinamide SPF 46+ with 90s absorption.' },
+      rich_espresso: { label: 'Deep / Rich', spfRec: 'Beauty of Joseon Relief Sun SPF 50+ (100% Sheer Organic UV Filters)', spfNote: 'Deep / Rich Undertone: Zero-titanium sheer organic UV filters prevent chalky flashback while sealing humectants beneath complexion products.' }
     };
     var FINISH_META = {
       dewy_glass: { label: 'Dewy Glass', prepRule: 'Mist damp skin + press 2 drops squalane/ceramide essence before SPF.' },
@@ -353,9 +340,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     ];
 
     function renderMiniVesselSvg(vesselType, tagText, hasClash, isEmpty) {
-      var stroke = isEmpty ? '#9E968E' : (hasClash ? '#7A2332' : '#524A43');
-      var fill = isEmpty ? 'transparent' : (hasClash ? '#F5E1E4' : '#FAF6F0');
-      var accent = hasClash ? '#7A2332' : '#264C3C';
+      var stroke = isEmpty ? '#7A2332' : (hasClash ? '#7A2332' : '#524A43');
+      var fill = isEmpty ? '#FBF7F4' : (hasClash ? '#F5E1E4' : '#FAF6F0');
+      var accent = hasClash || isEmpty ? '#7A2332' : '#264C3C';
       if (vesselType === 'mist') {
         return '<svg width="34" height="42" viewBox="0 0 38 46" fill="none" aria-hidden="true"><rect x="14" y="3" width="10" height="6" rx="1" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.2"/><path d="M12 9H26L28 14V40C28 41.1 27.1 42 26 42H12C10.9 42 10 41.1 10 40V14L12 9Z" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="12" y="19" width="14" height="14" fill="#FFFFFF" stroke="' + stroke + '" stroke-width="0.8"/><text x="19" y="28" text-anchor="middle" font-size="6.2" font-family="monospace" font-weight="700" fill="' + stroke + '">' + tagText + '</text></svg>';
       }
@@ -424,51 +411,19 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
 
       // Clash 1: Hypochlorous Mist (Slot 01) + Vitamin C / Antioxidant or Copper Peptide (Slot 02) without dry-down or BPO + Vitamin C
       if (b0 && b1 && b0.id === 'panoxyl-10-bpo-wash' && (b1.id === 'skinceuticals-ce-ferulic' || b1.id === 'rohto-melano-cc')) {
-        clashes.push({
-          slots: [0, 1],
-          severity: 'CRITICAL',
-          title: 'Benzoyl Peroxide (Slot 01) Oxidizes Vitamin C (Slot 02)',
-          detail: 'Residual Benzoyl Peroxide oxidizes L-Ascorbic Acid on contact before it can enter the skin.',
-          fixLabel: 'Swap Slot 01 to Anua Heartleaf 77% Soothing Toner',
-          fixFn: function() { st.slotSelections[0] = 1; delete st.customSlotBottle[0]; }
-        });
+        clashes.push({ slots: [0, 1], severity: 'CRITICAL', title: 'Benzoyl Peroxide (Slot 01) Oxidizes Vitamin C (Slot 02)', detail: 'Residual Benzoyl Peroxide oxidizes L-Ascorbic Acid on contact before it can enter the skin.', fixLabel: 'Swap Slot 01 to Anua Heartleaf 77% Soothing Toner', fixFn: function() { st.slotSelections[0] = 1; delete st.customSlotBottle[0]; } });
       }
       // Clash 2: Glycolic Acid 7% in AM Prep (Slot 01) + Pure Vitamin C or Copper Peptides in AM Active (Slot 02)
       if (b0 && b1 && b0.id === 'to-glycolic-acid-7' && (b1.id === 'skinceuticals-ce-ferulic' || b1.id === 'to-buffet-copper-peptides')) {
-        clashes.push({
-          slots: [0, 1],
-          severity: 'CRITICAL',
-          title: b1.id === 'to-buffet-copper-peptides'
-            ? 'Glycolic Acid 7% (pH 3.6) Hydrolyzes Copper Peptides (Slot 02)'
-            : 'Double Low-pH Acid Stack: Glycolic 7% + 15% Vitamin C',
-          detail: b1.id === 'to-buffet-copper-peptides'
-            ? 'Direct AHA acid breaks the fragile GHK-Cu copper tripeptide bond and triggers redness.'
-            : 'Stacking pH 3.6 Glycolic Acid under pH 3.2 L-Ascorbic Acid in the morning strips the stratum corneum.',
-          fixLabel: 'Swap Slot 01 to Tower 28 SOS Mist',
-          fixFn: function() { st.slotSelections[0] = 0; delete st.customSlotBottle[0]; }
-        });
+        clashes.push({ slots: [0, 1], severity: 'CRITICAL', title: b1.id === 'to-buffet-copper-peptides' ? 'Glycolic Acid 7% (pH 3.6) Hydrolyzes Copper Peptides (Slot 02)' : 'Double Low-pH Acid Stack: Glycolic 7% + 15% Vitamin C', detail: b1.id === 'to-buffet-copper-peptides' ? 'Direct AHA acid breaks the fragile GHK-Cu copper tripeptide bond and triggers redness.' : 'Stacking pH 3.6 Glycolic Acid under pH 3.2 L-Ascorbic Acid in the morning strips the stratum corneum.', fixLabel: 'Swap Slot 01 to Tower 28 SOS Mist', fixFn: function() { st.slotSelections[0] = 0; delete st.customSlotBottle[0]; } });
       }
       // Clash 3: Vitamin C in Slot 02 + Copper Peptides in Slot 05 if layered without AM/PM separation or if Copper is in Slot 02 + Acid in Slot 05
       if (b1 && b4 && b1.id === 'to-buffet-copper-peptides' && (b4.id === 'paulas-choice-2-bha' || b4.id === 'biologique-recherche-p50-1970' || b4.id === 'rx-tretinoin-005')) {
-        clashes.push({
-          slots: [1, 4],
-          severity: 'MODERATE',
-          title: 'High-Active Turnover Load: Copper Peptides + Strong PM Acid/Retinoid',
-          detail: 'Keep Copper Peptides strictly separated from exfoliating acids and buffer your evening retinoid with Slot 03 Ceramide Cream.',
-          fixLabel: 'Set Slot 03 to Aestura 365 Ceramide Buffer',
-          fixFn: function() { st.slotSelections[2] = 0; delete st.customSlotBottle[2]; st.slotSelections[1] = 2; delete st.customSlotBottle[1]; }
-        });
+        clashes.push({ slots: [1, 4], severity: 'MODERATE', title: 'High-Active Turnover Load: Copper Peptides + Strong PM Acid/Retinoid', detail: 'Keep Copper Peptides strictly separated from exfoliating acids and buffer your evening retinoid with Slot 03 Ceramide Cream.', fixLabel: 'Set Slot 03 to Aestura 365 Ceramide Buffer', fixFn: function() { st.slotSelections[2] = 0; delete st.customSlotBottle[2]; st.slotSelections[1] = 2; delete st.customSlotBottle[1]; } });
       }
       // Clash 4: Unbuffered Rx Tretinoin or Lotion P50 when Slot 03 Barrier Seal is empty
       if (b4 && !b2 && (b4.id === 'rx-tretinoin-005' || b4.id === 'biologique-recherche-p50-1970')) {
-        clashes.push({
-          slots: [2, 4],
-          severity: 'CRITICAL',
-          title: 'Missing Slot 03 Barrier Cushion for ' + b4.short,
-          detail: 'Applying ' + b4.short + ' without a 3:1:1 Ceramide or Panthenol barrier seal in Slot 03 causes flaking around the mouth and nose.',
-          fixLabel: 'Restore Aestura 365 Ceramide Cream to Slot 03',
-          fixFn: function() { st.slotSelections[2] = 0; delete st.customSlotBottle[2]; }
-        });
+        clashes.push({ slots: [2, 4], severity: 'CRITICAL', title: 'Missing Slot 03 Barrier Cushion for ' + b4.short, detail: 'Applying ' + b4.short + ' without a 3:1:1 Ceramide or Panthenol barrier seal in Slot 03 causes flaking around the mouth and nose.', fixLabel: 'Restore Aestura 365 Ceramide Cream to Slot 03', fixFn: function() { st.slotSelections[2] = 0; delete st.customSlotBottle[2]; } });
       }
       return clashes;
     }
@@ -658,6 +613,35 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var activeIdx = typeof st.activeSlotIdx === 'number' ? st.activeSlotIdx : 3;
       var uParentBox = document.getElementById('dl-undertone-parent-box');
       if (uParentBox) uParentBox.style.display = (activeIdx === 3) ? 'flex' : 'none';
+      var calBox = document.getElementById('dl-slot-calibrator-box');
+      var calCfg = SLOT_CALIBRATORS[activeIdx];
+      var activeCalNote = '';
+      if (calBox) {
+        if (activeIdx !== 3 && calCfg) {
+          calBox.style.display = 'flex';
+          var r1Val = st[calCfg.row1Key] || calCfg.row1[0].id;
+          var r2Val = st[calCfg.row2Key] || calCfg.row2[0].id;
+          var r1Obj = calCfg.row1.find(function(x) { return x.id === r1Val; }) || calCfg.row1[0];
+          var r2Obj = calCfg.row2.find(function(x) { return x.id === r2Val; }) || calCfg.row2[0];
+          activeCalNote = r1Obj.note + ' ' + r2Obj.subNote;
+          calBox.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">'
+            + '<span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">' + calCfg.title + ':</span>'
+            + '<span id="dl-slot-calibrator-active-label" class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:600;">' + r1Obj.label + ' &middot; ' + r2Obj.label + '</span>'
+            + '</div>'
+            + '<div role="group" aria-label="' + calCfg.row1Label + '" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;">'
+            + calCfg.row1.map(function(opt) {
+              return '<button type="button" class="dl-vanity-swatch-btn mono' + (opt.id === r1Obj.id ? ' active' : '') + '" data-cal-row1="' + opt.id + '" onclick="window.__dlSetSlotCalibrator(' + activeIdx + ',1,\\'' + opt.id + '\\')">' + opt.label + '</button>';
+            }).join('')
+            + '</div>'
+            + '<div role="group" aria-label="' + calCfg.row2Label + '" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;">'
+            + calCfg.row2.map(function(opt) {
+              return '<button type="button" class="dl-vanity-swatch-btn mono' + (opt.id === r2Obj.id ? ' active' : '') + '" data-cal-row2="' + opt.id + '" onclick="window.__dlSetSlotCalibrator(' + activeIdx + ',2,\\'' + opt.id + '\\')">' + opt.label + '</button>';
+            }).join('')
+            + '</div>';
+        } else {
+          calBox.style.display = 'none';
+        }
+      }
 
       // Render Option 3 Visual Bottle Tray
       var trayEl = document.getElementById('dl-vanity-visual-tray');
@@ -696,7 +680,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
             ? (uMeta.spfNote + ' ' + fMeta.prepRule)
             : (slotHasClash
               ? ('<strong style="color:var(--berry-clash);">Clash Alert:</strong> ' + slotHasClash.detail)
-              : ('When to apply: ' + slot.timing + '. Zero pH cancellation with your other slots.'));
+              : (isOpen && activeCalNote ? activeCalNote : ('When to apply: ' + slot.timing + '. Zero pH cancellation with your other slots.')));
 
           var chipsHtml = slot.choices.map(function(ch, cIdx) {
             var isSel = currentBottle && currentBottle.id === ch.id;
@@ -781,7 +765,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         var b4p = getBottleForSlot(st, 4) || SLOT_OPTIONS[4].choices[0];
         passPanel.innerHTML = '<div style="background:#181412;color:#F4EFE8;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">'
           + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">'
-            + '<span class="mono" style="font-size:0.7rem;color:#C9A45A;font-weight:700;">2-SIDED 9:16 LOCK-SCREEN PASS</span>'
+            + '<span class="mono" style="font-size:0.7rem;color:#C9A45A;font-weight:700;">2-SIDED 9:16 LOCK-SCREEN WALLPAPER</span>'
             + '<div style="display:inline-flex;background:#2A231F;padding:2px;gap:2px;">'
               + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'am\\')" style="padding:4px 8px;font-size:0.7rem;border:none;cursor:pointer;background:' + (side === 'am' ? 'var(--rose-brand)' : 'transparent') + ';color:#F4EFE8;font-weight:600;">☀ Side A · AM</button>'
               + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'pm\\')" style="padding:4px 8px;font-size:0.7rem;border:none;cursor:pointer;background:' + (side === 'pm' ? 'var(--rose-brand)' : 'transparent') + ';color:#F4EFE8;font-weight:600;">☾ Side B · PM</button>'
@@ -789,18 +773,24 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           + '</div>'
           + (side === 'am'
             ? '<div style="background:#FBF8F4;color:#181412;padding:10px 12px;display:flex;flex-direction:column;gap:5px;">'
-                + '<div class="mono" style="font-size:0.68rem;color:#7A2332;font-weight:700;">SIDE A · 7:30 AM MORNING SHIELD (' + uMeta.label.toUpperCase() + ')</div>'
-                + '<div style="font-size:0.76rem;padding:4px 7px;background:#FFFFFF;border:1px solid #E2D9CD;">1. <strong>' + b0.short + '</strong> · Wait 45s</div>'
-                + '<div style="font-size:0.76rem;padding:4px 7px;background:#FFFFFF;border:1px solid #E2D9CD;">2. <strong>' + b1.short + '</strong> · Wait 60s</div>'
-                + '<div style="font-size:0.76rem;padding:4px 7px;background:#FFFFFF;border:1px solid #E2D9CD;">3. <strong>' + b2p.short + '</strong> · Wait 60s</div>'
-                + '<div style="font-size:0.76rem;padding:4px 7px;background:#FFFFFF;border:1px solid #E2D9CD;">4. <strong>' + b3.short + '</strong> · Zero Cast</div>'
+                + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span class="mono" style="font-size:0.68rem;color:#7A2332;font-weight:700;">SIDE A · 7:30 AM SHIELD (' + uMeta.label.toUpperCase() + ')</span><span class="mono" style="font-size:0.64rem;padding:1px 6px;background:#E6EFEA;color:#264C3C;font-weight:700;">0 Clashes · pH Verified</span></div>'
+                + '<div style="font-size:0.75rem;padding:5px 8px;background:#FFFFFF;border:1px solid #E2D9CD;display:flex;justify-content:space-between;align-items:center;"><span>1. <strong>' + b0.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#6E655E;">pH ' + b0.ph + ' · Wait 45s</span></div>'
+                + '<div style="font-size:0.75rem;padding:5px 8px;background:#FFFFFF;border:1px solid #E2D9CD;display:flex;justify-content:space-between;align-items:center;"><span>2. <strong>' + b1.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#6E655E;">pH ' + b1.ph + ' · Wait 60s</span></div>'
+                + '<div style="font-size:0.75rem;padding:5px 8px;background:#FFFFFF;border:1px solid #E2D9CD;display:flex;justify-content:space-between;align-items:center;"><span>3. <strong>' + b2p.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#6E655E;">pH ' + b2p.ph + ' · 3:1:1 Seal</span></div>'
+                + '<div style="font-size:0.75rem;padding:5px 8px;background:#FFFFFF;border:1px solid #E2D9CD;display:flex;justify-content:space-between;align-items:center;"><span>4. <strong>' + b3.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#264C3C;font-weight:600;">' + fMeta.label + ' · Wait 90s</span></div>'
               + '</div>'
             : '<div style="background:#231E1A;color:#F4EFE8;padding:10px 12px;border:1px solid #423930;display:flex;flex-direction:column;gap:5px;">'
-                + '<div class="mono" style="font-size:0.68rem;color:#C9A45A;font-weight:700;">SIDE B · 9:30 PM BEDTIME RENEWAL &amp; BUFFER</div>'
-                + '<div style="font-size:0.76rem;padding:4px 7px;background:rgba(255,255,255,0.06);">1. Gentle Evening Cleanse · Pat 100% Dry</div>'
-                + '<div style="font-size:0.76rem;padding:4px 7px;background:rgba(255,255,255,0.06);">2. <strong>' + b4p.short + '</strong> (Nights 1 &amp; 3 Only)</div>'
-                + '<div style="font-size:0.76rem;padding:4px 7px;background:rgba(255,255,255,0.06);">3. <strong>' + b2p.short + '</strong> (Every Night Seal)</div>'
+                + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span class="mono" style="font-size:0.68rem;color:#C9A45A;font-weight:700;">SIDE B · 9:30 PM RENEWAL &amp; 4-NIGHT CYCLE</span><span class="mono" style="font-size:0.64rem;padding:1px 6px;background:rgba(201,164,90,0.18);color:#E8C6B0;">Sandwich Buffer</span></div>'
+                + '<div style="font-size:0.75rem;padding:5px 8px;background:rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;"><span>1. Gentle Evening Cleanse</span><span class="mono" style="font-size:0.66rem;color:#C9BCAE;">Pat 100% Dry (10m)</span></div>'
+                + '<div style="font-size:0.75rem;padding:5px 8px;background:rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;"><span>2. <strong>' + b4p.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#E8C6B0;">pH ' + b4p.ph + ' · Nights 1 &amp; 3</span></div>'
+                + '<div style="font-size:0.75rem;padding:5px 8px;background:rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;"><span>3. <strong>' + b2p.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#C9BCAE;">pH ' + b2p.ph + ' · Every Night</span></div>'
+                + '<div class="mono" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;font-size:0.63rem;text-align:center;padding-top:2px;"><span style="padding:3px;background:#7A2332;color:#FFF;">N1: ' + b4p.tag + '</span><span style="padding:3px;background:#264C3C;color:#FFF;">N2: Rest</span><span style="padding:3px;background:#7A2332;color:#FFF;">N3: ' + b4p.tag + '</span><span style="padding:3px;background:#264C3C;color:#FFF;">N4: Lipid</span></div>'
               + '</div>')
+          + '<div style="padding:8px 10px;background:#231E1A;border-left:2.5px solid #C9A45A;font-size:0.72rem;line-height:1.4;color:#E6E0D6;">'
+            + '<strong class="mono" style="color:#C9A45A;display:block;font-size:0.68rem;margin-bottom:2px;">WHAT YOUR 99&cent; FULL LOCK-SCREEN EXPORT UNLOCKS:</strong>'
+            + '<div>&bull; Full 1080&times;1920 Retina Dual AM/PM Lock-Screen PNG (sized below iPhone/Android clock)</div>'
+            + '<div>&bull; Exact pH &amp; wait-time rules, sensitive-skin sandwich buffer notes &amp; 4-Night schedule</div>'
+          + '</div>'
           + '</div>';
       }
     };
@@ -899,6 +889,46 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       window.__dlVanityState.dossierTab = 'slots';
       saveVanityState(window.__dlVanityState);
       window.__dlRenderVanityDrawer();
+    };
+
+    window.__dlSetSlotCalibrator = function(slotIdx, rowNum, valId) {
+      var st = window.__dlVanityState;
+      var cfg = SLOT_CALIBRATORS[slotIdx];
+      if (!cfg) return;
+      st[rowNum === 1 ? cfg.row1Key : cfg.row2Key] = valId;
+      var r1Val = st[cfg.row1Key] || cfg.row1[0].id;
+      var r2Val = st[cfg.row2Key] || cfg.row2[0].id;
+      var r1Obj = cfg.row1.find(function(x) { return x.id === r1Val; }) || cfg.row1[0];
+      var isGentle = (r2Val === 'sensitive' || r2Val === 'beginner_sandwich');
+      var recIdx = (isGentle && typeof r1Obj.sensitivePickIdx === 'number') ? r1Obj.sensitivePickIdx : ((isGentle && typeof r1Obj.gentlePickIdx === 'number') ? r1Obj.gentlePickIdx : r1Obj.pickIdx);
+      if (typeof recIdx === 'number') {
+        st.slotSelections[slotIdx] = recIdx;
+        if (st.customSlotBottle) delete st.customSlotBottle[slotIdx];
+      }
+      st.activeSlotIdx = slotIdx;
+      st.dossierTab = 'slots';
+      saveVanityState(st);
+      window.__dlRenderVanityDrawer();
+      window.__dlRefreshPageAddButtons();
+    };
+
+    window.__dlAddCustomSearchBottle = function() {
+      var inp = document.getElementById('productFilterInput');
+      var q = inp && inp.value ? inp.value.trim() : '';
+      if (!q) return;
+      fetch('/api/bottles/discover', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: q })
+      }).then(function(r) { return r.json(); }).then(function(d) {
+        if (d && d.product) {
+          window.__dlToggleBottleInBag(d.product.id, d.product.name, d.product.priceUsd, null);
+          window.__dlOpenVanityDrawer('custom_bottle');
+        }
+      }).catch(function() {
+        window.__dlToggleBottleInBag('custom-' + Date.now(), q, 28, null);
+        window.__dlOpenVanityDrawer('custom_bottle');
+      });
     };
 
     window.__dlSendVanityHoldEmail = function(ev) {

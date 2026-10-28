@@ -232,7 +232,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
               </div>
             </div>
             <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:16px 18px;background:var(--bg-surface);margin-top:16px;font-size:0.86rem;">
-              <div><strong class="mono" style="color:var(--rose-brand);display:block;margin-bottom:2px;">Step 1 &middot; Tap Bottles</strong><span style="color:var(--text-secondary);">Pick from 44 cult serums or try a famous shelf</span></div>
+              <div><strong class="mono" style="color:var(--rose-brand);display:block;margin-bottom:2px;">Step 1 &middot; Tap Bottles</strong><span style="color:var(--text-secondary);">Pick from ${products.length} cult serums or add any custom bottle</span></div>
               <div><strong class="mono" style="color:var(--sage-safe);display:block;margin-bottom:2px;">Step 2 &middot; Spot Clashes</strong><span style="color:var(--text-secondary);">See if Vitamin C, Acids, or Retinol conflict</span></div>
               <div><strong class="mono" style="color:var(--text-primary);display:block;margin-bottom:2px;">Step 3 &middot; Keep Your Bag</strong><span style="color:var(--text-secondary);">Save your 5-slot AM &amp; PM phone card</span></div>
             </div>

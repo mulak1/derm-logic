@@ -45,7 +45,7 @@ async function runVerification() {
     const health = await healthRes.json();
     console.log('1. Health & Seeded Counts:', JSON.stringify(health.counts));
     assert(health.counts.ingredients >= 60, `Expected >=60 ingredients, got ${health.counts.ingredients}`);
-    assert(health.counts.products >= 40, `Expected >=40 products, got ${health.counts.products}`);
+    assert(health.counts.products >= 75, `Expected >=75 products, got ${health.counts.products}`);
     assert(health.counts.seoPages >= 55, `Expected >=55 pSEO pages, got ${health.counts.seoPages}`);
 
     // 2. Verify POST /api/analyze-routine (<5ms deterministic engine)
@@ -350,7 +350,23 @@ async function runVerification() {
     assert.strictEqual(openSlotBodies[0], 1, 'Expected Slot index 1 to be the single open slot');
     const holdTimerText = await page.textContent('#dl-vanity-hold-countdown');
     assert(holdTimerText && holdTimerText.includes('h'), `Expected 24h hold countdown timer to show remaining hours, got "${holdTimerText}"`);
+
+    // Verify Slot 02 (Serum) Calibrator Strip (Focus + Sensitivity)
+    const calBoxVisible = await page.locator('#dl-slot-calibrator-box').isVisible();
+    assert.strictEqual(calBoxVisible, true, 'Slot 02 must display #dl-slot-calibrator-box');
+    await page.click('#dl-slot-calibrator-box button[data-cal-row1="sun_spots"]');
+    await page.click('#dl-slot-calibrator-box button[data-cal-row2="sensitive"]');
+    await page.waitForTimeout(120);
+    const slot2BodyText = await page.textContent('#dl-vanity-slot-card-1');
+    assert(slot2BodyText.includes('Topicals Faded') || slot2BodyText.includes('5.5'), `Expected sensitive + sun_spots on Slot 02 to recommend pH 5.5 Topicals Faded, got "${slot2BodyText}"`);
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-atelier-vanity-drawer.png'), fullPage: false });
+
+    // Verify Tab 04 (Phone Card) shows pH/wait rules + 99c unlock summary
+    await page.click('#dl-dossier-tab-pass');
+    await page.waitForTimeout(120);
+    const passPanelText = await page.textContent('#dl-dossier-panel-pass');
+    assert(passPanelText.includes('1080') && passPanelText.includes('pH'), `Expected Tab 04 Phone Card to show pH rules & 1080x1920 99c unlock details, got "${passPanelText}"`);
+    await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-atelier-vanity-phone-card.png'), fullPage: false });
 
     // Verify Tab 02 (Bag Clashes) + 1-Tap Fix
     await page.evaluate(() => window.__dlInjectSampleClash());

@@ -571,7 +571,7 @@ function attachGlowIndexSeoUpgrades(app) {
                 <a href="/directory" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">All 318+ Layering Guides</a>
                 <a href="/compare" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">Head-to-Head Comparisons (/compare)</a>
                 <a href="/scenario" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">Life-Event &amp; Barrier Scenarios (/scenario)</a>
-                <a href="/bottle" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">44 Cult Bottles (/bottle)</a>
+                <a href="/bottle" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">${CULT_PRODUCTS.length} Cult Bottles (/bottle)</a>
                 <a href="/ingredient" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">65 Clinical Actives (/ingredient)</a>
                 <a href="/ingredient/l-ascorbic-acid/serums" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">Active x Category Matrix</a>
                 <a href="/celebrity" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">14 Celebrity Shelves (/celebrity)</a>

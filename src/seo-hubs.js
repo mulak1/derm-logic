@@ -572,12 +572,12 @@ function renderBottleIndexPage() {
   }).join('');
 
   return renderShell({
-    title: '44 Cult Skincare Bottles: pH, Layering Order, Clashes & Dupes | DermLogic',
-    description: 'Complete formulation index of 44 cult skincare serums, toners, retinoids, and barrier creams with exact pH, wait times, celebrity shelves, and dupes.',
+    title: `${CULT_PRODUCTS.length} Cult Skincare Bottles: pH, Layering Order, Clashes & Dupes | DermLogic`,
+    description: `Complete formulation index of ${CULT_PRODUCTS.length} cult skincare serums, toners, retinoids, and barrier creams with exact pH, wait times, celebrity shelves, and dupes.`,
     canonicalPath: '/bottle',
     breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Skincare Library', href: '/directory' }, { label: 'Cult Bottles', href: '/bottle' }],
     faqItems: [{ q: 'How are DermLogic bottle guides structured?', a: 'Every bottle includes its verified pH window, primary actives, pore-safety check, celebrity shelves using it, and budget/luxury dupes.' }],
-    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('bottle')}<h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.5rem);margin-bottom:12px;">44 Cult Skincare Bottles: Layering Order &amp; Dupe Library</h1><p class="hero-sub" style="margin-bottom:26px;">Click any bottle to see what never to layer with it, how long to wait before your next step, which celebrities keep it on their vanity, and chemist-verified dupes.</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;">${cards}</div></div></section>`
+    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('bottle')}<h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.5rem);margin-bottom:12px;">${CULT_PRODUCTS.length} Cult Skincare Bottles: Layering Order &amp; Dupe Library</h1><p class="hero-sub" style="margin-bottom:26px;">Click any bottle to see what never to layer with it, how long to wait before your next step, which celebrities keep it on their vanity, and chemist-verified dupes.</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;">${cards}</div></div></section>`
   });
 }
 

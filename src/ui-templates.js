@@ -341,7 +341,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:auto;">${roleTag} &middot; $${prod.priceUsd}</span>
         </span>
       </label>`;
-  }).join('') + `<div id="shelfEmptyState" style="display:none;grid-column:1/-1;padding:16px;background:var(--bg-canvas);font-size:0.88rem;color:var(--text-secondary);text-align:center;">No bottle matched that search. <button type="button" class="btn-secondary" style="padding:5px 12px;min-height:30px;font-size:0.82rem;margin-left:6px;" onclick="const q=document.getElementById('productFilterInput').value;const ta=document.getElementById('rawInciTextarea');if(ta&&q){ta.value=q;runRoutineAnalysis();}">Check as Ingredient Below &rarr;</button></div>`;
+  }).join('') + `<div id="shelfEmptyState" style="display:none;grid-column:1/-1;padding:16px;background:var(--bg-canvas);font-size:0.86rem;color:var(--text-secondary);text-align:center;">Don't see that bottle in our ${products.length}-bottle catalog? <button type="button" class="btn-primary mono" style="padding:5px 12px;min-height:30px;font-size:0.78rem;margin-left:6px;" onclick="if(window.__dlAddCustomSearchBottle)window.__dlAddCustomSearchBottle()">+ Add Custom Bottle to Vanity Bag &rarr;</button><button type="button" class="btn-secondary mono" style="padding:5px 12px;min-height:30px;font-size:0.78rem;margin-left:6px;" onclick="const q=document.getElementById('productFilterInput').value;const ta=document.getElementById('rawInciTextarea');if(ta&&q){ta.value=q;runRoutineAnalysis();}">Check INCI Ingredients &rarr;</button></div>`;
 
   return `
     <div id="checker"></div>
@@ -356,7 +356,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               </div>
               <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
                 <button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 9px;font-size:0.78rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-weight:500;" onclick="clearRoutineSelection()">Clear (${selectedSet.size}) &times;</button>
-                <span class="badge-safe mono" id="shelfCountBadge" style="font-size:0.76rem;">${products.length} Bottles</span>
+                <span class="badge-safe mono" id="shelfCountBadge" style="font-size:0.76rem;" title="Catalog synced weekly + instant custom bottle discovery">${products.length} Bottles &middot; Weekly Sync</span>
               </div>
             </div>
 

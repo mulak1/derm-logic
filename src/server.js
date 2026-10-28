@@ -401,6 +401,36 @@ app.get('/api/products', (req, res) => {
   res.status(200).json({ count: CULT_PRODUCTS.length, products: CULT_PRODUCTS });
 });
 
+app.post('/api/bottles/discover', (req, res) => {
+  const { name, brand, category, ph, priceUsd, inciList } = req.body || {};
+  const cleanName = String(name || '').trim();
+  if (!cleanName || cleanName.length < 2) {
+    return res.status(400).json({ ok: false, error: 'Please provide a bottle name.' });
+  }
+  const slug = cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
+  const existing = CULT_PRODUCTS.find((p) => p.id === slug || p.name.toLowerCase() === cleanName.toLowerCase());
+  if (existing) {
+    return res.status(200).json({ ok: true, alreadyExists: true, product: existing, totalCount: CULT_PRODUCTS.length });
+  }
+  const newProd = {
+    id: slug || `custom-${Date.now()}`,
+    brand: String(brand || cleanName.split(' ')[0] || 'Custom Atelier').trim().slice(0, 32),
+    name: cleanName.slice(0, 80),
+    category: String(category || 'Daily Skincare').trim().slice(0, 32),
+    ph: Number(ph) >= 2.5 && Number(ph) <= 8.0 ? Number(ph) : 5.5,
+    priceUsd: Number(priceUsd) > 0 ? Number(priceUsd) : 28,
+    primaryActives: ['glycerin', 'niacinamide'],
+    inciList: String(inciList || 'Aqua, Glycerin, Niacinamide, Panthenol, Ceramide NP').slice(0, 400),
+    summary: 'User-discovered custom bottle added to live DermLogic catalog and 5-Slot Vanity Bag.'
+  };
+  CULT_PRODUCTS.push(newProd);
+  db.prepare(`
+    INSERT OR REPLACE INTO products (id, brand, name, category, ph, price_usd, primary_actives_json, inci_list, summary)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(newProd.id, newProd.brand, newProd.name, newProd.category, newProd.ph, newProd.priceUsd, JSON.stringify(newProd.primaryActives), newProd.inciList, newProd.summary);
+  res.status(200).json({ ok: true, alreadyExists: false, product: newProd, totalCount: CULT_PRODUCTS.length });
+});
+
 // 11. Meta Pixel + Conversions API (CAPI) Server-Side Event Endpoint (POST /api/meta-capi)
 app.post('/api/meta-capi', (req, res) => {
   const body = req.body || {};
