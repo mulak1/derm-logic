@@ -96,6 +96,47 @@ async function runVerification() {
     assert.strictEqual(r404.status, 404, 'Custom 404 route must return HTTP 404');
     console.log(`3. Verified ${getRoutes.length} GET routes (200 OK) + Custom 404 route (404).`);
 
+    // 3b. Verify 8-Pillar GlowIndex SEO / GEO / AEO Architecture Upgrades
+    const glowIndexRoutes = [
+      '/compare',
+      '/compare/copper-tripeptide-1-vs-l-ascorbic-acid',
+      '/compare/aestura-atobarrier-365-vs-skinceuticals-ce-ferulic',
+      '/ingredient/l-ascorbic-acid/serums',
+      '/scenario',
+      '/scenario/pregnancy-safe',
+      '/studio/formulas/post-peel-ceramide-recovery',
+      '/studio/playbooks/intake-shelf-audit-sop',
+      '/kiosk/medspa',
+      '/client/sydney-sweeney-shelf',
+      '/glow-session.js',
+      '/pricing.md',
+      '/okf/index.json',
+      '/sitemap-index.xml',
+      '/sitemap-core.xml',
+      '/sitemap-seo-guides.xml',
+      '/sitemap-comparisons.xml',
+      '/sitemap-bottles-actives.xml',
+      '/sitemap-celebrities-concerns.xml',
+      '/api/embed/badge/sydney-sweeney-shelf.svg',
+      '/api/seo/telemetry'
+    ];
+    for (const gr of glowIndexRoutes) {
+      const r = await fetch(`${BASE_URL}${gr}`);
+      assert.strictEqual(r.status, 200, `GlowIndex route GET ${gr} must return HTTP 200, got ${r.status}`);
+    }
+    // Verify 301 Canonical Ordering on Reversed Comparison Slugs (B-vs-A -> A-vs-B)
+    const revCompare = await fetch(`${BASE_URL}/compare/l-ascorbic-acid-vs-copper-tripeptide-1`, { redirect: 'manual' });
+    assert.strictEqual(revCompare.status, 301, 'Reversed /compare/l-ascorbic-acid-vs-copper-tripeptide-1 must 301 redirect');
+    assert.strictEqual(revCompare.headers.get('location'), '/compare/copper-tripeptide-1-vs-l-ascorbic-acid');
+    // Verify .md Content Negotiation & Accept: text/markdown
+    const mdSuffixRes = await fetch(`${BASE_URL}/compare/copper-tripeptide-1-vs-l-ascorbic-acid.md`);
+    assert.strictEqual(mdSuffixRes.status, 200);
+    assert(String(mdSuffixRes.headers.get('content-type')).includes('text/markdown'), '.md suffix must return text/markdown');
+    const mdAcceptRes = await fetch(`${BASE_URL}/compare/copper-tripeptide-1-vs-l-ascorbic-acid`, { headers: { Accept: 'text/markdown' } });
+    assert.strictEqual(mdAcceptRes.status, 200);
+    assert(String(mdAcceptRes.headers.get('content-type')).includes('text/markdown'), 'Accept: text/markdown must return text/markdown');
+    console.log(`3b. Verified ${glowIndexRoutes.length} GlowIndex 8-Pillar routes (200 OK), 301 B-vs-A canonicalization, and .md content negotiation.`);
+
     // Verify Affiliate JSON response
     const affRes = await fetch(`${BASE_URL}/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore&format=json`);
     const affJson = await affRes.json();
@@ -353,6 +394,22 @@ async function runVerification() {
     assert.strictEqual(seoLogoHref, '/', 'Brand logo on /seo/:slug must link to /');
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-seo-copper-vitc.png'), fullPage: false });
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'seo-desktop.png'), fullPage: false });
+
+    // Verify GlowIndex Pillar 3, 4 & 5 on /compare/copper-tripeptide-1-vs-l-ascorbic-acid
+    await page.goto(`${BASE_URL}/compare/copper-tripeptide-1-vs-l-ascorbic-acid`, { waitUntil: 'domcontentloaded' });
+    assert.strictEqual(await page.locator('#gi-verdict-selector-top').count(), 1, 'Above-the-fold #gi-verdict-selector-top must exist');
+    assert.strictEqual(await page.locator('#gi-verdict-selector-bottom').count(), 1, 'Below-table #gi-verdict-selector-bottom must exist');
+    await page.click('#gi-verdict-selector-top button[data-skin-profile="sensitive"]');
+    await page.waitForTimeout(150);
+    const compareGlowState = await page.evaluate(() => {
+      const sess = JSON.parse(localStorage.getItem('dermlogic_glow_session_v1') || '{}');
+      const colWinner = document.querySelector('#gi-compare-matrix-table [data-col-winner="true"]');
+      const hasMeasurementTech = document.documentElement.innerHTML.includes('measurementTechnique');
+      return { skinType: sess.skinType, hasWinnerCol: Boolean(colWinner), hasMeasurementTech };
+    });
+    assert.strictEqual(compareGlowState.skinType, 'sensitive', 'Clicking 1-tap verdict button must persist skinType=sensitive in dermlogic_glow_session_v1');
+    assert.strictEqual(compareGlowState.hasWinnerCol, true, 'Clicking 1-tap verdict button must highlight winning table column');
+    assert.strictEqual(compareGlowState.hasMeasurementTech, true, 'Page must embed Dataset JSON-LD with measurementTechnique');
     await desktopCtx.close();
 
     // Mobile Viewport (390x844) — Verify zero horizontal overflow & zero floating overlapping boxes
