@@ -814,6 +814,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       }).filter(Boolean);
 
       document.querySelectorAll('a[href*="/api/affiliate?product="], a[data-sovrn-beacon*="product="]').forEach(function(affLink) {
+        if (affLink.closest('[data-no-bag-inject="1"]')) return;
         var href = (affLink.getAttribute('href') || '') + ' ' + (affLink.getAttribute('data-sovrn-beacon') || '');
         var m = href.match(/product=([^&\s"']+)/);
         if (!m) return;
@@ -840,14 +841,11 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       document.querySelectorAll('button[data-dl-bag-prod]').forEach(function(btn) {
         var prodId = btn.getAttribute('data-dl-bag-prod') || '';
         if (!prodId) return;
-        var prodTitle = btn.getAttribute('data-dl-bag-title') || prodId;
         var inBag = activeIds.indexOf(prodId) !== -1;
-        var mapped = mapProductIdToSlot(prodId, prodTitle, '');
-        var slotLabel = 'Slot 0' + (mapped.slotIdx + 1);
         btn.className = 'dl-add-to-bag-btn mono' + (inBag ? ' in-bag' : '');
         btn.innerHTML = inBag
-          ? ('✓ In Vanity Bag (' + slotLabel + ') &times;')
-          : ('+ Add to Vanity Bag (' + slotLabel + ')');
+          ? '✓ In Vanity Bag &times;'
+          : '+ Add to Vanity Bag';
       });
     };
 

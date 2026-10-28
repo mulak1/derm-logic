@@ -776,7 +776,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
           <span class="${seoBadgeClass} mono">${escapeHtml(formatVerdictLabel(page.verdict))} · Everyday Layering Guide</span>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;" data-no-bag-inject="1">
             <a href="#analyzer" class="affiliate-link-pill mono" style="border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">Test With My Shelf Below &darr;</a>
             <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ${escapeHtml(primaryProdObj.brand)} ${escapeHtml(primaryProdObj.name)} &rarr;</a>
             <a href="/api/affiliate?product=${escapeHtml(secondaryProdId)}&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ${escapeHtml(secondaryProdObj.brand)} Barrier Cream &rarr;</a>
