@@ -81,7 +81,7 @@ function buildExactBaselineStyles(cfg) {
   #eb-cmdk-modal { display: none; position: fixed; inset: 0; z-index: 9995; background: rgba(15, 23, 42, 0.45); align-items: flex-start; justify-content: center; padding-top: 70px; font-family: ${t.fontSans}; }
   #eb-mobile-firstfold-bar { display: none !important; }
   @media (max-width: 768px) {
-    #eb-mobile-firstfold-bar { display: flex !important; margin: 8px 0 10px 0 !important; } .top-ticker { display: none !important; } .nav-links { flex-wrap: wrap !important; overflow-x: visible !important; white-space: normal !important; }
+    .top-ticker { display: none !important; } .nav-links { flex-wrap: wrap !important; overflow-x: visible !important; white-space: normal !important; }
     .hero-section, main > section:first-child { padding-top: 14px !important; } main h1 { font-size: 2.15rem !important; line-height: 1.14 !important; margin-bottom: 6px !important; }
     .hero-sub, .subhead, .editorial-subhead, .hero-lead { font-size: 1rem !important; line-height: 1.48 !important; margin-bottom: 6px !important; } .site-header .btn, header .btn { padding: 6px 10px !important; font-size:13px !important; }
     .preset-row { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 6px !important; } #eb-bottom-conversion-suite { padding: 0 14px; margin: 28px auto 82px auto; } .eb-panel-card { padding: 16px; }
@@ -572,7 +572,7 @@ function buildClientRuntimeScript(cfg) {
       }
     } else {
       var homeSubLead = document.querySelector('.hero-sub, .subhead, .editorial-subhead, .hero-lead, main h1 ~ p');
-      if (homeSubLead && homeSubLead.parentNode && !window.__ebIsUnlocked && !document.getElementById('eb-mobile-firstfold-bar')) homeSubLead.parentNode.insertBefore(buildQBar('eb-mobile-firstfold-bar'), homeSubLead.nextSibling);
+      if (homeSubLead && homeSubLead.parentNode && !isDerm && !window.__ebIsUnlocked && !document.getElementById('eb-mobile-firstfold-bar')) homeSubLead.parentNode.insertBefore(buildQBar('eb-mobile-firstfold-bar'), homeSubLead.nextSibling);
       var nativePhotoShell = document.querySelector('.editorial-photo-shell');
       var customHeroMount = document.getElementById('eb-hero-visual-mount');
       if (nativePhotoShell && !document.getElementById('eb-hero-sparkline-pill')) {
