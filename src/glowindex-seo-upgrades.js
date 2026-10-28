@@ -564,9 +564,9 @@ function attachGlowIndexSeoUpgrades(app) {
       if (typeof body === 'string' && (String(res.getHeader('Content-Type') || '').includes('text/html') || body.trim().startsWith('<!DOCTYPE html>'))) {
         let out = body;
         if (out.includes('href="/directory"') && !out.includes('id="gi-nav-quickjump"')) {
-          const dropdownHtml = `<style>@media(max-width:900px){#gi-nav-quickjump{display:none!important;}}</style><div id="gi-nav-quickjump" style="position:relative;display:inline-block;">
+          const dropdownHtml = `<style>@media(max-width:1180px){#gi-nav-quickjump{display:none!important;}}</style><div id="gi-nav-quickjump" style="position:relative;display:inline-block;flex-shrink:0;white-space:nowrap;">
             <details style="position:relative;display:inline-block;">
-              <summary class="mono" style="list-style:none;cursor:pointer;font-size:0.78rem;color:var(--text-secondary);padding:4px 8px;border:1px solid var(--border-hairline);background:var(--bg-oat);">Hubs &amp; Matrix &#9662;</summary>
+              <summary class="mono" style="list-style:none;cursor:pointer;font-size:0.78rem;color:var(--text-secondary);padding:4px 8px;border:1px solid var(--border-hairline);background:var(--bg-oat);white-space:nowrap;">Hubs &amp; Matrix &#9662;</summary>
               <div style="position:absolute;top:calc(100% + 6px);left:0;min-width:230px;background:var(--bg-surface);border:1px solid var(--border-hairline);padding:10px;z-index:999;display:flex;flex-direction:column;gap:6px;box-shadow:0 10px 24px rgba(24,20,18,0.08);">
                 <a href="/directory" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">All 318+ Layering Guides</a>
                 <a href="/compare" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">Head-to-Head Comparisons (/compare)</a>

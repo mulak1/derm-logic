@@ -866,11 +866,11 @@ const ROUTINE_PRESETS = [
 
 const VANITY_SLOT_CALIBRATORS = {
   0: {
-    title: 'Match Slot 01 Prep to Morning Skin State & Wash Type',
+    title: 'Match Slot 01 to Morning Skin & Wash Type',
     row1Label: 'Morning Skin State',
     row1Key: 'prepGoal',
     row1: [
-      { id: 'redness_sos', label: 'Redness / Post-Workout', pickIdx: 0, note: 'Hypochlorous Mist (pH 4.8): Calms flushing & bacteria. Let dry 45s before Vitamin C.' },
+      { id: 'redness_sos', label: 'Redness / Post-Gym', pickIdx: 0, note: 'Hypochlorous Mist (pH 4.8): Calms flushing & bacteria. Let dry 45s before Vitamin C.' },
       { id: 'dry_tight', label: 'Dry / Tight Barrier', pickIdx: 1, note: 'Heartleaf 77% Toner (pH 5.7): Restores hydration without stripping natural lipids.' },
       { id: 'blemish_prone', label: 'Active Blemishes', pickIdx: 2, note: 'PanOxyl 10% BPO Wash: Rinse 100% clean so residual peroxide never oxidizes AM Vitamin C.' },
       { id: 'dull_texture', label: 'Rough Texture', pickIdx: 3, note: 'Glycolic 7% Toner (pH 3.6): Resurfaces dull skin, but do not stack directly under Copper Peptides.' }
@@ -878,17 +878,17 @@ const VANITY_SLOT_CALIBRATORS = {
     row2Label: 'Water & Cleanse Rule',
     row2Key: 'prepSecond',
     row2: [
-      { id: 'splash_only', label: 'Water Splash / Mist Only', subNote: 'Preserves overnight lipid mantle for dry or sensitive skin.' },
-      { id: 'gentle_milk', label: 'Gentle Glycerin Wash', subNote: 'Removes evening occlusives without raising skin pH.' },
-      { id: 'active_wash', label: '60s Blemish Wash Contact', subNote: 'Short-contact therapy clears pores with zero leave-on clash.' }
+      { id: 'splash_only', label: 'Mist / Splash Only', subNote: 'Preserves overnight lipid mantle for dry or sensitive skin.' },
+      { id: 'gentle_milk', label: 'Gentle Milk Wash', subNote: 'Removes evening occlusives without raising skin pH.' },
+      { id: 'active_wash', label: '60s Blemish Wash', subNote: 'Short-contact therapy clears pores with zero leave-on clash.' }
     ]
   },
   1: {
-    title: 'Match Slot 02 Serum to Skin Focus & Sensitivity',
+    title: 'Match Slot 02 to Skin Focus & Sensitivity',
     row1Label: 'Primary Serum Focus',
     row1Key: 'serumFocus',
     row1: [
-      { id: 'sun_spots', label: 'Sun Spots & Radiance', pickIdx: 0, sensitivePickIdx: 3, note: 'Targets dark spots & UV free radicals. Uses 15% Vitamin C (pH 3.2) or pH 5.5 Tranexamic Acid if sensitive.' },
+      { id: 'sun_spots', label: 'Sun Spots & Glow', pickIdx: 0, sensitivePickIdx: 3, note: 'Targets dark spots & UV free radicals. Uses 15% Vitamin C (pH 3.2) or pH 5.5 Tranexamic Acid if sensitive.' },
       { id: 'aging_firmness', label: 'Aging & Firmness', pickIdx: 4, sensitivePickIdx: 4, note: 'Copper Peptides 1% (GHK-Cu + Matrixyl, pH 6.2): Remodels collagen without low-pH acid stinging.' },
       { id: 'pores_oil', label: 'Pores & Oil Control', pickIdx: 2, sensitivePickIdx: 2, note: 'Niacinamide 10% + Zinc 1% (pH 6.0): Balances sebum and visibly tightens pores under SPF.' },
       { id: 'stubborn_pigment', label: 'Post-Blemish Marks', pickIdx: 3, sensitivePickIdx: 3, note: 'Topicals Faded (Tranexamic + Azelaic + Kojic, pH 5.5): Fades dark marks with zero acid burn.' }
@@ -896,82 +896,82 @@ const VANITY_SLOT_CALIBRATORS = {
     row2Label: 'Skin Sensitivity & pH Tolerance',
     row2Key: 'serumSensitivity',
     row2: [
-      { id: 'resilient', label: 'Resilient (pH 3.2 Peak)', subNote: 'Tolerates pure L-Ascorbic Acid at pH 3.2 for maximum penetration.' },
+      { id: 'resilient', label: 'Resilient (pH 3.2)', subNote: 'Tolerates pure L-Ascorbic Acid at pH 3.2 for maximum penetration.' },
       { id: 'balanced', label: 'Balanced Skin', subNote: 'Wait 60s after serum application before sealing with barrier cream.' },
-      { id: 'sensitive', label: 'Sensitive / Reactive (pH 5.5+)', subNote: 'Avoids pH 3.2 acid sting; switches to pH 5.5+ Tranexamic or Peptide serums.' }
+      { id: 'sensitive', label: 'Sensitive (pH 5.5+)', subNote: 'Avoids pH 3.2 acid sting; switches to pH 5.5+ Tranexamic or Peptide serums.' }
     ]
   },
   2: {
-    title: 'Match Slot 03 Cream to Barrier Need & Texture Weight',
+    title: 'Match Slot 03 to Barrier Need & Weight',
     row1Label: 'Barrier Focus',
     row1Key: 'creamFocus',
     row1: [
-      { id: 'ceramide_repair', label: 'Dry / Flaking (3:1:1 Ceramides)', pickIdx: 0, note: 'Aestura Atobarrier 365 (pH 5.5): Hospital-grade encapsulated ceramide-cholesterol-lipid ratio.' },
-      { id: 'redness_cica', label: 'Sensitive / Redness (B5 Cica)', pickIdx: 3, note: 'Cicaplast Baume B5+ (5% Panthenol + Madecassoside): Calms heat, windburn, and retinoid irritation.' },
-      { id: 'aging_plump', label: 'Plumping & Fine Lines', pickIdx: 1, note: 'Dieux Instant Angel (Lipid + Peptide + Urea): Cushions fine lines and locks in humectants.' },
-      { id: 'pore_safe_light', label: 'Oily / Blemish-Safe', pickIdx: 4, note: 'CeraVe PM / Snail 96: Breathable barrier hydration that will not feel heavy under sunscreen.' }
+      { id: 'ceramide_repair', label: 'Dry / Flaking (3:1:1)', pickIdx: 0, note: 'Aestura Atobarrier 365 (pH 5.5): Hospital-grade encapsulated ceramide-cholesterol-lipid ratio.' },
+      { id: 'redness_cica', label: 'Redness (B5 Cica)', pickIdx: 3, note: 'Cicaplast Baume B5+ (5% Panthenol + Madecassoside): Calms heat, windburn, and retinoid irritation.' },
+      { id: 'aging_plump', label: 'Plumping & Lines', pickIdx: 1, note: 'Dieux Instant Angel (Lipid + Peptide + Urea): Cushions fine lines and locks in humectants.' },
+      { id: 'pore_safe_light', label: 'Oily / Pore-Safe', pickIdx: 4, note: 'CeraVe PM / Snail 96: Breathable barrier hydration that will not feel heavy under sunscreen.' }
     ],
     row2Label: 'Climate & Texture Weight',
     row2Key: 'creamWeight',
     row2: [
-      { id: 'weightless_gel', label: 'Humid / Weightless Essence', subNote: 'Thin humectant layer prevents midday shine.' },
-      { id: 'satin_lotion', label: 'Everyday Velvet Cream', subNote: 'Balanced 3:1:1 lipid seal for morning and evening.' },
-      { id: 'rich_balm', label: 'Dry / Night Sandwich Balm', subNote: 'Buffers Slot 05 retinoids so corners of nose and mouth never peel.' }
+      { id: 'weightless_gel', label: 'Weightless Gel', subNote: 'Thin humectant layer prevents midday shine.' },
+      { id: 'satin_lotion', label: 'Velvet Cream', subNote: 'Balanced 3:1:1 lipid seal for morning and evening.' },
+      { id: 'rich_balm', label: 'Night Buffer Balm', subNote: 'Buffers Slot 05 retinoids so corners of nose and mouth never peel.' }
     ]
   },
   4: {
-    title: 'Match Slot 05 Night Renewal to Goal & Retinoid Tolerance',
+    title: 'Match Slot 05 to Night Goal & Tolerance',
     row1Label: 'Evening Focus',
     row1Key: 'pmFocus',
     row1: [
       { id: 'fine_lines_aging', label: 'Fine Lines & Aging', pickIdx: 0, gentlePickIdx: 1, note: 'Nightly collagen remodeling with Rx Tretinoin 0.05% or encapsulated Medik8 Crystal Retinal.' },
-      { id: 'sun_spots_redness', label: 'Sun Spots & Rosacea', pickIdx: 6, gentlePickIdx: 6, note: 'Finacea 15% Azelaic Acid (pH 4.9): Fades hyperpigmentation and redness; pregnancy-safe.' },
+      { id: 'sun_spots_redness', label: 'Sun Spots & Redness', pickIdx: 6, gentlePickIdx: 6, note: 'Finacea 15% Azelaic Acid (pH 4.9): Fades hyperpigmentation and redness; pregnancy-safe.' },
       { id: 'clogged_pores', label: 'Clogged Pores & BHA', pickIdx: 2, gentlePickIdx: 4, note: 'Oil-soluble 2% BHA or Differin 0.1% Gel clears congested pores on Nights 1 & 3.' },
-      { id: 'gentle_peptide', label: 'Sensitive / Zero-Peel Peptides', pickIdx: 3, gentlePickIdx: 3, note: 'Copper Peptides 1% (pH 6.2): Repairs firmness overnight with zero retinoid purging.' }
+      { id: 'gentle_peptide', label: 'Zero-Peel Peptides', pickIdx: 3, gentlePickIdx: 3, note: 'Copper Peptides 1% (pH 6.2): Repairs firmness overnight with zero retinoid purging.' }
     ],
     row2Label: 'Retinoid & Acid Tolerance',
     row2Key: 'pmTolerance',
     row2: [
-      { id: 'beginner_sandwich', label: 'Sensitive / Sandwich Buffer', subNote: 'Apply a thin layer of Slot 03 Cream BEFORE and AFTER Slot 05 to block peeling.' },
-      { id: 'cycling_4night', label: '4-Night Skin Cycling', subNote: 'Use Slot 05 on Nights 1 & 3; rest with Ceramides only on Nights 2 & 4.' },
-      { id: 'experienced', label: 'Experienced (Direct on Dry Skin)', subNote: 'Wait 10m after cleansing so damp skin does not accelerate retinoid sting.' }
+      { id: 'beginner_sandwich', label: 'Sandwich Buffer', subNote: 'Apply a thin layer of Slot 03 Cream BEFORE and AFTER Slot 05 to block peeling.' },
+      { id: 'cycling_4night', label: '4-Night Cycling', subNote: 'Use Slot 05 on Nights 1 & 3; rest with Ceramides only on Nights 2 & 4.' },
+      { id: 'experienced', label: 'Direct (Dry Skin)', subNote: 'Wait 10m after cleansing so damp skin does not accelerate retinoid sting.' }
     ]
   }
 };
 
 const VANITY_SLOT_OPTIONS = [
   { slotNum: '01 · AM PREP', shortSlot: '01 · PREP', vesselType: 'mist', role: 'Morning Cleanse & pH Prep', timing: '7:30 AM · Step 1 (pH Reset · Wait 45s)', choices: [
-    { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28 Mist', ph: '4.8', tag: 'HOCl' },
-    { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua 77% Toner', ph: '5.7', tag: 'pH 5.7' },
-    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl 10% BPO', ph: '5.2', tag: '10% BPO' },
-    { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Ordinary Glycolic', ph: '3.6', tag: '7% AHA' }
+    { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28', ph: '4.8', tag: 'HOCl' },
+    { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua Toner', ph: '5.7', tag: 'pH5.7' },
+    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl 10%', ph: '5.2', tag: 'BPO' },
+    { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Glycolic 7%', ph: '3.6', tag: '7%AHA' }
   ] },
   { slotNum: '02 · AM ACTIVE', shortSlot: '02 · SERUM', vesselType: 'dropper', role: 'Morning Antioxidant Serum', timing: '7:31 AM · Step 2 (Antioxidant Shield · Wait 60s before cream)', choices: [
-    { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'C E Ferulic 15%', ph: '3.2', tag: '15% C' },
+    { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'CE Ferulic', ph: '3.2', tag: '15% C' },
     { id: 'rohto-melano-cc', label: 'Rohto Melano CC Vitamin C Essence ($14)', short: 'Melano CC', ph: '3.5', tag: 'Vit C' },
-    { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'Niacinamide 10%', ph: '6.0', tag: '10% B3' },
-    { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Topicals Faded', ph: '5.5', tag: 'TXA' },
-    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper Peptides', ph: '6.2', tag: 'GHK-Cu' }
+    { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'Niacinamide', ph: '6.0', tag: '10%B3' },
+    { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Faded Serum', ph: '5.5', tag: 'TXA' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper Pept', ph: '6.2', tag: 'GHKCu' }
   ] },
   { slotNum: '03 · BARRIER SEAL', shortSlot: '03 · CREAM', vesselType: 'jar', role: '3:1:1 Ceramide & Lipid Cushion', timing: 'AM & PM · Step 3 (Seals hydration & buffers night actives)', choices: [
     { id: 'aestura-atobarrier-365', label: 'Aestura Atobarrier 365 Ceramide Cream ($32)', short: 'Aestura 365', ph: '5.5', tag: '3:1:1' },
-    { id: 'dieux-instant-angel', label: 'Dieux Instant Angel Lipid Cream ($45)', short: 'Instant Angel', ph: '5.4', tag: 'Lipid' },
-    { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96 Mucin', ph: '6.5', tag: '96% Snail' },
-    { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast B5+', ph: '5.6', tag: '5% B5' },
-    { id: 'cerave-pm-lotion', label: 'CeraVe PM Facial Moisturizing Lotion ($17)', short: 'CeraVe PM', ph: '5.8', tag: 'Ceramide' }
+    { id: 'dieux-instant-angel', label: 'Dieux Instant Angel Lipid Cream ($45)', short: 'Dieux Angel', ph: '5.4', tag: 'Lipid' },
+    { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96', ph: '6.5', tag: 'Snail' },
+    { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast B5', ph: '5.6', tag: '5% B5' },
+    { id: 'cerave-pm-lotion', label: 'CeraVe PM Facial Moisturizing Lotion ($17)', short: 'CeraVe PM', ph: '5.8', tag: 'Cera' }
   ] },
   { slotNum: '04 · SPF & TONE', shortSlot: '04 · SPF 50', vesselType: 'tube', role: 'Undertone-Matched SPF 50 & Finish', timing: '7:33 AM · Step 4 (2-Finger Rule · Wait 90s before makeup)', choices: [
-    { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon SPF 50+', ph: '6.2', tag: 'SPF 50' },
-    { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD SPF 46', ph: '6.0', tag: 'SPF 46' }
+    { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon SPF50', ph: '6.2', tag: 'SPF50' },
+    { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD SPF46', ph: '6.0', tag: 'SPF46' }
   ] },
   { slotNum: '05 · PM RENEWAL', shortSlot: '05 · PM', vesselType: 'pm_bottle', role: 'Evening Retinoid / Exfoliant (4-Night Cycle)', timing: '9:30 PM · Nights 1 & 2 Only (Dry skin buffer · Never mix with AM acids)', choices: [
-    { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tretinoin 0.05%', ph: '5.8', tag: 'Rx Retin' },
-    { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Crystal Retinal', ph: '5.9', tag: 'Retinal' },
-    { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: "Paula's 2% BHA", ph: '3.5', tag: '2% BHA' },
-    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper Peptides', ph: '6.2', tag: 'GHK-Cu' },
-    { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin 0.1%', ph: '5.5', tag: '0.1% Gel' },
-    { id: 'biologique-recherche-p50-1970', label: 'Biologique Recherche Lotion P50 1970 ($115)', short: 'Lotion P50', ph: '3.0', tag: 'pH 3.0' },
-    { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15%', ph: '4.9', tag: '15% AzA' }
+    { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tret 0.05%', ph: '5.8', tag: 'Tret' },
+    { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Retinal 6', ph: '5.9', tag: 'Retin' },
+    { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: 'Paula 2% BHA', ph: '3.5', tag: '2%BHA' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper Pept', ph: '6.2', tag: 'GHKCu' },
+    { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin 0.1', ph: '5.5', tag: '0.1%' },
+    { id: 'biologique-recherche-p50-1970', label: 'Biologique Recherche Lotion P50 1970 ($115)', short: 'Lotion P50', ph: '3.0', tag: 'P50' },
+    { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15%', ph: '4.9', tag: '15%Az' }
   ] }
 ];
 

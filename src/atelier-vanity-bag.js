@@ -24,10 +24,11 @@ function renderAtelierVanityDrawerHtml() {
       transform: scale(0.97);
     }
     .dl-vanity-swatch-btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 5px 8px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 6px;
       background: var(--bg-surface); color: var(--text-secondary);
-      border: 1px solid transparent; cursor: pointer;
-      font-size: 0.76rem; font-weight: 500; white-space: nowrap; transition: border-color 160ms ease, background-color 160ms ease, transform 160ms cubic-bezier(0.22,1,0.36,1);
+      border: 1px solid var(--border-hairline); cursor: pointer; min-width: 0; max-width: 100%;
+      overflow: hidden; text-overflow: ellipsis; text-align: center;
+      font-size: 0.72rem; line-height: 1.2; font-weight: 500; white-space: nowrap; transition: border-color 160ms ease, background-color 160ms ease, transform 160ms cubic-bezier(0.22,1,0.36,1);
     }
     .dl-vanity-swatch-btn.active {
       background: var(--rose-pill-bg); color: var(--rose-brand);
@@ -274,16 +275,17 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var stroke = isEmpty ? '#7A2332' : (hasClash ? '#7A2332' : '#524A43');
       var fill = isEmpty ? '#FBF7F4' : (hasClash ? '#F5E1E4' : '#FAF6F0');
       var accent = hasClash || isEmpty ? '#7A2332' : '#264C3C';
+      var safeTag = String(tagText || '').slice(0, 6);
       if (vesselType === 'mist') {
-        return '<svg width="34" height="42" viewBox="0 0 38 46" fill="none" aria-hidden="true"><rect x="14" y="3" width="10" height="6" rx="1" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.2"/><path d="M12 9H26L28 14V40C28 41.1 27.1 42 26 42H12C10.9 42 10 41.1 10 40V14L12 9Z" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="12" y="19" width="14" height="14" fill="#FFFFFF" stroke="' + stroke + '" stroke-width="0.8"/><text x="19" y="28" text-anchor="middle" font-size="6.2" font-family="monospace" font-weight="700" fill="' + stroke + '">' + tagText + '</text></svg>';
+        return '<svg width="34" height="42" viewBox="0 0 38 46" fill="none" aria-hidden="true"><rect x="13" y="3" width="12" height="6" rx="1" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.2"/><path d="M9 9H29L31 14V40C31 41.1 30.1 42 29 42H9C7.9 42 7 41.1 7 40V14L9 9Z" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="9.5" y="19" width="19" height="14" fill="#FFFFFF" stroke="' + stroke + '" stroke-width="0.8"/><text x="19" y="28" text-anchor="middle" font-size="5.3" font-family="monospace" font-weight="700" fill="' + stroke + '">' + safeTag + '</text></svg>';
       }
       if (vesselType === 'jar') {
-        return '<svg width="36" height="42" viewBox="0 0 40 46" fill="none" aria-hidden="true"><rect x="8" y="12" width="24" height="6" rx="1.5" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.2"/><rect x="6" y="18" width="28" height="22" rx="3" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="10" y="23" width="20" height="11" fill="#FFFFFF" stroke="' + stroke + '" stroke-width="0.8"/><text x="20" y="30.5" text-anchor="middle" font-size="6.2" font-family="monospace" font-weight="700" fill="' + stroke + '">' + tagText + '</text></svg>';
+        return '<svg width="36" height="42" viewBox="0 0 40 46" fill="none" aria-hidden="true"><rect x="7" y="12" width="26" height="6" rx="1.5" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.2"/><rect x="5" y="18" width="30" height="22" rx="3" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="8" y="23" width="24" height="11" fill="#FFFFFF" stroke="' + stroke + '" stroke-width="0.8"/><text x="20" y="30.5" text-anchor="middle" font-size="5.4" font-family="monospace" font-weight="700" fill="' + stroke + '">' + safeTag + '</text></svg>';
       }
       if (vesselType === 'tube') {
-        return '<svg width="34" height="42" viewBox="0 0 38 46" fill="none" aria-hidden="true"><path d="M10 6H28L25 33H13L10 6Z" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="15" y="33" width="8" height="7" rx="1" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.2"/><text x="19" y="22" text-anchor="middle" font-size="6.2" font-family="monospace" font-weight="700" fill="' + accent + '">' + tagText + '</text></svg>';
+        return '<svg width="34" height="42" viewBox="0 0 38 46" fill="none" aria-hidden="true"><path d="M7 6H31L27 33H11L7 6Z" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="14" y="33" width="10" height="7" rx="1" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.2"/><text x="19" y="21.5" text-anchor="middle" font-size="5.2" font-family="monospace" font-weight="700" fill="' + accent + '">' + safeTag + '</text></svg>';
       }
-      return '<svg width="34" height="42" viewBox="0 0 38 46" fill="none" aria-hidden="true"><path d="M16 7C16 5 17.3 3.5 19 3.5C20.7 3.5 22 5 22 7V10H16V7Z" fill="#D9BDC2" stroke="' + stroke + '" stroke-width="1.2"/><rect x="14" y="10" width="10" height="3.5" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.1"/><path d="M12 13.5H26L28 18.5V40C28 41.1 27.1 42 26 42H12C10.9 42 10 41.1 10 40V18.5L12 13.5Z" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="12" y="21" width="14" height="14" fill="#FFFFFF" stroke="' + stroke + '" stroke-width="0.8"/><text x="19" y="30" text-anchor="middle" font-size="6" font-family="monospace" font-weight="700" fill="' + stroke + '">' + tagText + '</text></svg>';
+      return '<svg width="34" height="42" viewBox="0 0 38 46" fill="none" aria-hidden="true"><path d="M15.5 7C15.5 5 17 3.5 19 3.5C21 3.5 22.5 5 22.5 7V10H15.5V7Z" fill="#D9BDC2" stroke="' + stroke + '" stroke-width="1.2"/><rect x="13" y="10" width="12" height="3.5" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.1"/><path d="M9 13.5H29L31 18.5V40C31 41.1 30.1 42 29 42H9C7.9 42 7 41.1 7 40V18.5L9 13.5Z" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="9.5" y="21" width="19" height="14" fill="#FFFFFF" stroke="' + stroke + '" stroke-width="0.8"/><text x="19" y="30" text-anchor="middle" font-size="5.3" font-family="monospace" font-weight="700" fill="' + stroke + '">' + safeTag + '</text></svg>';
     }
 
     function loadVanityState() {
@@ -403,13 +405,13 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         delete st.customSlotBottle[sIdx];
       } else {
         st.slotSelections[sIdx] = 0;
-        var cleanShort = String(prodTitle || prodId).replace(/\s*\([^)]*\)/g, '').slice(0, 18);
+        var cleanShort = String(prodTitle || prodId).replace(/\s*\([^)]*\)/g, '').slice(0, 11).trim();
         st.customSlotBottle[sIdx] = {
           id: prodId,
           label: prodTitle + (prodPrice ? ' ($' + prodPrice + ')' : ''),
           short: cleanShort,
           ph: '5.5',
-          tag: 'Custom'
+          tag: 'pH5.5'
         };
       }
       st.activeSlotIdx = sIdx;
@@ -615,7 +617,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
 
           var chipsHtml = slot.choices.map(function(ch, cIdx) {
             var isSel = currentBottle && currentBottle.id === ch.id;
-            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;border:1px solid ' + (isSel ? 'var(--rose-brand)' : 'var(--border-hairline)') + ';background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-surface)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';">' + (isSel ? '✓ ' : '+ ') + ch.label.split(' ($')[0] + '</button>';
+            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:1px solid ' + (isSel ? 'var(--rose-brand)' : 'var(--border-hairline)') + ';background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-surface)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';">' + (isSel ? '✓ ' : '+ ') + ch.label.split(' ($')[0] + '</button>';
           }).join('');
 
           var prevIdx = (idx + 4) % 5;
@@ -945,6 +947,11 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           var mapped = mapProductIdToSlot(prodId, title, '');
           if (mapped.choiceIdx >= 0) {
             window.__dlVanityState.slotSelections[mapped.slotIdx] = mapped.choiceIdx;
+            if (window.__dlVanityState.customSlotBottle) delete window.__dlVanityState.customSlotBottle[mapped.slotIdx];
+          } else {
+            window.__dlVanityState.slotSelections[mapped.slotIdx] = 0;
+            if (!window.__dlVanityState.customSlotBottle) window.__dlVanityState.customSlotBottle = {};
+            window.__dlVanityState.customSlotBottle[mapped.slotIdx] = { id: prodId, label: title, short: title.slice(0, 11).trim(), ph: '5.5', tag: 'pH5.5' };
           }
           saveVanityState(window.__dlVanityState);
           if (!navigator.webdriver || window.__dlAllowToastInTest) {

@@ -107,9 +107,10 @@ function getConflictSafeSwap(conflict) {
 }
 
 function renderAboveFoldSovrnDisclosureBar() {
-  return `<div id="sovrn-ftc-disclosure-bar" role="region" aria-label="Editorial and Affiliate Disclosure" style="background:var(--bg-oat);padding:5px 0;font-size:0.875rem;line-height:1.35;color:var(--text-secondary);">
-    <div class="container">
-      <strong class="mono" style="color:var(--rose-brand);font-weight:600;">Editorial &amp; FTC Disclosure:</strong> DermLogic is an independent cosmetic-chemistry publication reviewed by our Formulation &amp; Esthetics Board. When you shop through retail links on our site, we may earn an affiliate commission at no extra cost to you. <a href="/editorial-policy" class="mono" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;margin-left:6px;white-space:nowrap;">Editorial &amp; Testing Policy</a> &middot; <a href="/editorial-policy#affiliate-disclosure" class="mono" style="color:var(--text-primary);font-weight:500;text-decoration:underline;white-space:nowrap;">Affiliate Disclosure</a>
+  return `<div id="sovrn-ftc-disclosure-bar" role="region" aria-label="Editorial and Affiliate Disclosure" style="background:var(--bg-oat);padding:5px 0;font-size:0.8125rem;line-height:1.3;color:var(--text-secondary);">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:10px;white-space:nowrap;overflow-x:auto;">
+      <span><strong class="mono" style="color:var(--rose-brand);font-weight:600;">Editorial &amp; FTC Disclosure:</strong> Independent cosmetic-chemistry lab. Retail links may earn an affiliate commission at no extra cost to you.</span>
+      <span style="flex-shrink:0;"><a href="/editorial-policy" class="mono" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;white-space:nowrap;">Editorial &amp; Testing Policy</a> &middot; <a href="/editorial-policy#affiliate-disclosure" class="mono" style="color:var(--text-primary);font-weight:500;text-decoration:underline;white-space:nowrap;">Affiliate Disclosure</a></span>
     </div>
   </div>`;
 }

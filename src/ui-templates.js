@@ -52,7 +52,7 @@ const SHARED_CSS = `
     --sage-bg: #E4EDE8;
     --sage-border: #B7D4C6;
     --honey-warn: #7D5116;
-    --honey-bg: #EFECE6;
+    --honey-bg: #E8E6E3;
     --honey-border: #DFC8A6;
     --berry-clash: #7A2332;
     --berry-bg: #EFE5E7;
@@ -229,12 +229,12 @@ const SHARED_CSS = `
     .editorial-top-banner { grid-template-columns: 1fr; row-gap: 24px; }
     .hero-title-block, .hero-copy-col, .hero-photo-col { grid-column: 1 / -1 !important; }
     .hero-grid, .z-cascade-stage, .bento-grid-3 { grid-template-columns: 1fr; }
-    .product-selector-grid { max-height: 560px; }
-    .viscosity-seq-list { grid-template-columns: repeat(2, 1fr); }
-    .hero-h1-line2 { padding-left: 6vw; }
-    .nav-inner { flex-wrap: wrap; }
+    .product-selector-grid { max-height: 560px; } .viscosity-seq-list { grid-template-columns: repeat(2, 1fr); }
+    .hero-h1-line2 { padding-left: 6vw; } .nav-links { gap: 12px; font-size: 0.86rem; }
+  }
+  @media (max-width: 820px) {
+    .nav-inner { flex-wrap: wrap; } .hide-mobile { display: none !important; }
     .nav-links { width: 100%; order: 3; justify-content: flex-start; gap: 18px; padding-top: 8px; overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; }
-    .hide-mobile { display: none !important; }
   }
   @media (max-width: 640px) {
     .container { padding: 0 18px; }
@@ -259,9 +259,9 @@ function renderHeader(hideNav = false) {
   const vanityPill = renderHeaderVanityBagPill();
   const ftcBar = renderAboveFoldSovrnDisclosureBar();
   if (hideNav) {
-    return `<header class="site-header">${ftcBar}<div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">Atelier</span></span></a><div style="display:flex;align-items:center;gap:10px;">${vanityPill}${lightPill}</div></div></header>`;
+    return `${ftcBar}<header class="site-header"><div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">Atelier</span></span></a><div style="display:flex;align-items:center;gap:10px;">${vanityPill}${lightPill}</div></div></header>`;
   }
-  return `<header class="site-header">${ftcBar}<div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">Atelier</span></span></a><nav class="nav-links" aria-label="Main Navigation"><a href="/#analyzer">Shelf Builder</a><a href="/celebrity">Celebrity Routines</a><a href="/concern">Skin Concerns</a><a href="/directory">Layering Guides</a></nav><div style="display:flex;align-items:center;gap:10px;">${vanityPill}${lightPill}</div></div></header>`;
+  return `${ftcBar}<header class="site-header"><div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">Atelier</span></span></a><nav class="nav-links" aria-label="Main Navigation"><a href="/#analyzer">Shelf Builder</a><a href="/celebrity">Celebrity Routines</a><a href="/concern">Skin Concerns</a><a href="/directory">Layering Guides</a></nav><div style="display:flex;align-items:center;gap:10px;">${vanityPill}${lightPill}</div></div></header>`;
 }
 
 function renderFooter() {
