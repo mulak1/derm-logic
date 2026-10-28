@@ -14,8 +14,8 @@ function getTheme(cfg) {
 function buildExactBaselineStyles(cfg) {
   const t = getTheme(cfg);
   return `<style id="exact-baseline-cumulative-css">
-  html, body { max-width: 100vw !important; overflow-x: hidden !important; }
-  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100vw !important; overflow-x: hidden !important; } *, *::before, *::after { box-sizing: border-box; }
+  main.container > .container, .container .container { padding-left: 0 !important; padding-right: 0 !important; max-width: 100% !important; }
   button, input, select, textarea, svg text { font-family: inherit !important; }
   main p, article p, section p, p { max-width: 65ch !important; }
   .table-wrap, .posterior-table-wrap, .tab-bar, .panel, #competitor-battlecard > div, div[style*="overflow-x"] { overflow-x: hidden !important; flex-wrap: wrap !important; }
@@ -42,11 +42,11 @@ function buildExactBaselineStyles(cfg) {
   #eb-curtain-visual-split { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: stretch; margin: 16px 0 18px 0; } #eb-curtain-dossier-card { display: none !important; }
   #eb-floating-gate-popover { display: none; position: fixed; z-index: 9998; width: 360px; max-width: calc(100vw - 24px); background: ${t.cardBg}; color: ${t.textPrimary}; border-radius: ${t.radiusCard}; padding: 16px; font-family: ${t.fontSans}; text-transform: none !important; }
   #eb-bottom-conversion-suite { margin: 36px auto 88px auto; font-family: ${t.fontSans}; text-transform: none !important; }
-  .eb-panel-card { background: ${t.cardBg}; color: ${t.textPrimary}; border-radius: ${t.radiusCard}; padding: 24px 26px; margin-bottom: 20px; }
+  .eb-panel-card { background: ${t.cardBg}; color: ${t.textPrimary}; border: 1px solid ${t.border}; border-radius: ${t.radiusCard}; padding: 24px 26px; margin-bottom: 20px; }
   .eb-gbb-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; align-items: stretch; }
-  .eb-tier-card { background: ${t.canvasBg}; border-radius: ${t.radiusCard}; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; color: ${t.textPrimary}; }
+  .eb-tier-card { background: ${t.canvasBg}; border: 1px solid ${t.border}; border-radius: ${t.radiusCard}; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; color: ${t.textPrimary}; }
   #in-card-unlock-bar .eb-tier-card .eb-doppelrand-img { height: 84px !important; min-height: 84px !important; max-height: 84px !important; }
-  .eb-tier-card.featured { background: ${t.brandSoftBg}; position: relative; }
+  .eb-tier-card.featured { background: ${t.brandSoftBg}; border-color: ${t.brandPrimary}; position: relative; }
   #eb-executive-strip { margin-bottom: 20px; }
   .eb-strip-top-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid ${t.border}; }
   .eb-strip-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: ${t.brandPrimary}; background: ${t.brandSoftBg}; border: 1px solid ${t.accentBorder}; padding: 4px 12px; border-radius: 999px; }
@@ -141,7 +141,7 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     derm_logic: { h: 'Built for Calm, Glowing Skin Without the Chemistry Guesswork', q: '“I had six great products on my bathroom shelf that were secretly irritating my skin barrier when layered together. Splitting my routine into a simple morning and bedtime schedule changed my skin in days.”', who: 'Simone R. · Daily Morning & Evening Routine', tag: 'Barrier-Safe Routine', segs: [['/public/editorial-segment-1.jpg', 'Chloe Lin · Morning Glow', 'Zero SPF Pilling'], ['/public/editorial-segment-2.jpg', 'Elena M. · Sensitive Barrier', 'Safe Acid + Peptide Split'], ['/public/editorial-segment-3.jpg', 'Amara O. · Bedtime Ritual', 'Stopped Flaking in 4 Days']] }
   };
   const st = storyMap[cfg.moduleId] || storyMap.citation_forge;
-  const segsHtml = (st.segs || []).map((sg) => `<div style="display:flex;flex-direction:column;justify-content:space-between;gap:6px;padding:14px 16px;border-radius:12px;background:${t.subtleBg};"><div style="font-size:15px;font-weight:800;color:${t.safeColor};">${esc(sg[2])}</div><div style="font-size:13.5px;font-weight:600;color:${t.textPrimary};">${esc(sg[1])}</div></div>`).join('');
+  const segsHtml = (st.segs || []).map((sg) => `<div style="display:flex;flex-direction:column;justify-content:space-between;gap:6px;padding:14px 16px;border-radius:${t.radiusCard};background:${t.subtleBg};"><div style="font-size:15px;font-weight:700;color:${t.safeColor};">${esc(sg[2])}</div><div style="font-size:13.5px;font-weight:500;color:${t.textPrimary};">${esc(sg[1])}</div></div>`).join('');
   return `<section id="eb-bottom-conversion-suite" class="container" aria-label="${esc(cfg.brandName)} Export Passes, Comparisons & Partner Ecosystem">
   <div id="eb-customer-story-card" class="eb-panel-card" style="display:flex;flex-direction:column;gap:16px;">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;"><h3 style="margin:0;font-size:21px;font-family:${t.fontDisplay};font-weight:600;color:${t.textPrimary};line-height:1.3;">${esc(st.h)}</h3><span style="padding:4px 12px;border-radius:${t.radiusPill};background:${t.safeSoftBg};color:${t.safeColor};font-weight:700;font-size:13px;">${esc(st.tag)}</span></div>

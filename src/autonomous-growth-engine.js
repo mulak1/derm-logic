@@ -2,6 +2,8 @@
 
 let AA_VIEWS = null;
 try { AA_VIEWS = require('./views'); } catch (_) {}
+let DL_UI = null;
+try { DL_UI = require('./ui-templates'); } catch (_) {}
 
 /**
  * Autonomous Zero-HITL Growth & Open-Source Distribution Engine (Iteration 28)
@@ -52,7 +54,7 @@ const GROWTH_CATALOG = {
   derm_logic: {
     badgeLabel: 'DermLogic Safe',
     defaultMetric: 'Routine Safety 96/100 • pH Checked',
-    badgeColor: '#C85A70',
+    badgeColor: '#7A2332',
     categoryTag: 'Skincare Ingredient Conflict & Routine Checker',
     githubTopics: ['skincare-routine', 'inci-decoder', 'cosmetic-chemistry', 'dermatology', 'retinol', 'vitamin-c', 'skin-barrier', 'ph-balance', 'fungal-acne', 'mcp-server'],
     tools: [
@@ -167,7 +169,8 @@ function renderDynamicScorecardOgSvg(cfg, rawTarget) {
 
 function renderGrowthPageHtml(cfg, item, kind) {
   const g = getGrowthConfig(cfg.moduleId);
-  const t = cfg.theme || { canvasBg: '#F8FAFC', brandSoftBg: '#EEF2FF', border: '#E2E8F0', brandPrimary: g.badgeColor, textPrimary: '#0F172A', textSecondary: '#475569', safeColor: '#059669' };
+  const t = cfg.theme || { canvasBg: '#F8FAFC', cardBg: '#FFFFFF', subtleBg: '#F1F5F9', brandSoftBg: '#EEF2FF', border: '#E2E8F0', brandPrimary: g.badgeColor, textPrimary: '#0F172A', textSecondary: '#475569', safeColor: '#059669', safeSoftBg: '#ECFDF5', radiusCard: '0px', radiusPill: '0px' };
+  const primaryCol = t.brandPrimary || g.badgeColor;
   const canonicalUrl = `https://${cfg.domain}/${kind}/${item.slug}`;
   const badgeSvgUrl = `https://${cfg.domain}/badge/${encodeURIComponent(item.target)}.svg`;
   const mdBadgeSnippet = `[![${cfg.brandName} Verified](${badgeSvgUrl})](${canonicalUrl})`;
@@ -187,7 +190,10 @@ function renderGrowthPageHtml(cfg, item, kind) {
         { name: 'Ready-to-Use Implementation Pack', kpi: '3-File Bundle Ready', action: 'Download Action Pack Below', status: 'READY' }
       ];
 
-  const trsHtml = rows.map((r, idx) => `<tr${idx === 3 ? ' id="eb-growth-row4-tr"' : ''}><th${idx === 0 ? ' id="eb-growth-r1-name"' : ''} scope="row" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-weight:700;color:${escXml(t.textPrimary)};text-align:left;font-size:14px;">${escXml(r.name)}</th><td${idx === 0 ? ' id="eb-growth-r1-kpi"' : (idx === 1 ? ' id="eb-growth-r2-kpi"' : (idx === 3 ? ' id="eb-growth-row4-val"' : ''))} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-variant-numeric:tabular-nums;font-weight:700;color:${escXml(g.badgeColor)};font-size:14px;">${escXml(r.kpi)}</td><td style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};color:${escXml(t.textSecondary)};font-size:14px;">${escXml(r.action)}</td><td${idx === 3 ? ' id="eb-growth-row4-status"' : ''} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-size:13px;font-weight:700;color:${escXml(t.safeColor)};">${escXml(r.status)}</td></tr>`).join('');
+  const trsHtml = rows.map((r, idx) => `<tr${idx === 3 ? ' id="eb-growth-row4-tr"' : ''}><th${idx === 0 ? ' id="eb-growth-r1-name"' : ''} scope="row" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-weight:600;color:${escXml(t.textPrimary)};text-align:left;font-size:14px;">${escXml(r.name)}</th><td${idx === 0 ? ' id="eb-growth-r1-kpi"' : (idx === 1 ? ' id="eb-growth-r2-kpi"' : (idx === 3 ? ' id="eb-growth-row4-val"' : ''))} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-variant-numeric:tabular-nums;font-weight:600;color:${escXml(primaryCol)};font-size:14px;">${escXml(r.kpi)}</td><td style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};color:${escXml(t.textSecondary)};font-size:14px;">${escXml(r.action)}</td><td${idx === 3 ? ' id="eb-growth-row4-status"' : ''} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-size:13px;font-weight:600;color:${escXml(t.safeColor)};">${escXml(r.status)}</td></tr>`).join('');
+  const headStyles = DL_UI && DL_UI.SHARED_CSS ? `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet"><style>${DL_UI.SHARED_CSS}</style>` : '<link rel="stylesheet" href="/styles.css" />';
+  const topHeader = DL_UI && DL_UI.renderHeader ? DL_UI.renderHeader(false) : (AA_VIEWS ? AA_VIEWS.renderUnifiedHeaderHtml(kind === 'compare' ? 'SIDE-BY-SIDE COMPARISON' : 'FREE INTERACTIVE TOOL') : '');
+  const bottomFooter = DL_UI && DL_UI.renderFooter ? `${DL_UI.renderFooter()}<script>${DL_UI.CLIENT_SCRIPT}</script>` : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -205,38 +211,38 @@ function renderGrowthPageHtml(cfg, item, kind) {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escXml(item.title)}" />
   <meta name="twitter:description" content="${escXml(item.summary.slice(0, 156))}" />
-  <link rel="stylesheet" href="/styles.css" />
+  ${headStyles}
 </head>
-<body style="margin:0;background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-family:${escXml(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
-  ${AA_VIEWS ? AA_VIEWS.renderUnifiedHeaderHtml(kind === 'compare' ? 'SIDE-BY-SIDE COMPARISON' : 'FREE INTERACTIVE TOOL') : ''}
-  <main id="main-content" style="max-width:1240px;margin:0 auto;padding:24px;">
-    <nav aria-label="Breadcrumb" style="font-size:13px;color:#64748B;margin-bottom:10px;">
-      <a href="/" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Home</a> / <a href="/directory" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Directory</a> / <span>${escXml(item.slug)}</span>
+<body style="margin:0;background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-family:${escXml(t.fontSans || 'Newsreader,Georgia,serif')};font-size:16px;line-height:1.6;">
+  ${topHeader}
+  <main id="main-content" class="container" style="padding-top:28px;padding-bottom:48px;">
+    <nav aria-label="Breadcrumb" style="font-size:13px;color:${escXml(t.textSecondary)};margin-bottom:10px;">
+      <a href="/" style="color:${escXml(primaryCol)};text-decoration:none;font-weight:600;">Home</a> / <a href="/directory" style="color:${escXml(primaryCol)};text-decoration:none;font-weight:600;">Directory</a> / <span>${escXml(item.slug)}</span>
     </nav>
-    <h1 style="font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.18;margin:0 0 8px 0;">${escXml(item.title)}</h1>
-    <p class="pseo-lead" style="font-size:16px;color:${escXml(t.textSecondary)};margin:0 0 14px 0;">${escXml(item.summary)}</p>
+    <h1 class="serif-display" style="font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.15;margin:0 0 8px 0;">${escXml(item.title)}</h1>
+    <p class="pseo-lead" style="font-size:16px;color:${escXml(t.textSecondary)};margin:0 0 14px 0;max-width:72ch;">${escXml(item.summary)}</p>
     <script>window.__ebRunGrowthWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var n=document.getElementById('eb-growth-r1-name'),k1=document.getElementById('eb-growth-r1-kpi'),k2=document.getElementById('eb-growth-r2-kpi'),b=document.getElementById('eb-growth-badge-img'),pl=document.getElementById('eb-growth-permalink-btn');if(n)n.textContent=s.target+' : Live Check';if(k1)k1.textContent=s.grade+' ('+s.score+'/100) • '+s.kpi1;if(k2)k2.textContent=s.kpi2+' • '+s.cnnReadout;if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';if(pl)pl.href='/scan/'+encodeURIComponent(s.target);});};</script>
-    <section id="eb-onnx-cnn-workbench" style="background:#FFFFFF;color:${escXml(t.textPrimary)};border-radius:14px;padding:14px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+    <section id="eb-onnx-cnn-workbench" style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${escXml(t.border)};color:${escXml(t.textPrimary)};border-radius:${t.radiusCard || '0px'};padding:14px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:13px;font-weight:800;color:${escXml(g.badgeColor)};">Live Interactive Calculator:</span>
-        <input id="eb-cnn-wb-input" type="text" value="${escXml(item.target)}" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:8px;border:1px solid ${escXml(t.border)};background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-size:13.5px;width:155px;" />
-        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunGrowthWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}')" style="padding:6px 13px;border-radius:8px;border:none;background:${escXml(g.badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">Check Score ↗</button>
-        <a id="eb-growth-permalink-btn" href="/scan/${escXml(encodeURIComponent(item.target))}" style="font-size:13px;font-weight:600;color:${escXml(t.textSecondary)};text-decoration:underline;padding:2px 6px;">Full Report ↗</a>
+        <span style="font-size:13px;font-weight:600;color:${escXml(primaryCol)};">Live Interactive Calculator:</span>
+        <input id="eb-cnn-wb-input" type="text" value="${escXml(item.target)}" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:${t.radiusCard || '0px'};border:1px solid ${escXml(t.border)};background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-size:13.5px;width:155px;" />
+        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunGrowthWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}')" style="padding:6px 13px;border-radius:${t.radiusPill || '0px'};border:none;background:${escXml(primaryCol)};color:#FFFFFF;font-size:13.5px;font-weight:600;cursor:pointer;">Check Score ↗</button>
+        <a id="eb-growth-permalink-btn" href="/scan/${escXml(encodeURIComponent(item.target))}" style="font-size:13px;font-weight:500;color:${escXml(t.textSecondary)};text-decoration:underline;padding:2px 6px;">Full Report ↗</a>
       </div>
-      <div id="eb-live-cnn-readout" style="font-variant-numeric:tabular-nums;font-size:13px;color:${escXml(t.safeColor)};font-weight:700;">${escXml(item.target)} → ${escXml(item.metricA || item.scoreA)}</div>
+      <div id="eb-live-cnn-readout" style="font-variant-numeric:tabular-nums;font-size:13px;color:${escXml(t.safeColor)};font-weight:600;">${escXml(item.target)} → ${escXml(item.metricA || item.scoreA)}</div>
     </section>
-    <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;margin-top:14px;">
+    <section class="table-wrap" style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${escXml(t.border)};border-radius:${t.radiusCard || '0px'};padding:18px;margin-top:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-        <h2 style="font-size:18px;margin:0;">Side-by-Side Results &amp; Action Plan</h2>
-        <span style="font-size:12.5px;font-weight:700;color:${escXml(t.safeColor)};background:#ECFDF5;padding:4px 10px;border-radius:999px;">Verified Benchmark Data</span>
+        <h2 class="serif-display" style="font-size:19px;font-weight:400;margin:0;">Side-by-Side Results &amp; Action Plan</h2>
+        <span style="font-size:12.5px;font-weight:600;color:${escXml(t.safeColor)};background:${t.safeSoftBg || 'var(--sage-bg)'};padding:4px 10px;border-radius:${t.radiusPill || '0px'};">Verified Benchmark Data</span>
       </div>
       <table aria-label="${escXml(item.title)} Benchmark Matrix" style="width:100%;border-collapse:collapse;font-size:14px;">
-        <thead><tr style="background:${escXml(t.canvasBg)};text-align:left;"><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Option / Check</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Measured Result</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Recommended Step</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Status</th></tr></thead>
+        <thead><tr style="background:${t.subtleBg || 'var(--bg-oat)'};text-align:left;"><th scope="col" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};">Option / Check</th><th scope="col" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};">Measured Result</th><th scope="col" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};">Recommended Step</th><th scope="col" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};">Status</th></tr></thead>
         <tbody id="prompt-matrix-tbody">${trsHtml}</tbody>
       </table>
-      <div id="eb-inline-row4-unlock" style="margin-top:16px;padding:14px 18px;border-radius:12px;background:${escXml(t.canvasBg)};border:1px solid ${escXml(t.border)};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div id="eb-inline-row4-unlock" style="margin-top:16px;padding:14px 18px;border-radius:${t.radiusCard || '0px'};background:${t.subtleBg || 'var(--bg-oat)'};border:1px solid ${escXml(t.border)};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div>
-          <div style="font-size:14px;font-weight:800;color:${escXml(t.textPrimary)};">Download the Ready-to-Use Action Pack</div>
+          <div style="font-size:14px;font-weight:600;color:${escXml(t.textPrimary)};">Download the Ready-to-Use Action Pack</div>
           <div style="font-size:13px;color:${escXml(t.textSecondary)};margin-top:2px;">Instant download · One-time payment (never a subscription) · 30-day guarantee</div>
         </div>
         <div id="eb-growth-row4-msg" style="display:none !important;">
@@ -244,20 +250,21 @@ function renderGrowthPageHtml(cfg, item, kind) {
           <button id="eb-growth-row4-btn" type="button">Reveal Row #4 →</button>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <a href="/buy/micro_pass" rel="nofollow" style="padding:9px 14px;border-radius:8px;background:#FFFFFF;color:${escXml(t.textPrimary)};border:1px solid ${escXml(t.border)};font-size:13.5px;font-weight:700;text-decoration:none;">Single File (99¢)</a>
-          <a href="/buy/flash_pass" rel="nofollow" style="padding:9px 16px;border-radius:8px;background:${escXml(g.badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:800;text-decoration:none;">Get Complete 3-File Pack ($1.99) →</a>
+          <a href="/buy/micro_pass" rel="nofollow" style="padding:9px 14px;border-radius:${t.radiusPill || '0px'};background:${t.cardBg || 'var(--bg-surface)'};color:${escXml(t.textPrimary)};border:1px solid ${escXml(t.border)};font-size:13.5px;font-weight:600;text-decoration:none;">Single File (99¢)</a>
+          <a href="/buy/flash_pass" rel="nofollow" style="padding:9px 16px;border-radius:${t.radiusPill || '0px'};background:${escXml(primaryCol)};color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">Get Complete 3-File Pack ($1.99) →</a>
         </div>
       </div>
     </section>
-    <details style="background:#FFFFFF;border-radius:14px;padding:14px 18px;margin-top:16px;">
-      <summary style="cursor:pointer;font-size:14px;font-weight:700;color:${escXml(t.textPrimary)};">Embed Live Verified Badge &amp; Technical Specs (For Developers)</summary>
+    <details style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${escXml(t.border)};border-radius:${t.radiusCard || '0px'};padding:14px 18px;margin-top:16px;">
+      <summary style="cursor:pointer;font-size:14px;font-weight:600;color:${escXml(t.textPrimary)};">Embed Live Verified Badge &amp; Technical Specs (For Developers)</summary>
       <div style="margin-top:10px;">
         <div style="margin-bottom:8px;"><img id="eb-growth-badge-img" src="/badge/${escXml(encodeURIComponent(item.target))}.svg" alt="${escXml(cfg.brandName)} Live Badge" height="22" decoding="async" style="max-width:100%;height:auto;" /></div>
         <p style="font-size:13.5px;color:${escXml(t.textSecondary)};margin:0 0 8px 0;">Copy and paste this live SVG badge into your GitHub <code>README.md</code>, documentation, or media kit:</p>
-        <pre style="background:${escXml(t.canvasBg)};border-radius:8px;padding:10px 12px;font-size:13px;overflow-x:auto;margin:0;"><code>${escXml(mdBadgeSnippet)}</code></pre>
+        <pre style="background:${escXml(t.canvasBg)};border-radius:${t.radiusCard || '0px'};padding:10px 12px;font-size:13px;overflow-x:auto;margin:0;"><code>${escXml(mdBadgeSnippet)}</code></pre>
       </div>
     </details>
   </main>
+  ${bottomFooter}
 </body>
 </html>`;
 }
