@@ -939,8 +939,40 @@ const VANITY_SLOT_CALIBRATORS = {
   }
 };
 
-module.exports = {
-  CULT_PRODUCTS,
-  ROUTINE_PRESETS,
-  VANITY_SLOT_CALIBRATORS
-};
+const VANITY_SLOT_OPTIONS = [
+  { slotNum: '01 · AM PREP', shortSlot: '01 · PREP', vesselType: 'mist', role: 'Morning Cleanse & pH Prep', timing: '7:30 AM · Step 1 (pH Reset · Wait 45s)', choices: [
+    { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28 Mist', ph: '4.8', tag: 'HOCl' },
+    { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua 77% Toner', ph: '5.7', tag: 'pH 5.7' },
+    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl 10% BPO', ph: '5.2', tag: '10% BPO' },
+    { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Ordinary Glycolic', ph: '3.6', tag: '7% AHA' }
+  ] },
+  { slotNum: '02 · AM ACTIVE', shortSlot: '02 · SERUM', vesselType: 'dropper', role: 'Morning Antioxidant Serum', timing: '7:31 AM · Step 2 (Antioxidant Shield · Wait 60s before cream)', choices: [
+    { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'C E Ferulic 15%', ph: '3.2', tag: '15% C' },
+    { id: 'rohto-melano-cc', label: 'Rohto Melano CC Vitamin C Essence ($14)', short: 'Melano CC', ph: '3.5', tag: 'Vit C' },
+    { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'Niacinamide 10%', ph: '6.0', tag: '10% B3' },
+    { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Topicals Faded', ph: '5.5', tag: 'TXA' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper Peptides', ph: '6.2', tag: 'GHK-Cu' }
+  ] },
+  { slotNum: '03 · BARRIER SEAL', shortSlot: '03 · CREAM', vesselType: 'jar', role: '3:1:1 Ceramide & Lipid Cushion', timing: 'AM & PM · Step 3 (Seals hydration & buffers night actives)', choices: [
+    { id: 'aestura-atobarrier-365', label: 'Aestura Atobarrier 365 Ceramide Cream ($32)', short: 'Aestura 365', ph: '5.5', tag: '3:1:1' },
+    { id: 'dieux-instant-angel', label: 'Dieux Instant Angel Lipid Cream ($45)', short: 'Instant Angel', ph: '5.4', tag: 'Lipid' },
+    { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96 Mucin', ph: '6.5', tag: '96% Snail' },
+    { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast B5+', ph: '5.6', tag: '5% B5' },
+    { id: 'cerave-pm-lotion', label: 'CeraVe PM Facial Moisturizing Lotion ($17)', short: 'CeraVe PM', ph: '5.8', tag: 'Ceramide' }
+  ] },
+  { slotNum: '04 · SPF & TONE', shortSlot: '04 · SPF 50', vesselType: 'tube', role: 'Undertone-Matched SPF 50 & Finish', timing: '7:33 AM · Step 4 (2-Finger Rule · Wait 90s before makeup)', choices: [
+    { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon SPF 50+', ph: '6.2', tag: 'SPF 50' },
+    { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD SPF 46', ph: '6.0', tag: 'SPF 46' }
+  ] },
+  { slotNum: '05 · PM RENEWAL', shortSlot: '05 · PM', vesselType: 'pm_bottle', role: 'Evening Retinoid / Exfoliant (4-Night Cycle)', timing: '9:30 PM · Nights 1 & 2 Only (Dry skin buffer · Never mix with AM acids)', choices: [
+    { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tretinoin 0.05%', ph: '5.8', tag: 'Rx Retin' },
+    { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Crystal Retinal', ph: '5.9', tag: 'Retinal' },
+    { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: "Paula's 2% BHA", ph: '3.5', tag: '2% BHA' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper Peptides', ph: '6.2', tag: 'GHK-Cu' },
+    { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin 0.1%', ph: '5.5', tag: '0.1% Gel' },
+    { id: 'biologique-recherche-p50-1970', label: 'Biologique Recherche Lotion P50 1970 ($115)', short: 'Lotion P50', ph: '3.0', tag: 'pH 3.0' },
+    { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15%', ph: '4.9', tag: '15% AzA' }
+  ] }
+];
+
+module.exports = { CULT_PRODUCTS, ROUTINE_PRESETS, VANITY_SLOT_CALIBRATORS, VANITY_SLOT_OPTIONS };

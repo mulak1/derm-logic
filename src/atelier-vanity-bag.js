@@ -6,7 +6,7 @@
  * and Mobile Bottom-Sheet Experience.
  * Strictly < 1,000 lines and zero em-dashes.
  */
-const { VANITY_SLOT_CALIBRATORS } = require('./clinical-products');
+const { VANITY_SLOT_CALIBRATORS, VANITY_SLOT_OPTIONS } = require('./clinical-products');
 
 function renderHeaderVanityBagPill() {
   return `<button type="button" id="dl-header-vanity-pill" class="mono" onclick="window.__dlOpenVanityDrawer('header_pill')" aria-label="Open My 5-Slot Atelier Vanity Bag" style="display:inline-flex;align-items:center;gap:6px;padding:7px 11px;background:var(--rose-pill-bg);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-size:0.8rem;font-weight:600;transition:transform 180ms cubic-bezier(0.22,1,0.36,1),background-color 180ms ease;white-space:nowrap;">
@@ -268,76 +268,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       cloud_matte: { label: 'Soft Matte', prepRule: 'Use Niacinamide 10% + Zinc in T-zone and blot excess oil before applying SPF.' }
     };
 
-    var SLOT_OPTIONS = [
-      {
-        slotNum: '01 · AM PREP',
-        shortSlot: '01 · PREP',
-        vesselType: 'mist',
-        role: 'Morning Cleanse & pH Prep',
-        choices: [
-          { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28 Mist', ph: '4.8', tag: 'HOCl' },
-          { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua 77% Toner', ph: '5.7', tag: 'pH 5.7' },
-          { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl 10% BPO', ph: '5.2', tag: '10% BPO' },
-          { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Ordinary Glycolic', ph: '3.6', tag: '7% AHA' }
-        ],
-        timing: '7:30 AM · Step 1 (pH Reset · Wait 45s)'
-      },
-      {
-        slotNum: '02 · AM ACTIVE',
-        shortSlot: '02 · SERUM',
-        vesselType: 'dropper',
-        role: 'Morning Antioxidant Serum',
-        choices: [
-          { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'C E Ferulic 15%', ph: '3.2', tag: '15% C' },
-          { id: 'rohto-melano-cc', label: 'Rohto Melano CC Vitamin C Essence ($14)', short: 'Melano CC', ph: '3.5', tag: 'Vit C' },
-          { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'Niacinamide 10%', ph: '6.0', tag: '10% B3' },
-          { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Topicals Faded', ph: '5.5', tag: 'TXA' },
-          { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper Peptides', ph: '6.2', tag: 'GHK-Cu' }
-        ],
-        timing: '7:31 AM · Step 2 (Antioxidant Shield · Wait 60s before cream)'
-      },
-      {
-        slotNum: '03 · BARRIER SEAL',
-        shortSlot: '03 · CREAM',
-        vesselType: 'jar',
-        role: '3:1:1 Ceramide & Lipid Cushion',
-        choices: [
-          { id: 'aestura-atobarrier-365', label: 'Aestura Atobarrier 365 Ceramide Cream ($32)', short: 'Aestura 365', ph: '5.5', tag: '3:1:1' },
-          { id: 'dieux-instant-angel', label: 'Dieux Instant Angel Lipid Cream ($45)', short: 'Instant Angel', ph: '5.4', tag: 'Lipid' },
-          { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96 Mucin', ph: '6.5', tag: '96% Snail' },
-          { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast B5+', ph: '5.6', tag: '5% B5' },
-          { id: 'cerave-pm-lotion', label: 'CeraVe PM Facial Moisturizing Lotion ($17)', short: 'CeraVe PM', ph: '5.8', tag: 'Ceramide' }
-        ],
-        timing: 'AM & PM · Step 3 (Seals hydration & buffers night actives)'
-      },
-      {
-        slotNum: '04 · SPF & TONE',
-        shortSlot: '04 · SPF 50',
-        vesselType: 'tube',
-        role: 'Undertone-Matched SPF 50 & Finish',
-        choices: [
-          { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon SPF 50+', ph: '6.2', tag: 'SPF 50' },
-          { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD SPF 46', ph: '6.0', tag: 'SPF 46' }
-        ],
-        timing: '7:33 AM · Step 4 (2-Finger Rule · Wait 90s before makeup)'
-      },
-      {
-        slotNum: '05 · PM RENEWAL',
-        shortSlot: '05 · PM',
-        vesselType: 'pm_bottle',
-        role: 'Evening Retinoid / Exfoliant (4-Night Cycle)',
-        choices: [
-          { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tretinoin 0.05%', ph: '5.8', tag: 'Rx Retin' },
-          { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Crystal Retinal', ph: '5.9', tag: 'Retinal' },
-          { id: 'paulas-choice-2-bha', label: 'Paula\\'s Choice 2% BHA Liquid Exfoliant ($35)', short: 'Paula\\'s 2% BHA', ph: '3.5', tag: '2% BHA' },
-          { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper Peptides', ph: '6.2', tag: 'GHK-Cu' },
-          { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin 0.1%', ph: '5.5', tag: '0.1% Gel' },
-          { id: 'biologique-recherche-p50-1970', label: 'Biologique Recherche Lotion P50 1970 ($115)', short: 'Lotion P50', ph: '3.0', tag: 'pH 3.0' },
-          { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15%', ph: '4.9', tag: '15% AzA' }
-        ],
-        timing: '9:30 PM · Nights 1 & 2 Only (Dry skin buffer · Never mix with AM acids)'
-      }
-    ];
+    var SLOT_OPTIONS = ${JSON.stringify(VANITY_SLOT_OPTIONS)};
 
     function renderMiniVesselSvg(vesselType, tagText, hasClash, isEmpty) {
       var stroke = isEmpty ? '#7A2332' : (hasClash ? '#7A2332' : '#524A43');
@@ -754,42 +685,70 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           + '</div>';
       }
 
-      // Render Tab 04: 2-Sided 9:16 Lock-Screen Flip Card (Option 3)
+      // Render Tab 04: Luxury Editorial 9:16 Phone Lock-Screen Pass
       var passPanel = document.getElementById('dl-dossier-panel-pass');
       if (passPanel) {
         var side = st.passSide === 'pm' ? 'pm' : 'am';
+        var isAm = side === 'am';
         var b0 = getBottleForSlot(st, 0) || SLOT_OPTIONS[0].choices[0];
         var b1 = getBottleForSlot(st, 1) || SLOT_OPTIONS[1].choices[0];
         var b2p = getBottleForSlot(st, 2) || SLOT_OPTIONS[2].choices[0];
         var b3 = getBottleForSlot(st, 3) || SLOT_OPTIONS[3].choices[0];
         var b4p = getBottleForSlot(st, 4) || SLOT_OPTIONS[4].choices[0];
-        passPanel.innerHTML = '<div style="background:#181412;color:#F4EFE8;padding:12px 14px;display:flex;flex-direction:column;gap:8px;">'
+        var steps = isAm
+          ? [
+              { vt: 'mist', num: '01', name: b0.short, role: 'Morning pH Prep', pill: 'pH ' + b0.ph + ' · 45s', col: '#7A2332', bg: '#F7EFEA' },
+              { vt: 'dropper', num: '02', name: b1.short, role: 'Antioxidant Shield', pill: 'pH ' + b1.ph + ' · 60s', col: '#7A2332', bg: '#F7EFEA' },
+              { vt: 'jar', num: '03', name: b2p.short, role: '3:1:1 Ceramide Seal', pill: 'pH ' + b2p.ph + ' · Cushion', col: '#264C3C', bg: '#E6EFEA' },
+              { vt: 'tube', num: '04', name: b3.short, role: uMeta.label + ' · ' + fMeta.label, pill: b3.tag + ' · 90s', col: '#264C3C', bg: '#E6EFEA' }
+            ]
+          : [
+              { vt: 'mist', num: '01', name: 'Gentle Milk Cleanse', role: 'Pat 100% Dry Before Actives', pill: 'Wait 10m Dry', col: '#C9A45A', bg: 'rgba(201,164,90,0.16)' },
+              { vt: 'pm_bottle', num: '02', name: b4p.short, role: 'Nights 1 & 3 Active Renewal', pill: 'pH ' + b4p.ph + ' · Pea Size', col: '#E8C6B0', bg: 'rgba(122,35,50,0.45)' },
+              { vt: 'jar', num: '03', name: b2p.short, role: 'Every Night Sandwich Buffer', pill: 'pH ' + b2p.ph + ' · 3:1:1 Seal', col: '#A7D7C5', bg: 'rgba(38,76,60,0.42)' }
+            ];
+        var stepsHtml = steps.map(function(s) {
+          var miniSvg = renderMiniVesselSvg(s.vt, s.num, false, false).replace('width="34" height="42"', 'width="24" height="30"').replace('width="36" height="42"', 'width="26" height="30"');
+          return '<div style="display:flex;align-items:center;gap:8px;padding:6px 9px;background:' + (isAm ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.07)') + ';border:1px solid ' + (isAm ? '#E5DCD0' : 'rgba(201,164,90,0.24)') + ';border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.04);">'
+            + '<div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:28px;height:32px;background:' + (isAm ? '#F4EFE8' : 'rgba(255,255,255,0.06)') + ';border-radius:6px;">' + miniSvg + '</div>'
+            + '<div style="flex:1;min-width:0;">'
+              + '<div style="font-size:0.78rem;font-weight:700;color:' + (isAm ? '#181412' : '#FBF8F4') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + s.num + ' &middot; ' + s.name + '</div>'
+              + '<div style="font-size:0.68rem;color:' + (isAm ? '#6E655E' : '#C9BCAE') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + s.role + '</div>'
+            + '</div>'
+            + '<span class="mono" style="font-size:0.64rem;font-weight:700;padding:3px 7px;border-radius:99px;background:' + s.bg + ';color:' + s.col + ';white-space:nowrap;flex-shrink:0;">' + s.pill + '</span>'
+          + '</div>';
+        }).join('');
+
+        passPanel.innerHTML = '<div style="background:linear-gradient(155deg,#1A1512 0%,#28201B 100%);color:#F4EFE8;padding:12px 14px;display:flex;flex-direction:column;gap:10px;border:1px solid #3D322C;">'
           + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">'
-            + '<span class="mono" style="font-size:0.7rem;color:#C9A45A;font-weight:700;">2-SIDED 9:16 LOCK-SCREEN WALLPAPER</span>'
-            + '<div style="display:inline-flex;background:#2A231F;padding:2px;gap:2px;">'
-              + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'am\\')" style="padding:4px 8px;font-size:0.7rem;border:none;cursor:pointer;background:' + (side === 'am' ? 'var(--rose-brand)' : 'transparent') + ';color:#F4EFE8;font-weight:600;">☀ Side A · AM</button>'
-              + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'pm\\')" style="padding:4px 8px;font-size:0.7rem;border:none;cursor:pointer;background:' + (side === 'pm' ? 'var(--rose-brand)' : 'transparent') + ';color:#F4EFE8;font-weight:600;">☾ Side B · PM</button>'
+            + '<div><span class="mono" style="font-size:0.68rem;color:#C9A45A;font-weight:700;letter-spacing:0.06em;display:block;">ATELIER 9:16 LOCK-SCREEN WALLPAPER</span><span style="font-size:0.74rem;color:#D5CBC0;">Tap AM or PM to flip your live phone lock-screen</span></div>'
+            + '<div style="display:inline-flex;background:#120E0C;padding:3px;border:1px solid #3D322C;">'
+              + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'am\\')" style="padding:5px 10px;font-size:0.71rem;border:none;cursor:pointer;background:' + (isAm ? 'var(--rose-brand)' : 'transparent') + ';color:#F4EFE8;font-weight:700;">☀ 7:30 AM</button>'
+              + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'pm\\')" style="padding:5px 10px;font-size:0.71rem;border:none;cursor:pointer;background:' + (!isAm ? '#C9A45A' : 'transparent') + ';color:' + (!isAm ? '#181412' : '#F4EFE8') + ';font-weight:700;">☾ 9:30 PM</button>'
             + '</div>'
           + '</div>'
-          + (side === 'am'
-            ? '<div style="background:#FBF8F4;color:#181412;padding:10px 12px;display:flex;flex-direction:column;gap:5px;">'
-                + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span class="mono" style="font-size:0.68rem;color:#7A2332;font-weight:700;">SIDE A · 7:30 AM SHIELD (' + uMeta.label.toUpperCase() + ')</span><span class="mono" style="font-size:0.64rem;padding:1px 6px;background:#E6EFEA;color:#264C3C;font-weight:700;">0 Clashes · pH Verified</span></div>'
-                + '<div style="font-size:0.75rem;padding:5px 8px;background:#FFFFFF;border:1px solid #E2D9CD;display:flex;justify-content:space-between;align-items:center;"><span>1. <strong>' + b0.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#6E655E;">pH ' + b0.ph + ' · Wait 45s</span></div>'
-                + '<div style="font-size:0.75rem;padding:5px 8px;background:#FFFFFF;border:1px solid #E2D9CD;display:flex;justify-content:space-between;align-items:center;"><span>2. <strong>' + b1.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#6E655E;">pH ' + b1.ph + ' · Wait 60s</span></div>'
-                + '<div style="font-size:0.75rem;padding:5px 8px;background:#FFFFFF;border:1px solid #E2D9CD;display:flex;justify-content:space-between;align-items:center;"><span>3. <strong>' + b2p.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#6E655E;">pH ' + b2p.ph + ' · 3:1:1 Seal</span></div>'
-                + '<div style="font-size:0.75rem;padding:5px 8px;background:#FFFFFF;border:1px solid #E2D9CD;display:flex;justify-content:space-between;align-items:center;"><span>4. <strong>' + b3.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#264C3C;font-weight:600;">' + fMeta.label + ' · Wait 90s</span></div>'
+          + '<div style="max-width:340px;width:100%;margin:0 auto;border-radius:24px;padding:7px;background:linear-gradient(145deg,#4A3E37,#1F1916);box-shadow:0 14px 32px rgba(0,0,0,0.42);">'
+            + '<div style="border-radius:19px;padding:11px 12px 10px;background:' + (isAm ? 'linear-gradient(175deg,#FBF7F2 0%,#F2E9DF 55%,#E9DDD0 100%)' : 'linear-gradient(175deg,#171311 0%,#241C18 58%,#2F231E 100%)') + ';color:' + (isAm ? '#181412' : '#F4EFE8') + ';display:flex;flex-direction:column;gap:6px;position:relative;">'
+              + '<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.62rem;opacity:0.75;padding:0 4px;" class="mono"><span>DERMLOGIC ATELIER</span><span style="width:52px;height:11px;background:#120E0C;border-radius:99px;display:inline-block;"></span><span>5G &middot; 100%</span></div>'
+              + '<div style="text-align:center;padding:2px 0 4px;border-bottom:1px solid ' + (isAm ? 'rgba(24,20,18,0.08)' : 'rgba(255,255,255,0.08)') + ';">'
+                + '<div class="mono" style="font-size:0.63rem;letter-spacing:0.08em;color:' + (isAm ? '#7A2332' : '#C9A45A') + ';font-weight:700;">' + (isAm ? 'MORNING ANTIOXIDANT &amp; SPF SHIELD' : 'BEDTIME RENEWAL &amp; BARRIER RECOVERY') + '</div>'
+                + '<div class="serif-display" style="font-size:1.75rem;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin:1px 0;">' + (isAm ? '07:30' : '21:30') + '</div>'
+                + '<div class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.63rem;padding:2px 8px;border-radius:99px;background:' + (isAm ? '#E6EFEA' : 'rgba(201,164,90,0.16)') + ';color:' + (isAm ? '#264C3C' : '#E8C6B0') + ';font-weight:700;"><span>96% Harmony &middot; 0 Clashes</span><span>&bull;</span><span>' + uMeta.label + '</span></div>'
               + '</div>'
-            : '<div style="background:#231E1A;color:#F4EFE8;padding:10px 12px;border:1px solid #423930;display:flex;flex-direction:column;gap:5px;">'
-                + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span class="mono" style="font-size:0.68rem;color:#C9A45A;font-weight:700;">SIDE B · 9:30 PM RENEWAL &amp; 4-NIGHT CYCLE</span><span class="mono" style="font-size:0.64rem;padding:1px 6px;background:rgba(201,164,90,0.18);color:#E8C6B0;">Sandwich Buffer</span></div>'
-                + '<div style="font-size:0.75rem;padding:5px 8px;background:rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;"><span>1. Gentle Evening Cleanse</span><span class="mono" style="font-size:0.66rem;color:#C9BCAE;">Pat 100% Dry (10m)</span></div>'
-                + '<div style="font-size:0.75rem;padding:5px 8px;background:rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;"><span>2. <strong>' + b4p.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#E8C6B0;">pH ' + b4p.ph + ' · Nights 1 &amp; 3</span></div>'
-                + '<div style="font-size:0.75rem;padding:5px 8px;background:rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;"><span>3. <strong>' + b2p.short + '</strong></span><span class="mono" style="font-size:0.66rem;color:#C9BCAE;">pH ' + b2p.ph + ' · Every Night</span></div>'
-                + '<div class="mono" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;font-size:0.63rem;text-align:center;padding-top:2px;"><span style="padding:3px;background:#7A2332;color:#FFF;">N1: ' + b4p.tag + '</span><span style="padding:3px;background:#264C3C;color:#FFF;">N2: Rest</span><span style="padding:3px;background:#7A2332;color:#FFF;">N3: ' + b4p.tag + '</span><span style="padding:3px;background:#264C3C;color:#FFF;">N4: Lipid</span></div>'
-              + '</div>')
-          + '<div style="padding:8px 10px;background:#231E1A;border-left:2.5px solid #C9A45A;font-size:0.72rem;line-height:1.4;color:#E6E0D6;">'
-            + '<strong class="mono" style="color:#C9A45A;display:block;font-size:0.68rem;margin-bottom:2px;">WHAT YOUR 99&cent; FULL LOCK-SCREEN EXPORT UNLOCKS:</strong>'
-            + '<div>&bull; Full 1080&times;1920 Retina Dual AM/PM Lock-Screen PNG (sized below iPhone/Android clock)</div>'
-            + '<div>&bull; Exact pH &amp; wait-time rules, sensitive-skin sandwich buffer notes &amp; 4-Night schedule</div>'
+              + '<div style="display:flex;flex-direction:column;gap:5px;">' + stepsHtml + '</div>'
+              + '<div class="mono" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;font-size:0.6rem;text-align:center;padding-top:2px;">'
+                + '<span style="padding:3px 2px;border-radius:5px;background:#7A2332;color:#FFF;font-weight:700;">N1: ' + b4p.tag + '</span>'
+                + '<span style="padding:3px 2px;border-radius:5px;background:#264C3C;color:#FFF;font-weight:700;">N2: Rest</span>'
+                + '<span style="padding:3px 2px;border-radius:5px;background:#7A2332;color:#FFF;font-weight:700;">N3: ' + b4p.tag + '</span>'
+                + '<span style="padding:3px 2px;border-radius:5px;background:#264C3C;color:#FFF;font-weight:700;">N4: Lipid</span>'
+              + '</div>'
+              + '<div style="width:76px;height:3px;background:' + (isAm ? 'rgba(24,20,18,0.22)' : 'rgba(255,255,255,0.28)') + ';border-radius:99px;margin:2px auto 0;"></div>'
+            + '</div>'
+          + '</div>'
+          + '<div style="padding:8px 10px;background:#120E0C;border-left:2.5px solid #C9A45A;font-size:0.72rem;line-height:1.4;color:#E6E0D6;">'
+            + '<strong class="mono" style="color:#C9A45A;display:block;font-size:0.68rem;margin-bottom:2px;">INCLUDED IN YOUR 99&cent; HIGH-RES WALLPAPER DOWNLOAD:</strong>'
+            + '<div>&bull; Crisp 1080&times;1920 Retina AM + PM Lock-Screen PNGs (auto-positioned below iOS/Android clock)</div>'
+            + '<div>&bull; Exact pH windows, wait timers, sensitive-skin sandwich buffer rules &amp; 4-Night schedule</div>'
           + '</div>'
           + '</div>';
       }
