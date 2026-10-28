@@ -828,7 +828,7 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
         <div>
           <h2 style="margin:0;font-size:22px;font-family:${t.fontDisplay};font-weight:500;color:${t.textPrimary};">Top-Rated Industry Leaders</h2>
         </div>
-        <a href="/leaderboard" style="padding:9px 18px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;font-size:14px;font-weight:500;text-decoration:none;">Explore Full Interactive Leaderboard →</a>
+        <a href="/leaderboard" style="padding:9px 18px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:var(--accent-ink,#FFFFFF);font-size:14px;font-weight:500;text-decoration:none;">Explore Full Interactive Leaderboard →</a>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:14px;">${podiumCards}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:12px;">

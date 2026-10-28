@@ -80,7 +80,7 @@ function renderAtelierVanityDrawerHtml() {
     .dl-tray-vessel-btn.is-empty {
       border: 1.5px dashed var(--rose-brand); background: var(--bg-canvas); opacity: 1;
     }
-    .dl-add-to-bag-btn {
+    .dl-add-to-bag-btn, .vanity-card-bag-btn {
       display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px;
       background: var(--bg-surface); color: var(--rose-brand); border: 1px solid var(--rose-brand);
       font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap;
@@ -789,7 +789,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         var titleEl = (card && !card.classList.contains('conflict-card')) ? card.querySelector('a[href^="/bottle/"], h1, h3') : null;
         var prodTitle = titleEl ? titleEl.textContent.trim() : (affLink.textContent.trim() || prodId);
         var btnId = 'dl-bag-btn-' + prodId;
-        var existing = (affLink.parentElement ? affLink.parentElement.querySelector('button[data-dl-bag-prod="' + prodId + '"]') : null) || (card ? card.querySelector('button[data-dl-bag-prod="' + prodId + '"]') : null);
+        var existing = document.getElementById(btnId) || (affLink.parentElement ? affLink.parentElement.querySelector('button[data-dl-bag-prod]') : null) || (card ? card.querySelector('button[data-dl-bag-prod]') : null);
         if (!existing) {
           existing = document.createElement('button');
           existing.type = 'button';

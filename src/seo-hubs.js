@@ -491,7 +491,7 @@ function renderCelebrityDetailPage(celeb) {
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-bottom:44px;">${bottleCards}</div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:44px;">
-        <div class="porcelain-vessel-core" style="background:linear-gradient(155deg,#FAF2F3 0%,#F5E6E8 100%);padding:26px 28px;position:relative;overflow:hidden;border:1px solid rgba(139,38,53,0.18);justify-content:space-between;">
+        <div class="porcelain-vessel-core" style="background:var(--berry-bg);padding:26px 28px;position:relative;overflow:hidden;border:1px solid var(--berry-border);justify-content:space-between;">
           <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:96px;pointer-events:none;background:radial-gradient(ellipse 65% 90% at 84% 12%,rgba(139,38,53,0.14) 0%,transparent 75%);"><svg width="100%" height="96" viewBox="0 0 560 96" preserveAspectRatio="xMaxYMin slice" fill="none"><circle cx="486" cy="34" r="24" stroke="#8B2635" stroke-opacity="0.22" stroke-width="1.2" stroke-dasharray="3 4"/><circle cx="458" cy="46" r="20" stroke="#8B2635" stroke-opacity="0.18" stroke-width="1.1"/><path d="M466 30L478 50M478 30L466 50" stroke="#8B2635" stroke-opacity="0.34" stroke-width="1.5" stroke-linecap="round"/></svg></div>
           <div style="position:relative;z-index:1;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
@@ -499,7 +499,7 @@ function renderCelebrityDetailPage(celeb) {
               <span class="mono" style="font-size:0.72rem;color:var(--berry-clash);letter-spacing:0.06em;text-transform:uppercase;">· pH Barrier Guardrail</span>
             </div>
             <h3 class="serif-display" style="font-size:1.38rem;margin:0 0 12px;">What Never to Mix on ${escapeHtml(celeb.name)}’s Shelf</h3>
-            <div style="background:rgba(255,255,255,0.72);border-left:3px solid var(--berry-clash);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+            <div style="background:var(--bg-surface);border-left:3px solid var(--berry-clash);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
               <p style="font-size:0.91rem;color:var(--text-primary);line-height:1.6;margin:0;">${escapeHtml(celeb.clashWarning)}</p>
             </div>
           </div>
@@ -508,7 +508,7 @@ function renderCelebrityDetailPage(celeb) {
             <a href="${preloadHref}" class="mono" style="color:var(--berry-clash);font-weight:600;text-decoration:none;">Test Shelf Harmony &rarr;</a>
           </div>
         </div>
-        <div class="porcelain-vessel-core" style="background:linear-gradient(155deg,#F2F6F3 0%,#E5EFE8 100%);padding:26px 28px;position:relative;overflow:hidden;border:1px solid rgba(46,90,68,0.18);justify-content:space-between;">
+        <div class="porcelain-vessel-core" style="background:var(--sage-bg);padding:26px 28px;position:relative;overflow:hidden;border:1px solid var(--sage-border);justify-content:space-between;">
           <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:96px;pointer-events:none;background:radial-gradient(ellipse 65% 90% at 84% 12%,rgba(46,90,68,0.14) 0%,transparent 75%);"><svg width="100%" height="96" viewBox="0 0 560 96" preserveAspectRatio="xMaxYMin slice" fill="none"><rect x="448" y="18" width="22" height="36" rx="5" stroke="#2E5A44" stroke-opacity="0.22" stroke-width="1.2"/><rect x="486" y="18" width="22" height="36" rx="5" stroke="#2E5A44" stroke-opacity="0.32" stroke-width="1.2" fill="#2E5A44" fill-opacity="0.08"/><path d="M474 36H482" stroke="#2E5A44" stroke-opacity="0.4" stroke-width="1.4" stroke-linecap="round"/></svg></div>
           <div style="position:relative;z-index:1;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
@@ -517,8 +517,8 @@ function renderCelebrityDetailPage(celeb) {
             </div>
             <h3 class="serif-display" style="font-size:1.38rem;margin:0 0 12px;">Luxury Shelf vs. Barrier-Identical Swap</h3>
             <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:12px;">
-              <div style="background:rgba(255,255,255,0.62);border:1px solid rgba(28,25,23,0.08);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:2px;">Luxury Original</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.luxury)}</strong></div>
-              <div style="background:rgba(255,255,255,0.86);border:1px solid rgba(46,90,68,0.26);border-left:3px solid var(--sage-safe);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--sage-safe);margin-bottom:2px;">Chemist Barrier-Identical Swap</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong></div>
+              <div style="background:var(--bg-surface);border:1px solid var(--border-hairline);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:2px;">Luxury Original</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.luxury)}</strong></div>
+              <div style="background:var(--bg-surface);border:1px solid var(--sage-border);border-left:3px solid var(--sage-safe);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--sage-safe);margin-bottom:2px;">Chemist Barrier-Identical Swap</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong></div>
             </div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:relative;z-index:1;">
@@ -826,15 +826,15 @@ function renderConcernDetailPage(concern) {
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;font-size:0.78rem;position:relative;z-index:1;"><span class="mono" style="color:var(--text-secondary);">60s Dry-Down Between Layers</span><a href="${preloadHref}" class="mono" style="color:var(--rose-brand);font-weight:600;text-decoration:none;">Customize in Shelf Checker &rarr;</a></div>
         </div>
-        <div class="porcelain-vessel-core" style="background:linear-gradient(155deg,#FAF2F3 0%,#F5E6E8 100%);padding:26px 28px;position:relative;overflow:hidden;border:1px solid rgba(139,38,53,0.18);justify-content:space-between;">
+        <div class="porcelain-vessel-core" style="background:var(--berry-bg);padding:26px 28px;position:relative;overflow:hidden;border:1px solid var(--berry-border);justify-content:space-between;">
           <div style="position:relative;z-index:1;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
               <span class="badge-clash mono">What to Pause Immediately</span>
               <span class="mono" style="font-size:0.72rem;color:var(--berry-clash);text-transform:uppercase;">· Barrier Guardrail</span>
             </div>
             <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:12px;">Common Mistake That Breaks This Routine</h2>
-            <div style="background:rgba(255,255,255,0.78);border-left:3px solid var(--berry-clash);border-radius:10px;padding:13px 15px;margin-bottom:12px;"><p style="font-size:0.91rem;line-height:1.58;margin:0;color:var(--text-primary);">${escapeHtml(concern.avoidNote)}</p></div>
-            <div style="background:rgba(255,255,255,0.88);border:1px solid rgba(46,90,68,0.24);border-left:3px solid var(--sage-safe);border-radius:10px;padding:12px 15px;">
+            <div style="background:var(--bg-surface);border-left:3px solid var(--berry-clash);border-radius:10px;padding:13px 15px;margin-bottom:12px;"><p style="font-size:0.91rem;line-height:1.58;margin:0;color:var(--text-primary);">${escapeHtml(concern.avoidNote)}</p></div>
+            <div style="background:var(--bg-surface);border:1px solid var(--sage-border);border-left:3px solid var(--sage-safe);border-radius:10px;padding:12px 15px;">
               <span class="mono" style="display:block;font-size:0.7rem;text-transform:uppercase;color:var(--sage-safe);font-weight:600;margin-bottom:4px;">Verified Safe Replacements in This Protocol</span>
               <div style="font-size:0.86rem;color:var(--text-primary);line-height:1.5;">${actives.map((a) => `<strong>${escapeHtml(a.commonName.replace(/\s*\([^)]*\)/g, ''))}</strong> (${escapeHtml(a.functionRole)})`).join(' · ')}</div>
             </div>
