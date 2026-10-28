@@ -391,7 +391,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
             <div style="flex:0 0 auto;display:flex;flex-direction:column;padding:8px 10px;background:var(--bg-canvas);">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;gap:8px;flex-wrap:wrap;">
-                <label class="field-label" for="rawInciTextarea" style="margin:0;font-size:0.76rem;color:var(--text-secondary);">Optional: Paste Ingredient List (Pore Check)</label>
+                <label class="field-label" for="rawInciTextarea" style="margin:0;font-size:0.76rem;color:var(--text-secondary);">Optional: Paste Bottle Ingredient List (INCI Label · Pore Check)</label>
                 <button type="button" class="btn-secondary" style="padding:2px 8px;font-size:0.74rem;min-height:22px;flex-shrink:0;" onclick="pasteSampleComedogenicInci()">Try Sample</button>
               </div>
               <textarea id="rawInciTextarea" class="textarea-box mono" rows="1" style="flex:0 0 auto;height:34px;min-height:34px;max-height:80px;resize:vertical;font-size:0.78rem;padding:5px 8px;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="Optional: paste ingredients (e.g., Aqua, Ascorbic Acid 15%)...">${escapeHtml(initialRawInci || '')}</textarea>

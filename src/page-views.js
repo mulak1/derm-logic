@@ -237,8 +237,8 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
               <div><strong class="mono" style="color:var(--text-primary);display:block;margin-bottom:2px;">Step 3 &middot; Keep Your Bag</strong><span style="color:var(--text-secondary);">Save your 5-slot AM &amp; PM phone card</span></div>
             </div>
             <div style="display:flex;flex-direction:column;gap:4px;padding:10px 14px;margin-top:10px;border-radius:10px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);font-size:0.8rem;color:var(--text-secondary);line-height:1.4;">
-              <div><strong style="color:var(--sage-safe);">&#9679; Why We're Reputable (Clinical Source):</strong> Peer-reviewed dermatology literature (<span class="mono">JCAD/PubMed</span> active thresholds), pH conflict matrices &amp; official INCI formulation registries.</div>
-              <div><strong style="color:var(--sage-safe);">&#9679; Freshness &amp; Updates:</strong> Updated Today (2026 Clinical INCI Registry) &bull; Formulations audited weekly &bull; Instant real-time conflict check.</div>
+              <div><strong style="color:var(--sage-safe);">&#9679; Chemist-Verified Source:</strong> Peer-reviewed dermatology studies (<span class="mono">JCAD/PubMed</span>), pH compatibility tables &amp; official bottle ingredient lists (<abbr title="International Nomenclature of Cosmetic Ingredients: the standardized ingredient list printed on every skincare box" style="text-decoration:underline dotted;cursor:help;">INCI</abbr>, the standard ingredient label printed on every skincare box).</div>
+              <div><strong style="color:var(--sage-safe);">&#9679; Always Current:</strong> Updated today (2026 Skincare Ingredient Label [<span class="mono">INCI</span>] Registry) &bull; Brand formulas reviewed weekly &bull; Instant real-time routine check.</div>
             </div>
           </div>
           <div class="hero-photo-col">
@@ -426,11 +426,11 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
         </div>
 
         <details class="science-footnote-drawer" data-ui="science-drawer" style="margin-top:18px;padding:16px 20px;background:var(--bg-oat);">
-          <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.86rem;">Esthetician &amp; Cosmetic Chemist Specifications (pH Windows, pKa, Daltons &amp; Full INCI)</summary>
+          <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.86rem;">Esthetician &amp; Cosmetic Chemist Specifications (pH Windows, pKa, Daltons &amp; Bottle Ingredient Names [INCI])</summary>
           <div style="margin-top:14px;overflow-x:auto;">
-            <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:10px;">Laboratory formulation metrics: optimal free-acid dissociation ranges, pKa Henderson-Hasselbalch values, and Daltons (molecular weight) determining skin-barrier penetration depth.</p>
+            <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:10px;">Laboratory formulation metrics: optimal free-acid dissociation ranges, pKa Henderson-Hasselbalch values, Daltons (molecular weight), and official INCI names (the standardized ingredient names printed on every skincare bottle).</p>
             <table>
-              <thead><tr><th>Official INCI Nomenclature</th><th>Lab pH Range</th><th>pKa Dissociation</th><th>Molecular Size (Da)</th><th>EU CosIng Comedogenic (0–5)</th><th>Malassezia Safe</th></tr></thead>
+              <thead><tr><th>Official Bottle Ingredient Name (INCI)</th><th>Lab pH Range</th><th>pKa Dissociation</th><th>Molecular Size (Da)</th><th>EU CosIng Comedogenic (0–5)</th><th>Malassezia Safe</th></tr></thead>
               <tbody>${chemistrySpecsRows}</tbody>
             </table>
           </div>
@@ -902,11 +902,11 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               </table>
             </div>
             <details class="science-footnote-drawer" style="margin-top:14px;padding:14px 16px;background:var(--bg-canvas);">
-              <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.84rem;">Esthetician &amp; Cosmetic Chemist Footnote (Lab Mechanism, pH Windows, pKa, Daltons &amp; INCI)</summary>
+              <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.84rem;">Esthetician &amp; Cosmetic Chemist Footnote (Lab Mechanism, pH Windows, pKa, Daltons &amp; Bottle Ingredient Names [INCI])</summary>
               <div style="margin-top:12px;overflow-x:auto;">
                 <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:8px;"><strong>Lab Mechanism (${escapeHtml(page.labConflictType || page.conflictType)}):</strong> ${escapeHtml(page.labSummary || page.summary)}</p>
                 <table>
-                  <thead><tr><th>Official INCI Nomenclature</th><th>Lab pH Range</th><th>pKa Dissociation</th><th>Molecular Size (Da)</th><th>EU CosIng Comedogenic (0–5)</th><th>Malassezia Safe</th></tr></thead>
+                  <thead><tr><th>Official Bottle Ingredient Name (INCI)</th><th>Lab pH Range</th><th>pKa Dissociation</th><th>Molecular Size (Da)</th><th>EU CosIng Comedogenic (0–5)</th><th>Malassezia Safe</th></tr></thead>
                   <tbody>${seoChemistrySpecsRows}</tbody>
                 </table>
               </div>
