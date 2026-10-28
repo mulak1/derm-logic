@@ -512,16 +512,17 @@ function attachMissionControlRoutes(app, cfg, store) {
       aggregate4ProductMetrics(cfg, store, Number(req.query.hours || 8760)),
       fetchLiveStripeOracle()
     ]);
-    const rawEvents = (store && store.data && Array.isArray(store.data.events)) ? store.data.events.slice(-80) : [];
-    const rawOrders = (store && store.data && Array.isArray(store.data.orders)) ? store.data.orders.slice(-40) : [];
-    const rawLeads = (store && store.data && Array.isArray(store.data.leads)) ? store.data.leads.slice(-40) : [];
+    const st = (store && (store.data || (typeof store.getRawState === 'function' ? store.getRawState() : null))) || {};
+    const rawEvents = Array.isArray(st.events) ? st.events.slice(-80) : [];
+    const rawOrders = Array.isArray(st.orders) ? st.orders.slice(-40) : [];
+    const rawLeads = Array.isArray(st.leads) ? st.leads.slice(-40) : [];
     res.setHeader('Cache-Control', 'no-store, max-age=0');
     res.json({
       ok: true,
       module_id: cfg.moduleId,
       domain: cfg.domain,
       principal_forensics_summary: {
-        raw_events_in_local_ledger: (store && store.data && store.data.events) ? store.data.events.length : 0,
+        raw_events_in_local_ledger: Array.isArray(st.events) ? st.events.length : 0,
         wilson_95_ci: agg.wilson_95_ci,
         traffic_segmentation: agg.traffic_segmentation,
         stripe_upstream_oracle: stripeOracle
@@ -529,6 +530,58 @@ function attachMissionControlRoutes(app, cfg, store) {
       raw_append_only_events_tail: rawEvents,
       raw_orders_tail: rawOrders,
       raw_leads_tail: rawLeads
+    });
+  });
+  app.get('/api/telemetry/dropoff-audit', async (req, res) => {
+    const hours = Math.max(1, Number(req.query.hours || 24));
+    const cutoffMs = Date.now() - hours * 3600 * 1000;
+    const st = (store && (store.data || (typeof store.getRawState === 'function' ? store.getRawState() : null))) || {};
+    const allEv = Array.isArray(st.events) ? st.events.filter((e) => new Date(e.created_at).getTime() >= cutoffMs) : [];
+    const humanEv = allEv.filter((e) => Number(e.is_test) === 0 && !e.is_owner && !e.is_mirofish && !e.is_crawler);
+    const countType = (arr, types) => arr.filter((e) => types.includes(e.event_type)).length;
+    const rawVisits = countType(humanEv, ['visit', 'visit_hydrated']);
+    const hydratedVisits = humanEv.filter((e) => e.event_type === 'visit_hydrated' || (e.meta && (e.meta.js_hydrated || e.meta.vid))).length;
+    const vanityOrCalc = countType(humanEv, ['calculate', 'vanity_bag_add', 'vanity_calibrator', 'vanity_tab_switch', 'vanity_pass_flip']);
+    const paywallSeen = countType(humanEv, ['view_paywall']);
+    const checkoutOrAff = countType(humanEv, ['checkout_intent', 'affiliate_click', 'lead_capture']);
+    const exits = humanEv.filter((e) => e.event_type === 'session_exit');
+    const avgMetric = (key) => exits.length ? Math.round(exits.reduce((s, e) => s + (Number(e.meta && e.meta[key]) || 0), 0) / exits.length) : 0;
+    const byRoute = {};
+    for (const e of humanEv) {
+      const p = String(e.page_url || '/').split('?')[0];
+      const fam = p === '/' ? 'home' : (p.startsWith('/seo/') ? 'seo_guide' : (p.startsWith('/bottle/') ? 'bottle_sku' : (p.startsWith('/celebrity/') ? 'celebrity' : (p.startsWith('/concern/') ? 'concern' : 'other'))));
+      if (!byRoute[fam]) byRoute[fam] = { visits: 0, hydrated: 0, interactions: 0, paywalls: 0, conversions: 0 };
+      if (e.event_type === 'visit' || e.event_type === 'visit_hydrated') byRoute[fam].visits += 1;
+      if (e.event_type === 'visit_hydrated' || (e.meta && e.meta.js_hydrated)) byRoute[fam].hydrated += 1;
+      if (['calculate', 'vanity_bag_add', 'vanity_calibrator', 'vanity_tab_switch', 'vanity_pass_flip'].includes(e.event_type)) byRoute[fam].interactions += 1;
+      if (e.event_type === 'view_paywall') byRoute[fam].paywalls += 1;
+      if (['checkout_intent', 'affiliate_click', 'lead_capture'].includes(e.event_type)) byRoute[fam].conversions += 1;
+    }
+    res.setHeader('Cache-Control', 'no-store, max-age=0');
+    res.json({
+      ok: true,
+      module_id: cfg.moduleId,
+      window_hours: hours,
+      survival_funnel: {
+        stage_1_http_visits: rawVisits,
+        stage_2_js_hydrated: hydratedVisits,
+        stage_3_routine_or_vanity_interaction: vanityOrCalc,
+        stage_4_paywall_viewed: paywallSeen,
+        stage_5_monetization_action: checkoutOrAff,
+        wilson_95_ci: {
+          hydration_rate: wilson95CI(hydratedVisits, Math.max(1, rawVisits)),
+          interaction_given_hydrated: wilson95CI(vanityOrCalc, Math.max(1, hydratedVisits || rawVisits)),
+          paywall_given_interaction: wilson95CI(paywallSeen, Math.max(1, vanityOrCalc)),
+          action_given_paywall: wilson95CI(checkoutOrAff, Math.max(1, paywallSeen))
+        }
+      },
+      unload_beacon_telemetry: {
+        session_exit_beacons: exits.length,
+        avg_dwell_ms: avgMetric('dwell_ms'),
+        avg_ttfi_ms: avgMetric('ttfi_ms'),
+        avg_max_scroll_pct: avgMetric('max_scroll_pct')
+      },
+      route_family_cohorts: byRoute
     });
   });
   app.post('/api/admin/push-indexing', async (req, res) => {

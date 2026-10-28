@@ -931,8 +931,24 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       return false;
     };
 
-    var exitHoldShown = false;
-    var enteredAt = Date.now();
+    var exitHoldShown = false, enteredAt = Date.now(), ttfiMs = 0, maxScrollPct = 0, exitBeaconSent = false;
+    var markFirstInteract = function() { if (!ttfiMs) ttfiMs = Date.now() - enteredAt; };
+    window.addEventListener('pointerdown', markFirstInteract, { passive: true, once: true });
+    window.addEventListener('scroll', function() {
+      if (!ttfiMs) ttfiMs = Date.now() - enteredAt;
+      var sh = Math.max(1, (document.documentElement && document.documentElement.scrollHeight) || 1);
+      var pct = Math.min(100, Math.round((((window.scrollY || 0) + (window.innerHeight || 800)) / sh) * 100));
+      if (pct > maxScrollPct) maxScrollPct = pct;
+    }, { passive: true });
+    var sendExitBeacon = function() {
+      if (exitBeaconSent || navigator.webdriver) return;
+      exitBeaconSent = true;
+      var payload = JSON.stringify({ event_type: 'session_exit', page_url: window.location.pathname, meta: { vid: window.__ebVid || '', sid: window.__ebSid || '', js_hydrated: 1, dwell_ms: Date.now() - enteredAt, ttfi_ms: ttfiMs, max_scroll_pct: maxScrollPct, interacted: Boolean(ttfiMs > 0) } });
+      if (navigator.sendBeacon) { try { navigator.sendBeacon('/api/telemetry/event', new Blob([payload], { type: 'application/json' })); return; } catch (_) {} }
+      if (window.__ebLogEvent) window.__ebLogEvent('session_exit', { dwell_ms: Date.now() - enteredAt, ttfi_ms: ttfiMs, max_scroll_pct: maxScrollPct, interacted: Boolean(ttfiMs > 0) });
+    };
+    document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') sendExitBeacon(); });
+    window.addEventListener('pagehide', sendExitBeacon);
     document.addEventListener('mouseleave', function(e) {
       if (exitHoldShown || window.__ebIsUnlocked || navigator.webdriver) return;
       if (e.clientY <= 6 && (Date.now() - enteredAt) > 12000) {

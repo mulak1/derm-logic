@@ -324,7 +324,7 @@ function buildClientRuntimeScript(cfg) {
   window.__ebLogEvent = function(eventType, meta) {
     try {
       var m = Object.assign({ vid: window.__ebVid, sid: window.__ebSid, js_hydrated: 1 }, meta || {});
-      fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: eventType, page_url: window.location.pathname, meta: m }) }).catch(function(){});
+      fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: eventType, page_url: window.location.pathname, meta: m }), keepalive: true }).catch(function(){});
     } catch (_) {}
   };
 
@@ -918,7 +918,7 @@ function buildClientRuntimeScript(cfg) {
   };
   window.__ebCheckout = function(tier, confirmed) {
     var cleanTier = typeof tier === 'string' ? tier : 'flash_pass', actTarget = window.__ebActiveEntity || (document.getElementById('lookup-query') && document.getElementById('lookup-query').value) || '', cBar = document.getElementById('eb-buy-preview-confirm'), pBar = document.getElementById('eb-pricing-preview-confirm');
-    if (pBar && pBar.style.display === 'block' && window.__ebPendingTier === cleanTier) confirmed = true;
+    if (confirmed === undefined || (pBar && pBar.style.display === 'block' && window.__ebPendingTier === cleanTier)) confirmed = true;
     if (!confirmed && (cBar || pBar)) {
       window.__ebPendingTier = cleanTier;
       ['eb-cmdk-modal', 'eb-floating-gate-popover', 'eb-ouibounce-toast'].forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });

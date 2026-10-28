@@ -3,6 +3,7 @@
 const { CLINICAL_INGREDIENTS, CULT_PRODUCTS } = require('./clinical-data');
 const { CELEBRITY_ROUTINES } = require('./celebrity-routines');
 const { PAIR_SEO_SEEDS, PRODUCT_SEO_SEEDS } = require('./pseo-catalog');
+const { CONCERN_HUBS, getAllBrandHubs } = require('./seo-hubs');
 const { analyzeRoutine } = require('./engine');
 const { escapeHtml, SHARED_CSS, CLIENT_SCRIPT, renderHeader, renderFooter } = require('./ui-templates');
 
@@ -812,13 +813,15 @@ function attachGlowIndexSeoUpgrades(app) {
   });
 
   app.get('/sitemap-bottles-actives.xml', (req, res) => {
-    const urls = [`${HOST_URL}/bottle`, ...CLINICAL_PRODUCTS.map((p) => `${HOST_URL}/bottle/${p.id}`), `${HOST_URL}/ingredient`, ...CLINICAL_INGREDIENTS.map((i) => `${HOST_URL}/ingredient/${i.id}`), ...CLINICAL_INGREDIENTS.slice(0, 20).map((i) => `${HOST_URL}/ingredient/${i.id}/serums`), `${HOST_URL}/brand`];
-    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(urls));
+    const brandUrls = (typeof getAllBrandHubs === 'function' ? getAllBrandHubs() : []).map((b) => `${HOST_URL}/brand/${b.slug}`);
+    const urls = [`${HOST_URL}/bottle`, ...CLINICAL_PRODUCTS.map((p) => `${HOST_URL}/bottle/${p.id}`), `${HOST_URL}/ingredient`, ...CLINICAL_INGREDIENTS.map((i) => `${HOST_URL}/ingredient/${i.id}`), ...CLINICAL_INGREDIENTS.slice(0, 20).flatMap((i) => INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/ingredient/${i.id}/${sc.slug}`)), `${HOST_URL}/brand`, ...brandUrls];
+    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set(urls))));
   });
 
   app.get('/sitemap-celebrities-concerns.xml', (req, res) => {
-    const urls = [`${HOST_URL}/celebrity`, ...CELEBRITY_ROUTINES.map((c) => `${HOST_URL}/celebrity/${c.slug}`), `${HOST_URL}/concern`, `${HOST_URL}/scenario`, ...SCENARIO_GUIDES.map((s) => `${HOST_URL}/scenario/${s.slug}`)];
-    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(urls));
+    const concernUrls = (Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : []).map((c) => `${HOST_URL}/concern/${c.slug}`);
+    const urls = [`${HOST_URL}/celebrity`, ...CELEBRITY_ROUTINES.map((c) => `${HOST_URL}/celebrity/${c.slug}`), `${HOST_URL}/concern`, ...concernUrls, `${HOST_URL}/scenario`, ...SCENARIO_GUIDES.map((s) => `${HOST_URL}/scenario/${s.slug}`)];
+    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set(urls))));
   });
 
   app.get(/^\/(.+)\.md$/, (req, res, next) => {
