@@ -1,10 +1,13 @@
 'use strict';
 
+let AA_VIEWS = null;
+try { AA_VIEWS = require('./views'); } catch (_) {}
+
 /**
  * Autonomous Zero-HITL Growth & Open-Source Distribution Engine (Iteration 28)
  * Implements:
- *  1. Dynamic Live SVG Score Badges (`GET /badge/:target.svg`, `GET /api/badge/:target.svg`): `anuraghazra/github-readme-stats` (79.8k) & `badges/shields` (27.2k)
- *  2. Shields.io JSON Endpoint (`GET /api/badge/shield`) & Dynamic 1200x630 OpenGraph Scorecard (`GET /api/og/scorecard`: `vercel/satori` 14.1k)
+ *  1. Dynamic Live SVG Score Badges (`GET /badge/:target.svg`, `GET /api/badge/:target.svg`): `anuraghazra/github-readme-stats` (★ 79.8k) & `badges/shields` (★ 27.2k)
+ *  2. Shields.io JSON Endpoint (`GET /api/badge/shield`) & Dynamic 1200x630 OpenGraph Scorecard (`GET /api/og/scorecard`: `vercel/satori` ★ 14.1k)
  *  3. 1-Line Embeddable Interactive Micro-Widget (`GET /embed.js`) & Copyable Markdown/HTML Snippet API (`GET /api/growth/embed-snippet`)
  *  4. Machine-Actionable Agent Discovery Triad (`GET /openapi.json` OpenAPI 3.1.0, `GET /.well-known/ai-plugin.json`, `GET /.well-known/mcp-registry.json`, `POST /api/mcp/rpc`)
  *  5. High-Intent Interactive `/tools/:slug` & `/compare/:slug` Programmatic Calculator & Comparison Routes (+ `.md` Markdown Twins)
@@ -15,7 +18,7 @@ const GROWTH_CATALOG = {
   citation_forge: {
     badgeLabel: 'CitationForge GEO',
     defaultMetric: '89/100 (Grade A) • llms.txt Ready',
-    badgeColor: '#1D4ED8',
+    badgeColor: '#4F46E5',
     categoryTag: 'AI Search & ChatGPT Visibility',
     githubTopics: ['llms-txt', 'generative-engine-optimization', 'ai-seo', 'perplexity-seo', 'chatgpt-search', 'json-ld', 'schema-org', 'mcp-server', 'seo-audit', 'answer-engine-optimization'],
     tools: [
@@ -64,9 +67,9 @@ const GROWTH_CATALOG = {
     ]
   },
   abandon_alpha: {
-    badgeLabel: 'AbandonAlpha Recovery',
+    badgeLabel: 'AbandonAlpha',
     defaultMetric: '+62.4% Smart Retry & Checkout Lift',
-    badgeColor: '#1D4ED8',
+    badgeColor: '#0F172A',
     categoryTag: 'Failed-Payment & Checkout Drop-Off Recovery',
     githubTopics: ['stripe-dunning', 'cart-abandonment', 'checkout-recovery', 'thompson-sampling', 'multi-armed-bandit', 'finops', 'saas-metrics', 'churn-reduction', 'payment-retries', 'mcp-server'],
     tools: [
@@ -83,7 +86,6 @@ const GROWTH_CATALOG = {
 };
 
 const { attachPublicScanFlywheel, getAllPublicScanUrls, evaluateScanTarget } = require('./public-scan-flywheel');
-const { SHARED_CSS, CLIENT_SCRIPT, renderHeader, renderFooter } = require('./ui-templates');
 
 function escXml(str) {
   return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -110,15 +112,15 @@ function computeTargetBadgeMetric(cfg, rawTarget) {
   const presetKey = matchedPreset ? matchedPreset.key : clean.toLowerCase();
   const kpiArr = cfg.presetKpis && cfg.presetKpis[presetKey];
   if (Array.isArray(kpiArr) && kpiArr.length > 0) {
-    return { target: clean, label: `${g.badgeLabel} (${clean.slice(0, 18)})`, message: String(kpiArr.slice(0, 2).join(' • ')).slice(0, 34), color: g.badgeColor };
+    return { target: clean, label: `${cfg.brandName}: ${clean.slice(0, 18)}`, message: String(kpiArr.slice(0, 2).join(' • ')).slice(0, 34), color: g.badgeColor };
   }
   const scan = evaluateScanTarget(cfg, clean);
-  return { target: scan.target, label: `${g.badgeLabel} (${scan.target.slice(0, 18)})`, message: `${scan.grade} (${scan.score}/100) • ${scan.kpi1}`.slice(0, 36), color: g.badgeColor };
+  return { target: scan.target, label: `${cfg.brandName}: ${scan.target.slice(0, 18)}`, message: `${scan.grade} (${scan.score}/100) • ${scan.kpi1}`.slice(0, 36), color: g.badgeColor };
 }
 
 function renderShieldSvg({ label, message, color }) {
-  const leftW = Math.max(115, Math.min(270, Math.round(label.length * 7.4 + 24)));
-  const rightW = Math.max(130, Math.min(290, Math.round(message.length * 7.4 + 24)));
+  const leftW = Math.max(105, Math.round(label.length * 6.8 + 22));
+  const rightW = Math.max(115, Math.round(message.length * 6.8 + 22));
   const totalW = leftW + rightW;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${totalW}" height="22" role="img" aria-label="${escXml(label)}: ${escXml(message)}">
   <title>${escXml(label)}: ${escXml(message)}</title>
@@ -126,13 +128,13 @@ function renderShieldSvg({ label, message, color }) {
     <stop offset="0" stop-color="#ffffff" stop-opacity=".12"/>
     <stop offset="1" stop-opacity=".12"/>
   </linearGradient>
-  <clipPath id="eb-r"><rect width="${totalW}" height="22" rx="0" fill="#fff"/></clipPath>
+  <clipPath id="eb-r"><rect width="${totalW}" height="22" rx="5" fill="#fff"/></clipPath>
   <g clip-path="url(#eb-r)">
-    <rect width="${leftW}" height="22" fill="#181412"/>
+    <rect width="${leftW}" height="22" fill="#0F172A"/>
     <rect x="${leftW}" width="${rightW}" height="22" fill="${escXml(color)}"/>
     <rect width="${totalW}" height="22" fill="url(#eb-g)"/>
   </g>
-  <g fill="#fff" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="11.5" font-weight="500">
+  <g fill="#fff" text-anchor="middle" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="11" font-weight="700">
     <text x="${Math.round(leftW / 2)}" y="15">${escXml(label)}</text>
     <text x="${leftW + Math.round(rightW / 2)}" y="15">${escXml(message)}</text>
   </g>
@@ -144,43 +146,51 @@ function renderDynamicScorecardOgSvg(cfg, rawTarget) {
   const g = getGrowthConfig(cfg.moduleId);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="${escXml(cfg.brandName)} Live Benchmark Scorecard">
   <title>${escXml(cfg.brandName)} Live Benchmark Scorecard: ${escXml(info.target)}</title>
-  <rect width="1200" height="630" fill="#F4EFE8"/>
-  <rect x="44" y="44" width="1112" height="542" fill="#FAF6F0" stroke="#E9E2D7" stroke-width="3"/>
-  <rect x="76" y="78" width="420" height="40" fill="#E9E2D7"/>
-  <text x="96" y="104" font-family="Newsreader, Georgia, serif" font-size="16" font-weight="500" fill="#7A2332">${escXml(g.categoryTag.toUpperCase())}</text>
-  <text x="76" y="182" font-family="Newsreader, Georgia, serif" font-size="52" font-weight="400" fill="#181412">${escXml(cfg.brandName)} Report: ${escXml(info.target.slice(0, 26))}</text>
-  <text x="76" y="236" font-family="Newsreader, Georgia, serif" font-size="24" fill="#524943">Verified Formulation Dossier · Ready-to-Use Ritual Pack &amp; 1-Click Export</text>
-  <rect x="76" y="278" width="1048" height="176" fill="#E9E2D7"/>
-  <text x="112" y="334" font-family="Newsreader, Georgia, serif" font-size="18" font-weight="500" fill="#524943">VERIFIED SCORE &amp; IMPACT</text>
-  <text x="112" y="402" font-family="Newsreader, Georgia, serif" font-size="46" font-weight="500" fill="#7A2332">${escXml(info.message)}</text>
-  <text x="76" y="528" font-family="Newsreader, Georgia, serif" font-size="22" font-weight="500" fill="#181412">https://${escXml(cfg.domain)}/?q=${escXml(encodeURIComponent(info.target))} · Free Interactive Check &amp; 99¢ Single-File Export</text>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EEF2FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="44" y="44" width="1112" height="542" rx="28" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="3"/>
+  <rect x="76" y="78" width="380" height="40" rx="20" fill="#EEF2FF"/>
+  <text x="98" y="104" font-family="Plus Jakarta Sans, sans-serif" font-size="17" font-weight="700" fill="${escXml(g.badgeColor)}">${escXml(g.categoryTag)}</text>
+  <text x="76" y="182" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#0F172A">${escXml(cfg.brandName)} Report: ${escXml(info.target.slice(0, 26))}</text>
+  <text x="76" y="236" font-family="Plus Jakarta Sans, sans-serif" font-size="24" fill="#475569">Verified Scorecard • Ready-to-Use Action Pack &amp; 1-Click Export</text>
+  <rect x="76" y="278" width="1048" height="176" rx="20" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="112" y="334" font-family="Plus Jakarta Sans, sans-serif" font-size="20" font-weight="700" fill="#64748B">Verified Score &amp; Impact</text>
+  <text x="112" y="402" font-family="Plus Jakarta Sans, sans-serif" font-size="48" font-weight="800" fill="${escXml(g.badgeColor)}">${escXml(info.message)}</text>
+  <text x="76" y="528" font-family="Plus Jakarta Sans, sans-serif" font-size="22" font-weight="700" fill="#0F172A">https://${escXml(cfg.domain)}/?q=${escXml(encodeURIComponent(info.target))} • Free Interactive Check &amp; 99¢ Single-File Export</text>
 </svg>`;
 }
 
 function renderGrowthPageHtml(cfg, item, kind) {
+  const g = getGrowthConfig(cfg.moduleId);
+  const t = cfg.theme || { canvasBg: '#F8FAFC', brandSoftBg: '#EEF2FF', border: '#E2E8F0', brandPrimary: g.badgeColor, textPrimary: '#0F172A', textSecondary: '#475569', safeColor: '#059669' };
   const canonicalUrl = `https://${cfg.domain}/${kind}/${item.slug}`;
   const badgeSvgUrl = `https://${cfg.domain}/badge/${encodeURIComponent(item.target)}.svg`;
   const mdBadgeSnippet = `[![${cfg.brandName} Verified](${badgeSvgUrl})](${canonicalUrl})`;
+  // 1. Dynamic Live SVG Score Badges (`GET /badge/:target.svg`, `GET /api/badge/:target.svg`) : `anuraghazra/github-readme-stats` (★ 79.8k) & `badges/shields` (★ 27.2k)
+  // 2. Shields.io JSON Endpoint (`GET /api/badge/shield`) & Dynamic 1200x630 OpenGraph Scorecard (`GET /api/og/scorecard` : `vercel/satori` ★ 14.1k)
   const rows = kind === 'compare'
     ? [
-        { name: item.entityA, kpi: item.scoreA, action: 'Top Rated · Leading Option', status: 'RECOMMENDED (#1)' },
-        { name: item.entityB, kpi: item.scoreB, action: 'Alternative · Comparison Baseline', status: 'SEPARATE AM/PM' },
-        { name: 'Key Difference & Gain', kpi: item.winnerLift, action: `Use ${cfg.freeDeliverableName}`, status: 'VERIFIED GAIN' },
-        { name: '4-Night Recovery Schedule & Wait Intervals', kpi: '60s Dry-Down + 4-Night Cycle', action: 'Alternate active nights with 2 ceramide recovery nights', status: 'INCLUDED IN KIT' },
-        { name: 'Printable 9:16 Phone Card & Calendar (.ICS)', kpi: 'PDF + .ICS + .CSV Swaps', action: 'Save complete Morning & Bedtime Routine Kit ($1.99)', status: 'READY TO SAVE' }
+        { name: item.entityA, kpi: item.scoreA, action: 'Top Rated • Leading Option', status: 'RECOMMENDED (#1)' },
+        { name: item.entityB, kpi: item.scoreB, action: 'Alternative • Comparison Baseline', status: 'GAP FOUND' },
+        { name: 'Key Difference & Gain', kpi: item.winnerLift, action: `Apply ${cfg.freeDeliverableName}`, status: 'VERIFIED GAIN' },
+        { name: 'Ready-to-Use Implementation Pack', kpi: '3-File Bundle Ready', action: 'Download Action Pack Below', status: 'READY' }
       ]
     : [
         { name: `${item.target} : Baseline Check`, kpi: item.metricA, action: 'Test Your Own Above', status: 'VERIFIED' },
-        { name: `${cfg.freeDeliverableName} Impact`, kpi: item.metricB, action: 'Ready-to-Use Ritual File', status: 'READY' },
+        { name: `${cfg.freeDeliverableName} Impact`, kpi: item.metricB, action: 'Ready-to-Use Action File', status: 'READY' },
         { name: 'Setup Time', kpi: '< 10 Seconds', action: 'Instant Browser Calculation', status: 'INSTANT' },
-        { name: '4-Night Recovery Schedule & Wait Intervals', kpi: '60s Dry-Down + 4-Night Cycle', action: 'Alternate active nights with 2 ceramide recovery nights', status: 'INCLUDED IN KIT' },
-        { name: 'Printable 9:16 Phone Card & Calendar (.ICS)', kpi: 'PDF + .ICS + .CSV Swaps', action: 'Save complete Morning & Bedtime Routine Kit ($1.99)', status: 'READY TO SAVE' }
+        { name: 'Ready-to-Use Implementation Pack', kpi: '3-File Bundle Ready', action: 'Download Action Pack Below', status: 'READY' }
       ];
 
-  const trsHtml = rows.map((r, idx) => `<tr${idx === 3 ? ' id="eb-growth-row4-tr"' : ''}><th${idx === 0 ? ' id="eb-growth-r1-name"' : ''} scope="row" style="text-align:left;font-weight:500;">${escXml(r.name)}</th><td${idx === 0 ? ' id="eb-growth-r1-kpi"' : (idx === 1 ? ' id="eb-growth-r2-kpi"' : (idx === 3 ? ' id="eb-growth-row4-val"' : ''))} class="mono" style="font-weight:500;color:var(--rose-brand);">${escXml(r.kpi)}</td><td style="color:var(--text-secondary);">${escXml(r.action)}</td><td${idx === 3 ? ' id="eb-growth-row4-status"' : ''} style="font-size:13.5px;font-weight:500;color:var(--sage-safe);">${escXml(r.status)}</td></tr>`).join('');
+  const trsHtml = rows.map((r, idx) => `<tr${idx === 3 ? ' id="eb-growth-row4-tr"' : ''}><th${idx === 0 ? ' id="eb-growth-r1-name"' : ''} scope="row" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-weight:700;color:${escXml(t.textPrimary)};text-align:left;font-size:14px;">${escXml(r.name)}</th><td${idx === 0 ? ' id="eb-growth-r1-kpi"' : (idx === 1 ? ' id="eb-growth-r2-kpi"' : (idx === 3 ? ' id="eb-growth-row4-val"' : ''))} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-variant-numeric:tabular-nums;font-weight:700;color:${escXml(g.badgeColor)};font-size:14px;">${escXml(r.kpi)}</td><td style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};color:${escXml(t.textSecondary)};font-size:14px;">${escXml(r.action)}</td><td${idx === 3 ? ' id="eb-growth-row4-status"' : ''} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-size:13px;font-weight:700;color:${escXml(t.safeColor)};">${escXml(r.status)}</td></tr>`).join('');
 
   return `<!DOCTYPE html>
-<html lang="en" data-theme="day">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -195,60 +205,59 @@ function renderGrowthPageHtml(cfg, item, kind) {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escXml(item.title)}" />
   <meta name="twitter:description" content="${escXml(item.summary.slice(0, 156))}" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
-  <style>${SHARED_CSS}</style>
-  <script>try{if(localStorage.getItem('dermlogic_vanity_theme')==='night')document.documentElement.setAttribute('data-theme','night');}catch(_){}</script>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
-  ${renderHeader(false)}
-  <main class="container" style="padding-top:48px;padding-bottom:96px;">
-    <nav aria-label="Breadcrumb" style="font-size:14px;color:var(--text-muted);margin-bottom:18px;">
-      <a href="/" style="color:var(--rose-brand);text-decoration:none;font-weight:500;">Atelier</a> / <a href="/directory" style="color:var(--rose-brand);text-decoration:none;font-weight:500;">Archive</a> / <span style="color:var(--text-primary);">${escXml(item.slug)}</span>
+<body style="margin:0;background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-family:${escXml(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
+  ${AA_VIEWS ? AA_VIEWS.renderUnifiedHeaderHtml(kind === 'compare' ? 'SIDE-BY-SIDE COMPARISON' : 'FREE INTERACTIVE TOOL') : ''}
+  <main id="main-content" style="max-width:1240px;margin:0 auto;padding:24px;">
+    <nav aria-label="Breadcrumb" style="font-size:13px;color:#64748B;margin-bottom:10px;">
+      <a href="/" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Home</a> / <a href="/directory" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Directory</a> / <span>${escXml(item.slug)}</span>
     </nav>
-    <h1 class="hero-h1" style="margin:0 0 14px 0;">${escXml(item.title)}</h1>
-    <p class="pseo-lead hero-sub" style="margin:0 0 24px 0;">${escXml(item.summary)}</p>
+    <h1 style="font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.18;margin:0 0 8px 0;">${escXml(item.title)}</h1>
+    <p class="pseo-lead" style="font-size:16px;color:${escXml(t.textSecondary)};margin:0 0 14px 0;">${escXml(item.summary)}</p>
     <script>window.__ebRunGrowthWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var n=document.getElementById('eb-growth-r1-name'),k1=document.getElementById('eb-growth-r1-kpi'),k2=document.getElementById('eb-growth-r2-kpi'),b=document.getElementById('eb-growth-badge-img'),pl=document.getElementById('eb-growth-permalink-btn');if(n)n.textContent=s.target+' : Live Check';if(k1)k1.textContent=s.grade+' ('+s.score+'/100) • '+s.kpi1;if(k2)k2.textContent=s.kpi2+' • '+s.cnnReadout;if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';if(pl)pl.href='/scan/'+encodeURIComponent(s.target);});};</script>
-    <section id="eb-onnx-cnn-workbench" style="background:var(--bg-oat);color:var(--text-primary);padding:18px 24px;margin-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <section id="eb-onnx-cnn-workbench" style="background:#FFFFFF;color:${escXml(t.textPrimary)};border-radius:14px;padding:14px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:13.5px;font-weight:500;color:var(--rose-brand);letter-spacing:0.03em;">LIVE INTERACTIVE CALCULATOR:</span>
-        <input id="eb-cnn-wb-input" type="text" value="${escXml(item.target)}" placeholder="Enter routine..." aria-label="Custom scan target" class="input-box" style="width:185px;padding:7px 12px;font-size:14px;background:var(--bg-surface);" />
-        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunGrowthWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}')" class="btn btn-primary" style="padding:8px 16px;font-size:13.5px;">Check Score →</button>
-        <a id="eb-growth-permalink-btn" href="/scan/${escXml(encodeURIComponent(item.target))}" style="font-size:14px;font-weight:500;color:var(--text-secondary);text-decoration:underline;padding:2px 6px;">Full Report →</a>
+        <span style="font-size:13px;font-weight:800;color:${escXml(g.badgeColor)};">Live Interactive Calculator:</span>
+        <input id="eb-cnn-wb-input" type="text" value="${escXml(item.target)}" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:8px;border:1px solid ${escXml(t.border)};background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-size:13.5px;width:155px;" />
+        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunGrowthWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}')" style="padding:6px 13px;border-radius:8px;border:none;background:${escXml(g.badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">Check Score ↗</button>
+        <a id="eb-growth-permalink-btn" href="/scan/${escXml(encodeURIComponent(item.target))}" style="font-size:13px;font-weight:600;color:${escXml(t.textSecondary)};text-decoration:underline;padding:2px 6px;">Full Report ↗</a>
       </div>
-      <div id="eb-live-cnn-readout" class="mono" style="font-size:14px;color:var(--sage-safe);font-weight:500;">${escXml(item.target)} → ${escXml(item.metricA || item.scoreA)}</div>
+      <div id="eb-live-cnn-readout" style="font-variant-numeric:tabular-nums;font-size:13px;color:${escXml(t.safeColor)};font-weight:700;">${escXml(item.target)} → ${escXml(item.metricA || item.scoreA)}</div>
     </section>
-    <section class="table-wrap" style="background:var(--bg-oat);padding:28px 32px;margin-top:24px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
-        <h2 style="font-size:clamp(1.4rem,2vw,1.8rem);margin:0;">Side-by-Side Results &amp; Layering Plan</h2>
-        <img id="eb-growth-badge-img" src="/badge/${escXml(encodeURIComponent(item.target))}.svg" alt="${escXml(cfg.brandName)} Live Badge" width="240" height="22" decoding="async" />
+    <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;margin-top:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+        <h2 style="font-size:18px;margin:0;">Side-by-Side Results &amp; Action Plan</h2>
+        <span style="font-size:12.5px;font-weight:700;color:${escXml(t.safeColor)};background:#ECFDF5;padding:4px 10px;border-radius:999px;">Verified Benchmark Data</span>
       </div>
-      <table aria-label="${escXml(item.title)} Benchmark Matrix" style="width:100%;border-collapse:collapse;">
-        <thead><tr><th scope="col">Option / Check</th><th scope="col">Measured Result</th><th scope="col">Recommended Step</th><th scope="col">Status</th></tr></thead>
+      <table aria-label="${escXml(item.title)} Benchmark Matrix" style="width:100%;border-collapse:collapse;font-size:14px;">
+        <thead><tr style="background:${escXml(t.canvasBg)};text-align:left;"><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Option / Check</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Measured Result</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Recommended Step</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Status</th></tr></thead>
         <tbody id="prompt-matrix-tbody">${trsHtml}</tbody>
       </table>
-      <div id="eb-inline-row4-unlock" style="margin-top:18px;padding:16px 20px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <div style="font-size:15px;font-weight:500;color:var(--text-primary);">Want to save this schedule to your phone? Get the 9:16 Lock-Screen Card, 4-Night Calendar (.ICS) &amp; Pore-Safe Swaps</div>
+      <div id="eb-inline-row4-unlock" style="margin-top:16px;padding:14px 18px;border-radius:12px;background:${escXml(t.canvasBg)};border:1px solid ${escXml(t.border)};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="font-size:14px;font-weight:800;color:${escXml(t.textPrimary)};">Download the Ready-to-Use Action Pack</div>
+          <div style="font-size:13px;color:${escXml(t.textSecondary)};margin-top:2px;">Instant download · One-time payment (never a subscription) · 30-day guarantee</div>
+        </div>
         <div id="eb-growth-row4-msg" style="display:none !important;">
-          <input id="eb-growth-row4-email" type="email" placeholder="you@email.com" aria-label="Email to unlock Row 4" />
+          <input id="eb-growth-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" />
           <button id="eb-growth-row4-btn" type="button">Reveal Row #4 →</button>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <a href="/buy/flash_pass" rel="nofollow" class="btn btn-primary" style="padding:10px 18px;font-size:14px;">Save Complete Routine Kit ($1.99) →</a>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <a href="/buy/micro_pass" rel="nofollow" style="padding:9px 14px;border-radius:8px;background:#FFFFFF;color:${escXml(t.textPrimary)};border:1px solid ${escXml(t.border)};font-size:13.5px;font-weight:700;text-decoration:none;">Single File (99¢)</a>
+          <a href="/buy/flash_pass" rel="nofollow" style="padding:9px 16px;border-radius:8px;background:${escXml(g.badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:800;text-decoration:none;">Get Complete 3-File Pack ($1.99) →</a>
         </div>
       </div>
     </section>
-    <details style="background:var(--bg-oat);padding:18px 24px;margin-top:20px;">
-      <summary style="cursor:pointer;font-size:15px;font-weight:500;color:var(--text-primary);">Embed Live Verified Badge &amp; Technical Specs</summary>
-      <div style="margin-top:12px;">
-        <p style="font-size:14.5px;color:var(--text-secondary);margin:0 0 8px 0;">Copy and paste this live SVG badge into your documentation or notes:</p>
-        <pre style="background:var(--bg-surface);color:var(--text-primary);padding:12px 14px;font-size:13.5px;overflow-x:auto;margin:0;"><code>${escXml(mdBadgeSnippet)}</code></pre>
+    <details style="background:#FFFFFF;border-radius:14px;padding:14px 18px;margin-top:16px;">
+      <summary style="cursor:pointer;font-size:14px;font-weight:700;color:${escXml(t.textPrimary)};">Embed Live Verified Badge &amp; Technical Specs (For Developers)</summary>
+      <div style="margin-top:10px;">
+        <div style="margin-bottom:8px;"><img id="eb-growth-badge-img" src="/badge/${escXml(encodeURIComponent(item.target))}.svg" alt="${escXml(cfg.brandName)} Live Badge" height="22" decoding="async" style="max-width:100%;height:auto;" /></div>
+        <p style="font-size:13.5px;color:${escXml(t.textSecondary)};margin:0 0 8px 0;">Copy and paste this live SVG badge into your GitHub <code>README.md</code>, documentation, or media kit:</p>
+        <pre style="background:${escXml(t.canvasBg)};border-radius:8px;padding:10px 12px;font-size:13px;overflow-x:auto;margin:0;"><code>${escXml(mdBadgeSnippet)}</code></pre>
       </div>
     </details>
   </main>
-  ${renderFooter()}
-  <script>${CLIENT_SCRIPT}</script>
 </body>
 </html>`;
 }
@@ -293,7 +302,7 @@ function attachAutonomousGrowthEngine(app, cfg, store, renderHtmlFn, classifyFn)
   // 4. 1-Line Embeddable Widget (`GET /embed.js`) & Copyable Embed Snippet API (`GET /api/growth/embed-snippet`)
   app.get('/embed.js', (req, res) => {
     const t = String(req.query.target || '').replace(/[^a-zA-Z0-9._+-]/g, '').slice(0, 36) || cfg.presets[0]?.key || 'verified';
-    const js = `(function(){var s=document.currentScript;var t=(s&&s.getAttribute('data-target'))||'${t}';var d=document.createElement('div');d.style.cssText='display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#FFFFFF;border:1px solid #CBD5E1;font-family:system-ui,sans-serif;font-size:13px;';d.innerHTML='<a href="https://${cfg.domain}/?q='+encodeURIComponent(t)+'&utm_source=embed_widget" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:#0F172A;font-weight:700;"><img src="https://${cfg.domain}/badge/'+encodeURIComponent(t)+'.svg" alt="${cfg.brandName}" width="210" height="20" style="height:20px;width:auto;vertical-align:middle;"/><span>Run Free Audit ↗</span></a>';if(s&&s.parentNode)s.parentNode.insertBefore(d,s.nextSibling);})();`;
+    const js = `(function(){var s=document.currentScript;var t=(s&&s.getAttribute('data-target'))||'${t}';var d=document.createElement('div');d.style.cssText='display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#FFFFFF;border:1px solid #CBD5E1;font-family:system-ui,sans-serif;font-size:13px;box-shadow:0 2px 8px rgba(15,23,42,0.06);';d.innerHTML='<a href="https://${cfg.domain}/?q='+encodeURIComponent(t)+'&utm_source=embed_widget" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:#0F172A;font-weight:700;"><img src="https://${cfg.domain}/badge/'+encodeURIComponent(t)+'.svg" alt="${cfg.brandName}" width="210" height="20" style="height:20px;width:auto;vertical-align:middle;"/><span>Run Free Audit ↗</span></a>';if(s&&s.parentNode)s.parentNode.insertBefore(d,s.nextSibling);})();`;
     res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
     res.setHeader('Cache-Control', edgeCacheHdr);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -431,7 +440,7 @@ function attachAutonomousGrowthEngine(app, cfg, store, renderHtmlFn, classifyFn)
       ok: true,
       iteration: 30,
       module_id: cfg.moduleId,
-      repo: 'anuraghazra/github-readme-stats (79,843) + badges/shields (27,271) + vercel/satori (14,099) + modelcontextprotocol/servers (91,340) + onnxruntime-web / PP-OCRv4 CNN Sensor',
+      repo: 'anuraghazra/github-readme-stats (★ 79,843) + badges/shields (★ 27,271) + vercel/satori (★ 14,099) + modelcontextprotocol/servers (★ 91,340) + onnxruntime-web / PP-OCRv4 CNN Sensor',
       features: {
         dynamic_svg_score_badges: true,
         shields_io_json_endpoint: true,

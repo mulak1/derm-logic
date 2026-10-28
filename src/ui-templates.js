@@ -9,6 +9,11 @@ const {
   renderBeforeAfterAndCanvasFooterHtml,
   ENDOWMENT_CLIENT_SCRIPT
 } = require('./endowment-sovrn');
+const {
+  renderHeaderVanityBagPill,
+  renderAtelierVanityDrawerHtml,
+  ATELIER_VANITY_CLIENT_SCRIPT
+} = require('./atelier-vanity-bag');
 
 function escapeHtml(str) {
   if (str == null) return '';
@@ -27,17 +32,17 @@ const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 
 
 const SHARED_CSS = `
   :root {
-    --bg-canvas: #F4EFE8;
-    --bg-oat: #E9E2D7;
-    --bg-surface: #FAF6F0;
-    --bg-porcelain: #E9E2D7;
+    --bg-canvas: #F2F0EE;
+    --bg-oat: #E6E4E1;
+    --bg-surface: #F8F7F6;
+    --bg-porcelain: #E6E4E1;
     --bg-deep: #181412;
-    --ink-on-deep: #F4EFE8;
+    --ink-on-deep: #F2F0EE;
     --border-hairline: #D5CCC0;
     --border-strong: #C9BCAE;
     --text-primary: #181412;
-    --text-secondary: #5C534C;
-    --text-muted: #655C55;
+    --text-secondary: #3A342F;
+    --text-muted: #524A43;
     --rose-brand: #7A2332;
     --rose-brand-hover: #5E1927;
     --accent-ink: #F4EFE8;
@@ -47,7 +52,7 @@ const SHARED_CSS = `
     --sage-bg: #E4EDE8;
     --sage-border: #B7D4C6;
     --honey-warn: #7D5116;
-    --honey-bg: #F3EAD8;
+    --honey-bg: #EFECE6;
     --honey-border: #DFC8A6;
     --berry-clash: #7A2332;
     --berry-bg: #EFE5E7;
@@ -96,7 +101,7 @@ const SHARED_CSS = `
   html, body {
     background-color: var(--bg-canvas); color: var(--text-primary);
     font-family: 'Newsreader', Georgia, serif; font-weight: 400;
-    font-size: var(--step-body); line-height: 1.58; overflow-x: clip;
+    font-size: 16px; line-height: 1.58; overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     transition: background-color 320ms var(--ease-spring), color 320ms var(--ease-spring);
   }
@@ -117,7 +122,7 @@ const SHARED_CSS = `
   .nav-links a { white-space: nowrap; transition: color 180ms ease-out, opacity 180ms ease-out; }
   .nav-links a:hover { color: var(--rose-brand); }
   .vanity-light-pill { display: inline-flex; background: var(--bg-oat); padding: 4px; gap: 4px; }
-  .vanity-light-btn { border: none; background: transparent; padding: 5px 10px; min-height: 32px; font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: background-color 200ms var(--ease-spring), color 200ms var(--ease-spring), transform 160ms ease-out; }
+  .vanity-light-btn { border: none; background: transparent; padding: 5px 10px; min-height: 32px; font-size: 0.84rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: background-color 200ms var(--ease-spring), color 200ms var(--ease-spring), transform 160ms ease-out; }
   .vanity-light-btn.active { background: var(--rose-brand); color: var(--accent-ink); }
   .vanity-light-btn:active { transform: scale(0.97); }
 
@@ -159,7 +164,7 @@ const SHARED_CSS = `
   .grader-card, .results-panel { background: var(--bg-oat); padding: 12px; min-width: 0; }
   .porcelain-vessel-core { background: var(--bg-surface); padding: 24px 26px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 16px; min-width: 0; }
   #textureFilterTabs { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 6px !important; width: 100%; }
-  #textureFilterTabs .vanity-light-btn { padding: 7px 6px !important; font-size: 0.78rem !important; white-space: normal !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; }
+  #textureFilterTabs .vanity-light-btn { padding: 7px 6px !important; font-size: 0.84rem !important; white-space: normal !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; }
   .shelf-search-row { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 10px; align-items: center; }
   .shelf-search-row .input-box { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .preset-row { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; margin-bottom: 4px; }
@@ -167,7 +172,7 @@ const SHARED_CSS = `
   .preset-chip:hover, .preset-chip.active { background: var(--rose-pill-bg); }
   .preset-chip:active { transform: scale(0.98); }
   .preset-chip strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-primary); font-family: 'Newsreader', Georgia, serif; font-size: 1rem; font-weight: 400; line-height: 1.25; white-space: normal; }
-  .preset-chip span { display: block; color: var(--rose-brand); font-size: 0.8rem; font-weight: 500; line-height: 1.3; white-space: normal; }
+  .preset-chip span { display: block; color: var(--rose-brand); font-size: 0.84rem; font-weight: 500; line-height: 1.3; white-space: normal; }
   .field-label { display: block; font-size: 0.9rem; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
   .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: 138px; gap: 10px; flex: 1 1 0px; height: 0; min-height: 540px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 12px; background: var(--bg-canvas); margin-bottom: 14px; align-content: start; }
   .prod-check-item { display: flex; align-items: stretch; gap: 10px; padding: 12px 14px; height: 138px; background: var(--bg-surface); cursor: pointer; font-size: 0.88rem; transition: background-color 180ms ease-out; overflow: hidden; }
@@ -237,12 +242,12 @@ const SHARED_CSS = `
     #textureFilterTabs { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
     .brand-logo-link { font-size: 1.15rem; gap: 8px; }
     .brand-atelier-word { display: none; }
-    .vanity-light-btn { padding: 6px 10px; font-size: 0.76rem; white-space: nowrap; min-height: 32px; }
+    .vanity-light-btn { padding: 6px 10px; font-size: 0.84rem; white-space: nowrap; min-height: 32px; }
     .site-header .btn-primary { display: none; }
   }
   #appleWalletCardPreview, #appleWalletCardPreview.eb-blurred-deliverable, #actives-matrix tr.eb-blurred-deliverable { filter: none !important; max-height: none !important; overflow: visible !important; opacity: 1 !important; user-select: auto !important; cursor: auto !important; }
   #liveResultsContainer #eb-postcalc-inline-cta, #actives-matrix #eb-table-row4-gate-tr, #actives-matrix #eb-tanstack-table-bar { display: none !important; }
-  #eb-prism-proof-preview { white-space: normal !important; padding: 16px 18px !important; background: var(--bg-canvas) !important; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important; }
+  #eb-prism-proof-preview { white-space: normal !important; padding: 16px 18px !important; background: var(--bg-canvas) !important; font-family: 'Newsreader', Georgia, serif !important; }
 `;
 
 function renderHeader(hideNav = false) {
@@ -250,15 +255,16 @@ function renderHeader(hideNav = false) {
     <button type="button" class="vanity-light-btn active" data-theme-mode="day" aria-pressed="true" onclick="setAtelierVanityLight('day', this)">Daylight</button>
     <button type="button" class="vanity-light-btn" data-theme-mode="night" aria-pressed="false" onclick="setAtelierVanityLight('night', this)">Night Mode</button>
   </div>`;
+  const vanityPill = renderHeaderVanityBagPill();
   const ftcBar = renderAboveFoldSovrnDisclosureBar();
   if (hideNav) {
-    return `<header class="site-header">${ftcBar}<div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span></a><div style="display:flex;align-items:center;gap:10px;">${lightPill}<a href="/#analyzer" class="btn-primary"><span>Check My Shelf</span><span class="btn-icon-circle">&rarr;</span></a></div></div></header>`;
+    return `<header class="site-header">${ftcBar}<div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span></a><div style="display:flex;align-items:center;gap:8px;">${vanityPill}${lightPill}<a href="/#analyzer" class="btn-primary"><span>Check My Shelf</span><span class="btn-icon-circle">&rarr;</span></a></div></div></header>`;
   }
-  return `<header class="site-header">${ftcBar}<div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span></a><nav class="nav-links" aria-label="Main Navigation"><a href="/#analyzer">Shelf Audit</a><a href="/celebrity">Iconic Routines</a><a href="/concern">Skin Concerns</a><a href="/directory">Layering Guides</a><a href="/editorial-policy">Editorial Policy</a></nav><div style="display:flex;align-items:center;gap:10px;">${lightPill}<a href="/#analyzer" class="btn-primary" style="padding:9px 14px;font-size:0.88rem;"><span>Check My Shelf</span><span class="btn-icon-circle">&rarr;</span></a></div></div></header>`;
+  return `<header class="site-header">${ftcBar}<div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.1rem;">Atelier <span class="brand-atelier-word">Céramique</span></span></span></a><nav class="nav-links" aria-label="Main Navigation"><a href="/#analyzer">Shelf Audit</a><a href="/celebrity">Iconic Routines</a><a href="/concern">Skin Concerns</a><a href="/directory">Layering Guides</a><a href="/editorial-policy">Editorial Policy</a></nav><div style="display:flex;align-items:center;gap:8px;">${vanityPill}${lightPill}<a href="/#analyzer" class="btn-primary" style="padding:9px 14px;font-size:0.88rem;"><span>Check My Shelf</span><span class="btn-icon-circle">&rarr;</span></a></div></div></header>`;
 }
 
 function renderFooter() {
-  return `<div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie Consent"><div class="container cookie-banner-inner"><div style="font-size:0.85rem;color:var(--text-secondary);">We use privacy-friendly cookies to remember your skincare routine preferences. See our <a href="/privacy" style="text-decoration:underline;color:var(--rose-brand);">Privacy Policy</a> &amp; <a href="/editorial-policy" style="text-decoration:underline;color:var(--rose-brand);">Editorial Policy</a>.</div><div style="display:flex;gap:8px;"><button type="button" id="cookie-reject" class="btn-secondary" style="padding:6px 14px;font-size:0.8125rem;" onclick="setCookieConsent('rejected')">Reject</button><button type="button" id="cookie-accept" class="btn-primary" style="padding:6px 16px;font-size:0.8125rem;" onclick="setCookieConsent('accepted')">Accept</button></div></div></div><footer class="site-footer"><div class="container"><div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-start;"><div style="max-width:52ch;"><a href="/" class="brand-logo-link" aria-label="DermLogic Home" style="margin-bottom:8px;color:var(--ink-on-deep);">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:#E8C6B0;">Formulation Atelier</span></span></a><p style="color:#B5ACA3;font-size:0.9rem;">Cosmetic-chemist verified pH windows, peptide &amp; Vitamin C compatibility, pore-safety, and four-night skin-cycling rituals. Reader-supported formulation lab: when you purchase through retail links on our site, we may earn an affiliate commission at no extra cost to you.</p></div><div style="display:flex;gap:20px;flex-wrap:wrap;font-weight:400;font-size:0.9rem;color:var(--ink-on-deep);"><a href="/#analyzer">Shelf Audit</a><a href="/celebrity">Iconic Routines</a><a href="/bottle">Cult Bottles</a><a href="/ingredient">Ingredients</a><a href="/concern">Skin Concerns</a><a href="/leaderboard">Routine Leaderboard</a><a href="/directory">Layering Guides</a><a href="/editorial-policy">Editorial &amp; FTC Policy</a><a href="/sitemap.xml">XML Sitemap</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div></div><div class="footer-wordmark">DermLogic</div></div></footer>${renderSovrnVglnkScript()}`;
+  return `<div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie Consent"><div class="container cookie-banner-inner"><div style="font-size:0.85rem;color:var(--text-secondary);">We use privacy-friendly cookies to remember your skincare routine preferences. See our <a href="/privacy" style="text-decoration:underline;color:var(--rose-brand);">Privacy Policy</a> &amp; <a href="/editorial-policy" style="text-decoration:underline;color:var(--rose-brand);">Editorial Policy</a>.</div><div style="display:flex;gap:8px;"><button type="button" id="cookie-reject" class="btn-secondary" style="padding:6px 14px;font-size:0.8125rem;" onclick="setCookieConsent('rejected')">Reject</button><button type="button" id="cookie-accept" class="btn-primary" style="padding:6px 16px;font-size:0.8125rem;" onclick="setCookieConsent('accepted')">Accept</button></div></div></div><footer class="site-footer"><div class="container"><div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-start;"><div style="max-width:52ch;"><a href="/" class="brand-logo-link" aria-label="DermLogic Home" style="margin-bottom:8px;color:var(--ink-on-deep);">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:#E8C6B0;">Formulation Atelier</span></span></a><p style="color:#B5ACA3;font-size:0.9rem;">Cosmetic-chemist verified pH windows, peptide &amp; Vitamin C compatibility, pore-safety, and four-night skin-cycling rituals. Reader-supported formulation lab: when you purchase through retail links on our site, we may earn an affiliate commission at no extra cost to you.</p></div><div style="display:flex;gap:20px;flex-wrap:wrap;font-weight:400;font-size:0.9rem;color:var(--ink-on-deep);"><a href="/#analyzer">Shelf Audit</a><a href="/celebrity">Iconic Routines</a><a href="/bottle">Cult Bottles</a><a href="/ingredient">Ingredients</a><a href="/concern">Skin Concerns</a><a href="/leaderboard">Routine Leaderboard</a><a href="/directory">Layering Guides</a><a href="/editorial-policy">Editorial &amp; FTC Policy</a><a href="/sitemap.xml">XML Sitemap</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div></div><div class="footer-wordmark">DermLogic</div></div></footer>${renderAtelierVanityDrawerHtml()}${renderSovrnVglnkScript()}`;
 }
 
 const SHORT_PRODUCT_NAMES = {
@@ -331,11 +337,11 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         <input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" />
         <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
           <span>
-            <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.72rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--text-secondary)'};font-weight:500;flex-shrink:0;">${isChecked ? 'Selected' : '+ Add'}</span></span>
+            <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:0.84rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.82rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--text-secondary)'};font-weight:500;flex-shrink:0;">${isChecked ? 'Selected' : '+ Add'}</span></span>
             <strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:1.02rem;font-weight:400;line-height:1.2;margin-bottom:4px;">${escapeHtml(cleanProdName)}</strong>
-            <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${roleTag} · $${prod.priceUsd}</span>
+            <span class="mono" style="color:var(--rose-brand);font-size:0.84rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${roleTag} · $${prod.priceUsd}</span>
           </span>
-          <span class="mono" style="font-size:0.73rem;color:var(--text-secondary);margin-top:auto;">pH ${prod.ph} · ${fitHint}</span>
+          <span class="mono" style="font-size:0.82rem;color:var(--text-secondary);margin-top:auto;">pH ${prod.ph} · ${fitHint}</span>
         </span>
       </label>`;
   }).join('') + `<div id="shelfEmptyState" style="display:none;grid-column:1/-1;padding:16px;background:var(--bg-canvas);font-size:0.88rem;color:var(--text-secondary);text-align:center;">No bottle matched that search. <button type="button" class="btn-secondary" style="padding:5px 12px;min-height:30px;font-size:0.82rem;margin-left:6px;" onclick="const q=document.getElementById('productFilterInput').value;const ta=document.getElementById('rawInciTextarea');if(ta&&q){ta.value=q;runRoutineAnalysis();}">Check as Ingredient Below &rarr;</button></div>`;
@@ -349,7 +355,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
               <span class="mono" style="font-size:0.9rem;color:var(--rose-brand);font-weight:500;">Bathroom Vanity Shelf Builder</span>
               <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                <button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 9px;font-size:0.74rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-weight:500;" onclick="clearRoutineSelection()">Clear ${selectedSet.size} Selected &times;</button>
+                <button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 9px;font-size:0.84rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-weight:500;" onclick="clearRoutineSelection()">Clear ${selectedSet.size} Selected &times;</button>
                 <span class="badge-safe mono" id="shelfCountBadge">${products.length} Popular Bottles</span>
               </div>
             </div>
@@ -372,7 +378,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               </select>
             </div>
 
-            <div class="product-selector-grid" id="productSelectorGrid" style="margin-bottom:0;">
+            <div class="product-selector-grid" id="productSelectorGrid" data-ui="shelf-grid" style="margin-bottom:0;">
               ${productCheckboxesHtml}
             </div>
 
@@ -388,11 +394,11 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             <div style="flex:0 0 auto;display:flex;flex-direction:column;padding:12px 14px;background:var(--bg-canvas);">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;">
                 <label class="field-label" for="rawInciTextarea" style="margin:0;font-size:0.84rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Paste Ingredient List (Pore-Clogging Check)</label>
-                <button type="button" class="btn-secondary" style="padding:4px 10px;font-size:0.76rem;min-height:28px;flex-shrink:0;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Sample</button>
+                <button type="button" class="btn-secondary" style="padding:4px 10px;font-size:0.84rem;min-height:28px;flex-shrink:0;" onclick="pasteSampleComedogenicInci()">Try Pore-Clogging Sample</button>
               </div>
               <textarea id="rawInciTextarea" class="textarea-box mono" rows="3" style="flex:0 0 auto;height:78px;min-height:78px;max-height:130px;resize:vertical;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="e.g., Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate...">${escapeHtml(initialRawInci || '')}</textarea>
               <div id="rawInciFeedbackBox" style="margin-top:6px;"></div>
-              <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:5px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients before you buy a new moisturizer.</div>
+              <div style="font-size:0.84rem;color:var(--text-secondary);margin-top:5px;">Flags pore-clogging oils, waxes &amp; clashes across 65 skincare ingredients before you buy a new moisturizer.</div>
             </div>
             ${renderPersonalizationBarHtml('indoor_dry', '')}
           </div>
@@ -470,8 +476,8 @@ function renderSingleConflictCard(c) {
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;"><span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono">${badgeLabel}</span><span class="mono" style="font-size:0.84rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</span></div>
       <div class="serif-display" style="font-size:1.18rem;font-weight:400;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(cleanTitle)}</div>
       <p style="color:var(--text-secondary);font-size:0.86rem;line-height:1.48;margin-bottom:7px;">${escapeHtml(cleanMechanism)}</p>
-      <div style="padding:7px 10px;background:rgba(255,255,255,0.66);border-left:2.5px solid ${isCritical ? 'var(--berry-clash)' : 'var(--honey-warn)'};font-size:0.82rem;line-height:1.4;color:var(--text-primary);margin-bottom:7px;"><strong>How to Fix:</strong> ${escapeHtml(howToFix)}<div class="mono" style="margin-top:3px;font-size:0.76rem;color:var(--sage-safe);">${escapeHtml(swap.freeFix)}</div></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span class="mono" style="font-size:0.76rem;color:var(--text-muted);">${timingTip}</span><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div>
+      <div style="padding:7px 10px;background:rgba(255,255,255,0.66);border-left:2.5px solid ${isCritical ? 'var(--berry-clash)' : 'var(--honey-warn)'};font-size:0.84rem;line-height:1.4;color:var(--text-primary);margin-bottom:7px;"><strong>How to Fix:</strong> ${escapeHtml(howToFix)}<div class="mono" style="margin-top:3px;font-size:0.84rem;color:var(--sage-safe);">${escapeHtml(swap.freeFix)}</div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span class="mono" style="font-size:0.84rem;color:var(--text-muted);">${timingTip}</span><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div>
     </div>`;
 }
 
@@ -534,7 +540,7 @@ function renderAnalysisResultHtml(res) {
   const amStepsHtml = amDynamicSteps.map((stepTitle, idx) => `
     <div style="padding:9px 12px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;">
       <div style="min-width:0;font-size:0.88rem;line-height:1.38;"><strong style="color:var(--text-primary);">${idx + 1}. ${escapeHtml(stepTitle)}</strong></div>
-      <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? 'Apply First' : idx === 1 ? 'Wait 60s' : 'Morning SPF'}</span>
+      <span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? 'Apply First' : idx === 1 ? 'Wait 60s' : 'Morning SPF'}</span>
     </div>`).join('');
 
   const cMode = String(res.climateMode || 'indoor_dry');
@@ -551,7 +557,7 @@ function renderAnalysisResultHtml(res) {
   const pmStepsHtml = pmDynamicSteps.map((nightStep, idx) => `
     <div style="padding:9px 12px;background:rgba(244,239,232,0.08);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;">
       <div style="min-width:0;font-size:0.88rem;line-height:1.38;color:#F4EFE8;"><strong>${idx + 1}. ${escapeHtml(nightStep)}</strong></div>
-      <span class="mono" style="font-size:0.75rem;padding:2px 8px;background:#7A2332;color:#F4EFE8;font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? (pmExfol ? 'Night 1 Polish' : 'Evening Cleanse') : idx === 1 ? 'Night 2 Renew' : 'Every Night Seal'}</span>
+      <span class="mono" style="font-size:0.84rem;padding:2px 8px;background:#7A2332;color:#F4EFE8;font-weight:500;flex-shrink:0;white-space:nowrap;">${idx === 0 ? (pmExfol ? 'Night 1 Polish' : 'Evening Cleanse') : idx === 1 ? 'Night 2 Renew' : 'Every Night Seal'}</span>
     </div>`).join('');
 
   const poreCount = res.comedogenicFlags.length;
@@ -570,25 +576,25 @@ function renderAnalysisResultHtml(res) {
       <div>
         ${renderPersonalizedResultsHeaderHtml(res)}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px;">
-          <span class="${badgeClass} mono" style="font-size:0.78rem;">${escapeHtml(topVerdictText)}</span>
-          <span class="mono" style="font-size:0.78rem;color:var(--text-secondary);">${escapeHtml(poreSummaryText)}</span>
+          <span class="${badgeClass} mono" style="font-size:0.84rem;">${escapeHtml(topVerdictText)}</span>
+          <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(poreSummaryText)}</span>
         </div>
 
         <div class="score-strip" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:stretch;margin-bottom:14px;">
           <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
-            <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Routine Verdict</div>
+            <div class="mono" style="font-size:0.84rem;color:var(--text-secondary);">Routine Verdict</div>
             <div class="serif-display" style="font-size:1.55rem;font-weight:400;color:${scoreColor};line-height:1.15;margin-top:2px;" id="compatibilityScoreValue">${isCritical ? 'Clash Found' : isWarn ? 'Space Apart' : 'Calm & Safe'}</div>
-            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:2px;">${res.conflicts.length === 0 ? 'Bottles layer smoothly' : `${res.conflicts.length} bottle ${res.conflicts.length === 1 ? 'clash' : 'clashes'}`}</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);margin-top:2px;">${res.conflicts.length === 0 ? 'Bottles layer smoothly' : `${res.conflicts.length} bottle ${res.conflicts.length === 1 ? 'clash' : 'clashes'}`}</div>
           </div>
           <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
-            <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Skin Barrier Feel</div>
+            <div class="mono" style="font-size:0.84rem;color:var(--text-secondary);">Skin Barrier Feel</div>
             <div class="metric-val" style="color:${res.barrierHazardIndex > 50 ? 'var(--berry-clash)' : 'var(--sage-safe)'};font-size:1.55rem;margin-top:2px;">${res.barrierHazardIndex > 50 ? 'High Tingle' : 'Gentle'}</div>
-            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:2px;">${res.barrierHazardIndex > 50 ? 'Separate morning & night' : 'Calm moisture barrier'}</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);margin-top:2px;">${res.barrierHazardIndex > 50 ? 'Separate morning & night' : 'Calm moisture barrier'}</div>
           </div>
           <div class="metric-box" style="display:flex;flex-direction:column;justify-content:center;">
-            <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Serum Value at Risk</div>
+            <div class="mono" style="font-size:0.84rem;color:var(--text-secondary);">Serum Value at Risk</div>
             <div class="metric-val" style="color:${isCritical ? 'var(--berry-clash)' : (res.wastedShelfValueUsd || 0) > 0 ? 'var(--honey-warn)' : 'var(--sage-safe)'};font-size:1.55rem;margin-top:2px;" id="wastedShelfValueReadout">$${res.wastedShelfValueUsd || 0}<span style="font-size:0.85rem;color:var(--text-secondary);">/$${res.totalShelfValueUsd || 248}</span></div>
-            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:2px;">${isCritical ? 'Canceled on contact' : (res.wastedShelfValueUsd || 0) > 0 ? 'At risk if stacked' : '100% absorbed'}</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);margin-top:2px;">${isCritical ? 'Canceled on contact' : (res.wastedShelfValueUsd || 0) > 0 ? 'At risk if stacked' : '100% absorbed'}</div>
           </div>
         </div>
 
@@ -934,6 +940,7 @@ const CLIENT_SCRIPT = `
     fireMetaCapiEvent('ViewContent', 0, { path: window.location.pathname });
   });
   ${ENDOWMENT_CLIENT_SCRIPT}
+  ${ATELIER_VANITY_CLIENT_SCRIPT}
 `;
 
 module.exports = {

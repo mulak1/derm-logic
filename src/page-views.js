@@ -156,7 +156,7 @@ function renderPorcelainSwatchCards(ingList) {
     const step = Number(ing.molecularWeightDa) < 200 ? 'First · Water-Light' : (Number(ing.molecularWeightDa) < 500 ? 'Second · Silky Serum' : 'Third · Velvet Seal');
     const feel = Number(ing.phMin) < 4.0 ? 'Gentle tingle · Wait 60s' : 'Cushion-soft & calm';
     const pore = ing.comedogenicity === 0 ? '0/5 Pore-Safe' : `Low (${ing.comedogenicity}/5)`;
-    return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;justify-content:space-between;gap:14px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Daily Active Note</span><span class="badge-safe mono">${pore}</span></div><h3 class="serif-display" style="font-size:1.36rem;line-height:1.24;margin-bottom:14px;">${escapeHtml(ing.commonName)}</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">When to Apply</div><div style="font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${slot.split('(')[0].trim()}</div></div><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Texture Weight</div><div style="font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${step}</div></div></div></div><div style="font-size:0.86rem;color:var(--text-secondary);padding-top:8px;line-height:1.4;"><strong>On your skin:</strong> ${feel} · <span class="mono">pH ${ing.phMin}–${ing.phMax}</span></div></div>`;
+    return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;justify-content:space-between;gap:14px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Daily Active Note</span><span class="badge-safe mono">${pore}</span></div><h3 class="serif-display" style="font-size:1.36rem;line-height:1.24;margin-bottom:14px;">${escapeHtml(ing.commonName)}</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.84rem;color:var(--text-secondary);">When to Apply</div><div style="font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${slot.split('(')[0].trim()}</div></div><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.84rem;color:var(--text-secondary);">Texture Weight</div><div style="font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${step}</div></div></div></div><div style="font-size:0.86rem;color:var(--text-secondary);padding-top:8px;line-height:1.4;"><strong>On your skin:</strong> ${feel} · <span class="mono">pH ${ing.phMin}–${ing.phMax}</span></div></div>`;
   }).join('')}</div>`;
 }
 
@@ -202,7 +202,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
         ? 'Second · Medium serum'
         : 'Third · Cream / rich';
 
-    return `<tr class="dl-ing-row" data-ing-id="${escapeHtml(ing.id)}" style="cursor:pointer;transition:background 0.18s ease;" onclick="window.__dlClickIngredientRow('${escapeHtml(ing.id)}','${escapeHtml(ing.commonName)}',this,event)"><td><a href="/ingredient/${escapeHtml(ing.id)}" onclick="event.stopPropagation();" style="color:var(--text-primary);font-weight:600;text-decoration:underline;text-decoration-color:var(--rose-pill-border);">${escapeHtml(ing.commonName)}</a><br/><span style="font-size:0.8125rem;color:var(--text-secondary);">${escapeHtml(ing.functionRole || ing.category || 'Targeted active')}</span><div style="margin-top:5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><button type="button" class="mono dl-row-test-btn" style="padding:2px 8px;font-size:0.72rem;background:var(--bg-oat);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-weight:600;" onclick="event.stopPropagation();window.__dlClickIngredientRow('${escapeHtml(ing.id)}','${escapeHtml(ing.commonName)}',this.closest('tr'),event)">+ Test in My Shelf &uarr;</button><a href="/ingredient/${escapeHtml(ing.id)}" class="mono" style="font-size:0.72rem;color:var(--text-secondary);text-decoration:underline;" onclick="event.stopPropagation();">Full Guide &rarr;</a></div></td><td>${poreClogText}</td><td>${sensitivityText}</td><td style="font-size:0.86rem;color:var(--text-primary);">${routineSlot}</td><td class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${textureOrder}</td><td style="color:var(--text-secondary);font-size:0.88rem;line-height:1.5;">${escapeHtml(getFriendlyBenefit(ing))}</td></tr>`;
+    return `<tr class="dl-ing-row" data-ing-id="${escapeHtml(ing.id)}" style="cursor:pointer;transition:background 0.18s ease;" onclick="window.__dlClickIngredientRow('${escapeHtml(ing.id)}','${escapeHtml(ing.commonName)}',this,event)"><td><a href="/ingredient/${escapeHtml(ing.id)}" onclick="event.stopPropagation();" style="color:var(--text-primary);font-weight:600;text-decoration:underline;text-decoration-color:var(--rose-pill-border);">${escapeHtml(ing.commonName)}</a><br/><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(ing.functionRole || ing.category || 'Targeted active')}</span><div style="margin-top:5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><button type="button" class="mono dl-row-test-btn" style="padding:2px 8px;font-size:0.82rem;background:var(--bg-oat);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-weight:600;" onclick="event.stopPropagation();window.__dlClickIngredientRow('${escapeHtml(ing.id)}','${escapeHtml(ing.commonName)}',this.closest('tr'),event)">+ Test in My Shelf &uarr;</button><a href="/ingredient/${escapeHtml(ing.id)}" class="mono" style="font-size:0.82rem;color:var(--text-secondary);text-decoration:underline;" onclick="event.stopPropagation();">Full Guide &rarr;</a></div></td><td>${poreClogText}</td><td>${sensitivityText}</td><td style="font-size:0.86rem;color:var(--text-primary);">${routineSlot}</td><td class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${textureOrder}</td><td style="color:var(--text-secondary);font-size:0.88rem;line-height:1.5;">${escapeHtml(getFriendlyBenefit(ing))}</td></tr>`;
   }).join('');
 
   const chemistrySpecsRows = prioritizedIngredients.map((ing) => `<tr><td><strong class="mono" style="font-size:0.84rem;">${escapeHtml(ing.inciName)}</strong></td><td class="mono">${ing.phMin}–${ing.phMax}</td><td class="mono">${ing.pka != null ? ing.pka : 'N/A'}</td><td class="mono">${ing.molecularWeightDa} Da</td><td class="mono">${ing.comedogenicity}/5</td><td class="mono">${ing.malasseziaTrigger ? 'Trigger' : 'Safe'}</td></tr>`).join('');
@@ -214,7 +214,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
   ].slice(0, 6);
 
   const pairPortraits = ['/public/editorial-segment-1.jpg', '/public/editorial-segment-2.jpg', '/public/editorial-segment-3.jpg', '/public/routines/sofia-mist.jpg', '/public/routines/selena-dewy-bounce.jpg', '/public/routines/zendaya-calm-balm.jpg'];
-  const featuredSeoLinks = featuredSeoPages.map((p, idx) => `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;justify-content:space-between;gap:12px;"><div><div style="height:128px;border-radius:8px;overflow:hidden;margin-bottom:12px;"><img src="${pairPortraits[idx % pairPortraits.length]}" alt="${escapeHtml(p.title)}" loading="lazy" style="width:100%;height:128px;object-fit:cover;object-position:center 24%;display:block;" /></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;"><span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(p.category)}</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.3rem;line-height:1.24;color:var(--text-primary);margin-bottom:8px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.56;">${escapeHtml(String(p.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor)[^)]*\)/gi, ''))}</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;gap:8px;flex-wrap:wrap;"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Read Layering Guide &rarr;</a><a href="/?products=${encodeURIComponent((p.presetProducts || ['skinceuticals-ce-ferulic']).join(','))}#analyzer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.84rem;">Test With My Shelf &rarr;</a></div></div>`).join('');
+  const featuredSeoLinks = featuredSeoPages.map((p, idx) => `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;justify-content:space-between;gap:12px;"><div><div style="height:128px;border-radius:8px;overflow:hidden;margin-bottom:12px;"><img src="${pairPortraits[idx % pairPortraits.length]}" alt="${escapeHtml(p.title)}" loading="lazy" style="width:100%;height:128px;object-fit:cover;object-position:center 24%;display:block;" /></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;"><span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(p.category)}</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.15rem;line-height:1.24;color:var(--text-primary);margin-bottom:8px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.56;">${escapeHtml(String(p.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor)[^)]*\)/gi, ''))}</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;gap:8px;flex-wrap:wrap;"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Read Layering Guide &rarr;</a><a href="/?products=${encodeURIComponent((p.presetProducts || ['skinceuticals-ce-ferulic']).join(','))}#analyzer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.84rem;">Test With My Shelf &rarr;</a></div></div>`).join('');
 
   const homeSwatchesHtml = renderPorcelainSwatchCards(prioritizedIngredients.slice(0, 3));
 
@@ -303,7 +303,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                 <blockquote class="serif-italic" style="font-size:1.02rem;line-height:1.5;color:var(--text-primary);background:var(--bg-canvas);padding:14px 16px;margin-bottom:12px;">
                   “Why did my $182 Vitamin C stop brightening and start stinging the week I added Copper Peptides?”
                 </blockquote>
-                <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;">
+                <p style="color:var(--text-secondary);font-size:1rem;line-height:1.6;">
                   Pure Vitamin C needs a tangy, low-pH environment to absorb, while Copper Peptides rest at a calm, neutral level. Layering them together cancels out both serums on contact. Keep Vitamin C for morning sun defense and save peptides for bedtime repair.
                 </p>
               </div>
@@ -323,7 +323,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                 <blockquote class="serif-italic" style="font-size:1.02rem;line-height:1.5;color:var(--text-primary);background:var(--bg-canvas);padding:14px 16px;margin-bottom:12px;">
                   “Waiting ninety seconds after my exfoliating toner stopped my cheeks from flushing warm and kept my concealer from rolling off.”
                 </blockquote>
-                <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;">
+                <p style="color:var(--text-secondary);font-size:1rem;line-height:1.6;">
                   Pressing Niacinamide or rich creams straight over damp Glycolic or Salicylic Acid overwhelms sensitive skin, triggering a warm flush on your cheeks and causing morning sunscreen or primer to pill along your jawline.
                 </p>
               </div>
@@ -343,7 +343,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                 <blockquote class="serif-italic" style="font-size:1.02rem;line-height:1.5;color:var(--text-primary);background:var(--bg-canvas);padding:14px 16px;margin-bottom:12px;">
                   “Moving Benzoyl Peroxide to the shower and buffering Tretinoin over ceramide cream calmed the peeling around my mouth in four days.”
                 </blockquote>
-                <p style="color:var(--text-secondary);font-size:0.94rem;line-height:1.6;">
+                <p style="color:var(--text-secondary);font-size:1rem;line-height:1.6;">
                   Benzoyl Peroxide releases oxygen that wipes out over 80% of Retinol and Tretinoin on contact. Use blemish washes in the morning, and cushion your nighttime retinoid over a rich ceramide cream to protect your moisture barrier.
                 </p>
               </div>
@@ -366,7 +366,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <ul class="viscosity-seq-list">
             <li class="viscosity-seq-item">
               <div>
-                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 1 · Damp Skin Prep (AM &amp; PM)</div>
+                <div class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 1 · Damp Skin Prep (AM &amp; PM)</div>
                 <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);display:block;margin-bottom:4px;">Mist or Hydrating Essence</strong>
                 <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Press onto damp skin right after cleansing while pores are receptive.</div>
               </div>
@@ -374,7 +374,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
             </li>
             <li class="viscosity-seq-item">
               <div>
-                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 2 · Active Serum (AM: Vit C · PM: Peptides)</div>
+                <div class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 2 · Active Serum (AM: Vit C · PM: Peptides)</div>
                 <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);display:block;margin-bottom:4px;">Vitamin C (AM) or Peptide Serum (PM)</strong>
                 <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Pat gently with warm palms and give pH-dependent actives time to settle.</div>
               </div>
@@ -382,7 +382,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
             </li>
             <li class="viscosity-seq-item">
               <div>
-                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 3 · Velvet Cushion (AM &amp; PM)</div>
+                <div class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 3 · Velvet Cushion (AM &amp; PM)</div>
                 <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);display:block;margin-bottom:4px;">3:1:1 Ceramide Moisturizer</strong>
                 <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Locks in hydration and cushions dry corners before nighttime retinoids.</div>
               </div>
@@ -390,7 +390,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
             </li>
             <li class="viscosity-seq-item">
               <div>
-                <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 4 · Final Seal (AM: SPF 50 · PM: Retinoid)</div>
+                <div class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Step 4 · Final Seal (AM: SPF 50 · PM: Retinoid)</div>
                 <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);display:block;margin-bottom:4px;">Morning SPF 50 or Nighttime Retinoid</strong>
                 <div style="font-size:0.86rem;color:var(--text-secondary);line-height:1.45;">Let moisturizer set for one minute so sunscreen or night treatment never pills.</div>
               </div>
@@ -406,7 +406,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       <div class="container">
         <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,0.65fr);gap:24px;align-items:center;margin-bottom:24px;">
           <div>
-            <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:8px;">Inside every bottle on your shelf.</h2>
+            <h2 class="serif-display" style="font-size:clamp(1.6rem, 2.8vw, 2.2rem);margin-bottom:8px;">Inside every bottle.</h2>
             <p style="color:var(--text-secondary);font-size:var(--step-body);margin-bottom:14px;max-width:62ch;">
               Explore how everyday skincare actives behave on your skin: whether they clog pores, whether they tingle, and when in your routine they belong.
             </p>
@@ -429,7 +429,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           </table>
         </div>
 
-        <details class="science-footnote-drawer" style="margin-top:18px;padding:16px 20px;background:var(--bg-oat);">
+        <details class="science-footnote-drawer" data-ui="science-drawer" style="margin-top:18px;padding:16px 20px;background:var(--bg-oat);">
           <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.86rem;">Esthetician &amp; Cosmetic Chemist Specifications (pH Windows, pKa, Daltons &amp; Full INCI)</summary>
           <div style="margin-top:14px;overflow-x:auto;">
             <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:10px;">Laboratory formulation metrics: optimal free-acid dissociation ranges, pKa Henderson-Hasselbalch values, and Daltons (molecular weight) determining skin-barrier penetration depth.</p>
@@ -456,7 +456,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
         </div>
         <div style="padding:18px 22px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
           <div>
-            <span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">Explore Complete Serum Routines by Goal or Celebrity Vanity</span>
+            <span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">Explore Complete Serum Routines by Goal or Celebrity Vanity</span>
             <span style="font-size:0.9rem;color:var(--text-secondary);">Browse verified morning &amp; bedtime shelves with exact bottles, wait times, and chemist dupes.</span>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">

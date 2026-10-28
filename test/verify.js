@@ -195,7 +195,7 @@ async function runVerification() {
     const initialThemeAttr = await page.getAttribute('html', 'data-theme');
     assert.strictEqual(initialThemeAttr, 'day', 'Initial html[data-theme] must be day');
     const dayBg = await page.evaluate(() => window.getComputedStyle(document.body).backgroundColor);
-    assert.strictEqual(dayBg, 'rgb(244, 239, 232)', `Day Mode body background must be #F4EFE8 (rgb(244, 239, 232)), got ${dayBg}`);
+    assert.strictEqual(dayBg, 'rgb(242, 240, 238)', `Day Mode body background must be #F2F0EE (rgb(242, 240, 238)), got ${dayBg}`);
 
     await page.click('#vanityLightToggle button[data-theme-mode="night"]');
     await page.waitForTimeout(380);
@@ -222,7 +222,7 @@ async function runVerification() {
     }));
     assert.strictEqual(restoredState.theme, 'day', 'Toggling Daylight Gallery must restore html[data-theme="day"]');
     assert.strictEqual(restoredState.hasClass, false, 'Toggling Daylight Gallery must remove body.vanity-night');
-    assert.strictEqual(restoredState.bg, 'rgb(244, 239, 232)', `Day Mode restored background must be rgb(244, 239, 232), got ${restoredState.bg}`);
+    assert.strictEqual(restoredState.bg, 'rgb(242, 240, 238)', `Day Mode restored background must be rgb(242, 240, 238), got ${restoredState.bg}`);
     assert.strictEqual(restoredState.stored, 'day', 'Daylight Gallery must persist dermlogic_vanity_theme=day in localStorage');
 
     // Click Preset 2 ("Copper Peptides + Vitamin C Oxidation Trap")
@@ -281,6 +281,36 @@ async function runVerification() {
     const restoredShelfName = await page.inputValue('#shelfNameInput');
     assert.strictEqual(restoredShelfName, 'Maya Evening Protocol', 'Shelf name must restore byte-for-byte after Stripe redirect');
     console.log('6b. Verified Layer A Zero-Loss State Persistence across Stripe redirect + 9:16 Lock-Screen Canvas & Sovrn Disclosure.');
+
+    // 6c. Verify Option 1: 5-Slot Atelier Vanity Bag Drawer, Undertone/SPF Swatches, Screenshot-Resistant Single-Focus Accordion & 24-Hour Hold
+    const vanityPillVisible = await page.locator('#dl-header-vanity-pill').isVisible();
+    assert.strictEqual(vanityPillVisible, true, '#dl-header-vanity-pill must be visible in sticky header');
+    await page.click('#dl-header-vanity-pill');
+    await page.waitForTimeout(250);
+    const vanityDrawerVisible = await page.locator('#dl-atelier-vanity-drawer').isVisible();
+    assert.strictEqual(vanityDrawerVisible, true, 'Clicking #dl-header-vanity-pill must open #dl-atelier-vanity-drawer');
+    await page.click('#dl-undertone-swatches button[data-undertone="warm_olive"]');
+    await page.click('#dl-finish-swatches button[data-finish="dewy_glass"]');
+    await page.waitForTimeout(150);
+    const spfMatchText = await page.textContent('#dl-vanity-slot-body-3');
+    assert(spfMatchText.includes('Warm') || spfMatchText.includes('Olive') || spfMatchText.includes('Zero White-Cast'), `Expected Slot 4 SPF body to reflect Warm/Olive undertone match, got "${spfMatchText}"`);
+    // Verify Screenshot-Resistant Single-Slot Accordion: clicking Slot 2 opens Slot 2 and closes Slot 4
+    await page.click('#dl-vanity-slot-header-1');
+    await page.waitForTimeout(150);
+    const openSlotBodies = await page.evaluate(() => {
+      return [0, 1, 2, 3, 4].filter((i) => {
+        const el = document.getElementById('dl-vanity-slot-body-' + i);
+        return el && window.getComputedStyle(el).display !== 'none';
+      });
+    });
+    assert.strictEqual(openSlotBodies.length, 1, `Expected strictly 1 expanded vanity slot at a time (screenshot-resistant), got ${openSlotBodies.length}`);
+    assert.strictEqual(openSlotBodies[0], 1, 'Expected Slot index 1 to be the single open slot');
+    const holdTimerText = await page.textContent('#dl-vanity-hold-countdown');
+    assert(holdTimerText && holdTimerText.includes('h'), `Expected 24h hold countdown timer to show remaining hours, got "${holdTimerText}"`);
+    await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-atelier-vanity-drawer.png'), fullPage: false });
+    await page.click('#dl-vanity-drawer-close');
+    await page.waitForTimeout(200);
+    console.log('6c. Verified 5-Slot Atelier Vanity Bag Drawer, Undertone/SPF Swatches, Single-Slot Screenshot Resistance & 24h Hold.');
 
     // Scroll back to top before fullPage screenshot so sticky header sits cleanly at top of document
     await page.evaluate(() => window.scrollTo(0, 0));

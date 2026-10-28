@@ -17,7 +17,7 @@ const { CRAWLER_UA_REGEX, loadVerticalSeoCatalog, attachUniversalSeoAndAiRoutes 
 const { attachAutonomousGrowthEngine } = require('./autonomous-growth-engine');
 
 const INDEXNOW_KEY = process.env.INDEXNOW_KEY || 'b25e791e2b694f4c9c57d8e20ad8d904';
-const SOVRN_COMMERCE_KEY = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || '77092b74b2ef39a0fcc70907f5f6216d';
+const SOVRN_COMMERCE_KEY = process.env.SOVRN_COMMERCE_KEY || 'ea3d7b74c5752fd817f896be27cd1a01';
 const SOVRN_SECRET_KEY = process.env.SOVRN_SECRET_KEY || '';
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 
@@ -28,7 +28,7 @@ const VERTICAL_CONFIGS = {
     domain: 'www.citationforge.io',
     accentColor: '#0F172A',
     theme: {
-      canvasBg: '#FAF9F5', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(250, 249, 245, 0.96)',
+      canvasBg: '#F8FAFC', cardBg: '#FFFFFF', subtleBg: '#F1F5F9', dockBg: 'rgba(248, 250, 252, 0.96)',
       border: '#E4E2DD', accentBorder: '#CBD5E1', textPrimary: '#0F172A', textSecondary: '#334155', textMuted: '#475569',
       brandPrimary: '#0F172A', brandSoftBg: '#F1F5F9', brandText: '#0F172A',
       safeColor: '#047857', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
@@ -139,7 +139,7 @@ const VERTICAL_CONFIGS = {
     lockedTitle: 'Verified Sponsor & Show Rate-Card Contacts (88 Direct Emails)',
     deliverableName: '88 Verified Brand & Show Contacts (.CSV) + 96-Flight Rate-Card Floor Ledger (.CSV) + Counter-Offer & Pilot Scripts (.EML)',
     freeDeliverableName: '88 Brand & Show Contacts + Rate-Card Floor & Counter-Offer Pack',
-    unlockBannerTitle: 'Verified Sponsor Contacts, Show Rate Floors & Counter-Offer Scripts',
+    unlockBannerTitle: 'Verified Sponsor Contacts & Show Rate Floors',
     explainerText: 'See which sponsors renewed 3+ times, audit -18% 3-flight floor CPMs vs. rack rates, and unlock 88 direct buyer & show booking rep emails',
     hudLabel: 'Media Buyer HUD', redditSub: 'podcasting',
     sliderLabel: 'Bookings', sliderMin: 1, sliderMax: 30, sliderVal: 14,
@@ -236,11 +236,11 @@ const VERTICAL_CONFIGS = {
     sliderLabel: 'Products', sliderMin: 2, sliderMax: 8, sliderVal: 4,
     searchPlaceholder: 'Search ingredient or product (e.g. Retinol)...',
     tier1Tag: 'SINGLE-ROUTINE PASS • SAVE 60% VS $4.99',
-    tier1Desc: 'Instantly unlocks your watermark-free 9:16 phone lock-screen routine card, Step 3 barrier seal wait times, and 4-Night Skin-Cycling calendar (.ICS).',
+    tier1Desc: 'Instantly unlocks your 9:16 phone lockscreen routine card, exact wait times between serums, and 4-Night Skin-Cycling calendar (.ICS).',
     tier2Tag: 'COMPLETE AM/PM ROUTINE RESCUE KIT',
-    tier2Desc: 'Printable Morning & Night Vanity Card PDF, full 65-ingredient compatibility chart, and gentle pore-safe product swaps.',
+    tier2Desc: 'Printable Morning & Night Vanity Card PDF, full ingredient compatibility chart, and gentle pore-safe product swaps.',
     tier3Tag: 'UNLIMITED SHELF & ESTHETICIAN PASS',
-    tier3Desc: 'Full year of unlimited ingredient checks, client monogrammed routine cards, fungal-acne safe screening, and pregnancy-safe filters.',
+    tier3Desc: 'Full year of unlimited ingredient checks, fungal-acne safe screening, pregnancy-safe filters, and seasonal routine updates.',
     battlecard: {
       heading: 'Why Skincare Lovers & Estheticians Choose DermLogic Over Generic Apps',
       colLegacy: '$150 Derm Visit / Guesswork', colManual: 'Single-Product Barcode Apps',
@@ -251,14 +251,14 @@ const VERTICAL_CONFIGS = {
       ]
     },
     exportActions: [
-      { id: 'btn-copy-shopping-list', label: 'Copy AM/PM Routine', type: 'copy' },
+      { id: 'btn-copy-shopping-list', label: 'Copy Routine Steps', type: 'copy' },
       { id: 'btn-export-ics', label: '4-Night Calendar (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
-      { id: 'btn-export-csv', label: 'Pore-Safe Swaps List', href: '/api/github-upgrade/export.csv' },
-      { id: 'btn-export-llms', label: 'Save Routine Card Notes', href: '/api/github-upgrade/llms-bundle.txt' },
-      { id: 'btn-print-summary', label: 'Print Bathroom Mirror Card', type: 'print' },
-      { id: 'btn-showroom-hud', label: 'Esthetician Notes', type: 'hud' },
-      { id: 'btn-cmdk-trigger', label: 'Quick Routine Menu', type: 'cmdk' },
-      { id: 'btn-reddit-share', label: 'Copy [Routine Help] Post', type: 'reddit' }
+      { id: 'btn-export-csv', label: 'Ingredient Chart (.CSV)', href: '/api/github-upgrade/export.csv' },
+      { id: 'btn-export-llms', label: 'Download Routine Notes (.TXT)', href: '/api/github-upgrade/llms-bundle.txt' },
+      { id: 'btn-print-summary', label: 'Print Vanity Card', type: 'print' },
+      { id: 'btn-showroom-hud', label: 'Vanity Shelf HUD', type: 'hud' },
+      { id: 'btn-cmdk-trigger', label: '⌘K Quick Menu', type: 'cmdk' },
+      { id: 'btn-reddit-share', label: 'Share to r/SkincareAddiction', type: 'reddit' }
     ],
     kpis: [
       { label: 'Routine Harmony Score', val: '20/100', sub: 'Ingredient Clash Found' },
@@ -283,7 +283,7 @@ const VERTICAL_CONFIGS = {
       { key: 'ultrasun', label: 'Pore-Safety Check', rowText: 'Formulation Alert: Heavy esters (Isopropyl Myristate & Coconut Alkanes) trap heat under active serums.' }
     ],
     affiliates: [
-      { title: 'SkinCeuticals C E Ferulic (Dermstore)', badge: 'Morning Vitamin C Pick', cpa: 'Shop Authorized Clinical', url: 'https://sovrn.co/n3acz14' },
+      { title: 'SkinCeuticals C E Ferulic (Dermstore)', badge: 'Morning Vitamin C Pick', cpa: 'Shop Authorized Clinical', url: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/' },
       { title: "Paula's Choice 2% BHA Liquid (Sephora)", badge: 'Exfoliating Night Pick', cpa: 'Shop Verified Formula', url: 'https://www.sephora.com/product/skin-perfecting-2-bha-liquid-exfoliant-P469502' },
       { title: 'La Roche-Posay Cicaplast Baume B5+', badge: 'Recovery Night Cream', cpa: 'Shop Dermatologist Pick', url: 'https://www.ulta.com/p/cicaplast-baume-b5-soothing-therapeutic-multi-purpose-cream-pimprod2018267' }
     ],
@@ -977,7 +977,7 @@ function attachExactBaselinePack(app, options = {}) {
     const origSend = res.send.bind(res);
     res.send = function patchedSend(body) {
       const isHtml = typeof body === 'string' && (String(res.getHeader('Content-Type') || '').includes('text/html') || body.trim().startsWith('<!DOCTYPE html>'));
-      if ( isHtml && req.method === 'GET' && (req.path === '/' || req.path === '/lp' || req.path === '/directory' || req.path === '/editorial-policy' || req.path === '/about' || req.path === '/leaderboard' || req.path === '/privacy' || req.path === '/terms' || req.path.startsWith('/dossier/sample') || req.path.startsWith('/seo/') || req.path.startsWith('/tools/') || req.path.startsWith('/compare/') || req.path.startsWith('/scan/') || req.path.startsWith('/report/')) && !body.includes('id="eb-bottom-conversion-suite"')) {
+      if (isHtml && req.method === 'GET' && (req.path === '/' || req.path === '/lp' || req.path === '/directory' || req.path === '/leaderboard' || req.path === '/privacy' || req.path === '/terms' || req.path.startsWith('/dossier/sample') || req.path.startsWith('/seo/') || req.path.startsWith('/tools/') || req.path.startsWith('/compare/') || req.path.startsWith('/scan/') || req.path.startsWith('/report/')) && !body.includes('id="eb-bottom-conversion-suite"')) {
         try { res.setHeader('X-Robots-Tag', 'all, index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'); res.setHeader('Link', `<https://${cfg.domain}/llms.txt>; rel="llms-txt", <https://${cfg.domain}/llms-full.txt>; rel="llms-full-txt", <https://${cfg.domain}/openapi.json>; rel="service-desc", <https://${cfg.domain}/feed.xml>; rel="alternate"; type="application/rss+xml"`); } catch (_) {}
         store.recordEvent({ eventType: 'visit', pageUrl: req.originalUrl || req.path, deviceType, utmSource: String(req.query?.utm_source || ''), utmCampaign: String(req.query?.utm_campaign || ''), isTest, isCrawler, isOwnerIp, clientIp });
         body = renderExactBaselineEnhancements(body, cfg, req.path);

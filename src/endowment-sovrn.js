@@ -107,7 +107,7 @@ function getConflictSafeSwap(conflict) {
 }
 
 function renderAboveFoldSovrnDisclosureBar() {
-  return `<div id="sovrn-ftc-disclosure-bar" role="region" aria-label="Editorial and Affiliate Disclosure" style="background:var(--bg-oat);border-bottom:1px solid var(--border-hairline);padding:5px 0;font-size:0.76rem;line-height:1.35;color:var(--text-secondary);">
+  return `<div id="sovrn-ftc-disclosure-bar" role="region" aria-label="Editorial and Affiliate Disclosure" style="background:var(--bg-oat);padding:5px 0;font-size:0.875rem;line-height:1.35;color:var(--text-secondary);">
     <div class="container">
       <strong class="mono" style="color:var(--rose-brand);font-weight:600;">Editorial &amp; FTC Disclosure:</strong> DermLogic is an independent cosmetic-chemistry publication reviewed by our Formulation &amp; Esthetics Board. When you shop through retail links on our site, we may earn an affiliate commission at no extra cost to you. <a href="/editorial-policy" class="mono" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;margin-left:6px;white-space:nowrap;">Editorial &amp; Testing Policy</a> &middot; <a href="/editorial-policy#affiliate-disclosure" class="mono" style="color:var(--text-primary);font-weight:500;text-decoration:underline;white-space:nowrap;">Affiliate Disclosure</a>
     </div>
@@ -187,7 +187,7 @@ function renderPersonalizedResultsHeaderHtml(res) {
   return `<div id="personalizedRoutineBanner" style="padding:12px 15px;background:var(--bg-canvas);border-left:3px solid var(--rose-brand);margin-bottom:12px;display:flex;flex-direction:column;gap:4px;">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
       <strong id="personalizedRoutineTitle" class="serif-display" style="font-size:1.22rem;color:var(--text-primary);font-weight:600;">${escapeHtml(heading)}</strong>
-      <span id="personalizedClimateBadge" class="badge-safe mono" style="font-size:0.74rem;padding:3px 9px;">${escapeHtml(meta.badge)}</span>
+      <span id="personalizedClimateBadge" class="badge-safe mono" style="font-size:0.84rem;padding:3px 9px;">${escapeHtml(meta.badge)}</span>
     </div>
     <div id="personalizedClimateRule" style="font-size:0.83rem;color:var(--text-secondary);line-height:1.42;">${escapeHtml(meta.rule)}</div>
   </div>`;
@@ -197,19 +197,19 @@ function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShel
   return `<div id="endowmentPersonalizationBar" style="padding:14px 16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
       <span class="field-label" style="margin:0;font-size:0.88rem;">Personalize Your Climate &amp; Lock-Screen Card</span>
-      <span id="shelfDraftSavedBadge" class="badge-safe mono" style="font-size:0.72rem;padding:2px 8px;">✓ Shelf Auto-Saved</span>
+      <span id="shelfDraftSavedBadge" class="badge-safe mono" style="font-size:0.84rem;padding:2px 8px;">Shelf Auto-Saved</span>
     </div>
     <div id="climateContextPills" role="group" aria-label="Climate and Barrier Context" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;background:var(--bg-oat);padding:4px;">
-      <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry Heat</button>
-      <button type="button" class="vanity-light-btn mono ${initialClimate === 'humid_oily' ? 'active' : ''}" data-climate="humid_oily" aria-pressed="${initialClimate === 'humid_oily' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('humid_oily', this)">Humid / Dewy</button>
-      <button type="button" class="vanity-light-btn mono ${initialClimate === 'retinoid_retinization' ? 'active' : ''}" data-climate="retinoid_retinization" aria-pressed="${initialClimate === 'retinoid_retinization' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('retinoid_retinization', this)">Retinoid Purge</button>
-      <button type="button" class="vanity-light-btn mono ${initialClimate === 'pregnancy_nursing' ? 'active' : ''}" data-climate="pregnancy_nursing" aria-pressed="${initialClimate === 'pregnancy_nursing' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.74rem;min-height:30px;" onclick="window.__dlSetClimate('pregnancy_nursing', this)">Pregnancy-Safe</button>
+      <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.84rem;min-height:30px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry Heat</button>
+      <button type="button" class="vanity-light-btn mono ${initialClimate === 'humid_oily' ? 'active' : ''}" data-climate="humid_oily" aria-pressed="${initialClimate === 'humid_oily' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.84rem;min-height:30px;" onclick="window.__dlSetClimate('humid_oily', this)">Humid / Dewy</button>
+      <button type="button" class="vanity-light-btn mono ${initialClimate === 'retinoid_retinization' ? 'active' : ''}" data-climate="retinoid_retinization" aria-pressed="${initialClimate === 'retinoid_retinization' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.84rem;min-height:30px;" onclick="window.__dlSetClimate('retinoid_retinization', this)">Retinoid Purge</button>
+      <button type="button" class="vanity-light-btn mono ${initialClimate === 'pregnancy_nursing' ? 'active' : ''}" data-climate="pregnancy_nursing" aria-pressed="${initialClimate === 'pregnancy_nursing' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:6px 4px;font-size:0.84rem;min-height:30px;" onclick="window.__dlSetClimate('pregnancy_nursing', this)">Pregnancy-Safe</button>
     </div>
     <div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;">
-      <label for="shelfNameInput" class="mono" style="font-size:0.76rem;color:var(--text-secondary);white-space:nowrap;">Routine Title:</label>
+      <label for="shelfNameInput" class="mono" style="font-size:0.84rem;color:var(--text-secondary);white-space:nowrap;">Routine Title:</label>
       <input id="shelfNameInput" type="text" maxlength="44" class="input-box" style="padding:7px 11px;font-size:0.84rem;" placeholder="e.g., Maya's Evening Ritual (Optional)" value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(typeof runRoutineAnalysis==='function')runRoutineAnalysis(null,true);}" />
     </div>
-    <div id="analyzeBtnFeedback" role="status" aria-live="polite" style="display:none;padding:8px 11px;background:var(--sage-bg);color:var(--sage-safe);border-left:3px solid var(--sage-safe);font-size:0.8rem;font-weight:500;line-height:1.38;"></div>
+    <div id="analyzeBtnFeedback" role="status" aria-live="polite" style="display:none;padding:8px 11px;background:var(--sage-bg);color:var(--sage-safe);border-left:3px solid var(--sage-safe);font-size:0.84rem;font-weight:500;line-height:1.38;"></div>
   </div>`;
 }
 
@@ -218,38 +218,38 @@ function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Va
   const wastedUsd = res.wastedShelfValueUsd || 0;
   return `
     <div style="padding:14px 16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:12px;">
-      <div id="beforeAfterSplitBar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--border-hairline);">
-        <span id="beforeAfterStatusText" style="font-size:0.82rem;color:var(--text-secondary);"><strong style="color:var(--sage-safe);">✓ Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)</span>
+      <div id="beforeAfterSplitBar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-bottom:10px;">
+        <span id="beforeAfterStatusText" style="font-size:0.84rem;color:var(--text-secondary);"><strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)</span>
         <div class="vanity-light-pill" role="group" aria-label="Compare Before Clashing Stack vs After Fixed Split" style="padding:3px;gap:3px;">
-          <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.73rem;padding:4px 9px;min-height:26px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Fixed Split (96/100)</button>
-          <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.73rem;padding:4px 9px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} &middot; -$${wastedUsd})</button>
+          <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.84rem;padding:4px 9px;min-height:26px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Fixed Split (96/100)</button>
+          <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.84rem;padding:4px 9px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} &middot; -$${wastedUsd})</button>
         </div>
       </div>
 
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
-          <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);font-weight:600;letter-spacing:0.02em;text-transform:uppercase;">4-Night Bedtime Rotation</span>
-          <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:500;text-decoration:underline;white-space:nowrap;">Add 4-Night .ICS Calendar (99&cent;) &rarr;</a>
+          <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);font-weight:600;letter-spacing:0.02em;text-transform:uppercase;">4-Night Bedtime Rotation</span>
+          <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;text-decoration:underline;white-space:nowrap;">Add 4-Night .ICS Calendar (99&cent;) &rarr;</a>
         </div>
         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
-          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;white-space:nowrap;">${escapeHtml(n1Label)}</span><span class="mono" style="font-size:0.69rem;color:var(--text-muted);white-space:nowrap;">Wait 60s</span></div><div style="font-size:0.83rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n1Val)}</div></div>
-          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.76rem;color:var(--honey-warn);font-weight:600;white-space:nowrap;">${escapeHtml(n2Label)}</span><span class="mono" style="font-size:0.69rem;color:var(--text-muted);white-space:nowrap;">Dry Skin</span></div><div style="font-size:0.83rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n2Val)}</div></div>
-          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;white-space:nowrap;">${escapeHtml(n3Label)}</span><span class="mono dl-gated-night-val" data-unlocked-text="Damp Seal" style="font-size:0.69rem;color:var(--sage-safe);white-space:nowrap;">Barrier Rest</span></div><div style="font-size:0.83rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n3Val)}</div></div>
-          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;white-space:nowrap;">Night 4 &middot; Seal</span><span class="mono dl-gated-night-val" data-unlocked-text="3:1:1 Lipids" style="font-size:0.69rem;color:var(--sage-safe);white-space:nowrap;">3:1:1 Lipids</span></div><div style="font-size:0.83rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n4Val)}</div></div>
+          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;flex-wrap:wrap;"><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:600;white-space:nowrap;">${escapeHtml(n1Label)}</span><span class="mono" style="font-size:0.84rem;color:var(--text-muted);white-space:nowrap;">Wait 60s</span></div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n1Val)}</div></div>
+          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;flex-wrap:wrap;"><span class="mono" style="font-size:0.84rem;color:var(--honey-warn);font-weight:600;white-space:nowrap;">${escapeHtml(n2Label)}</span><span class="mono" style="font-size:0.84rem;color:var(--text-muted);white-space:nowrap;">Dry Skin</span></div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n2Val)}</div></div>
+          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;flex-wrap:wrap;"><span class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:600;white-space:nowrap;">${escapeHtml(n3Label)}</span><span class="mono dl-gated-night-val" data-unlocked-text="Damp Seal" style="font-size:0.84rem;color:var(--sage-safe);white-space:nowrap;">Barrier Rest</span></div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n3Val)}</div></div>
+          <div style="padding:9px 11px;background:var(--bg-surface);"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;flex-wrap:wrap;"><span class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:600;white-space:nowrap;">Night 4 &middot; Seal</span><span class="mono dl-gated-night-val" data-unlocked-text="3:1:1 Lipids" style="font-size:0.84rem;color:var(--sage-safe);white-space:nowrap;">Lipids</span></div><div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n4Val)}</div></div>
         </div>
       </div>
 
       <div id="lockScreenCanvasSection" style="padding:12px 14px;background:var(--bg-surface);display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px;align-items:center;">
-        <canvas id="lockScreenWallpaperCanvas" width="360" height="640" onclick="window.__dlDownloadOrUnlockWallpaper()" title="Click to download 9:16 Lock-Screen Routine Card" style="width:84px;height:149px;background:#181412;display:block;cursor:pointer;box-shadow:0 4px 12px rgba(12,10,8,0.14);"></canvas>
+        <canvas id="lockScreenWallpaperCanvas" width="360" height="640" onclick="window.__dlDownloadOrUnlockWallpaper()" title="Click to download 9:16 Lock-Screen Routine Card" style="width:84px;height:149px;background:#181412;display:block;cursor:pointer;"></canvas>
         <div style="min-width:0;display:flex;flex-direction:column;gap:6px;">
           <div>
-            <span class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:600;display:block;text-transform:uppercase;letter-spacing:0.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">9:16 Lock-Screen Card &amp; Reddit Summary</span>
+            <span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:600;display:block;text-transform:uppercase;letter-spacing:0.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">9:16 Lock-Screen Card &amp; Reddit Summary</span>
             <div class="serif-display" style="font-size:1.08rem;color:var(--text-primary);line-height:1.22;margin-top:2px;">Save your custom AM &amp; PM order to your phone.</div>
-            <div style="font-size:0.78rem;color:var(--text-secondary);line-height:1.36;margin-top:2px;">Live monogrammed card updates as you type. Download the 9:16 PNG or copy your Reddit summary.</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);line-height:1.36;margin-top:2px;">Live monogrammed card updates as you type. Download the 9:16 PNG or copy your Reddit summary.</div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:center;margin-top:2px;">
-            <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:6px 8px;min-height:32px;font-size:0.72rem;white-space:nowrap;justify-content:center;" onclick="window.__dlDownloadOrUnlockWallpaper()">Save 9:16 PNG (99&cent;) &rarr;</button>
-            <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 8px;min-height:32px;font-size:0.72rem;white-space:nowrap;justify-content:center;" onclick="window.__dlCopyRedditRoutineHelp(this)">Copy Reddit Summary</button>
+            <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:6px 8px;min-height:32px;font-size:0.84rem;white-space:nowrap;justify-content:center;" onclick="window.__dlDownloadOrUnlockWallpaper()">Save 9:16 PNG (99&cent;) &rarr;</button>
+            <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 8px;min-height:32px;font-size:0.84rem;white-space:nowrap;justify-content:center;" onclick="window.__dlCopyRedditRoutineHelp(this)">Copy Reddit Summary</button>
           </div>
         </div>
       </div>
@@ -280,7 +280,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       localStorage.setItem(window.__dlShelfStateKey, JSON.stringify(state));
       var badge = document.getElementById('shelfDraftSavedBadge');
       if (badge) {
-        badge.textContent = '✓ Saved (' + checked.length + ' bottles)';
+        badge.textContent = 'Saved (' + checked.length + ' bottles)';
       }
     } catch (_) {}
   };
@@ -436,13 +436,13 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       fb.style.display = 'block';
       var who = shelfName ? (shelfName + "'s Routine") : 'Your Routine';
       var clashSummary = cCount === 0 ? '0 Active Clashes' : (cCount + (cCount === 1 ? ' Clash Separated AM/PM' : ' Clashes Separated AM/PM'));
-      fb.innerHTML = '✓ <strong>' + who.replace(/[<>"'&]/g, '') + ' Checked (' + checkedCount + ' Bottles)</strong> &middot; ' + meta.shortLabel + ' Applied &middot; ' + clashSummary + ' &middot; <a href="#liveResultsContainer" onclick="var el=document.getElementById(\\'liveResultsContainer\\');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:\\'smooth\\',block:\\'start\\'});return false;" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;">Jump to Updated Routine &rarr;</a>';
+      fb.innerHTML = '<strong>' + who.replace(/[<>"'&]/g, '') + ' Checked (' + checkedCount + ' Bottles)</strong> &middot; ' + meta.shortLabel + ' Applied &middot; ' + clashSummary + ' &middot; <a href="#liveResultsContainer" onclick="var el=document.getElementById(\\'liveResultsContainer\\');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:\\'smooth\\',block:\\'start\\'});return false;" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;">Jump to Updated Routine &rarr;</a>';
     }
     if (isExplicitClick) {
       var btn = document.getElementById('analyzeBtn');
       if (btn) {
         if (window.__dlBtnResetTimer) clearTimeout(window.__dlBtnResetTimer);
-        var btnLabel = shelfName ? ('✓ ' + shelfName.slice(0, 18).replace(/[<>"'&]/g, '') + "'s Shelf Checked · View Routine") : ('✓ Shelf Checked (' + checkedCount + ' Bottles) · Routine Updated');
+        var btnLabel = shelfName ? (shelfName.slice(0, 18).replace(/[<>"'&]/g, '') + "'s Shelf Checked · View Routine") : ('Shelf Checked (' + checkedCount + ' Bottles) · Routine Updated');
         btn.style.background = 'var(--sage-safe)';
         btn.innerHTML = '<span>' + btnLabel + '</span><span class="btn-icon-circle">&uarr;</span>';
         window.__dlBtnResetTimer = setTimeout(function() {
@@ -479,7 +479,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     if (st) {
       st.innerHTML = window.__dlViewMode === 'clash'
         ? '<strong style="color:var(--berry-clash);">Unfixed Stack</strong> &middot; ' + cCount + ' Clashes (-$' + wUsd + ' Serum Value at Risk)'
-        : '<strong style="color:var(--sage-safe);">✓ Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)';
+        : '<strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)';
     }
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();
@@ -620,7 +620,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     }
     if (btn) {
       var orig = btn.textContent;
-      btn.textContent = '✓ Copied [Routine Help] Markdown!';
+      btn.textContent = 'Copied [Routine Help] Markdown!';
       setTimeout(function() { btn.textContent = orig; }, 3000);
     }
   };
@@ -652,7 +652,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     if (trEl) {
       trEl.style.background = 'var(--sage-bg)';
       var btn = trEl.querySelector('.dl-row-test-btn');
-      if (btn) btn.innerHTML = '✓ Added to Shelf &middot; Viewing Above &uarr;';
+      if (btn) btn.innerHTML = 'Added to Shelf &middot; Viewing Above &uarr;';
     }
     var mappedProdId = window.__dlIngProductMap[ingId] || '';
     var cb = mappedProdId ? document.querySelector('input[name="routineProduct"][value="' + mappedProdId + '"]') : null;
@@ -718,61 +718,61 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       rowsHtml =
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">9:16 Lock-Screen Wallpaper (PNG):</strong> Instant AM/PM bathroom checklist sized for iPhone &amp; Android</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">1080 &times; 1920 PNG</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">1080 &times; 1920 PNG</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">4-Night Calendar (.ICS):</strong> 9:00 PM alerts for Night 1 (' + safeText(pmItemA) + ') vs. Night 2 (' + safeText(pmItemB) + ')</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Apple &amp; Google Cal</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Apple &amp; Google Cal</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Pore-Safe Swaps (.CSV):</strong> 1-to-1 non-comedogenic &amp; budget alternatives for your $' + usd + ' shelf</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3 Files in 1 Pack</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3 Files in 1 Pack</span>' +
         '</div>';
     } else if (idx === 1) {
       rowsHtml =
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">Night 1 (Exfoliate):</strong> ' + safeText(amItem) + ' in AM &middot; <strong>' + safeText(pmItemA) + '</strong> at 9:30 PM</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Wait 60s</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Wait 60s</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">Night 2 (Renew):</strong> <strong>' + safeText(pmItemB) + '</strong> on dry skin + Ceramide Buffer</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">9:00 PM Alert</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">9:00 PM Alert</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Nights 3 &amp; 4 (Recovery):</strong> Zero acids or retinoids &middot; 3:1:1 Ceramide Cushion</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">Barrier Rest</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">Barrier Rest</span>' +
         '</div>';
     } else if (idx === 2) {
       rowsHtml =
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Pore-Safety Audit:</strong> Screens your ' + (hasShelf ? (names.length + ' selected bottles') : 'routine') + ' against 65 pore-clogging esters &amp; waxes</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">0/5 Pore-Safe</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">0/5 Pore-Safe</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">1-to-1 Barrier Swaps:</strong> Budget &amp; clinical alternatives that layer with <strong>' + safeText(amItem) + '</strong> without pilling</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">.CSV Included</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">.CSV Included</span>' +
         '</div>';
     } else {
       rowsHtml =
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">7:30 AM Morning Shield:</strong> Gentle Rinse &rarr; <strong>' + safeText(amItem) + '</strong> &rarr; 60s pH Wait &rarr; SPF 50</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">Wait 60s &middot; pH 3.2</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">Wait 60s &middot; pH 3.2</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">9:30 PM Night 1 vs. Night 2:</strong> Splits <strong>' + safeText(pmItemA) + '</strong> and <strong>' + safeText(pmItemB) + '</strong> across alternating nights</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Zero Clash Split</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Zero Clash Split</span>' +
         '</div>' +
         '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
           '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Every Night Barrier Seal:</strong> 3:1:1 Ceramide recovery cream locks in hydration without clogging pores</div>' +
-          '<span class="mono" style="font-size:0.73rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3:1:1 Lipid Seal</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3:1:1 Lipid Seal</span>' +
         '</div>';
     }
 
     pre.innerHTML =
       '<div class="dl-curtain-rich-card" style="display:flex;flex-direction:column;gap:8px;width:100%;">' +
-        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-bottom:6px;border-bottom:1px solid var(--border-hairline);">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-bottom:6px;">' +
           '<span class="serif-display" style="font-size:1.12rem;color:var(--text-primary);font-weight:400;">' + titleText + '</span>' +
-          '<span class="mono" style="font-size:0.73rem;padding:3px 9px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;">' + pillText + '</span>' +
+          '<span class="mono" style="font-size:0.84rem;padding:3px 9px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;">' + pillText + '</span>' +
         '</div>' +
         rowsHtml +
       '</div>';
