@@ -282,13 +282,15 @@ async function runVerification() {
     assert.strictEqual(restoredShelfName, 'Maya Evening Protocol', 'Shelf name must restore byte-for-byte after Stripe redirect');
     console.log('6b. Verified Layer A Zero-Loss State Persistence across Stripe redirect + 9:16 Lock-Screen Canvas & Sovrn Disclosure.');
 
-    // 6c. Verify Option 1: 5-Slot Atelier Vanity Bag Drawer, Undertone/SPF Swatches, Screenshot-Resistant Single-Focus Accordion & 24-Hour Hold
+    // 6c. Verify Option 1 + 2 + 3 Hybrid: 5-Slot Atelier Vanity Bag, 4-Tab Dossier, Visual Bottle Tray, Clash Engine & 24-Hour Hold
     const vanityPillVisible = await page.locator('#dl-header-vanity-pill').isVisible();
     assert.strictEqual(vanityPillVisible, true, '#dl-header-vanity-pill must be visible in sticky header');
     await page.click('#dl-header-vanity-pill');
     await page.waitForTimeout(250);
     const vanityDrawerVisible = await page.locator('#dl-atelier-vanity-drawer').isVisible();
     assert.strictEqual(vanityDrawerVisible, true, 'Clicking #dl-header-vanity-pill must open #dl-atelier-vanity-drawer');
+    const trayVesselsCount = await page.locator('#dl-vanity-visual-tray .dl-tray-vessel-btn').count();
+    assert.strictEqual(trayVesselsCount, 5, 'Expected 5 visual bottle vessels in #dl-vanity-visual-tray');
     await page.click('#dl-undertone-swatches button[data-undertone="warm_olive"]');
     await page.click('#dl-finish-swatches button[data-finish="dewy_glass"]');
     await page.waitForTimeout(150);
@@ -308,9 +310,21 @@ async function runVerification() {
     const holdTimerText = await page.textContent('#dl-vanity-hold-countdown');
     assert(holdTimerText && holdTimerText.includes('h'), `Expected 24h hold countdown timer to show remaining hours, got "${holdTimerText}"`);
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-atelier-vanity-drawer.png'), fullPage: false });
+
+    // Verify Tab 02 (Bag Clashes) + 1-Tap Fix
+    await page.evaluate(() => window.__dlInjectSampleClash());
+    await page.waitForTimeout(150);
+    const clashBannerVisible = await page.locator('#dl-vanity-clash-banner').isVisible();
+    assert.strictEqual(clashBannerVisible, true, 'Injecting a bag clash must display #dl-vanity-clash-banner');
+    await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-atelier-vanity-clash.png'), fullPage: false });
+    await page.evaluate(() => window.__dlAutoFixBagClashes());
+    await page.waitForTimeout(150);
+    const clashBannerAfterFix = await page.locator('#dl-vanity-clash-banner').isVisible();
+    assert.strictEqual(clashBannerAfterFix, false, '1-Tap Fix must resolve the bag clash and hide #dl-vanity-clash-banner');
+
     await page.click('#dl-vanity-drawer-close');
     await page.waitForTimeout(200);
-    console.log('6c. Verified 5-Slot Atelier Vanity Bag Drawer, Undertone/SPF Swatches, Single-Slot Screenshot Resistance & 24h Hold.');
+    console.log('6c. Verified Option 1+2+3 Hybrid Vanity Bag Drawer, 5-Vessel Tray, Clash Engine & 24h Hold.');
 
     // Scroll back to top before fullPage screenshot so sticky header sits cleanly at top of document
     await page.evaluate(() => window.scrollTo(0, 0));
