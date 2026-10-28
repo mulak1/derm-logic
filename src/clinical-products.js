@@ -942,36 +942,36 @@ const VANITY_SLOT_CALIBRATORS = {
 const VANITY_SLOT_OPTIONS = [
   { slotNum: '01 · AM PREP', shortSlot: '01 · PREP', vesselType: 'mist', role: 'Morning Cleanse & pH Prep', timing: '7:30 AM · Step 1 (pH Reset · Wait 45s)', choices: [
     { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28', ph: '4.8', tag: 'HOCl' },
-    { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua Toner', ph: '5.7', tag: 'pH5.7' },
-    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl 10%', ph: '5.2', tag: 'BPO' },
-    { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Glycolic 7%', ph: '3.6', tag: '7%AHA' }
+    { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua 77%', ph: '5.7', tag: 'pH5' },
+    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl', ph: '5.2', tag: 'BPO' },
+    { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Glycolic 7', ph: '3.6', tag: 'AHA' }
   ] },
   { slotNum: '02 · AM ACTIVE', shortSlot: '02 · SERUM', vesselType: 'dropper', role: 'Morning Antioxidant Serum', timing: '7:31 AM · Step 2 (Antioxidant Shield · Wait 60s before cream)', choices: [
-    { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'CE Ferulic', ph: '3.2', tag: '15% C' },
-    { id: 'rohto-melano-cc', label: 'Rohto Melano CC Vitamin C Essence ($14)', short: 'Melano CC', ph: '3.5', tag: 'Vit C' },
-    { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'Niacinamide', ph: '6.0', tag: '10%B3' },
-    { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Faded Serum', ph: '5.5', tag: 'TXA' },
-    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper Pept', ph: '6.2', tag: 'GHKCu' }
+    { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'CE Ferulic', ph: '3.2', tag: '15%C' },
+    { id: 'rohto-melano-cc', label: 'Rohto Melano CC Vitamin C Essence ($14)', short: 'Melano CC', ph: '3.5', tag: 'VitC' },
+    { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'B3 + Zinc', ph: '6.0', tag: '10%' },
+    { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Faded TXA', ph: '5.5', tag: 'TXA' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%' }
   ] },
   { slotNum: '03 · BARRIER SEAL', shortSlot: '03 · CREAM', vesselType: 'jar', role: '3:1:1 Ceramide & Lipid Cushion', timing: 'AM & PM · Step 3 (Seals hydration & buffers night actives)', choices: [
-    { id: 'aestura-atobarrier-365', label: 'Aestura Atobarrier 365 Ceramide Cream ($32)', short: 'Aestura 365', ph: '5.5', tag: '3:1:1' },
-    { id: 'dieux-instant-angel', label: 'Dieux Instant Angel Lipid Cream ($45)', short: 'Dieux Angel', ph: '5.4', tag: 'Lipid' },
-    { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96', ph: '6.5', tag: 'Snail' },
-    { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast B5', ph: '5.6', tag: '5% B5' },
+    { id: 'aestura-atobarrier-365', label: 'Aestura Atobarrier 365 Ceramide Cream ($32)', short: 'Aestura', ph: '5.5', tag: '3:1:1' },
+    { id: 'dieux-instant-angel', label: 'Dieux Instant Angel Lipid Cream ($45)', short: 'Dieux', ph: '5.4', tag: 'Lipid' },
+    { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96', ph: '6.5', tag: '96%' },
+    { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast', ph: '5.6', tag: 'B5+' },
     { id: 'cerave-pm-lotion', label: 'CeraVe PM Facial Moisturizing Lotion ($17)', short: 'CeraVe PM', ph: '5.8', tag: 'Cera' }
   ] },
   { slotNum: '04 · SPF & TONE', shortSlot: '04 · SPF 50', vesselType: 'tube', role: 'Undertone-Matched SPF 50 & Finish', timing: '7:33 AM · Step 4 (2-Finger Rule · Wait 90s before makeup)', choices: [
-    { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon SPF50', ph: '6.2', tag: 'SPF50' },
-    { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD SPF46', ph: '6.0', tag: 'SPF46' }
+    { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon 50', ph: '6.2', tag: 'SPF' },
+    { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD 46', ph: '6.0', tag: 'UV46' }
   ] },
   { slotNum: '05 · PM RENEWAL', shortSlot: '05 · PM', vesselType: 'pm_bottle', role: 'Evening Retinoid / Exfoliant (4-Night Cycle)', timing: '9:30 PM · Nights 1 & 2 Only (Dry skin buffer · Never mix with AM acids)', choices: [
     { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tret 0.05%', ph: '5.8', tag: 'Tret' },
-    { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Retinal 6', ph: '5.9', tag: 'Retin' },
-    { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: 'Paula 2% BHA', ph: '3.5', tag: '2%BHA' },
-    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper Pept', ph: '6.2', tag: 'GHKCu' },
-    { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin 0.1', ph: '5.5', tag: '0.1%' },
+    { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Retinal 6', ph: '5.9', tag: 'Ret6' },
+    { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: 'Paula BHA', ph: '3.5', tag: 'BHA' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%' },
+    { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin', ph: '5.5', tag: '0.1%' },
     { id: 'biologique-recherche-p50-1970', label: 'Biologique Recherche Lotion P50 1970 ($115)', short: 'Lotion P50', ph: '3.0', tag: 'P50' },
-    { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15%', ph: '4.9', tag: '15%Az' }
+    { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15', ph: '4.9', tag: 'AzA' }
   ] }
 ];
 
