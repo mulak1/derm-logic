@@ -223,46 +223,45 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       <div class="container">
         <div id="home-executive-brief" class="editorial-top-banner">
           <div class="hero-copy-col">
-            <div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
               <h1 class="hero-h1"><span class="hero-h1-line1">Quiet your shelf.</span><span class="hero-h1-line2">Perfect your routine.</span></h1>
-              <p class="hero-sub">Build a chemist-verified morning and bedtime serum routine from the bottles you already own. Check in five seconds which actives cancel on contact, and get the exact thinnest-to-richest layering order for Vitamin C, Copper Peptides, Exfoliants, and Tretinoin.</p>
-              <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
-                <a href="#analyzer" class="btn-primary"><span>Build &amp; Check My Serum Routine</span><span class="btn-icon-circle">&rarr;</span></a>
-                <a href="/celebrity" class="btn-secondary"><span>Explore Iconic Serum Routines</span></a>
-              </div>
-              <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px;background:var(--bg-surface);margin-bottom:10px;font-size:0.84rem;">
-                <div><strong class="mono" style="color:var(--rose-brand);display:block;">1. Pick Serums or Goal</strong><span style="color:var(--text-secondary);">Tap your bottles or load a routine</span></div>
-                <div><strong class="mono" style="color:var(--sage-safe);display:block;">2. Check Layering Clashes</strong><span style="color:var(--text-secondary);">Spot pH &amp; active conflicts</span></div>
-                <div><strong class="mono" style="color:var(--text-primary);display:block;">3. AM &amp; PM Routine Order</strong><span style="color:var(--text-secondary);">Exact wait times &amp; 4-night plan</span></div>
+              <p class="hero-sub">Build a calm, chemist-verified morning and bedtime ritual from the bottles you already own. Tap your serums below to see which actives cancel on contact and how to layer them without stinging or pilling.</p>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                <a href="#analyzer" class="btn-primary"><span>Play With the Shelf Builder</span><span class="btn-icon-circle">&rarr;</span></a>
+                <a href="/celebrity" class="btn-secondary"><span>Explore Celebrity Shelves</span></a>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px;background:var(--bg-oat);">
-              <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">44</div><div style="font-size:0.84rem;color:var(--text-secondary);">Popular Serums &amp; Creams</div></div>
-              <div><div class="mono" style="font-size:1.15rem;color:var(--text-primary);font-weight:500;">65</div><div style="font-size:0.84rem;color:var(--text-secondary);">Skincare Ingredients</div></div>
-              <div><div class="mono" style="font-size:1.15rem;color:var(--rose-brand);font-weight:500;">Daily</div><div style="font-size:0.84rem;color:var(--text-secondary);"><a href="/celebrity" style="text-decoration:underline;">Iconic Routines (+1/day)</a></div></div>
+            <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:16px 18px;background:var(--bg-surface);margin-top:16px;font-size:0.86rem;">
+              <div><strong class="mono" style="color:var(--rose-brand);display:block;margin-bottom:2px;">Step 1 &middot; Tap Bottles</strong><span style="color:var(--text-secondary);">Pick from 44 cult serums or try a famous shelf</span></div>
+              <div><strong class="mono" style="color:var(--sage-safe);display:block;margin-bottom:2px;">Step 2 &middot; Spot Clashes</strong><span style="color:var(--text-secondary);">See if Vitamin C, Acids, or Retinol conflict</span></div>
+              <div><strong class="mono" style="color:var(--text-primary);display:block;margin-bottom:2px;">Step 3 &middot; Keep Your Bag</strong><span style="color:var(--text-secondary);">Save your 5-slot AM &amp; PM phone card</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px;padding:10px 14px;margin-top:10px;border-radius:10px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);font-size:0.8rem;color:var(--text-secondary);line-height:1.4;">
+              <div><strong style="color:var(--sage-safe);">&#9679; Why We're Reputable (Clinical Source):</strong> Peer-reviewed dermatology literature (<span class="mono">JCAD/PubMed</span> active thresholds), pH conflict matrices &amp; official INCI formulation registries.</div>
+              <div><strong style="color:var(--sage-safe);">&#9679; Freshness &amp; Updates:</strong> Updated Today (2026 Clinical INCI Registry) &bull; Formulations audited weekly &bull; Instant real-time conflict check.</div>
             </div>
           </div>
           <div class="hero-photo-col">
             <div class="editorial-photo-shell">
-              <div id="heroRitualToggleBar" class="vanity-light-pill" role="group" aria-label="Preview Morning, Bedtime, or Serum Clash Mode" style="display:flex;width:100%;justify-content:space-between;flex-wrap:wrap;">
-                <button type="button" class="vanity-light-btn active mono" style="flex:1;font-size:0.84rem;padding:7px 8px;" aria-pressed="true" onclick="setHeroRitualMode('am', this)">7:30 AM · Morning</button>
-                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:7px 8px;" aria-pressed="false" onclick="setHeroRitualMode('pm', this)">9:30 PM · Bedtime</button>
-                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:7px 8px;" aria-pressed="false" onclick="setHeroRitualMode('clash', this)">Why Serums Clash</button>
+              <div id="heroRitualToggleBar" class="vanity-light-pill" role="group" aria-label="Preview Morning, Bedtime, or Serum Clash Mode" style="display:flex;width:100%;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px;">
+                <button type="button" class="vanity-light-btn active mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="true" onclick="setHeroRitualMode('am', this)">7:30 AM &middot; Morning</button>
+                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="false" onclick="setHeroRitualMode('pm', this)">9:30 PM &middot; Bedtime</button>
+                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="false" onclick="setHeroRitualMode('clash', this)">Why Serums Clash</button>
               </div>
-              <div class="editorial-photo-diptych">
-                <div class="editorial-photo-inner">
-                  <img id="heroDiptychImg1" src="/public/editorial-woman-morning.jpg" alt="Woman in linen robe applying morning Vitamin C serum at a sunlit travertine vanity" style="object-position:center 20%;" fetchpriority="high" />
+              <div class="editorial-photo-diptych" style="grid-template-columns:1fr;">
+                <div class="editorial-photo-inner" style="min-height:240px;max-height:290px;">
+                  <img id="heroDiptychImg1" src="/public/editorial-woman-morning.jpg" alt="Woman in linen robe applying morning Vitamin C serum at a sunlit travertine vanity" style="object-position:center 22%;" fetchpriority="high" />
                 </div>
-                <div class="editorial-photo-inner">
+                <div class="editorial-photo-inner" style="display:none;">
                   <img id="heroDiptychImg2" src="/public/editorial-segment-1.jpg" alt="Radiant woman in oat-linen robe pressing morning Vitamin C serum onto her cheek in warm daylight" style="object-position:center 24%;" fetchpriority="high" />
                 </div>
               </div>
-              <div class="editorial-photo-caption">
+              <div class="editorial-photo-caption" style="padding-top:6px;">
                 <div>
-                  <strong id="heroDiptychTitle" class="serif-display" style="font-size:1.08rem;color:var(--text-primary);">7:30 AM · Morning Shield &amp; Zero-Pilling Prep</strong>
-                  <div id="heroDiptychSub" style="color:var(--text-secondary);font-size:0.84rem;">Vitamin C (Wait 60s) &middot; Hydrating Serum &middot; Barrier Cream &middot; Broad-Spectrum SPF 50</div>
+                  <strong id="heroDiptychTitle" class="serif-display" style="font-size:1.12rem;color:var(--text-primary);display:block;">7:30 AM &middot; Morning Shield &amp; Zero-Pilling Prep</strong>
+                  <div id="heroDiptychSub" style="color:var(--text-secondary);font-size:0.84rem;margin-top:2px;">Vitamin C (Wait 60s) &middot; Hydrating Serum &middot; Barrier Cream &middot; Broad-Spectrum SPF 50</div>
                 </div>
-                <span id="heroDiptychBadge" class="badge-safe mono">Morning Glow Order</span>
+                <span id="heroDiptychBadge" class="badge-safe mono" style="flex-shrink:0;">Morning Glow Order</span>
               </div>
             </div>
           </div>

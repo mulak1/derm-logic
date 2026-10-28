@@ -23,56 +23,60 @@ function renderAtelierVanityDrawerHtml() {
       transform: scale(0.97);
     }
     .dl-vanity-swatch-btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 5px 6px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 5px 8px;
       background: var(--bg-surface); color: var(--text-secondary);
-      border: 1px solid var(--border-hairline); cursor: pointer;
-      font-size: 0.75rem; font-weight: 500; white-space: nowrap; transition: border-color 160ms ease, background-color 160ms ease, transform 160ms cubic-bezier(0.22,1,0.36,1);
+      border: 1px solid transparent; cursor: pointer;
+      font-size: 0.76rem; font-weight: 500; white-space: nowrap; transition: border-color 160ms ease, background-color 160ms ease, transform 160ms cubic-bezier(0.22,1,0.36,1);
     }
     .dl-vanity-swatch-btn.active {
       background: var(--rose-pill-bg); color: var(--rose-brand);
       border-color: var(--rose-brand); font-weight: 600;
     }
     .dl-vanity-slot-card {
-      background: var(--bg-surface); border: 1px solid var(--border-hairline);
-      transition: border-color 180ms ease;
+      background: var(--bg-surface); border: 1px solid transparent;
+      transition: border-color 180ms ease, background-color 180ms ease;
     }
     .dl-vanity-slot-card.active {
-      border-color: var(--rose-brand);
-      background: var(--bg-canvas);
+      border-color: var(--border-hairline);
+      border-left: 3px solid var(--rose-brand);
+      background: var(--bg-surface);
     }
     .dl-vanity-slot-card.clash-slot {
       border-left: 3px solid var(--berry-clash);
     }
     .dl-dossier-tabs-bar {
       display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-      background: var(--bg-oat); border: 1px solid var(--border-hairline);
+      background: var(--bg-oat); padding: 4px; gap: 4px;
     }
     .dl-dossier-tab-btn {
-      padding: 7px 6px; background: transparent; border: none; border-right: 1px solid var(--border-hairline);
-      border-bottom: 2.5px solid transparent; cursor: pointer; text-align: left;
-      display: flex; flex-direction: column; gap: 1px; min-width: 0;
+      padding: 8px 6px; background: transparent; border: none;
+      cursor: pointer; text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 0;
+      transition: background-color 160ms ease, color 160ms ease;
     }
-    .dl-dossier-tab-btn:last-child { border-right: none; }
     .dl-dossier-tab-btn.active {
-      background: var(--bg-surface); border-bottom-color: var(--rose-brand);
+      background: var(--bg-surface); box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
     .dl-tray-lineup-grid {
-      display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px;
+      display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px;
     }
     .dl-tray-vessel-btn {
-      background: var(--bg-surface); border: 1px solid var(--border-hairline);
-      padding: 6px 4px; cursor: pointer; display: flex; flex-direction: column;
-      align-items: center; justify-content: space-between; gap: 3px; min-width: 0; position: relative;
-      transition: border-color 160ms ease, background-color 160ms ease;
+      background: var(--bg-surface); border: 1px solid transparent;
+      padding: 8px 4px; cursor: pointer; display: flex; flex-direction: column;
+      align-items: center; justify-content: space-between; gap: 4px; min-width: 0; position: relative;
+      transition: transform 180ms cubic-bezier(0.22,1,0.36,1), border-color 160ms ease, background-color 160ms ease;
+    }
+    .dl-tray-vessel-btn:hover {
+      transform: translateY(-2px);
     }
     .dl-tray-vessel-btn.active {
-      border: 1.5px solid var(--rose-brand); background: var(--rose-pill-bg);
+      border: 1.5px solid var(--rose-brand); background: var(--rose-pill-bg); transform: translateY(-2px);
     }
     .dl-tray-vessel-btn.has-clash {
       border-color: var(--berry-clash); background: var(--berry-bg);
     }
     .dl-tray-vessel-btn.is-empty {
-      border-style: dashed; opacity: 0.72;
+      border: 1px dashed var(--border-strong); opacity: 0.72;
     }
     .dl-add-to-bag-btn {
       display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px;
@@ -121,143 +125,124 @@ function renderAtelierVanityDrawerHtml() {
     <button type="button" class="mono" onclick="window.__dlOpenVanityDrawer('toast');document.getElementById('dl-vanity-toast').style.display='none';" style="background:var(--rose-brand);color:var(--accent-ink);border:none;padding:4px 9px;font-size:0.74rem;font-weight:700;cursor:pointer;white-space:nowrap;">Open Bag &rarr;</button>
   </div>
 
-  <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" style="display:none;position:fixed;inset:0;z-index:9996;background:rgba(12,10,8,0.64);align-items:stretch;justify-content:flex-end;">
-    <div id="dl-atelier-vanity-panel" style="width:575px;max-width:100vw;height:100%;background:var(--bg-canvas);color:var(--text-primary);border-left:1px solid var(--border-strong);display:flex;flex-direction:column;justify-content:space-between;overflow-y:auto;padding:14px 18px;gap:8px;">
+  <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" style="display:none;position:fixed;inset:0;z-index:9996;background:rgba(12,10,8,0.58);align-items:stretch;justify-content:flex-end;">
+    <div id="dl-atelier-vanity-panel" style="width:540px;max-width:100vw;height:100%;background:var(--bg-canvas);color:var(--text-primary);border-left:1px solid var(--border-strong);display:flex;flex-direction:column;justify-content:space-between;overflow-y:auto;padding:20px 24px;gap:12px;">
       
       <!-- Mobile Bottom-Sheet Grab Handle -->
       <div class="dl-mobile-grabber" style="display:none;" onclick="window.__dlCloseVanityDrawer()"></div>
 
-      <!-- Top Header & 24-Hour Reservation Status + Live Clash Pill -->
-      <div style="border-bottom:1px solid var(--border-hairline);padding-bottom:8px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:4px;">
-          <div style="display:inline-flex;align-items:center;gap:5px;flex-wrap:wrap;">
-            <span class="mono" style="font-size:0.71rem;font-weight:700;padding:2px 7px;background:var(--rose-brand);color:var(--accent-ink);letter-spacing:0.04em;">ATELIER VANITY DOSSIER</span>
-            <span id="dl-vanity-bag-id" class="mono" style="font-size:0.73rem;color:var(--text-muted);">#DL-4829</span>
-            <button type="button" id="dl-vanity-harmony-pill" class="badge-safe mono" onclick="window.__dlSetDossierTab('clashes')" style="font-size:0.73rem;padding:2px 8px;border:none;cursor:pointer;">96% Harmony · 0 Clashes</button>
+      <!-- Calm Top Header -->
+      <div style="border-bottom:1px solid var(--border-hairline);padding-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <button type="button" id="dl-vanity-harmony-pill" class="badge-safe mono" onclick="window.__dlSetDossierTab('clashes')" style="font-size:0.75rem;padding:3px 9px;border:none;cursor:pointer;">96% Harmony &middot; 0 Clashes</button>
+            <span id="dl-vanity-hold-countdown" class="mono" style="color:var(--text-secondary);font-size:0.75rem;">Reserved for 23h 59m</span>
+            <span id="dl-vanity-bag-id" class="mono" style="display:none;">#DL-4829</span>
           </div>
-          <button type="button" id="dl-vanity-drawer-close" class="btn-secondary mono" onclick="window.__dlCloseVanityDrawer()" style="padding:3px 9px;min-height:25px;font-size:0.74rem;">Close &times;</button>
+          <button type="button" id="dl-vanity-drawer-close" class="btn-secondary mono" onclick="window.__dlCloseVanityDrawer()" style="padding:4px 10px;min-height:26px;font-size:0.76rem;">Close &times;</button>
         </div>
 
-        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;">
-          <h3 id="dl-vanity-bag-title" class="serif-display" style="font-size:1.28rem;font-weight:500;line-height:1.16;color:var(--text-primary);margin:0;">Your 5-Slot Calibrated Vanity Bag</h3>
-          <strong id="dl-vanity-hold-countdown" class="mono" style="color:var(--rose-brand);font-size:0.74rem;background:var(--rose-pill-bg);padding:2px 7px;">Reserved for 23h 59m</strong>
+        <h3 id="dl-vanity-bag-title" class="serif-display" style="font-size:1.45rem;font-weight:400;line-height:1.15;color:var(--text-primary);margin:0;">Your 5-Slot Calibrated Vanity Bag</h3>
+
+        <div id="dl-vanity-exit-alert" style="display:none;padding:8px 10px;background:var(--rose-pill-bg);border-left:3px solid var(--rose-brand);margin-top:8px;font-size:0.78rem;color:var(--text-primary);line-height:1.38;">
+          <strong style="color:var(--rose-brand);">Your Vanity Bag Is Reserved for 24 Hours:</strong> Save your 9:16 Lock-Screen Card or email yourself a free restore link below before leaving.
         </div>
 
-        <div id="dl-vanity-exit-alert" style="display:none;padding:7px 9px;background:var(--rose-pill-bg);border-left:3px solid var(--rose-brand);margin-top:5px;font-size:0.77rem;color:var(--text-primary);line-height:1.35;">
-          <strong style="color:var(--rose-brand);">Wait · Your Custom Vanity Bag Is Held for 24 Hours:</strong> Keep your permanent 9:16 Lock-Screen Card + .ICS Schedule below so your calibrated 5-slot formula is not lost when this session expires.
-        </div>
-
-        <!-- Live Clash Alert Banner inside the Drawer (appears automatically if her bag has a clash!) -->
-        <div id="dl-vanity-clash-banner" style="display:none;padding:7px 10px;background:var(--berry-bg);border:1px solid var(--berry-border);border-left:3px solid var(--berry-clash);margin-top:5px;font-size:0.76rem;color:var(--text-primary);line-height:1.35;justify-content:space-between;align-items:center;gap:8px;">
+        <!-- Live Clash Alert Banner inside the Drawer -->
+        <div id="dl-vanity-clash-banner" style="display:none;padding:9px 12px;background:var(--berry-bg);border-left:3px solid var(--berry-clash);margin-top:8px;font-size:0.8rem;color:var(--text-primary);line-height:1.38;justify-content:space-between;align-items:center;gap:10px;">
           <div id="dl-vanity-clash-banner-text" style="min-width:0;flex:1;"></div>
-          <button type="button" class="mono" onclick="window.__dlAutoFixBagClashes()" style="padding:4px 8px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.72rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;">1-Tap Fix &rarr;</button>
+          <button type="button" class="mono" onclick="window.__dlAutoFixBagClashes()" style="padding:5px 10px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.75rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;">1-Tap Fix &rarr;</button>
         </div>
       </div>
 
-      <!-- Option 3 Visual Bottle Countertop Tray (5 Custom SVG Vessels in Thinnest -> Richest Order) -->
-      <div style="background:var(--bg-oat);padding:7px 9px;border:1px solid var(--border-hairline);">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;gap:6px;">
-          <span class="mono" style="font-size:0.7rem;font-weight:700;color:var(--rose-brand);text-transform:uppercase;letter-spacing:0.04em;">Visual Countertop Lineup (Tap Any Bottle or + Add on Any Page)</span>
-          <span id="dl-tray-filled-label" class="mono" style="font-size:0.7rem;color:var(--text-secondary);">5/5 Vessels</span>
+      <!-- Airy Visual Bottle Countertop Shelf (Option 3) -->
+      <div style="background:var(--bg-oat);padding:10px 12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px;">
+          <span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Tap any bottle on your shelf (<span id="dl-tray-filled-label">5/5 Vessels</span>):</span>
+          <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:1px solid var(--rose-pill-border);padding:2px 8px;font-size:0.72rem;font-weight:600;cursor:pointer;">Play: Test a Clash &rarr;</button>
         </div>
         <div id="dl-vanity-visual-tray" class="dl-tray-lineup-grid"></div>
       </div>
 
-      <!-- Undertone Swatches & SPF/Makeup Finish Calibration -->
-      <div style="padding:7px 10px;background:var(--bg-surface);border:1px solid var(--border-hairline);display:flex;flex-direction:column;gap:5px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
-          <span class="mono" style="font-size:0.72rem;font-weight:600;color:var(--rose-brand);text-transform:uppercase;">Skin Undertone &amp; SPF Finish (No White-Cast / Pilling)</span>
-          <span id="dl-undertone-active-label" class="mono" style="font-size:0.72rem;color:var(--sage-safe);font-weight:600;">Neutral Ivory · Velvet Satin</span>
-        </div>
-
-        <div id="dl-undertone-swatches" role="group" aria-label="Select Skin Undertone" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;">
-          <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="cool_rosy" onclick="window.__dlSetUndertone('cool_rosy', this)">
-            <span style="width:10px;height:10px;border-radius:50%;background:#F3D9D4;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
-            <span>Cool Rosy</span>
-          </button>
-          <button type="button" class="dl-vanity-swatch-btn active mono" data-undertone="neutral_ivory" onclick="window.__dlSetUndertone('neutral_ivory', this)">
-            <span style="width:10px;height:10px;border-radius:50%;background:#EFE0D0;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
-            <span>Neutral</span>
-          </button>
-          <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="warm_olive" onclick="window.__dlSetUndertone('warm_olive', this)">
-            <span style="width:10px;height:10px;border-radius:50%;background:#D8B48E;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
-            <span>Warm Olive</span>
-          </button>
-          <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="rich_espresso" onclick="window.__dlSetUndertone('rich_espresso', this)">
-            <span style="width:10px;height:10px;border-radius:50%;background:#7B4B36;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
-            <span>Deep Rich</span>
-          </button>
-        </div>
-
-        <div id="dl-finish-swatches" role="group" aria-label="Select Complexion Finish" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;">
-          <button type="button" class="dl-vanity-swatch-btn mono" data-finish="dewy_glass" onclick="window.__dlSetFinish('dewy_glass', this)">Dewy Glass</button>
-          <button type="button" class="dl-vanity-swatch-btn active mono" data-finish="velvet_satin" onclick="window.__dlSetFinish('velvet_satin', this)">Velvet Satin</button>
-          <button type="button" class="dl-vanity-swatch-btn mono" data-finish="cloud_matte" onclick="window.__dlSetFinish('cloud_matte', this)">Soft Matte</button>
-        </div>
-      </div>
-
-      <!-- Option 2 Hybrid: 4-Tab Atelier Prescription Dossier Bar (1 Tab Visible at a Time = Structural Screenshot Guard) -->
+      <!-- Clean 1-Line 4-Pill Switcher -->
       <div class="dl-dossier-tabs-bar" role="tablist" aria-label="4-Tab Atelier Prescription Dossier">
         <button type="button" role="tab" id="dl-dossier-tab-slots" class="dl-dossier-tab-btn active" onclick="window.__dlSetDossierTab('slots')">
-          <span class="mono" style="font-size:0.65rem;color:var(--rose-brand);font-weight:700;">TAB 01 · BAG</span>
-          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.84rem;font-weight:500;">5-Slot Lineup</strong>
-          <span class="mono dl-dossier-tab-sub" style="font-size:0.66rem;color:var(--text-muted);">Add / Swap / Remove</span>
+          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">1 &middot; Bottles</strong>
         </button>
         <button type="button" role="tab" id="dl-dossier-tab-clashes" class="dl-dossier-tab-btn" onclick="window.__dlSetDossierTab('clashes')">
-          <span class="mono" id="dl-tab02-kicker" style="font-size:0.65rem;color:var(--text-muted);font-weight:700;">TAB 02 · AUDIT</span>
-          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.84rem;font-weight:500;">Bag Clashes</strong>
-          <span class="mono dl-dossier-tab-sub" id="dl-tab02-sub" style="font-size:0.66rem;color:var(--sage-safe);">0 Clashes Found</span>
+          <span class="mono" id="dl-tab02-kicker" style="display:none;">AUDIT</span>
+          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">2 &middot; Clashes</strong>
+          <span class="mono dl-dossier-tab-sub" id="dl-tab02-sub" style="display:none;">0 Clashes</span>
         </button>
         <button type="button" role="tab" id="dl-dossier-tab-cycle" class="dl-dossier-tab-btn" onclick="window.__dlSetDossierTab('cycle')">
-          <span class="mono" style="font-size:0.65rem;color:var(--text-muted);font-weight:700;">TAB 03 · PM</span>
-          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.84rem;font-weight:500;">4-Night Cycle</strong>
-          <span class="mono dl-dossier-tab-sub" style="font-size:0.66rem;color:var(--text-muted);">Retinoid / Acid Split</span>
+          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">3 &middot; 4-Night</strong>
         </button>
         <button type="button" role="tab" id="dl-dossier-tab-pass" class="dl-dossier-tab-btn" onclick="window.__dlSetDossierTab('pass')">
-          <span class="mono" style="font-size:0.65rem;color:var(--text-muted);font-weight:700;">TAB 04 · PASS</span>
-          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.84rem;font-weight:500;">9:16 Flip Card</strong>
-          <span class="mono dl-dossier-tab-sub" style="font-size:0.66rem;color:var(--text-muted);">AM Sun / PM Moon</span>
+          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">4 &middot; Phone Card</strong>
         </button>
       </div>
 
-      <!-- Tab 01 View: 5-Slot Screenshot-Resistant Single-Focus Accordion (with Add/Swap/Remove + Test Clashes) -->
-      <div id="dl-dossier-panel-slots" style="display:flex;flex-direction:column;gap:4px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
-          <span class="mono" style="font-size:0.71rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;">Tap Any Slot to Inspect, Swap, or Remove (1-Slot Focus View)</span>
-          <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--berry-bg);color:var(--berry-clash);border:1px solid var(--berry-border);padding:2px 7px;font-size:0.68rem;font-weight:600;cursor:pointer;">Test Clash in Bag &rarr;</button>
+      <!-- Tab 01 View: Single-Bottle Spotlight Card + Slot 04 Undertone Strip -->
+      <div id="dl-dossier-panel-slots" style="display:flex;flex-direction:column;gap:10px;">
+        <div id="dl-vanity-slots-list" style="display:flex;flex-direction:column;gap:0;"></div>
+
+        <!-- Undertone & Finish Strip (Only shown when inspecting Slot 04 SPF) -->
+        <div id="dl-undertone-parent-box" style="padding:12px 14px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
+            <span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Match Slot 04 SPF to Skin Tone &amp; Finish:</span>
+            <span id="dl-undertone-active-label" class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:600;">Neutral Ivory &middot; Velvet Satin</span>
+          </div>
+          <div id="dl-undertone-swatches" role="group" aria-label="Select Skin Undertone" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;">
+            <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="cool_rosy" onclick="window.__dlSetUndertone('cool_rosy', this)">
+              <span style="width:9px;height:9px;border-radius:50%;background:#F3D9D4;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
+              <span>Cool Rosy</span>
+            </button>
+            <button type="button" class="dl-vanity-swatch-btn active mono" data-undertone="neutral_ivory" onclick="window.__dlSetUndertone('neutral_ivory', this)">
+              <span style="width:9px;height:9px;border-radius:50%;background:#EFE0D0;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
+              <span>Neutral</span>
+            </button>
+            <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="warm_olive" onclick="window.__dlSetUndertone('warm_olive', this)">
+              <span style="width:9px;height:9px;border-radius:50%;background:#D8B48E;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
+              <span>Warm Olive</span>
+            </button>
+            <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="rich_espresso" onclick="window.__dlSetUndertone('rich_espresso', this)">
+              <span style="width:9px;height:9px;border-radius:50%;background:#7B4B36;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
+              <span>Deep Rich</span>
+            </button>
+          </div>
+          <div id="dl-finish-swatches" role="group" aria-label="Select Complexion Finish" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;">
+            <button type="button" class="dl-vanity-swatch-btn mono" data-finish="dewy_glass" onclick="window.__dlSetFinish('dewy_glass', this)">Dewy Glass</button>
+            <button type="button" class="dl-vanity-swatch-btn active mono" data-finish="velvet_satin" onclick="window.__dlSetFinish('velvet_satin', this)">Velvet Satin</button>
+            <button type="button" class="dl-vanity-swatch-btn mono" data-finish="cloud_matte" onclick="window.__dlSetFinish('cloud_matte', this)">Soft Matte</button>
+          </div>
         </div>
-        <div id="dl-vanity-slots-list" style="display:flex;flex-direction:column;gap:4px;"></div>
       </div>
 
       <!-- Tab 02 View: Live Bag Clash & pH Conflict Audit -->
-      <div id="dl-dossier-panel-clashes" style="display:none;flex-direction:column;gap:6px;"></div>
+      <div id="dl-dossier-panel-clashes" style="display:none;flex-direction:column;gap:8px;"></div>
 
       <!-- Tab 03 View: 4-Night Skin Cycling Calendar -->
-      <div id="dl-dossier-panel-cycle" style="display:none;flex-direction:column;gap:6px;"></div>
+      <div id="dl-dossier-panel-cycle" style="display:none;flex-direction:column;gap:8px;"></div>
 
-      <!-- Tab 04 View: 2-Sided 9:16 Lock-Screen Pass Preview (Side A AM / Side B PM) -->
-      <div id="dl-dossier-panel-pass" style="display:none;flex-direction:column;gap:6px;"></div>
+      <!-- Tab 04 View: 2-Sided 9:16 Lock-Screen Pass Preview -->
+      <div id="dl-dossier-panel-pass" style="display:none;flex-direction:column;gap:8px;"></div>
 
-      <!-- Step C: 24-Hour Loss-Aversion Vault & Keep Forever CTA -->
-      <div id="dl-vanity-vault-footer" style="padding:10px 12px;background:var(--bg-oat);border:1px solid var(--border-strong);display:flex;flex-direction:column;gap:6px;margin-top:auto;">
-        <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.34;">
-          <strong style="color:var(--rose-brand);font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;">24-Hour Atelier Vault:</strong> Merge all 4 Dossier Tabs (AM + PM + 4-Night Cycle + Undertone SPF) onto one <strong>9:16 Lock-Screen Card + .ICS Alarm</strong>.
-        </div>
-
-        <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:6px;">
-          <a id="dl-vanity-keep-99c" href="/buy/micro_pass?source=vanity_bag_99c" onclick="if(window.__ebQuickBuy){window.__dlCloseVanityDrawer();window.__ebQuickBuy('micro_pass');return false;}" class="btn-primary mono" style="width:100%;justify-content:center;text-decoration:none;padding:8px 10px;font-size:0.78rem;white-space:nowrap;">
-            <span>Keep 9:16 Card (99&cent;) &rarr;</span>
+      <!-- Calm Footer -->
+      <div id="dl-vanity-vault-footer" style="padding:12px 14px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;margin-top:auto;">
+        <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:8px;">
+          <a id="dl-vanity-keep-99c" href="/buy/micro_pass?source=vanity_bag_99c" onclick="if(window.__ebQuickBuy){window.__dlCloseVanityDrawer();window.__ebQuickBuy('micro_pass');return false;}" class="btn-primary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.8rem;white-space:nowrap;">
+            <span>Save 9:16 Phone Card (99&cent;) &rarr;</span>
           </a>
-          <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="if(window.__ebQuickBuy){window.__dlCloseVanityDrawer();window.__ebQuickBuy('flash_pass');return false;}" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:8px 10px;font-size:0.76rem;white-space:nowrap;">
-            <span>Full 3-File Kit ($1.99)</span>
+          <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="if(window.__ebQuickBuy){window.__dlCloseVanityDrawer();window.__ebQuickBuy('flash_pass');return false;}" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;">
+            <span>Complete 3-File Kit ($1.99)</span>
           </a>
         </div>
 
         <form id="dl-vanity-email-form" onsubmit="return window.__dlSendVanityHoldEmail(event)" style="display:flex;gap:6px;align-items:center;">
-          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Or email my free 24h restore link..." style="flex:1;padding:5px 9px;font-size:0.74rem;min-height:28px;" />
-          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:5px 9px;min-height:28px;font-size:0.73rem;white-space:nowrap;">Send 24h Link</button>
+          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Or email my free 24h restore link..." style="flex:1;padding:6px 10px;font-size:0.76rem;min-height:30px;" />
+          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:6px 10px;min-height:30px;font-size:0.75rem;white-space:nowrap;">Email 24h Link</button>
         </form>
-        <div id="dl-vanity-email-status" class="mono" style="display:none;font-size:0.74rem;color:var(--sage-safe);font-weight:600;"></div>
+        <div id="dl-vanity-email-status" class="mono" style="display:none;font-size:0.75rem;color:var(--sage-safe);font-weight:600;"></div>
       </div>
 
     </div>
@@ -671,6 +656,8 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       });
 
       var activeIdx = typeof st.activeSlotIdx === 'number' ? st.activeSlotIdx : 3;
+      var uParentBox = document.getElementById('dl-undertone-parent-box');
+      if (uParentBox) uParentBox.style.display = (activeIdx === 3) ? 'flex' : 'none';
 
       // Render Option 3 Visual Bottle Tray
       var trayEl = document.getElementById('dl-vanity-visual-tray');
@@ -681,7 +668,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           var isSel = idx === activeIdx && (st.dossierTab || 'slots') === 'slots';
           var cls = 'dl-tray-vessel-btn' + (isSel ? ' active' : '') + (hasClash ? ' has-clash' : '') + (!b ? ' is-empty' : '');
           var svg = renderMiniVesselSvg(slot.vesselType, b ? b.tag : '+ADD', hasClash, !b);
-          return '<button type="button" class="' + cls + '" onclick="window.__dlSetDossierTab(\\'slots\\');window.__dlSelectVanitySlot(' + idx + ')" title="' + slot.slotNum + ': ' + (b ? b.label : 'Empty Slot') + '">'
+          return '<button type="button" id="dl-vanity-slot-header-' + idx + '" class="' + cls + '" onclick="window.__dlSetDossierTab(\\'slots\\');window.__dlSelectVanitySlot(' + idx + ')" title="' + slot.slotNum + ': ' + (b ? b.label : 'Empty Slot') + '">'
             + '<span class="mono" style="font-size:0.62rem;font-weight:700;color:' + (hasClash ? 'var(--berry-clash)' : 'var(--rose-brand)') + ';">' + slot.shortSlot + '</span>'
             + svg
             + '<span style="font-size:0.66rem;font-weight:600;color:var(--text-primary);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (b ? b.short : 'Empty · Tap') + '</span>'
@@ -698,7 +685,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         if (pnl) pnl.style.display = (tName === curTab) ? 'flex' : 'none';
       });
 
-      // Render Tab 01: 5-Slot Accordion
+      // Render Tab 01: Single-Bottle Spotlight Card (Only the 1 selected bottle is shown!)
       var listEl = document.getElementById('dl-vanity-slots-list');
       if (listEl) {
         listEl.innerHTML = SLOT_OPTIONS.map(function(slot, idx) {
@@ -709,32 +696,39 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
             ? (uMeta.spfNote + ' ' + fMeta.prepRule)
             : (slotHasClash
               ? ('<strong style="color:var(--berry-clash);">Clash Alert:</strong> ' + slotHasClash.detail)
-              : ('Layering Rule: ' + slot.timing + '. Zero pH cancellation with your other slots.'));
+              : ('When to apply: ' + slot.timing + '. Zero pH cancellation with your other slots.'));
 
           var chipsHtml = slot.choices.map(function(ch, cIdx) {
             var isSel = currentBottle && currentBottle.id === ch.id;
-            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" style="padding:3px 7px;font-size:0.72rem;cursor:pointer;border:1px solid ' + (isSel ? 'var(--rose-brand)' : 'var(--border-hairline)') + ';background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-surface)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';">' + (isSel ? '✓ ' : '+ ') + ch.label.split(' ($')[0] + '</button>';
+            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;border:1px solid ' + (isSel ? 'var(--rose-brand)' : 'var(--border-hairline)') + ';background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-surface)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';">' + (isSel ? '✓ ' : '+ ') + ch.label.split(' ($')[0] + '</button>';
           }).join('');
 
-          return '<div class="dl-vanity-slot-card ' + (isOpen ? 'active ' : '') + (slotHasClash ? 'clash-slot' : '') + '" id="dl-vanity-slot-card-' + idx + '">'
-            + '<button type="button" id="dl-vanity-slot-header-' + idx + '" class="dl-vanity-slot-head" onclick="window.__dlSelectVanitySlot(' + idx + ')" aria-expanded="' + (isOpen ? 'true' : 'false') + '" style="width:100%;text-align:left;padding:6px 10px;background:transparent;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;">'
+          var prevIdx = (idx + 4) % 5;
+          var nextIdx = (idx + 1) % 5;
+          var nextBtnHtml = idx < 4
+            ? '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + nextIdx + ')" style="padding:5px 11px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Next Bottle (0' + (nextIdx + 1) + ') &rarr;</button>'
+            : '<button type="button" class="mono" onclick="window.__dlSetDossierTab(\\'pass\\')" style="padding:5px 11px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Preview 9:16 Card &rarr;</button>';
+
+          return '<div class="dl-vanity-slot-card ' + (isOpen ? 'active ' : '') + (slotHasClash ? 'clash-slot' : '') + '" id="dl-vanity-slot-card-' + idx + '" style="display:' + (isOpen ? 'block' : 'none') + ';padding:14px 16px;">'
+            + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;">'
               + '<div style="min-width:0;">'
-                + '<div style="display:flex;align-items:center;gap:6px;">'
-                  + '<span class="mono" style="font-size:0.69rem;font-weight:700;color:' + (slotHasClash ? 'var(--berry-clash)' : 'var(--rose-brand)') + ';">' + slot.slotNum + (slotHasClash ? ' · CLASH' : '') + '</span>'
-                  + '<span style="font-size:0.73rem;color:var(--text-secondary);">' + slot.role + '</span>'
+                + '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">'
+                  + '<span class="mono" style="font-size:0.72rem;font-weight:700;color:' + (slotHasClash ? 'var(--berry-clash)' : 'var(--rose-brand)') + ';">SPOTLIGHT &middot; ' + slot.slotNum + (slotHasClash ? ' &middot; CLASH' : '') + '</span>'
+                  + '<span style="font-size:0.76rem;color:var(--text-secondary);">' + slot.role + '</span>'
                 + '</div>'
-                + '<div class="serif-display" style="font-size:0.93rem;font-weight:500;color:' + (currentBottle ? 'var(--text-primary)' : 'var(--text-muted)') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;">' + (currentBottle ? currentBottle.label : 'Slot Empty · Tap to Pick a Bottle below') + '</div>'
+                + '<div class="serif-display" style="font-size:1.18rem;font-weight:400;color:' + (currentBottle ? 'var(--text-primary)' : 'var(--text-muted)') + ';margin-top:3px;">' + (currentBottle ? currentBottle.label : 'Slot Empty &middot; Tap a Bottle Below') + '</div>'
               + '</div>'
-              + '<span class="mono" style="font-size:0.7rem;padding:2px 7px;background:' + (isOpen ? 'var(--rose-brand)' : 'var(--bg-oat)') + ';color:' + (isOpen ? 'var(--accent-ink)' : 'var(--text-secondary)') + ';flex-shrink:0;">' + (isOpen ? 'Inspecting ▾' : 'Inspect ▸') + '</span>'
-            + '</button>'
-            + '<div id="dl-vanity-slot-body-' + idx + '" style="display:' + (isOpen ? 'block' : 'none') + ';padding:0 10px 8px 10px;border-top:1px solid var(--border-hairline);">'
-              + '<div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.36;margin-top:5px;margin-bottom:5px;">' + extraNote + '</div>'
-              + '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;">' + chipsHtml + '</div>'
-              + '<div class="mono" style="padding:4px 8px;background:var(--bg-oat);font-size:0.7rem;color:var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:6px;">'
+              + '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + prevIdx + ')" style="padding:3px 8px;background:var(--bg-oat);color:var(--text-secondary);border:none;font-size:0.72rem;cursor:pointer;flex-shrink:0;">&larr; Prev</button>'
+            + '</div>'
+            + '<div id="dl-vanity-slot-body-' + idx + '" style="display:' + (isOpen ? 'block' : 'none') + ';border-top:1px solid var(--border-hairline);padding-top:10px;">'
+              + '<div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.48;margin-bottom:10px;">' + extraNote + '</div>'
+              + '<div class="mono" style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Swap or try another bottle in this slot:</div>'
+              + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">' + chipsHtml + '</div>'
+              + '<div class="mono" style="padding:7px 10px;background:var(--bg-oat);font-size:0.74rem;color:var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:8px;">'
                 + (currentBottle
-                  ? '<button type="button" class="mono" onclick="window.__dlRemoveSlotBottle(' + idx + ')" style="background:transparent;border:none;color:var(--text-muted);text-decoration:underline;cursor:pointer;font-size:0.7rem;">Remove from Slot &times;</button>'
-                  : '<span>Select any bottle chip above to fill slot</span>')
-                + '<a href="/buy/micro_pass?source=vanity_slot_' + idx + '" onclick="if(window.__ebQuickBuy){window.__dlCloseVanityDrawer();window.__ebQuickBuy(\\'micro_pass\\');return false;}" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;white-space:nowrap;">Unlock on 9:16 Card (99&cent;) &rarr;</a>'
+                  ? '<button type="button" class="mono" onclick="window.__dlRemoveSlotBottle(' + idx + ')" style="background:transparent;border:none;color:var(--text-muted);text-decoration:underline;cursor:pointer;font-size:0.74rem;">Remove from Slot &times;</button>'
+                  : '<span>Tap a bottle chip above</span>')
+                + nextBtnHtml
               + '</div>'
             + '</div>'
           + '</div>';

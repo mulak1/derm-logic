@@ -331,7 +331,9 @@ async function runVerification() {
     await page.waitForTimeout(150);
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-home-analyzed.png'), fullPage: true });
 
-    // Open checkout modal & test interactive unlock
+    // Open checkout modal & test interactive unlock (advance to Step 2 of 3 on the Right Panel first)
+    await page.click('#dl-btn-next-step-2');
+    await page.waitForTimeout(150);
     await page.click('#appleWalletCardPreview button');
     await page.waitForTimeout(200);
     await page.click('#checkoutSubmitBtn');
