@@ -229,17 +229,20 @@ function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Va
         </div>
       </div>
 
-      <div id="lockScreenCanvasSection" style="padding:12px 14px;background:var(--bg-surface);display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;align-items:center;min-width:0;">
-        <canvas id="lockScreenWallpaperCanvas" width="360" height="640" onclick="window.__dlDownloadOrUnlockWallpaper()" title="Click to download 9:16 Lock-Screen Routine Card" style="width:72px;height:128px;background:#181412;display:block;cursor:pointer;"></canvas>
+      <div id="lockScreenCanvasSection" style="padding:14px 16px;background:linear-gradient(155deg,#1A1512 0%,#28201B 100%);color:#F4EFE8;border:1px solid #3D322C;display:grid;grid-template-columns:112px minmax(0,1fr);gap:16px;align-items:center;min-width:0;">
+        <div style="border-radius:16px;padding:4px;background:linear-gradient(145deg,#4A3E37,#161210);box-shadow:0 10px 24px rgba(0,0,0,0.38);">
+          <canvas id="lockScreenWallpaperCanvas" width="360" height="640" onclick="window.__dlDownloadOrUnlockWallpaper()" title="Click to download 9:16 Lock-Screen Routine Card" style="width:104px;height:185px;border-radius:12px;background:#181412;display:block;cursor:pointer;"></canvas>
+        </div>
         <div style="min-width:0;display:flex;flex-direction:column;gap:8px;">
           <div>
-            <span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;display:block;text-transform:uppercase;letter-spacing:0.02em;">9:16 Lock-Screen Card &amp; Vanity Bag</span>
-            <div class="serif-display" style="font-size:1.05rem;color:var(--text-primary);line-height:1.22;margin-top:2px;">Keep your routine on your phone or in your 5-Slot Bag.</div>
+            <span class="mono" style="font-size:0.72rem;color:#C9A45A;font-weight:700;display:block;text-transform:uppercase;letter-spacing:0.05em;">ATELIER 9:16 LOCK-SCREEN WALLPAPER (AM + PM)</span>
+            <div class="serif-display" style="font-size:1.12rem;color:#FBF8F4;line-height:1.22;margin-top:2px;">Keep your 7:30 AM &amp; 9:30 PM order on your iPhone lock screen.</div>
+            <div style="font-size:0.76rem;color:#D5CBC0;margin-top:4px;line-height:1.38;">Includes pH windows, wait timers, ceramide sandwich buffers &amp; 4-Night cycle below your phone clock.</div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-            <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:6px 12px;min-height:32px;font-size:0.8rem;" onclick="window.__dlDownloadOrUnlockWallpaper()">Save 9:16 PNG (99&cent;) &rarr;</button>
-            <button type="button" class="btn-secondary mono" style="padding:6px 12px;min-height:32px;font-size:0.8rem;" onclick="if(window.__dlOpenVanityDrawer)window.__dlOpenVanityDrawer('workbench')">Open 5-Slot Bag</button>
-            <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 10px;min-height:32px;font-size:0.78rem;" onclick="window.__dlCopyRedditRoutineHelp(this)">Copy Summary</button>
+            <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:7px 13px;min-height:32px;font-size:0.8rem;background:#7A2332;color:#FFF;" onclick="window.__dlDownloadOrUnlockWallpaper()">Save 9:16 PNG (99&cent;) &rarr;</button>
+            <button type="button" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.78rem;background:rgba(255,255,255,0.08);color:#F4EFE8;border-color:rgba(201,164,90,0.4);" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('workbench');if(window.__dlSetDossierTab)window.__dlSetDossierTab('pass');}">Interactive AM/PM Preview &rarr;</button>
+            <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 10px;min-height:32px;font-size:0.76rem;background:transparent;color:#C9BCAE;border-color:#3D322C;" onclick="window.__dlCopyRedditRoutineHelp(this)">Copy Summary</button>
           </div>
         </div>
       </div>
@@ -486,78 +489,115 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     if (!canvas || !canvas.getContext) return;
     var ctx = canvas.getContext('2d');
     var w = canvas.width, h = canvas.height;
-    ctx.fillStyle = '#181412';
+    var grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, '#1B1513');
+    grad.addColorStop(0.55, '#271E1A');
+    grad.addColorStop(1, '#14100E');
+    ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
-    ctx.strokeStyle = '#C9A45A';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(12, 12, w - 24, h - 24);
 
-    var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim() || 'My Porcelain Vanity Ritual';
-    var climateLabels = { indoor_dry: 'AC / Dry Heat (90s Wait)', humid_oily: 'Humid Climate (60s Wait)', retinoid_retinization: 'Retinoid Buffer Protocol', pregnancy_nursing: '100% Pregnancy-Safe' };
-    var climateTxt = climateLabels[window.__dlClimateMode] || '60s Dry-Down Protocol';
-
-    ctx.fillStyle = '#C9A45A';
-    ctx.font = '600 11px Georgia, serif';
-    ctx.fillText('DERMLOGIC · FORMULATION ATELIER', 26, 42);
-
-    ctx.fillStyle = '#F4EFE8';
-    ctx.font = 'bold 19px Georgia, serif';
-    ctx.fillText(shelfName.slice(0, 26), 26, 70);
-
+    // Dynamic Island & iOS status bar
+    ctx.fillStyle = '#0B0908';
+    ctx.fillRect(w / 2 - 42, 12, 84, 18);
     ctx.fillStyle = '#B5ACA3';
-    ctx.font = '12.5px Georgia, serif';
-    ctx.fillText(climateTxt, 26, 92);
+    ctx.font = '600 9.5px sans-serif';
+    ctx.fillText('DERMLOGIC', 20, 24);
+    ctx.fillText('5G 100%', w - 62, 24);
+
+    // Lock-Screen Clock & Subhead
+    ctx.fillStyle = '#C9A45A';
+    ctx.font = 'bold 10.5px Georgia, serif';
+    ctx.fillText('ATELIER 9:16 RITUAL WALLPAPER', 92, 50);
+    ctx.fillStyle = '#FBF8F4';
+    ctx.font = '300 38px Georgia, serif';
+    ctx.fillText('07:30 · 21:30', 76, 88);
+
+    var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim() || 'Calibrated AM & PM Shelf';
+    var climateLabels = { indoor_dry: 'AC / Dry Heat · 90s Wait', humid_oily: 'Humid Climate · 60s Wait', retinoid_retinization: 'Retinoid Buffer Protocol', pregnancy_nursing: '100% Pregnancy-Safe' };
+    var climateTxt = climateLabels[window.__dlClimateMode] || '60s Dry-Down Protocol';
+    ctx.fillStyle = 'rgba(201,164,90,0.18)';
+    ctx.fillRect(36, 98, w - 72, 22);
+    ctx.fillStyle = '#E8C6B0';
+    ctx.font = 'bold 10.5px sans-serif';
+    ctx.fillText((shelfName.slice(0, 20) + ' · ' + climateTxt).slice(0, 42), 48, 113);
 
     var cards = document.querySelectorAll('#appleWalletCardPreview strong');
     var steps = [];
-    for (var i = 0; i < cards.length; i++) {
-      steps.push(window.__dlCleanCanvasStep(cards[i].textContent));
-    }
-    if (steps.length === 0) {
-      steps = ['1. Gentle Morning Cleanse', '2. Morning Vitamin C (Wait 60s)', '3. Barrier Seal + SPF 50', '1. Evening Cleanse', '2. Night Active / Peptide', '3. 3:1:1 Ceramide Cushion'];
+    for (var i = 0; i < cards.length; i++) steps.push(window.__dlCleanCanvasStep(cards[i].textContent));
+    if (steps.length < 6) {
+      steps = ['1. Gentle Morning Cleanse', '2. Vitamin C Serum (Wait 60s)', '3. Ceramide + SPF 50 Shield', '1. Evening Milk Cleanse', '2. Night Active / Retinoid', '3. 3:1:1 Ceramide Cushion'];
     }
 
-    ctx.fillStyle = '#EFE5E7';
-    ctx.font = 'bold 12.5px Georgia, serif';
-    ctx.fillText('7:30 AM · MORNING SHIELD', 26, 132);
-    ctx.fillStyle = '#F4EFE8';
-    ctx.font = '13px Georgia, serif';
-    for (var a = 0; a < Math.min(3, steps.length); a++) {
-      ctx.fillText(steps[a], 26, 158 + a * 26);
+    // AM Card (Warm Porcelain)
+    ctx.fillStyle = '#F6EFE6';
+    ctx.fillRect(18, 130, w - 36, 132);
+    ctx.fillStyle = '#7A2332';
+    ctx.font = 'bold 11.5px Georgia, serif';
+    ctx.fillText('☀ 7:30 AM · MORNING SHIELD & SPF PREP', 28, 149);
+    var amPills = ['pH 5.2 · 45s', 'pH 3.3 · 60s', 'SPF 50 · 90s'];
+    for (var a = 0; a < 3; a++) {
+      var ay = 160 + a * 32;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(26, ay, w - 52, 26);
+      ctx.fillStyle = '#181412';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText((steps[a] || '').slice(0, 27), 34, ay + 17);
+      ctx.fillStyle = '#F3E5E8';
+      ctx.fillRect(w - 106, ay + 4, 72, 18);
+      ctx.fillStyle = '#7A2332';
+      ctx.font = 'bold 9.5px sans-serif';
+      ctx.fillText(amPills[a], w - 100, ay + 16);
     }
 
+    // PM Card (Nocturnal Velvet)
+    ctx.fillStyle = '#241C18';
+    ctx.fillRect(18, 272, w - 36, 132);
+    ctx.strokeStyle = 'rgba(201,164,90,0.4)';
+    ctx.strokeRect(18, 272, w - 36, 132);
     ctx.fillStyle = '#C9A45A';
-    ctx.font = 'bold 12.5px Georgia, serif';
-    ctx.fillText('9:30 PM · BEDTIME RECOVERY', 26, 256);
-    ctx.fillStyle = '#F4EFE8';
-    ctx.font = '13px Georgia, serif';
-    for (var p = 3; p < Math.min(6, steps.length); p++) {
-      ctx.fillText(steps[p], 26, 282 + (p - 3) * 26);
+    ctx.font = 'bold 11.5px Georgia, serif';
+    ctx.fillText('☾ 9:30 PM · BEDTIME RENEWAL & BUFFER', 28, 291);
+    var pmPills = ['Dry 10m', 'Pea Size', '3:1:1 Seal'];
+    for (var p = 0; p < 3; p++) {
+      var py = 302 + p * 32;
+      ctx.fillStyle = 'rgba(255,255,255,0.07)';
+      ctx.fillRect(26, py, w - 52, 26);
+      ctx.fillStyle = '#FBF8F4';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText((steps[p + 3] || '').slice(0, 27), 34, py + 17);
+      ctx.fillStyle = 'rgba(201,164,90,0.22)';
+      ctx.fillRect(w - 98, py + 4, 64, 18);
+      ctx.fillStyle = '#E8C6B0';
+      ctx.font = 'bold 9.5px sans-serif';
+      ctx.fillText(pmPills[p], w - 91, py + 16);
     }
 
-    ctx.fillStyle = '#88C4A6';
-    ctx.font = 'bold 12.5px Georgia, serif';
-    ctx.fillText('4-NIGHT SKIN-CYCLING PLAN', 26, 380);
-    ctx.fillStyle = '#B5ACA3';
-    ctx.font = '12.5px Georgia, serif';
-    ctx.fillText('Night 1: Gentle Acid Polish · Wait 60s', 26, 406);
-    ctx.fillText('Night 2: Retinoid Renewal · Cream Buffer', 26, 430);
-    ctx.fillText('Night 3: Peptide & Barrier Recovery', 26, 454);
-    ctx.fillText('Night 4: 3:1:1 Ceramide Cushion Seal', 26, 478);
+    // 4-Night Cycling Strip
+    ctx.fillStyle = '#A7D7C5';
+    ctx.font = 'bold 11px Georgia, serif';
+    ctx.fillText('4-NIGHT SKIN-CYCLING ROTATION', 20, 424);
+    var nights = ['N1: Polish', 'N2: Rest', 'N3: Renew', 'N4: Lipids'];
+    for (var n = 0; n < 4; n++) {
+      var nx = 18 + n * 82;
+      ctx.fillStyle = (n % 2 === 0) ? '#7A2332' : '#264C3C';
+      ctx.fillRect(nx, 434, 76, 26);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.fillText(nights[n], nx + 10, 451);
+    }
 
     var unlocked = Boolean(window.__ebIsUnlocked);
     if (!unlocked) {
-      ctx.fillStyle = 'rgba(201, 164, 90, 0.16)';
-      ctx.fillRect(24, 524, w - 48, 52);
-      ctx.strokeStyle = 'rgba(201, 164, 90, 0.55)';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(24, 524, w - 48, 52);
+      ctx.fillStyle = 'rgba(201, 164, 90, 0.18)';
+      ctx.fillRect(18, 476, w - 36, 48);
+      ctx.strokeStyle = '#C9A45A';
+      ctx.strokeRect(18, 476, w - 36, 48);
       ctx.fillStyle = '#C9A45A';
-      ctx.font = 'bold 12px Georgia, serif';
-      ctx.fillText('DERMLOGIC.IO FREE PREVIEW', 38, 546);
+      ctx.font = 'bold 11.5px Georgia, serif';
+      ctx.fillText('DERMLOGIC.IO · 99¢ LOCK-SCREEN PASS', 30, 496);
       ctx.fillStyle = '#F4EFE8';
-      ctx.font = '11.5px Georgia, serif';
-      ctx.fillText('Tap to download unwatermarked 9:16 PNG (99¢)', 38, 564);
+      ctx.font = '11px sans-serif';
+      ctx.fillText('Tap to unlock crisp 1080x1920 AM + PM PNGs', 30, 514);
     } else {
       var dlBtn = document.getElementById('btnDownloadLockScreenPng');
       if (dlBtn) dlBtn.textContent = 'Download Clean 9:16 PNG ↓';
@@ -567,9 +607,8 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       });
     }
 
-    ctx.fillStyle = '#9E968E';
-    ctx.font = '10.5px Georgia, serif';
-    ctx.fillText('Verified by DermLogic Formulation Atelier · dermlogic.io', 26, h - 24);
+    ctx.fillStyle = 'rgba(255,255,255,0.32)';
+    ctx.fillRect(w / 2 - 48, h - 14, 96, 4);
   };
 
   window.__dlDownloadOrUnlockWallpaper = function() {
