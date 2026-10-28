@@ -822,23 +822,30 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         var titleEl = (card && !card.classList.contains('conflict-card')) ? card.querySelector('a[href^="/bottle/"], h1, h3') : null;
         var prodTitle = titleEl ? titleEl.textContent.trim() : (affLink.textContent.trim() || prodId);
         var btnId = 'dl-bag-btn-' + prodId;
-        var existing = card ? card.querySelector('button[data-dl-bag-prod="' + prodId + '"]') : null;
-        var inBag = activeIds.indexOf(prodId) !== -1;
-        var mapped = mapProductIdToSlot(prodId, prodTitle, '');
-        var slotLabel = 'Slot 0' + (mapped.slotIdx + 1);
+        var existing = (affLink.parentElement ? affLink.parentElement.querySelector('button[data-dl-bag-prod="' + prodId + '"]') : null) || (card ? card.querySelector('button[data-dl-bag-prod="' + prodId + '"]') : null);
         if (!existing) {
           existing = document.createElement('button');
           existing.type = 'button';
           existing.id = btnId;
           existing.setAttribute('data-dl-bag-prod', prodId);
-          existing.className = 'dl-add-to-bag-btn mono' + (inBag ? ' in-bag' : '');
+          existing.setAttribute('data-dl-bag-title', prodTitle);
+          existing.className = 'dl-add-to-bag-btn mono';
           existing.onclick = function() { window.__dlToggleBottleInBag(prodId, prodTitle, '', existing); };
           if (affLink.parentElement) {
             affLink.parentElement.appendChild(existing);
           }
         }
-        existing.className = 'dl-add-to-bag-btn mono' + (inBag ? ' in-bag' : '');
-        existing.innerHTML = inBag
+      });
+
+      document.querySelectorAll('button[data-dl-bag-prod]').forEach(function(btn) {
+        var prodId = btn.getAttribute('data-dl-bag-prod') || '';
+        if (!prodId) return;
+        var prodTitle = btn.getAttribute('data-dl-bag-title') || prodId;
+        var inBag = activeIds.indexOf(prodId) !== -1;
+        var mapped = mapProductIdToSlot(prodId, prodTitle, '');
+        var slotLabel = 'Slot 0' + (mapped.slotIdx + 1);
+        btn.className = 'dl-add-to-bag-btn mono' + (inBag ? ' in-bag' : '');
+        btn.innerHTML = inBag
           ? ('✓ In Vanity Bag (' + slotLabel + ') &times;')
           : ('+ Add to Vanity Bag (' + slotLabel + ')');
       });

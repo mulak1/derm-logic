@@ -403,9 +403,9 @@ function renderCelebrityDetailPage(celeb) {
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-top:6px;">
         <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
           <a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.79rem;color:var(--rose-brand);font-weight:500;">Bottle Breakdown &amp; Dupes &rarr;</a>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
             <a href="/api/affiliate?product=${escapeHtml(b.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ($${b.priceUsd}) &rarr;</a>
-            <a href="/?products=${escapeHtml(b.id)}#analyzer" class="mono" style="font-size:0.74rem;padding:4px 8px;background:var(--bg-oat);color:var(--text-primary);text-decoration:none;">Test in Shelf &rarr;</a>
+            <button type="button" id="dl-bag-btn-${escapeHtml(b.id)}" data-dl-bag-prod="${escapeHtml(b.id)}" data-dl-bag-title="${escapeHtml(b.brand + ' ' + b.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(b.id)}','${escapeHtml((b.brand + ' ' + b.name).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button>
           </div>
         </div>
         <div style="width:54px;height:60px;background:var(--bg-oat);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="${escapeHtml(b.brand)} ${escapeHtml(b.name)}">${renderBottleVesselSvg(b)}</div>
@@ -566,7 +566,7 @@ function renderBottleIndexPage() {
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;">
         <a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Layering &amp; Dupes &rarr;</a>
-        ${celebUsers.length > 0 ? `<span class="mono" style="font-size:0.76rem;color:var(--text-secondary);">On ${escapeHtml(celebUsers[0].name)}’s Shelf</span>` : `<a href="/?products=${escapeHtml(b.id)}#analyzer" class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Check Shelf &rarr;</a>`}
+        <button type="button" id="dl-bag-btn-${escapeHtml(b.id)}" data-dl-bag-prod="${escapeHtml(b.id)}" data-dl-bag-title="${escapeHtml(b.brand + ' ' + b.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(b.id)}','${escapeHtml((b.brand + ' ' + b.name).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button>
       </div>
     </div>`;
   }).join('');
@@ -601,9 +601,10 @@ function renderBottleDetailPage(prod) {
             <span class="mono" style="font-size:0.86rem;color:var(--rose-brand);font-weight:500;">${escapeHtml(prod.category)} · pH ${prod.ph} · $${prod.priceUsd}</span>
           </div>
           <p class="hero-sub" style="margin-bottom:18px;">${escapeHtml(prod.summary)}</p>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
             <a href="/?products=${escapeHtml(prod.id)}#analyzer" class="btn-primary"><span>Test This Bottle with My Shelf</span><span class="btn-icon-circle">&rarr;</span></a>
             <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="btn-secondary"><span>Shop at ${partner === 'dermstore' ? 'Dermstore' : 'Sephora'} ($${prod.priceUsd}) &rarr;</span></a>
+            <button type="button" id="dl-bag-btn-${escapeHtml(prod.id)}" data-dl-bag-prod="${escapeHtml(prod.id)}" data-dl-bag-title="${escapeHtml(prod.brand + ' ' + shortBottleName)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(prod.id)}','${escapeHtml((prod.brand + ' ' + shortBottleName).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -711,7 +712,7 @@ function renderBrandIndexPage() {
 
 function renderBrandDetailPage(brandHub) {
   const preloadHref = `/?products=${encodeURIComponent(brandHub.products.map((p) => p.id).join(','))}#analyzer`;
-  const cards = brandHub.products.map((b) => `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;"><div><span class="badge-safe mono" style="margin-bottom:6px;display:inline-block;">${escapeHtml(b.category)} · pH ${b.ph} · $${b.priceUsd}</span><a href="/bottle/${escapeHtml(b.id)}" class="serif-display" style="display:block;font-size:1.3rem;margin-bottom:6px;">${escapeHtml(b.name)}</a><p style="font-size:0.88rem;color:var(--text-secondary);">${escapeHtml(b.summary)}</p></div><a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">View Bottle Guide &amp; Dupes &rarr;</a></div>`).join('');
+  const cards = brandHub.products.map((b) => `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;"><div><span class="badge-safe mono" style="margin-bottom:6px;display:inline-block;">${escapeHtml(b.category)} · pH ${b.ph} · $${b.priceUsd}</span><a href="/bottle/${escapeHtml(b.id)}" class="serif-display" style="display:block;font-size:1.3rem;margin-bottom:6px;">${escapeHtml(b.name)}</a><p style="font-size:0.88rem;color:var(--text-secondary);">${escapeHtml(b.summary)}</p></div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">View Bottle Guide &amp; Dupes &rarr;</a><button type="button" id="dl-bag-btn-${escapeHtml(b.id)}" data-dl-bag-prod="${escapeHtml(b.id)}" data-dl-bag-title="${escapeHtml(b.brand + ' ' + b.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(b.id)}','${escapeHtml((b.brand + ' ' + b.name).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button></div></div>`).join('');
   return renderShell({
     title: `${brandHub.name} Skincare Layering Guide, Bottle pH & Clashes | DermLogic`,
     description: `How to layer ${brandHub.name} bottles (${brandHub.products.map((p) => p.name).join(', ')}): verified pH levels, wait times, and routine compatibility.`,
@@ -782,7 +783,10 @@ function renderConcernDetailPage(concern) {
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-top:6px;">
         <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
           <a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.79rem;color:var(--rose-brand);font-weight:500;">Bottle Breakdown &amp; Dupes &rarr;</a>
-          <a href="/api/affiliate?product=${escapeHtml(b.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ($${b.priceUsd}) &rarr;</a>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+            <a href="/api/affiliate?product=${escapeHtml(b.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ($${b.priceUsd}) &rarr;</a>
+            <button type="button" id="dl-bag-btn-${escapeHtml(b.id)}" data-dl-bag-prod="${escapeHtml(b.id)}" data-dl-bag-title="${escapeHtml(b.brand + ' ' + b.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(b.id)}','${escapeHtml((b.brand + ' ' + b.name).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button>
+          </div>
         </div>
         <div style="width:54px;height:60px;background:var(--bg-oat);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="${escapeHtml(b.brand)} ${escapeHtml(b.name)}">${renderBottleVesselSvg(b)}</div>
       </div>
