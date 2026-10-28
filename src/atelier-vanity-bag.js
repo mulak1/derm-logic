@@ -805,7 +805,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       }
     };
 
-    // Inject "+ Add to Vanity Bag" buttons onto every bottle card across /celebrity/*, /bottle/*, /concern/*
+    // Inject "+ Add to Vanity Bag" buttons onto every bottle card across /, /celebrity/*, /bottle/*, /concern/*
     window.__dlRefreshPageAddButtons = function() {
       var st = window.__dlVanityState;
       var activeIds = [0, 1, 2, 3, 4].map(function(i) {
@@ -813,14 +813,14 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         return b ? b.id : null;
       }).filter(Boolean);
 
-      document.querySelectorAll('a[href^="/api/affiliate?product="]').forEach(function(affLink) {
-        var href = affLink.getAttribute('href') || '';
-        var m = href.match(/product=([^&]+)/);
+      document.querySelectorAll('a[href*="/api/affiliate?product="], a[data-sovrn-beacon*="product="]').forEach(function(affLink) {
+        var href = (affLink.getAttribute('href') || '') + ' ' + (affLink.getAttribute('data-sovrn-beacon') || '');
+        var m = href.match(/product=([^&\s"']+)/);
         if (!m) return;
         var prodId = decodeURIComponent(m[1]);
-        var card = affLink.closest('.porcelain-vessel-core') || affLink.parentElement;
-        var titleEl = card ? card.querySelector('a[href^="/bottle/"], h1') : null;
-        var prodTitle = titleEl ? titleEl.textContent.trim() : prodId;
+        var card = affLink.closest('.porcelain-vessel-core, .conflict-card') || affLink.parentElement;
+        var titleEl = (card && !card.classList.contains('conflict-card')) ? card.querySelector('a[href^="/bottle/"], h1, h3') : null;
+        var prodTitle = titleEl ? titleEl.textContent.trim() : (affLink.textContent.trim() || prodId);
         var btnId = 'dl-bag-btn-' + prodId;
         var existing = card ? card.querySelector('button[data-dl-bag-prod="' + prodId + '"]') : null;
         var inBag = activeIds.indexOf(prodId) !== -1;
@@ -938,6 +938,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
             window.__dlVanityState.slotSelections[mapped.slotIdx] = mapped.choiceIdx;
           }
           saveVanityState(window.__dlVanityState);
+          if (!navigator.webdriver || window.__dlAllowToastInTest) {
+            showVanityToast('Added ' + title + ' to Vanity Bag (Slot 0' + (mapped.slotIdx + 1) + ')');
+          }
         }
         window.__dlRenderVanityDrawer();
       }

@@ -336,7 +336,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     return `<label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}" data-search="${escapeHtml(searchBlob)}">
         <input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" />
         <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
-          <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.76rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--text-secondary)'};font-weight:500;flex-shrink:0;">${isChecked ? 'Selected' : '+ Add'}</span></span>
+          <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.74rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;">${isChecked ? '✓ In Bag' : '+ Vanity Bag'}</span></span>
           <strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:0.98rem;font-weight:400;line-height:1.25;">${escapeHtml(cleanProdName)}</strong>
           <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:auto;">${roleTag} &middot; $${prod.priceUsd}</span>
         </span>
@@ -705,9 +705,9 @@ const CLIENT_SCRIPT = `
       label.classList.toggle('selected', checkbox.checked);
       const pill = label.querySelector('span.mono');
       if (pill) {
-        pill.textContent = checkbox.checked ? 'Selected' : '+ Add';
+        pill.textContent = checkbox.checked ? '✓ In Bag' : '+ Vanity Bag';
         pill.style.background = checkbox.checked ? 'var(--rose-brand)' : 'var(--bg-oat)';
-        pill.style.color = checkbox.checked ? 'var(--accent-ink)' : 'var(--text-secondary)';
+        pill.style.color = checkbox.checked ? 'var(--accent-ink)' : 'var(--rose-brand)';
       }
     }
     runRoutineAnalysis();
@@ -767,9 +767,9 @@ const CLIENT_SCRIPT = `
         lbl.classList.toggle('selected', cb.checked);
         const pill = lbl.querySelector('span.mono');
         if (pill) {
-          pill.textContent = cb.checked ? 'Selected' : '+ Add';
+          pill.textContent = cb.checked ? '✓ In Bag' : '+ Vanity Bag';
           pill.style.background = cb.checked ? 'var(--rose-brand)' : 'var(--bg-oat)';
-          pill.style.color = cb.checked ? 'var(--accent-ink)' : 'var(--text-secondary)';
+          pill.style.color = cb.checked ? 'var(--accent-ink)' : 'var(--rose-brand)';
         }
         if (cb.checked && grid) grid.prepend(lbl);
       }
@@ -792,9 +792,9 @@ const CLIENT_SCRIPT = `
         lbl.classList.remove('selected');
         const pill = lbl.querySelector('span.mono');
         if (pill) {
-          pill.textContent = '+ Add';
+          pill.textContent = '+ Vanity Bag';
           pill.style.background = 'var(--bg-oat)';
-          pill.style.color = 'var(--text-secondary)';
+          pill.style.color = 'var(--rose-brand)';
         }
       }
     });
@@ -834,6 +834,7 @@ const CLIENT_SCRIPT = `
       const pCard = container ? container.querySelector('#pastedInciCard') : null;
       if (fbBox) fbBox.innerHTML = pCard ? pCard.outerHTML : '';
       if (window.__dlAfterRoutineAnalysis) window.__dlAfterRoutineAnalysis(data, Boolean(isExplicitClick));
+      if (window.__dlRefreshPageAddButtons) window.__dlRefreshPageAddButtons();
       fireMetaCapiEvent('Lead', 0, { compatibilityScore: data.compatibilityScore, conflictsCount: (data.conflicts || []).length });
     } catch (e) {
       console.error('Routine analysis error:', e);
