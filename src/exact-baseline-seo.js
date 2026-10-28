@@ -172,7 +172,15 @@ function buildLlmsTxtContent(cfg, seoEntries) {
     }),
     '',
     `## All ${seoEntries.length} Indexed Programmatic SEO Benchmarks & Playbooks (/seo/:slug & .md Twins)`,
-    ...seoEntries.map((item) => `- [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${item.summary}`)
+    ...seoEntries.map((item) => `- [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${item.summary}`),
+    ...(cfg.moduleId === 'derm_logic' ? [
+      '',
+      '## Semantic Skincare Hubs: Celebrity Shelves, Concerns, Cult Bottles, Ingredients & Brands',
+      `- [Celebrity Skincare Shelves Hub](${host}/celebrity): Verified morning & evening shelves for Hailey Bieber, Sydney Sweeney, Sofia Richie, Sabrina Carpenter, Zendaya, Margot Robbie, and more.`,
+      `- [Skin Concerns & Clinical Protocols Hub](${host}/concern): Morning under-makeup zero-pilling, pregnancy-safe retinol swaps, tretinoin sandwich method, 72h barrier reset, fungal-acne safe, rosacea, and hormonal acne.`,
+      `- [Cult Skincare Bottles Directory](${host}/bottle): Full INCI, pH window, and layering rules for 75+ iconic bottles.`,
+      `- [Active Skincare Ingredients Encyclopedia](${host}/ingredient): 65+ active ingredients with pH, pore-safety, and conflict rules.`
+    ] : [])
   ];
   return lines.join('\n');
 }
@@ -291,13 +299,18 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
     res.status(200).type('image/svg+xml; charset=utf-8').send(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="${cfg.theme?.brandPrimary || '#0F172A'}"/><text x="32" y="43" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="32" font-weight="800">${escXml((cfg.brandName || 'A')[0])}</text></svg>`);
   });
   app.get('/robots.txt', (req, res) => {
-    const { isTest, isCrawler } = classifyTrafficRequest(req);
-    if (isCrawler) store.recordEvent({ eventType: 'crawler_robots', pageUrl: '/robots.txt', isTest, isCrawler });
-    const botStanzas = AI_CRAWLER_AGENTS.map((bot) => `User-agent: ${bot}\nAllow: /\nAllow: /seo/\nAllow: /scan/\nAllow: /leaderboard\nAllow: /tools/\nAllow: /compare/\nAllow: /llms.txt\nAllow: /llms-full.txt\nAllow: /openapi.json\nDisallow: /buy/\nDisallow: /api/buy/\nDisallow: /api/affiliate\n`).join('\n');
+    const { isTest, isCrawler, clientIp } = classifyTrafficRequest(req);
+    if (isCrawler) store.recordEvent({ eventType: 'crawler_robots', pageUrl: '/robots.txt', isTest, isCrawler, clientIp });
+    const botStanzas = AI_CRAWLER_AGENTS.map((bot) => `User-agent: ${bot}\nAllow: /\nAllow: /seo/\nAllow: /celebrity\nAllow: /concern\nAllow: /bottle\nAllow: /ingredient\nAllow: /brand/\nAllow: /scan/\nAllow: /leaderboard\nAllow: /tools/\nAllow: /compare/\nAllow: /llms.txt\nAllow: /llms-full.txt\nAllow: /openapi.json\nDisallow: /buy/\nDisallow: /api/buy/\nDisallow: /api/affiliate\n`).join('\n');
     const txt = [
       'User-agent: *',
       'Allow: /',
       'Allow: /seo/',
+      'Allow: /celebrity',
+      'Allow: /concern',
+      'Allow: /bottle',
+      'Allow: /ingredient',
+      'Allow: /brand/',
       'Allow: /scan/',
       'Allow: /leaderboard',
       'Allow: /tools/',
@@ -330,24 +343,24 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
 
   // 2. Universal /llms.txt, /.well-known/llms.txt, /llms-full.txt & Markdown Twins (/index.md, /seo/:slug.md)
   app.get(['/llms.txt', '/.well-known/llms.txt'], (req, res) => {
-    const { isTest, isCrawler } = classifyTrafficRequest(req);
-    if (isCrawler) store.recordEvent({ eventType: 'crawler_index', pageUrl: req.path, isTest, isCrawler });
+    const { isTest, isCrawler, clientIp } = classifyTrafficRequest(req);
+    if (isCrawler) store.recordEvent({ eventType: 'crawler_index', pageUrl: req.path, isTest, isCrawler, clientIp });
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('X-Robots-Tag', 'all, index, follow');
     res.status(200).type('text/plain; charset=utf-8').send(buildLlmsTxtContent(cfg, getEntries()));
   });
 
   app.get('/llms-full.txt', (req, res) => {
-    const { isTest, isCrawler } = classifyTrafficRequest(req);
-    if (isCrawler) store.recordEvent({ eventType: 'crawler_index', pageUrl: '/llms-full.txt', isTest, isCrawler });
+    const { isTest, isCrawler, clientIp } = classifyTrafficRequest(req);
+    if (isCrawler) store.recordEvent({ eventType: 'crawler_index', pageUrl: '/llms-full.txt', isTest, isCrawler, clientIp });
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('X-Robots-Tag', 'all, index, follow');
     res.status(200).type('text/plain; charset=utf-8').send(buildLlmsFullTxtContent(cfg, getEntries()));
   });
 
   app.get('/index.md', (req, res) => {
-    const { isTest, isCrawler } = classifyTrafficRequest(req);
-    if (isCrawler) store.recordEvent({ eventType: 'crawler_index', pageUrl: '/index.md', isTest, isCrawler });
+    const { isTest, isCrawler, clientIp } = classifyTrafficRequest(req);
+    if (isCrawler) store.recordEvent({ eventType: 'crawler_index', pageUrl: '/index.md', isTest, isCrawler, clientIp });
     res.setHeader('X-Robots-Tag', 'all, index, follow');
     res.setHeader('Link', `<${hostUrl}/>; rel="canonical"`);
     res.status(200).type('text/markdown; charset=utf-8').send(buildMarkdownTwinContent(cfg, getEntries(), 'index'));
