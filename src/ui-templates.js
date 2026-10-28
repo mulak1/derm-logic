@@ -150,11 +150,12 @@ const SHARED_CSS = `
   .hero-h1-line1 { display: block; }
   .hero-h1-line2 { display: block; padding-left: 5vw; }
   .hero-sub { color: var(--text-secondary); font-size: var(--step-lead); line-height: 1.38; max-width: 54ch; margin-bottom: 12px; }
-  .editorial-photo-shell { background: var(--bg-oat); padding: 10px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-  .editorial-photo-inner { overflow: hidden; position: relative; min-height: 205px; height: 100%; flex: 1; background: var(--bg-porcelain); }
-  .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .editorial-photo-diptych { display: grid; grid-template-columns: 1.32fr 0.88fr; gap: 8px; min-height: 215px; height: 100%; flex: 1; }
-  .editorial-photo-diptych .editorial-photo-inner { height: 100%; }
+  .editorial-photo-shell { background: var(--bg-oat); padding: 12px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .editorial-photo-inner { overflow: hidden; position: relative; min-height: 290px; height: 100%; flex: 1; background: var(--bg-porcelain); }
+  .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 180ms ease-out; }
+  .editorial-photo-diptych { display: flex; flex-direction: column; min-height: 290px; height: 100%; flex: 1; }
+  .editorial-photo-diptych .editorial-photo-inner { height: 100%; flex: 1; }
+  #eb-hero-trust-strip { display: none !important; }
   .vessel-photo-frame { background: var(--bg-oat); padding: 6px; margin-bottom: 14px; }
   .vessel-photo-frame img { width: 100%; height: 172px; object-fit: cover; display: block; }
   .editorial-photo-caption { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: var(--step-small); color: var(--text-secondary); }
@@ -926,21 +927,25 @@ const CLIENT_SCRIPT = `
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
     }
+    const heroBtn = document.querySelector('#heroRitualToggleBar .vanity-light-btn[data-ritual-mode="' + (isNight ? 'pm' : 'am') + '"]');
+    setHeroRitualMode(isNight ? 'pm' : 'am', heroBtn);
   }
   function setHeroRitualMode(mode, btn) {
     const map = {
-      am: { img1: '/public/editorial-woman-morning.jpg', img2: '/public/editorial-segment-1.jpg', title: '7:30 AM · Morning Shield & Zero-Pilling Prep', sub: 'Vitamin C (Wait 60s) · Hydrating Serum · Barrier Cream · Broad-Spectrum SPF 50', badge: 'Morning Glow Order', badgeClass: 'badge-safe mono' },
-      pm: { img1: '/public/editorial-woman-evening.jpg', img2: '/public/editorial-segment-3.jpg', title: '9:30 PM · Bedtime Renewal & Ceramide Cushion', sub: 'Oil-to-Milk Cleanse · Dry-Skin Retinoid or Peptide · 3:1:1 Ceramide Barrier Seal', badge: 'Bedtime Recovery', badgeClass: 'badge-safe mono' },
-      clash: { img1: '/public/editorial-segment-2.jpg', img2: '/public/routines/sofia-mist.jpg', title: 'Why $182 Serums Cancel on Contact', sub: 'Pure Vitamin C (pH 3.2) + Copper Peptides or Retinol + Benzoyl Peroxide deactivate each other', badge: 'Separate AM & PM', badgeClass: 'badge-clash mono' }
+      am: { img1: '/public/editorial-woman-morning.jpg', alt: 'Woman in linen robe applying morning Vitamin C serum at a sunlit travertine vanity', pos: 'center 22%', title: '7:30 AM · Morning Shield & Zero-Pilling Prep', sub: 'Vitamin C (Wait 60s) · Hydrating Serum · Barrier Cream · Broad-Spectrum SPF 50', badge: 'Morning Glow Order', badgeClass: 'badge-safe mono' },
+      pm: { img1: '/public/editorial-woman-evening.jpg', alt: 'Woman applying evening ceramide recovery cream by warm candlelight', pos: 'center 20%', title: '9:30 PM · Bedtime Renewal & Ceramide Cushion', sub: 'Oil-to-Milk Cleanse · Dry-Skin Retinoid or Peptide · 3:1:1 Ceramide Barrier Seal', badge: 'Bedtime Recovery', badgeClass: 'badge-safe mono' },
+      clash: { img1: '/public/editorial-segment-2.jpg', alt: 'Close-up of woman inspecting active dropper bottle to prevent pH serum clash', pos: 'center 18%', title: 'Why $182 Serums Cancel on Contact', sub: 'Pure Vitamin C (pH 3.2) + Copper Peptides or Retinol + Benzoyl Peroxide deactivate each other', badge: 'Separate AM & PM', badgeClass: 'badge-clash mono' }
     };
-    const cfg = map[mode] || map.am, tEl = document.getElementById('heroDiptychTitle'), sEl = document.getElementById('heroDiptychSub'), bEl = document.getElementById('heroDiptychBadge'), i1 = document.getElementById('heroDiptychImg1'), i2 = document.getElementById('heroDiptychImg2');
+    const cfg = map[mode] || map.am, tEl = document.getElementById('heroDiptychTitle'), sEl = document.getElementById('heroDiptychSub'), bEl = document.getElementById('heroDiptychBadge'), i1 = document.getElementById('heroDiptychImg1');
     if (tEl) tEl.textContent = cfg.title;
     if (sEl) sEl.textContent = cfg.sub;
     if (bEl) { bEl.textContent = cfg.badge; bEl.className = cfg.badgeClass; }
-    if (i1) i1.src = cfg.img1;
-    if (i2) i2.src = cfg.img2;
-    document.querySelectorAll('#heroRitualToggleBar .vanity-light-btn').forEach((b) => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
-    if (btn) { btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); }
+    if (i1) { i1.src = cfg.img1; i1.alt = cfg.alt; i1.style.objectPosition = cfg.pos; }
+    document.querySelectorAll('#heroRitualToggleBar .vanity-light-btn').forEach((b) => {
+      const active = b === btn || b.getAttribute('data-ritual-mode') === mode;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
   }
   function startViscosityTimer(seconds, btn) {
     if (!btn || btn.dataset.running === '1') return;

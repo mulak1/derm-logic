@@ -244,16 +244,13 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div class="hero-photo-col">
             <div class="editorial-photo-shell">
               <div id="heroRitualToggleBar" class="vanity-light-pill" role="group" aria-label="Preview Morning, Bedtime, or Serum Clash Mode" style="display:flex;width:100%;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px;">
-                <button type="button" class="vanity-light-btn active mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="true" onclick="setHeroRitualMode('am', this)">7:30 AM &middot; Morning</button>
-                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="false" onclick="setHeroRitualMode('pm', this)">9:30 PM &middot; Bedtime</button>
-                <button type="button" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="false" onclick="setHeroRitualMode('clash', this)">Why Serums Clash</button>
+                <button type="button" data-ritual-mode="am" class="vanity-light-btn active mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="true" onclick="setHeroRitualMode('am', this)">7:30 AM &middot; Morning</button>
+                <button type="button" data-ritual-mode="pm" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="false" onclick="setHeroRitualMode('pm', this)">9:30 PM &middot; Bedtime</button>
+                <button type="button" data-ritual-mode="clash" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="false" onclick="setHeroRitualMode('clash', this)">Why Serums Clash</button>
               </div>
-              <div class="editorial-photo-diptych" style="grid-template-columns:1fr;">
-                <div class="editorial-photo-inner" style="min-height:240px;max-height:290px;">
+              <div class="editorial-photo-diptych">
+                <div class="editorial-photo-inner" style="min-height:290px;height:100%;">
                   <img id="heroDiptychImg1" src="/public/editorial-woman-morning.jpg" alt="Woman in linen robe applying morning Vitamin C serum at a sunlit travertine vanity" style="object-position:center 22%;" fetchpriority="high" />
-                </div>
-                <div class="editorial-photo-inner" style="display:none;">
-                  <img id="heroDiptychImg2" src="/public/editorial-segment-1.jpg" alt="Radiant woman in oat-linen robe pressing morning Vitamin C serum onto her cheek in warm daylight" style="object-position:center 24%;" fetchpriority="high" />
                 </div>
               </div>
               <div class="editorial-photo-caption" style="padding-top:6px;">
