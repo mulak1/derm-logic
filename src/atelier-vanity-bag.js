@@ -18,17 +18,11 @@ function buildLogoBagIconSvg(size = 26) {
 }
 
 function renderHeaderVanityBagPill() {
-  return `<button type="button" id="dl-header-vanity-pill" class="mono" onclick="window.__dlOpenVanityDrawer('header_pill')" aria-label="Open My 5-Slot Atelier Vanity Bag" style="display:inline-flex;align-items:center;gap:9px;padding:6px 14px 6px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;border-radius:999px;cursor:pointer;font-size:0.84rem;font-weight:600;transition:transform 180ms cubic-bezier(0.22,1,0.36,1),background-color 180ms ease;white-space:nowrap;">
+  return `<button type="button" id="dl-header-vanity-pill" class="mono" onclick="window.__dlOpenVanityDrawer('header_pill')" aria-label="Open My 5-Slot Atelier Vanity Bag" style="display:inline-flex;align-items:center;gap:9px;padding:6px 14px 6px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;border-radius:999px;cursor:pointer;font-size:0.84rem;font-weight:600;user-select:none;touch-action:manipulation;transition:background-color 180ms ease;white-space:nowrap;">
     <span style="position:relative;display:inline-flex;align-items:center;gap:6px;">
       ${buildLogoBagIconSvg(26)}
       <span id="dl-header-vanity-full-dot" style="position:absolute;top:-1px;left:18px;width:9px;height:9px;border-radius:999px;background:#10B981;"></span>
-      <span id="dl-header-vanity-bars" style="display:inline-flex;flex-direction:column;gap:2px;align-items:center;">
-        <span style="width:5px;height:2.5px;border-radius:99px;background:#10B981;"></span>
-        <span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span>
-        <span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span>
-        <span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span>
-        <span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span>
-      </span>
+      <span id="dl-header-vanity-bars" style="display:inline-flex;flex-direction:column;gap:2px;align-items:center;"><span style="width:5px;height:2.5px;border-radius:99px;background:#10B981;"></span><span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span><span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span><span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span><span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span></span>
     </span>
     <span>Vanity Bag</span>
     <span id="dl-header-vanity-count" style="padding:2px 9px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);font-size:0.75rem;font-weight:600;">5 of 5 Full</span>
@@ -39,7 +33,8 @@ function renderHeaderVanityBagPill() {
 function renderAtelierVanityDrawerHtml() {
   return `
   <style>
-    #dl-header-vanity-pill:active, .dl-vanity-swatch-btn:active, .dl-vanity-slot-head:active, .dl-dossier-tab-btn:active, .dl-tray-vessel-btn:active, .dl-add-to-bag-btn:active { transform: scale(0.97); }
+    .dl-vanity-swatch-btn:active, .dl-vanity-slot-head:active, .dl-dossier-tab-btn:active, .dl-tray-vessel-btn:active, .dl-add-to-bag-btn:active { transform: scale(0.97); }
+    #dl-header-vanity-pill *, #dl-floating-vanity-dock * { pointer-events: none; }
     .dl-vanity-swatch-btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 6px; background: var(--bg-surface); color: var(--text-secondary); border: none; border-radius: 999px; cursor: pointer; min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; text-align: center; font-size: 0.72rem; line-height: 1.2; font-weight: 500; white-space: nowrap; transition: background-color 160ms ease, transform 160ms cubic-bezier(0.22,1,0.36,1); }
     .dl-vanity-swatch-btn.active { background: var(--rose-pill-bg); color: var(--rose-brand); font-weight: 600; }
     .dl-vanity-slot-card { background: var(--bg-surface); border: none; border-radius: 20px; transition: background-color 180ms ease; }
@@ -49,19 +44,20 @@ function renderAtelierVanityDrawerHtml() {
     .dl-dossier-tab-btn { padding: 8px 6px; background: transparent; border: none; border-radius: 999px; cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 0; transition: background-color 160ms ease, color 160ms ease; }
     .dl-dossier-tab-btn.active { background: var(--bg-surface); box-shadow: 0 2px 8px rgba(58,31,39,0.06); }
     .dl-tray-lineup-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
-    .dl-tray-vessel-btn { background: var(--bg-surface); border: none; border-radius: 16px; padding: 8px 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 4px; min-width: 0; position: relative; transition: transform 180ms cubic-bezier(0.22,1,0.36,1), background-color 160ms ease; }
+    .dl-tray-vessel-btn { background: var(--bg-surface); border: 1.5px solid transparent; border-radius: 16px; padding: 8px 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 4px; min-width: 0; position: relative; transition: transform 180ms cubic-bezier(0.22,1,0.36,1), background-color 160ms ease, border-color 160ms ease; }
     .dl-tray-vessel-btn:hover { transform: translateY(-2px); }
-    .dl-tray-vessel-btn.active { background: var(--rose-pill-bg); transform: translateY(-2px); }
+    .dl-tray-vessel-btn.active { background: var(--rose-pill-bg); border-color: rgba(138,52,72,0.38); transform: translateY(-2px); }
     .dl-tray-vessel-btn.has-clash { background: var(--berry-bg); }
-    .dl-tray-vessel-btn.is-empty { background: var(--bg-canvas); opacity: 0.92; }
+    .dl-tray-vessel-btn.is-empty { background: #EBE0D4; border: 1.5px dashed rgba(110,75,85,0.38); }
+    .dl-tray-vessel-btn.is-empty.active { background: #E5D6C8; border: 1.5px dashed var(--rose-brand); }
     .dl-add-to-bag-btn, .vanity-card-bag-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 999px; background: var(--rose-pill-bg); color: var(--rose-brand); border: none; font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background-color 160ms ease, color 160ms ease, transform 150ms ease; }
     .dl-add-to-bag-btn.in-bag { background: var(--rose-brand); color: var(--accent-ink); }
-    .dl-info-i { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 999px; background: rgba(138,52,72,0.14); color: var(--rose-brand); font-size: 0.65rem; font-weight: 700; font-style: italic; font-family: Georgia, serif; flex-shrink: 0; cursor: help; margin-left: 4px; line-height: 1; transition: background-color 140ms ease, color 140ms ease; }
+    .dl-info-i { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 999px; background: rgba(138,52,72,0.15); color: var(--rose-brand); font-size: 0.66rem; font-weight: 700; font-style: italic; font-family: Georgia, serif; flex-shrink: 0; cursor: pointer; margin-left: 4px; line-height: 1; user-select: none; touch-action: manipulation; transition: background-color 140ms ease, color 140ms ease; }
     .dl-info-i:hover { background: var(--rose-brand); color: #FFFFFF; }
     #dl-prod-info-tip { position: fixed; z-index: 10020; max-width: 268px; border-radius: 18px; padding: 10px 13px; background: #FFF7F8; color: #3A1F27; font-size: 0.75rem; line-height: 1.4; box-shadow: 0 14px 32px rgba(138,52,72,0.16), 0 2px 8px rgba(58,31,39,0.08); pointer-events: none; display: none; }
     #dl-vanity-toast { position: fixed; bottom: 18px; right: 18px; z-index: 9998; background: #3A1F27; color: #FDF8F6; border: none; border-radius: 999px; padding: 10px 16px; font-size: 0.8rem; display: none; align-items: center; gap: 10px; box-shadow: 0 14px 34px rgba(58,31,39,0.22); max-width: calc(100vw - 32px); }
-    #dl-floating-vanity-dock { position: fixed; right: 0; top: 52%; transform: translateY(-50%); z-index: 9990; background: var(--bg-pouch); color: var(--text-primary); border-radius: 26px 0 0 26px; padding: 16px 13px; display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; border: none; transition: transform 180ms cubic-bezier(0.22,1,0.36,1); }
-    #dl-floating-vanity-dock:hover { transform: translateY(-50%) translateX(-2px); }
+    #dl-floating-vanity-dock { position: fixed; right: 0; top: calc(50dvh - 76px); transform: none !important; z-index: 9995; background: var(--bg-pouch); color: var(--text-primary); border-radius: 26px 0 0 26px; padding: 16px 13px; display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; border: none; user-select: none; touch-action: manipulation; box-shadow: -6px 10px 28px rgba(58,31,39,0.1); transition: background-color 160ms ease; }
+    #dl-floating-vanity-dock:hover, #dl-floating-vanity-dock:active, #dl-header-vanity-pill:active { transform: none !important; background: #EAD2D7; }
     @media (max-width: 768px) {
       .dl-hide-mobile, #dl-floating-vanity-dock { display: none !important; }
       #dl-header-vanity-pill { padding: 5px 10px !important; font-size: 0.74rem !important; gap: 5px !important; }
@@ -183,7 +179,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     var PROD_INFO = ${JSON.stringify(PROD_INFO_MAP)};
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
     window.__dlShowProdInfo = function(el, prodId, ev) {
+      var isClick = ev && (ev.type === 'click' || ev.type === 'pointerdown');
       if (ev && ev.stopPropagation && el && el.classList && el.classList.contains('dl-info-i')) { ev.stopPropagation(); ev.preventDefault(); }
+      if (isClick) window.__dlInfoPinnedUntil = Date.now() + 2600;
       var tip = document.getElementById('dl-prod-info-tip');
       var info = PROD_INFO[prodId];
       if (!tip || !info || !info.desc) return;
@@ -196,12 +194,15 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       tip.style.left = Math.round(left) + 'px';
       tip.style.top = Math.round(Math.max(8, top)) + 'px';
     };
-    window.__dlHideProdInfo = function() { var tip = document.getElementById('dl-prod-info-tip'); if (tip) tip.style.display = 'none'; };
-    document.addEventListener('scroll', window.__dlHideProdInfo, { passive: true, capture: true });
+    window.__dlHideProdInfo = function(force) {
+      if (force !== true && window.__dlInfoPinnedUntil && Date.now() < window.__dlInfoPinnedUntil) return;
+      var tip = document.getElementById('dl-prod-info-tip'); if (tip) tip.style.display = 'none';
+    };
+    document.addEventListener('scroll', function() { window.__dlHideProdInfo(true); }, { passive: true, capture: true });
 
     function renderMiniVesselSvg(vesselType, tagText, hasClash, isEmpty) {
-      var stroke = isEmpty ? '#8A3448' : (hasClash ? '#8A3448' : '#3A1F27');
-      var fill = isEmpty ? '#FDF8F6' : (hasClash ? '#F6E3E7' : '#F8EFE6');
+      var stroke = isEmpty ? '#8E6B75' : (hasClash ? '#8A3448' : '#3A1F27');
+      var fill = isEmpty ? '#F4ECE3' : (hasClash ? '#F6E3E7' : '#F8EFE6');
       var accent = hasClash || isEmpty ? '#8A3448' : '#285B44';
       var safeTag = esc(String(tagText || '').slice(0, 6));
       if (vesselType === 'mist') {
@@ -430,7 +431,8 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         var nmEl = document.getElementById(m.nameId);
         var sbEl = document.getElementById(m.subId);
         if (cardEl) {
-          cardEl.style.background = isFilled ? '#FFFFFF' : 'rgba(255,255,255,0.68)';
+          cardEl.style.background = isFilled ? '#FFFFFF' : '#EBE0D4';
+          cardEl.style.border = isFilled ? '1.5px solid transparent' : '1.5px dashed rgba(110,75,85,0.38)';
           cardEl.style.position = 'relative';
           cardEl.onmouseenter = (isFilled && b) ? function(ev) { window.__dlShowProdInfo(cardEl, b.id, ev); } : null;
           cardEl.onmouseleave = window.__dlHideProdInfo;
@@ -438,7 +440,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           if (oldI) oldI.remove();
           if (isFilled && b) {
             var pi = document.createElement('span'); pi.className = 'dl-info-i dl-pouch-i'; pi.style.cssText = 'position:absolute;top:5px;right:5px;margin:0;width:13px;height:13px;font-size:0.6rem;'; pi.textContent = 'i';
-            pi.onclick = function(ev) { window.__dlShowProdInfo(pi, b.id, ev); };
+            pi.onpointerdown = pi.onclick = function(ev) { window.__dlShowProdInfo(pi, b.id, ev); };
             cardEl.appendChild(pi);
           }
         }
@@ -467,6 +469,10 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (dockCountEl) dockCountEl.textContent = filledCount === 5 ? '5 / 5 Full' : (filledCount + ' / 5');
       var dockHarmEl = document.getElementById('dl-dock-vanity-harmony');
       if (dockHarmEl) dockHarmEl.textContent = clashes.length > 0 ? (clashes.length + ' Clash') : 'Harmonized';
+      ['dl-dock-vanity-bars', 'dl-header-vanity-bars'].forEach(function(bId) {
+        var bEl = document.getElementById(bId);
+        if (bEl) bEl.innerHTML = [0, 1, 2, 3, 4].map(function(i) { var hasB = Boolean(getBottleForSlot(st, i)); var w = bId.indexOf('dock') !== -1 ? 'width:6px;height:3px;' : 'width:5px;height:2.5px;'; return '<span style="' + w + 'border-radius:99px;background:' + (hasB ? (i === 0 ? '#10B981' : '#8A3448') : 'rgba(138,52,72,0.22)') + ';"></span>'; }).join('');
+      });
 
       var headerClashEl = document.getElementById('dl-header-vanity-clash-dot');
       if (headerClashEl) {
@@ -559,16 +565,13 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (trayEl) {
         trayEl.innerHTML = SLOT_OPTIONS.map(function(slot, idx) {
           var b = getBottleForSlot(st, idx);
-          var hasClash = clashes.some(function(c) { return c.slots.indexOf(idx) !== -1; });
+          var hasClash = Boolean(b) && clashes.some(function(c) { return c.slots.indexOf(idx) !== -1; });
           var isSel = idx === activeIdx && (st.dossierTab || 'slots') === 'slots';
           var cls = 'dl-tray-vessel-btn' + (isSel ? ' active' : '') + (hasClash ? ' has-clash' : '') + (!b ? ' is-empty' : '');
           var svg = renderMiniVesselSvg(slot.vesselType, b ? b.tag : '+ADD', hasClash, !b);
           var hoverAttr = b ? (' onmouseenter="window.__dlShowProdInfo(this,\\'' + esc(b.id) + '\\',event)" onmouseleave="window.__dlHideProdInfo()"') : '';
-          return '<button type="button" id="dl-vanity-slot-header-' + idx + '" class="' + cls + '" onclick="window.__dlSetDossierTab(\\'slots\\');window.__dlSelectVanitySlot(' + idx + ')"' + hoverAttr + ' title="' + esc(slot.slotNum + ': ' + (b ? b.label : 'Empty Slot')) + '">'
-            + '<span class="mono" style="font-size:0.62rem;font-weight:700;color:' + (hasClash ? 'var(--berry-clash)' : 'var(--rose-brand)') + ';">' + esc(slot.shortSlot) + '</span>'
-            + svg
-            + '<span style="font-size:0.66rem;font-weight:600;color:var(--text-primary);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + esc(b ? b.short : 'Empty · Tap') + '</span>'
-          + '</button>';
+          var lblStyle = b ? 'font-size:0.66rem;font-weight:600;color:var(--text-primary);' : 'font-size:0.65rem;font-weight:600;font-style:italic;color:#7D5660;';
+          return '<button type="button" id="dl-vanity-slot-header-' + idx + '" class="' + cls + '" onclick="window.__dlSetDossierTab(\\'slots\\');window.__dlSelectVanitySlot(' + idx + ')"' + hoverAttr + ' title="' + esc(slot.slotNum + ': ' + (b ? b.label : 'Empty Slot')) + '"><span class="mono" style="font-size:0.62rem;font-weight:700;color:' + (!b ? '#7D5660' : (hasClash ? 'var(--berry-clash)' : 'var(--rose-brand)')) + ';">' + esc(slot.shortSlot) + '</span>' + svg + '<span style="' + lblStyle + 'max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + esc(b ? b.short : 'Empty · Tap') + '</span></button>';
         }).join('');
       }
 
@@ -596,7 +599,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
 
           var chipsHtml = slot.choices.map(function(ch, cIdx) {
             var isSel = currentBottle && currentBottle.id === ch.id;
-            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" onmouseenter="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)" onmouseleave="window.__dlHideProdInfo()" style="display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;font-size:0.74rem;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:none;background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-oat)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';"><span>' + (isSel ? '✓ ' : '+ ') + esc(ch.label.split(' ($')[0]) + '</span><span class="dl-info-i" onclick="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)">i</span></button>';
+            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" onmouseenter="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)" onmouseleave="window.__dlHideProdInfo()" style="display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;font-size:0.74rem;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:none;background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-oat)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';"><span>' + (isSel ? '✓ ' : '+ ') + esc(ch.label.split(' ($')[0]) + '</span><span class="dl-info-i" onpointerdown="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)" onclick="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)">i</span></button>';
           }).join('');
 
           var prevIdx = (idx + 4) % 5;
@@ -755,9 +758,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           existing.setAttribute('data-dl-bag-title', prodTitle);
           existing.className = 'dl-add-to-bag-btn mono';
           existing.onclick = function() { window.__dlToggleBottleInBag(prodId, prodTitle, '', existing); };
-          if (affLink.parentElement) {
-            affLink.parentElement.appendChild(existing);
-          }
+          if (affLink.parentElement) affLink.parentElement.appendChild(existing);
         }
       });
 
@@ -767,7 +768,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         a.onmouseenter = function(ev) { window.__dlShowProdInfo(a, pid, ev); };
         a.onmouseleave = window.__dlHideProdInfo;
         var ib = document.createElement('span'); ib.className = 'dl-info-i'; ib.textContent = 'i';
-        ib.onclick = function(ev) { window.__dlShowProdInfo(ib, pid, ev); };
+        ib.onpointerdown = ib.onclick = function(ev) { window.__dlShowProdInfo(ib, pid, ev); };
         a.appendChild(ib);
       });
       document.querySelectorAll('button[data-dl-bag-prod]').forEach(function(btn) {
@@ -784,17 +785,13 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     window.__dlOpenVanityDrawer = function(reason) {
       var drawer = document.getElementById('dl-atelier-vanity-drawer');
       if (!drawer) return;
-      var toast = document.getElementById('dl-vanity-toast');
-      if (toast) toast.style.display = 'none';
-      var exitAlert = document.getElementById('dl-vanity-exit-alert');
-      if (exitAlert) {
-        exitAlert.style.display = (reason === 'exit_hold') ? 'block' : 'none';
-      }
+      if (drawer.style.display === 'flex' && window.__dlLastOpenTs && Date.now() - window.__dlLastOpenTs < 260) return;
+      window.__dlLastOpenTs = Date.now();
+      var toast = document.getElementById('dl-vanity-toast'); if (toast) toast.style.display = 'none';
+      var exitAlert = document.getElementById('dl-vanity-exit-alert'); if (exitAlert) exitAlert.style.display = (reason === 'exit_hold') ? 'block' : 'none';
       window.__dlRenderVanityDrawer();
       drawer.style.display = 'flex';
-      if (window.__ebLogEvent) {
-        window.__ebLogEvent('view_paywall', { target: 'atelier_vanity_drawer_' + (reason || 'open') });
-      }
+      if (window.__ebLogEvent) window.__ebLogEvent('view_paywall', { target: 'atelier_vanity_drawer_' + (reason || 'open') });
     };
 
     window.__dlCloseVanityDrawer = function() {
