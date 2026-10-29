@@ -48,8 +48,8 @@ function renderAtelierVanityDrawerHtml() {
     .dl-tray-vessel-btn:hover { transform: translateY(-2px); }
     .dl-tray-vessel-btn.active { background: var(--rose-pill-bg); transform: translateY(-2px); }
     .dl-tray-vessel-btn.has-clash { background: var(--berry-bg); }
-    .dl-tray-vessel-btn.is-empty { background: #EAE0D7; }
-    .dl-tray-vessel-btn.is-empty.active { background: #E3D3C8; }
+    .dl-tray-vessel-btn.is-empty { background: var(--bg-empty-slot, #EAE0D7); }
+    .dl-tray-vessel-btn.is-empty.active { background: var(--bg-empty-slot-active, #E3D3C8); }
     .dl-add-to-bag-btn, .vanity-card-bag-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 999px; background: var(--rose-pill-bg); color: var(--rose-brand); border: none; font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background-color 160ms ease, color 160ms ease, transform 150ms ease; }
     .dl-add-to-bag-btn.in-bag { background: var(--rose-brand); color: var(--accent-ink); }
     .dl-info-i { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 999px; background: rgba(138,52,72,0.15); color: var(--rose-brand); font-size: 0.66rem; font-weight: 700; font-style: italic; font-family: Georgia, serif; flex-shrink: 0; cursor: pointer; margin-left: 4px; line-height: 1; user-select: none; touch-action: manipulation; transition: background-color 140ms ease, color 140ms ease; }
@@ -57,7 +57,7 @@ function renderAtelierVanityDrawerHtml() {
     #dl-prod-info-tip { position: fixed; z-index: 10025; max-width: 268px; border-radius: 18px; padding: 10px 13px; background: #FFF7F8; color: #3A1F27; font-size: 0.75rem; line-height: 1.4; box-shadow: 0 14px 32px rgba(138,52,72,0.16), 0 2px 8px rgba(58,31,39,0.08); pointer-events: none; display: none; }
     #dl-vanity-toast { position: fixed; bottom: 18px; right: 18px; z-index: 9998; background: #3A1F27; color: #FDF8F6; border: none; border-radius: 999px; padding: 10px 16px; font-size: 0.8rem; display: none; align-items: center; gap: 10px; box-shadow: 0 14px 34px rgba(58,31,39,0.22); max-width: calc(100vw - 32px); }
     #dl-floating-vanity-dock { position: fixed; right: 0; top: calc(50dvh - 76px); transform: none !important; z-index: 10010; background: var(--bg-pouch); color: var(--text-primary); border-radius: 26px 0 0 26px; padding: 16px 14px; display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; border: none; user-select: none; touch-action: manipulation; box-shadow: -6px 10px 28px rgba(58,31,39,0.1); transition: background-color 160ms ease; }
-    #dl-floating-vanity-dock:hover, #dl-floating-vanity-dock:active, #dl-header-vanity-pill:active { transform: none !important; background: #EAD2D7; }
+    #dl-floating-vanity-dock:hover, #dl-floating-vanity-dock:active, #dl-header-vanity-pill:active { transform: none !important; background: var(--rose-pill-bg); }
     @media (max-width: 768px) {
       .dl-hide-mobile, #dl-floating-vanity-dock { display: none !important; }
       #dl-header-vanity-pill { padding: 5px 10px !important; font-size: 0.74rem !important; gap: 5px !important; }
@@ -82,7 +82,7 @@ function renderAtelierVanityDrawerHtml() {
       <span id="dl-dock-vanity-bars" style="display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="width:6px;height:3px;border-radius:99px;background:#10B981;"></span><span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span><span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span><span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span><span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span></span>
     </div>
     <span style="font-size:0.78rem;font-weight:600;color:var(--text-primary);">Vanity Bag</span>
-    <span id="dl-dock-vanity-count" style="padding:3px 10px;border-radius:999px;background:var(--rose-brand);color:#FFFFFF;font-size:0.74rem;font-weight:600;">5 / 5 Full</span>
+    <span id="dl-dock-vanity-count" style="padding:3px 10px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);font-size:0.74rem;font-weight:600;">5 / 5 Full</span>
     <span style="display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--sage-safe);font-weight:600;"><span id="dl-dock-vanity-status-dot" style="width:6px;height:6px;border-radius:999px;background:#10B981;"></span><span id="dl-dock-vanity-harmony">Harmonized</span></span>
   </button>
   <div id="dl-prod-info-tip" role="tooltip" aria-hidden="true"></div>
@@ -245,12 +245,22 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
 
     window.__dlVanityState = loadVanityState();
 
+    function makeCustomSlot(prodId, prodTitle, prodPrice) {
+      var pInfo = PROD_INFO[prodId] || {};
+      var baseName = pInfo.name || String(prodTitle || prodId).replace(/\([^)]*\)/g, '').replace(/[()]/g, '').trim();
+      var shortNm = baseName.replace(/^(The Ordinary|La Roche-Posay|Paula's Choice|Beauty of Joseon|SkinCeuticals|Biologique Recherche|Good Molecules|Sunday Riley|Dr\. Dennis Gross|Drunk Elephant|First Aid Beauty|Summer Fridays|Round Lab|Skin1004|Rohto Mentholatum|Peter Thomas Roth|Stratia|CeraVe|Vanicream|Eucerin|Prequel|Medik8|Aestura|Anua|COSRX|Dieux|Topicals|Byoma|Naturium|Caudalie|Haruharu|Isntree|Purito|EltaMD|Supergoop!|PanOxyl|Bioderma|Geek & Gorgeous|Timeless|Maelove|Differin|Galderma|Finacea|Leo Pharma|Rx Generic|Sofie Pavitt|Rhode|Laneige|Tatcha|Ilia|iUNIK|Aveeno|Nivea)\s+/i, '').replace(/[()]/g, '').trim().slice(0, 11).trim() || baseName.slice(0, 11);
+      var pr = prodPrice || pInfo.price;
+      return { id: prodId, label: baseName + (pr ? ' ($' + pr + ')' : ''), short: shortNm, ph: String(pInfo.ph || '5.5'), tag: 'pH' + (pInfo.ph || '5.5') };
+    }
+
     function getBottleForSlot(st, slotIdx) {
       var sel = st.slotSelections[slotIdx];
       if (sel === -1 || sel === null || typeof sel === 'undefined') return null;
       var slot = SLOT_OPTIONS[slotIdx];
       if (st.customSlotBottle && st.customSlotBottle[slotIdx]) {
-        return st.customSlotBottle[slotIdx];
+        var cb = st.customSlotBottle[slotIdx];
+        if (!cb.short || /[()]/.test(cb.short)) return makeCustomSlot(cb.id, cb.label, '');
+        return cb;
       }
       return slot.choices[sel] || slot.choices[0];
     }
@@ -283,15 +293,16 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     }
 
     function mapProductIdToSlot(prodId, prodName, prodCat) {
-      var hay = ((prodId || '') + ' ' + (prodName || '') + ' ' + (prodCat || '')).toLowerCase();
       for (var sIdx = 0; sIdx < SLOT_OPTIONS.length; sIdx++) {
         var foundIdx = SLOT_OPTIONS[sIdx].choices.findIndex(function(c) { return c.id === prodId; });
         if (foundIdx !== -1) return { slotIdx: sIdx, choiceIdx: foundIdx };
       }
+      var pInfo = PROD_INFO[prodId] || {};
+      var hay = ((prodId || '') + ' ' + (prodName || pInfo.name || '') + ' ' + (prodCat || pInfo.cat || '')).toLowerCase();
       if (/spf|sun|uv/.test(hay)) return { slotIdx: 3, choiceIdx: -2 };
-      if (/tretinoin|retinal|retinol|adapalene|differin|bha|p50|babyfacial|peel/.test(hay)) return { slotIdx: 4, choiceIdx: -2 };
-      if (/wash|cleanse|micellar|mist|spray|toner|glycolic/.test(hay)) return { slotIdx: 0, choiceIdx: -2 };
-      if (/cream|moistur|baume|angel|atobarrier|lotion|snail|urea|lipid/.test(hay)) return { slotIdx: 2, choiceIdx: -2 };
+      if (/tretinoin|retinal|retinol|adapalene|differin|bha|p50|babyfacial|peel|glycolic-acid-10|lactic-acid|mandelic-acid|salicylic-acid/.test(hay) && !/wash|cleanse|toner/.test(hay)) return { slotIdx: 4, choiceIdx: -2 };
+      if (/wash|cleanse|micellar|mist|spray|toner|glycolic|essence-toner/.test(hay)) return { slotIdx: 0, choiceIdx: -2 };
+      if (/cream|moistur|baume|angel|atobarrier|lotion|snail|urea|lipid|balm|milk|barrier/.test(hay)) return { slotIdx: 2, choiceIdx: -2 };
       return { slotIdx: 1, choiceIdx: -2 };
     }
 
@@ -326,14 +337,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         delete st.customSlotBottle[sIdx];
       } else {
         st.slotSelections[sIdx] = 0;
-        var cleanShort = String(prodTitle || prodId).replace(/\s*\([^)]*\)/g, '').slice(0, 11).trim();
-        st.customSlotBottle[sIdx] = {
-          id: prodId,
-          label: prodTitle + (prodPrice ? ' ($' + prodPrice + ')' : ''),
-          short: cleanShort,
-          ph: '5.5',
-          tag: 'pH5.5'
-        };
+        st.customSlotBottle[sIdx] = makeCustomSlot(prodId, prodTitle, prodPrice);
       }
       st.activeSlotIdx = sIdx;
       saveVanityState(st);
@@ -431,7 +435,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         var nmEl = document.getElementById(m.nameId);
         var sbEl = document.getElementById(m.subId);
         if (cardEl) {
-          cardEl.style.background = isFilled ? '#FFFFFF' : '#EAE0D7';
+          cardEl.style.background = isFilled ? 'var(--bg-surface)' : 'var(--bg-empty-slot)';
           cardEl.style.position = 'relative';
           cardEl.onmouseenter = (isFilled && b) ? function(ev) { window.__dlShowProdInfo(cardEl, b.id, ev); } : null;
           cardEl.onmouseleave = window.__dlHideProdInfo;
@@ -569,8 +573,8 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           var cls = 'dl-tray-vessel-btn' + (isSel ? ' active' : '') + (hasClash ? ' has-clash' : '') + (!b ? ' is-empty' : '');
           var svg = renderMiniVesselSvg(slot.vesselType, b ? b.tag : '+ADD', hasClash, !b);
           var hoverAttr = b ? (' onmouseenter="window.__dlShowProdInfo(this,\\'' + esc(b.id) + '\\',event)" onmouseleave="window.__dlHideProdInfo()"') : '';
-          var lblStyle = b ? 'font-size:0.66rem;font-weight:600;color:var(--text-primary);' : 'font-size:0.65rem;font-weight:600;font-style:italic;color:#7D5660;';
-          return '<button type="button" id="dl-vanity-slot-header-' + idx + '" class="' + cls + '" onclick="window.__dlSetDossierTab(\\'slots\\');window.__dlSelectVanitySlot(' + idx + ')"' + hoverAttr + ' title="' + esc(slot.slotNum + ': ' + (b ? b.label : 'Empty Slot')) + '"><span class="mono" style="font-size:0.62rem;font-weight:700;color:' + (!b ? '#7D5660' : (hasClash ? 'var(--berry-clash)' : 'var(--rose-brand)')) + ';">' + esc(slot.shortSlot) + '</span>' + svg + '<span style="' + lblStyle + 'max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + esc(b ? b.short : 'Empty · Tap') + '</span></button>';
+          var lblStyle = b ? 'font-size:0.66rem;font-weight:600;color:var(--text-primary);' : 'font-size:0.65rem;font-weight:600;font-style:italic;color:var(--text-empty-slot,#7D5660);';
+          return '<button type="button" id="dl-vanity-slot-header-' + idx + '" class="' + cls + '" onclick="window.__dlSetDossierTab(\\'slots\\');window.__dlSelectVanitySlot(' + idx + ')"' + hoverAttr + ' title="' + esc(slot.slotNum + ': ' + (b ? b.label : 'Empty Slot')) + '"><span class="mono" style="font-size:0.62rem;font-weight:700;color:' + (!b ? 'var(--text-empty-slot,#7D5660)' : (hasClash ? 'var(--berry-clash)' : 'var(--rose-brand)')) + ';">' + esc(slot.shortSlot) + '</span>' + svg + '<span style="' + lblStyle + 'max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + esc(b ? b.short : 'Empty · Tap') + '</span></button>';
         }).join('');
       }
 
@@ -937,7 +941,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
             st.slotSelections[mapped.slotIdx] = mapped.choiceIdx;
           } else {
             st.slotSelections[mapped.slotIdx] = 0;
-            st.customSlotBottle[mapped.slotIdx] = { id: prodId, label: title, short: title.slice(0, 11).trim(), ph: '5.5', tag: 'pH5.5' };
+            st.customSlotBottle[mapped.slotIdx] = makeCustomSlot(prodId, title, '');
           }
         });
       }
@@ -961,7 +965,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           } else {
             window.__dlVanityState.slotSelections[mapped.slotIdx] = 0;
             if (!window.__dlVanityState.customSlotBottle) window.__dlVanityState.customSlotBottle = {};
-            window.__dlVanityState.customSlotBottle[mapped.slotIdx] = { id: prodId, label: title, short: title.slice(0, 11).trim(), ph: '5.5', tag: 'pH5.5' };
+            window.__dlVanityState.customSlotBottle[mapped.slotIdx] = makeCustomSlot(prodId, title, '');
           }
           saveVanityState(window.__dlVanityState);
           if (!navigator.webdriver || window.__dlAllowToastInTest) {

@@ -245,10 +245,12 @@ async function runVerification() {
     const nightState = await page.evaluate(() => ({
       hasClass: document.body.classList.contains('vanity-night'),
       bg: window.getComputedStyle(document.body).backgroundColor,
+      pouchCardBg: window.getComputedStyle(document.getElementById('dl-pouch-card-0')).backgroundColor,
       stored: localStorage.getItem('dermlogic_vanity_theme')
     }));
     assert.strictEqual(nightState.hasClass, true, 'Night mode must add body.vanity-night');
-    assert.strictEqual(nightState.bg, 'rgb(12, 10, 8)', `Night Mode body background must be #0C0A08 (rgb(12, 10, 8)), got ${nightState.bg}`);
+    assert.strictEqual(nightState.bg, 'rgb(34, 19, 25)', `Night Mode body background must be Evening Mulberry-Velvet #221319 (rgb(34, 19, 25)), got ${nightState.bg}`);
+    assert.strictEqual(nightState.pouchCardBg, 'rgb(49, 28, 37)', `Night Mode pouch card background must be #311C25 (rgb(49, 28, 37)), got ${nightState.pouchCardBg}`);
     assert.strictEqual(nightState.stored, 'night', 'Night mode must persist dermlogic_vanity_theme=night in localStorage');
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-home-night.png'), fullPage: false });
 

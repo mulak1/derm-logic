@@ -1,4 +1,4 @@
-const { CULT_PRODUCTS } = require('./clinical-data');
+const { CULT_PRODUCTS, VANITY_SLOT_OPTIONS } = require('./clinical-products');
 const {
   getSovrnMerchantLink,
   getConflictSafeSwap,
@@ -33,6 +33,7 @@ const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 
 const SHARED_CSS = `
   :root {
     --bg-canvas: #FDF8F6; --bg-oat: #F8EFE6; --bg-pouch: #F3E1E5; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
+    --bg-empty-slot: #EAE0D7; --bg-empty-slot-active: #E3D3C8; --text-empty-slot: #7D5660;
     --bg-deep: #3A1F27; --ink-on-deep: #FDF8F6; --border-hairline: transparent; --border-strong: transparent;
     --text-primary: #3A1F27; --text-secondary: #6E4B55; --text-muted: #8E6B75;
     --rose-brand: #8A3448; --rose-brand-hover: #722739; --accent-ink: #FFFFFF; --rose-pill-bg: #EED6DC; --rose-pill-border: transparent;
@@ -45,13 +46,14 @@ const SHARED_CSS = `
     --radius-shell: 28px; --radius-card: 22px; --radius-input: 999px; --radius-pill: 999px; --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   }
   body.vanity-night, html[data-theme="night"] body {
-    --bg-canvas: #0C0A08; --bg-oat: #181512; --bg-pouch: #24191D; --bg-surface: #181512; --bg-porcelain: #231E1A;
-    --bg-deep: #231E1A; --ink-on-deep: #F5F1EB; --border-hairline: #2E2822; --border-strong: #423930;
-    --text-primary: #F5F1EB; --text-secondary: #B5ACA3; --text-muted: #9E968E;
-    --rose-brand: #C9A45A; --rose-brand-hover: #DFBE78; --accent-ink: #0C0A08; --rose-pill-bg: #262017; --rose-pill-border: #59492B;
-    --sage-safe: #88C4A6; --sage-bg: #16241D; --sage-border: #2A4739;
-    --honey-warn: #DFBE78; --honey-bg: #262017; --honey-border: #59492B;
-    --berry-clash: #E5989B; --berry-bg: #2A181B; --berry-border: #5E3138;
+    --bg-canvas: #221319; --bg-oat: #2C1921; --bg-pouch: #371F29; --bg-surface: #311C25; --bg-porcelain: #3B222D;
+    --bg-empty-slot: #26151C; --bg-empty-slot-active: #3F2430; --text-empty-slot: #C9A3AC;
+    --bg-deep: #1C0F14; --ink-on-deep: #FDF6F7; --border-hairline: transparent; --border-strong: transparent;
+    --text-primary: #FDF6F7; --text-secondary: #E0C6CD; --text-muted: #B8969F;
+    --rose-brand: #E8A5B2; --rose-brand-hover: #F2B8C4; --accent-ink: #221319; --rose-pill-bg: #462834; --rose-pill-border: transparent;
+    --sage-safe: #88C9A8; --sage-bg: #1B2D24; --sage-border: transparent;
+    --honey-warn: #E8B98A; --honey-bg: #36251C; --honey-border: transparent;
+    --berry-clash: #F09CA9; --berry-bg: #422028; --berry-border: transparent;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border-color: transparent; }
   html, body { background-color: var(--bg-canvas); color: var(--text-primary); font-family: var(--font-sans); font-weight: 400; font-size: 16px; line-height: 1.58; overflow-x: clip; -webkit-font-smoothing: antialiased; transition: background-color 320ms var(--ease-spring), color 320ms var(--ease-spring); }
@@ -115,8 +117,8 @@ const SHARED_CSS = `
   .grader-card { background: var(--bg-surface); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; }
   .results-panel { background: var(--bg-oat); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; }
   .porcelain-vessel-core { background: var(--bg-surface); border-radius: 22px; padding: 24px 26px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 18px; min-width: 0; max-width: 100%; overflow: hidden; }
-  #textureFilterTabs { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 6px !important; width: 100%; background: var(--bg-oat); padding: 5px; border-radius: 999px; }
-  #textureFilterTabs .vanity-light-btn { padding: 7px 6px !important; font-size: 0.82rem !important; white-space: normal !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; border-radius: 999px; }
+  #textureFilterTabs { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 6px !important; width: 100%; background: var(--bg-oat); padding: 6px; border-radius: 20px; }
+  #textureFilterTabs .vanity-light-btn { padding: 7px 6px !important; font-size: 0.8rem !important; white-space: nowrap !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; border-radius: 999px; }
   .shelf-search-row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 10px; align-items: center; }
   .shelf-search-row .input-box { min-width: 0; overflow: hidden; text-overflow: ellipsis; border-radius: 999px; background: var(--bg-canvas); }
   .preset-row { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; margin-bottom: 2px; }
@@ -277,24 +279,34 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     'Cleanser': 'Gentle Cleanser'
   };
   const getTexGroup = (prod) => {
-    const isAcid = prod.ph <= 4.0;
-    const isCream = (prod.category || '').toLowerCase().includes('cream') || (prod.category || '').toLowerCase().includes('moistur') || (prod.category || '').toLowerCase().includes('retin');
-    return isAcid ? 'toner_acid' : isCream ? 'cream_retinol' : 'active_serum';
+    for (let sIdx = 0; sIdx < VANITY_SLOT_OPTIONS.length; sIdx++) {
+      if (VANITY_SLOT_OPTIONS[sIdx].choices.some((c) => c.id === prod.id)) {
+        return ['prep', 'serum', 'cream', 'spf', 'pm'][sIdx];
+      }
+    }
+    const hay = (prod.id + ' ' + prod.name + ' ' + (prod.category || '')).toLowerCase();
+    if (/spf|sun|uv/.test(hay)) return 'spf';
+    if (/tretinoin|retinal|retinol|adapalene|differin|bha|p50|babyfacial|peel|exfoli/.test(hay) && !/wash|cleanse|toner/.test(hay)) return 'pm';
+    if (/wash|cleanse|micellar|mist|spray|toner|glycolic|shampoo/.test(hay)) return 'prep';
+    if (/cream|moistur|baume|angel|atobarrier|lotion|snail|urea|lipid|barrier|balm|milk/.test(hay)) return 'cream';
+    return 'serum';
   };
-  const tonerCount = products.filter((p) => getTexGroup(p) === 'toner_acid').length;
-  const serumCount = products.filter((p) => getTexGroup(p) === 'active_serum').length;
-  const creamCount = products.filter((p) => getTexGroup(p) === 'cream_retinol').length;
+  const prepCount = products.filter((p) => getTexGroup(p) === 'prep').length;
+  const serumCount = products.filter((p) => getTexGroup(p) === 'serum').length;
+  const creamCount = products.filter((p) => getTexGroup(p) === 'cream').length;
+  const spfCount = products.filter((p) => getTexGroup(p) === 'spf').length;
+  const pmCount = products.filter((p) => getTexGroup(p) === 'pm').length;
   const sortedProducts = [...products].sort((a, b) => (selectedSet.has(b.id) ? 1 : 0) - (selectedSet.has(a.id) ? 1 : 0));
   const productCheckboxesHtml = sortedProducts.map((prod) => {
     const isChecked = selectedSet.has(prod.id);
     const texGroup = getTexGroup(prod);
     const roleTag = categoryLabelMap[prod.category] || 'Daily Skincare';
-    const cleanProdName = shortNameMap[prod.id] || String(prod.name || '').replace(/\s*\([^)]*\)/g, '').replace(/\s+with\s+.*$/i, '');
+    const cleanProdName = shortNameMap[prod.id] || String(prod.name || '').replace(/\s*\([^)]*\)/g, '').replace(/[()]/g, '').replace(/\s+with\s+.*$/i, '');
     const searchBlob = (prod.brand + ' ' + prod.name + ' ' + (prod.category || '') + ' ' + (prod.inciList || '') + ' ' + (prod.summary || '')).toLowerCase();
     return `<label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}" data-search="${escapeHtml(searchBlob)}" onmouseenter="if(window.__dlShowProdInfo)window.__dlShowProdInfo(this,'${escapeHtml(prod.id)}',event)" onmouseleave="if(window.__dlHideProdInfo)window.__dlHideProdInfo()">
         <input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" />
         <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
-          <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-flex;align-items:center;">${escapeHtml(prod.brand)}<span class="dl-info-i" onclick="if(window.__dlShowProdInfo)window.__dlShowProdInfo(this,'${escapeHtml(prod.id)}',event)">i</span></span><span class="mono" style="font-size:0.74rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;">${isChecked ? '✓ In Bag' : '+ Vanity Bag'}</span></span>
+          <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-flex;align-items:center;">${escapeHtml(prod.brand)}<span class="dl-info-i" onpointerdown="if(window.__dlShowProdInfo)window.__dlShowProdInfo(this,'${escapeHtml(prod.id)}',event)" onclick="if(window.__dlShowProdInfo)window.__dlShowProdInfo(this,'${escapeHtml(prod.id)}',event)">i</span></span><span class="mono" style="font-size:0.74rem;padding:1px 7px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;">${isChecked ? '✓ In Bag' : '+ Vanity Bag'}</span></span>
           <strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:0.91rem;font-weight:400;line-height:1.2;">${escapeHtml(cleanProdName)}</strong>
           <span class="mono" style="color:var(--rose-brand);font-size:0.78rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:auto;">${roleTag} &middot; $${prod.priceUsd}</span>
         </span>
@@ -311,40 +323,40 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               <div class="serif-display" style="font-size:1.22rem;color:var(--text-primary);font-weight:500;">Your Soft Pinch Vanity Pouch &middot; <span id="dl-pouch-status-label" style="color:var(--rose-brand);">4 of 5 Comfort Steps Zip-Ready</span></div>
               <div style="font-size:0.84rem;color:var(--text-secondary);margin-top:2px;">Tap one sheer daily SPF 50 below to seal your weightless morning &amp; bedtime bag.</div>
             </div>
-            <span id="dl-pouch-pct-pill" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:#FFFFFF;color:var(--rose-brand);font-size:0.78rem;font-weight:600;">
+            <span id="dl-pouch-pct-pill" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:var(--bg-surface);color:var(--rose-brand);font-size:0.78rem;font-weight:600;">
               <span style="width:8px;height:8px;border-radius:999px;background:#10B981;"></span>
               <span id="dl-pouch-pct-text">Almost Full &middot; 80%</span>
             </span>
           </div>
           <div id="dl-pouch-bottles-grid" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;text-align:center;">
-            <div id="dl-pouch-card-0" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_0');window.__dlSelectVanitySlot(0);}" style="background:#FFFFFF;border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-0" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_0');window.__dlSelectVanitySlot(0);}" style="background:var(--bg-surface);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><rect x="13" y="4" width="12" height="6" rx="2" fill="#D8B4A0"/><path d="M9 10H29L31 15V40C31 41.5 29.8 42.5 28.5 42.5H9.5C8.2 42.5 7 41.5 7 40V15L9 10Z" fill="#CBE2F6"/><rect x="10.5" y="19" width="17" height="13" rx="3" fill="#FFFFFF"/><text x="19" y="27.5" text-anchor="middle" font-size="6" fill="#3A1F27">Mist</text></svg>
               <div id="dl-pouch-slot-name-0" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">SOS Mist</div>
               <span id="dl-pouch-slot-sub-0" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
             </div>
-            <div id="dl-pouch-card-1" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_1');window.__dlSelectVanitySlot(1);}" style="background:#FFFFFF;border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-1" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_1');window.__dlSelectVanitySlot(1);}" style="background:var(--bg-surface);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M15.5 6C15.5 4 17 2.5 19 2.5C21 2.5 22.5 4 22.5 6V9.5H15.5V6Z" fill="#D8B4A0"/><path d="M9 12.5H29L31 17.5V40C31 41.5 29.8 42.5 28.5 42.5H9.5C8.2 42.5 7 41.5 7 40V17.5L9 12.5Z" fill="#F7DFAD"/><rect x="10.5" y="21" width="17" height="13" rx="3" fill="#FFFFFF"/><text x="19" y="29.5" text-anchor="middle" font-size="6" fill="#3A1F27">Serum</text></svg>
               <div id="dl-pouch-slot-name-1" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">C E Ferulic</div>
               <span id="dl-pouch-slot-sub-1" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
             </div>
-            <div id="dl-pouch-card-2" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_2');window.__dlSelectVanitySlot(2);}" style="background:#FFFFFF;border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-2" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_2');window.__dlSelectVanitySlot(2);}" style="background:var(--bg-surface);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 40 46" fill="none"><rect x="7" y="11" width="26" height="6" rx="2.5" fill="#D8B4A0"/><rect x="5" y="17" width="30" height="23" rx="6" fill="#CBEAD9"/><rect x="9" y="23" width="22" height="11" rx="3" fill="#FFFFFF"/><text x="20" y="30.5" text-anchor="middle" font-size="6" fill="#3A1F27">Lotion</text></svg>
               <div id="dl-pouch-slot-name-2" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Aestura 365</div>
               <span id="dl-pouch-slot-sub-2" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
             </div>
-            <div id="dl-pouch-card-3" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_4');window.__dlSelectVanitySlot(4);}" style="background:#FFFFFF;border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-3" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_4');window.__dlSelectVanitySlot(4);}" style="background:var(--bg-surface);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M7 6H31L27 33H11L7 6Z" fill="#E2D2F2"/><rect x="14" y="33" width="10" height="7" rx="2" fill="#D8B4A0"/><text x="19" y="22" text-anchor="middle" font-size="6" fill="#3A1F27">Night</text></svg>
               <div id="dl-pouch-slot-name-3" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Tretinoin</div>
               <span id="dl-pouch-slot-sub-3" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
             </div>
-            <div id="dl-empty-bottle-slot" onclick="if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();" style="background:rgba(255,255,255,0.68);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
-              <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M7 6H31L27 33H11L7 6Z" fill="#8A3448" fill-opacity="0.16"/><rect x="14" y="33" width="10" height="7" rx="2" fill="#8A3448" fill-opacity="0.3"/><text x="19" y="22" text-anchor="middle" font-size="6.5" fill="#8A3448" font-weight="600">+SPF</text></svg>
+            <div id="dl-empty-bottle-slot" onclick="if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();" style="background:var(--bg-empty-slot);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+              <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M7 6H31L27 33H11L7 6Z" fill="#8A3448" fill-opacity="0.16"/><rect x="14" y="33" width="10" height="7" rx="2" fill="#8A3448" fill-opacity="0.3"/><text x="19" y="22" text-anchor="middle" font-size="6.5" fill="var(--rose-brand)" font-weight="600">+SPF</text></svg>
               <div id="dl-pouch-slot-name-4" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Add SPF 50</div>
               <span id="dl-pouch-slot-sub-4" style="font-size:0.68rem;color:var(--text-secondary);">Final Step</span>
             </div>
           </div>
-          <div style="margin-top:12px;height:8px;border-radius:999px;background:rgba(255,255,255,0.78);overflow:hidden;">
-            <div id="dl-pouch-progress-fill" style="width:80%;height:100%;border-radius:999px;background:linear-gradient(90deg, #8A3448 0%, #10B981 100%);transition:width 240ms ease;"></div>
+          <div style="margin-top:12px;height:8px;border-radius:999px;background:var(--bg-oat);overflow:hidden;">
+            <div id="dl-pouch-progress-fill" style="width:80%;height:100%;border-radius:999px;background:linear-gradient(90deg, var(--rose-brand) 0%, #10B981 100%);transition:width 240ms ease;"></div>
           </div>
         </div>
         <div class="porcelain-vessel-core" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
@@ -360,18 +372,20 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               </div>
             </div>
 
-            <div style="padding:10px 12px;background:var(--bg-canvas);">
+            <div style="padding:10px 12px;background:var(--bg-canvas);border-radius:18px;">
               <div class="mono" style="font-size:0.78rem;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">Want to play first? Tap a popular routine to see how we fix clashes:</div>
               <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">
                 ${presetButtonsHtml}
               </div>
             </div>
 
-            <div id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Texture">
-              <button type="button" class="vanity-light-btn active mono" aria-pressed="true" onclick="filterShelfByTexture('all', this)">All (${products.length})</button>
-              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('toner_acid', this)">Toners &amp; Acids (${tonerCount})</button>
-              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('active_serum', this)">Serums (${serumCount})</button>
-              <button type="button" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('cream_retinol', this)">Creams &amp; Retinol (${creamCount})</button>
+            <div id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Vanity Bag Step">
+              <button type="button" data-tex="all" class="vanity-light-btn active mono" aria-pressed="true" onclick="filterShelfByTexture('all', this)">All (${products.length})</button>
+              <button type="button" data-tex="prep" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('prep', this)">01 &middot; Prep (${prepCount})</button>
+              <button type="button" data-tex="serum" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('serum', this)">02 &middot; Serum (${serumCount})</button>
+              <button type="button" data-tex="cream" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('cream', this)">03 &middot; Cream (${creamCount})</button>
+              <button type="button" data-tex="spf" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('spf', this)">04 &middot; SPF 50 (${spfCount})</button>
+              <button type="button" data-tex="pm" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('pm', this)">05 &middot; PM (${pmCount})</button>
             </div>
 
             <div class="shelf-search-row">
