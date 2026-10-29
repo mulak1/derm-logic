@@ -750,83 +750,19 @@ const CULT_PRODUCTS = [
     inciList: 'Colloidal Oatmeal 0.50%, Water, Stearic Acid, Glycerin, C12-15 Alkyl Benzoate, Caprylic/Capric Triglyceride, Glyceryl Stearate, Butyrospermum Parkii (Shea) Butter, Dimethicone, Squalane, Allantoin, Ceramide 3',
     summary: 'OTC 0.5% Colloidal Oatmeal + Shea Butter + Ceramide 3 soothing cream for dry, windburned, or eczema-prone skin.'
   },
-  {
-    id: 'laneige-cream-skin-toner',
-    brand: 'LANEIGE',
-    name: 'Cream Skin Cerapeptide Refiner Toner & Moisturizer',
-    category: 'Soothing Toner',
-    ph: 5.6,
-    priceUsd: 36,
-    primaryActives: ['ceramide-np', 'squalane', 'glycerin'],
-    inciList: 'Water, Butylene Glycol, Glycerin, Limnanthes Alba (Meadowfoam) Seed Oil, Isopentyldiol, 1,2-Hexanediol, Squalane, Polyglyceryl-10 Stearate, Glyceryl Stearate Citrate, Sodium Stearoyl Glutamate, Inulin Lauryl Carbamate, Ceramide NP, Acetyl Tetrapeptide-11',
-    summary: 'Micro-emulsified Ceramide NP + Acetyl Tetrapeptide-11 + White Leaf Tea milky toner for dry or sensitive morning prep.'
-  },
-  {
-    id: 'im-from-mugwort-essence',
-    brand: "I'm From",
-    name: 'Mugwort Essence (100% Artemisia Princeps Extract)',
-    category: 'Soothing Toner',
-    ph: 5.8,
-    priceUsd: 40,
-    primaryActives: ['centella-asiatica'],
-    inciList: 'Artemisia Princeps Extract (100%)',
-    summary: 'Single-ingredient slow-extracted Korean Mugwort essence that calms flushing, heat, and reactive skin.'
-  },
-  {
-    id: 'byoma-hydrating-milky-toner',
-    brand: 'BYOMA',
-    name: 'Hydrating Milky Toner (Tri-Ceramide + Polyglutamic Acid + Cica)',
-    category: 'Soothing Toner',
-    ph: 5.5,
-    priceUsd: 15,
-    primaryActives: ['ceramide-np', 'cholesterol', 'centella-asiatica', 'panthenol'],
-    inciList: 'Aqua, Glycerin, Butylene Glycol, Squalane, Ceramide NP, Cholesterol, Phytosphingosine, Polyglutamic Acid, Centella Asiatica Extract, Panthenol, Allantoin',
-    summary: 'Accessible Tri-Ceramide + Polyglutamic Acid + Centella milky toner that preps dry skin before serums.'
-  },
-  {
-    id: 'peach-slices-azelaic-10',
-    brand: 'Peach Slices',
-    name: 'Redness Relief Azelaic Acid Serum (10% Azelaic + Panthenol + Cica)',
-    category: 'Rosacea & Brightening',
-    ph: 5.0,
-    priceUsd: 20,
-    primaryActives: ['azelaic-acid', 'panthenol', 'centella-asiatica', 'allantoin'],
-    inciList: 'Water, Azelaic Acid (10%), Propanediol, Glycerin, Butylene Glycol, Panthenol, Centella Asiatica Extract, Madecassoside, Allantoin, Sodium Hyaluronate',
-    summary: '10% Azelaic Acid + Cica + Panthenol redness-relief serum; gentle alternative to stinging low-pH acids.'
-  },
-  {
-    id: 'good-molecules-discoloration-serum',
-    brand: 'Good Molecules',
-    name: 'Discoloration Correcting Serum (3% Tranexamic + 4% Niacinamide)',
-    category: 'Brightening Serum',
-    ph: 5.5,
-    priceUsd: 12,
-    primaryActives: ['tranexamic-acid', 'niacinamide', 'glycerin'],
-    inciList: 'Water, Butylene Glycol, Propanediol, Glycerin, Niacinamide (4%), Cetyl Tranexamate Mesylate (3%), Cetyl Alcohol, Ceramide NP, Sodium Hyaluronate',
-    summary: '3% Cetyl Tranexamate Mesylate + 4% Niacinamide at pH 5.5; layers cleanly under Vitamin C or retinoids.'
-  },
-  {
-    id: 'cosrx-bha-blackhead-liquid',
-    brand: 'COSRX',
-    name: 'BHA Blackhead Power Liquid (4% Betaine Salicylate + Niacinamide)',
-    category: 'Exfoliating Acid',
-    ph: 4.0,
-    priceUsd: 25,
-    primaryActives: ['salicylic-acid', 'niacinamide', 'panthenol', 'hyaluronic-acid'],
-    inciList: 'Salix Alba (Willow) Bark Water, Butylene Glycol, Betaine Salicylate (4%), Niacinamide, 1,2-Hexanediol, Arginine, Panthenol, Sodium Hyaluronate',
-    summary: 'Gentle pH 4.0 4% Betaine Salicylate + Willow Bark pore clarifier for sensitive skin that cannot tolerate pH 3.5 Salicylic Acid.'
-  },
-  {
-    id: 'kiehls-ultra-facial-cream',
-    brand: "Kiehl's",
-    name: 'Ultra Facial Cream with 4.5% Squalane & Glacial Glycoprotein',
-    category: 'Barrier Moisturizer',
-    ph: 5.6,
-    priceUsd: 39,
-    primaryActives: ['squalane', 'glycerin', 'salicylic-acid', 'tocopherol'],
-    inciList: 'Aqua/Water, Glycerin, Dimethicone, Squalane (4.5%), Bis-PEG-18 Methyl Ether Dimethyl Silane, Sucrose Stearate, Stearyl Alcohol, PEG-8 Distearate, Pseudoalteromonas Ferment Extract, Salicylic Acid, Tocopherol',
-    summary: '4.5% olive-derived Squalane + Glacial Glycoprotein daily barrier cream for 24-hour moisture balance.'
-  }
+  { id: 'laneige-cream-skin-toner', brand: 'LANEIGE', name: 'Cream Skin Cerapeptide Refiner Toner & Moisturizer', category: 'Soothing Toner', ph: 5.6, priceUsd: 36, primaryActives: ['ceramide-np', 'squalane', 'glycerin'], inciList: 'Water, Butylene Glycol, Glycerin, Limnanthes Alba (Meadowfoam) Seed Oil, Isopentyldiol, 1,2-Hexanediol, Squalane, Polyglyceryl-10 Stearate, Glyceryl Stearate Citrate, Sodium Stearoyl Glutamate, Inulin Lauryl Carbamate, Ceramide NP, Acetyl Tetrapeptide-11', summary: 'US #1 Sephora Milky Toner: Micro-emulsified Ceramide NP + Acetyl Tetrapeptide-11 + White Leaf Tea for dewy morning barrier prep.' },
+  { id: 'im-from-mugwort-essence', brand: "I'm From", name: 'Mugwort Essence (100% Artemisia Princeps Extract)', category: 'Soothing Toner', ph: 5.8, priceUsd: 40, primaryActives: ['centella-asiatica'], inciList: 'Artemisia Princeps Extract (100%)', summary: 'Single-ingredient slow-extracted Korean Mugwort essence that calms flushing, heat, and reactive skin.' },
+  { id: 'byoma-hydrating-milky-toner', brand: 'BYOMA', name: 'Hydrating Milky Toner (Tri-Ceramide + Polyglutamic Acid + Cica)', category: 'Soothing Toner', ph: 5.5, priceUsd: 15, primaryActives: ['ceramide-np', 'cholesterol', 'centella-asiatica', 'panthenol'], inciList: 'Aqua, Glycerin, Butylene Glycol, Squalane, Ceramide NP, Cholesterol, Phytosphingosine, Polyglutamic Acid, Centella Asiatica Extract, Panthenol, Allantoin', summary: 'US #1 Ulta Mass Milky Toner: Accessible Tri-Ceramide + Polyglutamic Acid + Centella milky toner that preps dry skin before serums.' },
+  { id: 'peach-slices-azelaic-10', brand: 'Peach Slices', name: 'Redness Relief Azelaic Acid Serum (10% Azelaic + Panthenol + Cica)', category: 'Rosacea & Brightening', ph: 5.0, priceUsd: 20, primaryActives: ['azelaic-acid', 'panthenol', 'centella-asiatica', 'allantoin'], inciList: 'Water, Azelaic Acid (10%), Propanediol, Glycerin, Butylene Glycol, Panthenol, Centella Asiatica Extract, Madecassoside, Allantoin, Sodium Hyaluronate', summary: 'US #1 Ulta Redness Serum: 10% Azelaic Acid + Cica + Panthenol redness-relief serum; gentle alternative to stinging low-pH acids.' },
+  { id: 'good-molecules-discoloration-serum', brand: 'Good Molecules', name: 'Discoloration Correcting Serum (3% Tranexamic + 4% Niacinamide)', category: 'Brightening Serum', ph: 5.5, priceUsd: 12, primaryActives: ['tranexamic-acid', 'niacinamide', 'glycerin'], inciList: 'Water, Butylene Glycol, Propanediol, Glycerin, Niacinamide (4%), Cetyl Tranexamate Mesylate (3%), Cetyl Alcohol, Ceramide NP, Sodium Hyaluronate', summary: 'US #1 Ulta Brightening Value Serum: 3% Cetyl Tranexamate Mesylate + 4% Niacinamide at pH 5.5; layers cleanly under Vitamin C or retinoids.' },
+  { id: 'cosrx-bha-blackhead-liquid', brand: 'COSRX', name: 'BHA Blackhead Power Liquid (4% Betaine Salicylate + Niacinamide)', category: 'Exfoliating Acid', ph: 4.0, priceUsd: 25, primaryActives: ['salicylic-acid', 'niacinamide', 'panthenol', 'hyaluronic-acid'], inciList: 'Salix Alba (Willow) Bark Water, Butylene Glycol, Betaine Salicylate (4%), Niacinamide, 1,2-Hexanediol, Arginine, Panthenol, Sodium Hyaluronate', summary: 'Gentle pH 4.0 4% Betaine Salicylate + Willow Bark pore clarifier for sensitive skin that cannot tolerate pH 3.5 Salicylic Acid.' },
+  { id: 'kiehls-ultra-facial-cream', brand: "Kiehl's", name: 'Ultra Facial Cream with 4.5% Squalane & Glacial Glycoprotein', category: 'Barrier Moisturizer', ph: 5.6, priceUsd: 39, primaryActives: ['squalane', 'glycerin', 'salicylic-acid', 'tocopherol'], inciList: 'Aqua/Water, Glycerin, Dimethicone, Squalane (4.5%), Bis-PEG-18 Methyl Ether Dimethyl Silane, Sucrose Stearate, Stearyl Alcohol, PEG-8 Distearate, Pseudoalteromonas Ferment Extract, Salicylic Acid, Tocopherol', summary: 'US Top-2 Prestige Moisturizer: 4.5% olive-derived Squalane + Glacial Glycoprotein daily barrier cream for 24-hour moisture balance.' },
+  { id: 'tatcha-dewy-skin-cream', brand: 'Tatcha', name: 'The Dewy Skin Cream Plumping & Hydrating Moisturizer', category: 'Barrier Moisturizer', ph: 5.6, priceUsd: 72, primaryActives: ['hyaluronic-acid', 'squalane', 'ceramide-np', 'glycerin'], inciList: 'Aqua/Water/Eau, Saccharomyces/Rice Ferment Filtrate, Glycerin, Propanediol, Dimethicone, Squalane, Camellia Sinensis Leaf Extract, Cladosiphon Okamuranus Extract, Sodium Hyaluronate, Ceramide NP, Tocopherol', summary: 'US #1 Sephora Luxury Moisturizer: Japanese Purple Rice + Hadasei-3 ferment + Hyaluronic Acid + Squalane for luminous, cushiony bounce.' },
+  { id: 'drunk-elephant-protini', brand: 'Drunk Elephant', name: 'Protini Polypeptide Firming Refillable Moisturizer', category: 'Barrier Moisturizer', ph: 4.0, priceUsd: 69, primaryActives: ['matrixyl-3000', 'argireline', 'hyaluronic-acid', 'glycerin'], inciList: 'Water/Aqua/Eau, Dicaprylyl Carbonate, Glycerin, Cetearyl Alcohol, Cetearyl Olivate, Sorbitan Olivate, Sclerocarya Birrea Seed Oil, sh-Oligopeptide-1, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7, Copper Palmitoyl Heptapeptide-14, Sodium Hyaluronate', summary: 'US #2 Sephora Bestseller: 9 signal peptides + pygmy waterlily + amino acids (pH 4.0) for firm, bouncy, protein-supported skin.' },
+  { id: 'clinique-moisture-surge-100h', brand: 'Clinique', name: 'Moisture Surge 100H Auto-Replenishing Hydrator Gel-Cream', category: 'Barrier Moisturizer', ph: 5.5, priceUsd: 46, primaryActives: ['hyaluronic-acid', 'centella-asiatica', 'glycerin', 'caffeine'], inciList: 'Water/Aqua/Eau, Dimethicone, Butylene Glycol, Glycerin, Trisiloxane, Trehalose, Sucrose, Ammonium Acryloyldimethyltaurate/VP Copolymer, Hydroxyethyl Urea, Aloe Barbadensis Leaf Water, Sodium Hyaluronate, Centella Asiatica Extract, Caffeine', summary: 'US #1 Ulta Gel-Cream Moisturizer: Oil-free Aloe Bio-Ferment + Hyaluronic Acid + Cica gel-cream for pore-safe 100-hour hydration.' },
+  { id: 'olehenriksen-banana-bright-15', brand: 'Olehenriksen', name: 'Banana Bright 15% Vitamin C Dark Spot Serum', category: 'Antioxidant Serum', ph: 3.6, priceUsd: 68, primaryActives: ['l-ascorbic-acid', 'pha-gluconolactone', 'hyaluronic-acid', 'tocopherol'], inciList: 'Aqua/Water/Eau, 3-O-Ethyl Ascorbic Acid, Ascorbic Acid, Gluconolactone, Propanediol, Glycerin, Hyaluronic Acid, Tocopherol, Panthenol, Citrus Aurantium Dulcis Fruit Extract', summary: 'US Top-2 Sephora Vitamin C Serum: 15% Vitamin C + 5% PHA Gluconolactone + hyaluronic acid for instant luminosity and dark spot fading.' },
+  { id: 'glow-recipe-dew-drops', brand: 'Glow Recipe', name: 'Watermelon Glow Niacinamide Dew Drops Serum', category: 'Sebum & Pore Serum', ph: 5.8, priceUsd: 35, primaryActives: ['niacinamide', 'hyaluronic-acid', 'glycerin', 'panthenol'], inciList: 'Aqua/Water/Eau, Propanediol, Glycereth-26, Glycerin, Niacinamide, Citrullus Lanatus (Watermelon) Fruit Extract, Sodium Hyaluronate, Morinda Citrifolia Extract, Panthenol, Tocopherol', summary: 'US #1 Sephora Niacinamide Glow Serum: Micca-free Watermelon + Niacinamide + Hyaluronic Acid hybrid serum for instant glass-skin sheen.' },
+  { id: 'tatcha-silk-sunscreen-spf50', brand: 'Tatcha', name: 'The Silk Sunscreen Hydrating Mineral Shield SPF 50 PA++++', category: 'Sunscreen (SPF)', ph: 6.2, priceUsd: 64, primaryActives: ['zinc-oxide', 'niacinamide', 'hyaluronic-acid', 'squalane'], inciList: 'Zinc Oxide 10%, Water, Isododecane, Caprylic/Capric Triglyceride, Propanediol, Niacinamide, Glycerin, Silk Extract, Sodium Hyaluronate, Squalane, Camellia Sinensis Leaf Extract', summary: 'US #1 Sephora Luxury Mineral SPF: 10% sheer Zinc Oxide + Silk Extract + Niacinamide + Hyaluronic Acid fluid that melts in with zero cast.' }
 ];
 
 const ROUTINE_PRESETS = [
@@ -941,38 +877,64 @@ const VANITY_SLOT_CALIBRATORS = {
 
 const VANITY_SLOT_OPTIONS = [
   { slotNum: '01 · AM PREP', shortSlot: '01 · PREP', vesselType: 'mist', role: 'Morning Cleanse & pH Prep', timing: '7:30 AM · Step 1 (pH Reset · Wait 45s)', choices: [
-    { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28', ph: '4.8', tag: 'HOCl', desc: 'Tower 28 National Eczema Assoc. accepted pH 4.8 Hypochlorous Acid mist. Calms redness, post-gym bacteria & flare-ups in 45s.' },
-    { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua 77%', ph: '5.7', tag: 'pH5', desc: 'K-beauty #1 soothing toner with 77% Heartleaf + Panthenol + Cica (pH 5.7). Cools reactive skin and preps dry barriers without sting.' },
-    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl', ph: '5.2', tag: 'BPO', desc: 'Dermatologist short-contact 10% Benzoyl Peroxide wash. Clears acne bacteria in 60s in the shower; rinse clean before Vitamin C.' },
-    { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Glycolic 7', ph: '3.6', tag: 'AHA', desc: 'High-strength pH 3.6 7% Glycolic AHA + Tasmanian Pepperberry resurfacing toner for glass-skin glow and smooth texture.' }
+    { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28', ph: '4.8', tag: 'HOCl', desc: 'US #1 Sephora Soothing Mist: National Eczema Assoc. accepted pH 4.8 Hypochlorous Acid mist. Calms redness & post-gym bacteria in 45s.' },
+    { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua 77%', ph: '5.7', tag: 'pH5', desc: 'US #1 Amazon/K-Beauty Soothing Toner: 77% Heartleaf + Panthenol + Cica (pH 5.7). Cools reactive skin and preps dry barriers.' },
+    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl', ph: '5.2', tag: 'BPO', desc: 'US #1 Amazon/Ulta Acne Wash: Short-contact 10% Benzoyl Peroxide wash clears acne bacteria in 60s; rinse clean before Vitamin C.' },
+    { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Glycolic 7', ph: '3.6', tag: 'AHA', desc: 'US #1 Ulta Exfoliating Toner: High-strength pH 3.6 7% Glycolic AHA + Tasmanian Pepperberry resurfacing toner for smooth glow.' },
+    { id: 'glow-recipe-pha-bha-toner', label: 'Glow Recipe Watermelon PHA+BHA Toner ($35)', short: 'Glow PHA', ph: '4.5', tag: 'PHA', desc: 'US #1 Sephora Pore Toner: Cactus water + Hyaluronic Acid + gentle PHA/BHA (pH 4.5) that hydrates and tightens pores with zero sting.' },
+    { id: 'laneige-cream-skin-toner', label: 'LANEIGE Cream Skin Cerapeptide Toner ($36)', short: 'Cream Skin', ph: '5.6', tag: 'Cera', desc: 'US #1 Sephora Milky Toner: Micro-emulsified Ceramide NP + Acetyl Tetrapeptide-11 + White Leaf Tea for dewy morning barrier prep.' }
   ] },
   { slotNum: '02 · AM ACTIVE', shortSlot: '02 · SERUM', vesselType: 'dropper', role: 'Morning Antioxidant Serum', timing: '7:31 AM · Step 2 (Antioxidant Shield · Wait 60s before cream)', choices: [
-    { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'CE Ferulic', ph: '3.2', tag: '15%C', desc: 'Duke-patented pH 3.2 gold standard: 15% pure L-Ascorbic Acid + 1% Vitamin E + 0.5% Ferulic Acid for 8x UV environmental defense.' },
+    { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'CE Ferulic', ph: '3.2', tag: '15%C', desc: 'US #1 Derm Vitamin C: Duke-patented pH 3.2 15% L-Ascorbic Acid + 1% Vitamin E + 0.5% Ferulic Acid for 8x UV environmental defense.' },
     { id: 'rohto-melano-cc', label: 'Rohto Melano CC Vitamin C Essence ($14)', short: 'Melano CC', ph: '3.5', tag: 'VitC', desc: 'Cult Japanese airless tube combining pure Vitamin C + Vitamin E + Dipotassium Glycyrrhizate to fade dark spots without oxidizing.' },
-    { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'B3 + Zinc', ph: '6.0', tag: '10%', desc: 'Oil-balancing pH 6.0 10% Vitamin B3 + 1% Zinc PCA water-light serum that minimizes shine and visibly tightens congested pores.' },
-    { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Faded TXA', ph: '5.5', tag: 'TXA', desc: 'Multi-pathway pigment eraser with Tranexamic Acid, Azelaic Acid, Kojic Acid & Niacinamide (pH 5.5) for stubborn marks & melasma.' },
-    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%', desc: '1% pure GHK-Cu Copper Tripeptide + Matrixyl 3000 + Argireline (pH 6.2). Plumps fine lines & bounce with zero low-pH acid sting.' }
+    { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'B3 + Zinc', ph: '6.0', tag: '10%', desc: 'US #1 Ulta/Amazon Pore Serum: Oil-balancing pH 6.0 10% Vitamin B3 + 1% Zinc PCA serum that minimizes shine and tightens pores.' },
+    { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Faded TXA', ph: '5.5', tag: 'TXA', desc: 'US #1 Sephora Dark-Spot Serum: Tranexamic Acid, Azelaic Acid, Kojic Acid & Niacinamide (pH 5.5) for stubborn marks & melasma.' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%', desc: 'US #1 Peptide Serum: 1% pure GHK-Cu Copper Tripeptide + Matrixyl 3000 + Argireline (pH 6.2). Plumps fine lines with zero acid sting.' },
+    { id: 'sunday-riley-ceo-15', label: 'Sunday Riley C.E.O. 15% Vitamin C Serum ($85)', short: 'CEO 15%C', ph: '5.5', tag: 'THD', desc: 'US #1 Sephora/Ulta Vitamin C Serum: 15% oil-soluble THD Ascorbate + Phytosterols (pH 5.5) that brightens rapidly with zero low-pH acid sting.' },
+    { id: 'olehenriksen-banana-bright-15', label: 'Olehenriksen Banana Bright 15% Vitamin C ($68)', short: 'Banana 15%', ph: '3.6', tag: '15%C', desc: 'US #2 Sephora Vitamin C Serum: 15% Vitamin C + 5% PHA Gluconolactone + Hyaluronic Acid for instant luminosity and dark spot fading.' },
+    { id: 'glow-recipe-dew-drops', label: 'Glow Recipe Watermelon Niacinamide Dew Drops ($35)', short: 'Dew Drops', ph: '5.8', tag: 'Dew', desc: 'US #1 Sephora Glow Serum: Mica-free Watermelon + Niacinamide + Hyaluronic Acid hybrid serum (pH 5.8) for instant glass-skin sheen.' }
   ] },
   { slotNum: '03 · BARRIER SEAL', shortSlot: '03 · CREAM', vesselType: 'jar', role: '3:1:1 Ceramide & Lipid Cushion', timing: 'AM & PM · Step 3 (Seals hydration & buffers night actives)', choices: [
     { id: 'aestura-atobarrier-365', label: 'Aestura Atobarrier 365 Ceramide Cream ($32)', short: 'Aestura', ph: '5.5', tag: '3:1:1', desc: 'Korean hospital-grade DermaON encapsulated 3:1:1 Ceramide-Cholesterol-Fatty Acid capsules for 120-hour barrier repair.' },
     { id: 'dieux-instant-angel', label: 'Dieux Instant Angel Lipid Cream ($45)', short: 'Dieux', ph: '5.4', tag: 'Lipid', desc: 'Formulated by cosmetic chemist Joyce de Lemos: 3:1:1 barrier lipids + Dipalmitoyl Hydroxyproline peptides for silky, zero-pill cushion.' },
-    { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96', ph: '6.5', tag: '96%', desc: '96.3% Snail Secretion Filtrate + Panthenol + Allantoin weightless gel-essence that gives glass-skin bounce and buffers retinoids.' },
-    { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast', ph: '5.6', tag: 'B5+', desc: 'French pharmacy SOS balm with 5% Vitamin B5 (Panthenol) + Madecassoside + Tribioma to rescue windburn, peeling & redness overnight.' },
-    { id: 'cerave-pm-lotion', label: 'CeraVe PM Facial Moisturizing Lotion ($17)', short: 'CeraVe PM', ph: '5.8', tag: 'Cera', desc: 'Oil-free MVE time-release lotion with 4% Niacinamide + Ceramides NP/AP/EOP + Hyaluronic Acid for lightweight barrier comfort.' }
+    { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96', ph: '6.5', tag: '96%', desc: 'US #1 Amazon Hydrating Essence: 96.3% Snail Secretion Filtrate + Panthenol + Allantoin weightless gel-essence that buffers retinoids.' },
+    { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast', ph: '5.6', tag: 'B5+', desc: 'US #1 Derm Recovery Balm: 5% Vitamin B5 (Panthenol) + Madecassoside + Tribioma to rescue windburn, peeling & redness overnight.' },
+    { id: 'cerave-pm-lotion', label: 'CeraVe PM Facial Moisturizing Lotion ($17)', short: 'CeraVe PM', ph: '5.8', tag: 'Cera', desc: 'US #1 Drugstore Night Lotion: Oil-free MVE lotion with 4% Niacinamide + Ceramides NP/AP/EOP + Hyaluronic Acid for lightweight comfort.' },
+    { id: 'tatcha-dewy-skin-cream', label: 'Tatcha The Dewy Skin Cream ($72)', short: 'Tatcha', ph: '5.6', tag: 'Dewy', desc: 'US #1 Sephora Luxury Moisturizer: Japanese Purple Rice + Hadasei-3 ferment + Hyaluronic Acid + Squalane for luminous, cushiony bounce.' },
+    { id: 'drunk-elephant-protini', label: 'Drunk Elephant Protini Polypeptide Cream ($69)', short: 'Protini', ph: '4.0', tag: 'Pep9', desc: 'US #2 Sephora Bestseller: 9 signal peptides + pygmy waterlily + amino acids (pH 4.0) for firm, bouncy, protein-supported skin.' },
+    { id: 'clinique-moisture-surge-100h', label: 'Clinique Moisture Surge 100H Gel-Cream ($46)', short: 'Clinique', ph: '5.5', tag: '100H', desc: 'US #1 Ulta Gel-Cream Moisturizer: Oil-free Aloe Bio-Ferment + Hyaluronic Acid + Cica gel-cream for pore-safe 100-hour hydration.' }
   ] },
   { slotNum: '04 · SPF & TONE', shortSlot: '04 · SPF 50', vesselType: 'tube', role: 'Undertone-Matched SPF 50 & Finish', timing: '7:33 AM · Step 4 (2-Finger Rule · Wait 90s before makeup)', choices: [
-    { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon 50', ph: '6.2', tag: 'SPF', desc: '30% Rice Extract + Grain Probiotics organic UV filter lotion (PA++++). Zero white cast, zero eye sting, and grips makeup like a primer.' },
-    { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD 46', ph: '6.0', tag: 'UV46', desc: 'Derm-favorite 9% transparent Zinc Oxide + 5% Niacinamide oil-free SPF 46 designed for acne-prone, rosacea, and sensitive skin.' }
+    { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon 50', ph: '6.2', tag: 'SPF', desc: 'US #1 Viral Rice SPF: 30% Rice Extract + Grain Probiotics organic UV lotion (PA++++). Zero white cast, zero eye sting, grips makeup.' },
+    { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD 46', ph: '6.0', tag: 'UV46', desc: 'US #1 Dermatologist & Amazon SPF: 9% transparent Zinc Oxide + 5% Niacinamide oil-free SPF 46 for acne-prone, rosacea & sensitive skin.' },
+    { id: 'supergoop-unseen-spf50', label: 'Supergoop! Unseen Sunscreen SPF 50 ($38)', short: 'Supergoop', ph: '6.0', tag: 'Clear', desc: 'US #1 Sephora Sunscreen: 100% invisible, weightless, scentless & oil-free velvet gel-primer SPF 50 that grips makeup with zero cast.' },
+    { id: 'lrp-anthelios-uvmune-400', label: 'La Roche-Posay Anthelios Invisible Fluid SPF 50+ ($36)', short: 'Anthelios', ph: '6.1', tag: 'UV50', desc: 'US #1 Ulta Sunscreen Line: Ultra-lightweight fluid with high UVA/UVB antioxidant protection that absorbs instantly without greasiness.' },
+    { id: 'tatcha-silk-sunscreen-spf50', label: 'Tatcha The Silk Sunscreen Mineral SPF 50 ($64)', short: 'Tatcha 50', ph: '6.2', tag: 'Silk', desc: 'US #1 Sephora Luxury Mineral SPF: 10% sheer Zinc Oxide + Silk Extract + Niacinamide + Hyaluronic Acid fluid that melts in effortlessly.' }
   ] },
   { slotNum: '05 · PM RENEWAL', shortSlot: '05 · PM', vesselType: 'pm_bottle', role: 'Evening Retinoid / Exfoliant (4-Night Cycle)', timing: '9:30 PM · Nights 1 & 2 Only (Dry skin buffer · Never mix with AM acids)', choices: [
-    { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tret 0.05%', ph: '5.8', tag: 'Tret', desc: 'Prescription-strength 0.05% All-Trans Retinoic Acid. Directly binds nuclear RAR receptors to remodel collagen & clear pores.' },
-    { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Retinal 6', ph: '5.9', tag: 'Ret6', desc: 'Encapsulated 0.06% Retinaldehyde (acts 11x faster than standard retinol with 1 conversion step) in a gentle carrot-seed cushion.' },
-    { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: 'Paula BHA', ph: '3.5', tag: 'BHA', desc: 'Cult oil-soluble 2% Salicylic Acid + Green Tea leave-on liquid (pH 3.5) that dissolves sebaceous filaments and blackheads inside pores.' },
+    { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tret 0.05%', ph: '5.8', tag: 'Tret', desc: 'US #1 Prescription Retinoid: 0.05% All-Trans Retinoic Acid directly binds nuclear RAR receptors to remodel collagen & clear pores.' },
+    { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Retinal 6', ph: '5.9', tag: 'Ret6', desc: 'US #1 Derm Retinaldehyde: Encapsulated 0.06% Retinaldehyde (acts 11x faster than standard retinol) in a gentle carrot-seed cushion.' },
+    { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: 'Paula BHA', ph: '3.5', tag: 'BHA', desc: 'US #1 Sephora & Amazon Exfoliant: Cult oil-soluble 2% Salicylic Acid + Green Tea liquid (pH 3.5) that clears blackheads & shrinks pores.' },
     { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%', desc: 'Retinoid-free night firming option: 1% pure Copper Tripeptide-1 + Matrixyl 3000 repairs elasticity with zero peeling or sun sensitivity.' },
-    { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin', ph: '5.5', tag: '0.1%', desc: '3rd-generation OTC retinoid gel targeting follicular RAR-beta/gamma receptors to prevent clogged pores with less irritation than tretinoin.' },
+    { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin', ph: '5.5', tag: '0.1%', desc: 'US #2 OTC Acne Retinoid: 3rd-generation RAR-beta/gamma retinoid gel that prevents clogged pores with less irritation than tretinoin.' },
     { id: 'biologique-recherche-p50-1970', label: 'Biologique Recherche Lotion P50 1970 ($115)', short: 'Lotion P50', ph: '3.0', tag: 'P50', desc: 'Iconic French facial-in-a-bottle combining AHA, BHA, PHA & Niacinamide at pH 3.0 to press-and-release dead cells for instant radiance.' },
-    { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15', ph: '4.9', tag: 'AzA', desc: '15% micronized Azelaic Acid hydrogel (pH 4.9). Calms rosacea flushing, fades post-acne redness (PIE), and is pregnancy-safe.' }
+    { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15', ph: '4.9', tag: 'AzA', desc: 'US #1 Derm Rosacea & Melasma Gel: 15% micronized Azelaic Acid hydrogel (pH 4.9). Calms flushing, fades PIE, and is pregnancy-safe.' },
+    { id: 'sunday-riley-good-genes', label: 'Sunday Riley Good Genes Lactic Acid ($85)', short: 'Good Genes', ph: '2.8', tag: 'AHA', desc: 'US #2 Sephora Exfoliating Treatment: Potent purified Lactic Acid + Licorice + Lemongrass (pH 2.8) for overnight radiance & line plumping.' },
+    { id: 'cerave-resurfacing-retinol', label: 'CeraVe Resurfacing Retinol Serum ($20)', short: 'CeraVe Ret', ph: '5.8', tag: 'Ret', desc: 'US #1 Ulta/Amazon OTC Retinol: Encapsulated Retinol + Licorice Root + 3 Essential Ceramides (pH 5.8) for gentle texture & mark fading.' }
   ] }
 ];
 
-module.exports = { CULT_PRODUCTS, ROUTINE_PRESETS, VANITY_SLOT_CALIBRATORS, VANITY_SLOT_OPTIONS };
+const US_TOP_SELLERS_BY_CATEGORY = {
+  lastSyncedAt: '2026-10-29T07:42:00Z',
+  syncCadence: 'weekly_monday_0900_pdt',
+  retailSources: ['Sephora US Bestsellers', 'Ulta Beauty Top Rated', 'Amazon US Luxury & Derm Beauty', 'Dermstore Bestsellers'],
+  categories: [
+    { slot: '01 · AM PREP (Toners, Mists & Cleansers)', topTwo: ['tower28-sos-spray', 'glow-recipe-pha-bha-toner'], runnersUp: ['laneige-cream-skin-toner', 'anua-heartleaf-77-toner', 'panoxyl-10-bpo-wash', 'to-glycolic-acid-7'] },
+    { slot: '02 · AM ACTIVE (Vitamin C & Glow Serums)', topTwo: ['skinceuticals-ce-ferulic', 'sunday-riley-ceo-15'], runnersUp: ['olehenriksen-banana-bright-15', 'glow-recipe-dew-drops', 'to-niacinamide-10-zinc', 'topicals-faded-serum'] },
+    { slot: '03 · BARRIER SEAL (Moisturizers & Creams)', topTwo: ['tatcha-dewy-skin-cream', 'drunk-elephant-protini'], runnersUp: ['clinique-moisture-surge-100h', 'aestura-atobarrier-365', 'dieux-instant-angel', 'lrp-cicaplast-baume-b5'] },
+    { slot: '04 · SPF & TONE (Daily Sunscreens)', topTwo: ['supergoop-unseen-spf50', 'eltamd-uv-clear-spf46'], runnersUp: ['boj-relief-sun-spf50', 'lrp-anthelios-uvmune-400', 'tatcha-silk-sunscreen-spf50'] },
+    { slot: '05 · PM RENEWAL (Retinoids & Exfoliants)', topTwo: ['paulas-choice-2-bha', 'cerave-resurfacing-retinol'], runnersUp: ['sunday-riley-good-genes', 'rx-tretinoin-005', 'medik8-crystal-retinal-6', 'differin-adapalene-01'] }
+  ]
+};
+
+module.exports = { CULT_PRODUCTS, ROUTINE_PRESETS, VANITY_SLOT_CALIBRATORS, VANITY_SLOT_OPTIONS, US_TOP_SELLERS_BY_CATEGORY };

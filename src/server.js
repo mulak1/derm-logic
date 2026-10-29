@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const { CLINICAL_INGREDIENTS, CULT_PRODUCTS, ROUTINE_PRESETS } = require('./clinical-data');
+const { US_TOP_SELLERS_BY_CATEGORY } = require('./clinical-products');
 const { db, sampleBetaArm, recordMetaEvent } = require('./db');
 const { analyzeRoutine, redactRoutineAnalysisForPreview, generateOptionalGeminiNote } = require('./engine');
 const { BRAND_LOGO_SVG, renderAnalysisResultHtml } = require('./ui-templates');
@@ -399,6 +400,10 @@ app.get('/api/ingredients', (req, res) => {
 
 app.get('/api/products', (req, res) => {
   res.status(200).json({ count: CULT_PRODUCTS.length, products: CULT_PRODUCTS });
+});
+
+app.get('/api/catalog/us-top-sellers', (req, res) => {
+  res.status(200).json({ ok: true, totalCatalogCount: CULT_PRODUCTS.length, ...US_TOP_SELLERS_BY_CATEGORY });
 });
 
 app.post('/api/bottles/discover', (req, res) => {

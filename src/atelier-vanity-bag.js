@@ -58,7 +58,7 @@ function renderAtelierVanityDrawerHtml() {
     .dl-add-to-bag-btn.in-bag { background: var(--rose-brand); color: var(--accent-ink); }
     .dl-info-i { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 999px; background: rgba(138,52,72,0.14); color: var(--rose-brand); font-size: 0.65rem; font-weight: 700; font-style: italic; font-family: Georgia, serif; flex-shrink: 0; cursor: help; margin-left: 4px; line-height: 1; transition: background-color 140ms ease, color 140ms ease; }
     .dl-info-i:hover { background: var(--rose-brand); color: #FFFFFF; }
-    #dl-prod-info-tip { position: fixed; z-index: 10020; max-width: 262px; border-radius: 16px; padding: 9px 12px; background: #3A1F27; color: #FDF8F6; font-size: 0.74rem; line-height: 1.38; box-shadow: 0 12px 30px rgba(58,31,39,0.28); pointer-events: none; display: none; }
+    #dl-prod-info-tip { position: fixed; z-index: 10020; max-width: 268px; border-radius: 18px; padding: 10px 13px; background: #FFF7F8; color: #3A1F27; font-size: 0.75rem; line-height: 1.4; box-shadow: 0 14px 32px rgba(138,52,72,0.16), 0 2px 8px rgba(58,31,39,0.08); pointer-events: none; display: none; }
     #dl-vanity-toast { position: fixed; bottom: 18px; right: 18px; z-index: 9998; background: #3A1F27; color: #FDF8F6; border: none; border-radius: 999px; padding: 10px 16px; font-size: 0.8rem; display: none; align-items: center; gap: 10px; box-shadow: 0 14px 34px rgba(58,31,39,0.22); max-width: calc(100vw - 32px); }
     #dl-floating-vanity-dock { position: fixed; right: 0; top: 52%; transform: translateY(-50%); z-index: 9990; background: var(--bg-pouch); color: var(--text-primary); border-radius: 26px 0 0 26px; padding: 16px 13px; display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; border: none; transition: transform 180ms cubic-bezier(0.22,1,0.36,1); }
     #dl-floating-vanity-dock:hover { transform: translateY(-50%) translateX(-2px); }
@@ -187,7 +187,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var tip = document.getElementById('dl-prod-info-tip');
       var info = PROD_INFO[prodId];
       if (!tip || !info || !info.desc) return;
-      tip.innerHTML = '<div class="mono" style="font-size:0.66rem;color:#F3C6D0;font-weight:600;margin-bottom:3px;">' + esc(info.cat || info.brand || 'Formula') + (info.ph ? ' &middot; pH ' + esc(info.ph) : '') + (info.price ? ' &middot; $' + esc(info.price) : '') + '</div><div>' + esc(info.desc) + '</div>';
+      tip.innerHTML = '<div class="mono" style="font-size:0.67rem;color:#8A3448;font-weight:700;margin-bottom:3px;">' + esc(info.cat || info.brand || 'Formula') + (info.ph ? ' &middot; pH ' + esc(info.ph) : '') + (info.price ? ' &middot; $' + esc(info.price) : '') + '</div><div style="color:#3A1F27;">' + esc(info.desc) + '</div>';
       tip.style.display = 'block';
       var r = (el && el.getBoundingClientRect) ? el.getBoundingClientRect() : { left: 20, top: 80, bottom: 100, width: 40 };
       var tw = Math.min(262, window.innerWidth - 20);
