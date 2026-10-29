@@ -107,8 +107,8 @@ function getConflictSafeSwap(conflict) {
 }
 
 function renderAboveFoldSovrnDisclosureBar() {
-  return `<div id="sovrn-ftc-disclosure-bar" role="region" aria-label="Editorial and Affiliate Disclosure" style="background:var(--bg-oat);padding:5px 0;font-size:0.8125rem;line-height:1.3;color:var(--text-secondary);">
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:10px;white-space:nowrap;overflow-x:auto;">
+  return `<div id="sovrn-ftc-disclosure-bar" class="ftc-disclosure-banner" role="region" aria-label="Editorial and Affiliate Disclosure" style="background:var(--bg-oat);padding:6px 0;font-size:0.78rem;line-height:1.35;color:var(--text-secondary);">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:6px 12px;flex-wrap:wrap;white-space:normal;">
       <span><strong class="mono" style="color:var(--rose-brand);font-weight:600;">Editorial &amp; FTC Disclosure:</strong> Independent cosmetic-chemistry lab. Retail links may earn an affiliate commission at no extra cost to you.</span>
       <span style="flex-shrink:0;"><a href="/editorial-policy" class="mono" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;white-space:nowrap;">Editorial &amp; Testing Policy</a> &middot; <a href="/editorial-policy#affiliate-disclosure" class="mono" style="color:var(--text-primary);font-weight:500;text-decoration:underline;white-space:nowrap;">Affiliate Disclosure</a></span>
     </div>
@@ -230,9 +230,9 @@ function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Va
         </div>
       </div>
 
-      <div id="lockScreenCanvasSection" style="padding:14px 16px;background:linear-gradient(155deg,#1A1512 0%,#28201B 100%);color:#F4EFE8;border:1px solid #3D322C;display:grid;grid-template-columns:112px minmax(0,1fr);gap:16px;align-items:center;min-width:0;">
-        <div style="border-radius:16px;padding:4px;background:linear-gradient(145deg,#4A3E37,#161210);box-shadow:0 10px 24px rgba(0,0,0,0.38);">
-          <canvas id="lockScreenWallpaperCanvas" width="360" height="640" onclick="window.__dlDownloadOrUnlockWallpaper()" title="Click to download 9:16 Lock-Screen Routine Card" style="width:104px;height:185px;border-radius:12px;background:#181412;display:block;cursor:pointer;"></canvas>
+      <div id="lockScreenCanvasSection" style="padding:14px 16px;background:linear-gradient(155deg,#3A1F27 0%,#28141A 100%);color:#FDF8F6;border:none;border-radius:20px;display:grid;grid-template-columns:112px minmax(0,1fr);gap:16px;align-items:center;min-width:0;">
+        <div style="border-radius:16px;padding:4px;background:linear-gradient(145deg,#5A303D,#28141A);box-shadow:0 10px 24px rgba(58,31,39,0.28);">
+          <canvas id="lockScreenWallpaperCanvas" width="360" height="640" onclick="window.__dlDownloadOrUnlockWallpaper()" title="Click to download 9:16 Lock-Screen Routine Card" style="width:104px;height:185px;border-radius:12px;background:#3A1F27;display:block;cursor:pointer;"></canvas>
         </div>
         <div style="min-width:0;display:flex;flex-direction:column;gap:8px;">
           <div>
@@ -540,7 +540,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       var ay = 160 + a * 32;
       ctx.fillStyle = '#FFFFFF';
       ctx.fillRect(26, ay, w - 52, 26);
-      ctx.fillStyle = '#181412';
+      ctx.fillStyle = '#3A1F27';
       ctx.font = 'bold 11px sans-serif';
       ctx.fillText((steps[a] || '').slice(0, 27), 34, ay + 17);
       ctx.fillStyle = '#F3E5E8';

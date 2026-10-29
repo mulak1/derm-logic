@@ -623,7 +623,7 @@ function attachGlowIndexSeoUpgrades(app) {
           const dropdownHtml = `<style>@media(max-width:1180px){#gi-nav-quickjump{display:none!important;}}</style><div id="gi-nav-quickjump" style="position:relative;display:inline-block;flex-shrink:0;white-space:nowrap;">
             <details style="position:relative;display:inline-block;">
               <summary class="mono" style="list-style:none;cursor:pointer;font-size:0.78rem;color:var(--text-secondary);padding:4px 8px;border:1px solid var(--border-hairline);background:var(--bg-oat);white-space:nowrap;">Hubs &amp; Matrix &#9662;</summary>
-              <div style="position:absolute;top:calc(100% + 6px);left:0;min-width:230px;background:var(--bg-surface);border:1px solid var(--border-hairline);padding:10px;z-index:999;display:flex;flex-direction:column;gap:6px;box-shadow:0 10px 24px rgba(24,20,18,0.08);">
+              <div style="position:absolute;top:calc(100% + 6px);left:0;min-width:230px;background:var(--bg-surface);border:none;border-radius:16px;padding:10px;z-index:999;display:flex;flex-direction:column;gap:6px;box-shadow:0 10px 24px rgba(58,31,39,0.12);">
                 <a href="/directory" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">All 318+ Layering Guides</a>
                 <a href="/compare" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">Head-to-Head Comparisons (/compare)</a>
                 <a href="/scenario" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">Life-Event &amp; Barrier Scenarios (/scenario)</a>
@@ -870,7 +870,7 @@ function attachGlowIndexSeoUpgrades(app) {
 
   app.get(['/api/embed/badge/:slug', '/api/embed/:type/:slug'], (req, res) => {
     const rawSlug = String(req.params.slug || 'verified').replace(/\.svg$/i, '').slice(0, 38);
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="250" height="22" role="img" aria-label="DermLogic Verified: ${escapeHtml(rawSlug)}"><rect width="115" height="22" rx="4" fill="#181412"/><rect x="115" width="135" height="22" rx="4" fill="#7A2332"/><text x="57" y="15" fill="#FAF6F0" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">DermLogic pH</text><text x="182" y="15" fill="#FAF6F0" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">${escapeHtml(rawSlug.slice(0, 18))} · 96/100</text></svg>`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="250" height="22" role="img" aria-label="DermLogic Verified: ${escapeHtml(rawSlug)}"><rect width="115" height="22" rx="4" fill="#3A1F27"/><rect x="115" width="135" height="22" rx="4" fill="#8A3448"/><text x="57" y="15" fill="#FDF8F6" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">DermLogic pH</text><text x="182" y="15" fill="#FDF8F6" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">${escapeHtml(rawSlug.slice(0, 18))} · 96/100</text></svg>`;
     res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8');
     res.setHeader('Cache-Control', 'public, max-age=3600');
     res.setHeader('Access-Control-Allow-Origin', '*');

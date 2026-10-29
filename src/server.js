@@ -403,7 +403,8 @@ app.get('/api/products', (req, res) => {
 
 app.post('/api/bottles/discover', (req, res) => {
   const { name, brand, category, ph, priceUsd, inciList } = req.body || {};
-  const cleanName = String(name || '').trim();
+  const stripHtml = (s) => String(s || '').replace(/[<>"'`&]/g, '').replace(/[\u0000-\u001F\u007F]/g, '').trim();
+  const cleanName = stripHtml(name);
   if (!cleanName || cleanName.length < 2) {
     return res.status(400).json({ ok: false, error: 'Please provide a bottle name.' });
   }
@@ -414,13 +415,13 @@ app.post('/api/bottles/discover', (req, res) => {
   }
   const newProd = {
     id: slug || `custom-${Date.now()}`,
-    brand: String(brand || cleanName.split(' ')[0] || 'Custom Atelier').trim().slice(0, 32),
+    brand: stripHtml(brand || cleanName.split(' ')[0] || 'Custom Atelier').slice(0, 32),
     name: cleanName.slice(0, 80),
-    category: String(category || 'Daily Skincare').trim().slice(0, 32),
+    category: stripHtml(category || 'Daily Skincare').slice(0, 32),
     ph: Number(ph) >= 2.5 && Number(ph) <= 8.0 ? Number(ph) : 5.5,
     priceUsd: Number(priceUsd) > 0 ? Number(priceUsd) : 28,
     primaryActives: ['glycerin', 'niacinamide'],
-    inciList: String(inciList || 'Aqua, Glycerin, Niacinamide, Panthenol, Ceramide NP').slice(0, 400),
+    inciList: stripHtml(inciList || 'Aqua, Glycerin, Niacinamide, Panthenol, Ceramide NP').slice(0, 400),
     summary: 'User-discovered custom bottle added to live DermLogic catalog and 5-Slot Vanity Bag.'
   };
   CULT_PRODUCTS.push(newProd);

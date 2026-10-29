@@ -34,105 +34,34 @@ function renderHeaderVanityBagPill() {
 function renderAtelierVanityDrawerHtml() {
   return `
   <style>
-    #dl-header-vanity-pill:active, .dl-vanity-swatch-btn:active, .dl-vanity-slot-head:active, .dl-dossier-tab-btn:active, .dl-tray-vessel-btn:active, .dl-add-to-bag-btn:active {
-      transform: scale(0.97);
-    }
-    .dl-vanity-swatch-btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 6px;
-      background: var(--bg-surface); color: var(--text-secondary);
-      border: 1px solid var(--border-hairline); cursor: pointer; min-width: 0; max-width: 100%;
-      overflow: hidden; text-overflow: ellipsis; text-align: center;
-      font-size: 0.72rem; line-height: 1.2; font-weight: 500; white-space: nowrap; transition: border-color 160ms ease, background-color 160ms ease, transform 160ms cubic-bezier(0.22,1,0.36,1);
-    }
-    .dl-vanity-swatch-btn.active {
-      background: var(--rose-pill-bg); color: var(--rose-brand);
-      border-color: var(--rose-brand); font-weight: 600;
-    }
-    .dl-vanity-slot-card {
-      background: var(--bg-surface); border: 1px solid transparent;
-      transition: border-color 180ms ease, background-color 180ms ease;
-    }
-    .dl-vanity-slot-card.active {
-      border-color: var(--border-hairline);
-      border-left: 3px solid var(--rose-brand);
-      background: var(--bg-surface);
-    }
-    .dl-vanity-slot-card.clash-slot {
-      border-left: 3px solid var(--berry-clash);
-    }
-    .dl-dossier-tabs-bar {
-      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-      background: var(--bg-oat); padding: 4px; gap: 4px;
-    }
-    .dl-dossier-tab-btn {
-      padding: 8px 6px; background: transparent; border: none;
-      cursor: pointer; text-align: center;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 0;
-      transition: background-color 160ms ease, color 160ms ease;
-    }
-    .dl-dossier-tab-btn.active {
-      background: var(--bg-surface); box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    }
-    .dl-tray-lineup-grid {
-      display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px;
-    }
-    .dl-tray-vessel-btn {
-      background: var(--bg-surface); border: 1px solid transparent;
-      padding: 8px 4px; cursor: pointer; display: flex; flex-direction: column;
-      align-items: center; justify-content: space-between; gap: 4px; min-width: 0; position: relative;
-      transition: transform 180ms cubic-bezier(0.22,1,0.36,1), border-color 160ms ease, background-color 160ms ease;
-    }
-    .dl-tray-vessel-btn:hover {
-      transform: translateY(-2px);
-    }
-    .dl-tray-vessel-btn.active {
-      border: 1.5px solid var(--rose-brand); background: var(--rose-pill-bg); transform: translateY(-2px);
-    }
-    .dl-tray-vessel-btn.has-clash {
-      border-color: var(--berry-clash); background: var(--berry-bg);
-    }
-    .dl-tray-vessel-btn.is-empty {
-      border: 1.5px dashed var(--rose-brand); background: var(--bg-canvas); opacity: 1;
-    }
-    .dl-add-to-bag-btn, .vanity-card-bag-btn {
-      display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px;
-      background: var(--bg-surface); color: var(--rose-brand); border: 1px solid var(--rose-brand);
-      font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap;
-      transition: background-color 160ms ease, color 160ms ease, transform 150ms ease;
-    }
-    .dl-add-to-bag-btn.in-bag {
-      background: var(--rose-brand); color: var(--accent-ink);
-    }
-    #dl-vanity-toast {
-      position: fixed; bottom: 18px; right: 18px; z-index: 9998;
-      background: #3A1F27; color: #FDF8F6; border: none; border-radius: 999px;
-      padding: 10px 16px; font-size: 0.8rem; display: none; align-items: center; gap: 10px;
-      box-shadow: 0 14px 34px rgba(58,31,39,0.22); max-width: calc(100vw - 32px);
-    }
-    #dl-floating-vanity-dock {
-      position: fixed; right: 0; top: 52%; transform: translateY(-50%); z-index: 9990;
-      background: var(--bg-pouch); color: var(--text-primary); border-radius: 26px 0 0 26px;
-      padding: 16px 13px; display: flex; flex-direction: column; align-items: center; gap: 7px;
-      cursor: pointer; border: none; transition: transform 180ms cubic-bezier(0.22,1,0.36,1);
-    }
+    #dl-header-vanity-pill:active, .dl-vanity-swatch-btn:active, .dl-vanity-slot-head:active, .dl-dossier-tab-btn:active, .dl-tray-vessel-btn:active, .dl-add-to-bag-btn:active { transform: scale(0.97); }
+    .dl-vanity-swatch-btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 6px; background: var(--bg-surface); color: var(--text-secondary); border: none; border-radius: 999px; cursor: pointer; min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; text-align: center; font-size: 0.72rem; line-height: 1.2; font-weight: 500; white-space: nowrap; transition: background-color 160ms ease, transform 160ms cubic-bezier(0.22,1,0.36,1); }
+    .dl-vanity-swatch-btn.active { background: var(--rose-pill-bg); color: var(--rose-brand); font-weight: 600; }
+    .dl-vanity-slot-card { background: var(--bg-surface); border: none; border-radius: 20px; transition: background-color 180ms ease; }
+    .dl-vanity-slot-card.active { background: var(--bg-surface); }
+    .dl-vanity-slot-card.clash-slot { background: var(--berry-bg); }
+    .dl-dossier-tabs-bar { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--bg-oat); border-radius: 999px; padding: 4px; gap: 4px; }
+    .dl-dossier-tab-btn { padding: 8px 6px; background: transparent; border: none; border-radius: 999px; cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 0; transition: background-color 160ms ease, color 160ms ease; }
+    .dl-dossier-tab-btn.active { background: var(--bg-surface); box-shadow: 0 2px 8px rgba(58,31,39,0.06); }
+    .dl-tray-lineup-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+    .dl-tray-vessel-btn { background: var(--bg-surface); border: none; border-radius: 16px; padding: 8px 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 4px; min-width: 0; position: relative; transition: transform 180ms cubic-bezier(0.22,1,0.36,1), background-color 160ms ease; }
+    .dl-tray-vessel-btn:hover { transform: translateY(-2px); }
+    .dl-tray-vessel-btn.active { background: var(--rose-pill-bg); transform: translateY(-2px); }
+    .dl-tray-vessel-btn.has-clash { background: var(--berry-bg); }
+    .dl-tray-vessel-btn.is-empty { background: var(--bg-canvas); opacity: 0.92; }
+    .dl-add-to-bag-btn, .vanity-card-bag-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 999px; background: var(--rose-pill-bg); color: var(--rose-brand); border: none; font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background-color 160ms ease, color 160ms ease, transform 150ms ease; }
+    .dl-add-to-bag-btn.in-bag { background: var(--rose-brand); color: var(--accent-ink); }
+    #dl-vanity-toast { position: fixed; bottom: 18px; right: 18px; z-index: 9998; background: #3A1F27; color: #FDF8F6; border: none; border-radius: 999px; padding: 10px 16px; font-size: 0.8rem; display: none; align-items: center; gap: 10px; box-shadow: 0 14px 34px rgba(58,31,39,0.22); max-width: calc(100vw - 32px); }
+    #dl-floating-vanity-dock { position: fixed; right: 0; top: 52%; transform: translateY(-50%); z-index: 9990; background: var(--bg-pouch); color: var(--text-primary); border-radius: 26px 0 0 26px; padding: 16px 13px; display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; border: none; transition: transform 180ms cubic-bezier(0.22,1,0.36,1); }
     #dl-floating-vanity-dock:hover { transform: translateY(-50%) translateX(-2px); }
     @media (max-width: 768px) {
       .dl-hide-mobile, #dl-floating-vanity-dock { display: none !important; }
-      #dl-header-vanity-pill { padding: 5px 8px !important; font-size: 0.74rem !important; gap: 4px !important; }
+      #dl-header-vanity-pill { padding: 5px 10px !important; font-size: 0.74rem !important; gap: 5px !important; }
       #dl-header-vanity-clash-dot { display: none !important; }
       #dl-atelier-vanity-drawer { align-items: flex-end !important; justify-content: center !important; }
-      #dl-atelier-vanity-panel {
-        width: 100vw !important; max-width: 100vw !important; height: 92dvh !important; max-height: 92dvh !important;
-        border-left: none !important; border-top: 2px solid var(--rose-brand) !important;
-        padding: 10px 14px 14px 14px !important; gap: 8px !important;
-      }
-      .dl-mobile-grabber {
-        display: block !important; width: 42px; height: 4px; background: var(--border-strong);
-        margin: 0 auto 4px auto; border-radius: 2px; flex-shrink: 0;
-      }
-      .dl-tray-lineup-grid {
-        display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 4px !important;
-      }
+      #dl-atelier-vanity-panel { width: 100vw !important; max-width: 100vw !important; height: 92dvh !important; max-height: 92dvh !important; border: none !important; border-radius: 24px 24px 0 0 !important; padding: 12px 14px 16px 14px !important; gap: 8px !important; }
+      .dl-mobile-grabber { display: block !important; width: 42px; height: 4px; background: var(--rose-pill-bg); margin: 0 auto 4px auto; border-radius: 2px; flex-shrink: 0; }
+      .dl-tray-lineup-grid { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 4px !important; }
       .dl-tray-vessel-btn { padding: 4px 2px !important; min-width: 0 !important; }
       .dl-tray-vessel-btn svg { width: 26px !important; height: 32px !important; }
       #dl-undertone-swatches .dl-vanity-swatch-btn { font-size: 0.67rem !important; padding: 5px 2px !important; gap: 3px !important; }
@@ -145,40 +74,21 @@ function renderAtelierVanityDrawerHtml() {
   <!-- Right-Edge Floating Vanity Bag Sidebar -->
   <button type="button" id="dl-floating-vanity-dock" aria-label="Open My 5-Slot Atelier Vanity Bag" onclick="window.__dlOpenVanityDrawer('floating_dock')">
     <div style="position:relative;display:inline-flex;align-items:center;gap:6px;">
-      <div style="position:relative;">
-        ${buildLogoBagIconSvg(36)}
-        <span id="dl-dock-vanity-full-dot" style="position:absolute;top:0px;right:0px;width:11px;height:11px;border-radius:999px;background:#10B981;" title="Vanity Pouch Full"></span>
-      </div>
-      <span id="dl-dock-vanity-bars" style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <span style="width:6px;height:3px;border-radius:99px;background:#10B981;"></span>
-        <span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span>
-        <span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span>
-        <span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span>
-        <span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span>
-      </span>
+      <div style="position:relative;">${buildLogoBagIconSvg(36)}<span id="dl-dock-vanity-full-dot" style="position:absolute;top:0px;right:0px;width:11px;height:11px;border-radius:999px;background:#10B981;" title="Vanity Pouch Full"></span></div>
+      <span id="dl-dock-vanity-bars" style="display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="width:6px;height:3px;border-radius:99px;background:#10B981;"></span><span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span><span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span><span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span><span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span></span>
     </div>
     <span style="font-size:0.78rem;font-weight:600;color:var(--text-primary);">Vanity Bag</span>
     <span id="dl-dock-vanity-count" style="padding:3px 10px;border-radius:999px;background:var(--rose-brand);color:#FFFFFF;font-size:0.74rem;font-weight:600;">5 / 5 Full</span>
-    <span style="display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--sage-safe);font-weight:600;">
-      <span id="dl-dock-vanity-status-dot" style="width:6px;height:6px;border-radius:999px;background:#10B981;"></span>
-      <span id="dl-dock-vanity-harmony">Harmonized</span>
-    </span>
+    <span style="display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--sage-safe);font-weight:600;"><span id="dl-dock-vanity-status-dot" style="width:6px;height:6px;border-radius:999px;background:#10B981;"></span><span id="dl-dock-vanity-harmony">Harmonized</span></span>
   </button>
-
-  <!-- Toast notification when adding/removing bottles from any page -->
   <div id="dl-vanity-toast" role="status" aria-live="polite">
     <span id="dl-vanity-toast-text" class="mono">Added to Vanity Bag</span>
     <button type="button" class="mono" onclick="window.__dlOpenVanityDrawer('toast');document.getElementById('dl-vanity-toast').style.display='none';" style="background:var(--rose-brand);color:var(--accent-ink);border:none;border-radius:999px;padding:4px 11px;font-size:0.74rem;font-weight:700;cursor:pointer;white-space:nowrap;">Open Bag &rarr;</button>
   </div>
-
-  <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" onclick="if(event.target===this)window.__dlCloseVanityDrawer()" style="display:none;position:fixed;inset:0;z-index:9996;background:rgba(12,10,8,0.58);align-items:stretch;justify-content:flex-end;">
-    <div id="dl-atelier-vanity-panel" style="width:540px;max-width:100vw;height:100%;background:var(--bg-canvas);color:var(--text-primary);border-left:1px solid var(--border-strong);display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;padding:20px 24px;gap:12px;">
-      
-      <!-- Mobile Bottom-Sheet Grab Handle -->
+  <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" onclick="if(event.target===this)window.__dlCloseVanityDrawer()" style="display:none;position:fixed;inset:0;z-index:9996;background:rgba(58,31,39,0.48);align-items:stretch;justify-content:flex-end;">
+    <div id="dl-atelier-vanity-panel" style="width:540px;max-width:100vw;height:100%;background:var(--bg-canvas);color:var(--text-primary);border:none;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;padding:20px 24px;gap:12px;">
       <div class="dl-mobile-grabber" style="display:none;" onclick="window.__dlCloseVanityDrawer()"></div>
-
-      <!-- Calm Top Header -->
-      <div style="border-bottom:1px solid var(--border-hairline);padding-bottom:10px;">
+      <div style="padding-bottom:6px;">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
           <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
             <button type="button" id="dl-vanity-harmony-pill" class="badge-safe mono" onclick="window.__dlSetDossierTab('clashes')" style="font-size:0.75rem;padding:3px 9px;border:none;cursor:pointer;">96% Harmony &middot; 0 Clashes</button>
@@ -187,75 +97,36 @@ function renderAtelierVanityDrawerHtml() {
           </div>
           <button type="button" id="dl-vanity-drawer-close" class="btn-secondary mono" onclick="window.__dlCloseVanityDrawer()" style="padding:4px 10px;min-height:26px;font-size:0.76rem;">Close &times;</button>
         </div>
-
         <h3 id="dl-vanity-bag-title" class="serif-display" style="font-size:1.45rem;font-weight:400;line-height:1.15;color:var(--text-primary);margin:0;">Your 5-Slot Calibrated Vanity Bag</h3>
-
-        <div id="dl-vanity-exit-alert" style="display:none;padding:8px 10px;background:var(--rose-pill-bg);border-left:3px solid var(--rose-brand);margin-top:8px;font-size:0.78rem;color:var(--text-primary);line-height:1.38;">
-          <strong style="color:var(--rose-brand);">Your Vanity Bag Is Reserved for 24 Hours:</strong> Save your 9:16 Lock-Screen Card or email yourself a free restore link below before leaving.
-        </div>
-
-        <!-- Live Clash Alert Banner inside the Drawer -->
-        <div id="dl-vanity-clash-banner" style="display:none;padding:9px 12px;background:var(--berry-bg);border-left:3px solid var(--berry-clash);margin-top:8px;font-size:0.8rem;color:var(--text-primary);line-height:1.38;justify-content:space-between;align-items:center;gap:10px;">
+        <div id="dl-vanity-exit-alert" style="display:none;padding:8px 10px;border-radius:14px;background:var(--rose-pill-bg);margin-top:8px;font-size:0.78rem;color:var(--text-primary);line-height:1.38;"><strong style="color:var(--rose-brand);">Your Vanity Bag Is Reserved for 24 Hours:</strong> Save your 9:16 Lock-Screen Card or email yourself a free restore link below before leaving.</div>
+        <div id="dl-vanity-clash-banner" style="display:none;padding:9px 12px;border-radius:14px;background:var(--berry-bg);margin-top:8px;font-size:0.8rem;color:var(--text-primary);line-height:1.38;justify-content:space-between;align-items:center;gap:10px;">
           <div id="dl-vanity-clash-banner-text" style="min-width:0;flex:1;"></div>
-          <button type="button" class="mono" onclick="window.__dlAutoFixBagClashes()" style="padding:5px 10px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.75rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;">1-Tap Fix &rarr;</button>
+          <button type="button" class="mono" onclick="window.__dlAutoFixBagClashes()" style="padding:5px 10px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.75rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;">1-Tap Fix &rarr;</button>
         </div>
       </div>
-
-      <!-- Airy Visual Bottle Countertop Shelf (Option 3) -->
-      <div style="background:var(--bg-oat);padding:10px 12px;">
+      <div style="background:var(--bg-oat);border-radius:20px;padding:10px 12px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px;">
           <span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Tap any bottle on your shelf (<span id="dl-tray-filled-label">5/5 Vessels</span>):</span>
-          <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:1px solid var(--rose-pill-border);padding:2px 8px;font-size:0.72rem;font-weight:600;cursor:pointer;">Play: Test a Clash &rarr;</button>
+          <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.72rem;font-weight:600;cursor:pointer;">Play: Test a Clash &rarr;</button>
         </div>
         <div id="dl-vanity-visual-tray" class="dl-tray-lineup-grid"></div>
       </div>
-
-      <!-- Clean 1-Line 4-Pill Switcher -->
       <div class="dl-dossier-tabs-bar" role="tablist" aria-label="4-Tab Atelier Prescription Dossier">
-        <button type="button" role="tab" id="dl-dossier-tab-slots" class="dl-dossier-tab-btn active" onclick="window.__dlSetDossierTab('slots')">
-          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">1 &middot; Bottles</strong>
-        </button>
-        <button type="button" role="tab" id="dl-dossier-tab-clashes" class="dl-dossier-tab-btn" onclick="window.__dlSetDossierTab('clashes')">
-          <span class="mono" id="dl-tab02-kicker" style="display:none;">AUDIT</span>
-          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">2 &middot; Clashes</strong>
-          <span class="mono dl-dossier-tab-sub" id="dl-tab02-sub" style="display:none;">0 Clashes</span>
-        </button>
-        <button type="button" role="tab" id="dl-dossier-tab-cycle" class="dl-dossier-tab-btn" onclick="window.__dlSetDossierTab('cycle')">
-          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">3 &middot; 4-Night</strong>
-        </button>
-        <button type="button" role="tab" id="dl-dossier-tab-pass" class="dl-dossier-tab-btn" onclick="window.__dlSetDossierTab('pass')">
-          <strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">4 &middot; Phone Card</strong>
-        </button>
+        <button type="button" role="tab" id="dl-dossier-tab-slots" class="dl-dossier-tab-btn active" onclick="window.__dlSetDossierTab('slots')"><strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">1 &middot; Bottles</strong></button>
+        <button type="button" role="tab" id="dl-dossier-tab-clashes" class="dl-dossier-tab-btn" onclick="window.__dlSetDossierTab('clashes')"><span class="mono" id="dl-tab02-kicker" style="display:none;">AUDIT</span><strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">2 &middot; Clashes</strong><span class="mono dl-dossier-tab-sub" id="dl-tab02-sub" style="display:none;">0 Clashes</span></button>
+        <button type="button" role="tab" id="dl-dossier-tab-cycle" class="dl-dossier-tab-btn" onclick="window.__dlSetDossierTab('cycle')"><strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">3 &middot; 4-Night</strong></button>
+        <button type="button" role="tab" id="dl-dossier-tab-pass" class="dl-dossier-tab-btn" onclick="window.__dlSetDossierTab('pass')"><strong class="serif-display dl-dossier-tab-title" style="font-size:0.88rem;font-weight:500;">4 &middot; Phone Card</strong></button>
       </div>
-
-      <!-- Tab 01 View: Single-Bottle Spotlight Card + Slot-Aware Calibrator Strip -->
       <div id="dl-dossier-panel-slots" style="display:flex;flex-direction:column;gap:10px;">
         <div id="dl-vanity-slots-list" style="display:flex;flex-direction:column;gap:0;"></div>
-        <div id="dl-slot-calibrator-box" style="display:none;padding:12px 14px;background:var(--bg-oat);flex-direction:column;gap:8px;"></div>
-
-        <!-- Undertone & Finish Strip (Only shown when inspecting Slot 04 SPF) -->
-        <div id="dl-undertone-parent-box" style="padding:12px 14px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
-            <span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Match Slot 04 SPF to Skin Tone &amp; Finish:</span>
-            <span id="dl-undertone-active-label" class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:600;">Neutral Ivory &middot; Velvet Satin</span>
-          </div>
+        <div id="dl-slot-calibrator-box" style="display:none;padding:12px 14px;border-radius:18px;background:var(--bg-oat);flex-direction:column;gap:8px;"></div>
+        <div id="dl-undertone-parent-box" style="padding:12px 14px;border-radius:18px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;"><span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Match Slot 04 SPF to Skin Tone &amp; Finish:</span><span id="dl-undertone-active-label" class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:600;">Neutral Ivory &middot; Velvet Satin</span></div>
           <div id="dl-undertone-swatches" role="group" aria-label="Select Skin Undertone" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;">
-            <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="cool_rosy" onclick="window.__dlSetUndertone('cool_rosy', this)">
-              <span style="width:9px;height:9px;border-radius:50%;background:#F3D9D4;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
-              <span>Cool Rosy</span>
-            </button>
-            <button type="button" class="dl-vanity-swatch-btn active mono" data-undertone="neutral_ivory" onclick="window.__dlSetUndertone('neutral_ivory', this)">
-              <span style="width:9px;height:9px;border-radius:50%;background:#EFE0D0;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
-              <span>Neutral</span>
-            </button>
-            <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="warm_olive" onclick="window.__dlSetUndertone('warm_olive', this)">
-              <span style="width:9px;height:9px;border-radius:50%;background:#D8B48E;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
-              <span>Warm Olive</span>
-            </button>
-            <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="rich_espresso" onclick="window.__dlSetUndertone('rich_espresso', this)">
-              <span style="width:9px;height:9px;border-radius:50%;background:#7B4B36;border:1px solid rgba(24,20,18,0.25);flex-shrink:0;"></span>
-              <span>Deep Rich</span>
-            </button>
+            <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="cool_rosy" onclick="window.__dlSetUndertone('cool_rosy', this)"><span style="width:9px;height:9px;border-radius:50%;background:#F3D9D4;flex-shrink:0;"></span><span>Cool Rosy</span></button>
+            <button type="button" class="dl-vanity-swatch-btn active mono" data-undertone="neutral_ivory" onclick="window.__dlSetUndertone('neutral_ivory', this)"><span style="width:9px;height:9px;border-radius:50%;background:#EFE0D0;flex-shrink:0;"></span><span>Neutral</span></button>
+            <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="warm_olive" onclick="window.__dlSetUndertone('warm_olive', this)"><span style="width:9px;height:9px;border-radius:50%;background:#D8B48E;flex-shrink:0;"></span><span>Warm Olive</span></button>
+            <button type="button" class="dl-vanity-swatch-btn mono" data-undertone="rich_espresso" onclick="window.__dlSetUndertone('rich_espresso', this)"><span style="width:9px;height:9px;border-radius:50%;background:#7B4B36;flex-shrink:0;"></span><span>Deep Rich</span></button>
           </div>
           <div id="dl-finish-swatches" role="group" aria-label="Select Complexion Finish" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;">
             <button type="button" class="dl-vanity-swatch-btn mono" data-finish="dewy_glass" onclick="window.__dlSetFinish('dewy_glass', this)">Dewy Glass</button>
@@ -264,34 +135,20 @@ function renderAtelierVanityDrawerHtml() {
           </div>
         </div>
       </div>
-
-      <!-- Tab 02 View: Live Bag Clash & pH Conflict Audit -->
       <div id="dl-dossier-panel-clashes" style="display:none;flex-direction:column;gap:8px;"></div>
-
-      <!-- Tab 03 View: 4-Night Skin Cycling Calendar -->
       <div id="dl-dossier-panel-cycle" style="display:none;flex-direction:column;gap:8px;"></div>
-
-      <!-- Tab 04 View: 2-Sided 9:16 Lock-Screen Pass Preview -->
       <div id="dl-dossier-panel-pass" style="display:none;flex-direction:column;gap:8px;"></div>
-
-      <!-- Calm Footer -->
-      <div id="dl-vanity-vault-footer" style="padding:12px 14px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
+      <div id="dl-vanity-vault-footer" style="padding:12px 14px;border-radius:18px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
         <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:8px;">
-          <a id="dl-vanity-keep-99c" href="/buy/micro_pass?source=vanity_bag_99c" onclick="return window.__dlBuyFromVanity('micro_pass', this)" class="btn-primary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.8rem;white-space:nowrap;">
-            <span>Save 9:16 Phone Card (99&cent;) &rarr;</span>
-          </a>
-          <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;">
-            <span>Complete 3-File Kit ($1.99)</span>
-          </a>
+          <a id="dl-vanity-keep-99c" href="/buy/micro_pass?source=vanity_bag_99c" onclick="return window.__dlBuyFromVanity('micro_pass', this)" class="btn-primary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.8rem;white-space:nowrap;"><span>Save 9:16 Phone Card (99&cent;) &rarr;</span></a>
+          <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;"><span>Complete 3-File Kit ($1.99)</span></a>
         </div>
-
         <form id="dl-vanity-email-form" onsubmit="return window.__dlSendVanityHoldEmail(event)" style="display:flex;gap:6px;align-items:center;">
           <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Or email my free 24h restore link..." style="flex:1;padding:6px 10px;font-size:0.76rem;min-height:30px;" />
           <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:6px 10px;min-height:30px;font-size:0.75rem;white-space:nowrap;">Email 24h Link</button>
         </form>
         <div id="dl-vanity-email-status" class="mono" style="display:none;font-size:0.75rem;color:var(--sage-safe);font-weight:600;"></div>
       </div>
-
     </div>
   </div>
   `;
@@ -314,12 +171,13 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     };
 
     var SLOT_OPTIONS = ${JSON.stringify(VANITY_SLOT_OPTIONS)};
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
     function renderMiniVesselSvg(vesselType, tagText, hasClash, isEmpty) {
-      var stroke = isEmpty ? '#7A2332' : (hasClash ? '#7A2332' : '#524A43');
-      var fill = isEmpty ? '#FBF7F4' : (hasClash ? '#F5E1E4' : '#FAF6F0');
-      var accent = hasClash || isEmpty ? '#7A2332' : '#264C3C';
-      var safeTag = String(tagText || '').slice(0, 6);
+      var stroke = isEmpty ? '#8A3448' : (hasClash ? '#8A3448' : '#3A1F27');
+      var fill = isEmpty ? '#FDF8F6' : (hasClash ? '#F6E3E7' : '#F8EFE6');
+      var accent = hasClash || isEmpty ? '#8A3448' : '#285B44';
+      var safeTag = esc(String(tagText || '').slice(0, 6));
       if (vesselType === 'mist') {
         return '<svg width="34" height="42" viewBox="0 0 38 46" fill="none" aria-hidden="true"><rect x="13" y="3" width="12" height="6" rx="1" fill="#E6E0D6" stroke="' + stroke + '" stroke-width="1.2"/><path d="M9 9H29L31 14V40C31 41.1 30.1 42 29 42H9C7.9 42 7 41.1 7 40V14L9 9Z" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.3"/><rect x="9.5" y="19" width="19" height="14" fill="#FFFFFF" stroke="' + stroke + '" stroke-width="0.8"/><text x="19" y="28" text-anchor="middle" font-size="5.3" font-family="monospace" font-weight="700" fill="' + stroke + '">' + safeTag + '</text></svg>';
       }
@@ -338,6 +196,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         if (raw) {
           var parsed = JSON.parse(raw);
           if (parsed && typeof parsed === 'object' && Array.isArray(parsed.slotSelections)) {
+            parsed.slotSelections = [0, 1, 2, 3, 4].map(function(i) { var v = parsed.slotSelections[i]; return (typeof v === 'number' && v >= -1 && v < 20) ? v : 0; });
+            parsed.activeSlotIdx = (typeof parsed.activeSlotIdx === 'number' && parsed.activeSlotIdx >= 0 && parsed.activeSlotIdx < 5) ? parsed.activeSlotIdx : 3;
+            parsed.customSlotBottle = (parsed.customSlotBottle && Object.prototype.toString.call(parsed.customSlotBottle) === '[object Object]') ? parsed.customSlotBottle : {};
             if (!parsed.dossierTab) parsed.dossierTab = 'slots';
             if (!parsed.passSide) parsed.passSide = 'am';
             return parsed;
@@ -345,18 +206,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         }
       } catch (_) {}
       var now = Date.now();
-      return {
-        bagId: 'DL-' + String(1000 + (now % 8999)),
-        holdExpiresAt: now + 86400000,
-        undertone: 'neutral_ivory',
-        finish: 'velvet_satin',
-        activeSlotIdx: 3,
-        dossierTab: 'slots',
-        passSide: 'am',
-        slotSelections: [0, 0, 0, 0, 0],
-        customSlotBottle: {},
-        customName: ''
-      };
+      return { bagId: 'DL-' + String(1000 + (now % 8999)), holdExpiresAt: now + 86400000, undertone: 'neutral_ivory', finish: 'velvet_satin', activeSlotIdx: 3, dossierTab: 'slots', passSide: 'am', slotSelections: [0, 0, 0, 0, 0], customSlotBottle: {}, customName: '', pouchSpfSealed: false };
     }
 
     function saveVanityState(st) {
@@ -517,31 +367,53 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     }
 
     window.__dlTapPouchSpfSlot = function() {
+      var st = window.__dlVanityState;
+      var curSpf = getBottleForSlot(st, 3);
+      if (st.pouchSpfSealed && curSpf) {
+        if (window.__dlSelectVanitySlot) window.__dlSelectVanitySlot(3);
+        if (window.__dlOpenVanityDrawer) window.__dlOpenVanityDrawer('pouch_slot_3');
+        return;
+      }
       var spfCb = document.querySelector('input[name="routineProduct"][value="boj-relief-sun-spf50"]') || document.querySelector('input[name="routineProduct"][value="eltamd-uv-clear-spf46"]');
       if (spfCb && !spfCb.checked) {
         spfCb.checked = true;
         if (typeof toggleProductChip === 'function') toggleProductChip(spfCb);
       }
-      var slot4 = document.getElementById('dl-empty-bottle-slot');
-      if (slot4) {
-        slot4.style.border = 'none';
-        slot4.style.background = '#FFFFFF';
-        var nm = document.getElementById('dl-pouch-slot-name-4');
-        var sb = document.getElementById('dl-pouch-slot-sub-4');
-        if (nm) { nm.textContent = 'Relief Sun SPF 50'; nm.style.color = 'var(--text-primary)'; }
-        if (sb) { sb.textContent = 'In Pouch'; sb.style.color = 'var(--sage-safe)'; }
-      }
+      st.pouchSpfSealed = true;
+      if (st.slotSelections[3] === -1 || typeof st.slotSelections[3] !== 'number') st.slotSelections[3] = 0;
+      saveVanityState(st);
+      window.__dlRenderVanityDrawer();
+      showVanityToast('Sealed your 5-Slot Soft Pinch Vanity Pouch with ' + (getBottleForSlot(st, 3) ? getBottleForSlot(st, 3).short : 'Relief Sun SPF 50+') + '!');
+    };
+
+    function syncSelectorVanityCaddy(st) {
+      var spfCheckedOnShelf = Boolean(document.querySelector('input[name="routineProduct"][value="boj-relief-sun-spf50"]:checked') || document.querySelector('input[name="routineProduct"][value="eltamd-uv-clear-spf46"]:checked'));
+      var cardMap = [
+        { cardId: 'dl-pouch-card-0', nameId: 'dl-pouch-slot-name-0', subId: 'dl-pouch-slot-sub-0', slotIdx: 0, emptyName: 'Add Mist', emptySub: 'Step 01' },
+        { cardId: 'dl-pouch-card-1', nameId: 'dl-pouch-slot-name-1', subId: 'dl-pouch-slot-sub-1', slotIdx: 1, emptyName: 'Add Serum', emptySub: 'Step 02' },
+        { cardId: 'dl-pouch-card-2', nameId: 'dl-pouch-slot-name-2', subId: 'dl-pouch-slot-sub-2', slotIdx: 2, emptyName: 'Add Cream', emptySub: 'Step 03' },
+        { cardId: 'dl-pouch-card-3', nameId: 'dl-pouch-slot-name-3', subId: 'dl-pouch-slot-sub-3', slotIdx: 4, emptyName: 'Add Night', emptySub: 'Step 04' },
+        { cardId: 'dl-empty-bottle-slot', nameId: 'dl-pouch-slot-name-4', subId: 'dl-pouch-slot-sub-4', slotIdx: 3, emptyName: 'Add SPF 50', emptySub: 'Final Step', isSpf: true }
+      ];
+      var pouchFilled = 0;
+      cardMap.forEach(function(m) {
+        var b = getBottleForSlot(st, m.slotIdx);
+        var isFilled = m.isSpf ? Boolean(b && (st.pouchSpfSealed || spfCheckedOnShelf)) : Boolean(b);
+        if (isFilled) pouchFilled++;
+        var cardEl = document.getElementById(m.cardId);
+        var nmEl = document.getElementById(m.nameId);
+        var sbEl = document.getElementById(m.subId);
+        if (cardEl) cardEl.style.background = isFilled ? '#FFFFFF' : 'rgba(255,255,255,0.68)';
+        if (nmEl) { nmEl.textContent = isFilled && b ? b.short : m.emptyName; nmEl.style.color = isFilled ? 'var(--text-primary)' : 'var(--rose-brand)'; }
+        if (sbEl) { sbEl.textContent = isFilled ? 'In Pouch' : m.emptySub; sbEl.style.color = isFilled ? 'var(--sage-safe)' : 'var(--text-secondary)'; }
+      });
       var stLbl = document.getElementById('dl-pouch-status-label');
       var pctTxt = document.getElementById('dl-pouch-pct-text');
       var prog = document.getElementById('dl-pouch-progress-fill');
-      if (stLbl) stLbl.textContent = '5 of 5 Comfort Steps Zip-Ready';
-      if (pctTxt) pctTxt.textContent = 'Full · 100%';
-      if (prog) prog.style.width = '100%';
-      window.__dlVanityState.slotSelections[3] = 0;
-      saveVanityState(window.__dlVanityState);
-      window.__dlRenderVanityDrawer();
-      showVanityToast('Sealed your 5-Slot Soft Pinch Vanity Pouch with Relief Sun SPF 50+!');
-    };
+      if (stLbl) stLbl.textContent = pouchFilled + ' of 5 Comfort Steps Zip-Ready';
+      if (pctTxt) pctTxt.textContent = pouchFilled === 5 ? 'Full · 100%' : (pouchFilled === 4 ? 'Almost Full · 80%' : (pouchFilled * 20) + '% Ready');
+      if (prog) prog.style.width = (pouchFilled * 20) + '%';
+    }
 
     window.__dlRenderVanityDrawer = function() {
       var st = window.__dlVanityState;
@@ -549,6 +421,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var fMeta = FINISH_META[st.finish] || FINISH_META.velvet_satin;
       var clashes = computeBagClashes(st);
       var filledCount = [0, 1, 2, 3, 4].filter(function(i) { return Boolean(getBottleForSlot(st, i)); }).length;
+      syncSelectorVanityCaddy(st);
 
       var countEl = document.getElementById('dl-header-vanity-count');
       if (countEl) countEl.textContent = filledCount === 5 ? '5 of 5 Full' : (filledCount + ' of 5');
@@ -580,7 +453,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (clashBanner && clashBannerTxt) {
         if (clashes.length > 0) {
           clashBanner.style.display = 'flex';
-          clashBannerTxt.innerHTML = '<strong style="color:var(--berry-clash);">Bag Conflict Detected:</strong> ' + clashes[0].title;
+          clashBannerTxt.innerHTML = '<strong style="color:var(--berry-clash);">Bag Conflict Detected:</strong> ' + esc(clashes[0].title);
         } else {
           clashBanner.style.display = 'none';
         }
@@ -621,7 +494,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         b.classList.toggle('active', b.getAttribute('data-finish') === st.finish);
       });
 
-      var activeIdx = typeof st.activeSlotIdx === 'number' ? st.activeSlotIdx : 3;
+      var activeIdx = (typeof st.activeSlotIdx === 'number' && st.activeSlotIdx >= 0 && st.activeSlotIdx < 5) ? st.activeSlotIdx : 3;
       var uParentBox = document.getElementById('dl-undertone-parent-box');
       if (uParentBox) uParentBox.style.display = (activeIdx === 3) ? 'flex' : 'none';
       var calBox = document.getElementById('dl-slot-calibrator-box');
@@ -635,20 +508,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           var r1Obj = calCfg.row1.find(function(x) { return x.id === r1Val; }) || calCfg.row1[0];
           var r2Obj = calCfg.row2.find(function(x) { return x.id === r2Val; }) || calCfg.row2[0];
           activeCalNote = r1Obj.note + ' ' + r2Obj.subNote;
-          calBox.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">'
-            + '<span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">' + calCfg.title + ':</span>'
-            + '<span id="dl-slot-calibrator-active-label" class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:600;">' + r1Obj.label + ' &middot; ' + r2Obj.label + '</span>'
-            + '</div>'
-            + '<div role="group" aria-label="' + calCfg.row1Label + '" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;">'
-            + calCfg.row1.map(function(opt) {
-              return '<button type="button" class="dl-vanity-swatch-btn mono' + (opt.id === r1Obj.id ? ' active' : '') + '" data-cal-row1="' + opt.id + '" onclick="window.__dlSetSlotCalibrator(' + activeIdx + ',1,\\'' + opt.id + '\\')">' + opt.label + '</button>';
-            }).join('')
-            + '</div>'
-            + '<div role="group" aria-label="' + calCfg.row2Label + '" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;">'
-            + calCfg.row2.map(function(opt) {
-              return '<button type="button" class="dl-vanity-swatch-btn mono' + (opt.id === r2Obj.id ? ' active' : '') + '" data-cal-row2="' + opt.id + '" onclick="window.__dlSetSlotCalibrator(' + activeIdx + ',2,\\'' + opt.id + '\\')">' + opt.label + '</button>';
-            }).join('')
-            + '</div>';
+          calBox.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;"><span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">' + esc(calCfg.title) + ':</span><span id="dl-slot-calibrator-active-label" class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:600;">' + esc(r1Obj.label) + ' &middot; ' + esc(r2Obj.label) + '</span></div>'
+            + '<div role="group" aria-label="' + esc(calCfg.row1Label) + '" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;">' + calCfg.row1.map(function(opt) { return '<button type="button" class="dl-vanity-swatch-btn mono' + (opt.id === r1Obj.id ? ' active' : '') + '" data-cal-row1="' + esc(opt.id) + '" onclick="window.__dlSetSlotCalibrator(' + activeIdx + ',1,\\'' + esc(opt.id) + '\\')">' + esc(opt.label) + '</button>'; }).join('') + '</div>'
+            + '<div role="group" aria-label="' + esc(calCfg.row2Label) + '" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;">' + calCfg.row2.map(function(opt) { return '<button type="button" class="dl-vanity-swatch-btn mono' + (opt.id === r2Obj.id ? ' active' : '') + '" data-cal-row2="' + esc(opt.id) + '" onclick="window.__dlSetSlotCalibrator(' + activeIdx + ',2,\\'' + esc(opt.id) + '\\')">' + esc(opt.label) + '</button>'; }).join('') + '</div>';
         } else {
           calBox.style.display = 'none';
         }
@@ -663,10 +525,10 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           var isSel = idx === activeIdx && (st.dossierTab || 'slots') === 'slots';
           var cls = 'dl-tray-vessel-btn' + (isSel ? ' active' : '') + (hasClash ? ' has-clash' : '') + (!b ? ' is-empty' : '');
           var svg = renderMiniVesselSvg(slot.vesselType, b ? b.tag : '+ADD', hasClash, !b);
-          return '<button type="button" id="dl-vanity-slot-header-' + idx + '" class="' + cls + '" onclick="window.__dlSetDossierTab(\\'slots\\');window.__dlSelectVanitySlot(' + idx + ')" title="' + slot.slotNum + ': ' + (b ? b.label : 'Empty Slot') + '">'
-            + '<span class="mono" style="font-size:0.62rem;font-weight:700;color:' + (hasClash ? 'var(--berry-clash)' : 'var(--rose-brand)') + ';">' + slot.shortSlot + '</span>'
+          return '<button type="button" id="dl-vanity-slot-header-' + idx + '" class="' + cls + '" onclick="window.__dlSetDossierTab(\\'slots\\');window.__dlSelectVanitySlot(' + idx + ')" title="' + esc(slot.slotNum + ': ' + (b ? b.label : 'Empty Slot')) + '">'
+            + '<span class="mono" style="font-size:0.62rem;font-weight:700;color:' + (hasClash ? 'var(--berry-clash)' : 'var(--rose-brand)') + ';">' + esc(slot.shortSlot) + '</span>'
             + svg
-            + '<span style="font-size:0.66rem;font-weight:600;color:var(--text-primary);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (b ? b.short : 'Empty · Tap') + '</span>'
+            + '<span style="font-size:0.66rem;font-weight:600;color:var(--text-primary);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + esc(b ? b.short : 'Empty · Tap') + '</span>'
           + '</button>';
         }).join('');
       }
@@ -688,45 +550,34 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           var currentBottle = getBottleForSlot(st, idx);
           var slotHasClash = clashes.find(function(c) { return c.slots.indexOf(idx) !== -1; });
           var extraNote = idx === 3
-            ? (uMeta.spfNote + ' ' + fMeta.prepRule)
+            ? esc(uMeta.spfNote + ' ' + fMeta.prepRule)
             : (slotHasClash
-              ? ('<strong style="color:var(--berry-clash);">Clash Alert:</strong> ' + slotHasClash.detail)
-              : (isOpen && activeCalNote ? activeCalNote : ('When to apply: ' + slot.timing + '. Zero pH cancellation with your other slots.')));
+              ? ('<strong style="color:var(--berry-clash);">Clash Alert:</strong> ' + esc(slotHasClash.detail))
+              : esc(isOpen && activeCalNote ? activeCalNote : ('When to apply: ' + slot.timing + '. Zero pH cancellation with your other slots.')));
 
           var chipsHtml = slot.choices.map(function(ch, cIdx) {
             var isSel = currentBottle && currentBottle.id === ch.id;
-            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:1px solid ' + (isSel ? 'var(--rose-brand)' : 'var(--border-hairline)') + ';background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-surface)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';">' + (isSel ? '✓ ' : '+ ') + ch.label.split(' ($')[0] + '</button>';
+            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" style="padding:5px 10px;border-radius:999px;font-size:0.74rem;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:none;background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-oat)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';">' + (isSel ? '✓ ' : '+ ') + esc(ch.label.split(' ($')[0]) + '</button>';
           }).join('');
 
           var prevIdx = (idx + 4) % 5;
           var nextIdx = (idx + 1) % 5;
           var nextBtnHtml = idx < 4
-            ? '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + nextIdx + ')" style="padding:5px 11px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Next Bottle (0' + (nextIdx + 1) + ') &rarr;</button>'
-            : '<button type="button" class="mono" onclick="window.__dlSetDossierTab(\\'pass\\')" style="padding:5px 11px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Preview 9:16 Card &rarr;</button>';
+            ? '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + nextIdx + ')" style="padding:5px 11px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Next Bottle (0' + (nextIdx + 1) + ') &rarr;</button>'
+            : '<button type="button" class="mono" onclick="window.__dlSetDossierTab(\\'pass\\')" style="padding:5px 11px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Preview 9:16 Card &rarr;</button>';
 
           return '<div class="dl-vanity-slot-card ' + (isOpen ? 'active ' : '') + (slotHasClash ? 'clash-slot' : '') + '" id="dl-vanity-slot-card-' + idx + '" style="display:' + (isOpen ? 'block' : 'none') + ';padding:14px 16px;">'
-            + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;">'
-              + '<div style="min-width:0;">'
-                + '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">'
-                  + '<span class="mono" style="font-size:0.72rem;font-weight:700;color:' + (slotHasClash ? 'var(--berry-clash)' : 'var(--rose-brand)') + ';">SPOTLIGHT &middot; ' + slot.slotNum + (slotHasClash ? ' &middot; CLASH' : '') + '</span>'
-                  + '<span style="font-size:0.76rem;color:var(--text-secondary);">' + slot.role + '</span>'
-                + '</div>'
-                + '<div class="serif-display" style="font-size:1.18rem;font-weight:400;color:' + (currentBottle ? 'var(--text-primary)' : 'var(--text-muted)') + ';margin-top:3px;">' + (currentBottle ? currentBottle.label : 'Slot Empty &middot; Tap a Bottle Below') + '</div>'
-              + '</div>'
-              + '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + prevIdx + ')" style="padding:3px 8px;background:var(--bg-oat);color:var(--text-secondary);border:none;font-size:0.72rem;cursor:pointer;flex-shrink:0;">&larr; Prev</button>'
-            + '</div>'
-            + '<div id="dl-vanity-slot-body-' + idx + '" style="display:' + (isOpen ? 'block' : 'none') + ';border-top:1px solid var(--border-hairline);padding-top:10px;">'
+            + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;"><div style="min-width:0;"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span class="mono" style="font-size:0.72rem;font-weight:700;color:' + (slotHasClash ? 'var(--berry-clash)' : 'var(--rose-brand)') + ';">SPOTLIGHT &middot; ' + esc(slot.slotNum) + (slotHasClash ? ' &middot; CLASH' : '') + '</span><span style="font-size:0.76rem;color:var(--text-secondary);">' + esc(slot.role) + '</span></div>'
+            + '<div class="serif-display" style="font-size:1.18rem;font-weight:400;color:' + (currentBottle ? 'var(--text-primary)' : 'var(--text-muted)') + ';margin-top:3px;">' + (currentBottle ? esc(currentBottle.label) : 'Slot Empty &middot; Tap a Bottle Below') + '</div></div>'
+            + '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + prevIdx + ')" style="padding:3px 8px;border-radius:999px;background:var(--bg-oat);color:var(--text-secondary);border:none;font-size:0.72rem;cursor:pointer;flex-shrink:0;">&larr; Prev</button></div>'
+            + '<div id="dl-vanity-slot-body-' + idx + '" style="display:' + (isOpen ? 'block' : 'none') + ';padding-top:10px;">'
               + '<div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.48;margin-bottom:10px;">' + extraNote + '</div>'
               + '<div class="mono" style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Swap or try another bottle in this slot:</div>'
               + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">' + chipsHtml + '</div>'
-              + '<div class="mono" style="padding:7px 10px;background:var(--bg-oat);font-size:0.74rem;color:var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:8px;">'
-                + (currentBottle
-                  ? '<button type="button" class="mono" onclick="window.__dlRemoveSlotBottle(' + idx + ')" style="background:transparent;border:none;color:var(--text-muted);text-decoration:underline;cursor:pointer;font-size:0.74rem;">Remove from Slot &times;</button>'
-                  : '<span>Tap a bottle chip above</span>')
+              + '<div class="mono" style="padding:7px 10px;border-radius:14px;background:var(--bg-oat);font-size:0.74rem;color:var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:8px;">'
+                + (currentBottle ? '<button type="button" class="mono" onclick="window.__dlRemoveSlotBottle(' + idx + ')" style="background:transparent;border:none;color:var(--text-muted);text-decoration:underline;cursor:pointer;font-size:0.74rem;">Remove from Slot &times;</button>' : '<span>Tap a bottle chip above</span>')
                 + nextBtnHtml
-              + '</div>'
-            + '</div>'
-          + '</div>';
+              + '</div></div></div>';
         }).join('');
       }
 
@@ -734,19 +585,17 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var clashPanel = document.getElementById('dl-dossier-panel-clashes');
       if (clashPanel) {
         if (clashes.length === 0) {
-          clashPanel.innerHTML = '<div style="padding:14px;background:var(--sage-bg);border:1px solid var(--sage-border);color:var(--sage-safe);font-size:0.82rem;line-height:1.45;">'
+          clashPanel.innerHTML = '<div style="padding:14px;border-radius:18px;background:var(--sage-bg);border:none;color:var(--sage-safe);font-size:0.82rem;line-height:1.45;">'
             + '<strong class="serif-display" style="font-size:1.08rem;display:block;margin-bottom:4px;">Zero Active Clashes in Your 5-Slot Vanity Bag</strong>'
             + '<div>Your morning antioxidant (Slot 02) is safely separated from your evening renewal active (Slot 05), and your Slot 03 Ceramide cushion buffers barrier pH.</div>'
-            + '<button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="margin-top:8px;padding:5px 10px;background:var(--bg-surface);color:var(--rose-brand);border:1px solid var(--rose-brand);font-size:0.74rem;font-weight:600;cursor:pointer;">Simulate a Glycolic + Copper Peptide Clash &rarr;</button>'
-            + '</div>';
+            + '<button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="margin-top:8px;padding:5px 12px;border-radius:999px;background:var(--bg-surface);color:var(--rose-brand);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;">Simulate a Glycolic + Copper Peptide Clash &rarr;</button></div>';
         } else {
           clashPanel.innerHTML = clashes.map(function(c) {
-            return '<div style="padding:11px 12px;background:var(--berry-bg);border:1px solid var(--berry-border);border-left:3px solid var(--berry-clash);font-size:0.78rem;line-height:1.4;">'
-              + '<div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--berry-clash);text-transform:uppercase;">' + c.severity + ' BAG CLASH · SLOTS 0' + (c.slots[0] + 1) + ' + 0' + (c.slots[1] + 1) + '</div>'
-              + '<div class="serif-display" style="font-size:1.02rem;font-weight:500;color:var(--text-primary);margin:2px 0 4px;">' + c.title + '</div>'
-              + '<div style="color:var(--text-secondary);margin-bottom:7px;">' + c.detail + '</div>'
-              + '<button type="button" class="mono" onclick="window.__dlAutoFixBagClashes()" style="padding:5px 10px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:700;cursor:pointer;">✓ ' + c.fixLabel + '</button>'
-              + '</div>';
+            return '<div style="padding:11px 12px;border-radius:18px;background:var(--berry-bg);border:none;font-size:0.78rem;line-height:1.4;">'
+              + '<div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--berry-clash);text-transform:uppercase;">' + esc(c.severity) + ' BAG CLASH · SLOTS 0' + (c.slots[0] + 1) + ' + 0' + (c.slots[1] + 1) + '</div>'
+              + '<div class="serif-display" style="font-size:1.02rem;font-weight:500;color:var(--text-primary);margin:2px 0 4px;">' + esc(c.title) + '</div>'
+              + '<div style="color:var(--text-secondary);margin-bottom:7px;">' + esc(c.detail) + '</div>'
+              + '<button type="button" class="mono" onclick="window.__dlAutoFixBagClashes()" style="padding:5px 12px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:700;cursor:pointer;">✓ ' + esc(c.fixLabel) + '</button></div>';
           }).join('');
         }
       }
@@ -756,13 +605,12 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (cyclePanel) {
         var b2 = getBottleForSlot(st, 2) || SLOT_OPTIONS[2].choices[0];
         var b4 = getBottleForSlot(st, 4) || SLOT_OPTIONS[4].choices[0];
-        cyclePanel.innerHTML = '<div style="padding:10px 12px;background:var(--bg-surface);border:1px solid var(--border-hairline);display:flex;flex-direction:column;gap:6px;">'
+        cyclePanel.innerHTML = '<div style="padding:12px 14px;border-radius:18px;background:var(--bg-surface);border:none;display:flex;flex-direction:column;gap:6px;">'
           + '<div class="mono" style="font-size:0.72rem;font-weight:700;color:var(--rose-brand);text-transform:uppercase;">4-Night Bedtime Skin-Cycling Schedule (9:30 PM)</div>'
-          + '<div style="padding:7px 9px;background:var(--bg-canvas);border-left:3px solid var(--rose-brand);font-size:0.77rem;"><strong>Night 1 (Active Renewal):</strong> Cleanse + Dry 10m + <strong>' + b4.short + '</strong> + ' + b2.short + '</div>'
-          + '<div style="padding:7px 9px;background:var(--bg-canvas);border-left:3px solid var(--sage-safe);font-size:0.77rem;"><strong>Night 2 (Barrier Recovery):</strong> Pause Slot 05 actives · Flood skin with <strong>' + b2.short + '</strong></div>'
-          + '<div style="padding:7px 9px;background:var(--bg-canvas);border-left:3px solid var(--rose-brand);font-size:0.77rem;"><strong>Night 3 (Second Renewal):</strong> Re-apply pea-sized <strong>' + b4.short + '</strong> buffered over cream</div>'
-          + '<div style="padding:7px 9px;background:var(--bg-canvas);border-left:3px solid var(--sage-safe);font-size:0.77rem;"><strong>Night 4 (Deep Lipid Cushion):</strong> 3:1:1 Ceramide recovery with <strong>' + b2.short + '</strong> before repeating cycle</div>'
-          + '</div>';
+          + '<div style="padding:8px 10px;border-radius:12px;background:var(--bg-canvas);font-size:0.77rem;"><strong>Night 1 (Active Renewal):</strong> Cleanse + Dry 10m + <strong>' + esc(b4.short) + '</strong> + ' + esc(b2.short) + '</div>'
+          + '<div style="padding:8px 10px;border-radius:12px;background:var(--sage-bg);font-size:0.77rem;"><strong>Night 2 (Barrier Recovery):</strong> Pause Slot 05 actives · Flood skin with <strong>' + esc(b2.short) + '</strong></div>'
+          + '<div style="padding:8px 10px;border-radius:12px;background:var(--bg-canvas);font-size:0.77rem;"><strong>Night 3 (Second Renewal):</strong> Re-apply pea-sized <strong>' + esc(b4.short) + '</strong> buffered over cream</div>'
+          + '<div style="padding:8px 10px;border-radius:12px;background:var(--sage-bg);font-size:0.77rem;"><strong>Night 4 (Deep Lipid Cushion):</strong> 3:1:1 Ceramide recovery with <strong>' + esc(b2.short) + '</strong> before repeating cycle</div></div>';
       }
 
       // Render Tab 04: Luxury Editorial 9:16 Phone Lock-Screen Pass
@@ -777,60 +625,52 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         var b4p = getBottleForSlot(st, 4) || SLOT_OPTIONS[4].choices[0];
         var steps = isAm
           ? [
-              { vt: 'mist', num: '01', name: b0.short, role: 'Morning pH Prep', pill: 'pH ' + b0.ph + ' · 45s', col: '#7A2332', bg: '#F7EFEA' },
-              { vt: 'dropper', num: '02', name: b1.short, role: 'Antioxidant Shield', pill: 'pH ' + b1.ph + ' · 60s', col: '#7A2332', bg: '#F7EFEA' },
-              { vt: 'jar', num: '03', name: b2p.short, role: '3:1:1 Ceramide Seal', pill: 'pH ' + b2p.ph + ' · Cushion', col: '#264C3C', bg: '#E6EFEA' },
-              { vt: 'tube', num: '04', name: b3.short, role: uMeta.label + ' · ' + fMeta.label, pill: b3.tag + ' · 90s', col: '#264C3C', bg: '#E6EFEA' }
+              { vt: 'mist', num: '01', name: b0.short, role: 'Morning pH Prep', pill: 'pH ' + b0.ph + ' · 45s', col: '#8A3448', bg: '#F3E1E5' },
+              { vt: 'dropper', num: '02', name: b1.short, role: 'Antioxidant Shield', pill: 'pH ' + b1.ph + ' · 60s', col: '#8A3448', bg: '#F3E1E5' },
+              { vt: 'jar', num: '03', name: b2p.short, role: '3:1:1 Ceramide Seal', pill: 'pH ' + b2p.ph + ' · Cushion', col: '#285B44', bg: '#E9F4EE' },
+              { vt: 'tube', num: '04', name: b3.short, role: uMeta.label + ' · ' + fMeta.label, pill: b3.tag + ' · 90s', col: '#285B44', bg: '#E9F4EE' }
             ]
           : [
               { vt: 'mist', num: '01', name: 'Gentle Milk Cleanse', role: 'Pat 100% Dry Before Actives', pill: 'Wait 10m Dry', col: '#C9A45A', bg: 'rgba(201,164,90,0.16)' },
-              { vt: 'pm_bottle', num: '02', name: b4p.short, role: 'Nights 1 & 3 Active Renewal', pill: 'pH ' + b4p.ph + ' · Pea Size', col: '#E8C6B0', bg: 'rgba(122,35,50,0.45)' },
-              { vt: 'jar', num: '03', name: b2p.short, role: 'Every Night Sandwich Buffer', pill: 'pH ' + b2p.ph + ' · 3:1:1 Seal', col: '#A7D7C5', bg: 'rgba(38,76,60,0.42)' }
+              { vt: 'pm_bottle', num: '02', name: b4p.short, role: 'Nights 1 & 3 Active Renewal', pill: 'pH ' + b4p.ph + ' · Pea Size', col: '#E8C6B0', bg: 'rgba(138,52,72,0.45)' },
+              { vt: 'jar', num: '03', name: b2p.short, role: 'Every Night Sandwich Buffer', pill: 'pH ' + b2p.ph + ' · 3:1:1 Seal', col: '#A7D7C5', bg: 'rgba(40,91,68,0.42)' }
             ];
         var stepsHtml = steps.map(function(s) {
           var miniSvg = renderMiniVesselSvg(s.vt, s.num, false, false).replace('width="34" height="42"', 'width="24" height="30"').replace('width="36" height="42"', 'width="26" height="30"');
-          return '<div style="display:flex;align-items:center;gap:8px;padding:6px 9px;background:' + (isAm ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.07)') + ';border:1px solid ' + (isAm ? '#E5DCD0' : 'rgba(201,164,90,0.24)') + ';border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.04);">'
-            + '<div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:28px;height:32px;background:' + (isAm ? '#F4EFE8' : 'rgba(255,255,255,0.06)') + ';border-radius:6px;">' + miniSvg + '</div>'
-            + '<div style="flex:1;min-width:0;">'
-              + '<div style="font-size:0.78rem;font-weight:700;color:' + (isAm ? '#181412' : '#FBF8F4') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + s.num + ' &middot; ' + s.name + '</div>'
-              + '<div style="font-size:0.68rem;color:' + (isAm ? '#6E655E' : '#C9BCAE') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + s.role + '</div>'
-            + '</div>'
-            + '<span class="mono" style="font-size:0.64rem;font-weight:700;padding:3px 7px;border-radius:99px;background:' + s.bg + ';color:' + s.col + ';white-space:nowrap;flex-shrink:0;">' + s.pill + '</span>'
-          + '</div>';
+          return '<div style="display:flex;align-items:center;gap:8px;padding:6px 9px;background:' + (isAm ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.07)') + ';border:none;border-radius:12px;box-shadow:0 2px 6px rgba(58,31,39,0.05);">'
+            + '<div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:28px;height:32px;background:' + (isAm ? '#F8EFE6' : 'rgba(255,255,255,0.06)') + ';border-radius:6px;">' + miniSvg + '</div>'
+            + '<div style="flex:1;min-width:0;"><div style="font-size:0.78rem;font-weight:700;color:' + (isAm ? '#3A1F27' : '#FDF8F6') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(s.num) + ' &middot; ' + esc(s.name) + '</div>'
+            + '<div style="font-size:0.68rem;color:' + (isAm ? '#6E4B55' : '#D5CBC0') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(s.role) + '</div></div>'
+            + '<span class="mono" style="font-size:0.64rem;font-weight:700;padding:3px 7px;border-radius:99px;background:' + s.bg + ';color:' + s.col + ';white-space:nowrap;flex-shrink:0;">' + esc(s.pill) + '</span></div>';
         }).join('');
 
-        passPanel.innerHTML = '<div style="background:linear-gradient(155deg,#1A1512 0%,#28201B 100%);color:#F4EFE8;padding:12px 14px;display:flex;flex-direction:column;gap:10px;border:1px solid #3D322C;">'
-          + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">'
-            + '<div><span class="mono" style="font-size:0.68rem;color:#C9A45A;font-weight:700;letter-spacing:0.06em;display:block;">ATELIER 9:16 LOCK-SCREEN WALLPAPER</span><span style="font-size:0.74rem;color:#D5CBC0;">Tap AM or PM to flip your live phone lock-screen</span></div>'
-            + '<div style="display:inline-flex;background:#120E0C;padding:3px;border:1px solid #3D322C;">'
-              + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'am\\')" style="padding:5px 10px;font-size:0.71rem;border:none;cursor:pointer;background:' + (isAm ? 'var(--rose-brand)' : 'transparent') + ';color:#F4EFE8;font-weight:700;">☀ 7:30 AM</button>'
-              + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'pm\\')" style="padding:5px 10px;font-size:0.71rem;border:none;cursor:pointer;background:' + (!isAm ? '#C9A45A' : 'transparent') + ';color:' + (!isAm ? '#181412' : '#F4EFE8') + ';font-weight:700;">☾ 9:30 PM</button>'
-            + '</div>'
-          + '</div>'
-          + '<div style="max-width:340px;width:100%;margin:0 auto;border-radius:24px;padding:7px;background:linear-gradient(145deg,#4A3E37,#1F1916);box-shadow:0 14px 32px rgba(0,0,0,0.42);">'
-            + '<div style="border-radius:19px;padding:11px 12px 10px;background:' + (isAm ? 'linear-gradient(175deg,#FBF7F2 0%,#F2E9DF 55%,#E9DDD0 100%)' : 'linear-gradient(175deg,#171311 0%,#241C18 58%,#2F231E 100%)') + ';color:' + (isAm ? '#181412' : '#F4EFE8') + ';display:flex;flex-direction:column;gap:6px;position:relative;">'
-              + '<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.62rem;opacity:0.75;padding:0 4px;" class="mono"><span>DERMLOGIC ATELIER</span><span style="width:52px;height:11px;background:#120E0C;border-radius:99px;display:inline-block;"></span><span>5G &middot; 100%</span></div>'
-              + '<div style="text-align:center;padding:2px 0 4px;border-bottom:1px solid ' + (isAm ? 'rgba(24,20,18,0.08)' : 'rgba(255,255,255,0.08)') + ';">'
-                + '<div class="mono" style="font-size:0.63rem;letter-spacing:0.08em;color:' + (isAm ? '#7A2332' : '#C9A45A') + ';font-weight:700;">' + (isAm ? 'MORNING ANTIOXIDANT &amp; SPF SHIELD' : 'BEDTIME RENEWAL &amp; BARRIER RECOVERY') + '</div>'
+        passPanel.innerHTML = '<div style="background:linear-gradient(155deg,#3A1F27 0%,#28141A 100%);color:#FDF8F6;border-radius:20px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;border:none;">'
+          + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><div><span class="mono" style="font-size:0.68rem;color:#EED6DC;font-weight:700;letter-spacing:0.06em;display:block;">ATELIER 9:16 LOCK-SCREEN WALLPAPER</span><span style="font-size:0.74rem;color:#F3E1E5;">Tap AM or PM to flip your live phone lock-screen</span></div>'
+          + '<div style="display:inline-flex;background:rgba(255,255,255,0.1);border-radius:999px;padding:3px;">'
+            + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'am\\')" style="padding:5px 10px;border-radius:999px;font-size:0.71rem;border:none;cursor:pointer;background:' + (isAm ? 'var(--rose-brand)' : 'transparent') + ';color:#FDF8F6;font-weight:700;">☀ 7:30 AM</button>'
+            + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'pm\\')" style="padding:5px 10px;border-radius:999px;font-size:0.71rem;border:none;cursor:pointer;background:' + (!isAm ? '#C9A45A' : 'transparent') + ';color:' + (!isAm ? '#3A1F27' : '#FDF8F6') + ';font-weight:700;">☾ 9:30 PM</button>'
+          + '</div></div>'
+          + '<div style="max-width:340px;width:100%;margin:0 auto;border-radius:24px;padding:7px;background:linear-gradient(145deg,#5A303D,#28141A);box-shadow:0 14px 32px rgba(58,31,39,0.36);">'
+            + '<div style="border-radius:19px;padding:11px 12px 10px;background:' + (isAm ? 'linear-gradient(175deg,#FDF8F6 0%,#F8EFE6 55%,#F3E1E5 100%)' : 'linear-gradient(175deg,#28141A 0%,#3A1F27 58%,#4A2832 100%)') + ';color:' + (isAm ? '#3A1F27' : '#FDF8F6') + ';display:flex;flex-direction:column;gap:6px;position:relative;">'
+              + '<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.62rem;opacity:0.75;padding:0 4px;" class="mono"><span>DERMLOGIC ATELIER</span><span style="width:52px;height:11px;background:#3A1F27;border-radius:99px;display:inline-block;"></span><span>5G &middot; 100%</span></div>'
+              + '<div style="text-align:center;padding:2px 0 4px;">'
+                + '<div class="mono" style="font-size:0.63rem;letter-spacing:0.08em;color:' + (isAm ? '#8A3448' : '#EED6DC') + ';font-weight:700;">' + (isAm ? 'MORNING ANTIOXIDANT &amp; SPF SHIELD' : 'BEDTIME RENEWAL &amp; BARRIER RECOVERY') + '</div>'
                 + '<div class="serif-display" style="font-size:1.75rem;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin:1px 0;">' + (isAm ? '07:30' : '21:30') + '</div>'
-                + '<div class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.63rem;padding:2px 8px;border-radius:99px;background:' + (isAm ? '#E6EFEA' : 'rgba(201,164,90,0.16)') + ';color:' + (isAm ? '#264C3C' : '#E8C6B0') + ';font-weight:700;"><span>96% Harmony &middot; 0 Clashes</span><span>&bull;</span><span>' + uMeta.label + '</span></div>'
+                + '<div class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.63rem;padding:2px 8px;border-radius:99px;background:' + (isAm ? '#E9F4EE' : 'rgba(201,164,90,0.16)') + ';color:' + (isAm ? '#285B44' : '#E8C6B0') + ';font-weight:700;"><span>96% Harmony &middot; 0 Clashes</span><span>&bull;</span><span>' + esc(uMeta.label) + '</span></div>'
               + '</div>'
               + '<div style="display:flex;flex-direction:column;gap:5px;">' + stepsHtml + '</div>'
               + '<div class="mono" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;font-size:0.6rem;text-align:center;padding-top:2px;">'
-                + '<span style="padding:3px 2px;border-radius:5px;background:#7A2332;color:#FFF;font-weight:700;">N1: ' + b4p.tag + '</span>'
-                + '<span style="padding:3px 2px;border-radius:5px;background:#264C3C;color:#FFF;font-weight:700;">N2: Rest</span>'
-                + '<span style="padding:3px 2px;border-radius:5px;background:#7A2332;color:#FFF;font-weight:700;">N3: ' + b4p.tag + '</span>'
-                + '<span style="padding:3px 2px;border-radius:5px;background:#264C3C;color:#FFF;font-weight:700;">N4: Lipid</span>'
+                + '<span style="padding:3px 2px;border-radius:5px;background:#8A3448;color:#FFF;font-weight:700;">N1: ' + esc(b4p.tag) + '</span>'
+                + '<span style="padding:3px 2px;border-radius:5px;background:#285B44;color:#FFF;font-weight:700;">N2: Rest</span>'
+                + '<span style="padding:3px 2px;border-radius:5px;background:#8A3448;color:#FFF;font-weight:700;">N3: ' + esc(b4p.tag) + '</span>'
+                + '<span style="padding:3px 2px;border-radius:5px;background:#285B44;color:#FFF;font-weight:700;">N4: Lipid</span>'
               + '</div>'
-              + '<div style="width:76px;height:3px;background:' + (isAm ? 'rgba(24,20,18,0.22)' : 'rgba(255,255,255,0.28)') + ';border-radius:99px;margin:2px auto 0;"></div>'
-            + '</div>'
-          + '</div>'
-          + '<div style="padding:8px 10px;background:#120E0C;border-left:2.5px solid #C9A45A;font-size:0.72rem;line-height:1.4;color:#E6E0D6;">'
-            + '<strong class="mono" style="color:#C9A45A;display:block;font-size:0.68rem;margin-bottom:2px;">INCLUDED IN YOUR 99&cent; HIGH-RES WALLPAPER DOWNLOAD:</strong>'
+              + '<div style="width:76px;height:3px;background:' + (isAm ? 'rgba(58,31,39,0.22)' : 'rgba(255,255,255,0.28)') + ';border-radius:99px;margin:2px auto 0;"></div>'
+            + '</div></div>'
+          + '<div style="padding:8px 10px;border-radius:12px;background:rgba(255,255,255,0.08);font-size:0.72rem;line-height:1.4;color:#F3E1E5;">'
+            + '<strong class="mono" style="color:#EED6DC;display:block;font-size:0.68rem;margin-bottom:2px;">INCLUDED IN YOUR 99&cent; HIGH-RES WALLPAPER DOWNLOAD:</strong>'
             + '<div>&bull; Crisp 1080&times;1920 Retina AM + PM Lock-Screen PNGs (auto-positioned below iOS/Android clock)</div>'
-            + '<div>&bull; Exact pH windows, wait timers, sensitive-skin sandwich buffer rules &amp; 4-Night schedule</div>'
-          + '</div>'
-          + '</div>';
+            + '<div>&bull; Exact pH windows, wait timers, sensitive-skin sandwich buffer rules &amp; 4-Night schedule</div></div></div>';
       }
     };
 
@@ -1032,14 +872,45 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       }
     }, { passive: true });
 
+    window.__dlSyncVanityFromCheckboxes = function(isClearAll) {
+      var st = window.__dlVanityState;
+      if (isClearAll) {
+        st.slotSelections = [-1, -1, -1, -1, -1];
+        st.customSlotBottle = {};
+        st.pouchSpfSealed = false;
+      } else {
+        st.slotSelections = [-1, -1, -1, -1, -1];
+        st.customSlotBottle = {};
+        st.pouchSpfSealed = false;
+        document.querySelectorAll('input[name="routineProduct"]:checked').forEach(function(cb) {
+          var prodId = cb.value;
+          var lbl = cb.closest('.prod-check-item');
+          var titleEl = lbl ? lbl.querySelector('strong') : null;
+          var title = titleEl ? titleEl.textContent.trim() : prodId;
+          var mapped = mapProductIdToSlot(prodId, title, '');
+          if (mapped.slotIdx === 3) st.pouchSpfSealed = true;
+          if (mapped.choiceIdx >= 0) {
+            st.slotSelections[mapped.slotIdx] = mapped.choiceIdx;
+          } else {
+            st.slotSelections[mapped.slotIdx] = 0;
+            st.customSlotBottle[mapped.slotIdx] = { id: prodId, label: title, short: title.slice(0, 11).trim(), ph: '5.5', tag: 'pH5.5' };
+          }
+        });
+      }
+      saveVanityState(st);
+      window.__dlRenderVanityDrawer();
+      window.__dlRefreshPageAddButtons();
+    };
+
     document.addEventListener('change', function(e) {
       if (e.target && e.target.name === 'routineProduct') {
         var prodId = e.target.value;
         var lbl = e.target.closest('.prod-check-item');
         var titleEl = lbl ? lbl.querySelector('strong') : null;
         var title = titleEl ? titleEl.textContent.trim() : prodId;
+        var mapped = mapProductIdToSlot(prodId, title, '');
         if (e.target.checked) {
-          var mapped = mapProductIdToSlot(prodId, title, '');
+          if (mapped.slotIdx === 3) window.__dlVanityState.pouchSpfSealed = true;
           if (mapped.choiceIdx >= 0) {
             window.__dlVanityState.slotSelections[mapped.slotIdx] = mapped.choiceIdx;
             if (window.__dlVanityState.customSlotBottle) delete window.__dlVanityState.customSlotBottle[mapped.slotIdx];
@@ -1051,6 +922,14 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           saveVanityState(window.__dlVanityState);
           if (!navigator.webdriver || window.__dlAllowToastInTest) {
             showVanityToast('Added ' + title + ' to Vanity Bag (Slot 0' + (mapped.slotIdx + 1) + ')');
+          }
+        } else {
+          var cur = getBottleForSlot(window.__dlVanityState, mapped.slotIdx);
+          if (cur && cur.id === prodId) {
+            window.__dlVanityState.slotSelections[mapped.slotIdx] = -1;
+            if (window.__dlVanityState.customSlotBottle) delete window.__dlVanityState.customSlotBottle[mapped.slotIdx];
+            if (mapped.slotIdx === 3) window.__dlVanityState.pouchSpfSealed = false;
+            saveVanityState(window.__dlVanityState);
           }
         }
         window.__dlRenderVanityDrawer();

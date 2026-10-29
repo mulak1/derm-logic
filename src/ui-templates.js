@@ -32,82 +32,29 @@ const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 
 
 const SHARED_CSS = `
   :root {
-    --bg-canvas: #FDF8F6;
-    --bg-oat: #F8EFE6;
-    --bg-pouch: #F3E1E5;
-    --bg-surface: #FFFFFF;
-    --bg-porcelain: #FFFFFF;
-    --bg-deep: #3A1F27;
-    --ink-on-deep: #FDF8F6;
-    --border-hairline: transparent;
-    --border-strong: transparent;
-    --text-primary: #3A1F27;
-    --text-secondary: #6E4B55;
-    --text-muted: #8E6B75;
-    --rose-brand: #8A3448;
-    --rose-brand-hover: #722739;
-    --accent-ink: #FFFFFF;
-    --rose-pill-bg: #EED6DC;
-    --rose-pill-border: transparent;
-    --sage-safe: #285B44;
-    --sage-bg: #E9F4EE;
-    --sage-border: transparent;
-    --honey-warn: #945227;
-    --honey-bg: #FBF0E4;
-    --honey-border: transparent;
-    --berry-clash: #8A3448;
-    --berry-bg: #F6E3E7;
-    --berry-border: transparent;
+    --bg-canvas: #FDF8F6; --bg-oat: #F8EFE6; --bg-pouch: #F3E1E5; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
+    --bg-deep: #3A1F27; --ink-on-deep: #FDF8F6; --border-hairline: transparent; --border-strong: transparent;
+    --text-primary: #3A1F27; --text-secondary: #6E4B55; --text-muted: #8E6B75;
+    --rose-brand: #8A3448; --rose-brand-hover: #722739; --accent-ink: #FFFFFF; --rose-pill-bg: #EED6DC; --rose-pill-border: transparent;
+    --sage-safe: #285B44; --sage-bg: #E9F4EE; --sage-border: transparent;
+    --honey-warn: #945227; --honey-bg: #FBF0E4; --honey-border: transparent;
+    --berry-clash: #8A3448; --berry-bg: #F6E3E7; --berry-border: transparent;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    --margin: 5vw;
-    --step-small: clamp(0.875rem, 0.82rem + 0.15vw, 0.9375rem);
-    --step-body: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
-    --step-lead: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem);
-    --step-head: clamp(2rem, 1.45rem + 2.4vw, 3.35rem);
-    --step-hero: clamp(3.5rem, 7.4vw, 6.85rem);
-    --radius-shell: 28px;
-    --radius-card: 22px;
-    --radius-input: 999px;
-    --radius-pill: 999px;
-    --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+    --margin: 5vw; --step-small: clamp(0.875rem, 0.82rem + 0.15vw, 0.9375rem); --step-body: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
+    --step-lead: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem); --step-head: clamp(2rem, 1.45rem + 2.4vw, 3.35rem); --step-hero: clamp(3.5rem, 7.4vw, 6.85rem);
+    --radius-shell: 28px; --radius-card: 22px; --radius-input: 999px; --radius-pill: 999px; --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   }
-  body.vanity-night,
-  html[data-theme="night"] body {
-    --bg-canvas: #0C0A08;
-    --bg-oat: #181512;
-    --bg-pouch: #24191D;
-    --bg-surface: #181512;
-    --bg-porcelain: #231E1A;
-    --bg-deep: #231E1A;
-    --ink-on-deep: #F5F1EB;
-    --border-hairline: #2E2822;
-    --border-strong: #423930;
-    --text-primary: #F5F1EB;
-    --text-secondary: #B5ACA3;
-    --text-muted: #9E968E;
-    --rose-brand: #C9A45A;
-    --rose-brand-hover: #DFBE78;
-    --accent-ink: #0C0A08;
-    --rose-pill-bg: #262017;
-    --rose-pill-border: #59492B;
-    --sage-safe: #88C4A6;
-    --sage-bg: #16241D;
-    --sage-border: #2A4739;
-    --honey-warn: #DFBE78;
-    --honey-bg: #262017;
-    --honey-border: #59492B;
-    --berry-clash: #E5989B;
-    --berry-bg: #2A181B;
-    --berry-border: #5E3138;
+  body.vanity-night, html[data-theme="night"] body {
+    --bg-canvas: #0C0A08; --bg-oat: #181512; --bg-pouch: #24191D; --bg-surface: #181512; --bg-porcelain: #231E1A;
+    --bg-deep: #231E1A; --ink-on-deep: #F5F1EB; --border-hairline: #2E2822; --border-strong: #423930;
+    --text-primary: #F5F1EB; --text-secondary: #B5ACA3; --text-muted: #9E968E;
+    --rose-brand: #C9A45A; --rose-brand-hover: #DFBE78; --accent-ink: #0C0A08; --rose-pill-bg: #262017; --rose-pill-border: #59492B;
+    --sage-safe: #88C4A6; --sage-bg: #16241D; --sage-border: #2A4739;
+    --honey-warn: #DFBE78; --honey-bg: #262017; --honey-border: #59492B;
+    --berry-clash: #E5989B; --berry-bg: #2A181B; --berry-border: #5E3138;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border-color: transparent; }
-  html, body {
-    background-color: var(--bg-canvas); color: var(--text-primary);
-    font-family: var(--font-sans); font-weight: 400;
-    font-size: 16px; line-height: 1.58; overflow-x: clip;
-    -webkit-font-smoothing: antialiased;
-    transition: background-color 320ms var(--ease-spring), color 320ms var(--ease-spring);
-  }
+  html, body { background-color: var(--bg-canvas); color: var(--text-primary); font-family: var(--font-sans); font-weight: 400; font-size: 16px; line-height: 1.58; overflow-x: clip; -webkit-font-smoothing: antialiased; transition: background-color 320ms var(--ease-spring), color 320ms var(--ease-spring); }
   .serif-display, h1, h2, h3 { font-family: 'Newsreader', Georgia, serif; font-weight: 400; letter-spacing: -0.025em; line-height: 1.08; }
   .serif-italic { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 400; }
   .mono { font-family: var(--font-sans); font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
@@ -151,7 +98,7 @@ const SHARED_CSS = `
   .hero-photo-col { min-width: 0; display: flex; flex-direction: column; }
   .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.35rem, 4.1vw, 3.65rem); font-weight: 400; line-height: 0.96; letter-spacing: -0.04em; color: var(--text-primary); margin-bottom: 10px; }
   .hero-h1-line1 { display: block; }
-  .hero-h1-line2 { display: block; padding-left: 5vw; }
+  .hero-h1-line2 { display: block; padding-left: 0; }
   .hero-sub { color: var(--text-secondary); font-size: var(--step-lead); line-height: 1.38; max-width: 54ch; margin-bottom: 12px; }
   .editorial-photo-shell { background: var(--bg-oat); border-radius: 28px; padding: 20px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
   .editorial-photo-inner { overflow: hidden; border-radius: 20px; position: relative; min-height: 290px; height: 100%; flex: 1; background: var(--bg-porcelain); }
@@ -176,7 +123,7 @@ const SHARED_CSS = `
   .preset-chip { background: var(--bg-surface); border-radius: 18px; padding: 10px 14px !important; font-size: 0.86rem; border: none; cursor: pointer; text-align: left !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; gap: 3px; white-space: normal !important; line-height: 1.25 !important; min-height: 56px; transition: transform 180ms ease-out, background-color 180ms ease-out; }
   .preset-chip:hover, .preset-chip.active { background: var(--rose-pill-bg); }
   .preset-chip:active { transform: scale(0.98); }
-  .preset-chip strong { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-primary); font-family: 'Newsreader', Georgia, serif; font-size: 0.95rem; font-weight: 500; line-height: 1.22; white-space: normal; }
+  .preset-chip strong { display: block; color: var(--text-primary); font-family: 'Newsreader', Georgia, serif; font-size: 0.95rem; font-weight: 500; line-height: 1.22; white-space: normal; }
   .preset-chip span { display: block; color: var(--rose-brand); font-size: 0.78rem; font-weight: 600; line-height: 1.25; white-space: normal; }
   .field-label { display: block; font-size: 0.88rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
   .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: minmax(92px, auto); gap: 10px; flex: 0 0 auto; height: 224px; min-height: 224px; max-height: 224px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--rose-pill-bg) transparent; padding: 12px; border-radius: 20px; background: var(--bg-canvas); margin-bottom: 4px; align-content: start; }
@@ -234,17 +181,24 @@ const SHARED_CSS = `
     .hero-title-block, .hero-copy-col, .hero-photo-col { grid-column: 1 / -1 !important; }
     .hero-grid, .z-cascade-stage, .bento-grid-3 { grid-template-columns: 1fr; }
     .product-selector-grid { max-height: 560px; } .viscosity-seq-list { grid-template-columns: repeat(2, 1fr); }
-    .hero-h1-line2 { padding-left: 6vw; } .nav-links { gap: 12px; font-size: 0.86rem; }
+    .hero-h1-line2 { padding-left: 0; } .nav-links { gap: 12px; font-size: 0.86rem; }
   }
   @media (max-width: 820px) {
     .nav-inner { flex-wrap: wrap; } .hide-mobile { display: none !important; }
-    .nav-links { width: 100%; order: 3; justify-content: flex-start; gap: 18px; padding-top: 8px; overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; }
+    .nav-links { width: 100%; order: 3; justify-content: space-between; gap: 4px; font-size: 0.72rem; padding-top: 8px; flex-wrap: nowrap; white-space: nowrap; }
   }
   @media (max-width: 640px) {
     .container { padding: 0 18px; }
     .grader-card, .results-panel { padding: 16px; }
-    .preset-row, .score-strip, .viscosity-seq-list, .shelf-search-row, .product-selector-grid, #appleWalletCardPreview { grid-template-columns: 1fr !important; }
+    .preset-row, .score-strip, .viscosity-seq-list, .shelf-search-row, .product-selector-grid, #appleWalletCardPreview, #hero-3step-promise { grid-template-columns: 1fr !important; }
+    #hero-3step-promise { gap: 10px !important; }
+    .editorial-photo-caption { flex-wrap: wrap !important; gap: 8px !important; }
+    #dl-pouch-bottles-grid { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+    #dl-pouch-bottles-grid > div:nth-child(-n+3) { grid-column: span 2; }
+    #dl-pouch-bottles-grid > div:nth-child(n+4) { grid-column: span 3; }
+    #dl-pouch-bottles-grid [id^="dl-pouch-slot-name-"] { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; line-height: 1.18 !important; }
     #textureFilterTabs { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    #dl-results-step-bar .vanity-light-btn, #heroRitualToggleBar .vanity-light-btn { white-space: normal !important; line-height: 1.2 !important; font-size: 0.72rem !important; padding: 6px 4px !important; min-width: 0; }
     .brand-logo-link { font-size: 1.15rem; gap: 8px; }
     .brand-atelier-word { display: none; }
     .vanity-light-btn { padding: 6px 10px; font-size: 0.84rem; white-space: nowrap; min-height: 32px; }
@@ -363,27 +317,27 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             </span>
           </div>
           <div id="dl-pouch-bottles-grid" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;text-align:center;">
-            <div onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_0');window.__dlSelectVanitySlot(0);}" style="background:#FFFFFF;border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-0" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_0');window.__dlSelectVanitySlot(0);}" style="background:#FFFFFF;border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><rect x="13" y="4" width="12" height="6" rx="2" fill="#D8B4A0"/><path d="M9 10H29L31 15V40C31 41.5 29.8 42.5 28.5 42.5H9.5C8.2 42.5 7 41.5 7 40V15L9 10Z" fill="#CBE2F6"/><rect x="10.5" y="19" width="17" height="13" rx="3" fill="#FFFFFF"/><text x="19" y="27.5" text-anchor="middle" font-size="6" fill="#3A1F27">Mist</text></svg>
               <div id="dl-pouch-slot-name-0" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">SOS Mist</div>
               <span id="dl-pouch-slot-sub-0" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
             </div>
-            <div onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_1');window.__dlSelectVanitySlot(1);}" style="background:#FFFFFF;border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-1" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_1');window.__dlSelectVanitySlot(1);}" style="background:#FFFFFF;border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M15.5 6C15.5 4 17 2.5 19 2.5C21 2.5 22.5 4 22.5 6V9.5H15.5V6Z" fill="#D8B4A0"/><path d="M9 12.5H29L31 17.5V40C31 41.5 29.8 42.5 28.5 42.5H9.5C8.2 42.5 7 41.5 7 40V17.5L9 12.5Z" fill="#F7DFAD"/><rect x="10.5" y="21" width="17" height="13" rx="3" fill="#FFFFFF"/><text x="19" y="29.5" text-anchor="middle" font-size="6" fill="#3A1F27">Serum</text></svg>
               <div id="dl-pouch-slot-name-1" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">C E Ferulic</div>
               <span id="dl-pouch-slot-sub-1" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
             </div>
-            <div onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_2');window.__dlSelectVanitySlot(2);}" style="background:#FFFFFF;border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-2" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_2');window.__dlSelectVanitySlot(2);}" style="background:#FFFFFF;border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 40 46" fill="none"><rect x="7" y="11" width="26" height="6" rx="2.5" fill="#D8B4A0"/><rect x="5" y="17" width="30" height="23" rx="6" fill="#CBEAD9"/><rect x="9" y="23" width="22" height="11" rx="3" fill="#FFFFFF"/><text x="20" y="30.5" text-anchor="middle" font-size="6" fill="#3A1F27">Lotion</text></svg>
               <div id="dl-pouch-slot-name-2" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Aestura 365</div>
               <span id="dl-pouch-slot-sub-2" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
             </div>
-            <div onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_4');window.__dlSelectVanitySlot(4);}" style="background:#FFFFFF;border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-3" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_4');window.__dlSelectVanitySlot(4);}" style="background:#FFFFFF;border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M7 6H31L27 33H11L7 6Z" fill="#E2D2F2"/><rect x="14" y="33" width="10" height="7" rx="2" fill="#D8B4A0"/><text x="19" y="22" text-anchor="middle" font-size="6" fill="#3A1F27">Night</text></svg>
               <div id="dl-pouch-slot-name-3" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Tretinoin</div>
               <span id="dl-pouch-slot-sub-3" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
             </div>
-            <div id="dl-empty-bottle-slot" onclick="if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();" style="background:rgba(255,255,255,0.68);border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;border:1.5px dashed rgba(138,52,72,0.34);">
+            <div id="dl-empty-bottle-slot" onclick="if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();" style="background:rgba(255,255,255,0.68);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M7 6H31L27 33H11L7 6Z" fill="#8A3448" fill-opacity="0.16"/><rect x="14" y="33" width="10" height="7" rx="2" fill="#8A3448" fill-opacity="0.3"/><text x="19" y="22" text-anchor="middle" font-size="6.5" fill="#8A3448" font-weight="600">+SPF</text></svg>
               <div id="dl-pouch-slot-name-4" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Add SPF 50</div>
               <span id="dl-pouch-slot-sub-4" style="font-size:0.68rem;color:var(--text-secondary);">Final Step</span>
@@ -401,7 +355,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
                 <strong class="serif-display" style="font-size:1.35rem;font-weight:400;color:var(--text-primary);">Tap Your Bottles or Try a Preset</strong>
               </div>
               <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                <button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 9px;font-size:0.78rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-weight:500;" onclick="clearRoutineSelection()">Clear (${selectedSet.size}) &times;</button>
+                <button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 9px;border-radius:999px;font-size:0.78rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;cursor:pointer;font-weight:500;" onclick="clearRoutineSelection()">Clear (${selectedSet.size}) &times;</button>
                 <span class="badge-safe mono" id="shelfCountBadge" style="font-size:0.76rem;" title="Catalog synced weekly + instant custom bottle discovery">${products.length} Bottles &middot; Weekly Sync</span>
               </div>
             </div>
@@ -463,37 +417,14 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
     <div id="checkoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" data-ui="checkout-dialog" onclick="if(event.target===this)closeCheckoutModal()">
       <div class="modal-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <span class="badge-safe mono" id="modalBanditBadge">DermLogic Instant Fulfillment · $1.99 Stripe Express</span>
-          <button type="button" class="btn-secondary" style="padding:6px 14px;min-height:34px;" onclick="closeCheckoutModal()">Close</button>
-        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="badge-safe mono" id="modalBanditBadge">DermLogic Instant Fulfillment · $1.99 Stripe Express</span><button type="button" class="btn-secondary" style="padding:6px 14px;min-height:34px;" onclick="closeCheckoutModal()">Close</button></div>
         <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Save Your Complete 3-Card Porcelain Ritual Dossier ($1.99)</h3>
-        <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:16px;">
-          Includes your printable 4-Night Skin-Cycling calendar (.ICS), non-comedogenic clean swaps (.CSV), and 9:16 bathroom mirror phone lock-screen card.
-        </p>
-        <div style="margin-bottom:16px;">
-          <a href="/buy/flash_pass" onclick="if(window.__dlBuyFromVanity)return window.__dlBuyFromVanity('flash_pass',this);if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none;padding:13px 20px;font-size:0.95rem;">
-            <span>Get 3-Card Ritual Dossier ($1.99 Stripe Express)</span>
-            <span class="btn-icon-circle">&rarr;</span>
-          </a>
-        </div>
+        <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:16px;">Includes your printable 4-Night Skin-Cycling calendar (.ICS), non-comedogenic clean swaps (.CSV), and 9:16 bathroom mirror phone lock-screen card.</p>
+        <div style="margin-bottom:16px;"><a href="/buy/flash_pass" onclick="if(window.__dlBuyFromVanity)return window.__dlBuyFromVanity('flash_pass',this);if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none;padding:13px 20px;font-size:0.95rem;"><span>Get 3-Card Ritual Dossier ($1.99 Stripe Express)</span><span class="btn-icon-circle">&rarr;</span></a></div>
         <form id="checkoutForm" onsubmit="submitSelfServeCheckout(event)" style="padding-top:12px;">
-          <input type="hidden" id="checkoutPlanId" value="onetime_499" />
-          <input type="text" name="website_hp" id="checkoutHoneypot" style="display:none !important" tabindex="-1" autocomplete="off" />
-          <div style="margin-bottom:10px;">
-            <label class="field-label" for="checkoutEmailInput">Email for Instant Ritual Delivery</label>
-            <input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="reader@dermlogic.io" />
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-            <label class="prod-check-item selected" id="planOption499" onclick="selectCheckoutPlan('onetime_499')">
-              <input type="radio" name="planChoice" value="onetime_499" checked />
-              <span><strong style="display:block;">$4.99 Complete Kit</strong></span>
-            </label>
-            <label class="prod-check-item" id="planOption1999" onclick="selectCheckoutPlan('annual_1999')">
-              <input type="radio" name="planChoice" value="annual_1999" />
-              <span><strong style="display:block;">$19.99/yr Unlimited</strong></span>
-            </label>
-          </div>
+          <input type="hidden" id="checkoutPlanId" value="onetime_499" /><input type="text" name="website_hp" id="checkoutHoneypot" style="display:none !important" tabindex="-1" autocomplete="off" />
+          <div style="margin-bottom:10px;"><label class="field-label" for="checkoutEmailInput">Email for Instant Ritual Delivery</label><input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="reader@dermlogic.io" /></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><label class="prod-check-item selected" id="planOption499" onclick="selectCheckoutPlan('onetime_499')"><input type="radio" name="planChoice" value="onetime_499" checked /><span><strong style="display:block;">$4.99 Complete Kit</strong></span></label><label class="prod-check-item" id="planOption1999" onclick="selectCheckoutPlan('annual_1999')"><input type="radio" name="planChoice" value="annual_1999" /><span><strong style="display:block;">$19.99/yr Unlimited</strong></span></label></div>
           <button type="submit" id="checkoutSubmitBtn" class="btn-secondary" style="width:100%;">Complete Plan Checkout &rarr;</button>
         </form>
         <div id="checkoutSuccessBox" style="display:none;margin-top:16px;padding:14px;background:var(--sage-bg);color:var(--sage-safe);"></div>
@@ -821,14 +752,12 @@ const CLIENT_SCRIPT = `
       }
     });
     if (grid) grid.scrollTop = 0;
+    if (window.__dlSyncVanityFromCheckboxes) window.__dlSyncVanityFromCheckboxes();
     runRoutineAnalysis(btn.getAttribute('data-preset-id'));
   }
   function pasteSampleComedogenicInci() {
     const el = document.getElementById('rawInciTextarea');
-    if (el) {
-      el.value = 'Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate, Cocos Nucifera Oil, Polysorbate 20, Niacinamide, Ceramide NP';
-      runRoutineAnalysis();
-    }
+    if (el) { el.value = 'Aqua, Ascorbic Acid 15%, Copper Tripeptide-1, Glycolic Acid 7%, Isopropyl Myristate, Cocos Nucifera Oil, Polysorbate 20, Niacinamide, Ceramide NP'; runRoutineAnalysis(); }
   }
   function clearRoutineSelection() {
     document.querySelectorAll('input[name="routineProduct"]').forEach((cb) => {
@@ -837,15 +766,12 @@ const CLIENT_SCRIPT = `
       if (lbl) {
         lbl.classList.remove('selected');
         const pill = lbl.querySelector('span.mono');
-        if (pill) {
-          pill.textContent = '+ Vanity Bag';
-          pill.style.background = 'var(--bg-oat)';
-          pill.style.color = 'var(--rose-brand)';
-        }
+        if (pill) { pill.textContent = '+ Vanity Bag'; pill.style.background = 'var(--bg-oat)'; pill.style.color = 'var(--rose-brand)'; }
       }
     });
     const el = document.getElementById('rawInciTextarea');
     if (el) el.value = '';
+    if (window.__dlSyncVanityFromCheckboxes) window.__dlSyncVanityFromCheckboxes(true);
     runRoutineAnalysis();
   }
   async function runRoutineAnalysis(presetSlug, isExplicitClick) {
