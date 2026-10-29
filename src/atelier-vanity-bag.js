@@ -58,8 +58,8 @@ function renderAtelierVanityDrawerHtml() {
       .dl-hide-mobile, #dl-floating-vanity-dock { display: none !important; }
       #dl-header-vanity-pill { padding: 5px 10px !important; font-size: 0.74rem !important; gap: 5px !important; }
       #dl-header-vanity-clash-dot { display: none !important; }
-      #dl-atelier-vanity-drawer { align-items: flex-end !important; justify-content: center !important; }
-      #dl-atelier-vanity-panel { width: 100vw !important; max-width: 100vw !important; height: 92dvh !important; max-height: 92dvh !important; border: none !important; border-radius: 24px 24px 0 0 !important; padding: 12px 14px 16px 14px !important; gap: 8px !important; }
+      #dl-atelier-vanity-drawer { align-items: flex-end !important; justify-content: center !important; padding: 0 !important; }
+      #dl-atelier-vanity-panel { width: 100vw !important; max-width: 100vw !important; height: auto !important; max-height: 92dvh !important; border: none !important; border-radius: 24px 24px 0 0 !important; padding: 12px 14px 16px 14px !important; gap: 8px !important; }
       .dl-mobile-grabber { display: block !important; width: 42px; height: 4px; background: var(--rose-pill-bg); margin: 0 auto 4px auto; border-radius: 2px; flex-shrink: 0; }
       .dl-tray-lineup-grid { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 4px !important; }
       .dl-tray-vessel-btn { padding: 4px 2px !important; min-width: 0 !important; }
@@ -85,8 +85,8 @@ function renderAtelierVanityDrawerHtml() {
     <span id="dl-vanity-toast-text" class="mono">Added to Vanity Bag</span>
     <button type="button" class="mono" onclick="window.__dlOpenVanityDrawer('toast');document.getElementById('dl-vanity-toast').style.display='none';" style="background:var(--rose-brand);color:var(--accent-ink);border:none;border-radius:999px;padding:4px 11px;font-size:0.74rem;font-weight:700;cursor:pointer;white-space:nowrap;">Open Bag &rarr;</button>
   </div>
-  <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" onclick="if(event.target===this)window.__dlCloseVanityDrawer()" style="display:none;position:fixed;inset:0;z-index:9996;background:rgba(58,31,39,0.48);align-items:stretch;justify-content:flex-end;">
-    <div id="dl-atelier-vanity-panel" style="width:540px;max-width:100vw;height:100%;background:var(--bg-canvas);color:var(--text-primary);border:none;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;padding:20px 24px;gap:12px;">
+  <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" onclick="if(event.target===this)window.__dlCloseVanityDrawer()" style="display:none;position:fixed;inset:0;z-index:9996;background:rgba(58,31,39,0.48);align-items:center;justify-content:flex-end;padding:16px;">
+    <div id="dl-atelier-vanity-panel" style="width:540px;max-width:100vw;height:auto;max-height:calc(100dvh - 32px);background:var(--bg-canvas);color:var(--text-primary);border:none;border-radius:28px;box-shadow:0 24px 64px rgba(58,31,39,0.24);display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;padding:20px 24px;gap:12px;">
       <div class="dl-mobile-grabber" style="display:none;" onclick="window.__dlCloseVanityDrawer()"></div>
       <div style="padding-bottom:6px;">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
