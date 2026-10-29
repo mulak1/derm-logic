@@ -59,6 +59,61 @@ const INGREDIENT_SUBCATEGORIES = [
   { slug: 'safe-pairings', label: 'Compatible Same-Routine Actives', filterFn: () => true }
 ];
 
+function getBottleRivals(prod, limit = 5) {
+  if (!prod) return [];
+  const firstActive = (prod.primaryActives || [])[0];
+  const sameActive = firstActive ? CLINICAL_PRODUCTS.filter((p) => p.id !== prod.id && (p.primaryActives || []).includes(firstActive)) : [];
+  const sameCat = CLINICAL_PRODUCTS.filter((p) => p.id !== prod.id && p.category === prod.category && !sameActive.includes(p));
+  const fallback = CLINICAL_PRODUCTS.filter((p) => p.id !== prod.id && !sameActive.includes(p) && !sameCat.includes(p));
+  return [...sameActive, ...sameCat, ...fallback].slice(0, limit);
+}
+
+const FLAGSHIP_BOTTLE_COMPARE_PAIRS = [
+  { slug: 'aestura-atobarrier-365-vs-illiyoon-ceramide-ato', title: 'Aestura Atobarrier 365 vs. Illiyoon Ceramide Ato Cream', sub: 'K-Beauty 3:1:1 Ceramide Barrier Cream Showdown' },
+  { slug: 'aestura-atobarrier-365-vs-lrp-cicaplast-baume-b5', title: 'Aestura Atobarrier 365 vs. La Roche-Posay Cicaplast Baume B5+', sub: 'Daily Ceramide Moisturizer vs. Panthenol B5 Recovery Balm' },
+  { slug: 'avene-cicalfate-plus-vs-lrp-cicaplast-baume-b5', title: 'Avène Cicalfate+ vs. La Roche-Posay Cicaplast Baume B5+', sub: 'Copper-Zinc Post-Procedure Balm vs. Madecassoside B5 Balm' },
+  { slug: 'aestura-atobarrier-365-vs-dieux-instant-angel', title: 'Aestura Atobarrier 365 vs. Dieux Instant Angel Lipid Cream', sub: 'Encapsulated Ceramide Capsules vs. Dipalmitoyl Hydroxyproline' },
+  { slug: 'skinceuticals-ce-ferulic-vs-timeless-20-vitamin-c', title: 'SkinCeuticals C E Ferulic ($182) vs. Timeless 20% Vitamin C ($26)', sub: 'pH 3.2 L-Ascorbic + Ferulic Patent vs. High-Potency Dupe' },
+  { slug: 'geek-gorgeous-c-glow-vs-skinceuticals-ce-ferulic', title: 'Geek & Gorgeous C-Glow vs. SkinCeuticals C E Ferulic', sub: 'Fresh-Batch 15% L-Ascorbic Acid vs. Clinical Gold Standard' },
+  { slug: 'prequel-lucent-c-vs-skinceuticals-ce-ferulic', title: 'Prequel Lucent-C vs. SkinCeuticals C E Ferulic', sub: '15% L-Ascorbic + Ergothioneine vs. C E Ferulic' },
+  { slug: 'anua-heartleaf-77-toner-vs-paulas-choice-2-bha', title: 'Anua Heartleaf 77% Soothing Toner vs. Paula’s Choice 2% BHA', sub: 'Daily Calming Hydration vs. Oil-Soluble Salicylic Pore Clearing' },
+  { slug: 'biologique-recherche-p50-1970-vs-paulas-choice-2-bha', title: 'Biologique Recherche Lotion P50 vs. Paula’s Choice 2% BHA', sub: 'Multi-Acid Polyhydroxy/AHA/BHA Toner vs. Targeted 2% BHA' },
+  { slug: 'cosrx-bha-blackhead-liquid-vs-paulas-choice-2-bha', title: 'COSRX BHA Blackhead Power Liquid vs. Paula’s Choice 2% BHA', sub: '4% Betaine Salicylate (Gentle K-Beauty) vs. 2% Salicylic Acid' },
+  { slug: 'boj-relief-sun-spf50-vs-round-lab-birch-spf50', title: 'Beauty of Joseon Relief Sun SPF 50 vs. Round Lab Birch Juice SPF 50', sub: 'Rice + Probiotics vs. Birch Sap Next-Gen UV Filters' },
+  { slug: 'boj-relief-sun-spf50-vs-skin1004-hyalu-cica-spf50', title: 'Beauty of Joseon Relief Sun vs. SKIN1004 Hyalu-Cica Sun Serum', sub: 'Dewy Cream SPF 50 vs. Ultra-Light Centella Water-Fit Serum' },
+  { slug: 'boj-relief-sun-spf50-vs-eltamd-uv-clear-spf46', title: 'Beauty of Joseon Relief Sun SPF 50 vs. EltaMD UV Clear SPF 46', sub: 'Korean Organic UV Filters vs. 9% Zinc Oxide + 5% Niacinamide' },
+  { slug: 'cosrx-snail-96-mucin-vs-rhode-glazing-milk', title: 'COSRX Snail 96 Mucin Essence vs. Rhode Glazing Milk', sub: 'Glycoprotein Humectant Bounce vs. Ceramide-Magnesium Milky Prep' },
+  { slug: 'laneige-cream-skin-toner-vs-rhode-glazing-milk', title: 'Laneige Cream Skin Cerapeptide vs. Rhode Glazing Milk', sub: 'Liquid Ceramide-Peptide Toner vs. Glazed Barrier Essence' },
+  { slug: 'differin-adapalene-01-vs-rx-tretinoin-005', title: 'Differin Adapalene 0.1% Gel vs. Prescription Tretinoin 0.05%', sub: 'RAR-Beta/Gamma Selective Retinoid vs. Full-Receptor Retinoic Acid' },
+  { slug: 'geek-gorgeous-a-game-10-vs-medik8-crystal-retinal-6', title: 'Geek & Gorgeous A-Game 10 vs. Medik8 Crystal Retinal 6', sub: '0.1% Retinaldehyde Emulsion vs. Encapsulated 0.06% Crystal Retinal' },
+  { slug: 'finacea-15-azelaic-vs-peach-slices-azelaic-10', title: 'Finacea 15% Azelaic Foam vs. Peach Slices Azelaic Acid 10%', sub: 'Prescription 15% Rosacea Standard vs. OTC 10% Redness Serum' },
+  { slug: 'dr-idriss-major-fade-serum-vs-topicals-faded-serum', title: 'Dr. Idriss Major Fade Hyper Serum vs. Topicals Faded Serum', sub: 'Alpha Arbutin + Kojic Acid vs. Tranexamic + Azelaic + Niacinamide' },
+  { slug: 'cerave-hydrating-cleanser-vs-vanicream-gentle-cleanser', title: 'CeraVe Hydrating Facial Cleanser vs. Vanicream Gentle Cleanser', sub: 'Ceramide Emulsion Wash vs. Zero-Ester Minimalist Sensitive Wash' }
+];
+
+function buildHighIntentComparisonSlugs() {
+  const set = new Set([
+    'copper-tripeptide-1-vs-l-ascorbic-acid', 'retinol-vs-tretinoin', 'glycolic-acid-vs-salicylic-acid',
+    'adapalene-vs-benzoyl-peroxide', 'azelaic-acid-vs-niacinamide', 'aestura-atobarrier-365-vs-skinceuticals-ce-ferulic',
+    ...FLAGSHIP_BOTTLE_COMPARE_PAIRS.map((p) => p.slug)
+  ]);
+  for (const prod of CLINICAL_PRODUCTS) {
+    for (const rival of getBottleRivals(prod, 6)) {
+      const pair = [prod.id, rival.id].sort();
+      set.add(`${pair[0]}-vs-${pair[1]}`);
+    }
+  }
+  for (let i = 0; i < Math.min(20, CLINICAL_INGREDIENTS.length); i++) {
+    for (let j = i + 1; j < Math.min(20, CLINICAL_INGREDIENTS.length); j++) {
+      const pair = [CLINICAL_INGREDIENTS[i].id, CLINICAL_INGREDIENTS[j].id].sort();
+      set.add(`${pair[0]}-vs-${pair[1]}`);
+    }
+  }
+  return Array.from(set);
+}
+
+const ALL_COMPARE_SLUGS = buildHighIntentComparisonSlugs();
+
 const BOT_FAMILIES = [
   { id: 'Googlebot', regex: /googlebot|google-extended|googleother|google-inspectiontool/i },
   { id: 'Bingbot', regex: /bingbot|msnbot/i },
@@ -71,13 +126,13 @@ const BOT_FAMILIES = [
 const ROUTE_FAMILIES_META = {
   core_hubs: { label: 'Core Platform & Directory (/, /directory, /lp)', totalCanonical: 6 },
   seo_guides: { label: 'Active-Pair & Bottle Layering Guides (/seo/:slug)', totalCanonical: (PAIR_SEO_SEEDS?.length || 274) + (PRODUCT_SEO_SEEDS?.length || 44) },
-  compare_matrix: { label: 'Head-to-Head Active & Bottle Comparisons (/compare/:a-vs-:b)', totalCanonical: 120 },
+  compare_matrix: { label: 'Head-to-Head Active & Bottle Comparisons (/compare/:a-vs-:b)', totalCanonical: ALL_COMPARE_SLUGS.length },
   ingredient_hubs: { label: 'Clinical Active Hubs (/ingredient/:slug)', totalCanonical: CLINICAL_INGREDIENTS.length },
-  entity_subcat: { label: 'Entity x Sub-Category Matrices (/ingredient/:slug/:cat)', totalCanonical: CLINICAL_INGREDIENTS.length * 4 },
+  entity_subcat: { label: 'Entity x Sub-Category Matrices (/ingredient/:slug/:cat & /concern/:slug/:cat)', totalCanonical: (CLINICAL_INGREDIENTS.length + (CONCERN_HUBS?.length || 9) + SCENARIO_GUIDES.length) * 4 },
   bottle_skus: { label: 'Cult Bottle & SKU Teardowns (/bottle/:slug & /sku/:brand/:sku)', totalCanonical: CLINICAL_PRODUCTS.length },
   celebrity_routines: { label: 'Celebrity & Iconic Routines (/celebrity/:slug)', totalCanonical: CELEBRITY_ROUTINES.length },
   brand_matrices: { label: 'Formulation Brand Hubs (/brand/:slug)', totalCanonical: 27 },
-  scenario_guides: { label: 'Life-Event & Skin Concern Scenarios (/scenario/:slug & /concern/:slug)', totalCanonical: SCENARIO_GUIDES.length + 8 },
+  scenario_guides: { label: 'Life-Event & Skin Concern Scenarios (/scenario/:slug & /concern/:slug)', totalCanonical: SCENARIO_GUIDES.length + (CONCERN_HUBS?.length || 9) },
   b2b_studio_kiosk: { label: 'B2B Backbar Formulas, Playbooks & Kiosks (/studio/* & /kiosk/*)', totalCanonical: B2B_STUDIO_FORMULAS.length + B2B_PLAYBOOKS.length + KIOSK_VERTICALS.length },
   client_artifacts: { label: 'Co-Branded B2B Client Deliverables (/client/:slug)', totalCanonical: B2B_CLIENT_DELIVERABLES.length },
   public_scans: { label: 'Viral Scan Permalinks & Leaderboard (/scan/:id & /leaderboard)', totalCanonical: 18 }
@@ -597,8 +652,24 @@ function attachGlowIndexSeoUpgrades(app) {
         }
 
         if (/^\/(bottle|ingredient|celebrity|concern|brand|scenario)\/[^/]+$/.test(req.path) && !out.includes('id="gi-entity-simulator"')) {
-          const slugPart = req.path.split('/').filter(Boolean).pop() || 'active';
-          const simHtml = renderEntityEnvironmentSimulatorHtml(slugPart.replace(/-/g, ' ').toUpperCase(), slugPart, 'skinceuticals-ce-ferulic');
+          const parts = req.path.split('/').filter(Boolean);
+          const famType = parts[0], slugPart = parts[1] || 'active';
+          let crossLinksHtml = '';
+          if (famType === 'bottle') {
+            const prod = CLINICAL_PRODUCTS.find((p) => p.id === slugPart);
+            const rivals = getBottleRivals(prod, 6);
+            if (prod && rivals.length > 0) {
+              const rivalPills = rivals.map((r) => {
+                const pair = [prod.id, r.id].sort();
+                return `<a href="/compare/${escapeHtml(`${pair[0]}-vs-${pair[1]}`)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:12px 16px;text-decoration:none;display:flex;justify-content:space-between;align-items:center;gap:8px;"><span style="font-size:0.86rem;color:var(--text-primary);font-weight:500;">${escapeHtml(prod.brand)} vs. <strong>${escapeHtml(r.brand)} ${escapeHtml(r.name.replace(/\s*\([^)]*\)/g, ''))}</strong></span><span class="mono" style="font-size:0.74rem;color:var(--rose-brand);white-space:nowrap;">pH ${prod.ph} vs ${r.ph} &rarr;</span></a>`;
+              }).join('');
+              crossLinksHtml = `<section class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 24px;margin:18px 0;"><div class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;margin-bottom:4px;">HEAD-TO-HEAD CULT BOTTLE COMPARISONS</div><h2 class="serif-display" style="font-size:1.45rem;margin:0 0 12px;">Compare ${escapeHtml(prod.brand)} ${escapeHtml(prod.name.replace(/\s*\([^)]*\)/g, ''))} vs. Category Rivals &amp; Dupes</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;">${rivalPills}</div></section>`;
+            }
+          } else if (famType === 'ingredient' || famType === 'concern' || famType === 'scenario') {
+            const catLinks = INGREDIENT_SUBCATEGORIES.map((sc) => `<a href="/${famType}/${escapeHtml(slugPart)}/${escapeHtml(sc.slug)}" class="affiliate-link-pill mono" style="padding:7px 13px;font-size:0.78rem;text-decoration:none;">${escapeHtml(sc.label)} Matrix &rarr;</a>`).join('');
+            crossLinksHtml = `<section class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 20px;margin:16px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;"><span class="mono" style="font-size:0.8rem;color:var(--text-primary);font-weight:600;">Browse Verified Safe Bottles by Category:</span><div style="display:flex;gap:8px;flex-wrap:wrap;">${catLinks}</div></section>`;
+          }
+          const simHtml = `${crossLinksHtml}${renderEntityEnvironmentSimulatorHtml(slugPart.replace(/-/g, ' ').toUpperCase(), slugPart, 'skinceuticals-ce-ferulic')}`;
           if (out.includes('</table>')) out = out.replace('</table>', `</table>${simHtml}`);
           else if (out.includes('</main>')) out = out.replace('</main>', `<div class="container">${simHtml}</div></main>`);
         }
@@ -666,17 +737,20 @@ function attachGlowIndexSeoUpgrades(app) {
   });
 
   app.get('/compare', (req, res) => {
-    const samplePairs = [
+    const activePairs = [
       { slug: 'copper-tripeptide-1-vs-l-ascorbic-acid', title: 'Copper Tripeptide-1 vs. L-Ascorbic Acid (Vitamin C)', sub: 'ΔpH 2.75 · Metal-Ion Oxidation Clash · Split AM/PM' },
       { slug: 'retinol-vs-tretinoin', title: 'Retinol vs. Prescription Tretinoin 0.05%', sub: 'ΔpH 0.15 · Conversion Kinetics & Ceramide Buffering' },
       { slug: 'glycolic-acid-vs-salicylic-acid', title: 'Glycolic Acid (AHA) vs. Salicylic Acid (BHA)', sub: 'ΔpH 0.10 · Water-Soluble Surface vs. Oil-Soluble Pore Clearing' },
       { slug: 'adapalene-vs-benzoyl-peroxide', title: 'Adapalene 0.1% vs. Benzoyl Peroxide', sub: 'ΔpH 0.55 · Photo-Stable Retinoid Compatibility' },
       { slug: 'azelaic-acid-vs-niacinamide', title: 'Azelaic Acid 10% vs. Niacinamide 5%', sub: 'ΔpH 1.15 · Redness & Melasma Synergy (Safe Same-Routine)' },
-      { slug: 'aestura-atobarrier-365-vs-skinceuticals-ce-ferulic', title: 'Aestura Atobarrier 365 Cream vs. SkinCeuticals C E Ferulic', sub: 'Bottle-vs-Bottle · Morning Vitamin C + Ceramide Seal' }
+      { slug: 'l-ascorbic-acid-vs-niacinamide', title: 'L-Ascorbic Acid (Vitamin C) vs. Niacinamide', sub: 'ΔpH 2.30 · 60s Wait Rule to Prevent Niacin Flush' },
+      { slug: 'azelaic-acid-vs-tretinoin', title: 'Azelaic Acid 15% vs. Prescription Tretinoin 0.05%', sub: 'Rosacea & Melasma Dual-Pathway Layering Order' },
+      { slug: 'lactic-acid-vs-retinol', title: 'Lactic Acid (AHA) vs. Retinol', sub: '4-Night Skin Cycling Schedule vs. Same-Night Irritation' }
     ];
-    const cards = samplePairs.map((c) => `<a href="/compare/${escapeHtml(c.slug)}" class="porcelain-vessel-core" style="padding:20px 24px;background:var(--bg-surface);text-decoration:none;display:block;"><div class="mono" style="font-size:0.78rem;color:var(--rose-brand);margin-bottom:6px;">${escapeHtml(c.sub)}</div><div class="serif-display" style="font-size:1.3rem;color:var(--text-primary);">${escapeHtml(c.title)} &rarr;</div></a>`).join('');
-    const bodyHtml = `<section class="section-block"><div class="container"><h1 class="hero-h1" style="font-size:clamp(2.2rem,3.6vw,3.2rem);margin-bottom:10px;">Head-to-Head Active &amp; Cult Bottle Comparisons</h1><p class="hero-sub" style="margin-bottom:22px;">Deterministic Henderson-Hasselbalch pKa free-acid bioavailability, ΔpH ionization shifts, Dalton molecular weights, and 1-tap inline verdict selectors.</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;">${cards}</div></div></section>`;
-    return res.status(200).type('html').send(renderBaseDocument({ title: 'Head-to-Head Skincare Active & Bottle Comparisons | DermLogic', description: 'Compare any two skincare active ingredients or cult bottles side by side with Henderson-Hasselbalch pH/pKa math.', canonicalPath: '/compare', ogSlug: 'compare-hub', jsonLdObjects: [], hideNav: false, bodyHtml }));
+    const bottleCards = FLAGSHIP_BOTTLE_COMPARE_PAIRS.map((c) => `<a href="/compare/${escapeHtml(c.slug)}" class="porcelain-vessel-core" style="padding:18px 22px;background:var(--bg-oat);text-decoration:none;display:block;"><div class="mono" style="font-size:0.75rem;color:var(--rose-brand);margin-bottom:5px;">Bottle vs. Bottle · ${escapeHtml(c.sub)}</div><div class="serif-display" style="font-size:1.22rem;color:var(--text-primary);">${escapeHtml(c.title)} &rarr;</div></a>`).join('');
+    const activeCards = activePairs.map((c) => `<a href="/compare/${escapeHtml(c.slug)}" class="porcelain-vessel-core" style="padding:18px 22px;background:var(--bg-surface);text-decoration:none;display:block;"><div class="mono" style="font-size:0.75rem;color:var(--rose-brand);margin-bottom:5px;">Active vs. Active · ${escapeHtml(c.sub)}</div><div class="serif-display" style="font-size:1.22rem;color:var(--text-primary);">${escapeHtml(c.title)} &rarr;</div></a>`).join('');
+    const bodyHtml = `<section class="section-block"><div class="container"><h1 class="hero-h1" style="font-size:clamp(2.2rem,3.6vw,3.2rem);margin-bottom:10px;">Head-to-Head Cult Bottle &amp; Active Comparisons (${ALL_COMPARE_SLUGS.length} Matrices)</h1><p class="hero-sub" style="margin-bottom:22px;">Side-by-side formulation pH windows, Henderson-Hasselbalch pKa bioavailability, INCI dupe match scores, and 1-tap inline verdict selectors.</p><h2 class="serif-display" style="font-size:1.65rem;margin-bottom:14px;">Most-Searched Cult Bottle vs. Bottle Showdowns</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-bottom:32px;">${bottleCards}</div><h2 class="serif-display" style="font-size:1.65rem;margin-bottom:14px;">Clinical Active vs. Active Chemistry Matrices</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;">${activeCards}</div></div></section>`;
+    return res.status(200).type('html').send(renderBaseDocument({ title: 'Cult Skincare Bottle vs. Bottle & Active Comparisons | DermLogic', description: 'Compare cult skincare bottles (Aestura vs Illiyoon, Cicaplast vs Cicalfate, Beauty of Joseon vs Round Lab, C E Ferulic vs Timeless) and clinical actives side by side.', canonicalPath: '/compare', ogSlug: 'compare-hub', jsonLdObjects: [], hideNav: false, bodyHtml }));
   });
 
   app.get('/compare/:slug', (req, res, next) => {
@@ -707,6 +781,27 @@ function attachGlowIndexSeoUpgrades(app) {
     const rowsHtml = matchingProducts.map((p) => `<tr><td><a href="/bottle/${escapeHtml(p.id)}" style="font-weight:600;color:var(--text-primary);text-decoration:underline;">${escapeHtml(p.brand)} ${escapeHtml(p.name)}</a></td><td class="mono">pH ${ing.phMin} - ${ing.phMax}</td><td class="mono">${hh.freeAcidPct}% Bioavailable</td><td class="mono">${escapeHtml(p.timeOfDay || 'AM / PM')}</td><td><button type="button" class="vanity-card-bag-btn mono" onclick="if(window.__dlQuickAddBottleToBag)window.__dlQuickAddBottleToBag('${escapeHtml(p.id)}',this)" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;background:var(--bg-surface);color:var(--rose-brand);border:1px solid var(--rose-brand);">+ Vanity Bag</button></td></tr>`).join('');
     const bodyHtml = `<section class="section-block"><div class="container"><nav class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:10px;"><a href="/">Home</a> / <a href="/ingredient">Actives</a> / <a href="/ingredient/${escapeHtml(ing.id)}">${escapeHtml(ing.commonName)}</a> / <span style="color:var(--rose-brand);">${escapeHtml(subcat.label)}</span></nav><h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,3rem);margin-bottom:10px;">${escapeHtml(ing.commonName)} (${escapeHtml(ing.inciName)}) × ${escapeHtml(subcat.label)} Matrix</h1><p class="hero-sub" style="margin-bottom:16px;">Formulation pH window ${ing.phMin}-${ing.phMax}, molecular weight ${ing.molecularWeightDa} Da, and ${hh.freeAcidPct}% Henderson-Hasselbalch bioavailability across ${escapeHtml(subcat.label.toLowerCase())}.</p>${renderEntityEnvironmentSimulatorHtml(`${ing.commonName} (${subcat.label})`, `${ing.id}-${subcat.slug}`, (matchingProducts[0] && matchingProducts[0].id) || 'skinceuticals-ce-ferulic')}<div class="porcelain-vessel-core" style="padding:22px;background:var(--bg-surface);"><div class="table-wrap"><table><thead><tr><th>Cult Bottle / Formulation</th><th>Target pH Window</th><th>Free-Active Bioavailability</th><th>Routine Slot</th><th>Vanity Bag</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></div></div></section>`;
     return res.status(200).type('html').send(renderBaseDocument({ title: `${ing.commonName} ${subcat.label} Matrix (pH ${ing.phMin}-${ing.phMax}) | DermLogic`, description: `Compare ${ing.commonName} ${subcat.label.toLowerCase()} by pH window, pKa bioavailability, and layering safety.`, canonicalPath: `/ingredient/${ing.id}/${subcat.slug}`, ogSlug: `${ing.id}-${subcat.slug}`, jsonLdObjects: [], hideNav: false, bodyHtml }));
+  });
+
+  app.get(['/concern/:slug/:category', '/scenario/:slug/:category'], (req, res, next) => {
+    const isConcern = req.path.startsWith('/concern/');
+    const basePrefix = isConcern ? '/concern' : '/scenario';
+    const rawCat = String(req.params.category || '');
+    const isMd = rawCat.endsWith('.md');
+    const cleanCat = isMd ? rawCat.slice(0, -3).toLowerCase() : rawCat.toLowerCase();
+    const list = isConcern ? (Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : []) : SCENARIO_GUIDES;
+    const qToks = String(req.params.slug || '').toLowerCase().split('-').filter((t) => t.length > 2 && !['safe', 'routine', 'shelf', 'skincare', 'and', 'for'].includes(t));
+    const item = list.find((x) => x.slug === req.params.slug) || list.find((x) => x.slug.includes(req.params.slug) || String(req.params.slug).includes(x.slug)) || list.find((x) => qToks.filter((t) => x.slug.includes(t)).length >= 2);
+    if (!item) return next();
+    const subcat = INGREDIENT_SUBCATEGORIES.find((c) => c.slug === cleanCat) || INGREDIENT_SUBCATEGORIES[0];
+    if (cleanCat !== subcat.slug || req.params.slug !== item.slug) return res.redirect(301, `${basePrefix}/${item.slug}/${subcat.slug}${isMd ? '.md' : ''}`);
+    if (isMd) return res.status(200).type('text/markdown; charset=utf-8').send(buildMarkdownForPath(`${basePrefix}/${item.slug}/${subcat.slug}`));
+    const safeSet = new Set(item.activeIds || item.safeIds || []);
+    const matchingProducts = CLINICAL_PRODUCTS.filter((p) => subcat.filterFn(p) && ((p.primaryActives || []).some((a) => safeSet.has(a)) || (item.productIds || []).includes(p.id))).concat(CLINICAL_PRODUCTS.filter(subcat.filterFn)).slice(0, 10);
+    const dedupProds = Array.from(new Map(matchingProducts.map((p) => [p.id, p])).values()).slice(0, 8);
+    const rowsHtml = dedupProds.map((p) => `<tr><td><a href="/bottle/${escapeHtml(p.id)}" style="font-weight:600;color:var(--text-primary);text-decoration:underline;">${escapeHtml(p.brand)} ${escapeHtml(p.name)}</a></td><td class="mono">pH ${p.ph} · $${p.priceUsd}</td><td class="mono">${escapeHtml(p.category)}</td><td><button type="button" class="vanity-card-bag-btn mono" onclick="if(window.__dlQuickAddBottleToBag)window.__dlQuickAddBottleToBag('${escapeHtml(p.id)}',this)" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;background:var(--bg-surface);color:var(--rose-brand);border:1px solid var(--rose-brand);">+ Vanity Bag</button></td></tr>`).join('');
+    const bodyHtml = `<section class="section-block"><div class="container"><nav class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:10px;"><a href="/">Home</a> / <a href="${basePrefix}">${isConcern ? 'Concerns' : 'Scenarios'}</a> / <a href="${basePrefix}/${escapeHtml(item.slug)}">${escapeHtml(item.title)}</a> / <span style="color:var(--rose-brand);">${escapeHtml(subcat.label)}</span></nav><h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,3rem);margin-bottom:10px;">${escapeHtml(item.title)}: Best ${escapeHtml(subcat.label)}</h1><p class="hero-sub" style="margin-bottom:16px;">${escapeHtml(item.summary)} Below are the top barrier-verified ${escapeHtml(subcat.label.toLowerCase())} with exact pH values and zero conflicting triggers.</p>${renderEntityEnvironmentSimulatorHtml(`${item.title} (${subcat.label})`, `${item.slug}-${subcat.slug}`, (dedupProds[0] && dedupProds[0].id) || 'aestura-atobarrier-365')}<div class="porcelain-vessel-core" style="padding:22px;background:var(--bg-surface);"><div class="table-wrap"><table><thead><tr><th>Verified Safe Bottle</th><th>pH &amp; Price</th><th>Formulation Role</th><th>Vanity Bag</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></div></div></section>`;
+    return res.status(200).type('html').send(renderBaseDocument({ title: `Best ${subcat.label} for ${item.title} | DermLogic`, description: `Verified ${subcat.label.toLowerCase()} for ${item.title}: exact bottle pH, INCI safety, and layering order.`, canonicalPath: `${basePrefix}/${item.slug}/${subcat.slug}`, ogSlug: `${item.slug}-${subcat.slug}`, jsonLdObjects: [], hideNav: false, bodyHtml }));
   });
 
   app.get(['/sku/:brand/:sku', '/shade/:brand/:sku'], (req, res) => {
@@ -802,25 +897,21 @@ function attachGlowIndexSeoUpgrades(app) {
   });
 
   app.get('/sitemap-comparisons.xml', (req, res) => {
-    const urls = [`${HOST_URL}/compare/copper-tripeptide-1-vs-l-ascorbic-acid`, `${HOST_URL}/compare/retinol-vs-tretinoin`, `${HOST_URL}/compare/glycolic-acid-vs-salicylic-acid`, `${HOST_URL}/compare/adapalene-vs-benzoyl-peroxide`, `${HOST_URL}/compare/azelaic-acid-vs-niacinamide`, `${HOST_URL}/compare/aestura-atobarrier-365-vs-skinceuticals-ce-ferulic`];
-    for (let i = 0; i < Math.min(16, CLINICAL_INGREDIENTS.length); i++) {
-      for (let j = i + 1; j < Math.min(16, CLINICAL_INGREDIENTS.length); j++) {
-        const pair = [CLINICAL_INGREDIENTS[i].id, CLINICAL_INGREDIENTS[j].id].sort();
-        urls.push(`${HOST_URL}/compare/${pair[0]}-vs-${pair[1]}`);
-      }
-    }
-    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set(urls))));
+    const urls = ALL_COMPARE_SLUGS.map((slug) => `${HOST_URL}/compare/${slug}`);
+    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(urls));
   });
 
   app.get('/sitemap-bottles-actives.xml', (req, res) => {
     const brandUrls = (typeof getAllBrandHubs === 'function' ? getAllBrandHubs() : []).map((b) => `${HOST_URL}/brand/${b.slug}`);
-    const urls = [`${HOST_URL}/bottle`, ...CLINICAL_PRODUCTS.map((p) => `${HOST_URL}/bottle/${p.id}`), `${HOST_URL}/ingredient`, ...CLINICAL_INGREDIENTS.map((i) => `${HOST_URL}/ingredient/${i.id}`), ...CLINICAL_INGREDIENTS.slice(0, 20).flatMap((i) => INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/ingredient/${i.id}/${sc.slug}`)), `${HOST_URL}/brand`, ...brandUrls];
+    const urls = [`${HOST_URL}/bottle`, ...CLINICAL_PRODUCTS.map((p) => `${HOST_URL}/bottle/${p.id}`), `${HOST_URL}/ingredient`, ...CLINICAL_INGREDIENTS.map((i) => `${HOST_URL}/ingredient/${i.id}`), ...CLINICAL_INGREDIENTS.flatMap((i) => INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/ingredient/${i.id}/${sc.slug}`)), `${HOST_URL}/brand`, ...brandUrls];
     return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set(urls))));
   });
 
   app.get('/sitemap-celebrities-concerns.xml', (req, res) => {
-    const concernUrls = (Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : []).map((c) => `${HOST_URL}/concern/${c.slug}`);
-    const urls = [`${HOST_URL}/celebrity`, ...CELEBRITY_ROUTINES.map((c) => `${HOST_URL}/celebrity/${c.slug}`), `${HOST_URL}/concern`, ...concernUrls, `${HOST_URL}/scenario`, ...SCENARIO_GUIDES.map((s) => `${HOST_URL}/scenario/${s.slug}`)];
+    const concernList = Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : [];
+    const concernUrls = concernList.flatMap((c) => [`${HOST_URL}/concern/${c.slug}`, ...INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/concern/${c.slug}/${sc.slug}`)]);
+    const scenarioUrls = SCENARIO_GUIDES.flatMap((s) => [`${HOST_URL}/scenario/${s.slug}`, ...INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/scenario/${s.slug}/${sc.slug}`)]);
+    const urls = [`${HOST_URL}/celebrity`, ...CELEBRITY_ROUTINES.map((c) => `${HOST_URL}/celebrity/${c.slug}`), `${HOST_URL}/concern`, ...concernUrls, `${HOST_URL}/scenario`, ...scenarioUrls];
     return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set(urls))));
   });
 
@@ -858,4 +949,18 @@ function attachGlowIndexSeoUpgrades(app) {
   });
 }
 
-module.exports = { attachGlowIndexSeoUpgrades, resolveComparisonSlug, computeComparisonTelemetry, computeHendersonHasselbalch };
+function getAllGlowIndexExtraUrls(hostUrl) {
+  const base = String(hostUrl || HOST_URL).replace(/\/$/, '');
+  const concernList = Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : [];
+  return [
+    { loc: `${base}/compare`, priority: '0.92', changefreq: 'weekly', title: 'Head-to-Head Cult Bottle & Active Comparisons' },
+    { loc: `${base}/scenario`, priority: '0.90', changefreq: 'weekly', title: 'Life-Event & Skin-Barrier Scenario Protocols' },
+    ...ALL_COMPARE_SLUGS.map((slug) => ({ loc: `${base}/compare/${slug}`, priority: '0.88', changefreq: 'weekly', title: `${slug.replace(/-vs-/g, ' vs. ').replace(/-/g, ' ')} Comparison Matrix` })),
+    ...SCENARIO_GUIDES.map((s) => ({ loc: `${base}/scenario/${s.slug}`, priority: '0.88', changefreq: 'weekly', title: s.title })),
+    ...concernList.flatMap((c) => INGREDIENT_SUBCATEGORIES.map((sc) => ({ loc: `${base}/concern/${c.slug}/${sc.slug}`, priority: '0.86', changefreq: 'weekly', title: `${c.title}: Best ${sc.label}` }))),
+    ...SCENARIO_GUIDES.flatMap((s) => INGREDIENT_SUBCATEGORIES.map((sc) => ({ loc: `${base}/scenario/${s.slug}/${sc.slug}`, priority: '0.86', changefreq: 'weekly', title: `${s.title}: Best ${sc.label}` }))),
+    ...CLINICAL_INGREDIENTS.flatMap((i) => INGREDIENT_SUBCATEGORIES.map((sc) => ({ loc: `${base}/ingredient/${i.id}/${sc.slug}`, priority: '0.85', changefreq: 'weekly', title: `${i.commonName} ${sc.label} Matrix` })))
+  ];
+}
+
+module.exports = { attachGlowIndexSeoUpgrades, resolveComparisonSlug, computeComparisonTelemetry, computeHendersonHasselbalch, getAllGlowIndexExtraUrls };

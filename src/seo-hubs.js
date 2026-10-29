@@ -899,6 +899,10 @@ function getAllSemanticHubUrls(hostUrl) {
   for (const cn of CONCERN_HUBS) {
     urls.push({ loc: `${base}/concern/${cn.slug}`, priority: '0.88', changefreq: 'weekly', title: cn.title });
   }
+  try {
+    const gi = require('./glowindex-seo-upgrades');
+    if (typeof gi.getAllGlowIndexExtraUrls === 'function') urls.push(...gi.getAllGlowIndexExtraUrls(base));
+  } catch (_) {}
   return urls;
 }
 
