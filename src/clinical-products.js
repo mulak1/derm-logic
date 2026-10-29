@@ -941,37 +941,37 @@ const VANITY_SLOT_CALIBRATORS = {
 
 const VANITY_SLOT_OPTIONS = [
   { slotNum: '01 · AM PREP', shortSlot: '01 · PREP', vesselType: 'mist', role: 'Morning Cleanse & pH Prep', timing: '7:30 AM · Step 1 (pH Reset · Wait 45s)', choices: [
-    { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28', ph: '4.8', tag: 'HOCl' },
-    { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua 77%', ph: '5.7', tag: 'pH5' },
-    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl', ph: '5.2', tag: 'BPO' },
-    { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Glycolic 7', ph: '3.6', tag: 'AHA' }
+    { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28', ph: '4.8', tag: 'HOCl', desc: 'Tower 28 National Eczema Assoc. accepted pH 4.8 Hypochlorous Acid mist. Calms redness, post-gym bacteria & flare-ups in 45s.' },
+    { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua 77%', ph: '5.7', tag: 'pH5', desc: 'K-beauty #1 soothing toner with 77% Heartleaf + Panthenol + Cica (pH 5.7). Cools reactive skin and preps dry barriers without sting.' },
+    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl', ph: '5.2', tag: 'BPO', desc: 'Dermatologist short-contact 10% Benzoyl Peroxide wash. Clears acne bacteria in 60s in the shower; rinse clean before Vitamin C.' },
+    { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Glycolic 7', ph: '3.6', tag: 'AHA', desc: 'High-strength pH 3.6 7% Glycolic AHA + Tasmanian Pepperberry resurfacing toner for glass-skin glow and smooth texture.' }
   ] },
   { slotNum: '02 · AM ACTIVE', shortSlot: '02 · SERUM', vesselType: 'dropper', role: 'Morning Antioxidant Serum', timing: '7:31 AM · Step 2 (Antioxidant Shield · Wait 60s before cream)', choices: [
-    { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'CE Ferulic', ph: '3.2', tag: '15%C' },
-    { id: 'rohto-melano-cc', label: 'Rohto Melano CC Vitamin C Essence ($14)', short: 'Melano CC', ph: '3.5', tag: 'VitC' },
-    { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'B3 + Zinc', ph: '6.0', tag: '10%' },
-    { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Faded TXA', ph: '5.5', tag: 'TXA' },
-    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%' }
+    { id: 'skinceuticals-ce-ferulic', label: 'SkinCeuticals C E Ferulic 15% Vitamin C ($182)', short: 'CE Ferulic', ph: '3.2', tag: '15%C', desc: 'Duke-patented pH 3.2 gold standard: 15% pure L-Ascorbic Acid + 1% Vitamin E + 0.5% Ferulic Acid for 8x UV environmental defense.' },
+    { id: 'rohto-melano-cc', label: 'Rohto Melano CC Vitamin C Essence ($14)', short: 'Melano CC', ph: '3.5', tag: 'VitC', desc: 'Cult Japanese airless tube combining pure Vitamin C + Vitamin E + Dipotassium Glycyrrhizate to fade dark spots without oxidizing.' },
+    { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'B3 + Zinc', ph: '6.0', tag: '10%', desc: 'Oil-balancing pH 6.0 10% Vitamin B3 + 1% Zinc PCA water-light serum that minimizes shine and visibly tightens congested pores.' },
+    { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Faded TXA', ph: '5.5', tag: 'TXA', desc: 'Multi-pathway pigment eraser with Tranexamic Acid, Azelaic Acid, Kojic Acid & Niacinamide (pH 5.5) for stubborn marks & melasma.' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%', desc: '1% pure GHK-Cu Copper Tripeptide + Matrixyl 3000 + Argireline (pH 6.2). Plumps fine lines & bounce with zero low-pH acid sting.' }
   ] },
   { slotNum: '03 · BARRIER SEAL', shortSlot: '03 · CREAM', vesselType: 'jar', role: '3:1:1 Ceramide & Lipid Cushion', timing: 'AM & PM · Step 3 (Seals hydration & buffers night actives)', choices: [
-    { id: 'aestura-atobarrier-365', label: 'Aestura Atobarrier 365 Ceramide Cream ($32)', short: 'Aestura', ph: '5.5', tag: '3:1:1' },
-    { id: 'dieux-instant-angel', label: 'Dieux Instant Angel Lipid Cream ($45)', short: 'Dieux', ph: '5.4', tag: 'Lipid' },
-    { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96', ph: '6.5', tag: '96%' },
-    { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast', ph: '5.6', tag: 'B5+' },
-    { id: 'cerave-pm-lotion', label: 'CeraVe PM Facial Moisturizing Lotion ($17)', short: 'CeraVe PM', ph: '5.8', tag: 'Cera' }
+    { id: 'aestura-atobarrier-365', label: 'Aestura Atobarrier 365 Ceramide Cream ($32)', short: 'Aestura', ph: '5.5', tag: '3:1:1', desc: 'Korean hospital-grade DermaON encapsulated 3:1:1 Ceramide-Cholesterol-Fatty Acid capsules for 120-hour barrier repair.' },
+    { id: 'dieux-instant-angel', label: 'Dieux Instant Angel Lipid Cream ($45)', short: 'Dieux', ph: '5.4', tag: 'Lipid', desc: 'Formulated by cosmetic chemist Joyce de Lemos: 3:1:1 barrier lipids + Dipalmitoyl Hydroxyproline peptides for silky, zero-pill cushion.' },
+    { id: 'cosrx-snail-96-mucin', label: 'COSRX Snail 96 Mucin Essence ($25)', short: 'Snail 96', ph: '6.5', tag: '96%', desc: '96.3% Snail Secretion Filtrate + Panthenol + Allantoin weightless gel-essence that gives glass-skin bounce and buffers retinoids.' },
+    { id: 'lrp-cicaplast-baume-b5', label: 'La Roche-Posay Cicaplast Baume B5+ ($18)', short: 'Cicaplast', ph: '5.6', tag: 'B5+', desc: 'French pharmacy SOS balm with 5% Vitamin B5 (Panthenol) + Madecassoside + Tribioma to rescue windburn, peeling & redness overnight.' },
+    { id: 'cerave-pm-lotion', label: 'CeraVe PM Facial Moisturizing Lotion ($17)', short: 'CeraVe PM', ph: '5.8', tag: 'Cera', desc: 'Oil-free MVE time-release lotion with 4% Niacinamide + Ceramides NP/AP/EOP + Hyaluronic Acid for lightweight barrier comfort.' }
   ] },
   { slotNum: '04 · SPF & TONE', shortSlot: '04 · SPF 50', vesselType: 'tube', role: 'Undertone-Matched SPF 50 & Finish', timing: '7:33 AM · Step 4 (2-Finger Rule · Wait 90s before makeup)', choices: [
-    { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon 50', ph: '6.2', tag: 'SPF' },
-    { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD 46', ph: '6.0', tag: 'UV46' }
+    { id: 'boj-relief-sun-spf50', label: 'Beauty of Joseon Relief Sun SPF 50+ ($18)', short: 'Joseon 50', ph: '6.2', tag: 'SPF', desc: '30% Rice Extract + Grain Probiotics organic UV filter lotion (PA++++). Zero white cast, zero eye sting, and grips makeup like a primer.' },
+    { id: 'eltamd-uv-clear-spf46', label: 'EltaMD UV Clear Broad-Spectrum SPF 46 ($43)', short: 'EltaMD 46', ph: '6.0', tag: 'UV46', desc: 'Derm-favorite 9% transparent Zinc Oxide + 5% Niacinamide oil-free SPF 46 designed for acne-prone, rosacea, and sensitive skin.' }
   ] },
   { slotNum: '05 · PM RENEWAL', shortSlot: '05 · PM', vesselType: 'pm_bottle', role: 'Evening Retinoid / Exfoliant (4-Night Cycle)', timing: '9:30 PM · Nights 1 & 2 Only (Dry skin buffer · Never mix with AM acids)', choices: [
-    { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tret 0.05%', ph: '5.8', tag: 'Tret' },
-    { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Retinal 6', ph: '5.9', tag: 'Ret6' },
-    { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: 'Paula BHA', ph: '3.5', tag: 'BHA' },
-    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%' },
-    { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin', ph: '5.5', tag: '0.1%' },
-    { id: 'biologique-recherche-p50-1970', label: 'Biologique Recherche Lotion P50 1970 ($115)', short: 'Lotion P50', ph: '3.0', tag: 'P50' },
-    { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15', ph: '4.9', tag: 'AzA' }
+    { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tret 0.05%', ph: '5.8', tag: 'Tret', desc: 'Prescription-strength 0.05% All-Trans Retinoic Acid. Directly binds nuclear RAR receptors to remodel collagen & clear pores.' },
+    { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Retinal 6', ph: '5.9', tag: 'Ret6', desc: 'Encapsulated 0.06% Retinaldehyde (acts 11x faster than standard retinol with 1 conversion step) in a gentle carrot-seed cushion.' },
+    { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: 'Paula BHA', ph: '3.5', tag: 'BHA', desc: 'Cult oil-soluble 2% Salicylic Acid + Green Tea leave-on liquid (pH 3.5) that dissolves sebaceous filaments and blackheads inside pores.' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%', desc: 'Retinoid-free night firming option: 1% pure Copper Tripeptide-1 + Matrixyl 3000 repairs elasticity with zero peeling or sun sensitivity.' },
+    { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin', ph: '5.5', tag: '0.1%', desc: '3rd-generation OTC retinoid gel targeting follicular RAR-beta/gamma receptors to prevent clogged pores with less irritation than tretinoin.' },
+    { id: 'biologique-recherche-p50-1970', label: 'Biologique Recherche Lotion P50 1970 ($115)', short: 'Lotion P50', ph: '3.0', tag: 'P50', desc: 'Iconic French facial-in-a-bottle combining AHA, BHA, PHA & Niacinamide at pH 3.0 to press-and-release dead cells for instant radiance.' },
+    { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15', ph: '4.9', tag: 'AzA', desc: '15% micronized Azelaic Acid hydrogel (pH 4.9). Calms rosacea flushing, fades post-acne redness (PIE), and is pregnancy-safe.' }
   ] }
 ];
 
