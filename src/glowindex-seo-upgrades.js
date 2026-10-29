@@ -325,10 +325,15 @@ function renderDualInlineVerdictSelector(comp, canonicalSlug, positionId) {
         <strong>Active Verdict (${comp.harmonyScore}/100 · ΔpH ${comp.deltaPh}):</strong> ${escapeHtml(comp.verdictLabel)}. Tap any profile button above to highlight the winning column in the chemistry table and save your profile.
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-        <button type="button" class="vanity-card-bag-btn mono" onclick="if(window.__dlQuickAddBottleToBag)window.__dlQuickAddBottleToBag('${escapeHtml((comp.productIds && comp.productIds[0]) || 'skinceuticals-ce-ferulic')}',this)" style="padding:8px 13px;font-size:0.78rem;cursor:pointer;background:var(--bg-surface);color:var(--rose-brand);border:1px solid var(--rose-brand);">+ Add Winner to Vanity Bag</button>
-        <a class="btn-primary mono gi-verdict-cta-link" href="/?products=${prodQuery}&amp;skin=combination&amp;ref=compare_${escapeHtml(canonicalSlug)}#analyzer" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(canonicalSlug)}',pos:'${escapeHtml(positionId)}'})" style="padding:8px 16px;font-size:0.82rem;min-height:36px;text-decoration:none;"><span>Load Both into MyShelf Checker (0s)</span><span class="btn-icon-circle">&rarr;</span></a>
+        <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml((comp.productIds && comp.productIds[0]) || 'skinceuticals-ce-ferulic')}','${escapeHtml((comp.productIds && comp.productIds[1]) || 'aestura-atobarrier-365')}'],'compare_${escapeHtml(canonicalSlug)}')" style="padding:8px 14px;font-size:0.8rem;min-height:36px;"><span>Pre-Load Both in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button>
+        <a class="btn-secondary mono gi-verdict-cta-link" href="/?products=${prodQuery}&amp;skin=combination&amp;ref=compare_${escapeHtml(canonicalSlug)}#analyzer" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(canonicalSlug)}',pos:'${escapeHtml(positionId)}'})" style="padding:8px 14px;font-size:0.8rem;min-height:36px;text-decoration:none;"><span>Open in MyShelf Checker &rarr;</span></a>
       </div>
     </div>
+    <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'compare_${escapeHtml(canonicalSlug)}')" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-hairline);">
+      <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Or email free 4-Night .ICS Calendar + 24h Routine Restore Link..." style="flex:1;min-width:220px;padding:7px 11px;font-size:0.76rem;min-height:34px;" />
+      <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
+      <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+    </form>
   </div>`;
 }
 

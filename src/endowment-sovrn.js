@@ -874,6 +874,36 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       }
     } catch (_) {}
   }, { passive: true });
+
+  window.__dlCaptureFreeIcsLead = function(ev, sourceTag) {
+    if (ev && ev.preventDefault) ev.preventDefault();
+    var formEl = (ev && ev.target && ev.target.tagName === 'FORM') ? ev.target : document.querySelector('.dl-inline-ics-form');
+    var emIn = formEl ? formEl.querySelector('.dl-inline-ics-email') : null;
+    var email = emIn && emIn.value ? emIn.value.trim() : '';
+    if (!email) return false;
+    var btnEl = formEl ? formEl.querySelector('.dl-inline-ics-btn') : null;
+    var statusEl = formEl ? formEl.querySelector('.dl-inline-ics-status') : null;
+    if (btnEl) { btnEl.textContent = '✓ Sent + .ICS Ready!'; btnEl.style.background = 'var(--sage-safe)'; }
+    if (statusEl) {
+      statusEl.style.display = 'block';
+      statusEl.innerHTML = '✓ Free 4-Night .ICS Calendar &amp; 24h Restore Link sent to <strong>' + email.replace(/[<>&"']/g, '') + '</strong> &middot; <a href="/api/github-upgrade/skin-cycling.ics" download="dermlogic-4-night-skin-cycling.ics" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Download .ICS Now</a> &middot; <a href="/buy/micro_pass?source=post_ics_lead" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Save 9:16 Lock-Screen Card (99&cent;) &rarr;</a>';
+    }
+    fetch('/api/leads/capture', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'inline_ics_' + (sourceTag || 'web') })
+    }).catch(function() {});
+    try {
+      var dlLink = document.createElement('a');
+      dlLink.href = '/api/github-upgrade/skin-cycling.ics';
+      dlLink.download = 'dermlogic-4-night-skin-cycling.ics';
+      dlLink.style.display = 'none';
+      document.body.appendChild(dlLink);
+      dlLink.click();
+      setTimeout(function() { if (dlLink.parentNode) dlLink.parentNode.removeChild(dlLink); }, 600);
+    } catch (_) {}
+    return false;
+  };
 `;
 
 function renderEditorialPolicyPage({ renderBaseDocument }) {

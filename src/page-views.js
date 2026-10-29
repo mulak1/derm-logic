@@ -785,16 +785,21 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div>
         </div>
         <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.8vw,3.4rem);">${escapeHtml(page.title)}</h1>
-        <p class="hero-sub" style="margin-bottom:20px;">${escapeHtml(page.summary)}</p>
+        <p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(page.summary)}</p>
+        <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-oat);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+          <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml(primaryProdId)}','${escapeHtml(secondaryProdId)}'],'seo_${escapeHtml(page.slug)}')" style="padding:9px 15px;font-size:0.8rem;"><span>Pre-Load These 2 Bottles in My 5-Slot Vanity Bag &amp; Fix Split</span><span class="btn-icon-circle">&rarr;</span></button>
+          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'seo_${escapeHtml(page.slug)}')" style="display:flex;gap:6px;flex:1;min-width:240px;align-items:center;flex-wrap:wrap;">
+            <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Or email free 4-Night .ICS Calendar + 24h Link..." style="flex:1;padding:7px 11px;font-size:0.77rem;min-height:34px;" />
+            <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
+            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.75rem;color:var(--sage-safe);"></div>
+          </form>
+        </div>
 
         <div class="z-cascade-stage" style="margin-bottom:24px;">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
               <div class="vessel-photo-frame"><img src="/public/editorial-segment-2.jpg" alt="Woman inspecting serum dropper compatibility in sunlit limestone atelier" style="object-position:center 22%;" loading="lazy" /></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
-                <span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Do They Cancel Out?</span>
-                <span class="${page.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono">${page.compatibilityScore < 55 ? 'Split AM & PM' : 'Layer Gently'}</span>
-              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Do They Cancel Out?</span><span class="${page.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono">${page.compatibilityScore < 55 ? 'Split AM & PM' : 'Layer Gently'}</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">${escapeHtml(page.conflictType)}</h3>
               <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(page.summary)}</p>
             </div>
@@ -803,10 +808,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <div class="z-vessel-center"><div class="porcelain-vessel-core">
             <div>
               <div class="vessel-photo-frame"><img src="/public/editorial-woman-morning.jpg" alt="Woman applying morning serum in warm daylight" style="object-position:center 20%;" loading="lazy" /></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
-                <span class="mono" style="font-size:0.82rem;color:var(--sage-safe);font-weight:500;">Morning Routine Rule</span>
-                <span class="badge-safe mono">Under SPF</span>
-              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--sage-safe);font-weight:500;">Morning Routine Rule</span><span class="badge-safe mono">Under SPF</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Wear in Daylight</h3>
               <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(page.amRule || 'Apply water-light serums first on clean skin, give 60 seconds to absorb, and seal with broad-spectrum SPF 50.')} Pat onto clean, dry skin after cleansing, let it settle for 60 seconds so the pH stays stable, then finish with lightweight moisturizer and SPF 30–50+.</p>
             </div>
@@ -815,10 +817,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <div class="z-vessel-right"><div class="porcelain-vessel-core">
             <div>
               <div class="vessel-photo-frame"><img src="/public/editorial-woman-evening.jpg" alt="Woman smoothing ceramide barrier cream onto her cheek at bedtime" style="object-position:center 22%;" loading="lazy" /></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
-                <span class="mono" style="font-size:0.82rem;color:var(--honey-warn);font-weight:500;">Bedtime Recovery Rule</span>
-                <span class="badge-safe mono">11 PM Vanity</span>
-              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--honey-warn);font-weight:500;">Bedtime Recovery Rule</span><span class="badge-safe mono">11 PM Vanity</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Layer at Bedtime</h3>
               <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(page.pmRule || 'Alternate strong actives across a calm 4-night recovery rhythm and cushion with a 3:1:1 ceramide barrier cream.')} Apply from thinnest watery essence to richest cream, and cushion sensitive areas around the corners of your nose and mouth with a barrier moisturizer.</p>
             </div>

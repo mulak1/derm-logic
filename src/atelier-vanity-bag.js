@@ -149,8 +149,8 @@ function renderAtelierVanityDrawerHtml() {
           <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;"><span>Complete 3-File Kit ($1.99)</span></a>
         </div>
         <form id="dl-vanity-email-form" onsubmit="return window.__dlSendVanityHoldEmail(event)" style="display:flex;gap:6px;align-items:center;">
-          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Or email my free 24h restore link..." style="flex:1;padding:6px 10px;font-size:0.76rem;min-height:30px;" />
-          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:6px 10px;min-height:30px;font-size:0.75rem;white-space:nowrap;">Email 24h Link</button>
+          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Or email free 4-Night .ICS + 24h link..." style="flex:1;padding:6px 10px;font-size:0.76rem;min-height:30px;" />
+          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:6px 10px;min-height:30px;font-size:0.75rem;white-space:nowrap;">Send Free .ICS</button>
         </form>
         <div id="dl-vanity-email-status" class="mono" style="display:none;font-size:0.75rem;color:var(--sage-safe);font-weight:600;"></div>
       </div>
@@ -619,8 +619,8 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
               + '<div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.48;margin-bottom:10px;">' + extraNote + '</div>'
               + '<div class="mono" style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Swap or try another bottle in this slot:</div>'
               + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">' + chipsHtml + '</div>'
-              + '<div class="mono" style="padding:7px 10px;border-radius:14px;background:var(--bg-oat);font-size:0.74rem;color:var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:8px;">'
-                + (currentBottle ? '<button type="button" class="mono" onclick="window.__dlRemoveSlotBottle(' + idx + ')" style="background:transparent;border:none;color:var(--text-muted);text-decoration:underline;cursor:pointer;font-size:0.74rem;">Remove from Slot &times;</button>' : '<span>Tap a bottle chip above</span>')
+              + '<div class="mono" style="padding:7px 10px;border-radius:14px;background:var(--bg-oat);font-size:0.74rem;color:var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">'
+                + (currentBottle ? '<span><button type="button" class="mono" onclick="window.__dlRemoveSlotBottle(' + idx + ')" style="background:transparent;border:none;color:var(--text-muted);text-decoration:underline;cursor:pointer;font-size:0.74rem;margin-right:10px;">Remove &times;</button><a href="/api/affiliate?product=' + esc(currentBottle.id) + '&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">Restock Bottle &nearr;</a></span>' : '<span>Tap a bottle chip above</span>')
                 + nextBtnHtml
               + '</div></div></div>';
         }).join('');
@@ -730,17 +730,36 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       return false;
     };
 
-    window.__dlQuickAddBottleToBag = function(prodId, btnEl) {
-      return window.__dlToggleBottleInBag(prodId, prodId, '', btnEl);
+    window.__dlQuickAddBottleToBag = function(prodId, btnEl) { return window.__dlToggleBottleInBag(prodId, prodId, '', btnEl); };
+
+    window.__dlPreloadBottlesInVanityBag = function(prodIds, sourceTag) {
+      var st = window.__dlVanityState;
+      if (!st.customSlotBottle) st.customSlotBottle = {};
+      var ids = Array.isArray(prodIds) ? prodIds : String(prodIds || '').split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+      var firstSlot = 0;
+      ids.forEach(function(pid, i) {
+        var mapped = mapProductIdToSlot(pid, (PROD_INFO[pid] && PROD_INFO[pid].name) || pid, '');
+        var sIdx = mapped.slotIdx;
+        if (i === 0) firstSlot = sIdx;
+        if (sIdx === 3) st.pouchSpfSealed = true;
+        if (mapped.choiceIdx >= 0) { st.slotSelections[sIdx] = mapped.choiceIdx; delete st.customSlotBottle[sIdx]; }
+        else { st.slotSelections[sIdx] = 0; st.customSlotBottle[sIdx] = makeCustomSlot(pid, (PROD_INFO[pid] && PROD_INFO[pid].name) || pid, ''); }
+      });
+      st.activeSlotIdx = firstSlot; st.dossierTab = 'slots'; saveVanityState(st);
+      window.__dlRenderVanityDrawer(); window.__dlRefreshPageAddButtons();
+      if (window.__ebLogEvent) {
+        window.__ebLogEvent('p_seo_compare_cta', { source: sourceTag || 'pseo_preload', products: ids });
+        window.__ebLogEvent('vanity_bag_add', { source: sourceTag || 'pseo_preload', count: ids.length });
+        window.__ebLogEvent('calculate', { source: sourceTag || 'pseo_preload', products: ids });
+      }
+      if (window.__giFireBeacon) window.__giFireBeacon('p_seo_cta_click', { slug: sourceTag || 'pseo_preload', trigger: 'vanity_bag_preload' });
+      window.__dlOpenVanityDrawer(sourceTag || 'pseo_preload');
     };
 
     // Inject "+ Add to Vanity Bag" buttons onto every bottle card across /, /celebrity/*, /bottle/*, /concern/*
     window.__dlRefreshPageAddButtons = function() {
       var st = window.__dlVanityState;
-      var activeIds = [0, 1, 2, 3, 4].map(function(i) {
-        var b = getBottleForSlot(st, i);
-        return b ? b.id : null;
-      }).filter(Boolean);
+      var activeIds = [0, 1, 2, 3, 4].map(function(i) { var b = getBottleForSlot(st, i); return b ? b.id : null; }).filter(Boolean);
 
       document.querySelectorAll('a[href*="/api/affiliate?product="], a[data-sovrn-beacon*="product="]').forEach(function(affLink) {
         if (affLink.closest('[data-no-bag-inject="1"]')) return;
@@ -754,11 +773,8 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         var btnId = 'dl-bag-btn-' + prodId;
         var existing = document.getElementById(btnId) || (affLink.parentElement ? affLink.parentElement.querySelector('button[data-dl-bag-prod]') : null) || (card ? card.querySelector('button[data-dl-bag-prod]') : null);
         if (!existing) {
-          existing = document.createElement('button');
-          existing.type = 'button';
-          existing.id = btnId;
-          existing.setAttribute('data-dl-bag-prod', prodId);
-          existing.setAttribute('data-dl-bag-title', prodTitle);
+          existing = document.createElement('button'); existing.type = 'button'; existing.id = btnId;
+          existing.setAttribute('data-dl-bag-prod', prodId); existing.setAttribute('data-dl-bag-title', prodTitle);
           existing.className = 'dl-add-to-bag-btn mono';
           existing.onclick = function() { window.__dlToggleBottleInBag(prodId, prodTitle, '', existing); };
           if (affLink.parentElement) affLink.parentElement.appendChild(existing);
@@ -797,61 +813,23 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (window.__ebLogEvent) window.__ebLogEvent('view_paywall', { target: 'atelier_vanity_drawer_' + (reason || 'open') });
     };
 
-    window.__dlCloseVanityDrawer = function() {
-      var drawer = document.getElementById('dl-atelier-vanity-drawer');
-      if (drawer) drawer.style.display = 'none';
-    };
-
-    window.__dlSelectVanitySlot = function(idx) {
-      window.__dlVanityState.activeSlotIdx = idx;
-      window.__dlVanityState.dossierTab = 'slots';
-      saveVanityState(window.__dlVanityState);
-      window.__dlRenderVanityDrawer();
-    };
-
-    window.__dlPickSlotBottle = function(slotIdx, choiceIdx) {
-      window.__dlVanityState.slotSelections[slotIdx] = choiceIdx;
-      if (window.__dlVanityState.customSlotBottle) delete window.__dlVanityState.customSlotBottle[slotIdx];
-      saveVanityState(window.__dlVanityState);
-      window.__dlRenderVanityDrawer();
-      window.__dlRefreshPageAddButtons();
-    };
-
-    window.__dlSetUndertone = function(undertone) {
-      window.__dlVanityState.undertone = undertone || 'neutral_ivory';
-      window.__dlVanityState.activeSlotIdx = 3;
-      window.__dlVanityState.dossierTab = 'slots';
-      saveVanityState(window.__dlVanityState);
-      window.__dlRenderVanityDrawer();
-    };
-
-    window.__dlSetFinish = function(finish) {
-      window.__dlVanityState.finish = finish || 'velvet_satin';
-      window.__dlVanityState.activeSlotIdx = 3;
-      window.__dlVanityState.dossierTab = 'slots';
-      saveVanityState(window.__dlVanityState);
-      window.__dlRenderVanityDrawer();
-    };
+    window.__dlCloseVanityDrawer = function() { var d = document.getElementById('dl-atelier-vanity-drawer'); if (d) d.style.display = 'none'; };
+    window.__dlSelectVanitySlot = function(idx) { window.__dlVanityState.activeSlotIdx = idx; window.__dlVanityState.dossierTab = 'slots'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); };
+    window.__dlPickSlotBottle = function(slotIdx, choiceIdx) { window.__dlVanityState.slotSelections[slotIdx] = choiceIdx; if (window.__dlVanityState.customSlotBottle) delete window.__dlVanityState.customSlotBottle[slotIdx]; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); window.__dlRefreshPageAddButtons(); };
+    window.__dlSetUndertone = function(undertone) { window.__dlVanityState.undertone = undertone || 'neutral_ivory'; window.__dlVanityState.activeSlotIdx = 3; window.__dlVanityState.dossierTab = 'slots'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); };
+    window.__dlSetFinish = function(finish) { window.__dlVanityState.finish = finish || 'velvet_satin'; window.__dlVanityState.activeSlotIdx = 3; window.__dlVanityState.dossierTab = 'slots'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); };
 
     window.__dlSetSlotCalibrator = function(slotIdx, rowNum, valId) {
-      var st = window.__dlVanityState;
-      var cfg = SLOT_CALIBRATORS[slotIdx];
+      var st = window.__dlVanityState, cfg = SLOT_CALIBRATORS[slotIdx];
       if (!cfg) return;
       st[rowNum === 1 ? cfg.row1Key : cfg.row2Key] = valId;
-      var r1Val = st[cfg.row1Key] || cfg.row1[0].id;
-      var r2Val = st[cfg.row2Key] || cfg.row2[0].id;
+      var r1Val = st[cfg.row1Key] || cfg.row1[0].id, r2Val = st[cfg.row2Key] || cfg.row2[0].id;
       var r1Obj = cfg.row1.find(function(x) { return x.id === r1Val; }) || cfg.row1[0];
       var isGentle = (r2Val === 'sensitive' || r2Val === 'beginner_sandwich');
       var recIdx = (isGentle && typeof r1Obj.sensitivePickIdx === 'number') ? r1Obj.sensitivePickIdx : ((isGentle && typeof r1Obj.gentlePickIdx === 'number') ? r1Obj.gentlePickIdx : r1Obj.pickIdx);
-      if (typeof recIdx === 'number') {
-        st.slotSelections[slotIdx] = recIdx;
-        if (st.customSlotBottle) delete st.customSlotBottle[slotIdx];
-      }
-      st.activeSlotIdx = slotIdx;
-      st.dossierTab = 'slots';
-      saveVanityState(st);
-      window.__dlRenderVanityDrawer();
-      window.__dlRefreshPageAddButtons();
+      if (typeof recIdx === 'number') { st.slotSelections[slotIdx] = recIdx; if (st.customSlotBottle) delete st.customSlotBottle[slotIdx]; }
+      st.activeSlotIdx = slotIdx; st.dossierTab = 'slots'; saveVanityState(st);
+      window.__dlRenderVanityDrawer(); window.__dlRefreshPageAddButtons();
       if (window.__ebLogEvent) window.__ebLogEvent('vanity_calibrator', { slot: slotIdx + 1, row: rowNum, value: valId });
     };
 
@@ -859,19 +837,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var inp = document.getElementById('productFilterInput');
       var q = inp && inp.value ? inp.value.trim() : '';
       if (!q) return;
-      fetch('/api/bottles/discover', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: q })
-      }).then(function(r) { return r.json(); }).then(function(d) {
-        if (d && d.product) {
-          window.__dlToggleBottleInBag(d.product.id, d.product.name, d.product.priceUsd, null);
-          window.__dlOpenVanityDrawer('custom_bottle');
-        }
-      }).catch(function() {
-        window.__dlToggleBottleInBag('custom-' + Date.now(), q, 28, null);
-        window.__dlOpenVanityDrawer('custom_bottle');
-      });
+      fetch('/api/bottles/discover', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: q }) }).then(function(r) { return r.json(); }).then(function(d) {
+        if (d && d.product) { window.__dlToggleBottleInBag(d.product.id, d.product.name, d.product.priceUsd, null); window.__dlOpenVanityDrawer('custom_bottle'); }
+      }).catch(function() { window.__dlToggleBottleInBag('custom-' + Date.now(), q, 28, null); window.__dlOpenVanityDrawer('custom_bottle'); });
     };
 
     window.__dlSendVanityHoldEmail = function(ev) {
@@ -879,18 +847,11 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var emIn = document.getElementById('dl-vanity-hold-email');
       var email = emIn && emIn.value ? emIn.value.trim() : '';
       if (!email) return false;
-      var statusEl = document.getElementById('dl-vanity-email-status');
-      var btnEl = document.getElementById('dl-vanity-email-btn');
-      if (btnEl) btnEl.textContent = 'Saved 24h!';
-      if (statusEl) {
-        statusEl.style.display = 'block';
-        statusEl.textContent = '24-Hour Restore Link sent to ' + email + ' (Bag #' + (window.__dlVanityState.bagId || 'DL-4829') + ').';
-      }
-      fetch('/api/leads/capture', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'atelier_vanity_24h_hold' })
-      }).catch(function() {});
+      var statusEl = document.getElementById('dl-vanity-email-status'), btnEl = document.getElementById('dl-vanity-email-btn');
+      if (btnEl) btnEl.textContent = '✓ Sent + .ICS!';
+      if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = '4-Night .ICS Calendar & 24h Restore Link sent to ' + email + ' (Bag #' + (window.__dlVanityState.bagId || 'DL-4829') + ').'; }
+      fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'atelier_vanity_24h_hold' }) }).catch(function() {});
+      try { var dl = document.createElement('a'); dl.href = '/api/github-upgrade/skin-cycling.ics'; dl.download = 'dermlogic-4-night-skin-cycling.ics'; dl.style.display = 'none'; document.body.appendChild(dl); dl.click(); setTimeout(function() { if (dl.parentNode) dl.parentNode.removeChild(dl); }, 600); } catch (_) {}
       return false;
     };
 

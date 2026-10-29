@@ -805,10 +805,16 @@ function renderConcernDetailPage(concern) {
           <h1 class="hero-h1" style="font-size:clamp(2rem,3.6vw,3.1rem);margin-bottom:10px;">${escapeHtml(concern.title)}</h1>
           <p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(concern.summary)}</p>
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;">${actives.map((a) => `<a href="/ingredient/${escapeHtml(a.id)}" class="mono" style="font-size:0.75rem;padding:4px 9px;background:var(--bg-surface);border:1px solid var(--border-hairline);color:var(--text-primary);text-decoration:none;">Safe Active: ${escapeHtml(a.commonName.replace(/\s*\([^)]*\)/g, ''))} (pH ${a.phMin}–${a.phMax})</a>`).join('')}</div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="${preloadHref}" class="btn-primary"><span>Load This ${bottles.length}-Bottle Protocol in Checker</span><span class="btn-icon-circle">&rarr;</span></a>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+            <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag([${bottles.map((b) => `'${escapeHtml(b.id)}'`).join(',')}],'concern_${escapeHtml(concern.slug)}')"><span>Pre-Load ${bottles.length} Bottles in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button>
+            <a href="${preloadHref}" class="btn-secondary"><span>Open in Full Checker &rarr;</span></a>
             <a href="/buy/flash_pass?guide=${encodeURIComponent(concern.slug)}" class="btn-secondary"><span>Save 9:16 Lock-Screen Card ($1.99)</span></a>
           </div>
+          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'concern_${escapeHtml(concern.slug)}')" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+            <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Or email free 4-Night .ICS Calendar + 24h Restore Link..." style="flex:1;min-width:210px;padding:7px 11px;font-size:0.76rem;min-height:34px;" />
+            <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
+            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+          </form>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
           <img src="${escapeHtml(concern.heroImg || '/public/editorial-woman-morning.jpg')}" alt="${escapeHtml(concern.title)} skincare ritual" loading="eager" style="width:100%;height:220px;object-fit:cover;object-position:center 22%;border-radius:10px;" />

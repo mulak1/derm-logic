@@ -590,11 +590,21 @@ function renderAnalysisResultHtml(res) {
           </div>
         </div>
 
-        <div id="beforeAfterSplitBar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 12px;background:var(--bg-canvas);margin-bottom:10px;min-width:0;">
+        <div id="beforeAfterSplitBar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 12px;background:var(--bg-canvas);margin-bottom:8px;min-width:0;">
           <span id="beforeAfterStatusText" style="font-size:0.82rem;color:var(--text-secondary);"><strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)</span>
           <div class="vanity-light-pill" role="group" aria-label="Compare Before Clashing Stack vs After Fixed Split" style="padding:3px;gap:3px;flex-wrap:wrap;">
             <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.76rem;padding:4px 8px;min-height:26px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Fixed Split</button>
             <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.76rem;padding:4px 8px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} &middot; -$${wastedUsd})</button>
+          </div>
+        </div>
+        <div id="dl-postscan-conversion-strip" style="padding:10px 12px;background:var(--bg-oat);margin-bottom:10px;display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+            <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'postscan_results')" style="display:flex;gap:6px;flex:1;min-width:220px;align-items:center;">
+              <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Email free 4-Night .ICS Calendar + 24h Link..." style="flex:1;padding:6px 10px;font-size:0.76rem;min-height:30px;" />
+              <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:6px 11px;min-height:30px;font-size:0.75rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
+              <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+            </form>
+            <a href="/api/affiliate?product=${escapeHtml((pmCream && pmCream.id) || (matchedProds[0] && matchedProds[0].id) || 'aestura-atobarrier-365')}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">Restock ${escapeHtml((pmCream && pmCream.brand) || (matchedProds[0] && matchedProds[0].brand) || 'Aestura')} ($${(pmCream && pmCream.priceUsd) || (matchedProds[0] && matchedProds[0].priceUsd) || 32}) &nearr;</a>
           </div>
         </div>
 
