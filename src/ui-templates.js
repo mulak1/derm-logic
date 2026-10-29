@@ -21,58 +21,61 @@ function escapeHtml(str) {
 }
 
 const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="34" height="34" role="img" aria-label="DermLogic Formulation Atelier Emblem" style="flex-shrink:0;display:block;">
-  <circle cx="20" cy="20" r="19" fill="#E9E2D7" stroke="#7A2332" stroke-width="1.5"/>
-  <circle cx="20" cy="20" r="15" fill="none" stroke="#655C55" stroke-width="0.75" stroke-dasharray="2 1.5"/>
-  <path d="M20 9.5 C20 9.5 26.8 17.6 26.8 22.6 C26.8 26.4 23.8 29.5 20 29.5 C16.2 29.5 13.2 26.4 13.2 22.6 C13.2 17.6 20 9.5 20 9.5 Z" fill="#7A2332"/>
-  <path d="M16.5 21.2 C16.2 23.6 17.6 25.8 19.8 26.3" fill="none" stroke="#F4EFE8" stroke-width="1.3" stroke-linecap="round"/>
-  <path d="M20 29.5 C22.8 29.5 25.5 31.2 26.5 33.2 C23.6 33.6 21.2 32.1 20 29.5 Z" fill="#264C3C"/>
-  <path d="M20 29.5 C17.2 29.5 14.5 31.2 13.5 33.2 C16.4 33.6 18.8 32.1 20 29.5 Z" fill="#264C3C" opacity="0.85"/>
-  <circle cx="20" cy="17.2" r="1.3" fill="#F4EFE8"/>
+  <circle cx="20" cy="20" r="19" fill="#F3E1E5" stroke="#8A3448" stroke-width="1.4"/>
+  <circle cx="20" cy="20" r="15" fill="none" stroke="#8E6B75" stroke-width="0.75" stroke-dasharray="2 1.5"/>
+  <path d="M20 9.5 C20 9.5 26.8 17.6 26.8 22.6 C26.8 26.4 23.8 29.5 20 29.5 C16.2 29.5 13.2 26.4 13.2 22.6 C13.2 17.6 20 9.5 20 9.5 Z" fill="#8A3448"/>
+  <path d="M16.5 21.2 C16.2 23.6 17.6 25.8 19.8 26.3" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M20 29.5 C22.8 29.5 25.5 31.2 26.5 33.2 C23.6 33.6 21.2 32.1 20 29.5 Z" fill="#285B44"/>
+  <path d="M20 29.5 C17.2 29.5 14.5 31.2 13.5 33.2 C16.4 33.6 18.8 32.1 20 29.5 Z" fill="#285B44" opacity="0.85"/>
+  <circle cx="20" cy="17.2" r="1.3" fill="#FFFFFF"/>
 </svg>`;
 
 const SHARED_CSS = `
   :root {
-    --bg-canvas: #F2F0EE;
-    --bg-oat: #E6E4E1;
-    --bg-surface: #F8F7F6;
-    --bg-porcelain: #E6E4E1;
-    --bg-deep: #181412;
-    --ink-on-deep: #F2F0EE;
-    --border-hairline: #D5CCC0;
-    --border-strong: #C9BCAE;
-    --text-primary: #181412;
-    --text-secondary: #3A342F;
-    --text-muted: #524A43;
-    --rose-brand: #7A2332;
-    --rose-brand-hover: #5E1927;
-    --accent-ink: #F4EFE8;
-    --rose-pill-bg: #EFE5E7;
-    --rose-pill-border: #D9BDC2;
-    --sage-safe: #264C3C;
-    --sage-bg: #E4EDE8;
-    --sage-border: #B7D4C6;
-    --honey-warn: #7D5116;
-    --honey-bg: #E8E6E3;
-    --honey-border: #DFC8A6;
-    --berry-clash: #7A2332;
-    --berry-bg: #EFE5E7;
-    --berry-border: #D9BDC2;
+    --bg-canvas: #FDF8F6;
+    --bg-oat: #F8EFE6;
+    --bg-pouch: #F3E1E5;
+    --bg-surface: #FFFFFF;
+    --bg-porcelain: #FFFFFF;
+    --bg-deep: #3A1F27;
+    --ink-on-deep: #FDF8F6;
+    --border-hairline: transparent;
+    --border-strong: transparent;
+    --text-primary: #3A1F27;
+    --text-secondary: #6E4B55;
+    --text-muted: #8E6B75;
+    --rose-brand: #8A3448;
+    --rose-brand-hover: #722739;
+    --accent-ink: #FFFFFF;
+    --rose-pill-bg: #EED6DC;
+    --rose-pill-border: transparent;
+    --sage-safe: #285B44;
+    --sage-bg: #E9F4EE;
+    --sage-border: transparent;
+    --honey-warn: #945227;
+    --honey-bg: #FBF0E4;
+    --honey-border: transparent;
+    --berry-clash: #8A3448;
+    --berry-bg: #F6E3E7;
+    --berry-border: transparent;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --margin: 5vw;
     --step-small: clamp(0.875rem, 0.82rem + 0.15vw, 0.9375rem);
     --step-body: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
     --step-lead: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem);
     --step-head: clamp(2rem, 1.45rem + 2.4vw, 3.35rem);
     --step-hero: clamp(3.5rem, 7.4vw, 6.85rem);
-    --radius-shell: 0px;
-    --radius-card: 0px;
-    --radius-input: 0px;
-    --radius-pill: 0px;
+    --radius-shell: 28px;
+    --radius-card: 22px;
+    --radius-input: 999px;
+    --radius-pill: 999px;
     --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   }
   body.vanity-night,
   html[data-theme="night"] body {
     --bg-canvas: #0C0A08;
     --bg-oat: #181512;
+    --bg-pouch: #24191D;
     --bg-surface: #181512;
     --bg-porcelain: #231E1A;
     --bg-deep: #231E1A;
@@ -97,17 +100,17 @@ const SHARED_CSS = `
     --berry-bg: #2A181B;
     --berry-border: #5E3138;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border-color: transparent; }
   html, body {
     background-color: var(--bg-canvas); color: var(--text-primary);
-    font-family: 'Newsreader', Georgia, serif; font-weight: 400;
+    font-family: var(--font-sans); font-weight: 400;
     font-size: 16px; line-height: 1.58; overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     transition: background-color 320ms var(--ease-spring), color 320ms var(--ease-spring);
   }
-  .serif-display { font-family: 'Newsreader', Georgia, serif; font-weight: 300; letter-spacing: -0.03em; line-height: 1.06; }
-  .serif-italic { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 300; }
-  .mono { font-family: 'Newsreader', Georgia, serif; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
+  .serif-display, h1, h2, h3 { font-family: 'Newsreader', Georgia, serif; font-weight: 400; letter-spacing: -0.025em; line-height: 1.08; }
+  .serif-italic { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 400; }
+  .mono { font-family: var(--font-sans); font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
   img { display: block; max-width: 100%; object-fit: cover; }
   a { color: inherit; text-decoration: none; }
   button, select, textarea, input { font: inherit; color: inherit; }
@@ -118,25 +121,25 @@ const SHARED_CSS = `
   .nav-inner { min-height: 70px; padding-top: 12px; padding-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: nowrap; }
   .brand-logo-link { display: inline-flex; align-items: center; gap: 8px; font-size: 1.24rem; font-weight: 400; letter-spacing: -0.02em; color: var(--text-primary); text-decoration: none; white-space: nowrap; transition: opacity 180ms ease-out; }
   .brand-logo-link:hover { opacity: 0.78; }
-  .nav-links { display: flex; align-items: center; gap: 16px; font-size: 0.92rem; font-weight: 400; color: var(--text-secondary); flex-wrap: nowrap; }
+  .nav-links { display: flex; align-items: center; gap: 16px; font-size: 0.92rem; font-weight: 500; color: var(--text-secondary); flex-wrap: nowrap; }
   .nav-links a { white-space: nowrap; transition: color 180ms ease-out, opacity 180ms ease-out; }
   .nav-links a:hover { color: var(--rose-brand); }
-  .vanity-light-pill { display: inline-flex; background: var(--bg-oat); padding: 4px; gap: 4px; }
-  .vanity-light-btn { border: none; background: transparent; padding: 5px 10px; min-height: 32px; font-size: 0.84rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: background-color 200ms var(--ease-spring), color 200ms var(--ease-spring), transform 160ms ease-out; }
+  .vanity-light-pill { display: inline-flex; background: var(--bg-surface); border-radius: 999px; padding: 4px; gap: 4px; }
+  .vanity-light-btn { border: none; border-radius: 999px; background: transparent; padding: 5px 12px; min-height: 32px; font-size: 0.84rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: background-color 200ms var(--ease-spring), color 200ms var(--ease-spring), transform 160ms ease-out; }
   .vanity-light-btn.active { background: var(--rose-brand); color: var(--accent-ink); }
   .vanity-light-btn:active { transform: scale(0.97); }
 
-  /* Buttons: Square editorial luxury blocks */
-  .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--rose-brand); color: var(--accent-ink); font-weight: 500; font-size: var(--step-small); padding: 12px 22px; min-height: 44px; border: none; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, opacity 180ms ease-out, background-color 200ms ease-out; }
+  /* Buttons: Soft Pillowy Capsules */
+  .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--rose-brand); color: var(--accent-ink); font-weight: 600; font-size: var(--step-small); padding: 13px 26px; min-height: 44px; border: none; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, opacity 180ms ease-out, background-color 200ms ease-out; }
   .btn-primary:hover { opacity: 0.92; }
   .btn-primary:active { transform: scale(0.97); }
   .btn-icon-circle { display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: transform 200ms var(--ease-spring); }
   .btn-primary:hover .btn-icon-circle { transform: translate(2px, -2px); }
-  .btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--bg-oat); color: var(--text-primary); font-weight: 500; font-size: var(--step-small); padding: 10px 18px; min-height: 42px; border: none; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, background-color 200ms ease-out, color 200ms ease-out; }
+  .btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--bg-oat); color: var(--text-primary); font-weight: 600; font-size: var(--step-small); padding: 12px 22px; min-height: 42px; border: none; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, background-color 200ms ease-out, color 200ms ease-out; }
   .btn-secondary:hover { background: var(--rose-pill-bg); color: var(--rose-brand); }
   .btn-secondary:active { transform: scale(0.97); }
 
-  .affiliate-link-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: var(--rose-pill-bg); color: var(--rose-brand); font-size: 0.84rem; font-weight: 500; text-decoration: none; transition: opacity 180ms ease-out; }
+  .affiliate-link-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: var(--rose-pill-bg); color: var(--rose-brand); font-size: 0.84rem; font-weight: 600; text-decoration: none; transition: opacity 180ms ease-out; }
   .affiliate-link-pill:hover { opacity: 0.85; }
   .affiliate-micro-link { display: inline-block; margin-top: 4px; font-size: 0.82rem; font-weight: 500; color: var(--sage-safe); text-decoration: underline; text-underline-offset: 3px; }
   .affiliate-micro-link:hover { color: var(--rose-brand); }
@@ -146,52 +149,53 @@ const SHARED_CSS = `
   .editorial-top-banner { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: stretch; margin-bottom: 16px; }
   .hero-copy-col { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; }
   .hero-photo-col { min-width: 0; display: flex; flex-direction: column; }
-  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.35rem, 4.1vw, 3.65rem); font-weight: 300; line-height: 0.96; letter-spacing: -0.04em; color: var(--text-primary); margin-bottom: 10px; }
+  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.35rem, 4.1vw, 3.65rem); font-weight: 400; line-height: 0.96; letter-spacing: -0.04em; color: var(--text-primary); margin-bottom: 10px; }
   .hero-h1-line1 { display: block; }
   .hero-h1-line2 { display: block; padding-left: 5vw; }
   .hero-sub { color: var(--text-secondary); font-size: var(--step-lead); line-height: 1.38; max-width: 54ch; margin-bottom: 12px; }
-  .editorial-photo-shell { background: var(--bg-oat); padding: 12px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-  .editorial-photo-inner { overflow: hidden; position: relative; min-height: 290px; height: 100%; flex: 1; background: var(--bg-porcelain); }
+  .editorial-photo-shell { background: var(--bg-oat); border-radius: 28px; padding: 20px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .editorial-photo-inner { overflow: hidden; border-radius: 20px; position: relative; min-height: 290px; height: 100%; flex: 1; background: var(--bg-porcelain); }
   .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 180ms ease-out; }
   .editorial-photo-diptych { display: flex; flex-direction: column; min-height: 290px; height: 100%; flex: 1; }
   .editorial-photo-diptych .editorial-photo-inner { height: 100%; flex: 1; }
   #eb-hero-trust-strip { display: none !important; }
-  .vessel-photo-frame { background: var(--bg-oat); padding: 6px; margin-bottom: 14px; }
+  .vessel-photo-frame { background: var(--bg-oat); border-radius: 18px; overflow: hidden; padding: 0; margin-bottom: 14px; }
   .vessel-photo-frame img { width: 100%; height: 172px; object-fit: cover; display: block; }
   .editorial-photo-caption { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: var(--step-small); color: var(--text-secondary); }
 
   /* Interactive Shelf Audit Workbench ([data-ui]) */
   .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: stretch; }
-  .grader-card, .results-panel { background: var(--bg-oat); padding: 14px; min-width: 0; max-width: 100%; overflow: hidden; }
-  .porcelain-vessel-core { background: var(--bg-surface); padding: 26px 28px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 18px; min-width: 0; max-width: 100%; overflow: hidden; }
-  #textureFilterTabs { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 6px !important; width: 100%; }
-  #textureFilterTabs .vanity-light-btn { padding: 7px 6px !important; font-size: 0.82rem !important; white-space: normal !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; }
+  .grader-card { background: var(--bg-surface); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; }
+  .results-panel { background: var(--bg-oat); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; }
+  .porcelain-vessel-core { background: var(--bg-surface); border-radius: 22px; padding: 24px 26px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 18px; min-width: 0; max-width: 100%; overflow: hidden; }
+  #textureFilterTabs { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 6px !important; width: 100%; background: var(--bg-oat); padding: 5px; border-radius: 999px; }
+  #textureFilterTabs .vanity-light-btn { padding: 7px 6px !important; font-size: 0.82rem !important; white-space: normal !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; border-radius: 999px; }
   .shelf-search-row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 10px; align-items: center; }
-  .shelf-search-row .input-box { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .shelf-search-row .input-box { min-width: 0; overflow: hidden; text-overflow: ellipsis; border-radius: 999px; background: var(--bg-canvas); }
   .preset-row { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; margin-bottom: 2px; }
-  .preset-chip { background: var(--bg-canvas); padding: 10px 12px !important; font-size: 0.86rem; border: 1px solid var(--border-hairline); cursor: pointer; text-align: left !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; gap: 3px; white-space: normal !important; line-height: 1.25 !important; min-height: 56px; transition: transform 180ms ease-out, background-color 180ms ease-out, border-color 180ms ease-out; }
-  .preset-chip:hover, .preset-chip.active { background: var(--rose-pill-bg); border-color: var(--rose-brand); }
+  .preset-chip { background: var(--bg-surface); border-radius: 18px; padding: 10px 14px !important; font-size: 0.86rem; border: none; cursor: pointer; text-align: left !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; gap: 3px; white-space: normal !important; line-height: 1.25 !important; min-height: 56px; transition: transform 180ms ease-out, background-color 180ms ease-out; }
+  .preset-chip:hover, .preset-chip.active { background: var(--rose-pill-bg); }
   .preset-chip:active { transform: scale(0.98); }
   .preset-chip strong { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-primary); font-family: 'Newsreader', Georgia, serif; font-size: 0.95rem; font-weight: 500; line-height: 1.22; white-space: normal; }
-  .preset-chip span { display: block; color: var(--rose-brand); font-size: 0.78rem; font-weight: 500; line-height: 1.25; white-space: normal; }
-  .field-label { display: block; font-size: 0.88rem; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
-  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: minmax(92px, auto); gap: 10px; flex: 0 0 auto; height: 224px; min-height: 224px; max-height: 224px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 12px; background: var(--bg-canvas); margin-bottom: 4px; align-content: start; }
-  .prod-check-item { display: flex; align-items: stretch; gap: 10px; padding: 12px 14px; min-height: 96px; background: var(--bg-surface); border: 1px solid transparent; cursor: pointer; font-size: 0.86rem; transition: background-color 180ms ease-out, border-color 180ms ease-out; overflow: hidden; }
-  .prod-check-item.selected { background: var(--rose-pill-bg); border-color: var(--rose-pill-border); }
+  .preset-chip span { display: block; color: var(--rose-brand); font-size: 0.78rem; font-weight: 600; line-height: 1.25; white-space: normal; }
+  .field-label { display: block; font-size: 0.88rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: minmax(92px, auto); gap: 10px; flex: 0 0 auto; height: 224px; min-height: 224px; max-height: 224px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--rose-pill-bg) transparent; padding: 12px; border-radius: 20px; background: var(--bg-canvas); margin-bottom: 4px; align-content: start; }
+  .prod-check-item { display: flex; align-items: stretch; gap: 10px; padding: 12px 14px; min-height: 96px; border-radius: 18px; background: var(--bg-surface); border: none; cursor: pointer; font-size: 0.86rem; transition: background-color 180ms ease-out; overflow: hidden; }
+  .prod-check-item.selected { background: var(--rose-pill-bg); }
   .prod-check-item input { margin-top: 2px; align-self: flex-start; accent-color: var(--rose-brand); flex-shrink: 0; }
-  [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); padding: 10px 14px; color: var(--text-primary); font-size: 15.5px; border: none; }
+  [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); border-radius: 18px; padding: 10px 14px; color: var(--text-primary); font-size: 15.5px; border: none; }
   .input-box:focus, .textarea-box:focus { outline: 2px solid var(--rose-brand); }
 
   .score-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
-  .metric-box { background: var(--bg-canvas); padding: 12px 14px; font-variant-numeric: tabular-nums; min-width: 0; overflow: hidden; }
+  .metric-box { background: var(--bg-canvas); border-radius: 18px; padding: 12px 14px; font-variant-numeric: tabular-nums; min-width: 0; overflow: hidden; }
   .metric-val { font-family: 'Newsreader', Georgia, serif; font-size: 1.32rem; font-weight: 500; line-height: 1.12; font-variant-numeric: tabular-nums; }
 
-  .badge-safe, .badge-clash, .badge-warn { display: inline-flex; align-items: center; padding: 5px 11px; font-size: 0.8rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .badge-safe, .badge-clash, .badge-warn { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 12px; font-size: 0.8rem; font-weight: 600; font-variant-numeric: tabular-nums; }
   .badge-safe { background: var(--sage-bg); color: var(--sage-safe); }
   .badge-clash { background: var(--berry-bg); color: var(--berry-clash); }
   .badge-warn { background: var(--honey-bg); color: var(--honey-warn); }
 
-  .conflict-card { background: var(--berry-bg); padding: 16px 18px; margin-bottom: 10px; min-width: 0; overflow: hidden; }
+  .conflict-card { background: var(--berry-bg); border-radius: 20px; padding: 16px 18px; margin-bottom: 10px; min-width: 0; overflow: hidden; }
   .conflict-card.MODERATE { background: var(--honey-bg); }
 
   /* Uneven Gallery & 4-Step Sink Pacing Strip */
@@ -347,6 +351,48 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     <div id="checker"></div>
     <div class="hero-grid" id="analyzer">
       <div class="grader-card" style="display:flex;flex-direction:column;">
+        <div id="dl-selector-vanity-caddy" style="background:var(--bg-pouch);border-radius:24px;padding:20px 22px;margin-bottom:18px;color:var(--text-primary);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+            <div>
+              <div class="serif-display" style="font-size:1.22rem;color:var(--text-primary);font-weight:500;">Your Soft Pinch Vanity Pouch &middot; <span id="dl-pouch-status-label" style="color:var(--rose-brand);">4 of 5 Comfort Steps Zip-Ready</span></div>
+              <div style="font-size:0.84rem;color:var(--text-secondary);margin-top:2px;">Tap one sheer daily SPF 50 below to seal your weightless morning &amp; bedtime bag.</div>
+            </div>
+            <span id="dl-pouch-pct-pill" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:#FFFFFF;color:var(--rose-brand);font-size:0.78rem;font-weight:600;">
+              <span style="width:8px;height:8px;border-radius:999px;background:#10B981;"></span>
+              <span id="dl-pouch-pct-text">Almost Full &middot; 80%</span>
+            </span>
+          </div>
+          <div id="dl-pouch-bottles-grid" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;text-align:center;">
+            <div onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_0');window.__dlSelectVanitySlot(0);}" style="background:#FFFFFF;border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+              <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><rect x="13" y="4" width="12" height="6" rx="2" fill="#D8B4A0"/><path d="M9 10H29L31 15V40C31 41.5 29.8 42.5 28.5 42.5H9.5C8.2 42.5 7 41.5 7 40V15L9 10Z" fill="#CBE2F6"/><rect x="10.5" y="19" width="17" height="13" rx="3" fill="#FFFFFF"/><text x="19" y="27.5" text-anchor="middle" font-size="6" fill="#3A1F27">Mist</text></svg>
+              <div id="dl-pouch-slot-name-0" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">SOS Mist</div>
+              <span id="dl-pouch-slot-sub-0" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
+            </div>
+            <div onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_1');window.__dlSelectVanitySlot(1);}" style="background:#FFFFFF;border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+              <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M15.5 6C15.5 4 17 2.5 19 2.5C21 2.5 22.5 4 22.5 6V9.5H15.5V6Z" fill="#D8B4A0"/><path d="M9 12.5H29L31 17.5V40C31 41.5 29.8 42.5 28.5 42.5H9.5C8.2 42.5 7 41.5 7 40V17.5L9 12.5Z" fill="#F7DFAD"/><rect x="10.5" y="21" width="17" height="13" rx="3" fill="#FFFFFF"/><text x="19" y="29.5" text-anchor="middle" font-size="6" fill="#3A1F27">Serum</text></svg>
+              <div id="dl-pouch-slot-name-1" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">C E Ferulic</div>
+              <span id="dl-pouch-slot-sub-1" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
+            </div>
+            <div onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_2');window.__dlSelectVanitySlot(2);}" style="background:#FFFFFF;border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+              <svg width="34" height="42" viewBox="0 0 40 46" fill="none"><rect x="7" y="11" width="26" height="6" rx="2.5" fill="#D8B4A0"/><rect x="5" y="17" width="30" height="23" rx="6" fill="#CBEAD9"/><rect x="9" y="23" width="22" height="11" rx="3" fill="#FFFFFF"/><text x="20" y="30.5" text-anchor="middle" font-size="6" fill="#3A1F27">Lotion</text></svg>
+              <div id="dl-pouch-slot-name-2" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Aestura 365</div>
+              <span id="dl-pouch-slot-sub-2" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
+            </div>
+            <div onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_4');window.__dlSelectVanitySlot(4);}" style="background:#FFFFFF;border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+              <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M7 6H31L27 33H11L7 6Z" fill="#E2D2F2"/><rect x="14" y="33" width="10" height="7" rx="2" fill="#D8B4A0"/><text x="19" y="22" text-anchor="middle" font-size="6" fill="#3A1F27">Night</text></svg>
+              <div id="dl-pouch-slot-name-3" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Tretinoin</div>
+              <span id="dl-pouch-slot-sub-3" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
+            </div>
+            <div id="dl-empty-bottle-slot" onclick="if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();" style="background:rgba(255,255,255,0.68);border-radius:18px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;border:1.5px dashed rgba(138,52,72,0.34);">
+              <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M7 6H31L27 33H11L7 6Z" fill="#8A3448" fill-opacity="0.16"/><rect x="14" y="33" width="10" height="7" rx="2" fill="#8A3448" fill-opacity="0.3"/><text x="19" y="22" text-anchor="middle" font-size="6.5" fill="#8A3448" font-weight="600">+SPF</text></svg>
+              <div id="dl-pouch-slot-name-4" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Add SPF 50</div>
+              <span id="dl-pouch-slot-sub-4" style="font-size:0.68rem;color:var(--text-secondary);">Final Step</span>
+            </div>
+          </div>
+          <div style="margin-top:12px;height:8px;border-radius:999px;background:rgba(255,255,255,0.78);overflow:hidden;">
+            <div id="dl-pouch-progress-fill" style="width:80%;height:100%;border-radius:999px;background:linear-gradient(90deg, #8A3448 0%, #10B981 100%);transition:width 240ms ease;"></div>
+          </div>
+        </div>
         <div class="porcelain-vessel-core" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
           <div style="flex:1;display:flex;flex-direction:column;min-height:0;gap:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
@@ -636,15 +682,15 @@ function renderAnalysisResultHtml(res) {
               </div>
             </div>
 
-            <div style="padding:16px 18px;background:#181412;color:#F4EFE8;display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
+            <div style="padding:16px 18px;border-radius:18px;background:#3A1F27;color:#FDF8F6;display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
                 <div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-                  <span class="mono" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:600;color:#C9A45A;">☾ 9:30 PM &middot; Bedtime Order</span>
-                  <span class="mono" style="font-size:0.75rem;color:#B5ACA3;">Overnight Renewal</span>
+                  <span class="mono" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:600;color:#F7DFAD;">☾ 9:30 PM &middot; Bedtime Order</span>
+                  <span class="mono" style="font-size:0.75rem;color:#EED6DC;">Overnight Renewal</span>
                 </div>
                 ${pmStepsHtml}
               </div>
-              <button type="button" class="btn-primary" style="width:100%;font-size:0.84rem;padding:10px 14px;margin-top:8px;background:#C9A45A;color:#0C0A08;white-space:normal;text-align:center;" onclick="openCheckoutModal('onetime_499')">
+              <button type="button" class="btn-primary" style="width:100%;font-size:0.84rem;padding:10px 14px;margin-top:8px;background:#F3E1E5;color:#3A1F27;white-space:normal;text-align:center;" onclick="openCheckoutModal('onetime_499')">
                 <span>Save Morning &amp; Bedtime Lock-Screen Card ($1.99)</span>
                 <span class="btn-icon-circle">&rarr;</span>
               </button>

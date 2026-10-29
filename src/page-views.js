@@ -77,7 +77,7 @@ function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdO
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   ${jsonLdScripts}
   <script>try{if(localStorage.getItem('dermlogic_vanity_theme')==='night')document.documentElement.setAttribute('data-theme','night');}catch(_){}</script>
   <style>${SHARED_CSS}</style>
@@ -231,12 +231,12 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
                 <a href="/celebrity" class="btn-secondary"><span>Explore Celebrity Shelves</span></a>
               </div>
             </div>
-            <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:16px 18px;background:var(--bg-surface);margin-top:16px;font-size:0.86rem;">
+            <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:16px 18px;background:var(--bg-surface);border-radius:20px;margin-top:16px;font-size:0.86rem;">
               <div style="cursor:pointer;" onclick="var el=document.getElementById('analyzer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--rose-brand);display:block;margin-bottom:2px;">Step 1 &middot; Tap Bottles &darr;</strong><span style="color:var(--text-secondary);">Pick from ${products.length} cult serums or add any custom bottle</span></div>
               <div style="cursor:pointer;" onclick="var el=document.getElementById('liveResultsContainer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--sage-safe);display:block;margin-bottom:2px;">Step 2 &middot; Spot Clashes &darr;</strong><span style="color:var(--text-secondary);">See if Vitamin C, Acids, or Retinol conflict</span></div>
               <div style="cursor:pointer;" onclick="if(window.__dlOpenVanityDrawer)window.__dlOpenVanityDrawer('hero_step3')"><strong class="mono" style="color:var(--text-primary);display:block;margin-bottom:2px;">Step 3 &middot; Keep Your Bag &rarr;</strong><span style="color:var(--text-secondary);">Save your 5-slot AM &amp; PM phone card</span></div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:4px;padding:10px 14px;margin-top:10px;border-radius:10px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);font-size:0.8rem;color:var(--text-secondary);line-height:1.4;">
+            <div class="hero-trust-callout" style="display:flex;flex-direction:column;gap:4px;padding:14px 18px;margin-top:10px;border-radius:20px;background:var(--sage-bg);font-size:0.8rem;color:var(--text-secondary);line-height:1.4;">
               <div><strong style="color:var(--sage-safe);">&#9679; Chemist-Verified Source:</strong> Peer-reviewed dermatology studies (<span class="mono">JCAD/PubMed</span>), pH compatibility tables &amp; official bottle ingredient lists (<abbr title="International Nomenclature of Cosmetic Ingredients: the standardized ingredient list printed on every skincare box" style="text-decoration:underline dotted;cursor:help;">INCI</abbr>, the standard ingredient label printed on every skincare box).</div>
               <div><strong style="color:var(--sage-safe);">&#9679; Always Current:</strong> Updated today (2026 Skincare Ingredient Label [<span class="mono">INCI</span>] Registry) &bull; Brand formulas reviewed weekly &bull; Instant real-time routine check.</div>
             </div>

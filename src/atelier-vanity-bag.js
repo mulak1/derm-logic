@@ -8,12 +8,26 @@
  */
 const { VANITY_SLOT_CALIBRATORS, VANITY_SLOT_OPTIONS } = require('./clinical-products');
 
+function buildLogoBagIconSvg(size = 26) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 44 44" fill="none" aria-hidden="true" style="flex-shrink:0;display:block;"><circle cx="22" cy="22" r="20" fill="#FFFFFF" stroke="#8A3448" stroke-width="1.4"/><path d="M16.5 17.5V14.2C16.5 11.5 18.9 9.8 22 9.8C25.1 9.8 27.5 11.5 27.5 14.2V17.5" stroke="#8A3448" stroke-width="1.5" stroke-linecap="round"/><rect x="14" y="14.5" width="4.4" height="7.5" rx="2" fill="#CBE2F6"/><rect x="20" y="13" width="4.4" height="9" rx="2" fill="#F7DFAD"/><rect x="25.8" y="14.5" width="4.4" height="7.5" rx="2" fill="#CBEAD9"/><path d="M11 20C11 18.2 12.6 17.2 15.5 17.2H28.5C31.4 17.2 33 18.2 33 20L31.2 31C30.7 33.2 28.5 34.2 22 34.2C15.5 34.2 13.3 33.2 12.8 31L11 20Z" fill="#8A3448"/><path d="M22 21.5C22 21.5 24.8 24.9 24.8 27C24.8 28.6 23.5 29.8 22 29.8C20.5 29.8 19.2 28.6 19.2 27C19.2 24.9 22 21.5 22 21.5Z" fill="#FFFFFF"/></svg>`;
+}
+
 function renderHeaderVanityBagPill() {
-  return `<button type="button" id="dl-header-vanity-pill" class="mono" onclick="window.__dlOpenVanityDrawer('header_pill')" aria-label="Open My 5-Slot Atelier Vanity Bag" style="display:inline-flex;align-items:center;gap:6px;padding:7px 11px;background:var(--rose-pill-bg);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;font-size:0.8rem;font-weight:600;transition:transform 180ms cubic-bezier(0.22,1,0.36,1),background-color 180ms ease;white-space:nowrap;">
-    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex-shrink:0;"><path d="M6 7V5.5C6 3.57 7.57 2 9.5 2h1C12.43 2 14 3.57 14 5.5V7h2.5v10.5c0 .83-.67 1.5-1.5 1.5H5c-.83 0-1.5-.67-1.5-1.5V7H6zm1.5 0h5V5.5c0-1.1-.9-2-2-2h-1c-1.1 0-2 .9-2 2V7z" fill="currentColor"/></svg>
+  return `<button type="button" id="dl-header-vanity-pill" class="mono" onclick="window.__dlOpenVanityDrawer('header_pill')" aria-label="Open My 5-Slot Atelier Vanity Bag" style="display:inline-flex;align-items:center;gap:9px;padding:6px 14px 6px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;border-radius:999px;cursor:pointer;font-size:0.84rem;font-weight:600;transition:transform 180ms cubic-bezier(0.22,1,0.36,1),background-color 180ms ease;white-space:nowrap;">
+    <span style="position:relative;display:inline-flex;align-items:center;gap:6px;">
+      ${buildLogoBagIconSvg(26)}
+      <span id="dl-header-vanity-full-dot" style="position:absolute;top:-1px;left:18px;width:9px;height:9px;border-radius:999px;background:#10B981;"></span>
+      <span id="dl-header-vanity-bars" style="display:inline-flex;flex-direction:column;gap:2px;align-items:center;">
+        <span style="width:5px;height:2.5px;border-radius:99px;background:#10B981;"></span>
+        <span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span>
+        <span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span>
+        <span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span>
+        <span style="width:5px;height:2.5px;border-radius:99px;background:#8A3448;"></span>
+      </span>
+    </span>
     <span>Vanity Bag</span>
-    <span id="dl-header-vanity-count" style="padding:1px 6px;background:var(--rose-brand);color:var(--accent-ink);font-size:0.74rem;font-weight:700;">5/5</span>
-    <span id="dl-header-vanity-clash-dot" style="font-size:0.73rem;padding:1px 6px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;">0 Clashes</span>
+    <span id="dl-header-vanity-count" style="padding:2px 9px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);font-size:0.75rem;font-weight:600;">5 of 5 Full</span>
+    <span id="dl-header-vanity-clash-dot" style="display:none;font-size:0.73rem;padding:1px 6px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;">0 Clashes</span>
   </button>`;
 }
 
@@ -91,12 +105,19 @@ function renderAtelierVanityDrawerHtml() {
     }
     #dl-vanity-toast {
       position: fixed; bottom: 18px; right: 18px; z-index: 9998;
-      background: #181412; color: #F4EFE8; border: 1px solid var(--rose-brand);
-      padding: 10px 14px; font-size: 0.8rem; display: none; align-items: center; gap: 10px;
-      box-shadow: 0 14px 34px rgba(0,0,0,0.32); max-width: calc(100vw - 32px);
+      background: #3A1F27; color: #FDF8F6; border: none; border-radius: 999px;
+      padding: 10px 16px; font-size: 0.8rem; display: none; align-items: center; gap: 10px;
+      box-shadow: 0 14px 34px rgba(58,31,39,0.22); max-width: calc(100vw - 32px);
     }
+    #dl-floating-vanity-dock {
+      position: fixed; right: 0; top: 52%; transform: translateY(-50%); z-index: 9990;
+      background: var(--bg-pouch); color: var(--text-primary); border-radius: 26px 0 0 26px;
+      padding: 16px 13px; display: flex; flex-direction: column; align-items: center; gap: 7px;
+      cursor: pointer; border: none; transition: transform 180ms cubic-bezier(0.22,1,0.36,1);
+    }
+    #dl-floating-vanity-dock:hover { transform: translateY(-50%) translateX(-2px); }
     @media (max-width: 768px) {
-      .dl-hide-mobile { display: none !important; }
+      .dl-hide-mobile, #dl-floating-vanity-dock { display: none !important; }
       #dl-header-vanity-pill { padding: 5px 8px !important; font-size: 0.74rem !important; gap: 4px !important; }
       #dl-header-vanity-clash-dot { display: none !important; }
       #dl-atelier-vanity-drawer { align-items: flex-end !important; justify-content: center !important; }
@@ -121,10 +142,33 @@ function renderAtelierVanityDrawerHtml() {
     }
   </style>
 
+  <!-- Right-Edge Floating Vanity Bag Sidebar -->
+  <button type="button" id="dl-floating-vanity-dock" aria-label="Open My 5-Slot Atelier Vanity Bag" onclick="window.__dlOpenVanityDrawer('floating_dock')">
+    <div style="position:relative;display:inline-flex;align-items:center;gap:6px;">
+      <div style="position:relative;">
+        ${buildLogoBagIconSvg(36)}
+        <span id="dl-dock-vanity-full-dot" style="position:absolute;top:0px;right:0px;width:11px;height:11px;border-radius:999px;background:#10B981;" title="Vanity Pouch Full"></span>
+      </div>
+      <span id="dl-dock-vanity-bars" style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <span style="width:6px;height:3px;border-radius:99px;background:#10B981;"></span>
+        <span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span>
+        <span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span>
+        <span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span>
+        <span style="width:6px;height:3px;border-radius:99px;background:#8A3448;"></span>
+      </span>
+    </div>
+    <span style="font-size:0.78rem;font-weight:600;color:var(--text-primary);">Vanity Bag</span>
+    <span id="dl-dock-vanity-count" style="padding:3px 10px;border-radius:999px;background:var(--rose-brand);color:#FFFFFF;font-size:0.74rem;font-weight:600;">5 / 5 Full</span>
+    <span style="display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--sage-safe);font-weight:600;">
+      <span id="dl-dock-vanity-status-dot" style="width:6px;height:6px;border-radius:999px;background:#10B981;"></span>
+      <span id="dl-dock-vanity-harmony">Harmonized</span>
+    </span>
+  </button>
+
   <!-- Toast notification when adding/removing bottles from any page -->
   <div id="dl-vanity-toast" role="status" aria-live="polite">
     <span id="dl-vanity-toast-text" class="mono">Added to Vanity Bag</span>
-    <button type="button" class="mono" onclick="window.__dlOpenVanityDrawer('toast');document.getElementById('dl-vanity-toast').style.display='none';" style="background:var(--rose-brand);color:var(--accent-ink);border:none;padding:4px 9px;font-size:0.74rem;font-weight:700;cursor:pointer;white-space:nowrap;">Open Bag &rarr;</button>
+    <button type="button" class="mono" onclick="window.__dlOpenVanityDrawer('toast');document.getElementById('dl-vanity-toast').style.display='none';" style="background:var(--rose-brand);color:var(--accent-ink);border:none;border-radius:999px;padding:4px 11px;font-size:0.74rem;font-weight:700;cursor:pointer;white-space:nowrap;">Open Bag &rarr;</button>
   </div>
 
   <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" onclick="if(event.target===this)window.__dlCloseVanityDrawer()" style="display:none;position:fixed;inset:0;z-index:9996;background:rgba(12,10,8,0.58);align-items:stretch;justify-content:flex-end;">
@@ -472,6 +516,33 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       return 'Reserved for ' + hrs + 'h ' + mins + 'm';
     }
 
+    window.__dlTapPouchSpfSlot = function() {
+      var spfCb = document.querySelector('input[name="routineProduct"][value="boj-relief-sun-spf50"]') || document.querySelector('input[name="routineProduct"][value="eltamd-uv-clear-spf46"]');
+      if (spfCb && !spfCb.checked) {
+        spfCb.checked = true;
+        if (typeof toggleProductChip === 'function') toggleProductChip(spfCb);
+      }
+      var slot4 = document.getElementById('dl-empty-bottle-slot');
+      if (slot4) {
+        slot4.style.border = 'none';
+        slot4.style.background = '#FFFFFF';
+        var nm = document.getElementById('dl-pouch-slot-name-4');
+        var sb = document.getElementById('dl-pouch-slot-sub-4');
+        if (nm) { nm.textContent = 'Relief Sun SPF 50'; nm.style.color = 'var(--text-primary)'; }
+        if (sb) { sb.textContent = 'In Pouch'; sb.style.color = 'var(--sage-safe)'; }
+      }
+      var stLbl = document.getElementById('dl-pouch-status-label');
+      var pctTxt = document.getElementById('dl-pouch-pct-text');
+      var prog = document.getElementById('dl-pouch-progress-fill');
+      if (stLbl) stLbl.textContent = '5 of 5 Comfort Steps Zip-Ready';
+      if (pctTxt) pctTxt.textContent = 'Full · 100%';
+      if (prog) prog.style.width = '100%';
+      window.__dlVanityState.slotSelections[3] = 0;
+      saveVanityState(window.__dlVanityState);
+      window.__dlRenderVanityDrawer();
+      showVanityToast('Sealed your 5-Slot Soft Pinch Vanity Pouch with Relief Sun SPF 50+!');
+    };
+
     window.__dlRenderVanityDrawer = function() {
       var st = window.__dlVanityState;
       var uMeta = UNDERTONE_META[st.undertone] || UNDERTONE_META.neutral_ivory;
@@ -480,7 +551,11 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var filledCount = [0, 1, 2, 3, 4].filter(function(i) { return Boolean(getBottleForSlot(st, i)); }).length;
 
       var countEl = document.getElementById('dl-header-vanity-count');
-      if (countEl) countEl.textContent = filledCount + '/5';
+      if (countEl) countEl.textContent = filledCount === 5 ? '5 of 5 Full' : (filledCount + ' of 5');
+      var dockCountEl = document.getElementById('dl-dock-vanity-count');
+      if (dockCountEl) dockCountEl.textContent = filledCount === 5 ? '5 / 5 Full' : (filledCount + ' / 5');
+      var dockHarmEl = document.getElementById('dl-dock-vanity-harmony');
+      if (dockHarmEl) dockHarmEl.textContent = clashes.length > 0 ? (clashes.length + ' Clash') : 'Harmonized';
 
       var headerClashEl = document.getElementById('dl-header-vanity-clash-dot');
       if (headerClashEl) {
