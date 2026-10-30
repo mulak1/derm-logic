@@ -135,7 +135,22 @@ async function runVerification() {
     const mdAcceptRes = await fetch(`${BASE_URL}/compare/copper-tripeptide-1-vs-l-ascorbic-acid`, { headers: { Accept: 'text/markdown' } });
     assert.strictEqual(mdAcceptRes.status, 200);
     assert(String(mdAcceptRes.headers.get('content-type')).includes('text/markdown'), 'Accept: text/markdown must return text/markdown');
-    console.log(`3b. Verified ${glowIndexRoutes.length} GlowIndex 8-Pillar routes (200 OK), 301 B-vs-A canonicalization, and .md content negotiation.`);
+    // Verify Google Search Console Dataset JSON-LD compliance (description >= 50 chars + creator present) across /, /seo/*, /compare/*, /bottle/*
+    for (const dsRoute of ['/', '/seo/the-ordinary-glycolic-acid-7-toner-conflicts', '/compare/copper-tripeptide-1-vs-l-ascorbic-acid', '/bottle/skinceuticals-ce-ferulic']) {
+      const dsHtml = await (await fetch(`${BASE_URL}${dsRoute}`)).text();
+      const ldMatches = [...dsHtml.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+      for (const m of ldMatches) {
+        const parsed = JSON.parse(m[1]);
+        const items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed['@graph']) ? parsed['@graph'] : [parsed]);
+        for (const item of items) {
+          if (item && item['@type'] === 'Dataset') {
+            assert(typeof item.description === 'string' && item.description.length >= 50, `Dataset on ${dsRoute} missing description >= 50 chars`);
+            assert(item.creator && (item.creator.name || item.creator['@id']), `Dataset on ${dsRoute} missing creator`);
+          }
+        }
+      }
+    }
+    console.log(`3b. Verified ${glowIndexRoutes.length} GlowIndex 8-Pillar routes (200 OK), Dataset JSON-LD compliance, 301 B-vs-A canonicalization, and .md content negotiation.`);
 
     // Verify Affiliate JSON response
     const affRes = await fetch(`${BASE_URL}/api/affiliate?product=skinceuticals-ce-ferulic&partner=dermstore&format=json`);

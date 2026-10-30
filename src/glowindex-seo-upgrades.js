@@ -376,11 +376,18 @@ function renderComparePageHtml(comp, canonicalSlug) {
       '@context': 'https://schema.org',
       '@type': 'Dataset',
       name: `${comp.nameA} vs ${comp.nameB} Deterministic Formulation Dataset`,
-      description: comp.summary,
+      description: comp.summary || `Cosmetic chemistry pH compatibility, Henderson-Hasselbalch pKa dissociation, and comedogenicity dataset comparing ${comp.nameA} and ${comp.nameB} (50+ clinical verification points).`,
       url: `${HOST_URL}/compare/${canonicalSlug}`,
+      creator: { '@type': 'Organization', name: 'DermLogic Cosmetic Chemistry Atelier', url: HOST_URL },
+      license: 'https://creativecommons.org/licenses/by/4.0/',
+      isAccessibleForFree: true,
       measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Stratum Corneum Diffusion & EU CosIng Comedogenicity Assay',
       citation: 'https://www.dermlogic.io/okf/index.json',
-      variableMeasured: ['Formulation pH Window', 'pKa Dissociation Constant', 'Free-Acid Bioavailability %', 'Molecular Weight (Daltons)', 'EU CosIng Comedogenicity (0-5)', 'Malassezia Ester Safety']
+      variableMeasured: ['Formulation pH Window', 'pKa Dissociation Constant', 'Free-Acid Bioavailability %', 'Molecular Weight (Daltons)', 'EU CosIng Comedogenicity (0-5)', 'Malassezia Ester Safety'],
+      distribution: [
+        { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${HOST_URL}/okf/index.json` },
+        { '@type': 'DataDownload', encodingFormat: 'text/markdown', contentUrl: `${HOST_URL}/compare/${canonicalSlug}.md` }
+      ]
     },
     {
       '@context': 'https://schema.org',
@@ -680,16 +687,24 @@ function attachGlowIndexSeoUpgrades(app) {
         }
 
         if (!out.includes('"measurementTechnique"')) {
+          const metaDescMatch = out.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i);
+          const dsDesc = (metaDescMatch && metaDescMatch[1] && metaDescMatch[1].length >= 50)
+            ? metaDescMatch[1]
+            : `First-principles cosmetic chemistry dataset for ${req.path} on DermLogic: formulation pH windows, Henderson-Hasselbalch pKa dissociation, Rule-of-500 Dalton barrier penetration, and EU CosIng comedogenicity ratings.`;
           const extraGraph = `<script id="gi-enriched-dataset-schema" type="application/ld+json">${JSON.stringify({
             '@context': 'https://schema.org',
             '@graph': [{
               '@type': 'Dataset',
               '@id': `${HOST_URL}${req.path}#deterministic-chemistry-dataset`,
               name: `DermLogic Cosmetic Chemistry & pH Compatibility Dataset (${req.path})`,
+              description: dsDesc,
               url: `${HOST_URL}${req.path}`,
+              creator: { '@type': 'Organization', name: 'DermLogic Cosmetic Chemistry Atelier', url: HOST_URL },
+              isAccessibleForFree: true,
               measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Stratum Corneum Diffusion & EU CosIng Comedogenicity Assay',
               citation: ['PubMed PMID: 11207686 (Pinnell et al., L-Ascorbic Acid Percutaneous Absorption)', 'JCAD Retinoid & Benzoyl Peroxide Oxidation Kinetics', 'EU CosIng Cosmetic Ingredient Database'],
-              license: 'https://creativecommons.org/licenses/by/4.0/'
+              license: 'https://creativecommons.org/licenses/by/4.0/',
+              distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${HOST_URL}/okf/index.json` }]
             }]
           })}</script>`;
           if (out.includes('</head>')) out = out.replace('</head>', `${extraGraph}\n</head>`);

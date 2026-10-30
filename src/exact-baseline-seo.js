@@ -948,9 +948,10 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
         '@type': 'Dataset',
         '@id': `${canonicalUrl}#dataset`,
         name: `${pageTitle}: Verified 2026 Dataset`,
-        description: pageDesc,
+        description: pageDesc && pageDesc.length >= 50 ? pageDesc : `${pageDesc} — Verified 2026 deterministic formulation dataset by ${cfg.brandName}.`,
         url: canonicalUrl,
-        creator: { '@id': `${hostUrl}/#organization` },
+        creator: { '@type': 'Organization', '@id': `${hostUrl}/#organization`, name: cfg.brandName, url: hostUrl },
+        isAccessibleForFree: true,
         license: 'https://creativecommons.org/licenses/by/4.0/',
         variableMeasured: cfg.kpis.map((k) => k.label),
         distribution: [
