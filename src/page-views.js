@@ -786,12 +786,15 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         </div>
         <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.8vw,3.4rem);">${escapeHtml(page.title)}</h1>
         <p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(page.summary)}</p>
-        <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-oat);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
-          <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml(primaryProdId)}','${escapeHtml(secondaryProdId)}'],'seo_${escapeHtml(page.slug)}')" style="padding:9px 15px;font-size:0.8rem;"><span>Pre-Load These 2 Bottles in My 5-Slot Vanity Bag &amp; Fix Split</span><span class="btn-icon-circle">&rarr;</span></button>
-          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'seo_${escapeHtml(page.slug)}')" style="display:flex;gap:6px;flex:1;min-width:240px;align-items:center;flex-wrap:wrap;">
-            <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Or email free 4-Night .ICS Calendar + 24h Link..." style="flex:1;padding:7px 11px;font-size:0.77rem;min-height:34px;" />
-            <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
-            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.75rem;color:var(--sage-safe);"></div>
+        <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-oat);margin-bottom:20px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+            <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml(primaryProdId)}','${escapeHtml(secondaryProdId)}'],'seo_${escapeHtml(page.slug)}')" style="padding:9px 16px;font-size:0.8rem;"><span>Pre-Load These 2 Bottles in My 5-Slot Vanity Bag &amp; Fix Split</span><span class="btn-icon-circle">&rarr;</span></button>
+            <a href="/buy/micro_pass?guide=${encodeURIComponent(page.slug)}" class="btn-secondary mono" style="padding:8px 14px;min-height:36px;font-size:0.78rem;background:var(--bg-surface);color:var(--rose-brand);text-decoration:none;"><span>Save 9:16 Lock-Screen Card (99&cent;) &rarr;</span></a>
+          </div>
+          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'seo_${escapeHtml(page.slug)}')">
+            <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Enter email for free 4-Night .ICS Calendar + 24h Routine Restore Link..." style="padding:8px 14px;font-size:0.78rem;min-height:36px;" />
+            <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
+            <div class="dl-inline-ics-status mono" style="display:none;grid-column:1/-1;font-size:0.75rem;color:var(--sage-safe);"></div>
           </form>
         </div>
 

@@ -143,14 +143,14 @@ function renderAtelierVanityDrawerHtml() {
       <div id="dl-dossier-panel-clashes" style="display:none;flex-direction:column;gap:8px;"></div>
       <div id="dl-dossier-panel-cycle" style="display:none;flex-direction:column;gap:8px;"></div>
       <div id="dl-dossier-panel-pass" style="display:none;flex-direction:column;gap:8px;"></div>
-      <div id="dl-vanity-vault-footer" style="padding:12px 14px;border-radius:18px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
+      <div id="dl-vanity-vault-footer" style="position:sticky;bottom:-20px;z-index:6;padding:12px 14px;border-radius:18px;background:var(--bg-oat);box-shadow:0 -8px 24px rgba(58,31,39,0.08);display:flex;flex-direction:column;gap:8px;">
         <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:8px;">
           <a id="dl-vanity-keep-99c" href="/buy/micro_pass?source=vanity_bag_99c" onclick="return window.__dlBuyFromVanity('micro_pass', this)" class="btn-primary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.8rem;white-space:nowrap;"><span>Save 9:16 Phone Card (99&cent;) &rarr;</span></a>
-          <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;"><span>Complete 3-File Kit ($1.99)</span></a>
+          <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;background:var(--bg-surface);color:var(--rose-brand);"><span>Complete 3-File Kit ($1.99)</span></a>
         </div>
-        <form id="dl-vanity-email-form" onsubmit="return window.__dlSendVanityHoldEmail(event)" style="display:flex;gap:6px;align-items:center;">
-          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Or email free 4-Night .ICS + 24h link..." style="flex:1;padding:6px 10px;font-size:0.76rem;min-height:30px;" />
-          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:6px 10px;min-height:30px;font-size:0.75rem;white-space:nowrap;">Send Free .ICS</button>
+        <form id="dl-vanity-email-form" onsubmit="return window.__dlSendVanityHoldEmail(event)" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;">
+          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Enter email for free 4-Night .ICS + 24h routine link..." style="width:100%;padding:7px 12px;font-size:0.76rem;min-height:32px;background:var(--bg-surface);border-radius:999px;" />
+          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.75rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
         </form>
         <div id="dl-vanity-email-status" class="mono" style="display:none;font-size:0.75rem;color:var(--sage-safe);font-weight:600;"></div>
       </div>

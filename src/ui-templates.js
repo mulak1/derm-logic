@@ -207,8 +207,12 @@ const SHARED_CSS = `
     .site-header .btn-primary { display: none; }
   }
   #appleWalletCardPreview, #appleWalletCardPreview.eb-blurred-deliverable, #actives-matrix tr.eb-blurred-deliverable { filter: none !important; max-height: none !important; overflow: visible !important; opacity: 1 !important; user-select: auto !important; cursor: auto !important; }
-  #liveResultsContainer #eb-postcalc-inline-cta, #actives-matrix #eb-table-row4-gate-tr, #actives-matrix #eb-tanstack-table-bar, #eb-deliverable-curtain { display: none !important; }
+  #liveResultsContainer #eb-postcalc-inline-cta, #actives-matrix #eb-table-row4-gate-tr, #actives-matrix #eb-tanstack-table-bar, #eb-deliverable-curtain, #eb-pseo-quick-bar { display: none !important; }
+  #eb-pseo-hero-split { grid-template-columns: 1fr !important; }
   #eb-prism-proof-preview { white-space: normal !important; padding: 16px 18px !important; background: var(--bg-canvas) !important; font-family: 'Newsreader', Georgia, serif !important; }
+  .dl-inline-ics-form { display: grid !important; grid-template-columns: minmax(190px, 1fr) auto; gap: 8px; align-items: center; width: 100%; }
+  .dl-inline-ics-form .input-box, #dl-vanity-email-form .input-box { width: 100%; min-width: 0; border-radius: 999px; background: var(--bg-surface); padding: 7px 14px; font-size: 0.78rem; }
+  .dl-inline-ics-btn, #dl-vanity-email-btn { background: var(--rose-pill-bg) !important; color: var(--rose-brand) !important; border-radius: 999px; font-weight: 600; }
 `;
 
 function renderHeader(hideNav = false) {
@@ -597,15 +601,19 @@ function renderAnalysisResultHtml(res) {
             <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.76rem;padding:4px 8px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} &middot; -$${wastedUsd})</button>
           </div>
         </div>
-        <div id="dl-postscan-conversion-strip" style="padding:10px 12px;background:var(--bg-oat);margin-bottom:10px;display:flex;flex-direction:column;gap:6px;">
+        <div id="dl-postscan-conversion-strip" style="padding:12px 14px;border-radius:18px;background:var(--bg-canvas);margin-bottom:10px;display:flex;flex-direction:column;gap:8px;">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
-            <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'postscan_results')" style="display:flex;gap:6px;flex:1;min-width:220px;align-items:center;">
-              <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Email free 4-Night .ICS Calendar + 24h Link..." style="flex:1;padding:6px 10px;font-size:0.76rem;min-height:30px;" />
-              <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:6px 11px;min-height:30px;font-size:0.75rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
-              <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
-            </form>
-            <a href="/api/affiliate?product=${escapeHtml((pmCream && pmCream.id) || (matchedProds[0] && matchedProds[0].id) || 'aestura-atobarrier-365')}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">Restock ${escapeHtml((pmCream && pmCream.brand) || (matchedProds[0] && matchedProds[0].brand) || 'Aestura')} ($${(pmCream && pmCream.priceUsd) || (matchedProds[0] && matchedProds[0].priceUsd) || 32}) &nearr;</a>
+            <span class="mono" style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">Keep Your Fixed AM/PM Split ($${wastedUsd || 184} Saved):</span>
+            <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
+              <a id="dl-postscan-keep-99c" href="/buy/micro_pass?source=postscan_sweetspot" class="btn-primary mono" style="padding:5px 12px;min-height:28px;font-size:0.75rem;text-decoration:none;">Save 9:16 Phone Card (99&cent;) &rarr;</a>
+              <a href="/api/affiliate?product=${escapeHtml((pmCream && pmCream.id) || (matchedProds[0] && matchedProds[0].id) || 'aestura-atobarrier-365')}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">Restock ${escapeHtml((pmCream && pmCream.brand) || (matchedProds[0] && matchedProds[0].brand) || 'Aestura')} ($${(pmCream && pmCream.priceUsd) || (matchedProds[0] && matchedProds[0].priceUsd) || 32}) &nearr;</a>
+            </div>
           </div>
+          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'postscan_results')">
+            <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Enter email for free 4-Night .ICS + 24h routine link..." style="background:var(--bg-oat);padding:7px 12px;font-size:0.76rem;min-height:32px;" />
+            <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:32px;font-size:0.75rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
+            <div class="dl-inline-ics-status mono" style="display:none;grid-column:1/-1;font-size:0.74rem;color:var(--sage-safe);"></div>
+          </form>
         </div>
 
         <!-- Slow-Paced 3-Step Journey Switcher -->
@@ -735,19 +743,11 @@ const CLIENT_SCRIPT = `
   }
   function filterShelfByTexture(group, btn) {
     window.__dlActiveTexGroup = group;
-    document.querySelectorAll('#textureFilterTabs .vanity-light-btn').forEach((b) => {
-      b.classList.remove('active');
-      b.setAttribute('aria-pressed', 'false');
-    });
-    if (btn) {
-      btn.classList.add('active');
-      btn.setAttribute('aria-pressed', 'true');
-    }
+    document.querySelectorAll('#textureFilterTabs .vanity-light-btn').forEach((b) => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+    if (btn) { btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); }
     applyShelfFilters();
   }
-  function filterProductList() {
-    applyShelfFilters();
-  }
+  function filterProductList() { applyShelfFilters(); }
   function applyPreset(presetId) {
     const map = { 'copper-vitc-trap': 'copper-vitc-oxidation', 'acne-rx-clash': 'acne-rx-bpo-tretinoin', 'tiktok-viral-clash': 'viral-tiktok-destroyer', 'barrier-safe-gold': 'glass-skin-recovery' };
     const btn = document.querySelector('[data-preset-id="' + (map[presetId] || presetId) + '"]');

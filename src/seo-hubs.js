@@ -810,10 +810,10 @@ function renderConcernDetailPage(concern) {
             <a href="${preloadHref}" class="btn-secondary"><span>Open in Full Checker &rarr;</span></a>
             <a href="/buy/flash_pass?guide=${encodeURIComponent(concern.slug)}" class="btn-secondary"><span>Save 9:16 Lock-Screen Card ($1.99)</span></a>
           </div>
-          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'concern_${escapeHtml(concern.slug)}')" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-            <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Or email free 4-Night .ICS Calendar + 24h Restore Link..." style="flex:1;min-width:210px;padding:7px 11px;font-size:0.76rem;min-height:34px;" />
+          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'concern_${escapeHtml(concern.slug)}')">
+            <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Enter email for free 4-Night .ICS Calendar + 24h Restore Link..." style="padding:7px 12px;font-size:0.77rem;min-height:34px;" />
             <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
-            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+            <div class="dl-inline-ics-status mono" style="display:none;grid-column:1/-1;font-size:0.74rem;color:var(--sage-safe);"></div>
           </form>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">

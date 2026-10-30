@@ -329,10 +329,10 @@ function renderDualInlineVerdictSelector(comp, canonicalSlug, positionId) {
         <a class="btn-secondary mono gi-verdict-cta-link" href="/?products=${prodQuery}&amp;skin=combination&amp;ref=compare_${escapeHtml(canonicalSlug)}#analyzer" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(canonicalSlug)}',pos:'${escapeHtml(positionId)}'})" style="padding:8px 14px;font-size:0.8rem;min-height:36px;text-decoration:none;"><span>Open in MyShelf Checker &rarr;</span></a>
       </div>
     </div>
-    <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'compare_${escapeHtml(canonicalSlug)}')" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-hairline);">
-      <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Or email free 4-Night .ICS Calendar + 24h Routine Restore Link..." style="flex:1;min-width:220px;padding:7px 11px;font-size:0.76rem;min-height:34px;" />
+    <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'compare_${escapeHtml(canonicalSlug)}')" style="margin-top:10px;padding-top:10px;">
+      <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Enter email for free 4-Night .ICS Calendar + 24h Routine Restore Link..." style="padding:7px 12px;font-size:0.77rem;min-height:34px;" />
       <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
-      <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+      <div class="dl-inline-ics-status mono" style="display:none;grid-column:1/-1;font-size:0.74rem;color:var(--sage-safe);"></div>
     </form>
   </div>`;
 }
@@ -419,7 +419,7 @@ function renderComparePageHtml(comp, canonicalSlug) {
         <div class="table-wrap">
           <table id="gi-compare-matrix-table" aria-label="${escapeHtml(comp.nameA)} vs ${escapeHtml(comp.nameB)} Chemistry Matrix">
             <thead><tr><th>Biochemical Parameter &amp; Unit</th><th data-col="a" class="gi-col-a">${escapeHtml(comp.nameA)}</th><th data-col="b" class="gi-col-b">${escapeHtml(comp.nameB)}</th><th>Combined Interaction &amp; Clinical Threshold</th></tr></thead>
-            <tbody>
+            <tbody id="prompt-matrix-tbody">
               <tr><td><strong>Formulation pH Window</strong> (pH Units)</td><td data-col="a" class="mono gi-col-a">${escapeHtml(comp.phRangeA)}</td><td data-col="b" class="mono gi-col-b">${escapeHtml(comp.phRangeB)}</td><td class="mono">ΔpH Differential: <strong>${comp.deltaPh}</strong> (${comp.deltaPh >= 1.5 ? 'High Ionization Shift · Separate AM/PM' : 'pH-Compatible Window'})</td></tr>
               <tr><td><strong>Dissociation Constant</strong> (pKa)</td><td data-col="a" class="mono gi-col-a">${escapeHtml(comp.pkaA)}</td><td data-col="b" class="mono gi-col-b">${escapeHtml(comp.pkaB)}</td><td class="mono">Free-Acid Equilibrium: 100 / (1 + 10^(pH - pKa))</td></tr>
               <tr><td><strong>Native Free-Acid Bioavailability</strong> (%)</td><td data-col="a" class="mono gi-col-a">${escapeHtml(comp.freeAcidA)}</td><td data-col="b" class="mono gi-col-b">${escapeHtml(comp.freeAcidB)}</td><td class="mono">${escapeHtml(comp.mixedFreeAcidA)}</td></tr>
@@ -466,6 +466,8 @@ function buildMarkdownForPath(reqPath) {
     if (resolved) {
       const comp = computeComparisonTelemetry(resolved);
       return [
+        `# ${comp.title}`,
+        '',
         '---',
         `title: "${comp.title}"`,
         `canonical_url: "${HOST_URL}/compare/${resolved.canonicalSlug}"`,
@@ -474,9 +476,10 @@ function buildMarkdownForPath(reqPath) {
         `delta_ph: ${comp.deltaPh}`,
         '---',
         '',
-        `# ${comp.title}`,
-        '',
         `> **Deterministic Verdict (${comp.harmonyScore}/100 · ΔpH ${comp.deltaPh})**: ${comp.verdictLabel}. ${comp.summary}`,
+        '',
+        `- **1-Click Single-File Export (99¢)**: ${HOST_URL}/buy/micro_pass`,
+        `- **1-Click 3-File Bundle ($1.99)**: ${HOST_URL}/buy/flash_pass`,
         '',
         `| Parameter | ${comp.nameA} | ${comp.nameB} | Interaction / Threshold |`,
         '| :--- | :--- | :--- | :--- |',
