@@ -481,8 +481,8 @@ const CLINICAL_INGREDIENTS = [
     activeClass: 'barrier_lipid',
     phMin: 4.5, phMax: 7.0, pka: null, molecularWeightDa: 565.95,
     comedogenicity: 0, irritationIndex: 0, malasseziaTrigger: false, pregnancySafe: 'SAFE',
-    functionRole: 'Physiological Stratum Corneum Lamellar Lipid',
-    clinicalMechanism: 'Seals intercellular lipid bilayers (optimal 3:1:1 molar ratio with cholesterol and free fatty acids) to halt TEWL.'
+    functionRole: 'Skin-Identical Moisture Barrier Ceramide',
+    clinicalMechanism: 'Replenishes your skin barrier with soothing ceramides to lock in moisture and prevent dryness.'
   },
   {
     id: 'cholesterol',

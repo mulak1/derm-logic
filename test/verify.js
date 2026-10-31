@@ -466,7 +466,7 @@ async function runVerification() {
     assert.strictEqual(compareGlowState.skinType, 'sensitive', 'Clicking 1-tap verdict button must persist skinType=sensitive in dermlogic_glow_session_v1');
     assert.strictEqual(compareGlowState.hasWinnerCol, true, 'Clicking 1-tap verdict button must highlight winning table column');
     assert.strictEqual(compareGlowState.hasMeasurementTech, true, 'Page must embed Dataset JSON-LD with measurementTechnique');
-    const bannedJargonRegex = /(Sunk-Cost|Bioavailability|Culprit Autopsy|Perioral Sting|Nasolabial|Micro-Fissures|PAO Oxidation|Bos & Meinardi|Ester Hydrolysis)/i;
+    const bannedJargonRegex = /(Sunk-Cost|Bioavailability|Culprit Autopsy|Perioral Sting|Nasolabial|Micro-Fissures|PAO Oxidation|Bos & Meinardi|Ester Hydrolysis|Stratum Corneum|Transepidermal)/i;
     assert(!bannedJargonRegex.test(compareGlowState.bodyText), `Banned robotic/textbook jargon found in visible compare page text: ${compareGlowState.bodyText.match(bannedJargonRegex)?.[0]}`);
     await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded' });
     const homeBodyText = await page.evaluate(() => document.body ? document.body.innerText : '');
