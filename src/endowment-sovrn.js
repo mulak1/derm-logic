@@ -28,7 +28,15 @@ const DIRECT_MERCHANT_URLS = {
   'medik8-crystal-retinal-6': { url: 'https://www.dermstore.com/p/medik8-crystal-retinal-6-stable-retinal-night-serum-30ml/12902821/', retailer: 'Dermstore', partner: 'dermstore' },
   'eltamd-uv-clear-spf46': { url: 'https://www.dermstore.com/p/eltamd-uv-clear-broad-spectrum-spf-46/11370303/', retailer: 'Dermstore', partner: 'dermstore' },
   'rohto-melano-cc': { url: 'https://www.amazon.com/dp/B08R82XGV2', retailer: 'Amazon', partner: 'amazon' },
-  'differin-adapalene-01': { url: 'https://www.ulta.com/p/adapalene-gel-01-acne-treatment-xlsImpprod15791005', retailer: 'Ulta Beauty', partner: 'dermstore' }
+  'differin-adapalene-01': { url: 'https://www.ulta.com/p/adapalene-gel-01-acne-treatment-xlsImpprod15791005', retailer: 'Ulta Beauty', partner: 'dermstore' },
+  'timeless-20-vitamin-c': { url: 'https://www.amazon.com/s?k=Timeless+Skin+Care+20%25+Vitamin+C+E+Ferulic+Acid+Serum', retailer: 'Amazon', partner: 'amazon' },
+  'cosrx-snail-96-mucin': { url: 'https://www.ulta.com/p/advanced-snail-96-mucin-power-essence-xlsImpprod15641052', retailer: 'Ulta Beauty', partner: 'dermstore' },
+  'cerave-pm-lotion': { url: 'https://www.ulta.com/p/pm-facial-moisturizing-lotion-xlsImpprod5140027', retailer: 'Ulta Beauty', partner: 'dermstore' },
+  'illiyoon-ceramide-ato': { url: 'https://www.amazon.com/s?k=ILLIYOON+Ceramide+Ato+Concentrate+Cream', retailer: 'Amazon', partner: 'amazon' },
+  'stratia-lipid-gold': { url: 'https://www.amazon.com/s?k=Stratia+Lipid+Gold+Barrier+Lotion', retailer: 'Amazon', partner: 'amazon' },
+  'boj-relief-sun-spf50': { url: 'https://www.amazon.com/s?k=Beauty+of+Joseon+Relief+Sun+SPF+50', retailer: 'Amazon', partner: 'amazon' },
+  'to-glycolic-acid-7': { url: 'https://www.sephora.com/product/the-ordinary-deciem-glycolic-acid-7-toning-solution-P427406', retailer: 'Sephora', partner: 'sephora' },
+  'to-niacinamide-10-zinc': { url: 'https://www.sephora.com/product/the-ordinary-deciem-niacinamide-10-zinc-1-P427417', retailer: 'Sephora', partner: 'sephora' }
 };
 
 function getSovrnMerchantLink(productId, preferredPartner = 'dermstore') {
@@ -220,7 +228,7 @@ function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Va
       <div style="min-width:0;">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
           <span class="mono" style="font-size:0.8rem;color:var(--text-secondary);font-weight:600;letter-spacing:0.02em;text-transform:uppercase;">4-Night Bedtime Rotation</span>
-          <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;text-decoration:underline;">Add 4-Night .ICS (99&cent;) &rarr;</a>
+          <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;text-decoration:underline;">Add 9:30 PM Phone Reminders (99&cent;) &rarr;</a>
         </div>
         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
           <div style="padding:9px 11px;background:var(--bg-surface);min-width:0;"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;">${escapeHtml(n1Label)}</span><span class="mono" style="font-size:0.74rem;color:var(--text-muted);">Wait 60s</span></div><div style="font-size:0.82rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n1Val)}</div></div>

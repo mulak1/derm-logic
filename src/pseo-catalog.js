@@ -794,9 +794,22 @@ function formatMetaDescription(rawText, maxLen = 155) {
 function toPlainConsumerPair(item, ingA, ingB) {
   const nameA = cleanIngName(ingA ? ingA.commonName : item.activeA);
   const nameB = cleanIngName(ingB ? ingB.commonName : item.activeB);
-  const roleA = ingA && ingA.functionRole ? ingA.functionRole.toLowerCase() : 'active serum';
-  const roleB = ingB && ingB.functionRole ? ingB.functionRole.toLowerCase() : 'treatment';
-  const phNote = ingA && ingB ? `(pH ${ingA.phMin} vs. pH ${ingB.phMin})` : '';
+  const friendlyRole = (ing, fallback) => {
+    const c = String(ing && ing.category || '').toLowerCase();
+    if (c.includes('retinoid')) return 'night retinoid treatment';
+    if (c.includes('barrier') || c.includes('humectant')) return 'hydrating barrier essence';
+    if (c.includes('exfoliant') || c.includes('aha') || c.includes('bha')) return 'smoothing exfoliant';
+    if (c.includes('antioxidant') || c.includes('brighten')) return 'brightening antioxidant serum';
+    if (c.includes('peptide')) return 'firming peptide serum';
+    return fallback;
+  };
+  const roleA = friendlyRole(ingA, 'active serum');
+  const roleB = friendlyRole(ingB, 'treatment');
+  const midA = ingA ? Number(((ingA.phMin + ingA.phMax) / 2).toFixed(1)) : 5.5;
+  const midB = ingB ? Number(((ingB.phMin + ingB.phMax) / 2).toFixed(1)) : 5.5;
+  const phNote = ingA && ingB ? `(pH ${midA} vs. pH ${midB})` : '';
+  const waitMin = Number(item.waitTimeMinutes) || 1;
+  const waitPhrase = waitMin >= 10 ? `wait ${waitMin} minutes for your skin to dry completely` : 'allow 60 seconds to absorb';
   const score = Number(item.compatibilityScore) || 50;
   if (String(item.slug || '').includes('adapalene') && String(item.slug || '').includes('benzoyl-peroxide')) {
     return {
@@ -813,12 +826,12 @@ function toPlainConsumerPair(item, ingA, ingB) {
   if (score < 78) {
     return {
       conflictType: 'Can Over-Exfoliate Sensitive Skin · Alternate Nights or Buffer',
-      summary: `Space apart ${nameA} (${roleA}) and ${nameB} (${roleB}) ${phNote}. Stacking both back-to-back can strip protective skin lipids and cause tightness around the nose and mouth. ${item.waitTimeMinutes >= 60 ? 'Alternate them on separate nights' : `Wait ${item.waitTimeMinutes || 10} minutes for full dry-down between layers`} and cushion with ceramide cream.`
+      summary: `Space apart ${nameA} (${roleA}) and ${nameB} (${roleB}) ${phNote}. Stacking both back-to-back can strip protective skin lipids and cause tightness around the nose and mouth. ${waitMin >= 60 ? 'Alternate them on separate nights' : `Wait ${waitMin || 10} minutes for full dry-down between layers`} and cushion with ceramide cream.`
     };
   }
   return {
     conflictType: 'Gentle & Hydrating Together · Layer Thinnest to Richest',
-    summary: `${nameA} (${roleA}) and ${nameB} (${roleB}) work harmoniously in the same routine ${phNote}. Smooth the lighter water-based layer onto clean skin first, allow 60 seconds to absorb, and seal with the richer formula to keep your moisture barrier calm and bouncy.`
+    summary: `${nameA} (${roleA}) and ${nameB} (${roleB}) work harmoniously in the same routine ${phNote}. Smooth the lighter water-based layer onto clean skin first, ${waitPhrase}, and seal with the richer formula to keep your moisture barrier calm and bouncy.`
   };
 }
 
@@ -891,7 +904,7 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       faqs: [
         { q: `Can you layer ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} in the same skincare routine?`, a: `${plain.summary}` },
         { q: `Why do ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} clash or work together?`, a: `They have a pH difference of ΔpH ${item.deltaPh} (${ingA ? `pH ${ingA.phMin} to ${ingA.phMax}` : 'acidic'} vs ${ingB ? `pH ${ingB.phMin} to ${ingB.phMax}` : 'neutral'}). When two products have very different acidity levels, layering them right on top of each other can make them less effective or irritate sensitive skin.` },
-        { q: `How long should I wait between ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB}?`, a: item.waitTimeMinutes >= 720 ? `Waiting a few minutes isn't enough when two strong actives clash. Use one in your morning routine and the other at bedtime (or alternate nights).` : `Wait about 60 seconds for the first layer to absorb on dry skin (or up to ${item.waitTimeMinutes} minutes for sensitive skin) before patting on the next step.` }
+        { q: `How long should I wait between ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB}?`, a: item.waitTimeMinutes >= 720 ? `Waiting a few minutes isn't enough when two strong actives clash. Use one in your morning routine and the other at bedtime (or alternate nights).` : (item.waitTimeMinutes >= 10 ? `Wait ${item.waitTimeMinutes} minutes for the first layer to dry completely before applying the next step so damp skin does not pull concentrated actives too rapidly into your barrier.` : `Wait about 60 seconds for the first layer to absorb on dry skin before patting on the next step.`) }
       ]
     });
   }

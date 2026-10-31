@@ -228,7 +228,7 @@ const VERTICAL_CONFIGS = {
     sliderLabel: 'Products', sliderMin: 2, sliderMax: 8, sliderVal: 4,
     searchPlaceholder: 'Search ingredient or product (e.g. Retinol)...',
     tier1Tag: 'SINGLE-ROUTINE PASS • SAVE 60% VS $4.99',
-    tier1Desc: 'Instantly unlocks your 9:16 phone lockscreen routine card, exact wait times between serums, and 4-Night Skin-Cycling calendar (.ICS).',
+    tier1Desc: 'Instantly unlocks your 9:16 phone lockscreen routine card, exact wait times between serums, and 4-Night phone bedtime reminders.',
     tier2Tag: 'COMPLETE AM/PM ROUTINE RESCUE KIT',
     tier2Desc: 'Printable Morning & Night Vanity Card PDF, full ingredient compatibility chart, and gentle pore-safe product swaps.',
     tier3Tag: 'UNLIMITED SHELF & ESTHETICIAN PASS',
@@ -244,12 +244,12 @@ const VERTICAL_CONFIGS = {
     },
     exportActions: [
       { id: 'btn-copy-shopping-list', label: 'Copy Routine Steps', type: 'copy' },
-      { id: 'btn-export-ics', label: '4-Night Calendar (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
-      { id: 'btn-export-csv', label: 'Ingredient Chart (.CSV)', href: '/api/github-upgrade/export.csv' },
-      { id: 'btn-export-llms', label: 'Download Routine Notes (.TXT)', href: '/api/github-upgrade/llms-bundle.txt' },
+      { id: 'btn-export-ics', label: 'Add Phone Reminders', href: '/api/github-upgrade/skin-cycling.ics' },
+      { id: 'btn-export-csv', label: 'Compatibility Chart', href: '/api/github-upgrade/export.csv' },
+      { id: 'btn-export-llms', label: 'Save Routine Notes', href: '/api/github-upgrade/llms-bundle.txt' },
       { id: 'btn-print-summary', label: 'Print Vanity Card', type: 'print' },
-      { id: 'btn-showroom-hud', label: 'Vanity Shelf HUD', type: 'hud' },
-      { id: 'btn-cmdk-trigger', label: '⌘K Quick Menu', type: 'cmdk' },
+      { id: 'btn-showroom-hud', label: 'Shelf Summary', type: 'hud' },
+      { id: 'btn-cmdk-trigger', label: 'Quick Search', type: 'cmdk' },
       { id: 'btn-reddit-share', label: 'Share to r/SkincareAddiction', type: 'reddit' }
     ],
     kpis: [

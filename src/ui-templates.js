@@ -438,8 +438,8 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     <div id="checkoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" data-ui="checkout-dialog" onclick="if(event.target===this)closeCheckoutModal()">
       <div class="modal-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="badge-safe mono" id="modalBanditBadge">DermLogic Instant Fulfillment · $1.99 Stripe Express</span><button type="button" class="btn-secondary" style="padding:6px 14px;min-height:34px;" onclick="closeCheckoutModal()">Close</button></div>
-        <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Save Your Complete 3-Card Porcelain Ritual Dossier ($1.99)</h3>
-        <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:16px;">Includes your printable 4-Night Skin-Cycling calendar (.ICS), non-comedogenic clean swaps (.CSV), and 9:16 bathroom mirror phone lock-screen card.</p>
+        <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Save Your Complete Morning &amp; Bedtime Routine Kit</h3>
+        <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:16px;">Includes your printable 4-Night Skin-Cycling schedule, pore-safe product swaps, and 9:16 bathroom mirror phone lock-screen card.</p>
         <div style="margin-bottom:16px;"><a href="/buy/flash_pass" onclick="if(window.__dlBuyFromVanity)return window.__dlBuyFromVanity('flash_pass',this);if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none;padding:13px 20px;font-size:0.95rem;"><span>Get 3-Card Ritual Dossier ($1.99 Stripe Express)</span><span class="btn-icon-circle">&rarr;</span></a></div>
         <form id="checkoutForm" onsubmit="submitSelfServeCheckout(event)" style="padding-top:12px;">
           <input type="hidden" id="checkoutPlanId" value="onetime_499" /><input type="text" name="website_hp" id="checkoutHoneypot" style="display:none !important" tabindex="-1" autocomplete="off" />
@@ -651,7 +651,7 @@ function renderAnalysisResultHtml(res) {
                 ${pmStepsHtml}
               </div>
               <button type="button" class="btn-primary" style="width:100%;font-size:0.84rem;padding:10px 14px;margin-top:8px;background:#F3E1E5;color:#3A1F27;white-space:normal;text-align:center;" onclick="openCheckoutModal('onetime_499')">
-                <span>Save Morning &amp; Bedtime Lock-Screen Card ($1.99)</span>
+                <span>Save Complete Morning &amp; Night Routine Kit ($1.99 / $4.99)</span>
                 <span class="btn-icon-circle">&rarr;</span>
               </button>
             </div>

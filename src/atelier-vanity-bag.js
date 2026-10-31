@@ -149,8 +149,8 @@ function renderAtelierVanityDrawerHtml() {
           <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;background:var(--bg-surface);color:var(--rose-brand);"><span>Complete 3-File Kit ($1.99)</span></a>
         </div>
         <form id="dl-vanity-email-form" onsubmit="return window.__dlSendVanityHoldEmail(event)" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;">
-          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Enter email for free 4-Night .ICS + 24h routine link..." style="width:100%;padding:7px 12px;font-size:0.76rem;min-height:32px;background:var(--bg-surface);border-radius:999px;" />
-          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.75rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
+          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Enter email to save your free 4-Night routine summary..." style="width:100%;padding:7px 12px;font-size:0.76rem;min-height:32px;background:var(--bg-surface);border-radius:999px;" />
+          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.75rem;white-space:nowrap;">Email Free Summary &rarr;</button>
         </form>
         <div id="dl-vanity-email-status" class="mono" style="display:none;font-size:0.75rem;color:var(--sage-safe);font-weight:600;"></div>
       </div>
@@ -418,17 +418,29 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     };
 
     function syncSelectorVanityCaddy(st) {
-      var spfCheckedOnShelf = Boolean(document.querySelector('input[name="routineProduct"][value="boj-relief-sun-spf50"]:checked') || document.querySelector('input[name="routineProduct"][value="eltamd-uv-clear-spf46"]:checked'));
+      var checkedEls = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked'));
+      var checkedIds = checkedEls.map(function(el) { return el.value; });
+      var spfCheckedOnShelf = checkedIds.some(function(id) { return /spf|sun|uv/i.test(id); });
+      var nonSpfChecked = checkedIds.filter(function(id) { return !/spf|sun|uv/i.test(id); });
       var cardMap = [
-        { cardId: 'dl-pouch-card-0', nameId: 'dl-pouch-slot-name-0', subId: 'dl-pouch-slot-sub-0', slotIdx: 0, emptyName: 'Add Mist', emptySub: 'Step 01' },
-        { cardId: 'dl-pouch-card-1', nameId: 'dl-pouch-slot-name-1', subId: 'dl-pouch-slot-sub-1', slotIdx: 1, emptyName: 'Add Serum', emptySub: 'Step 02' },
-        { cardId: 'dl-pouch-card-2', nameId: 'dl-pouch-slot-name-2', subId: 'dl-pouch-slot-sub-2', slotIdx: 2, emptyName: 'Add Cream', emptySub: 'Step 03' },
-        { cardId: 'dl-pouch-card-3', nameId: 'dl-pouch-slot-name-3', subId: 'dl-pouch-slot-sub-3', slotIdx: 4, emptyName: 'Add Night', emptySub: 'Step 04' },
-        { cardId: 'dl-empty-bottle-slot', nameId: 'dl-pouch-slot-name-4', subId: 'dl-pouch-slot-sub-4', slotIdx: 3, emptyName: 'Add SPF 50', emptySub: 'Final Step', isSpf: true }
+        { cardId: 'dl-pouch-card-0', nameId: 'dl-pouch-slot-name-0', subId: 'dl-pouch-slot-sub-0', slotIdx: 0, shelfIdx: 0, emptyName: 'Add Mist', emptySub: 'Step 01' },
+        { cardId: 'dl-pouch-card-1', nameId: 'dl-pouch-slot-name-1', subId: 'dl-pouch-slot-sub-1', slotIdx: 1, shelfIdx: 1, emptyName: 'Add Serum', emptySub: 'Step 02' },
+        { cardId: 'dl-pouch-card-2', nameId: 'dl-pouch-slot-name-2', subId: 'dl-pouch-slot-sub-2', slotIdx: 2, shelfIdx: 2, emptyName: 'Add Cream', emptySub: 'Step 03' },
+        { cardId: 'dl-pouch-card-3', nameId: 'dl-pouch-slot-name-3', subId: 'dl-pouch-slot-sub-3', slotIdx: 4, shelfIdx: 3, emptyName: 'Add Night', emptySub: 'Step 04' },
+        { cardId: 'dl-empty-bottle-slot', nameId: 'dl-pouch-slot-name-4', subId: 'dl-pouch-slot-sub-4', slotIdx: 3, shelfIdx: -1, emptyName: 'Add SPF 50', emptySub: 'Final Step', isSpf: true }
       ];
       var pouchFilled = 0;
       cardMap.forEach(function(m) {
         var b = getBottleForSlot(st, m.slotIdx);
+        if (!m.isSpf && nonSpfChecked.length > 0 && m.shelfIdx >= 0) {
+          var sId = nonSpfChecked[m.shelfIdx];
+          if (sId && PROD_INFO[sId]) {
+            var pInfo = PROD_INFO[sId];
+            b = { id: sId, short: (pInfo.name || sId).split(' ').slice(0, 2).join(' ').slice(0, 14) };
+          } else if (m.shelfIdx >= nonSpfChecked.length) {
+            b = null;
+          }
+        }
         var isFilled = m.isSpf ? Boolean(b && (st.pouchSpfSealed || spfCheckedOnShelf)) : Boolean(b);
         if (isFilled) pouchFilled++;
         var cardEl = document.getElementById(m.cardId);
@@ -456,6 +468,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (stLbl) stLbl.textContent = pouchFilled + ' of 5 Comfort Steps Zip-Ready';
       if (pctTxt) pctTxt.textContent = pouchFilled === 5 ? 'Full · 100%' : (pouchFilled === 4 ? 'Almost Full · 80%' : (pouchFilled * 20) + '% Ready');
       if (prog) prog.style.width = (pouchFilled * 20) + '%';
+      return pouchFilled;
     }
 
     window.__dlRenderVanityDrawer = function() {
@@ -463,8 +476,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var uMeta = UNDERTONE_META[st.undertone] || UNDERTONE_META.neutral_ivory;
       var fMeta = FINISH_META[st.finish] || FINISH_META.velvet_satin;
       var clashes = computeBagClashes(st);
-      var filledCount = [0, 1, 2, 3, 4].filter(function(i) { return Boolean(getBottleForSlot(st, i)); }).length;
-      syncSelectorVanityCaddy(st);
+      var pouchCount = syncSelectorVanityCaddy(st);
+      var hasCaddy = Boolean(document.getElementById('dl-selector-vanity-caddy'));
+      var filledCount = hasCaddy ? pouchCount : [0, 1, 2, 3, 4].filter(function(i) { return Boolean(getBottleForSlot(st, i)); }).length;
 
       var countEl = document.getElementById('dl-header-vanity-count');
       if (countEl) countEl.textContent = filledCount === 5 ? '5 of 5 Full' : (filledCount + ' of 5');
@@ -767,11 +781,11 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         var m = href.match(/product=([^&\s"']+)/);
         if (!m) return;
         var prodId = decodeURIComponent(m[1]);
-        var card = affLink.closest('.porcelain-vessel-core, .conflict-card') || affLink.parentElement;
+        var card = affLink.closest('tr, .porcelain-vessel-core, .conflict-card') || affLink.parentElement;
         var titleEl = (card && !card.classList.contains('conflict-card')) ? card.querySelector('a[href^="/bottle/"], h1, h3') : null;
         var prodTitle = titleEl ? titleEl.textContent.trim() : (affLink.textContent.trim() || prodId);
         var btnId = 'dl-bag-btn-' + prodId;
-        var existing = document.getElementById(btnId) || (affLink.parentElement ? affLink.parentElement.querySelector('button[data-dl-bag-prod]') : null) || (card ? card.querySelector('button[data-dl-bag-prod]') : null);
+        var existing = document.getElementById(btnId) || (affLink.parentElement ? affLink.parentElement.querySelector('button[data-dl-bag-prod], button[data-bottle-id]') : null) || (card ? card.querySelector('button[data-dl-bag-prod], button[data-bottle-id]') : null);
         if (!existing) {
           existing = document.createElement('button'); existing.type = 'button'; existing.id = btnId;
           existing.setAttribute('data-dl-bag-prod', prodId); existing.setAttribute('data-dl-bag-title', prodTitle);

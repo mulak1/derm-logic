@@ -811,10 +811,12 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const top3 = ledger.filter((s) => s.score >= 85).slice(0, 3);
   const fix2 = ledger.filter((s) => s.score < 80).slice(0, 2);
+  const isDerm = cfg.moduleId === 'derm_logic';
+  const fmtScanTitle = (raw) => isDerm ? ({ 'VitC-AM-Peptides-PM': 'Morning Vitamin C + Bedtime Copper Peptides', 'Ceramide-Tretinoin-Buffer': 'Ceramide Cushion + Tretinoin 0.05%', 'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5%', 'BHA2-SnailMucin-Stack': '2% BHA + Snail Mucin 96% Essence', 'VitC+Cu': 'Vitamin C + Copper Peptides (Same Routine)', 'Tret+BPO': 'Tretinoin 0.05% + Benzoyl Peroxide (Same Step)', 'TikTok': '7-Active Acid & Retinol Stack' }[raw] || raw) : raw;
   const medals = [
-    { icon: '#1 LEADER', bg: t.brandSoftBg, text: t.brandPrimary },
-    { icon: '#2 RUNNER-UP', bg: t.subtleBg, text: t.textPrimary },
-    { icon: '#3 TOP TIER', bg: t.safeSoftBg, text: t.safeColor }
+    { icon: isDerm ? '#1 MOST LOVED' : '#1 LEADER', bg: t.brandSoftBg, text: t.brandPrimary },
+    { icon: isDerm ? '#2 BARRIER FAVORITE' : '#2 RUNNER-UP', bg: t.subtleBg, text: t.textPrimary },
+    { icon: isDerm ? '#3 REDNESS SAFE' : '#3 TOP TIER', bg: t.safeSoftBg, text: t.safeColor }
   ];
   const podiumCards = top3.map((s, i) => {
     const m = medals[i] || medals[2];
@@ -824,29 +826,29 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
           <span style="padding:3px 9px;border-radius:${t.radiusPill};background:${m.bg};color:${m.text};font-size:12.5px;font-weight:600;">${m.icon}</span>
           <span style="padding:3px 10px;border-radius:${t.radiusPill};background:${t.safeSoftBg};color:${t.safeColor};font-family:${t.fontSans};font-variant-numeric:tabular-nums;font-size:13px;font-weight:600;">Grade ${escHtml(s.grade)} · ${s.score}/100</span>
         </div>
-        <div style="font-size:17px;font-weight:500;color:${t.textPrimary};margin-bottom:4px;">${escHtml(s.target)}</div>
+        <div style="font-size:17px;font-weight:500;color:${t.textPrimary};margin-bottom:4px;">${escHtml(fmtScanTitle(s.target))}</div>
         <div style="font-size:14px;color:${t.textSecondary};margin-bottom:10px;">${escHtml(s.kpi1)} · ${escHtml(s.kpi2)}</div>
       </div>
       <div>
         <div style="width:100%;height:6px;background:${t.border};border-radius:${t.radiusPill};overflow:hidden;margin-bottom:6px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};border-radius:${t.radiusPill};"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:${t.brandPrimary};font-weight:500;"><span>View Verified Report</span><span>→</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:${t.brandPrimary};font-weight:500;"><span>See Full Routine Order</span><span>→</span></div>
       </div>
     </a>`;
   }).join('');
-  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13.5px;font-weight:500;text-decoration:none;"><span>${escHtml(s.target)}</span><span style="font-variant-numeric:tabular-nums;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
+  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13.5px;font-weight:500;text-decoration:none;"><span>${escHtml(fmtScanTitle(s.target))}</span><span style="font-variant-numeric:tabular-nums;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
 
-  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Industry Leaderboard Podium" style="margin:20px auto;font-family:${t.fontSans};">
+  return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Highest-Rated Routines" style="margin:20px auto;font-family:${t.fontSans};">
     <div class="eb-panel-card" style="margin:0;padding:24px;background:${t.cardBg};">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
         <div>
-          <h2 style="margin:0;font-size:22px;font-family:${t.fontDisplay};font-weight:500;color:${t.textPrimary};">Top-Rated Industry Leaders</h2>
+          <h2 style="margin:0;font-size:22px;font-family:${t.fontDisplay};font-weight:500;color:${t.textPrimary};">${isDerm ? 'Highest-Rated Morning &amp; Bedtime Routines' : 'Top-Rated Industry Leaders'}</h2>
         </div>
-        <a href="/leaderboard" style="padding:9px 18px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:var(--accent-ink,#FFFFFF);font-size:14px;font-weight:500;text-decoration:none;">Explore Full Interactive Leaderboard →</a>
+        <a href="/leaderboard" style="padding:9px 18px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:var(--accent-ink,#FFFFFF);font-size:14px;font-weight:500;text-decoration:none;">${isDerm ? 'Explore All Rated Routines →' : 'Explore Full Interactive Leaderboard →'}</a>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:14px;">${podiumCards}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:12px;">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:13.5px;font-weight:600;color:${t.textSecondary};">Common Mistakes Analysed:</span>${fixPills}</div>
-        <a href="/leaderboard" style="font-size:13.5px;font-weight:600;color:${t.brandPrimary};text-decoration:underline;"> Filter all ${ledger.length} ranked benchmarks →</a>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:13.5px;font-weight:600;color:${t.textSecondary};">Common Shelf Mistakes:</span>${fixPills}</div>
+        <a href="/leaderboard" style="font-size:13.5px;font-weight:600;color:${t.brandPrimary};text-decoration:underline;">View all ${ledger.length} tested routines →</a>
       </div>
     </div>
   </section>`;
@@ -878,8 +880,8 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   return `<nav id="eb-seo-crawl-mesh" aria-label="${escHtml(cfg.brandName)} Complete ${growthItems.length}-Page Programmatic Benchmark &amp; AI Indexing Mesh" style="margin-top:16px;padding:18px;border-radius:${t.radiusCard};background:${t.subtleBg};">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
       <div>
-        <div style="font-size:16px;font-weight:600;color:${t.brandPrimary};">${isDerm ? `Complete Skincare Layering &amp; Routine Guide Directory (${growthItems.length} Guides)` : `Complete ${growthItems.length}-Benchmark Knowledge Graph &amp; AI Crawl Mesh`}</div>
-        <div style="font-size:15.5px;color:${t.textSecondary};">1-click access to all ${growthItems.length} verified guides, interactive tools, comparisons, <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:600;">${isDerm ? 'Routine Leaderboard' : 'Public Leaderboard'}</a>, <a href="/llms.txt" style="color:${t.brandPrimary};text-decoration:underline;">AI Summary Index</a>, <a href="/llms-full.txt" style="color:${t.brandPrimary};text-decoration:underline;">Full Knowledge Corpus</a>, and <a href="/sitemap-index.xml" style="color:${t.brandPrimary};text-decoration:underline;">XML Sitemap Index</a>.</div>
+        <div style="font-size:16px;font-weight:600;color:${t.brandPrimary};">${isDerm ? `Browse All ${growthItems.length} Skincare Layering &amp; Bottle Guides` : `Complete ${growthItems.length}-Benchmark Knowledge Graph &amp; AI Crawl Mesh`}</div>
+        <div style="font-size:15.5px;color:${t.textSecondary};">1-click access to all ${growthItems.length} verified layering guides, bottle comparisons, and <a href="/leaderboard" style="color:${t.brandPrimary};text-decoration:underline;font-weight:600;">${isDerm ? 'Top-Rated Routines' : 'Public Leaderboard'}</a>.</div>
       </div>
       <input type="search" id="eb-mesh-filter-input" aria-label="Filter ${growthItems.length} benchmark guides" placeholder="${isDerm ? 'Search routine guides...' : `Filter ${growthItems.length} guides...`}" oninput="(function(v){var q=v.toLowerCase();var a=document.querySelectorAll('#eb-seo-crawl-mesh .eb-mesh-link');for(var i=0;i<a.length;i++){a[i].style.display=(!q||a[i].getAttribute('data-mesh-text').indexOf(q)!==-1)?'inline-flex':'none';}})(this.value)" style="padding:7px 14px;border-radius:${t.radiusCard};background:${t.cardBg};color:${t.textPrimary};font-size:15px;min-width:250px;border:1px solid ${t.border};" />
     </div>
