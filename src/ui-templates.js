@@ -450,20 +450,20 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
 function renderSingleConflictCard(c) {
   const isCritical = c.severity === 'CRITICAL';
-  const badgeLabel = isCritical ? 'Cancels on Contact · -$2.80/use Neutralized' : 'Space Apart · Perioral Sting Risk';
+  const badgeLabel = isCritical ? 'Cancels Out Together · Use Morning vs. Night' : 'Space Apart · Can Sting Sensitive Skin';
   const nameA = String(c.ingredientA || c.inciA || '').replace(/\s*\([^)]*\)/g, '');
   const nameB = String(c.ingredientB || c.inciB || '').replace(/\s*\([^)]*\)/g, '');
   const cleanTitle = String(c.title || '').replace(/\s*\(pH[^)]*\)/gi, '');
   const rawRes = String(c.resolution || '').trim();
   const howToFix = (!rawRes || /LOCKED IN FREE PREVIEW/i.test(rawRes))
-    ? (isCritical ? 'Wear one bottle at 7:30 AM and keep the other for 9:30 PM so they never cancel out on contact.' : 'Apply a ceramide moisturizer first or alternate across your 4-night cycle.')
+    ? (isCritical ? 'Use one in the morning (7:30 AM) and save the other for bedtime (9:30 PM) so both work at full strength.' : 'Apply a soothing moisturizer first or alternate nights.')
     : rawRes;
   const swap = getConflictSafeSwap(c);
   return `<div class="conflict-card ${escapeHtml(c.severity)}" style="padding:16px 18px;margin-bottom:10px;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;"><span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono">${badgeLabel}</span><span class="mono" style="font-size:0.8rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</span></div>
       <div class="serif-display" style="font-size:1.16rem;font-weight:500;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(cleanTitle)}</div>
       <div style="padding:9px 12px;background:var(--bg-surface);border-left:2.5px solid ${isCritical ? 'var(--berry-clash)' : 'var(--honey-warn)'};font-size:0.84rem;line-height:1.45;color:var(--text-primary);margin-bottom:8px;"><strong>Easy Fix:</strong> ${escapeHtml(howToFix)}<div class="mono" style="margin-top:4px;font-size:0.8rem;color:var(--sage-safe);">${escapeHtml(swap.freeFix)}</div></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a><button type="button" class="vanity-light-btn mono" style="padding:5px 10px;font-size:0.73rem;min-height:26px;" onclick="window.__dlActivate72HrBarrierReset(this)">Activate 72-Hr Stinging Rescue Mode &rarr;</button></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a><button type="button" class="vanity-light-btn mono" style="padding:5px 10px;font-size:0.73rem;min-height:26px;" onclick="window.__dlActivate72HrBarrierReset(this)">Switch to 3-Night Soothing Reset &rarr;</button></div>
     </div>`;
 }
 
@@ -593,15 +593,15 @@ function renderAnalysisResultHtml(res) {
 
         <div id="beforeAfterSplitBar" style="display:flex;flex-direction:column;gap:8px;padding:11px 13px;border-radius:18px;background:var(--bg-canvas);margin-bottom:10px;min-width:0;">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-            <span id="beforeAfterStatusText" style="font-size:0.81rem;color:var(--text-secondary);"><strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 98.4% Active Bioavailability Protected ($0 Wasted)</span>
-            <div class="vanity-light-pill" role="group" aria-label="Compare Before Clashing Stack vs After Fixed Split" style="padding:3px;gap:3px;flex-wrap:wrap;">
-              <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.75rem;padding:4px 8px;min-height:26px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Fixed Split (98.4% Potency)</button>
-              <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.75rem;padding:4px 8px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} &middot; -$${wastedUsd}/yr)</button>
+            <span id="beforeAfterStatusText" style="font-size:0.81rem;color:var(--text-secondary);"><strong style="color:var(--sage-safe);">Morning &amp; Night Split</strong> &middot; Every Serum Works at Full Strength ($0 Wasted)</span>
+            <div class="vanity-light-pill" role="group" aria-label="Compare Safe Morning & Night Split vs Layered All at Once" style="padding:3px;gap:3px;flex-wrap:wrap;">
+              <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.75rem;padding:4px 8px;min-height:26px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Morning &amp; Night Split</button>
+              <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.75rem;padding:4px 8px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Layered All at Once (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'})</button>
             </div>
           </div>
-          <div style="height:7px;border-radius:999px;background:var(--bg-oat);overflow:hidden;" title="Active Serum Potency & Sunk-Cost Preservation Meter"><div id="dl-potency-meter-fill" style="width:98%;height:100%;border-radius:999px;background:linear-gradient(90deg, var(--rose-brand) 0%, #10B981 100%);transition:width 260ms ease;"></div></div>
+          <div style="height:7px;border-radius:999px;background:var(--bg-oat);overflow:hidden;" title="How Well Your Serums Work Together"><div id="dl-potency-meter-fill" style="width:98%;height:100%;border-radius:999px;background:linear-gradient(90deg, var(--rose-brand) 0%, #10B981 100%);transition:width 260ms ease;"></div></div>
           <div id="dl-postscan-conversion-strip" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:2px;">
-            <span style="font-size:0.78rem;color:var(--text-secondary);"><strong class="mono" style="color:var(--text-primary);">Sunk-Cost Protected ($${wastedUsd || 184}/yr):</strong> Separates <span style="color:var(--sage-safe);font-weight:600;">7:30 AM</span> &amp; <span style="color:var(--rose-brand);font-weight:600;">9:30 PM</span> actives so zero dropper potency is neutralized.</span>
+            <span style="font-size:0.78rem;color:var(--text-secondary);"><strong class="mono" style="color:var(--text-primary);">Saves $${wastedUsd || 184} in Serums:</strong> Uses Vitamin C in the <span style="color:var(--sage-safe);font-weight:600;">Morning</span> and Retinol at <span style="color:var(--rose-brand);font-weight:600;">Bedtime</span> so your bottles don't cancel each other out.</span>
             <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
               <button type="button" class="btn-secondary mono" onclick="window.__dlSwitchResultStep(2)" style="padding:4px 10px;min-height:26px;font-size:0.74rem;background:var(--rose-pill-bg);color:var(--rose-brand);">See AM &amp; PM Order &rarr;</button>
               <a href="/api/affiliate?product=${escapeHtml((pmCream && pmCream.id) || (matchedProds[0] && matchedProds[0].id) || 'aestura-atobarrier-365')}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;white-space:nowrap;" data-no-bag-inject="1">Check ${escapeHtml((pmCream && pmCream.brand) || (matchedProds[0] && matchedProds[0].brand) || 'Aestura')} ($${(pmCream && pmCream.priceUsd) || (matchedProds[0] && matchedProds[0].priceUsd) || 32}) &nearr;</a>

@@ -111,9 +111,9 @@ function renderAtelierVanityDrawerHtml() {
       </div>
       <div style="background:var(--bg-oat);border-radius:20px;padding:10px 12px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px;flex-wrap:wrap;">
-          <span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Tap any bottle on your shelf (<span id="dl-tray-filled-label">5/5 Vessels</span>):</span>
+          <span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Tap any bottle on your shelf (<span id="dl-tray-filled-label">5/5 Bottles</span>):</span>
           <div style="display:inline-flex;gap:5px;flex-wrap:wrap;">
-            <button type="button" class="mono" onclick="window.__dlDupeAllFiveVessels()" style="background:var(--sage-bg);color:var(--sage-safe);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Dupe All 5 ($86) &rarr;</button>
+            <button type="button" class="mono" onclick="window.__dlDupeAllFiveVessels()" style="background:var(--sage-bg);color:var(--sage-safe);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Try Affordable Dupes ($86) &rarr;</button>
             <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:600;cursor:pointer;">Test a Clash &rarr;</button>
           </div>
         </div>
@@ -561,11 +561,11 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         bagTotalUsd += mPr ? Number(mPr[1]) : 19;
       }
       var trayLabel = document.getElementById('dl-tray-filled-label');
-      if (trayLabel) trayLabel.textContent = filledCount + '/5 Vessels · $' + bagTotalUsd + ' Total · ' + (clashes.length > 0 ? (clashes.length + ' Clash') : (bagTotalUsd <= 110 ? 'Dupe Shelf' : 'pH Safe'));
+      if (trayLabel) trayLabel.textContent = filledCount + '/5 Bottles · $' + bagTotalUsd + ' Total · ' + (clashes.length > 0 ? (clashes.length + ' Clash') : (bagTotalUsd <= 110 ? 'Dupe Routine' : 'All Safe'));
       var keep99Btn = document.getElementById('dl-vanity-keep-99c');
       var keep199Btn = document.getElementById('dl-vanity-keep-199');
       if (keep99Btn && !window.__ebIsUnlocked) keep99Btn.innerHTML = '<span>' + (bagTotalUsd <= 110 ? ('Save $' + bagTotalUsd + ' Dupe Card (99&cent;) &rarr;') : 'Save 9:16 Phone Card (99&cent;) &rarr;') + '</span>';
-      if (keep199Btn && !window.__ebIsUnlocked) keep199Btn.innerHTML = '<span>' + (bagTotalUsd >= 180 ? '28-Day Atelier Vault ($1.99 / $4.99)' : 'Complete 3-File Kit ($1.99)') + '</span>';
+      if (keep199Btn && !window.__ebIsUnlocked) keep199Btn.innerHTML = '<span>' + (bagTotalUsd >= 180 ? 'Complete 28-Day Planner ($1.99 / $4.99)' : 'Complete 3-File Kit ($1.99)') + '</span>';
 
       document.querySelectorAll('#dl-undertone-swatches button[data-undertone]').forEach(function(b) {
         b.classList.toggle('active', b.getAttribute('data-undertone') === st.undertone);
@@ -644,7 +644,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           var bPriceMatch = currentBottle && currentBottle.label ? currentBottle.label.match(/\$(\d+)/) : null;
           var bPriceNum = bPriceMatch ? Number(bPriceMatch[1]) : 32;
           var restockPartner = bPriceNum <= 26 ? 'amazon' : 'dermstore';
-          var restockLabel = bPriceNum <= 26 ? ('Shop $' + bPriceNum + ' Dupe (Amazon/Ulta) ↗') : ('Authorized Restock ($' + bPriceNum + ') ↗');
+          var restockLabel = bPriceNum <= 26 ? ('Shop $' + bPriceNum + ' Dupe (Amazon/Ulta) ↗') : ('Shop Bottle ($' + bPriceNum + ') ↗');
           var nextBtnHtml = idx < 4
             ? '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + nextIdx + ')" style="padding:5px 11px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Next Bottle (0' + (nextIdx + 1) + ') &rarr;</button>'
             : '<button type="button" class="mono" onclick="window.__dlSetDossierTab(\\'pass\\')" style="padding:5px 11px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Preview 9:16 Card &rarr;</button>';
@@ -669,9 +669,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (clashPanel) {
         if (clashes.length === 0) {
           clashPanel.innerHTML = '<div style="padding:14px;border-radius:18px;background:var(--sage-bg);border:none;color:var(--sage-safe);font-size:0.82rem;line-height:1.45;">'
-            + '<strong class="serif-display" style="font-size:1.08rem;display:block;margin-bottom:4px;">Zero Active Clashes in Your 5-Slot Vanity Bag</strong>'
-            + '<div>Your morning antioxidant (Slot 02) is safely separated from your evening renewal active (Slot 05), and your Slot 03 Ceramide cushion buffers barrier pH.</div>'
-            + '<button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="margin-top:8px;padding:5px 12px;border-radius:999px;background:var(--bg-surface);color:var(--rose-brand);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;">Simulate a Glycolic + Copper Peptide Clash &rarr;</button></div>';
+            + '<strong class="serif-display" style="font-size:1.08rem;display:block;margin-bottom:4px;">Everything in Your Bag Works Safely Together</strong>'
+            + '<div>Your morning Vitamin C is kept separate from your bedtime treatment, and your moisturizer keeps your skin calm and hydrated.</div>'
+            + '<button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="margin-top:8px;padding:5px 12px;border-radius:999px;background:var(--bg-surface);color:var(--rose-brand);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;">Try a Sample Bottle Clash &rarr;</button></div>';
         } else {
           clashPanel.innerHTML = clashes.map(function(c) {
             return '<div style="padding:11px 12px;border-radius:18px;background:var(--berry-bg);border:none;font-size:0.78rem;line-height:1.4;">'

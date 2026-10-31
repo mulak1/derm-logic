@@ -474,8 +474,8 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     var wUsd = res.wastedShelfValueUsd || 0;
     if (st) {
       st.innerHTML = window.__dlViewMode === 'clash'
-        ? '<strong style="color:var(--berry-clash);">Unfixed Stack</strong> &middot; 26% Active Absorption (-$' + wUsd + '/yr Neutralized on Contact)'
-        : '<strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 98.4% Active Bioavailability Protected ($0 Wasted)';
+        ? '<strong style="color:var(--berry-clash);">Layered All at Once</strong> &middot; Bottles Cancel Out on Skin ($' + wUsd + ' Wasted)'
+        : '<strong style="color:var(--sage-safe);">Morning &amp; Night Split</strong> &middot; Every Serum Works at Full Strength ($0 Wasted)';
     }
     var mFill = document.getElementById('dl-potency-meter-fill');
     if (mFill) {
