@@ -682,10 +682,12 @@ function attachGlowIndexSeoUpgrades(app) {
           else if (out.includes('</main>')) out = out.replace('</main>', `<div class="container">${simHtml}</div></main>`);
         }
 
+        const unescMeta = (s) => String(s || '').replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&middot;/g, '·').replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').trim();
         const metaDescMatch = out.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i);
-        const dsDesc = (metaDescMatch && metaDescMatch[1] && metaDescMatch[1].length >= 50)
-          ? metaDescMatch[1]
-          : `First-principles cosmetic chemistry dataset for ${req.path} on DermLogic: formulation pH windows, Henderson-Hasselbalch pKa dissociation, Rule-of-500 Dalton barrier penetration, and EU CosIng comedogenicity ratings.`;
+        const rawMetaDesc = metaDescMatch && metaDescMatch[1] ? unescMeta(metaDescMatch[1]) : '';
+        const dsDesc = rawMetaDesc.length >= 60
+          ? rawMetaDesc
+          : `${rawMetaDesc ? `${rawMetaDesc} — ` : ''}First-principles cosmetic chemistry dataset for ${req.path} on DermLogic: formulation pH windows, Henderson-Hasselbalch pKa dissociation, Rule-of-500 Dalton barrier penetration, and EU CosIng comedogenicity ratings.`;
         const dsCreator = { '@type': 'Organization', name: 'DermLogic Cosmetic Chemistry Atelier', url: HOST_URL };
         out = out.replace(/<script([^>]*type=["']application\/ld\+json["'][^>]*)>([\s\S]*?)<\/script>/gi, (full, attrs, jsonRaw) => {
           if (!jsonRaw.includes('"Dataset"')) return full;
@@ -695,8 +697,9 @@ function attachGlowIndexSeoUpgrades(app) {
               if (!node || typeof node !== 'object') return;
               if (Array.isArray(node)) { node.forEach(patchNode); return; }
               if (node['@type'] === 'Dataset' || (Array.isArray(node['@type']) && node['@type'].includes('Dataset'))) {
-                if (!node.description || String(node.description).trim().length < 50) node.description = dsDesc;
-                if (!node.creator) node.creator = dsCreator;
+                const curDesc = unescMeta(node.description || '');
+                node.description = curDesc.length >= 60 ? curDesc : dsDesc;
+                if (!node.creator || !node.creator['@type'] || !node.creator.name) node.creator = dsCreator;
                 if (!node.license) node.license = 'https://creativecommons.org/licenses/by/4.0/';
                 if (node.isAccessibleForFree === undefined) node.isAccessibleForFree = true;
               }

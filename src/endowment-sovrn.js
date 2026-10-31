@@ -400,6 +400,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     window.__dlSyncPersonalizedHeaderDom();
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();
+    if (window.__dlSyncBudgetModeLinks) window.__dlSyncBudgetModeLinks();
     if (typeof runRoutineAnalysis === 'function') {
       runRoutineAnalysis(null, false);
     }
@@ -409,6 +410,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     window.__dlSyncPersonalizedHeaderDom();
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();
+    if (window.__dlSyncBudgetModeLinks) window.__dlSyncBudgetModeLinks();
     if (window.__dlNameTimer) clearTimeout(window.__dlNameTimer);
     window.__dlNameTimer = setTimeout(function() {
       if (typeof runRoutineAnalysis === 'function') runRoutineAnalysis(null, false);
@@ -419,6 +421,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     window.__dlSyncPersonalizedHeaderDom();
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();
+    if (window.__dlSyncBudgetModeLinks) window.__dlSyncBudgetModeLinks();
     var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim();
     var cMode = window.__dlClimateMode || 'indoor_dry';
     var meta = window.__dlClimateMetaMap[cMode] || window.__dlClimateMetaMap.indoor_dry;
@@ -483,6 +486,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     if (window.__dlSwitchResultStep) window.__dlSwitchResultStep(window.__dlViewMode === 'clash' ? 1 : 2, true);
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();
+    if (window.__dlSyncBudgetModeLinks) window.__dlSyncBudgetModeLinks();
   };
 
   window.__dlCleanCanvasStep = function(raw) {
@@ -556,40 +560,35 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     }
 
     // PM Card (Nocturnal Velvet)
-    ctx.fillStyle = '#241C18';
-    ctx.fillRect(18, 272, w - 36, 132);
-    ctx.strokeStyle = 'rgba(201,164,90,0.4)';
-    ctx.strokeRect(18, 272, w - 36, 132);
-    ctx.fillStyle = '#C9A45A';
-    ctx.font = 'bold 11.5px Georgia, serif';
-    ctx.fillText('☾ 9:30 PM · BEDTIME RENEWAL & BUFFER', 28, 291);
-    var pmPills = ['Dry 10m', 'Pea Size', '3:1:1 Seal'];
+    ctx.fillStyle = '#241C18'; ctx.fillRect(18, 272, w - 36, 132);
+    ctx.strokeStyle = 'rgba(201,164,90,0.4)'; ctx.strokeRect(18, 272, w - 36, 132);
+    ctx.fillStyle = '#C9A45A'; ctx.font = 'bold 11.5px Georgia, serif';
+    ctx.fillText(window.__dl72HrRescueActive ? '☾ 9:30 PM · ZERO-ACTIVE B5 BARRIER FLOOD' : '☾ 9:30 PM · BEDTIME RENEWAL & BUFFER', 28, 291);
+    var pmSteps = window.__dl72HrRescueActive ? ['1. Lukewarm Water Rinse', '2. Damp-Skin Panthenol / Mist', '3. Cicaplast B5+ + Ceramide Seal'] : [steps[3], steps[4], steps[5]];
+    var pmPills = window.__dl72HrRescueActive ? ['Zero Acid', 'Damp 60s', '3:1:1 Seal'] : ['Dry 10m', 'Pea Size', '3:1:1 Seal'];
     for (var p = 0; p < 3; p++) {
       var py = 302 + p * 32;
-      ctx.fillStyle = 'rgba(255,255,255,0.07)';
-      ctx.fillRect(26, py, w - 52, 26);
-      ctx.fillStyle = '#FBF8F4';
-      ctx.font = 'bold 11px sans-serif';
-      ctx.fillText((steps[p + 3] || '').slice(0, 27), 34, py + 17);
-      ctx.fillStyle = 'rgba(201,164,90,0.22)';
-      ctx.fillRect(w - 98, py + 4, 64, 18);
-      ctx.fillStyle = '#E8C6B0';
-      ctx.font = 'bold 9.5px sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.07)'; ctx.fillRect(26, py, w - 52, 26);
+      ctx.fillStyle = '#FBF8F4'; ctx.font = 'bold 11px sans-serif';
+      ctx.fillText((pmSteps[p] || '').slice(0, 27), 34, py + 17);
+      ctx.fillStyle = 'rgba(201,164,90,0.22)'; ctx.fillRect(w - 98, py + 4, 64, 18);
+      ctx.fillStyle = '#E8C6B0'; ctx.font = 'bold 9.5px sans-serif';
       ctx.fillText(pmPills[p], w - 91, py + 16);
     }
 
     // 4-Night Cycling Strip
     ctx.fillStyle = '#A7D7C5';
     ctx.font = 'bold 11px Georgia, serif';
-    ctx.fillText('4-NIGHT SKIN-CYCLING ROTATION', 20, 424);
-    var nights = ['N1: Polish', 'N2: Rest', 'N3: Renew', 'N4: Lipids'];
+    ctx.fillText(window.__dl72HrRescueActive ? '72-HR EMERGENCY BARRIER RESET ACTIVE' : '4-NIGHT SKIN-CYCLING ROTATION', 20, 424);
+    var nights = window.__dl72HrRescueActive ? ['N1: B5 Flood', 'N2: B5 Flood', 'N3: Lipid', 'N4: Pea Re-In'] : ['N1: Polish', 'N2: Renew', 'N3: Soothe', 'N4: Lipids'];
+    var selN = (window.__dlSelectedNightIdx || 1) - 1;
     for (var n = 0; n < 4; n++) {
       var nx = 18 + n * 82;
-      ctx.fillStyle = (n % 2 === 0) ? '#7A2332' : '#264C3C';
+      ctx.fillStyle = (n === selN) ? '#C9A45A' : ((n % 2 === 0) ? '#7A2332' : '#264C3C');
       ctx.fillRect(nx, 434, 76, 26);
-      ctx.fillStyle = '#FFFFFF';
+      ctx.fillStyle = (n === selN) ? '#28141A' : '#FFFFFF';
       ctx.font = 'bold 10px sans-serif';
-      ctx.fillText(nights[n], nx + 10, 451);
+      ctx.fillText(nights[n], nx + 8, 451);
     }
 
     var unlocked = Boolean(window.__ebIsUnlocked);

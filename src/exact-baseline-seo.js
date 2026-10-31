@@ -69,13 +69,13 @@ function loadVerticalSeoCatalog(cfg, srcDir) {
       const catPath = path.join(srcDir, 'pseo-catalog.js');
       if (fs.existsSync(catPath)) {
         const mod = require(catPath);
-        const list = [...(mod.PAIR_SEO_SEEDS || []), ...(mod.PRODUCT_SEO_SEEDS || [])];
+        const list = typeof mod.buildSeoPagesCatalog === 'function' ? mod.buildSeoPagesCatalog() : [...(mod.PAIR_SEO_SEEDS || []), ...(mod.PRODUCT_SEO_SEEDS || [])];
         for (const p of list) {
           entries.push({
             slug: p.slug,
             title: String(p.title || p.slug),
             category: p.category || p.pageType || 'Clinical INCI & pH Compatibility',
-            summary: String(p.summary || p.conflictHighlights || cfg.explainerText).slice(0, 158)
+            summary: String(p.summary || p.metaDescription || p.conflictHighlights || cfg.explainerText).slice(0, 158)
           });
         }
       }
@@ -903,40 +903,19 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
   const gCfg = getGrowthConfig(cfg.moduleId);
   const slugName = cleanPath.replace(/^\/(seo|tools|compare)\//, '');
   const currentEntry = entries.find((e) => e.slug === slugName) || [...gCfg.tools, ...gCfg.comparisons].find((x) => x.slug === slugName);
-  const pageTitle = currentEntry ? `${currentEntry.title} | ${cfg.brandName}` : `${cfg.brandName}: ${cfg.explainerText.slice(0, 70)}`;
-  const pageDesc = currentEntry ? currentEntry.summary : cfg.explainerText;
+  const unesc = (s) => String(s || '').replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&middot;/g, '·').replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').trim();
+  const titleTagM = out.match(/<title>([^<]+)<\/title>/i);
+  const metaDescM = out.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i);
+  const pageTitle = currentEntry ? `${currentEntry.title} | ${cfg.brandName}` : (titleTagM ? unesc(titleTagM[1]) : `${cfg.brandName}: ${cfg.explainerText.slice(0, 70)}`);
+  const rawDesc = (currentEntry && currentEntry.summary) ? unesc(currentEntry.summary) : (metaDescM ? unesc(metaDescM[1]) : unesc(cfg.explainerText));
+  const pageDesc = rawDesc && rawDesc.length >= 60 ? rawDesc : `${rawDesc || cfg.brandName} — Verified 2026 cosmetic chemistry, formulation pH window, and active ingredient compatibility dataset by ${cfg.brandName}.`;
 
   const schemaGraph = {
     '@context': 'https://schema.org',
     '@graph': [
-      {
-        '@type': 'Organization',
-        '@id': `${hostUrl}/#organization`,
-        name: cfg.brandName,
-        url: hostUrl,
-        logo: `${hostUrl}/favicon.svg`,
-        sameAs: [`${hostUrl}/llms.txt`, `${hostUrl}/llms-full.txt`, `${hostUrl}/feed.xml`]
-      },
-      {
-        '@type': 'WebSite',
-        '@id': `${hostUrl}/#website`,
-        url: hostUrl,
-        name: cfg.brandName,
-        publisher: { '@id': `${hostUrl}/#organization` },
-        inLanguage: 'en-US'
-      },
-      {
-        '@type': 'WebPage',
-        '@id': `${canonicalUrl}#webpage`,
-        url: canonicalUrl,
-        name: pageTitle,
-        description: pageDesc,
-        isPartOf: { '@id': `${hostUrl}/#website` },
-        speakable: {
-          '@type': 'SpeakableSpecification',
-          cssSelector: ['h1', '.pseo-lead', '#eb-prism-proof-preview', 'main p']
-        }
-      },
+      { '@type': 'Organization', '@id': `${hostUrl}/#organization`, name: cfg.brandName, url: hostUrl, logo: `${hostUrl}/favicon.svg`, sameAs: [`${hostUrl}/llms.txt`, `${hostUrl}/llms-full.txt`, `${hostUrl}/feed.xml`] },
+      { '@type': 'WebSite', '@id': `${hostUrl}/#website`, url: hostUrl, name: cfg.brandName, publisher: { '@id': `${hostUrl}/#organization` }, inLanguage: 'en-US' },
+      { '@type': 'WebPage', '@id': `${canonicalUrl}#webpage`, url: canonicalUrl, name: pageTitle, description: pageDesc, isPartOf: { '@id': `${hostUrl}/#website` }, speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '.pseo-lead', '#eb-prism-proof-preview', 'main p'] } },
       {
         '@type': 'BreadcrumbList',
         '@id': `${canonicalUrl}#breadcrumb`,
@@ -950,28 +929,22 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
         '@type': 'Dataset',
         '@id': `${canonicalUrl}#dataset`,
         name: `${pageTitle}: Verified 2026 Dataset`,
-        description: pageDesc && pageDesc.length >= 50 ? pageDesc : `${pageDesc} — Verified 2026 deterministic formulation dataset by ${cfg.brandName}.`,
+        description: pageDesc,
         url: canonicalUrl,
+        identifier: canonicalUrl,
         creator: { '@type': 'Organization', '@id': `${hostUrl}/#organization`, name: cfg.brandName, url: hostUrl },
+        includedInDataCatalog: { '@type': 'DataCatalog', name: `${cfg.brandName} Formulation & Compatibility Catalog`, url: `${hostUrl}/directory` },
         isAccessibleForFree: true,
         license: 'https://creativecommons.org/licenses/by/4.0/',
+        keywords: ['skincare ingredient compatibility', 'cosmetic chemistry pH dataset', 'INCI active conflict matrix', cfg.brandName],
+        measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Stratum Corneum Diffusion & EU CosIng Comedogenicity Assay',
         variableMeasured: cfg.kpis.map((k) => k.label),
         distribution: [
           { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: `${hostUrl}/api/github-upgrade/export.csv` },
           { '@type': 'DataDownload', encodingFormat: 'text/markdown', contentUrl: `${hostUrl}${mdTwinPath}` }
         ]
       },
-      {
-        '@type': 'ItemList',
-        '@id': `${canonicalUrl}#itemlist`,
-        name: `${cfg.brandName} Top Verified Benchmarks`,
-        itemListElement: entries.slice(0, 10).map((e, idx) => ({
-          '@type': 'ListItem',
-          position: idx + 1,
-          name: e.title,
-          url: `${hostUrl}/seo/${e.slug}`
-        }))
-      }
+      { '@type': 'ItemList', '@id': `${canonicalUrl}#itemlist`, name: `${cfg.brandName} Top Verified Benchmarks`, itemListElement: entries.slice(0, 10).map((e, idx) => ({ '@type': 'ListItem', position: idx + 1, name: e.title, url: `${hostUrl}/seo/${e.slug}` })) }
     ]
   };
 

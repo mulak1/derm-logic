@@ -450,7 +450,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
 function renderSingleConflictCard(c) {
   const isCritical = c.severity === 'CRITICAL';
-  const badgeLabel = isCritical ? 'Cancels on Contact' : 'Space Apart · Irritation Risk';
+  const badgeLabel = isCritical ? 'Cancels on Contact · -$2.80/use Neutralized' : 'Space Apart · Perioral Sting Risk';
   const nameA = String(c.ingredientA || c.inciA || '').replace(/\s*\([^)]*\)/g, '');
   const nameB = String(c.ingredientB || c.inciB || '').replace(/\s*\([^)]*\)/g, '');
   const cleanTitle = String(c.title || '').replace(/\s*\(pH[^)]*\)/gi, '');
@@ -463,7 +463,7 @@ function renderSingleConflictCard(c) {
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;"><span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono">${badgeLabel}</span><span class="mono" style="font-size:0.8rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</span></div>
       <div class="serif-display" style="font-size:1.16rem;font-weight:500;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(cleanTitle)}</div>
       <div style="padding:9px 12px;background:var(--bg-surface);border-left:2.5px solid ${isCritical ? 'var(--berry-clash)' : 'var(--honey-warn)'};font-size:0.84rem;line-height:1.45;color:var(--text-primary);margin-bottom:8px;"><strong>Easy Fix:</strong> ${escapeHtml(howToFix)}<div class="mono" style="margin-top:4px;font-size:0.8rem;color:var(--sage-safe);">${escapeHtml(swap.freeFix)}</div></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="white-space:normal;">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a><button type="button" class="vanity-light-btn mono" style="padding:5px 10px;font-size:0.73rem;min-height:26px;" onclick="window.__dlActivate72HrBarrierReset(this)">Activate 72-Hr Stinging Rescue Mode &rarr;</button></div>
     </div>`;
 }
 
@@ -627,6 +627,7 @@ function renderAnalysisResultHtml(res) {
 
         <!-- Step 2: Morning & Bedtime Order -->
         <div id="dl-res-step-2" style="display:none;flex-direction:column;gap:12px;min-width:0;"><span id="walletConflicts" style="display:none;"></span>
+          ${renderPersonaInteractiveWorkbenchAddons().liveWaitTimerHtml}
           <div style="display:grid;grid-template-columns:1fr;gap:12px;width:100%;min-width:0;" id="appleWalletCardPreview">
             <div style="padding:16px 18px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">

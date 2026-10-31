@@ -538,6 +538,20 @@ function renderPersonaInteractiveWorkbenchAddons() {
           </button>
         </div>
         <div id="dl-reaction-autopsy-card" style="display:none;margin-top:8px;padding:11px 13px;border-radius:14px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);font-size:0.8rem;line-height:1.45;"></div>
+      </div>`,
+    liveWaitTimerHtml: `
+      <div id="dl-live-wait-timer-bar" style="padding:11px 13px;border-radius:16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+          <div>
+            <span class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:700;text-transform:uppercase;">Live Bathroom Mirror Absorption Timer</span>
+            <span id="dl-timer-readout" style="font-size:0.79rem;color:var(--text-secondary);display:block;">Tap a timer while applying your routine so layers don't pill or sting:</span>
+          </div>
+          <div style="display:inline-flex;gap:5px;flex-wrap:wrap;">
+            <button type="button" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:25px;" onclick="window.__dlStartMirrorTimer(60, '60s Acid &amp; Vitamin C pH Absorption')">&#9201; 60s Acid / Vit C Timer</button>
+            <button type="button" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:25px;" onclick="window.__dlStartMirrorTimer(720, '12m Retinoid Bone-Dry Buffer')">&#9201; 12m Retinoid Dry-Down</button>
+          </div>
+        </div>
+        <div style="height:6px;border-radius:999px;background:var(--bg-oat);overflow:hidden;"><div id="dl-mirror-timer-fill" style="width:0%;height:100%;background:linear-gradient(90deg,var(--rose-brand),#10B981);transition:width 0.3s linear;"></div></div>
       </div>`
   };
 }
@@ -550,7 +564,7 @@ function renderInteractiveFourNightCalendarHtml(n1Label, n1Val, n2Label, n2Val, 
           <span class="mono" style="font-size:0.8rem;color:var(--text-primary);font-weight:600;letter-spacing:0.02em;text-transform:uppercase;">Interactive 4-Night Skin-Cycling Calendar</span>
           <span class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:block;">Tap any night below to inspect damp-vs-dry rules, wait timers &amp; missing buffer alerts:</span>
         </div>
-        <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Sync 9:30 PM Phone Alerts (99&cent;) &rarr;</a>
+        <a id="dl-cal-sync-link" href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Sync 9:30 PM Phone Alerts (99&cent;) &rarr;</a>
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;" role="tablist" aria-label="4-Night Skin Cycling Schedule">
         <button type="button" class="dl-night-cal-tab active" data-night="1" onclick="window.__dlSelectCyclingNight(1, this)" style="padding:9px 8px;background:var(--bg-surface);border:1.5px solid var(--rose-brand);border-radius:12px;text-align:left;cursor:pointer;min-width:0;">
@@ -627,18 +641,90 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
         : ['skinceuticals-ce-ferulic', 'to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005']);
     window.__dlApplyCheckedIdsAndSync(targetIds);
     var banner = document.getElementById('dl-budget-dupe-banner');
+    window.__dlActiveBudgetMode = mode;
     if (banner) {
       banner.style.display = 'block';
       if (mode === 'under35') {
-        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">Under-$35 Student Essentials ($30 Total &middot; Save $245/yr):</strong> <strong>The Ordinary Glycolic Acid 7% ($13)</strong> + <strong>CeraVe PM Niacinamide &amp; Ceramide Lotion ($17)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=cerave-pm-lotion&amp;partner=ulta" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $17 CeraVe PM &nearr;</a><a href="/buy/micro_pass?source=under35_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save $30 Routine Card (99&cent;) &rarr;</a></div></div>';
+        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">Under-$35 Student Essentials ($30 Total &middot; Save $245/yr):</strong> <strong>The Ordinary Glycolic Acid 7% ($13)</strong> + <strong>CeraVe PM Niacinamide &amp; Ceramide Lotion ($17)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=cerave-pm-lotion&amp;partner=ulta" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $17 CeraVe PM (Ulta) &nearr;</a><a href="/buy/micro_pass?source=under35_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save $30 Routine Card (99&cent;) &rarr;</a></div></div>';
       } else if (mode === 'dupe') {
-        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">Chemist Dupe Shelf Loaded ($83 Total &middot; You Save $192/yr):</strong> Swapped $182 SkinCeuticals &rarr; <strong>Timeless 20% Vit C ($26, pH 2.7)</strong> + <strong>ILLIYOON Ceramide ($19)</strong> + <strong>COSRX Snail 96 ($25)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=timeless-20-vitamin-c&amp;partner=amazon" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $26 Vit C Dupe &nearr;</a><a href="/buy/micro_pass?source=dupe_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save Dupe Card (99&cent;) &rarr;</a></div></div>';
+        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">Chemist Dupe Shelf Loaded ($83 Total &middot; You Save $192/yr):</strong> Swapped $182 SkinCeuticals &rarr; <strong>Timeless 20% Vit C ($26, pH 2.7)</strong> + <strong>ILLIYOON Ceramide ($19)</strong> + <strong>COSRX Snail 96 ($25)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=timeless-20-vitamin-c&amp;partner=amazon" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $26 Vit C Dupe (Amazon) &nearr;</a><a href="/buy/micro_pass?source=dupe_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save Dupe Card (99&cent;) &rarr;</a></div></div>';
       } else {
-        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--rose-brand);">Iconic Clinical Shelf ($275 Value):</strong> Protecting <strong>SkinCeuticals C E Ferulic ($182)</strong> + <strong>Paula\\'s Choice 2% BHA ($35)</strong> + <strong>Night Retinoid ($45)</strong> from pH neutralization.</div><a href="/api/affiliate?product=skinceuticals-ce-ferulic&amp;partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Authorized Dermstore Restock &nearr;</a></div>';
+        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--rose-brand);">Iconic Clinical Vault ($275 Shelf &middot; PAO Oxidation Guard):</strong> Open 15% L-Ascorbic Acid loses ~1.5% potency/wk if layered with high-pH peptides. Protecting <strong>SkinCeuticals C E Ferulic ($182)</strong> + <strong>Night Retinoid ($45)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=dieux-instant-angel&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop Dieux Lipid Seal ($45 &middot; Sephora) &nearr;</a><a href="/buy/onetime_499?source=luxury_vault" onclick="if(typeof openCheckoutModal===\\'function\\'){openCheckoutModal(\\'onetime_499\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Unlock 28-Day Atelier Vault ($4.99) &rarr;</a></div></div>';
       }
     }
+    window.__dlSyncBudgetModeLinks();
     window.__dlBumpCustomizationCount(mode);
     if (typeof runRoutineAnalysis === 'function') runRoutineAnalysis(null, true);
+  };
+
+  window.__dlSyncBudgetModeLinks = function() {
+    var mode = window.__dlActiveBudgetMode || 'luxury';
+    var postStripLink = document.querySelector('#dl-postscan-conversion-strip a.affiliate-link-pill');
+    var nightCta = document.getElementById('dl-night-cal-rescue-cta');
+    var swapLinks = document.querySelectorAll('.dl-conflict-swap-link');
+    if (mode === 'under35') {
+      if (postStripLink) { postStripLink.textContent = 'Shop CeraVe PM ($17 · Ulta) ↗'; postStripLink.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
+      if (nightCta) { nightCta.textContent = 'Shop $17 CeraVe PM Buffer (Ulta) ↗'; nightCta.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
+      for (var i = 0; i < swapLinks.length; i++) { swapLinks[i].textContent = 'Option B (Under-$35 Dupe): Cushion with CeraVe PM ($17) at Ulta →'; swapLinks[i].href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
+    } else if (mode === 'dupe') {
+      if (postStripLink) { postStripLink.textContent = 'Shop ILLIYOON Dupe ($19 · Amazon) ↗'; postStripLink.href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
+      if (nightCta) { nightCta.textContent = 'Shop $19 ILLIYOON Buffer (Amazon) ↗'; nightCta.href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
+      for (var j = 0; j < swapLinks.length; j++) { swapLinks[j].textContent = 'Option B (Chemist Dupe): Cushion with ILLIYOON Ceramide ($19) at Amazon →'; swapLinks[j].href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
+    } else {
+      if (postStripLink) { postStripLink.textContent = 'Shop Dieux Instant Angel ($45 · Sephora) ↗'; postStripLink.href = '/api/affiliate?product=dieux-instant-angel&partner=sephora'; }
+      if (nightCta) { nightCta.textContent = 'Shop Dieux Lipid Buffer ($45 · Sephora) ↗'; nightCta.href = '/api/affiliate?product=dieux-instant-angel&partner=sephora'; }
+    }
+  };
+
+  window.__dlDupeAllFiveVessels = function() {
+    var st = window.__dlVanityState;
+    if (!st) return;
+    st.slotSelections = [2, 3, 2, 1, 2];
+    st.customSlotBottle = {};
+    st.pouchSpfSealed = true;
+    if (window.__dlRenderVanityDrawer) window.__dlRenderVanityDrawer();
+    if (window.__dlSwitchShelfBudgetMode) window.__dlSwitchShelfBudgetMode('dupe');
+  };
+
+  window.__dlActivate72HrBarrierReset = function(btnEl) {
+    window.__dl72HrRescueActive = true;
+    window.__dlBumpCustomizationCount('72hr_rescue');
+    if (window.__dlSwitchResultStep) window.__dlSwitchResultStep(3, true);
+    var detailText = document.getElementById('dl-night-cal-detail-text');
+    var rescueCta = document.getElementById('dl-night-cal-rescue-cta');
+    var dlPngBtn = document.getElementById('btnDownloadLockScreenPng');
+    if (dlPngBtn && !window.__ebIsUnlocked) dlPngBtn.textContent = 'Save 72-Hr Recovery PNG (99¢) →';
+    if (detailText) {
+      detailText.innerHTML = '<strong style="color:var(--berry-clash);">72-Hr Emergency Barrier Reset Active:</strong> Pause all Exfoliating Acids &amp; Retinoids for 3 nights. Flood mist-damp skin with <strong>Panthenol B5 + 3:1:1 Ceramides</strong> tonight, tomorrow, and Night 3; re-introduce pea-sized active on Night 4.';
+    }
+    if (rescueCta) {
+      rescueCta.textContent = 'Shop Emergency Cicaplast B5+ ($17 · Ulta) ↗';
+      rescueCta.href = '/api/affiliate?product=lrp-cicaplast-baume-b5&partner=ulta';
+    }
+    if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas(0);
+  };
+
+  window.__dlStartMirrorTimer = function(seconds, label) {
+    if (window.__dlMirrorTimerInt) clearInterval(window.__dlMirrorTimerInt);
+    var readout = document.getElementById('dl-timer-readout');
+    var fill = document.getElementById('dl-mirror-timer-fill');
+    var rem = seconds;
+    window.__dlBumpCustomizationCount('timer');
+    var tick = function() {
+      var m = Math.floor(rem / 60);
+      var s = rem % 60;
+      var pct = Math.min(100, Math.round(((seconds - rem) / Math.max(1, seconds)) * 100));
+      if (fill) fill.style.width = pct + '%';
+      if (readout) {
+        readout.innerHTML = rem > 0
+          ? '<strong style="color:var(--rose-brand);">' + label + ' Active: ' + (m > 0 ? m + 'm ' : '') + s + 's remaining</strong> &middot; Skin pH stabilizing (' + pct + '% absorbed)'
+          : '<strong style="color:var(--sage-safe);">✓ ' + label + ' Complete!</strong> Safe to apply your next layer now without pilling or stinging.';
+      }
+      if (rem <= 0) { clearInterval(window.__dlMirrorTimerInt); return; }
+      rem--;
+    };
+    tick();
+    window.__dlMirrorTimerInt = setInterval(tick, 1000);
   };
 
   window.__dlDiagnoseSkinReaction = function(rxType, btnEl) {
@@ -650,48 +736,62 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
     var card = document.getElementById('dl-reaction-autopsy-card');
     if (!card) return;
     card.style.display = 'block';
+    var checkedNames = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map(function(cb) {
+      var lbl = cb.closest('.prod-check-item');
+      var st = lbl ? lbl.querySelector('strong') : null;
+      return st ? st.textContent.trim() : cb.value;
+    });
+    var shelfPrefix = checkedNames.length >= 2
+      ? 'Audited Your Checked Shelf (' + checkedNames.slice(0, 2).join(' + ') + '): '
+      : '';
     var map = {
       sting: {
         ids: ['to-glycolic-acid-7', 'rx-tretinoin-005', 'skinceuticals-ce-ferulic'],
+        zone: 'Face Zone: Nasolabial &amp; Mouth Corners',
         title: 'Culprit Found: Low-pH Acid + Retinoid Barrier Micro-Fissures',
-        body: 'Applying Glycolic 7% (pH 3.6) or Vitamin C (pH 3.2) in the same routine as a Night Retinoid—or onto damp skin—pulls acid too fast into the thin skin around your nose and mouth.',
+        body: shelfPrefix + 'Applying low-pH acids or Vitamin C in the same routine as a Night Retinoid—or onto damp skin—pulls acid too fast into the thin skin around your nose and mouth.',
         rescueProd: 'lrp-cicaplast-baume-b5',
         rescueLabel: 'Stop Tonight\\'s Sting: La Roche-Posay Cicaplast B5+ ($17 at Ulta) ↗',
         partner: 'ulta'
       },
       pill: {
         ids: ['to-niacinamide-10-zinc', 'cosrx-snail-96-mucin', 'cerave-pm-lotion'],
+        zone: 'Face Zone: Cheekbones &amp; Jawline Under SPF',
         title: 'Culprit Found: Gum/Gel Film Former Rolled Under SPF & Foundation',
-        body: 'Layering high-viscosity Niacinamide or Snail Mucin without a 60-second dry-down causes silicone primers and sunscreen to ball up into gray flakes.',
+        body: shelfPrefix + 'Layering high-viscosity Niacinamide or Snail Mucin without a 60-second dry-down causes silicone primers and sunscreen to ball up into gray flakes.',
         rescueProd: 'boj-relief-sun-spf50',
         rescueLabel: 'Zero-Pill Swap: Beauty of Joseon Relief Sun SPF 50 ($18) ↗',
         partner: 'sephora'
       },
       bumps: {
         ids: ['skinceuticals-ce-ferulic', 'cerave-pm-lotion', 'illiyoon-ceramide-ato'],
+        zone: 'Face Zone: Forehead &amp; Chin Pore Trap',
         title: 'Culprit Found: Rich Occlusive Over Unexfoliated Pores',
-        body: 'Trapping sweat or dead skin cells under a heavy night cream triggers overnight closed comedones. Switch to a 0/5 pore-safe BHA + lightweight gel-cream.',
+        body: shelfPrefix + 'Trapping sweat or dead skin cells under a heavy night cream triggers overnight closed comedones. Switch to a 0/5 pore-safe BHA + lightweight gel-cream.',
         rescueProd: 'paulas-choice-2-bha',
         rescueLabel: 'Clear Overnight Bumps: Paula\\'s Choice 2% BHA ($35) ↗',
         partner: 'sephora'
       },
       tight: {
         ids: ['to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005'],
+        zone: 'Face Zone: Full Stratum Corneum Lipid Barrier',
         title: 'Culprit Found: Stripped 3:1:1 Ceramide & Cholesterol Lipid Seal',
-        body: 'Stacking exfoliating acids and retinoids without 2 consecutive recovery nights drains ceramides, leaving skin shiny, tight, and reactive.',
+        body: shelfPrefix + 'Stacking exfoliating acids and retinoids without 2 consecutive recovery nights drains ceramides, leaving skin shiny, tight, and reactive.',
         rescueProd: 'illiyoon-ceramide-ato',
         rescueLabel: 'Rebuild Lipid Seal: ILLIYOON Ceramide Ato Cream ($19) ↗',
         partner: 'amazon'
       }
     };
     var cfg = map[rxType] || map.sting;
-    window.__dlApplyCheckedIdsAndSync(cfg.ids);
-    card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;"><div style="flex:1;min-width:210px;"><strong style="color:var(--rose-brand);display:block;margin-bottom:2px;">' + cfg.title + '</strong><span style="color:var(--text-secondary);">' + cfg.body + '</span></div><div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;"><a href="/api/affiliate?product=' + cfg.rescueProd + '&amp;partner=' + cfg.partner + '" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">' + cfg.rescueLabel + '</a><a href="/buy/micro_pass?source=reaction_triage" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Get 72-Hr Recovery Calendar (99&cent;) &rarr;</a></div></div>';
+    if (checkedNames.length < 2) window.__dlApplyCheckedIdsAndSync(cfg.ids);
+    card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;"><div style="flex:1;min-width:210px;"><span class="badge-clash mono" style="font-size:0.68rem;padding:1px 7px;margin-bottom:4px;display:inline-block;">' + cfg.zone + '</span><strong style="color:var(--rose-brand);display:block;margin-bottom:2px;">' + cfg.title + '</strong><span style="color:var(--text-secondary);">' + cfg.body + '</span></div><div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;"><a href="/api/affiliate?product=' + cfg.rescueProd + '&amp;partner=' + cfg.partner + '" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">' + cfg.rescueLabel + '</a><a href="/buy/micro_pass?source=reaction_triage" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Get 72-Hr Recovery Calendar (99&cent;) &rarr;</a></div></div>';
     window.__dlBumpCustomizationCount(rxType);
     if (typeof runRoutineAnalysis === 'function') runRoutineAnalysis(null, true);
   };
 
   window.__dlSelectCyclingNight = function(nightNum, btnEl) {
+    window.__dl72HrRescueActive = false;
+    window.__dlSelectedNightIdx = nightNum;
     var tabs = document.querySelectorAll('.dl-night-cal-tab');
     for (var i = 0; i < tabs.length; i++) {
       var active = tabs[i] === btnEl || Number(tabs[i].getAttribute('data-night')) === nightNum;
@@ -701,11 +801,22 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
     var detailText = document.getElementById('dl-night-cal-detail-text');
     var rescueCta = document.getElementById('dl-night-cal-rescue-cta');
     if (!detailText) return;
+    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var dName = days[(new Date().getDay() + (nightNum - 1)) % 7];
+    var checkedVals = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map(function(cb) { return cb.value; });
+    var hasCream = checkedVals.some(function(v) { return /cerave|illiyoon|aestura|cicaplast|dieux|stratia|vanicream/i.test(v); });
+    var gapBadge = (!hasCream && nightNum >= 3)
+      ? '<span class="badge-warn mono" style="font-size:0.68rem;padding:1px 7px;margin-right:6px;">Shelf Gap: 0 Ceramide Creams Checked for Night ' + nightNum + '</span>'
+      : '';
+    var syncLink = document.getElementById('dl-cal-sync-link');
+    if (syncLink) syncLink.innerHTML = 'Sync ' + dName + ' 9:30 PM Night ' + nightNum + ' Alert + 4-Card Pack (99&cent;) &rarr;';
+    var dlPngBtn = document.getElementById('btnDownloadLockScreenPng');
+    if (dlPngBtn && !window.__ebIsUnlocked) dlPngBtn.textContent = 'Save ' + dName + ' Night ' + nightNum + ' 9:16 PNG (99¢) →';
     var notes = {
-      1: '<strong style="color:var(--text-primary);">Night 1 (Thu &middot; Acid Polish):</strong> Pat exfoliant onto clean, dry skin. <strong>Wait 60 seconds</strong> before moisturizer so pH 3.6 acid isn\\'t neutralized. Skip all retinoids tonight.',
-      2: '<strong style="color:var(--text-primary);">Night 2 (Fri &middot; Retinoid Renew):</strong> Wait <strong>10–15 minutes until skin is bone-dry</strong> (damp skin causes retinoid burn around the nose). Apply pea-sized amount, then seal with ceramide cream.',
-      3: '<strong style="color:var(--text-primary);">Night 3 (Sat &middot; Barrier Flood):</strong> <strong>Zero acids or retinoids tonight.</strong> Mist or pat hydrating essence onto damp skin and lock in immediately with a 3:1:1 ceramide cream.',
-      4: '<strong style="color:var(--text-primary);">Night 4 (Sun &middot; Deep Lipid Seal):</strong> Second consecutive recovery night restores 98% stratum corneum hydration before Night 1 restarts on Monday.'
+      1: gapBadge + '<strong style="color:var(--text-primary);">Night 1 (' + dName + ' &middot; Acid Polish):</strong> Pat exfoliant onto clean, dry skin. <strong>Wait 60 seconds</strong> before moisturizer so pH 3.6 acid isn\\'t neutralized. Skip all retinoids tonight.',
+      2: gapBadge + '<strong style="color:var(--text-primary);">Night 2 (' + dName + ' &middot; Retinoid Renew):</strong> Wait <strong>10–15 minutes until skin is bone-dry</strong> (damp skin causes retinoid burn around the nose). Apply pea-sized amount, then seal with ceramide cream.',
+      3: gapBadge + '<strong style="color:var(--text-primary);">Night 3 (' + dName + ' &middot; Barrier Flood):</strong> <strong>Zero acids or retinoids tonight.</strong> Mist or pat hydrating essence onto damp skin and lock in immediately with a 3:1:1 ceramide cream.',
+      4: gapBadge + '<strong style="color:var(--text-primary);">Night 4 (' + dName + ' &middot; Deep Lipid Seal):</strong> Second consecutive recovery night restores 98% stratum corneum hydration before Night 1 restarts.'
     };
     detailText.innerHTML = notes[nightNum] || notes[1];
     if (rescueCta) {
@@ -713,10 +824,10 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
         rescueCta.textContent = 'Add Retinoid Sandwich Cream ($17) ↗';
         rescueCta.href = '/api/affiliate?product=lrp-cicaplast-baume-b5&partner=ulta';
       } else {
-        rescueCta.textContent = 'Add Night 3–4 Ceramide Buffer ($17) ↗';
-        rescueCta.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta';
+        window.__dlSyncBudgetModeLinks();
       }
     }
+    if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas(nightNum);
     window.__dlBumpCustomizationCount('night_' + nightNum);
   };
 `;

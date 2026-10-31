@@ -110,9 +110,12 @@ function renderAtelierVanityDrawerHtml() {
         </div>
       </div>
       <div style="background:var(--bg-oat);border-radius:20px;padding:10px 12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px;flex-wrap:wrap;">
           <span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Tap any bottle on your shelf (<span id="dl-tray-filled-label">5/5 Vessels</span>):</span>
-          <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.72rem;font-weight:600;cursor:pointer;">Play: Test a Clash &rarr;</button>
+          <div style="display:inline-flex;gap:5px;flex-wrap:wrap;">
+            <button type="button" class="mono" onclick="window.__dlDupeAllFiveVessels()" style="background:var(--sage-bg);color:var(--sage-safe);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Dupe All 5 ($86) &rarr;</button>
+            <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:600;cursor:pointer;">Test a Clash &rarr;</button>
+          </div>
         </div>
         <div id="dl-vanity-visual-tray" class="dl-tray-lineup-grid"></div>
       </div>
@@ -545,8 +548,24 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var uLabel = document.getElementById('dl-undertone-active-label');
       if (uLabel) uLabel.textContent = uMeta.label + ' · ' + fMeta.label;
 
+      var bagTotalUsd = 0;
+      for (var bi = 0; bi < 5; bi++) {
+        var bSlot = getBottleForSlot(st, bi);
+        if (!bSlot) continue;
+        var mPr = bSlot.label ? bSlot.label.match(/\$(\d+)/) : null;
+        if (!mPr && bSlot.id) {
+          var chkEl = document.querySelector('input[name="routineProduct"][value="' + bSlot.id + '"]');
+          var cardNode = chkEl ? chkEl.closest('.prod-check-item') : null;
+          if (cardNode) mPr = (cardNode.textContent || '').match(/\$(\d+)/);
+        }
+        bagTotalUsd += mPr ? Number(mPr[1]) : 19;
+      }
       var trayLabel = document.getElementById('dl-tray-filled-label');
-      if (trayLabel) trayLabel.textContent = filledCount + '/5 Vessels · ' + (clashes.length > 0 ? (clashes.length + ' Clash') : 'pH Safe');
+      if (trayLabel) trayLabel.textContent = filledCount + '/5 Vessels · $' + bagTotalUsd + ' Total · ' + (clashes.length > 0 ? (clashes.length + ' Clash') : (bagTotalUsd <= 110 ? 'Dupe Shelf' : 'pH Safe'));
+      var keep99Btn = document.getElementById('dl-vanity-keep-99c');
+      var keep199Btn = document.getElementById('dl-vanity-keep-199');
+      if (keep99Btn && !window.__ebIsUnlocked) keep99Btn.innerHTML = '<span>' + (bagTotalUsd <= 110 ? ('Save $' + bagTotalUsd + ' Dupe Card (99&cent;) &rarr;') : 'Save 9:16 Phone Card (99&cent;) &rarr;') + '</span>';
+      if (keep199Btn && !window.__ebIsUnlocked) keep199Btn.innerHTML = '<span>' + (bagTotalUsd >= 180 ? '28-Day Atelier Vault ($1.99 / $4.99)' : 'Complete 3-File Kit ($1.99)') + '</span>';
 
       document.querySelectorAll('#dl-undertone-swatches button[data-undertone]').forEach(function(b) {
         b.classList.toggle('active', b.getAttribute('data-undertone') === st.undertone);
@@ -616,11 +635,16 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
 
           var chipsHtml = slot.choices.map(function(ch, cIdx) {
             var isSel = currentBottle && currentBottle.id === ch.id;
-            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" onmouseenter="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)" onmouseleave="window.__dlHideProdInfo()" style="display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;font-size:0.74rem;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:none;background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-oat)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';"><span>' + (isSel ? '✓ ' : '+ ') + esc(ch.label.split(' ($')[0]) + '</span><span class="dl-info-i" onpointerdown="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)" onclick="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)">i</span></button>';
+            var chipText = String(ch.label || '').replace(/\s*·\s*pH[^)]*/gi, '');
+            return '<button type="button" class="mono" onclick="window.__dlPickSlotBottle(' + idx + ',' + cIdx + ')" onmouseenter="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)" onmouseleave="window.__dlHideProdInfo()" style="display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;font-size:0.74rem;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:none;background:' + (isSel ? 'var(--rose-pill-bg)' : 'var(--bg-oat)') + ';color:' + (isSel ? 'var(--rose-brand)' : 'var(--text-secondary)') + ';font-weight:' + (isSel ? '600' : '400') + ';"><span>' + (isSel ? '✓ ' : '+ ') + esc(chipText) + '</span><span class="dl-info-i" onpointerdown="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)" onclick="window.__dlShowProdInfo(this,\\'' + esc(ch.id) + '\\',event)">i</span></button>';
           }).join('');
 
           var prevIdx = (idx + 4) % 5;
           var nextIdx = (idx + 1) % 5;
+          var bPriceMatch = currentBottle && currentBottle.label ? currentBottle.label.match(/\$(\d+)/) : null;
+          var bPriceNum = bPriceMatch ? Number(bPriceMatch[1]) : 32;
+          var restockPartner = bPriceNum <= 26 ? 'amazon' : 'dermstore';
+          var restockLabel = bPriceNum <= 26 ? ('Shop $' + bPriceNum + ' Dupe (Amazon/Ulta) ↗') : ('Authorized Restock ($' + bPriceNum + ') ↗');
           var nextBtnHtml = idx < 4
             ? '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + nextIdx + ')" style="padding:5px 11px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Next Bottle (0' + (nextIdx + 1) + ') &rarr;</button>'
             : '<button type="button" class="mono" onclick="window.__dlSetDossierTab(\\'pass\\')" style="padding:5px 11px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Preview 9:16 Card &rarr;</button>';
@@ -631,10 +655,10 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
             + '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + prevIdx + ')" style="padding:3px 8px;border-radius:999px;background:var(--bg-oat);color:var(--text-secondary);border:none;font-size:0.72rem;cursor:pointer;flex-shrink:0;">&larr; Prev</button></div>'
             + '<div id="dl-vanity-slot-body-' + idx + '" style="display:' + (isOpen ? 'block' : 'none') + ';padding-top:10px;">'
               + '<div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.48;margin-bottom:10px;">' + extraNote + '</div>'
-              + '<div class="mono" style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Swap or try another bottle in this slot:</div>'
+              + '<div class="mono" style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Swap or try another bottle in this slot (Price &amp; Dupe comparison):</div>'
               + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">' + chipsHtml + '</div>'
               + '<div class="mono" style="padding:7px 10px;border-radius:14px;background:var(--bg-oat);font-size:0.74rem;color:var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">'
-                + (currentBottle ? '<span><button type="button" class="mono" onclick="window.__dlRemoveSlotBottle(' + idx + ')" style="background:transparent;border:none;color:var(--text-muted);text-decoration:underline;cursor:pointer;font-size:0.74rem;margin-right:10px;">Remove &times;</button><a href="/api/affiliate?product=' + esc(currentBottle.id) + '&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">Restock Bottle &nearr;</a></span>' : '<span>Tap a bottle chip above</span>')
+                + (currentBottle ? '<span><button type="button" class="mono" onclick="window.__dlRemoveSlotBottle(' + idx + ')" style="background:transparent;border:none;color:var(--text-muted);text-decoration:underline;cursor:pointer;font-size:0.74rem;margin-right:10px;">Remove &times;</button><a href="/api/affiliate?product=' + esc(currentBottle.id) + '&amp;partner=' + restockPartner + '" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;" data-no-bag-inject="1">' + esc(restockLabel) + '</a></span>' : '<span>Tap a bottle chip above</span>')
                 + nextBtnHtml
               + '</div></div></div>';
         }).join('');
