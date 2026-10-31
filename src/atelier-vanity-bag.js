@@ -911,13 +911,6 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     };
     document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') sendExitBeacon(); });
     window.addEventListener('pagehide', sendExitBeacon);
-    document.addEventListener('mouseleave', function(e) {
-      if (exitHoldShown || window.__ebIsUnlocked || navigator.webdriver) return;
-      if (e.clientY <= 6 && (Date.now() - enteredAt) > 12000) {
-        exitHoldShown = true;
-        window.__dlOpenVanityDrawer('exit_hold');
-      }
-    }, { passive: true });
 
     window.__dlSyncVanityFromCheckboxes = function(isClearAll) {
       var st = window.__dlVanityState;
