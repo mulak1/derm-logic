@@ -7,6 +7,7 @@
  */
 
 const { CULT_PRODUCTS, CLINICAL_INGREDIENTS } = require('./clinical-data');
+const { renderInteractiveFourNightCalendarHtml, PERSONA_INTERACTIVE_CLIENT_JS } = require('./celebrity-routines');
 
 const SOVRN_KEY = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || process.env.VIGLINK_API_KEY || '77092b74b2ef39a0fcc70907f5f6216d';
 
@@ -206,7 +207,7 @@ function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShel
   return `<div id="endowmentPersonalizationBar" style="padding:8px 10px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:6px;min-width:0;">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
       <span class="mono" style="font-size:0.76rem;color:var(--text-secondary);font-weight:500;">Optional: Climate &amp; Custom Shelf Name</span>
-      <span id="shelfDraftSavedBadge" class="badge-safe mono" style="font-size:0.72rem;padding:1px 7px;">Shelf Auto-Saved</span>
+      <span id="shelfDraftSavedBadge" class="badge-safe mono" style="font-size:0.72rem;padding:1px 7px;">1 Calibration Active &middot; Unsaved Tab Session</span>
     </div>
     <div id="climateContextPills" role="group" aria-label="Climate and Barrier Context" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;background:var(--bg-oat);padding:3px;">
       <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:4px 4px;font-size:0.74rem;min-height:24px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry</button>
@@ -225,18 +226,7 @@ function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShel
 function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Val, n3Label, n3Val, n4Val) {
   return `
     <div style="padding:16px 18px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:14px;min-width:0;">
-      <div style="min-width:0;">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
-          <span class="mono" style="font-size:0.8rem;color:var(--text-secondary);font-weight:600;letter-spacing:0.02em;text-transform:uppercase;">4-Night Bedtime Rotation</span>
-          <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;text-decoration:underline;">Add 9:30 PM Phone Reminders (99&cent;) &rarr;</a>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
-          <div style="padding:9px 11px;background:var(--bg-surface);min-width:0;"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;">${escapeHtml(n1Label)}</span><span class="mono" style="font-size:0.74rem;color:var(--text-muted);">Wait 60s</span></div><div style="font-size:0.82rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n1Val)}</div></div>
-          <div style="padding:9px 11px;background:var(--bg-surface);min-width:0;"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.78rem;color:var(--honey-warn);font-weight:600;">${escapeHtml(n2Label)}</span><span class="mono" style="font-size:0.74rem;color:var(--text-muted);">Dry Skin</span></div><div style="font-size:0.82rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n2Val)}</div></div>
-          <div style="padding:9px 11px;background:var(--bg-surface);min-width:0;"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.78rem;color:var(--sage-safe);font-weight:600;">${escapeHtml(n3Label)}</span><span class="mono dl-gated-night-val" data-unlocked-text="Damp Seal" style="font-size:0.74rem;color:var(--sage-safe);">Rest</span></div><div style="font-size:0.82rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n3Val)}</div></div>
-          <div style="padding:9px 11px;background:var(--bg-surface);min-width:0;"><div style="display:flex;justify-content:space-between;align-items:center;gap:4px;"><span class="mono" style="font-size:0.78rem;color:var(--sage-safe);font-weight:600;">Night 4 &middot; Seal</span><span class="mono dl-gated-night-val" data-unlocked-text="3:1:1 Lipids" style="font-size:0.74rem;color:var(--sage-safe);">Lipids</span></div><div style="font-size:0.82rem;color:var(--text-primary);margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(n4Val)}</div></div>
-        </div>
-      </div>
+      ${renderInteractiveFourNightCalendarHtml(escapeHtml(n1Label), escapeHtml(n1Val), escapeHtml(n2Label), escapeHtml(n2Val), escapeHtml(n3Label), escapeHtml(n3Val), escapeHtml(n4Val))}
 
       <div id="lockScreenCanvasSection" style="padding:14px 16px;background:linear-gradient(155deg,#3A1F27 0%,#28141A 100%);color:#FDF8F6;border:none;border-radius:20px;display:grid;grid-template-columns:112px minmax(0,1fr);gap:16px;align-items:center;min-width:0;">
         <div style="border-radius:16px;padding:4px;background:linear-gradient(145deg,#5A303D,#28141A);box-shadow:0 10px 24px rgba(58,31,39,0.28);">
@@ -260,6 +250,7 @@ function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Va
 }
 
 const ENDOWMENT_CLIENT_SCRIPT = `
+  ${PERSONA_INTERACTIVE_CLIENT_JS}
   window.__dlShelfStateKey = 'dermlogic_shelf_state_v1';
   window.__dlClimateMode = 'indoor_dry';
   window.__dlViewMode = 'fixed';
@@ -480,9 +471,15 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     var wUsd = res.wastedShelfValueUsd || 0;
     if (st) {
       st.innerHTML = window.__dlViewMode === 'clash'
-        ? '<strong style="color:var(--berry-clash);">Unfixed Stack</strong> &middot; ' + cCount + ' Clashes (-$' + wUsd + ' Serum Value at Risk)'
-        : '<strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)';
+        ? '<strong style="color:var(--berry-clash);">Unfixed Stack</strong> &middot; 26% Active Absorption (-$' + wUsd + '/yr Neutralized on Contact)'
+        : '<strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 98.4% Active Bioavailability Protected ($0 Wasted)';
     }
+    var mFill = document.getElementById('dl-potency-meter-fill');
+    if (mFill) {
+      mFill.style.width = window.__dlViewMode === 'clash' ? '26%' : '98%';
+      mFill.style.background = window.__dlViewMode === 'clash' ? 'var(--berry-clash)' : 'linear-gradient(90deg, var(--rose-brand) 0%, #10B981 100%)';
+    }
+    if (window.__dlBumpCustomizationCount) window.__dlBumpCustomizationCount('split_toggle');
     if (window.__dlSwitchResultStep) window.__dlSwitchResultStep(window.__dlViewMode === 'clash' ? 1 : 2, true);
     window.__dlSaveShelfState();
     window.__dlRenderWallpaperCanvas();

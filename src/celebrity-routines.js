@@ -501,9 +501,225 @@ function getAllCelebrityRoutines() {
   return list;
 }
 
+function renderPersonaInteractiveWorkbenchAddons() {
+  return {
+    pouchBudgetToggleHtml: `
+      <div id="dl-pouch-budget-bar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(122,35,50,0.12);">
+        <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);font-weight:600;">Shelf Budget Mode:</span>
+        <div role="group" aria-label="Switch between Iconic Luxury Shelf and Chemist Budget Dupes" style="display:inline-flex;gap:4px;background:var(--bg-surface);padding:3px;border-radius:999px;">
+          <button type="button" id="dl-btn-mode-luxury" class="vanity-light-btn active mono" style="padding:4px 10px;font-size:0.74rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('luxury', this)">Iconic Shelf ($275)</button>
+          <button type="button" id="dl-btn-mode-dupe" class="vanity-light-btn mono" style="padding:4px 10px;font-size:0.74rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('dupe', this)">Chemist Dupes ($83 &middot; Save $192)</button>
+        </div>
+      </div>
+      <div id="dl-budget-dupe-banner" style="display:none;margin-top:10px;padding:10px 12px;border-radius:14px;background:var(--bg-surface);font-size:0.79rem;color:var(--text-primary);line-height:1.45;"></div>`,
+    reactionTriageHtml: `
+      <div id="dl-reaction-triage-bar" style="margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+          <span class="mono" style="font-size:0.76rem;font-weight:600;color:var(--rose-brand);">Had a bad reaction to a cream or serum? Tap what happened to spot the culprit:</span>
+          <span class="mono" style="font-size:0.71rem;color:var(--text-secondary);">Instant Culprit Autopsy</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;">
+          <button type="button" class="preset-chip dl-reaction-btn" data-rx="sting" onclick="window.__dlDiagnoseSkinReaction('sting', this)" style="text-align:left;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px;">
+            <span><strong style="font-size:0.8rem;color:var(--text-primary);display:block;">Stung / Red Around Nose</strong><span style="font-size:0.72rem;color:var(--text-secondary);">Acid + Retinoid or damp-skin burn</span></span>
+            <span class="badge-clash mono" style="font-size:0.68rem;padding:2px 6px;flex-shrink:0;">Triage &rarr;</span>
+          </button>
+          <button type="button" class="preset-chip dl-reaction-btn" data-rx="pill" onclick="window.__dlDiagnoseSkinReaction('pill', this)" style="text-align:left;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px;">
+            <span><strong style="font-size:0.8rem;color:var(--text-primary);display:block;">Pilled Under Makeup / SPF</strong><span style="font-size:0.72rem;color:var(--text-secondary);">Rolled into flakes before work</span></span>
+            <span class="badge-warn mono" style="font-size:0.68rem;padding:2px 6px;flex-shrink:0;">Fix &rarr;</span>
+          </button>
+          <button type="button" class="preset-chip dl-reaction-btn" data-rx="bumps" onclick="window.__dlDiagnoseSkinReaction('bumps', this)" style="text-align:left;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px;">
+            <span><strong style="font-size:0.8rem;color:var(--text-primary);display:block;">Tiny Bumps Overnight</strong><span style="font-size:0.72rem;color:var(--text-secondary);">Heavy cream ester pore trap</span></span>
+            <span class="badge-warn mono" style="font-size:0.68rem;padding:2px 6px;flex-shrink:0;">Scan &rarr;</span>
+          </button>
+          <button type="button" class="preset-chip dl-reaction-btn" data-rx="tight" onclick="window.__dlDiagnoseSkinReaction('tight', this)" style="text-align:left;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px;">
+            <span><strong style="font-size:0.8rem;color:var(--text-primary);display:block;">Tight, Shiny &amp; Peeling</strong><span style="font-size:0.72rem;color:var(--text-secondary);">Over-exfoliated lipid barrier</span></span>
+            <span class="badge-safe mono" style="font-size:0.68rem;padding:2px 6px;flex-shrink:0;">Rescue &rarr;</span>
+          </button>
+        </div>
+        <div id="dl-reaction-autopsy-card" style="display:none;margin-top:8px;padding:11px 13px;border-radius:14px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);font-size:0.8rem;line-height:1.45;"></div>
+      </div>`
+  };
+}
+
+function renderInteractiveFourNightCalendarHtml(n1Label, n1Val, n2Label, n2Val, n3Label, n3Val, n4Val) {
+  return `
+    <div id="dl-interactive-4night-calendar" style="min-width:0;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+        <div>
+          <span class="mono" style="font-size:0.8rem;color:var(--text-primary);font-weight:600;letter-spacing:0.02em;text-transform:uppercase;">Interactive 4-Night Skin-Cycling Calendar</span>
+          <span class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:block;">Tap any night below to inspect damp-vs-dry rules, wait timers &amp; missing buffer alerts:</span>
+        </div>
+        <a href="/buy/micro_pass?source=cycling_grid" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('micro_pass');return false;}" class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Sync 9:30 PM Phone Alerts (99&cent;) &rarr;</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;" role="tablist" aria-label="4-Night Skin Cycling Schedule">
+        <button type="button" class="dl-night-cal-tab active" data-night="1" onclick="window.__dlSelectCyclingNight(1, this)" style="padding:9px 8px;background:var(--bg-surface);border:1.5px solid var(--rose-brand);border-radius:12px;text-align:left;cursor:pointer;min-width:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:700;">${ n1Label }</span><span class="mono" style="font-size:0.66rem;color:var(--text-muted);">60s Wait</span></div>
+          <div style="font-size:0.78rem;color:var(--text-primary);font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ n1Val }</div>
+        </button>
+        <button type="button" class="dl-night-cal-tab" data-night="2" onclick="window.__dlSelectCyclingNight(2, this)" style="padding:9px 8px;background:var(--bg-surface);border:1px solid rgba(122,35,50,0.14);border-radius:12px;text-align:left;cursor:pointer;min-width:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--honey-warn);font-weight:700;">${ n2Label }</span><span class="mono" style="font-size:0.66rem;color:var(--text-muted);">Bone-Dry</span></div>
+          <div style="font-size:0.78rem;color:var(--text-primary);font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ n2Val }</div>
+        </button>
+        <button type="button" class="dl-night-cal-tab" data-night="3" onclick="window.__dlSelectCyclingNight(3, this)" style="padding:9px 8px;background:var(--bg-surface);border:1px solid rgba(122,35,50,0.14);border-radius:12px;text-align:left;cursor:pointer;min-width:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:700;">${ n3Label }</span><span class="mono dl-gated-night-val" data-unlocked-text="Damp Seal" style="font-size:0.66rem;color:var(--sage-safe);">Rest</span></div>
+          <div style="font-size:0.78rem;color:var(--text-primary);font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ n3Val }</div>
+        </button>
+        <button type="button" class="dl-night-cal-tab" data-night="4" onclick="window.__dlSelectCyclingNight(4, this)" style="padding:9px 8px;background:var(--bg-surface);border:1px solid rgba(122,35,50,0.14);border-radius:12px;text-align:left;cursor:pointer;min-width:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:700;">Night 4 &middot; Seal</span><span class="mono dl-gated-night-val" data-unlocked-text="3:1:1 Lipids" style="font-size:0.66rem;color:var(--sage-safe);">Lipids</span></div>
+          <div style="font-size:0.78rem;color:var(--text-primary);font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ n4Val }</div>
+        </button>
+      </div>
+      <div id="dl-night-cal-detail-box" style="margin-top:8px;padding:11px 14px;border-radius:14px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:0.8rem;color:var(--text-secondary);">
+        <div id="dl-night-cal-detail-text" style="flex:1;min-width:220px;line-height:1.45;">
+          <strong style="color:var(--text-primary);">Tonight (Night 1 &middot; Exfoliating Polish):</strong> Apply <strong style="color:var(--rose-brand);">${ n1Val }</strong> onto clean, dry skin, wait 60 seconds so pH stabilizes, then seal with a ceramide cream. <em>Never stack retinoids on Night 1.</em>
+        </div>
+        <a id="dl-night-cal-rescue-cta" href="/api/affiliate?product=cerave-pm-lotion&amp;partner=ulta" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">Add Night 3–4 Ceramide Buffer ($17) &nearr;</a>
+      </div>
+    </div>`;
+}
+
+const PERSONA_INTERACTIVE_CLIENT_JS = `
+  window.__dlCustomizationsCount = 1;
+  window.__dlBumpCustomizationCount = function(label) {
+    window.__dlCustomizationsCount = (window.__dlCustomizationsCount || 1) + 1;
+    var badge = document.getElementById('shelfDraftSavedBadge');
+    if (badge) {
+      badge.textContent = window.__dlCustomizationsCount + ' Calibrations Active · Unsaved Tab Session';
+      badge.style.background = 'var(--rose-pill-bg)';
+      badge.style.color = 'var(--rose-brand)';
+    }
+  };
+
+  window.__dlApplyCheckedIdsAndSync = function(targetIds) {
+    var grid = document.getElementById('productSelectorGrid');
+    var cbs = document.querySelectorAll('input[name="routineProduct"]');
+    for (var i = 0; i < cbs.length; i++) {
+      var cb = cbs[i];
+      cb.checked = targetIds.indexOf(cb.value) !== -1;
+      var lbl = cb.closest('.prod-check-item');
+      if (lbl) {
+        lbl.classList.toggle('selected', cb.checked);
+        var pill = lbl.querySelector('span.mono');
+        if (pill) {
+          pill.textContent = cb.checked ? '✓ In Bag' : '+ Vanity Bag';
+          pill.style.background = cb.checked ? 'var(--rose-brand)' : 'var(--bg-oat)';
+          pill.style.color = cb.checked ? 'var(--accent-ink)' : 'var(--rose-brand)';
+        }
+        if (cb.checked && grid) grid.prepend(lbl);
+      }
+    }
+    if (grid) grid.scrollTop = 0;
+    if (window.__dlSyncVanityFromCheckboxes) window.__dlSyncVanityFromCheckboxes();
+  };
+
+  window.__dlSwitchShelfBudgetMode = function(mode, btnEl) {
+    var luxBtn = document.getElementById('dl-btn-mode-luxury');
+    var dupeBtn = document.getElementById('dl-btn-mode-dupe');
+    if (luxBtn) luxBtn.classList.toggle('active', mode === 'luxury');
+    if (dupeBtn) dupeBtn.classList.toggle('active', mode === 'dupe');
+    var targetIds = mode === 'dupe'
+      ? ['cosrx-snail-96-mucin', 'timeless-20-vitamin-c', 'illiyoon-ceramide-ato', 'to-glycolic-acid-7']
+      : ['skinceuticals-ce-ferulic', 'to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005'];
+    window.__dlApplyCheckedIdsAndSync(targetIds);
+    var banner = document.getElementById('dl-budget-dupe-banner');
+    if (banner) {
+      banner.style.display = 'block';
+      if (mode === 'dupe') {
+        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">Chemist Dupe Shelf Loaded ($83 Total &middot; You Save $192/yr):</strong> Swapped $182 SkinCeuticals &rarr; <strong>Timeless 20% Vit C ($26, pH 2.7)</strong> + <strong>ILLIYOON Ceramide ($19)</strong> + <strong>COSRX Snail 96 ($25)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=timeless-20-vitamin-c&amp;partner=amazon" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $26 Vit C Dupe &nearr;</a><a href="/buy/micro_pass?source=dupe_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save Dupe Card (99&cent;) &rarr;</a></div></div>';
+      } else {
+        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--rose-brand);">Iconic Clinical Shelf ($275 Value):</strong> Protecting <strong>SkinCeuticals C E Ferulic ($182)</strong> + <strong>Paula\\'s Choice 2% BHA ($35)</strong> + <strong>Night Retinoid ($45)</strong> from pH neutralization.</div><a href="/api/affiliate?product=skinceuticals-ce-ferulic&amp;partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Authorized Dermstore Restock &nearr;</a></div>';
+      }
+    }
+    window.__dlBumpCustomizationCount(mode);
+    if (typeof runRoutineAnalysis === 'function') runRoutineAnalysis(null, true);
+  };
+
+  window.__dlDiagnoseSkinReaction = function(rxType, btnEl) {
+    var allBtns = document.querySelectorAll('.dl-reaction-btn');
+    for (var i = 0; i < allBtns.length; i++) {
+      allBtns[i].style.borderColor = allBtns[i] === btnEl ? 'var(--rose-brand)' : '';
+      allBtns[i].style.background = allBtns[i] === btnEl ? 'var(--rose-pill-bg)' : '';
+    }
+    var card = document.getElementById('dl-reaction-autopsy-card');
+    if (!card) return;
+    card.style.display = 'block';
+    var map = {
+      sting: {
+        ids: ['to-glycolic-acid-7', 'rx-tretinoin-005', 'skinceuticals-ce-ferulic'],
+        title: 'Culprit Found: Low-pH Acid + Retinoid Barrier Micro-Fissures',
+        body: 'Applying Glycolic 7% (pH 3.6) or Vitamin C (pH 3.2) in the same routine as a Night Retinoid—or onto damp skin—pulls acid too fast into the thin skin around your nose and mouth.',
+        rescueProd: 'lrp-cicaplast-baume-b5',
+        rescueLabel: 'Stop Tonight\\'s Sting: La Roche-Posay Cicaplast B5+ ($17 at Ulta) ↗',
+        partner: 'ulta'
+      },
+      pill: {
+        ids: ['to-niacinamide-10-zinc', 'cosrx-snail-96-mucin', 'cerave-pm-lotion'],
+        title: 'Culprit Found: Gum/Gel Film Former Rolled Under SPF & Foundation',
+        body: 'Layering high-viscosity Niacinamide or Snail Mucin without a 60-second dry-down causes silicone primers and sunscreen to ball up into gray flakes.',
+        rescueProd: 'boj-relief-sun-spf50',
+        rescueLabel: 'Zero-Pill Swap: Beauty of Joseon Relief Sun SPF 50 ($18) ↗',
+        partner: 'sephora'
+      },
+      bumps: {
+        ids: ['skinceuticals-ce-ferulic', 'cerave-pm-lotion', 'illiyoon-ceramide-ato'],
+        title: 'Culprit Found: Rich Occlusive Over Unexfoliated Pores',
+        body: 'Trapping sweat or dead skin cells under a heavy night cream triggers overnight closed comedones. Switch to a 0/5 pore-safe BHA + lightweight gel-cream.',
+        rescueProd: 'paulas-choice-2-bha',
+        rescueLabel: 'Clear Overnight Bumps: Paula\\'s Choice 2% BHA ($35) ↗',
+        partner: 'sephora'
+      },
+      tight: {
+        ids: ['to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005'],
+        title: 'Culprit Found: Stripped 3:1:1 Ceramide & Cholesterol Lipid Seal',
+        body: 'Stacking exfoliating acids and retinoids without 2 consecutive recovery nights drains ceramides, leaving skin shiny, tight, and reactive.',
+        rescueProd: 'illiyoon-ceramide-ato',
+        rescueLabel: 'Rebuild Lipid Seal: ILLIYOON Ceramide Ato Cream ($19) ↗',
+        partner: 'amazon'
+      }
+    };
+    var cfg = map[rxType] || map.sting;
+    window.__dlApplyCheckedIdsAndSync(cfg.ids);
+    card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;"><div style="flex:1;min-width:210px;"><strong style="color:var(--rose-brand);display:block;margin-bottom:2px;">' + cfg.title + '</strong><span style="color:var(--text-secondary);">' + cfg.body + '</span></div><div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;"><a href="/api/affiliate?product=' + cfg.rescueProd + '&amp;partner=' + cfg.partner + '" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">' + cfg.rescueLabel + '</a><a href="/buy/micro_pass?source=reaction_triage" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Get 72-Hr Recovery Calendar (99&cent;) &rarr;</a></div></div>';
+    window.__dlBumpCustomizationCount(rxType);
+    if (typeof runRoutineAnalysis === 'function') runRoutineAnalysis(null, true);
+  };
+
+  window.__dlSelectCyclingNight = function(nightNum, btnEl) {
+    var tabs = document.querySelectorAll('.dl-night-cal-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      var active = tabs[i] === btnEl || Number(tabs[i].getAttribute('data-night')) === nightNum;
+      tabs[i].style.border = active ? '1.5px solid var(--rose-brand)' : '1px solid rgba(122,35,50,0.14)';
+      tabs[i].classList.toggle('active', active);
+    }
+    var detailText = document.getElementById('dl-night-cal-detail-text');
+    var rescueCta = document.getElementById('dl-night-cal-rescue-cta');
+    if (!detailText) return;
+    var notes = {
+      1: '<strong style="color:var(--text-primary);">Night 1 (Thu &middot; Acid Polish):</strong> Pat exfoliant onto clean, dry skin. <strong>Wait 60 seconds</strong> before moisturizer so pH 3.6 acid isn\\'t neutralized. Skip all retinoids tonight.',
+      2: '<strong style="color:var(--text-primary);">Night 2 (Fri &middot; Retinoid Renew):</strong> Wait <strong>10–15 minutes until skin is bone-dry</strong> (damp skin causes retinoid burn around the nose). Apply pea-sized amount, then seal with ceramide cream.',
+      3: '<strong style="color:var(--text-primary);">Night 3 (Sat &middot; Barrier Flood):</strong> <strong>Zero acids or retinoids tonight.</strong> Mist or pat hydrating essence onto damp skin and lock in immediately with a 3:1:1 ceramide cream.',
+      4: '<strong style="color:var(--text-primary);">Night 4 (Sun &middot; Deep Lipid Seal):</strong> Second consecutive recovery night restores 98% stratum corneum hydration before Night 1 restarts on Monday.'
+    };
+    detailText.innerHTML = notes[nightNum] || notes[1];
+    if (rescueCta) {
+      if (nightNum === 2) {
+        rescueCta.textContent = 'Add Retinoid Sandwich Cream ($17) ↗';
+        rescueCta.href = '/api/affiliate?product=lrp-cicaplast-baume-b5&partner=ulta';
+      } else {
+        rescueCta.textContent = 'Add Night 3–4 Ceramide Buffer ($17) ↗';
+        rescueCta.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta';
+      }
+    }
+    window.__dlBumpCustomizationCount('night_' + nightNum);
+  };
+`;
+
 module.exports = {
   CELEBRITY_ROUTINES,
   getAllCelebrityRoutines,
   getDailyDripInfo,
-  advanceCelebrityShelfByOneDay
+  advanceCelebrityShelfByOneDay,
+  renderPersonaInteractiveWorkbenchAddons,
+  renderInteractiveFourNightCalendarHtml,
+  PERSONA_INTERACTIVE_CLIENT_JS
 };

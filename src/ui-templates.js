@@ -14,21 +14,14 @@ const {
   renderAtelierVanityDrawerHtml,
   ATELIER_VANITY_CLIENT_SCRIPT
 } = require('./atelier-vanity-bag');
+const { renderPersonaInteractiveWorkbenchAddons } = require('./celebrity-routines');
 
 function escapeHtml(str) {
   if (str == null) return '';
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="34" height="34" role="img" aria-label="DermLogic Formulation Atelier Emblem" style="flex-shrink:0;display:block;">
-  <circle cx="20" cy="20" r="19" fill="#F3E1E5" stroke="#8A3448" stroke-width="1.4"/>
-  <circle cx="20" cy="20" r="15" fill="none" stroke="#8E6B75" stroke-width="0.75" stroke-dasharray="2 1.5"/>
-  <path d="M20 9.5 C20 9.5 26.8 17.6 26.8 22.6 C26.8 26.4 23.8 29.5 20 29.5 C16.2 29.5 13.2 26.4 13.2 22.6 C13.2 17.6 20 9.5 20 9.5 Z" fill="#8A3448"/>
-  <path d="M16.5 21.2 C16.2 23.6 17.6 25.8 19.8 26.3" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round"/>
-  <path d="M20 29.5 C22.8 29.5 25.5 31.2 26.5 33.2 C23.6 33.6 21.2 32.1 20 29.5 Z" fill="#285B44"/>
-  <path d="M20 29.5 C17.2 29.5 14.5 31.2 13.5 33.2 C16.4 33.6 18.8 32.1 20 29.5 Z" fill="#285B44" opacity="0.85"/>
-  <circle cx="20" cy="17.2" r="1.3" fill="#FFFFFF"/>
-</svg>`;
+const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="34" height="34" role="img" aria-label="DermLogic Formulation Atelier Emblem" style="flex-shrink:0;display:block;"><circle cx="20" cy="20" r="19" fill="#F3E1E5" stroke="#8A3448" stroke-width="1.4"/><circle cx="20" cy="20" r="15" fill="none" stroke="#8E6B75" stroke-width="0.75" stroke-dasharray="2 1.5"/><path d="M20 9.5 C20 9.5 26.8 17.6 26.8 22.6 C26.8 26.4 23.8 29.5 20 29.5 C16.2 29.5 13.2 26.4 13.2 22.6 C13.2 17.6 20 9.5 20 9.5 Z" fill="#8A3448"/><path d="M16.5 21.2 C16.2 23.6 17.6 25.8 19.8 26.3" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round"/><path d="M20 29.5 C22.8 29.5 25.5 31.2 26.5 33.2 C23.6 33.6 21.2 32.1 20 29.5 Z" fill="#285B44"/><path d="M20 29.5 C17.2 29.5 14.5 31.2 13.5 33.2 C16.4 33.6 18.8 32.1 20 29.5 Z" fill="#285B44" opacity="0.85"/><circle cx="20" cy="17.2" r="1.3" fill="#FFFFFF"/></svg>`;
 
 const SHARED_CSS = `
   :root {
@@ -364,13 +357,14 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           <div style="margin-top:12px;height:8px;border-radius:999px;background:var(--bg-oat);overflow:hidden;">
             <div id="dl-pouch-progress-fill" style="width:80%;height:100%;border-radius:999px;background:linear-gradient(90deg, var(--rose-brand) 0%, #10B981 100%);transition:width 240ms ease;"></div>
           </div>
+          ${renderPersonaInteractiveWorkbenchAddons().pouchBudgetToggleHtml}
         </div>
         <div class="porcelain-vessel-core" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
           <div style="flex:1;display:flex;flex-direction:column;min-height:0;gap:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
               <div>
                 <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;display:block;">Step 1 of 2 &middot; Your Bathroom Shelf</span>
-                <strong class="serif-display" style="font-size:1.35rem;font-weight:400;color:var(--text-primary);">Tap Your Bottles or Try a Preset</strong>
+                <strong class="serif-display" style="font-size:1.35rem;font-weight:400;color:var(--text-primary);">Tap Your Skin Reaction, Preset, or Bottles</strong>
               </div>
               <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
                 <button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 9px;border-radius:999px;font-size:0.78rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;cursor:pointer;font-weight:500;" onclick="clearRoutineSelection()">Clear (${selectedSet.size}) &times;</button>
@@ -379,7 +373,8 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             </div>
 
             <div style="padding:10px 12px;background:var(--bg-canvas);border-radius:18px;">
-              <div class="mono" style="font-size:0.78rem;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">Want to play first? Tap a popular routine to see how we fix clashes:</div>
+              ${renderPersonaInteractiveWorkbenchAddons().reactionTriageHtml}
+              <div class="mono" style="font-size:0.74rem;font-weight:500;color:var(--text-secondary);margin-bottom:5px;">Or test a common shelf combination:</div>
               <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">
                 ${presetButtonsHtml}
               </div>
@@ -596,20 +591,21 @@ function renderAnalysisResultHtml(res) {
           </div>
         </div>
 
-        <div id="beforeAfterSplitBar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 12px;background:var(--bg-canvas);margin-bottom:8px;min-width:0;">
-          <span id="beforeAfterStatusText" style="font-size:0.82rem;color:var(--text-secondary);"><strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 96/100 Harmony ($0 Wasted)</span>
-          <div class="vanity-light-pill" role="group" aria-label="Compare Before Clashing Stack vs After Fixed Split" style="padding:3px;gap:3px;flex-wrap:wrap;">
-            <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.76rem;padding:4px 8px;min-height:26px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Fixed Split</button>
-            <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.76rem;padding:4px 8px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} &middot; -$${wastedUsd})</button>
+        <div id="beforeAfterSplitBar" style="display:flex;flex-direction:column;gap:8px;padding:11px 13px;border-radius:18px;background:var(--bg-canvas);margin-bottom:10px;min-width:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <span id="beforeAfterStatusText" style="font-size:0.81rem;color:var(--text-secondary);"><strong style="color:var(--sage-safe);">Fixed AM/PM Split</strong> &middot; 98.4% Active Bioavailability Protected ($0 Wasted)</span>
+            <div class="vanity-light-pill" role="group" aria-label="Compare Before Clashing Stack vs After Fixed Split" style="padding:3px;gap:3px;flex-wrap:wrap;">
+              <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.75rem;padding:4px 8px;min-height:26px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Fixed Split (98.4% Potency)</button>
+              <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.75rem;padding:4px 8px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} &middot; -$${wastedUsd}/yr)</button>
+            </div>
           </div>
-        </div>
-        <div id="dl-postscan-conversion-strip" style="padding:10px 12px;border-radius:18px;background:var(--bg-canvas);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
-          <div style="font-size:0.79rem;color:var(--text-secondary);line-height:1.35;">
-            <strong class="mono" style="color:var(--text-primary);">Why This Split Saves $${wastedUsd || 184}:</strong> Separates low-pH &amp; oxidative actives between <span style="color:var(--sage-safe);font-weight:600;">7:30 AM</span> and <span style="color:var(--rose-brand);font-weight:600;">9:30 PM</span> so zero potency is lost.
-          </div>
-          <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
-            <button type="button" class="btn-secondary mono" onclick="window.__dlSwitchResultStep(2)" style="padding:5px 11px;min-height:28px;font-size:0.75rem;background:var(--rose-pill-bg);color:var(--rose-brand);">See AM &amp; PM Order &rarr;</button>
-            <a href="/api/affiliate?product=${escapeHtml((pmCream && pmCream.id) || (matchedProds[0] && matchedProds[0].id) || 'aestura-atobarrier-365')}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">Check ${escapeHtml((pmCream && pmCream.brand) || (matchedProds[0] && matchedProds[0].brand) || 'Aestura')} ($${(pmCream && pmCream.priceUsd) || (matchedProds[0] && matchedProds[0].priceUsd) || 32}) &nearr;</a>
+          <div style="height:7px;border-radius:999px;background:var(--bg-oat);overflow:hidden;" title="Active Serum Potency & Sunk-Cost Preservation Meter"><div id="dl-potency-meter-fill" style="width:98%;height:100%;border-radius:999px;background:linear-gradient(90deg, var(--rose-brand) 0%, #10B981 100%);transition:width 260ms ease;"></div></div>
+          <div id="dl-postscan-conversion-strip" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:2px;">
+            <span style="font-size:0.78rem;color:var(--text-secondary);"><strong class="mono" style="color:var(--text-primary);">Sunk-Cost Protected ($${wastedUsd || 184}/yr):</strong> Separates <span style="color:var(--sage-safe);font-weight:600;">7:30 AM</span> &amp; <span style="color:var(--rose-brand);font-weight:600;">9:30 PM</span> actives so zero dropper potency is neutralized.</span>
+            <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
+              <button type="button" class="btn-secondary mono" onclick="window.__dlSwitchResultStep(2)" style="padding:4px 10px;min-height:26px;font-size:0.74rem;background:var(--rose-pill-bg);color:var(--rose-brand);">See AM &amp; PM Order &rarr;</button>
+              <a href="/api/affiliate?product=${escapeHtml((pmCream && pmCream.id) || (matchedProds[0] && matchedProds[0].id) || 'aestura-atobarrier-365')}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;white-space:nowrap;" data-no-bag-inject="1">Check ${escapeHtml((pmCream && pmCream.brand) || (matchedProds[0] && matchedProds[0].brand) || 'Aestura')} ($${(pmCream && pmCream.priceUsd) || (matchedProds[0] && matchedProds[0].priceUsd) || 32}) &nearr;</a>
+            </div>
           </div>
         </div>
 
