@@ -54,7 +54,7 @@ const B2B_CLIENT_DELIVERABLES = [
 
 const INGREDIENT_SUBCATEGORIES = [
   { slug: 'serums', label: 'Targeted Serums & Ampoules', filterFn: (p) => /serum|drop|ampoule|booster|ce-ferulic|peptides|niacinamide|bha/i.test(p.id + ' ' + p.name + ' ' + p.category) },
-  { slug: 'moisturizers', label: 'Barrier Creams & Lotions', filterFn: (p) => /cream|moisturizer|baume|lipid|lotion|atobarrier/i.test(p.id + ' ' + p.name + ' ' + p.category) },
+  { slug: 'moisturizers', label: 'Barrier Creams & Lotions', filterFn: (p) => /cream|moisturizer|baume|lipid|lotion|atobarrier/i.test(p.id + ' ' + p.name + ' ' + p.category) && !/exfoliat|acid|peel|p50/i.test(p.category + ' ' + p.id) },
   { slug: 'cleansers-toners', label: 'Cleansers, Toners & Essences', filterFn: (p) => /cleanser|toner|essence|wash|mucin|skin/i.test(p.id + ' ' + p.name + ' ' + p.category) },
   { slug: 'safe-pairings', label: 'Compatible Same-Routine Actives', filterFn: () => true }
 ];
@@ -253,9 +253,12 @@ function computeComparisonTelemetry(resolved) {
     const deltaPh = Number(Math.abs(midPhA - midPhB).toFixed(2));
     const hhA = computeHendersonHasselbalch(midPhA, ingA.pka), hhB = computeHendersonHasselbalch(midPhB, ingB.pka);
     const shiftedHhA = computeHendersonHasselbalch((midPhA + midPhB) / 2, ingA.pka);
+    const numA = Number(pA.priceUsd) || 38, numB = Number(pB.priceUsd) || 32, diffPrice = Math.abs(numA - numB);
+    const sameCat = String(pA.category || '') === String(pB.category || '') || (pA.primaryActives && pB.primaryActives && pA.primaryActives[0] === pB.primaryActives[0]);
+    const cheaperName = numA <= numB ? `${pA.brand} ${pA.name}` : `${pB.brand} ${pB.name}`;
     return {
       kind: 'product',
-      title: `${pA.brand} ${pA.name} vs. ${pB.brand} ${pB.name}: Head-to-Head pH, INCI & Layering Matrix`,
+      title: `${pA.brand} ${pA.name} ($${numA}) vs. ${pB.brand} ${pB.name} ($${numB}): ${diffPrice >= 15 ? `Save $${diffPrice} · ` : ''}Head-to-Head Dupe & pH Showdown`,
       nameA: `${pA.brand} ${pA.name}`, nameB: `${pB.brand} ${pB.name}`, idA: pA.id, idB: pB.id,
       phRangeA: `${ingA.phMin} - ${ingA.phMax} (Mid ${midPhA})`, phRangeB: `${ingB.phMin} - ${ingB.phMax} (Mid ${midPhB})`,
       pkaA: ingA.pka != null ? `${ingA.pka} pKa` : 'Neutral (Non-Ionizable)', pkaB: ingB.pka != null ? `${ingB.pka} pKa` : 'Neutral (Non-Ionizable)',
@@ -267,10 +270,10 @@ function computeComparisonTelemetry(resolved) {
       malasseziaA: ingA.malasseziaTrigger ? 'Trigger (Avoid if Fungal-Acne Prone)' : '100% Malassezia-Safe',
       malasseziaB: ingB.malasseziaTrigger ? 'Trigger (Avoid if Fungal-Acne Prone)' : '100% Malassezia-Safe',
       slotA: pA.timeOfDay || 'AM / PM', slotB: pB.timeOfDay || 'AM / PM',
-      priceA: `$${pA.priceUsd || 38}`, priceB: `$${pB.priceUsd || 32}`,
+      priceA: `$${numA}`, priceB: `$${numB}`, numA, numB, diffPrice, descA: pA.summary || '', descB: pB.summary || '',
       deltaPh, harmonyScore: analysis.compatibilityScore,
-      verdictLabel: analysis.compatibilityScore < 55 ? 'DO NOT LAYER SAME-STEP · SPLIT AM / PM' : (analysis.compatibilityScore < 75 ? 'BUFFER WITH 60S WAIT WINDOW' : 'SAFE TO LAYER IN SAME ROUTINE'),
-      summary: `Deterministic cosmetic-chemistry comparison between ${pA.brand} ${pA.name} (pH ${midPhA}, ${ingA.molecularWeightDa} Da) and ${pB.brand} ${pB.name} (pH ${midPhB}, ${ingB.molecularWeightDa} Da). Measured ΔpH differential is ${deltaPh} with a Routine Harmony Score of ${analysis.compatibilityScore}/100.`,
+      verdictLabel: sameCat && diffPrice >= 15 ? `SAVE $${diffPrice} WITH ${cheaperName.toUpperCase()} · PICK ONE FOR THIS STEP` : (analysis.compatibilityScore < 55 ? 'DO NOT LAYER SAME-STEP · SPLIT AM / PM' : (analysis.compatibilityScore < 75 ? 'PICK ONE OR BUFFER WITH 60S WAIT WINDOW' : 'SAFE TO LAYER IN SAME ROUTINE')),
+      summary: `Side-by-side bottle & formula showdown: ${pA.brand} ${pA.name} ($${numA}, pH ${midPhA}, ${hhA.freeAcidPct}% active bioavailability) vs. ${pB.brand} ${pB.name} ($${numB}, pH ${midPhB}, ${hhB.freeAcidPct}% active bioavailability). ${diffPrice >= 15 ? `Save $${diffPrice} per bottle with ${cheaperName} while keeping ΔpH within ${deltaPh}.` : `Measured ΔpH differential is ${deltaPh} with a Routine Harmony Score of ${analysis.compatibilityScore}/100.`}`,
       productIds: [pA.id, pB.id]
     };
   }
@@ -307,57 +310,53 @@ function computeComparisonTelemetry(resolved) {
 
 function renderDualInlineVerdictSelector(comp, canonicalSlug, positionId) {
   const prodQuery = encodeURIComponent((comp.productIds || []).join(','));
-  return `<div id="${escapeHtml(positionId)}" class="gi-inline-verdict-selector porcelain-vessel-core" data-compare-slug="${escapeHtml(canonicalSlug)}" style="padding:20px 24px;background:var(--bg-oat);margin:18px 0;border:1px solid var(--border-hairline);">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+  const isTop = positionId.includes('top');
+  const emailFormHtml = isTop ? '' : `<form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'compare_${escapeHtml(canonicalSlug)}')" style="margin-top:10px;padding-top:10px;"><input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Enter email for free 4-Night .ICS Calendar + 24h Routine Restore Link..." style="padding:7px 12px;font-size:0.77rem;min-height:34px;" /><button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button><div class="dl-inline-ics-status mono" style="display:none;grid-column:1/-1;font-size:0.74rem;color:var(--sage-safe);"></div></form>`;
+  return `<div id="${escapeHtml(positionId)}" class="gi-inline-verdict-selector porcelain-vessel-core" data-compare-slug="${escapeHtml(canonicalSlug)}" style="padding:18px 22px;background:var(--bg-oat);margin:14px 0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
       <div>
-        <span class="badge-safe mono" style="margin-bottom:4px;display:inline-block;">1-Tap Inline Verdict Selector (${positionId.includes('top') ? 'Above-the-Fold Quick Check' : 'Post-Table Action Verdict'})</span>
-        <h3 class="serif-display" style="font-size:1.35rem;margin:0;font-weight:400;">Tap your skin goal to highlight the winning column &amp; load your shelf:</h3>
+        <span class="badge-safe mono" style="margin-bottom:4px;display:inline-block;">1-Tap Skin-Goal Winner Selector (${isTop ? 'Above-the-Fold Quick Check' : 'Post-Table Action Verdict'})</span>
+        <h3 class="serif-display" style="font-size:1.3rem;margin:0;font-weight:400;">Tap your skin goal to highlight the winning bottle &amp; load your shelf:</h3>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;" role="group" aria-label="1-Tap Verdict Profile Selector">
-        <button type="button" class="btn-secondary mono gi-verdict-btn" data-verdict-col="a" data-skin-profile="sensitive" onclick="window.__giSelectCompareVerdict('a','sensitive','${escapeHtml(comp.nameA)}','${escapeHtml(comp.idA)}','${escapeHtml(prodQuery)}',this)" style="padding:7px 13px;font-size:0.8rem;">Sensitive / Redness-Prone</button>
-        <button type="button" class="btn-secondary mono gi-verdict-btn" data-verdict-col="b" data-skin-profile="dry" onclick="window.__giSelectCompareVerdict('b','dry','${escapeHtml(comp.nameB)}','${escapeHtml(comp.idB)}','${escapeHtml(prodQuery)}',this)" style="padding:7px 13px;font-size:0.8rem;">Dry / Barrier-Stressed</button>
-        <button type="button" class="btn-secondary mono gi-verdict-btn" data-verdict-col="a" data-skin-profile="oily_acne" onclick="window.__giSelectCompareVerdict('a','oily_acne','${escapeHtml(comp.nameA)}','${escapeHtml(comp.idA)}','${escapeHtml(prodQuery)}',this)" style="padding:7px 13px;font-size:0.8rem;">Oily / Blemish &amp; Pore Clearing</button>
-        <button type="button" class="btn-secondary mono gi-verdict-btn" data-verdict-col="both" data-skin-profile="combination" onclick="window.__giSelectCompareVerdict('both','combination','${escapeHtml(comp.nameA)} + ${escapeHtml(comp.nameB)} Split','${escapeHtml(comp.idA)}','${escapeHtml(prodQuery)}',this)" style="padding:7px 13px;font-size:0.8rem;border-color:var(--rose-brand);color:var(--rose-brand);">Use Both (AM / PM Split)</button>
+        <button type="button" class="btn-secondary mono gi-verdict-btn" data-verdict-col="a" data-skin-profile="sensitive" onclick="window.__giSelectCompareVerdict('a','sensitive','${escapeHtml(comp.nameA)}','${escapeHtml(comp.idA)}','${escapeHtml(prodQuery)}',this)" style="padding:7px 14px;font-size:0.8rem;background:var(--bg-surface);border-radius:999px;">Sensitive / Redness-Prone</button>
+        <button type="button" class="btn-secondary mono gi-verdict-btn" data-verdict-col="b" data-skin-profile="dry" onclick="window.__giSelectCompareVerdict('b','dry','${escapeHtml(comp.nameB)}','${escapeHtml(comp.idB)}','${escapeHtml(prodQuery)}',this)" style="padding:7px 14px;font-size:0.8rem;background:var(--bg-surface);border-radius:999px;">Dry / Barrier-Stressed</button>
+        <button type="button" class="btn-secondary mono gi-verdict-btn" data-verdict-col="a" data-skin-profile="oily_acne" onclick="window.__giSelectCompareVerdict('a','oily_acne','${escapeHtml(comp.nameA)}','${escapeHtml(comp.idA)}','${escapeHtml(prodQuery)}',this)" style="padding:7px 14px;font-size:0.8rem;background:var(--bg-surface);border-radius:999px;">Oily / Blemish &amp; Pore Clearing</button>
+        <button type="button" class="btn-secondary mono gi-verdict-btn" data-verdict-col="both" data-skin-profile="combination" onclick="window.__giSelectCompareVerdict('both','combination','${escapeHtml(comp.nameA)} + ${escapeHtml(comp.nameB)} Split','${escapeHtml(comp.idA)}','${escapeHtml(prodQuery)}',this)" style="padding:7px 14px;font-size:0.8rem;background:var(--rose-pill-bg);color:var(--rose-brand);border-radius:999px;">Use Both (AM / PM Split)</button>
       </div>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:12px 16px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);">
-      <div class="gi-verdict-live-text" style="font-size:0.9rem;color:var(--text-primary);">
-        <strong>Active Verdict (${comp.harmonyScore}/100 · ΔpH ${comp.deltaPh}):</strong> ${escapeHtml(comp.verdictLabel)}. Tap any profile button above to highlight the winning column in the chemistry table and save your profile.
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:11px 15px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);border-radius:14px;">
+      <div class="gi-verdict-live-text" style="font-size:0.88rem;color:var(--text-primary);">
+        <strong>Active Verdict (${comp.harmonyScore}/100 · ΔpH ${comp.deltaPh}):</strong> ${escapeHtml(comp.verdictLabel)}. Tap any skin-goal pill above to highlight the winning column.
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
         <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml((comp.productIds && comp.productIds[0]) || 'skinceuticals-ce-ferulic')}','${escapeHtml((comp.productIds && comp.productIds[1]) || 'aestura-atobarrier-365')}'],'compare_${escapeHtml(canonicalSlug)}')" style="padding:8px 14px;font-size:0.8rem;min-height:36px;"><span>Pre-Load Both in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button>
-        <a class="btn-secondary mono gi-verdict-cta-link" href="/?products=${prodQuery}&amp;skin=combination&amp;ref=compare_${escapeHtml(canonicalSlug)}#analyzer" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(canonicalSlug)}',pos:'${escapeHtml(positionId)}'})" style="padding:8px 14px;font-size:0.8rem;min-height:36px;text-decoration:none;"><span>Open in MyShelf Checker &rarr;</span></a>
+        <a class="btn-secondary mono gi-verdict-cta-link" href="/?products=${prodQuery}&amp;skin=combination&amp;ref=compare_${escapeHtml(canonicalSlug)}#analyzer" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(canonicalSlug)}',pos:'${escapeHtml(positionId)}'})" style="padding:8px 14px;font-size:0.8rem;min-height:36px;text-decoration:none;background:var(--bg-oat);"><span>Open in MyShelf Checker &rarr;</span></a>
       </div>
-    </div>
-    <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'compare_${escapeHtml(canonicalSlug)}')" style="margin-top:10px;padding-top:10px;">
-      <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Enter email for free 4-Night .ICS Calendar + 24h Routine Restore Link..." style="padding:7px 12px;font-size:0.77rem;min-height:34px;" />
-      <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
-      <div class="dl-inline-ics-status mono" style="display:none;grid-column:1/-1;font-size:0.74rem;color:var(--sage-safe);"></div>
-    </form>
+    </div>${emailFormHtml}
   </div>`;
 }
 
 function renderEntityEnvironmentSimulatorHtml(entityTitle, entitySlug, defaultProdId) {
   const safeProd = defaultProdId || 'skinceuticals-ce-ferulic';
-  return `<section id="gi-entity-simulator" class="porcelain-vessel-core" data-entity-slug="${escapeHtml(entitySlug)}" style="padding:20px 24px;background:var(--bg-oat);margin:18px 0;border:1px solid var(--border-hairline);">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+  const cleanTitle = String(entityTitle || '').replace(/\s*\([^)]*\)/g, '').trim() || entityTitle;
+  return `<section id="gi-entity-simulator" class="porcelain-vessel-core" data-entity-slug="${escapeHtml(entitySlug)}" style="padding:18px 22px;background:var(--bg-oat);margin:16px 0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
       <div>
         <span class="badge-safe mono" style="margin-bottom:4px;display:inline-block;">Interactive Skin-Barrier &amp; Climate Simulator</span>
-        <h3 class="serif-display" style="font-size:1.32rem;margin:0;font-weight:400;">Simulate ${escapeHtml(entityTitle)} across your skin barrier &amp; bathroom lighting/climate:</h3>
+        <h3 class="serif-display" style="font-size:1.28rem;margin:0;font-weight:400;">Simulate ${escapeHtml(cleanTitle)} across your skin barrier &amp; bathroom climate:</h3>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;" role="group" aria-label="Skin Depth and Climate Toggles">
-        <button type="button" class="btn-secondary mono gi-sim-pill active" data-sim-skin="combination" data-sim-climate="daylight_uv" onclick="window.__giRunEntitySim('combination','daylight_uv','60s Wait · 98.4% Active Stability','Apply on dry skin in morning daylight; seal with SPF 50.',this)" style="padding:6px 12px;font-size:0.78rem;border-color:var(--rose-brand);color:var(--rose-brand);">Daylight UV · Balanced Skin</button>
-        <button type="button" class="btn-secondary mono gi-sim-pill" data-sim-skin="sensitive" data-sim-climate="dry_winter" onclick="window.__giRunEntitySim('sensitive','dry_winter','120s Cushion · 3:1:1 Ceramide Buffer','Buffer over a thin layer of ceramide cream to prevent winter TEWL stinging.',this)" style="padding:6px 12px;font-size:0.78rem;">Dry Winter · Sensitive Barrier</button>
-        <button type="button" class="btn-secondary mono gi-sim-pill" data-sim-skin="oily_acne" data-sim-climate="humid" onclick="window.__giRunEntitySim('oily_acne','humid','45s Wait · Zero-Ester Gel Layering','Skip heavy occlusive balms; pair with Niacinamide 5% and oil-free SPF.',this)" style="padding:6px 12px;font-size:0.78rem;">Humid Climate · Blemish-Prone</button>
-        <button type="button" class="btn-secondary mono gi-sim-pill" data-sim-skin="dry" data-sim-climate="night_recovery" onclick="window.__giRunEntitySim('dry','night_recovery','90s Wait · 11 PM Recovery Sandwich','Sandwich between hydrating essence and rich ceramide balm at bedtime.',this)" style="padding:6px 12px;font-size:0.78rem;">11 PM Candlelight · Dry Recovery</button>
+        <button type="button" class="btn-secondary mono gi-sim-pill active" data-sim-skin="combination" data-sim-climate="daylight_uv" onclick="window.__giRunEntitySim('combination','daylight_uv','60s Wait · 98.4% Active Stability','Apply on dry skin in morning daylight; seal with SPF 50.',this)" style="padding:6px 12px;font-size:0.78rem;background:var(--rose-pill-bg);color:var(--rose-brand);border-radius:999px;">Daylight UV · Balanced Skin</button>
+        <button type="button" class="btn-secondary mono gi-sim-pill" data-sim-skin="sensitive" data-sim-climate="dry_winter" onclick="window.__giRunEntitySim('sensitive','dry_winter','120s Cushion · 3:1:1 Ceramide Buffer','Buffer over a thin layer of ceramide cream to prevent winter TEWL stinging.',this)" style="padding:6px 12px;font-size:0.78rem;background:var(--bg-surface);border-radius:999px;">Dry Winter · Sensitive Barrier</button>
+        <button type="button" class="btn-secondary mono gi-sim-pill" data-sim-skin="oily_acne" data-sim-climate="humid" onclick="window.__giRunEntitySim('oily_acne','humid','45s Wait · Zero-Ester Gel Layering','Skip heavy occlusive balms; pair with Niacinamide 5% and oil-free SPF.',this)" style="padding:6px 12px;font-size:0.78rem;background:var(--bg-surface);border-radius:999px;">Humid Climate · Blemish-Prone</button>
+        <button type="button" class="btn-secondary mono gi-sim-pill" data-sim-skin="dry" data-sim-climate="night_recovery" onclick="window.__giRunEntitySim('dry','night_recovery','90s Wait · 11 PM Recovery Sandwich','Sandwich between hydrating essence and rich ceramide balm at bedtime.',this)" style="padding:6px 12px;font-size:0.78rem;background:var(--bg-surface);border-radius:999px;">11 PM Candlelight · Dry Recovery</button>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding:12px 16px;background:var(--bg-surface);">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding:12px 16px;background:var(--bg-surface);border-radius:14px;">
       <div><div class="mono" style="font-size:0.74rem;color:var(--text-secondary);">Simulated Equilibration &amp; Stability</div><div id="gi-sim-readout-kpi" class="mono" style="font-size:1.1rem;font-weight:600;color:var(--sage-safe);">60s Wait · 98.4% Active Stability</div></div>
       <div style="grid-column:span 2;"><div class="mono" style="font-size:0.74rem;color:var(--text-secondary);">Dynamic Layering Adjustment</div><div id="gi-sim-readout-note" style="font-size:0.88rem;color:var(--text-primary);">Apply on dry skin in morning daylight; seal with SPF 50.</div></div>
-      <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;">
-        <a id="gi-sim-hydrate-link" href="/?products=${escapeHtml(encodeURIComponent(safeProd))}&amp;skin=combination&amp;climate=daylight_uv&amp;ref=sim_${escapeHtml(entitySlug)}#analyzer" class="btn-primary mono" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(entitySlug)}',trigger:'entity_simulator'})" style="padding:8px 14px;font-size:0.8rem;min-height:36px;text-decoration:none;"><span>Apply to MyShelf &rarr;</span></a>
-      </div>
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;"><a id="gi-sim-hydrate-link" href="/?products=${escapeHtml(encodeURIComponent(safeProd))}&amp;skin=combination&amp;climate=daylight_uv&amp;ref=sim_${escapeHtml(entitySlug)}#analyzer" class="btn-primary mono" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(entitySlug)}',trigger:'entity_simulator'})" style="padding:8px 14px;font-size:0.8rem;min-height:36px;text-decoration:none;"><span>Apply to MyShelf &rarr;</span></a></div>
     </div>
   </section>`;
 }
@@ -399,19 +398,22 @@ function renderComparePageHtml(comp, canonicalSlug) {
     }
   ];
 
-  const bodyHtml = `<section class="section-block" style="padding-top:28px;">
+  const showdownCardsHtml = comp.kind === 'product' ? `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:14px 0;">
+    <div class="porcelain-vessel-core" style="padding:18px 22px;background:var(--bg-surface);justify-content:space-between;gap:10px;"><div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;"><span class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:700;">OPTION A &middot; ${comp.numA <= comp.numB ? 'BEST VALUE WINNER' : 'ICONIC BENCHMARK'}</span><span class="badge-safe mono">${escapeHtml(comp.priceA)} &middot; ${escapeHtml(comp.freeAcidA)}</span></div><h2 class="serif-display" style="font-size:1.38rem;margin:0 0 6px;"><a href="/bottle/${escapeHtml(comp.idA)}" style="color:var(--text-primary);text-decoration:none;">${escapeHtml(comp.nameA)}</a></h2><p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.48;margin:0 0 8px;">${escapeHtml(comp.descA || `${comp.phRangeA} · ${comp.slotA}`)}</p><div class="mono" style="font-size:0.76rem;color:var(--text-secondary);">${escapeHtml(comp.phRangeA)} &middot; ${escapeHtml(comp.comedoA)} &middot; ${escapeHtml(comp.malasseziaA)}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:6px;"><button type="button" id="dl-bag-btn-${escapeHtml(comp.idA)}" data-dl-bag-prod="${escapeHtml(comp.idA)}" data-dl-bag-title="${escapeHtml(comp.nameA)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(comp.idA)}','${escapeHtml(comp.nameA.replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button><a href="/api/affiliate?product=${escapeHtml(comp.idA)}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Check Price (${escapeHtml(comp.priceA)}) &nearr;</a></div></div>
+    <div class="porcelain-vessel-core" style="padding:18px 22px;background:var(--bg-surface);justify-content:space-between;gap:10px;"><div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;"><span class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:700;">OPTION B &middot; ${comp.numB <= comp.numA ? (`SAVE $${comp.diffPrice} DUPE WINNER`) : 'LUXURY ALTERNATIVE'}</span><span class="badge-safe mono">${escapeHtml(comp.priceB)} &middot; ${escapeHtml(comp.freeAcidB)}</span></div><h2 class="serif-display" style="font-size:1.38rem;margin:0 0 6px;"><a href="/bottle/${escapeHtml(comp.idB)}" style="color:var(--text-primary);text-decoration:none;">${escapeHtml(comp.nameB)}</a></h2><p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.48;margin:0 0 8px;">${escapeHtml(comp.descB || `${comp.phRangeB} · ${comp.slotB}`)}</p><div class="mono" style="font-size:0.76rem;color:var(--text-secondary);">${escapeHtml(comp.phRangeB)} &middot; ${escapeHtml(comp.comedoB)} &middot; ${escapeHtml(comp.malasseziaB)}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:6px;"><button type="button" id="dl-bag-btn-${escapeHtml(comp.idB)}" data-dl-bag-prod="${escapeHtml(comp.idB)}" data-dl-bag-title="${escapeHtml(comp.nameB)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(comp.idB)}','${escapeHtml(comp.nameB.replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button><a href="/api/affiliate?product=${escapeHtml(comp.idB)}&amp;partner=amazon" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Check Price (${escapeHtml(comp.priceB)}) &nearr;</a></div></div>
+  </div>` : '';
+  const bodyHtml = `<section class="section-block" style="padding-top:20px;">
     <div class="container">
-      <nav aria-label="Breadcrumb" class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:10px;">
-        <a href="/">Home</a> / <a href="/directory">Directory</a> / <a href="/compare">Comparisons</a> / <span style="color:var(--rose-brand);">${escapeHtml(comp.nameA)} vs. ${escapeHtml(comp.nameB)}</span>
-      </nav>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
+      <nav aria-label="Breadcrumb" class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;"><a href="/">Home</a> / <a href="/directory">Directory</a> / <a href="/compare">Comparisons</a> / <span style="color:var(--rose-brand);">${escapeHtml(comp.nameA)} vs. ${escapeHtml(comp.nameB)}</span></nav>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px;">
         <span class="${comp.harmonyScore < 55 ? 'badge-clash' : comp.harmonyScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(comp.verdictLabel)} · Score ${comp.harmonyScore}/100</span>
         <a href="/compare/${escapeHtml(canonicalSlug)}.md" class="mono" style="font-size:0.78rem;color:var(--text-secondary);text-decoration:underline;">View Clean Markdown Spec (.md) &rarr;</a>
       </div>
-      <h1 class="hero-h1" style="font-size:clamp(2.1rem,3.6vw,3.2rem);margin-bottom:10px;">${escapeHtml(comp.title)}</h1>
-      <p class="hero-sub" style="margin-bottom:18px;">${escapeHtml(comp.summary)}</p>
+      <h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,3rem);margin-bottom:8px;">${escapeHtml(comp.title)}</h1>
+      <p class="hero-sub" style="margin-bottom:12px;">${escapeHtml(comp.summary)}</p>
+      ${showdownCardsHtml}
       ${renderDualInlineVerdictSelector(comp, canonicalSlug, 'gi-verdict-selector-top')}
-      <div class="porcelain-vessel-core" style="padding:24px;background:var(--bg-surface);margin:20px 0;">
+      <div class="porcelain-vessel-core" style="padding:22px;background:var(--bg-surface);margin:16px 0;">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
           <h2 class="serif-display" style="font-size:1.65rem;margin:0;">First-Principles Cosmetic Chemistry &amp; Henderson-Hasselbalch Matrix</h2>
           <span class="mono" style="font-size:0.78rem;color:var(--sage-safe);">Reference Standard: Henderson-Hasselbalch pKa &amp; Rule-of-500 Da</span>
@@ -689,27 +691,32 @@ function attachGlowIndexSeoUpgrades(app) {
           else if (out.includes('</main>')) out = out.replace('</main>', `<div class="container">${simHtml}</div></main>`);
         }
 
+        const metaDescMatch = out.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i);
+        const dsDesc = (metaDescMatch && metaDescMatch[1] && metaDescMatch[1].length >= 50)
+          ? metaDescMatch[1]
+          : `First-principles cosmetic chemistry dataset for ${req.path} on DermLogic: formulation pH windows, Henderson-Hasselbalch pKa dissociation, Rule-of-500 Dalton barrier penetration, and EU CosIng comedogenicity ratings.`;
+        const dsCreator = { '@type': 'Organization', name: 'DermLogic Cosmetic Chemistry Atelier', url: HOST_URL };
+        out = out.replace(/<script([^>]*type=["']application\/ld\+json["'][^>]*)>([\s\S]*?)<\/script>/gi, (full, attrs, jsonRaw) => {
+          if (!jsonRaw.includes('"Dataset"')) return full;
+          try {
+            const parsed = JSON.parse(jsonRaw);
+            const patchNode = (node) => {
+              if (!node || typeof node !== 'object') return;
+              if (Array.isArray(node)) { node.forEach(patchNode); return; }
+              if (node['@type'] === 'Dataset' || (Array.isArray(node['@type']) && node['@type'].includes('Dataset'))) {
+                if (!node.description || String(node.description).trim().length < 50) node.description = dsDesc;
+                if (!node.creator) node.creator = dsCreator;
+                if (!node.license) node.license = 'https://creativecommons.org/licenses/by/4.0/';
+                if (node.isAccessibleForFree === undefined) node.isAccessibleForFree = true;
+              }
+              if (Array.isArray(node['@graph'])) node['@graph'].forEach(patchNode);
+            };
+            patchNode(parsed);
+            return `<script${attrs}>${JSON.stringify(parsed)}</script>`;
+          } catch (_) { return full; }
+        });
         if (!out.includes('"measurementTechnique"')) {
-          const metaDescMatch = out.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i);
-          const dsDesc = (metaDescMatch && metaDescMatch[1] && metaDescMatch[1].length >= 50)
-            ? metaDescMatch[1]
-            : `First-principles cosmetic chemistry dataset for ${req.path} on DermLogic: formulation pH windows, Henderson-Hasselbalch pKa dissociation, Rule-of-500 Dalton barrier penetration, and EU CosIng comedogenicity ratings.`;
-          const extraGraph = `<script id="gi-enriched-dataset-schema" type="application/ld+json">${JSON.stringify({
-            '@context': 'https://schema.org',
-            '@graph': [{
-              '@type': 'Dataset',
-              '@id': `${HOST_URL}${req.path}#deterministic-chemistry-dataset`,
-              name: `DermLogic Cosmetic Chemistry & pH Compatibility Dataset (${req.path})`,
-              description: dsDesc,
-              url: `${HOST_URL}${req.path}`,
-              creator: { '@type': 'Organization', name: 'DermLogic Cosmetic Chemistry Atelier', url: HOST_URL },
-              isAccessibleForFree: true,
-              measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Stratum Corneum Diffusion & EU CosIng Comedogenicity Assay',
-              citation: ['PubMed PMID: 11207686 (Pinnell et al., L-Ascorbic Acid Percutaneous Absorption)', 'JCAD Retinoid & Benzoyl Peroxide Oxidation Kinetics', 'EU CosIng Cosmetic Ingredient Database'],
-              license: 'https://creativecommons.org/licenses/by/4.0/',
-              distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${HOST_URL}/okf/index.json` }]
-            }]
-          })}</script>`;
+          const extraGraph = `<script id="gi-enriched-dataset-schema" type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'Dataset', '@id': `${HOST_URL}${req.path}#deterministic-chemistry-dataset`, name: `DermLogic Cosmetic Chemistry & pH Compatibility Dataset (${req.path})`, description: dsDesc, url: `${HOST_URL}${req.path}`, creator: dsCreator, isAccessibleForFree: true, measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Stratum Corneum Diffusion & EU CosIng Comedogenicity Assay', citation: ['PubMed PMID: 11207686 (Pinnell et al., L-Ascorbic Acid Percutaneous Absorption)', 'JCAD Retinoid & Benzoyl Peroxide Oxidation Kinetics', 'EU CosIng Cosmetic Ingredient Database'], license: 'https://creativecommons.org/licenses/by/4.0/', distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${HOST_URL}/okf/index.json` }] }] })}</script>`;
           if (out.includes('</head>')) out = out.replace('</head>', `${extraGraph}\n</head>`);
         }
 
@@ -801,8 +808,8 @@ function attachGlowIndexSeoUpgrades(app) {
     if (isMd) return res.status(200).type('text/markdown; charset=utf-8').send(buildMarkdownForPath(`/ingredient/${ing.id}/${subcat.slug}`));
     const matchingProducts = CLINICAL_PRODUCTS.filter((p) => (p.primaryActives || []).includes(ing.id) || subcat.filterFn(p)).slice(0, 8);
     const hh = computeHendersonHasselbalch((ing.phMin + ing.phMax) / 2, ing.pka);
-    const rowsHtml = matchingProducts.map((p) => `<tr><td><a href="/bottle/${escapeHtml(p.id)}" style="font-weight:600;color:var(--text-primary);text-decoration:underline;">${escapeHtml(p.brand)} ${escapeHtml(p.name)}</a></td><td class="mono">pH ${ing.phMin} - ${ing.phMax}</td><td class="mono">${hh.freeAcidPct}% Bioavailable</td><td class="mono">${escapeHtml(p.timeOfDay || 'AM / PM')}</td><td><button type="button" class="vanity-card-bag-btn mono" onclick="if(window.__dlQuickAddBottleToBag)window.__dlQuickAddBottleToBag('${escapeHtml(p.id)}',this)" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;background:var(--bg-surface);color:var(--rose-brand);border:1px solid var(--rose-brand);">+ Vanity Bag</button></td></tr>`).join('');
-    const bodyHtml = `<section class="section-block"><div class="container"><nav class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:10px;"><a href="/">Home</a> / <a href="/ingredient">Actives</a> / <a href="/ingredient/${escapeHtml(ing.id)}">${escapeHtml(ing.commonName)}</a> / <span style="color:var(--rose-brand);">${escapeHtml(subcat.label)}</span></nav><h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,3rem);margin-bottom:10px;">${escapeHtml(ing.commonName)} (${escapeHtml(ing.inciName)}) × ${escapeHtml(subcat.label)} Matrix</h1><p class="hero-sub" style="margin-bottom:16px;">Formulation pH window ${ing.phMin}-${ing.phMax}, molecular weight ${ing.molecularWeightDa} Da, and ${hh.freeAcidPct}% Henderson-Hasselbalch bioavailability across ${escapeHtml(subcat.label.toLowerCase())}.</p>${renderEntityEnvironmentSimulatorHtml(`${ing.commonName} (${subcat.label})`, `${ing.id}-${subcat.slug}`, (matchingProducts[0] && matchingProducts[0].id) || 'skinceuticals-ce-ferulic')}<div class="porcelain-vessel-core" style="padding:22px;background:var(--bg-surface);"><div class="table-wrap"><table><thead><tr><th>Cult Bottle / Formulation</th><th>Target pH Window</th><th>Free-Active Bioavailability</th><th>Routine Slot</th><th>Vanity Bag</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></div></div></section>`;
+    const rowsHtml = matchingProducts.map((p) => `<tr><td><a href="/bottle/${escapeHtml(p.id)}" style="font-weight:600;color:var(--text-primary);text-decoration:underline;">${escapeHtml(p.brand)} ${escapeHtml(p.name)}</a><div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">${escapeHtml(p.summary || '')}</div></td><td class="mono">pH ${ing.phMin} - ${ing.phMax} &middot; $${p.priceUsd}</td><td class="mono">${hh.freeAcidPct}% Bioavailable</td><td class="mono">${escapeHtml(p.timeOfDay || 'AM / PM')}</td><td><div style="display:flex;gap:6px;flex-wrap:wrap;"><button type="button" class="dl-vanity-add-pill vanity-card-bag-btn mono" data-bottle-id="${escapeHtml(p.id)}" onclick="if(window.__dlQuickAddBottleToBag)window.__dlQuickAddBottleToBag('${escapeHtml(p.id)}',this)" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;background:var(--rose-pill-bg);color:var(--rose-brand);border-radius:999px;">+ Vanity Bag</button><a href="/api/affiliate?product=${escapeHtml(p.id)}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;">Shop ($${p.priceUsd}) &nearr;</a></div></td></tr>`).join('');
+    const bodyHtml = `<section class="section-block" style="padding-top:20px;"><div class="container"><nav class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;"><a href="/">Home</a> / <a href="/ingredient">Actives</a> / <a href="/ingredient/${escapeHtml(ing.id)}">${escapeHtml(ing.commonName)}</a> / <span style="color:var(--rose-brand);">${escapeHtml(subcat.label)}</span></nav><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px;"><span class="badge-safe mono">Verified ${escapeHtml(subcat.label)} &middot; pH ${ing.phMin}–${ing.phMax} &middot; ${hh.freeAcidPct}% Bioavailable</span><button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag([${matchingProducts.slice(0, 3).map((p) => `'${escapeHtml(p.id)}'`).join(',')}],'ing_${escapeHtml(ing.id)}_${escapeHtml(subcat.slug)}')" style="padding:7px 14px;font-size:0.78rem;min-height:34px;"><span>Load Top 3 in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button></div><h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,3rem);margin-bottom:8px;">Best ${escapeHtml(ing.commonName)} ${escapeHtml(subcat.label)} (Ranked by pH &amp; Bioavailability)</h1><p class="hero-sub" style="margin-bottom:14px;">Formulation pH window ${ing.phMin}-${ing.phMax}, molecular weight ${ing.molecularWeightDa} Da, and ${hh.freeAcidPct}% Henderson-Hasselbalch bioavailability across ${escapeHtml(subcat.label.toLowerCase())}.</p><div class="porcelain-vessel-core" style="padding:20px 22px;background:var(--bg-surface);margin-bottom:16px;"><div class="table-wrap"><table><thead><tr><th>Cult Bottle &amp; Why It Wins</th><th>Target pH &amp; Price</th><th>Free-Active Bioavailability</th><th>Routine Slot</th><th>Add to Shelf / Shop</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></div>${renderEntityEnvironmentSimulatorHtml(`${ing.commonName} ${subcat.label}`, `${ing.id}-${subcat.slug}`, (matchingProducts[0] && matchingProducts[0].id) || 'skinceuticals-ce-ferulic')}</div></section>`;
     return res.status(200).type('html').send(renderBaseDocument({ title: `${ing.commonName} ${subcat.label} Matrix (pH ${ing.phMin}-${ing.phMax}) | DermLogic`, description: `Compare ${ing.commonName} ${subcat.label.toLowerCase()} by pH window, pKa bioavailability, and layering safety.`, canonicalPath: `/ingredient/${ing.id}/${subcat.slug}`, ogSlug: `${ing.id}-${subcat.slug}`, jsonLdObjects: [], hideNav: false, bodyHtml }));
   });
 
@@ -822,8 +829,8 @@ function attachGlowIndexSeoUpgrades(app) {
     const safeSet = new Set(item.activeIds || item.safeIds || []);
     const matchingProducts = CLINICAL_PRODUCTS.filter((p) => subcat.filterFn(p) && ((p.primaryActives || []).some((a) => safeSet.has(a)) || (item.productIds || []).includes(p.id))).concat(CLINICAL_PRODUCTS.filter(subcat.filterFn)).slice(0, 10);
     const dedupProds = Array.from(new Map(matchingProducts.map((p) => [p.id, p])).values()).slice(0, 8);
-    const rowsHtml = dedupProds.map((p) => `<tr><td><a href="/bottle/${escapeHtml(p.id)}" style="font-weight:600;color:var(--text-primary);text-decoration:underline;">${escapeHtml(p.brand)} ${escapeHtml(p.name)}</a></td><td class="mono">pH ${p.ph} · $${p.priceUsd}</td><td class="mono">${escapeHtml(p.category)}</td><td><button type="button" class="vanity-card-bag-btn mono" onclick="if(window.__dlQuickAddBottleToBag)window.__dlQuickAddBottleToBag('${escapeHtml(p.id)}',this)" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;background:var(--bg-surface);color:var(--rose-brand);border:1px solid var(--rose-brand);">+ Vanity Bag</button></td></tr>`).join('');
-    const bodyHtml = `<section class="section-block"><div class="container"><nav class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:10px;"><a href="/">Home</a> / <a href="${basePrefix}">${isConcern ? 'Concerns' : 'Scenarios'}</a> / <a href="${basePrefix}/${escapeHtml(item.slug)}">${escapeHtml(item.title)}</a> / <span style="color:var(--rose-brand);">${escapeHtml(subcat.label)}</span></nav><h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,3rem);margin-bottom:10px;">${escapeHtml(item.title)}: Best ${escapeHtml(subcat.label)}</h1><p class="hero-sub" style="margin-bottom:16px;">${escapeHtml(item.summary)} Below are the top barrier-verified ${escapeHtml(subcat.label.toLowerCase())} with exact pH values and zero conflicting triggers.</p>${renderEntityEnvironmentSimulatorHtml(`${item.title} (${subcat.label})`, `${item.slug}-${subcat.slug}`, (dedupProds[0] && dedupProds[0].id) || 'aestura-atobarrier-365')}<div class="porcelain-vessel-core" style="padding:22px;background:var(--bg-surface);"><div class="table-wrap"><table><thead><tr><th>Verified Safe Bottle</th><th>pH &amp; Price</th><th>Formulation Role</th><th>Vanity Bag</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></div></div></section>`;
+    const rowsHtml = dedupProds.map((p) => `<tr><td><a href="/bottle/${escapeHtml(p.id)}" style="font-weight:600;color:var(--text-primary);text-decoration:underline;">${escapeHtml(p.brand)} ${escapeHtml(p.name)}</a><div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">${escapeHtml(p.summary || '')}</div></td><td class="mono">pH ${p.ph} · $${p.priceUsd}</td><td class="mono">${escapeHtml(p.category)}</td><td><div style="display:flex;gap:6px;flex-wrap:wrap;"><button type="button" class="dl-vanity-add-pill vanity-card-bag-btn mono" data-bottle-id="${escapeHtml(p.id)}" onclick="if(window.__dlQuickAddBottleToBag)window.__dlQuickAddBottleToBag('${escapeHtml(p.id)}',this)" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;background:var(--rose-pill-bg);color:var(--rose-brand);border-radius:999px;">+ Vanity Bag</button><a href="/api/affiliate?product=${escapeHtml(p.id)}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;">Shop ($${p.priceUsd}) &nearr;</a></div></td></tr>`).join('');
+    const bodyHtml = `<section class="section-block" style="padding-top:20px;"><div class="container"><nav class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;"><a href="/">Home</a> / <a href="${basePrefix}">${isConcern ? 'Concerns' : 'Scenarios'}</a> / <a href="${basePrefix}/${escapeHtml(item.slug)}">${escapeHtml(item.title)}</a> / <span style="color:var(--rose-brand);">${escapeHtml(subcat.label)}</span></nav><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px;"><span class="badge-safe mono">Zero-Trigger Verified &middot; ${dedupProds.length} Safe ${escapeHtml(subcat.label)}</span><button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag([${dedupProds.slice(0, 3).map((p) => `'${escapeHtml(p.id)}'`).join(',')}],'concern_${escapeHtml(item.slug)}_${escapeHtml(subcat.slug)}')" style="padding:7px 14px;font-size:0.78rem;min-height:34px;"><span>Load Top 3 in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button></div><h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,3rem);margin-bottom:8px;">${escapeHtml(item.title)}: Best ${escapeHtml(subcat.label)}</h1><p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(item.summary)} Tap any verified bottle below to add it to your 5-Slot Vanity Bag or check retail pricing.</p><div class="porcelain-vessel-core" style="padding:20px 22px;background:var(--bg-surface);margin-bottom:16px;"><div class="table-wrap"><table><thead><tr><th>Verified Safe Bottle &amp; Why It Works</th><th>pH &amp; Price</th><th>Formulation Role</th><th>Add to Shelf / Shop</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></div>${renderEntityEnvironmentSimulatorHtml(`${item.title} ${subcat.label}`, `${item.slug}-${subcat.slug}`, (dedupProds[0] && dedupProds[0].id) || 'aestura-atobarrier-365')}</div></section>`;
     return res.status(200).type('html').send(renderBaseDocument({ title: `Best ${subcat.label} for ${item.title} | DermLogic`, description: `Verified ${subcat.label.toLowerCase()} for ${item.title}: exact bottle pH, INCI safety, and layering order.`, canonicalPath: `${basePrefix}/${item.slug}/${subcat.slug}`, ogSlug: `${item.slug}-${subcat.slug}`, jsonLdObjects: [], hideNav: false, bodyHtml }));
   });
 

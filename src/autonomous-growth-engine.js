@@ -211,6 +211,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escXml(item.title)}" />
   <meta name="twitter:description" content="${escXml(item.summary.slice(0, 156))}" />
+  <link rel="alternate" type="text/markdown" href="https://${escXml(cfg.domain)}/${kind}/${escXml(item.slug)}.md" />
   ${headStyles}
 </head>
 <body style="margin:0;background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-family:${escXml(t.fontSans || 'Newsreader,Georgia,serif')};font-size:16px;line-height:1.6;">

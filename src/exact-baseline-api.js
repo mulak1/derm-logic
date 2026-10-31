@@ -1,13 +1,5 @@
 /**
- * ExactBaseline (custom_automaton) Cumulative API, Telemetry, Monetization & GitHub Repo Upgrade Pack
- * Holistic Product, Visual Architecture & Behavioral Economics Edition:
- *  - Zero Railway SIGTERM crash reports: attaches graceful SIGTERM/SIGINT handlers & /api/health endpoint
- *  - Eliminates Zero-Price Effect cannibalization (Dan Ariely / @richardrx revenue-centric-design):
- *    Free = Instant Diagnostic + kpdecker/jsdiff Before/After Proof Preview
- *    Paid = Full Production Deliverable & Export Bundle ($1.99 Single-Audit Pass vs $4.99/$49 Complete Pack vs $19.99/$99/$199 Pro Anchor)
- *    Downsell-Only Email Capture = Exit-Intent Rescue Toast (#eb-ouibounce-toast) for abandoning visitors
- *  - 100% Persona-Authentic Vertical Copy & Comparison Matrices (zero B2B SaaS jargon on DermLogic)
- * Strictly < 1,000 lines per /code-craft rules.
+ * ExactBaseline API, Telemetry, Monetization & GitHub Repo Upgrade Pack (Strictly < 1,000 lines)
  */
 
 const fs = require('fs');

@@ -224,40 +224,38 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
       <div class="container">
         <div id="home-executive-brief" class="editorial-top-banner">
           <div class="hero-copy-col">
-            <div style="display:flex;flex-direction:column;gap:14px;">
-              <h1 class="hero-h1"><span class="hero-h1-line1">Quiet your shelf.</span><span class="hero-h1-line2">Perfect your routine.</span></h1>
-              <p class="hero-sub">Build a calm, chemist-verified morning and bedtime ritual from the bottles you already own. Tap your serums below to see which actives cancel on contact and how to layer them without stinging or pilling.</p>
-              <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-                <a href="#analyzer" class="btn-primary"><span>Play With the Shelf Builder</span><span class="btn-icon-circle">&rarr;</span></a>
-                <a href="/celebrity" class="btn-secondary"><span>Explore Celebrity Shelves</span></a>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span class="badge-clash mono" style="font-size:0.75rem;padding:4px 10px;">Cosmetic Chemist Shelf X-Ray &middot; ${products.length} Cult Bottles</span><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;">&#9679; JCAD/PubMed &amp; 2026 INCI Verified</span></div>
+              <h1 class="hero-h1"><span class="hero-h1-line1">Is your $280 skincare shelf</span><span class="hero-h1-line2">secretly canceling itself out?</span></h1>
+              <p class="hero-sub">Mixing Copper Peptides with Vitamin C—or layering Tretinoin over damp Snail Mucin—deactivates your most expensive serums on contact. Tap a famous routine mystery below or tap your own bottles to see what clashes:</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                <a href="#analyzer" class="btn-primary" style="padding:10px 20px;min-height:40px;"><span>Check My Shelf Below (5s)</span><span class="btn-icon-circle">&rarr;</span></a>
+                <a href="/compare" class="btn-secondary" style="padding:9px 18px;min-height:40px;"><span>Compare Cult Bottles &amp; Dupes</span></a>
+                <a href="/celebrity" class="btn-secondary" style="padding:9px 18px;min-height:40px;"><span>Celebrity Shelves</span></a>
               </div>
             </div>
-            <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:16px 18px;background:var(--bg-surface);border-radius:20px;margin-top:16px;font-size:0.86rem;">
-              <div style="cursor:pointer;" onclick="var el=document.getElementById('analyzer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--rose-brand);display:block;margin-bottom:2px;">Step 1 &middot; Tap Bottles &darr;</strong><span style="color:var(--text-secondary);">Pick from ${products.length} cult serums or add any custom bottle</span></div>
-              <div style="cursor:pointer;" onclick="var el=document.getElementById('liveResultsContainer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--sage-safe);display:block;margin-bottom:2px;">Step 2 &middot; Spot Clashes &darr;</strong><span style="color:var(--text-secondary);">See if Vitamin C, Acids, or Retinol conflict</span></div>
-              <div style="cursor:pointer;" onclick="if(window.__dlOpenVanityDrawer)window.__dlOpenVanityDrawer('hero_step3')"><strong class="mono" style="color:var(--text-primary);display:block;margin-bottom:2px;">Step 3 &middot; Keep Your Bag &rarr;</strong><span style="color:var(--text-secondary);">Save your 5-slot AM &amp; PM phone card</span></div>
-            </div>
-            <div class="hero-trust-callout" style="display:flex;flex-direction:column;gap:4px;padding:14px 18px;margin-top:10px;border-radius:20px;background:var(--sage-bg);font-size:0.8rem;color:var(--text-secondary);line-height:1.4;">
-              <div><strong style="color:var(--sage-safe);">&#9679; Chemist-Verified Source:</strong> Peer-reviewed dermatology studies (<span class="mono">JCAD/PubMed</span>), pH compatibility tables &amp; official bottle ingredient lists (<abbr title="International Nomenclature of Cosmetic Ingredients: the standardized ingredient list printed on every skincare box" style="text-decoration:underline dotted;cursor:help;">INCI</abbr>, the standard ingredient label printed on every skincare box).</div>
-              <div><strong style="color:var(--sage-safe);">&#9679; Always Current:</strong> Updated today (2026 Skincare Ingredient Label [<span class="mono">INCI</span>] Registry) &bull; Brand formulas reviewed weekly &bull; Instant real-time routine check.</div>
+            <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px;background:var(--bg-surface);border-radius:20px;margin-top:10px;font-size:0.82rem;">
+              <div style="cursor:pointer;padding:6px 8px;border-radius:14px;background:var(--bg-oat);transition:transform 150ms ease;" onclick="applyPreset('copper-vitc-oxidation');var el=document.getElementById('analyzer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--rose-brand);display:block;margin-bottom:2px;">&#9889; $210 Vit C + Copper Trap &darr;</strong><span style="color:var(--text-secondary);font-size:0.78rem;line-height:1.3;display:block;">See why C E Ferulic + Copper Peptides oxidize on contact</span></div>
+              <div style="cursor:pointer;padding:6px 8px;border-radius:14px;background:var(--bg-oat);transition:transform 150ms ease;" onclick="applyPreset('viral-tiktok-destroyer');var el=document.getElementById('analyzer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--honey-warn);display:block;margin-bottom:2px;">&#128293; Tretinoin + Acid Peel Mistake &darr;</strong><span style="color:var(--text-secondary);font-size:0.78rem;line-height:1.3;display:block;">Why Glycolic 7% + BHA + Retinoid stings &amp; flakes</span></div>
+              <div style="cursor:pointer;padding:6px 8px;border-radius:14px;background:var(--bg-oat);transition:transform 150ms ease;" onclick="applyPreset('glass-skin-recovery');var el=document.getElementById('analyzer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--sage-safe);display:block;margin-bottom:2px;">&#10024; Zero-Pilling Glass-Skin AM &darr;</strong><span style="color:var(--text-secondary);font-size:0.78rem;line-height:1.3;display:block;">How to layer Vitamin C, Snail 96 &amp; SPF 50 under makeup</span></div>
             </div>
           </div>
           <div class="hero-photo-col">
             <div class="editorial-photo-shell">
-              <div id="heroRitualToggleBar" class="vanity-light-pill" role="group" aria-label="Preview Morning, Bedtime, or Serum Clash Mode" style="display:flex;width:100%;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px;">
-                <button type="button" data-ritual-mode="am" class="vanity-light-btn active mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="true" onclick="setHeroRitualMode('am', this)">7:30 AM &middot; Morning</button>
-                <button type="button" data-ritual-mode="pm" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="false" onclick="setHeroRitualMode('pm', this)">9:30 PM &middot; Bedtime</button>
-                <button type="button" data-ritual-mode="clash" class="vanity-light-btn mono" style="flex:1;font-size:0.84rem;padding:8px 10px;" aria-pressed="false" onclick="setHeroRitualMode('clash', this)">Why Serums Clash</button>
+              <div id="heroRitualToggleBar" class="vanity-light-pill" role="group" aria-label="Preview Morning, Bedtime, or Serum Clash Mode" style="display:flex;width:100%;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px;">
+                <button type="button" data-ritual-mode="am" class="vanity-light-btn active mono" style="flex:1;font-size:0.8rem;padding:6px 8px;" aria-pressed="true" onclick="setHeroRitualMode('am', this)">7:30 AM &middot; Morning</button>
+                <button type="button" data-ritual-mode="pm" class="vanity-light-btn mono" style="flex:1;font-size:0.8rem;padding:6px 8px;" aria-pressed="false" onclick="setHeroRitualMode('pm', this)">9:30 PM &middot; Bedtime</button>
+                <button type="button" data-ritual-mode="clash" class="vanity-light-btn mono" style="flex:1;font-size:0.8rem;padding:6px 8px;" aria-pressed="false" onclick="setHeroRitualMode('clash', this)">Why Serums Clash</button>
               </div>
               <div class="editorial-photo-diptych">
-                <div class="editorial-photo-inner" style="min-height:290px;height:100%;">
+                <div class="editorial-photo-inner">
                   <img id="heroDiptychImg1" src="/public/editorial-woman-morning.jpg" alt="Woman in linen robe applying morning Vitamin C serum at a sunlit travertine vanity" style="object-position:center 22%;" fetchpriority="high" />
                 </div>
               </div>
               <div class="editorial-photo-caption" style="padding-top:6px;">
                 <div>
-                  <strong id="heroDiptychTitle" class="serif-display" style="font-size:1.12rem;color:var(--text-primary);display:block;">7:30 AM &middot; Morning Shield &amp; Zero-Pilling Prep</strong>
-                  <div id="heroDiptychSub" style="color:var(--text-secondary);font-size:0.84rem;margin-top:2px;">Vitamin C (Wait 60s) &middot; Hydrating Serum &middot; Barrier Cream &middot; Broad-Spectrum SPF 50</div>
+                  <strong id="heroDiptychTitle" class="serif-display" style="font-size:1.05rem;color:var(--text-primary);display:block;">7:30 AM &middot; Morning Shield &amp; Zero-Pilling Prep</strong>
+                  <div id="heroDiptychSub" style="color:var(--text-secondary);font-size:0.8rem;margin-top:2px;">Vitamin C (Wait 60s) &middot; Hydrating Serum &middot; Barrier Cream &middot; Broad-Spectrum SPF 50</div>
                 </div>
                 <span id="heroDiptychBadge" class="badge-safe mono" style="flex-shrink:0;">Morning Glow Order</span>
               </div>
@@ -784,18 +782,33 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
             <a href="/api/affiliate?product=${escapeHtml(secondaryProdId)}&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ${escapeHtml(secondaryProdObj.brand)} Barrier Cream &rarr;</a>
           </div>
         </div>
-        <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.8vw,3.4rem);">${escapeHtml(page.title)}</h1>
-        <p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(page.summary)}</p>
-        <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-oat);margin-bottom:20px;display:flex;flex-direction:column;gap:10px;">
+        <h1 class="hero-h1" style="font-size:clamp(2.15rem,3.6vw,3.25rem);">${escapeHtml(page.title)}</h1>
+        <p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(String(page.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor|matrix|chelator|derivative)[^)]*\)/gi, ''))}</p>
+        <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:18px 22px;background:var(--bg-oat);margin-bottom:22px;display:flex;flex-direction:column;gap:14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-            <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml(primaryProdId)}','${escapeHtml(secondaryProdId)}'],'seo_${escapeHtml(page.slug)}')" style="padding:9px 16px;font-size:0.8rem;"><span>Pre-Load These 2 Bottles in My 5-Slot Vanity Bag &amp; Fix Split</span><span class="btn-icon-circle">&rarr;</span></button>
-            <a href="/buy/micro_pass?guide=${encodeURIComponent(page.slug)}" class="btn-secondary mono" style="padding:8px 14px;min-height:36px;font-size:0.78rem;background:var(--bg-surface);color:var(--rose-brand);text-decoration:none;"><span>Save 9:16 Lock-Screen Card (99&cent;) &rarr;</span></a>
+            <div>
+              <span class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">10-SECOND BATHROOM SINK X-RAY &middot; ${page.compatibilityScore}/100 HARMONY</span>
+              <strong class="serif-display" style="font-size:1.3rem;color:var(--text-primary);font-weight:400;">What happens on your skin &amp; the exact $0 timing fix:</strong>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml(primaryProdId)}','${escapeHtml(secondaryProdId)}'],'seo_${escapeHtml(page.slug)}')" style="padding:8px 15px;min-height:36px;font-size:0.79rem;"><span>Load Both Bottles in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button>
+              <a href="#analyzer" class="btn-secondary mono" style="padding:8px 14px;min-height:36px;font-size:0.78rem;background:var(--bg-surface);color:var(--text-primary);text-decoration:none;"><span>Test With My Full Shelf &darr;</span></a>
+            </div>
           </div>
-          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'seo_${escapeHtml(page.slug)}')">
-            <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Enter email for free 4-Night .ICS Calendar + 24h Routine Restore Link..." style="padding:8px 14px;font-size:0.78rem;min-height:36px;" />
-            <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.76rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
-            <div class="dl-inline-ics-status mono" style="display:none;grid-column:1/-1;font-size:0.75rem;color:var(--sage-safe);"></div>
-          </form>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
+            <div style="padding:12px 14px;border-radius:16px;background:var(--bg-surface);">
+              <div class="mono" style="font-size:0.73rem;color:var(--berry-clash);font-weight:600;margin-bottom:4px;">01 &middot; THE COMMON MISTAKE</div>
+              <div style="font-size:0.86rem;color:var(--text-primary);line-height:1.45;">${page.compatibilityScore < 55 ? 'Layering both in the same routine shifts skin pH and neutralizes active potency on contact, causing stinging or pilling.' : 'Applying strong actives onto soaking-wet skin pulls molecules too rapidly into the barrier, causing redness around the mouth and nose.'}</div>
+            </div>
+            <div style="padding:12px 14px;border-radius:16px;background:var(--bg-surface);">
+              <div class="mono" style="font-size:0.73rem;color:var(--sage-safe);font-weight:600;margin-bottom:4px;">02 &middot; DAYLIGHT / PREP RULE</div>
+              <div style="font-size:0.86rem;color:var(--text-primary);line-height:1.45;">${escapeHtml(page.amRule || 'Apply water-light serums first on clean skin, give 60 seconds to absorb, and seal with broad-spectrum SPF 50.')}</div>
+            </div>
+            <div style="padding:12px 14px;border-radius:16px;background:var(--bg-surface);">
+              <div class="mono" style="font-size:0.73rem;color:var(--honey-warn);font-weight:600;margin-bottom:4px;">03 &middot; BEDTIME RECOVERY RULE</div>
+              <div style="font-size:0.86rem;color:var(--text-primary);line-height:1.45;">${escapeHtml(page.pmRule || 'Allow hydrating layers to dry completely before retinoids, then seal with a 3:1:1 ceramide barrier cream.')}</div>
+            </div>
+          </div>
         </div>
 
         <div class="z-cascade-stage" style="margin-bottom:24px;">
@@ -804,9 +817,9 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               <div class="vessel-photo-frame"><img src="/public/editorial-segment-2.jpg" alt="Woman inspecting serum dropper compatibility in sunlit limestone atelier" style="object-position:center 22%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Do They Cancel Out?</span><span class="${page.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono">${page.compatibilityScore < 55 ? 'Split AM & PM' : 'Layer Gently'}</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">${escapeHtml(page.conflictType)}</h3>
-              <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(page.summary)}</p>
+              <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(String(page.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor|matrix|chelator|derivative)[^)]*\)/gi, ''))}</p>
             </div>
-            <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 14px;text-align:center;">Save Lock-Screen Routine Card ($1.99) &rarr;</a>
+            <a href="#analyzer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 14px;text-align:center;">Check With My Own Bottles Below &darr;</a>
           </div></div>
           <div class="z-vessel-center"><div class="porcelain-vessel-core">
             <div>
@@ -933,15 +946,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
   `;
 
   const verdictTag = formatVerdictLabel(page.verdict);
-  return renderBaseDocument({
-    title: `${page.title} (${verdictTag}) | DermLogic`,
-    description: `${verdictTag}: ${page.metaDescription || page.summary}`,
-    canonicalPath: `/seo/${page.slug}`,
-    ogSlug: page.slug,
-    jsonLdObjects: jsonLd,
-    hideNav: false,
-    bodyHtml
-  });
+  return renderBaseDocument({ title: `${page.title} (${verdictTag}) | DermLogic`, description: `${verdictTag}: ${page.metaDescription || page.summary}`, canonicalPath: `/seo/${page.slug}`, ogSlug: page.slug, jsonLdObjects: jsonLd, hideNav: false, bodyHtml });
 }
 
 function renderLegalPage({ type }) {
@@ -952,29 +957,15 @@ function renderLegalPage({ type }) {
     <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.6vw,3.2rem);margin-bottom:10px;max-width:none;">${isPrivacy ? 'Privacy Policy &amp; Data Governance' : 'Terms of Service &amp; Educational Formulation Disclaimer'}</h1>
     <p style="color:var(--text-secondary);margin-bottom:24px;max-width:none;">Last Updated: October 27, 2026 &middot; Contact: <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a> &middot; Publication: <strong>https://www.dermlogic.io</strong></p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
-      <div class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;">
-        <h2 class="serif-display" style="font-size:1.4rem;margin-bottom:8px;">${isPrivacy ? '1. Privacy &amp; Routine Preferences' : '1. Skincare Routine Educational Scope'}</h2>
-        <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.62;max-width:none;">${isPrivacy ? 'DermLogic checks your pasted ingredient lists and bathroom shelf selections in real time to spot serum clashes, pH gaps, and pore-clogging oils. Pre-checkout routine selections are stored locally in your browser (localStorage) so your shelf remains intact across sessions. Optional checkout email addresses are used solely to deliver your Routine Ritual PDF and 9:16 Phone Lock-Screen Card.' : 'DermLogic provides cosmetic chemistry guidance (verified skin pH compatibility, active ingredient stability, and EU CosIng pore-safety scores) for educational skincare planning. Content published on DermLogic is authored for informational cosmetic-chemistry purposes and does not replace individualized medical diagnosis or prescription treatment by a board-certified dermatologist.'}</p>
-      </div>
-      <div class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;">
-        <h2 class="serif-display" style="font-size:1.4rem;margin-bottom:8px;">${isPrivacy ? '2. GDPR / CCPA Rights, Cookies &amp; Retail Links' : '2. 30-Day Guarantee, Self-Serve Fulfillment &amp; Retail Links'}</h2>
-        <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.62;max-width:none;">${isPrivacy ? 'Visitors may reject non-essential analytics via the Cookie Consent ribbon at any time and request complete deletion of order or telemetry records by emailing concierge@dermlogic.io. Outbound product links to authorized retailers (including Sephora, Dermstore, Ulta Beauty, and Amazon) include rel="sponsored" attributes and may earn an affiliate commission at no additional cost to you.' : 'All $0.99 Lock-Screen Cards, $1.99 Single-Routine Passes, $4.99 Complete Routine Kits, and $19.99/yr Unlimited Shelf Passes are fulfilled immediately in the browser and include an unconditional 30-day satisfaction guarantee. Outbound links to authorized retail partners may earn an affiliate commission as detailed in our Editorial &amp; FTC Policy.'}</p>
-      </div>
+      <div class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;"><h2 class="serif-display" style="font-size:1.4rem;margin-bottom:8px;">${isPrivacy ? '1. Privacy &amp; Routine Preferences' : '1. Skincare Routine Educational Scope'}</h2><p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.62;max-width:none;">${isPrivacy ? 'DermLogic checks your pasted ingredient lists and bathroom shelf selections in real time to spot serum clashes, pH gaps, and pore-clogging oils. Pre-checkout routine selections are stored locally in your browser (localStorage) so your shelf remains intact across sessions. Optional checkout email addresses are used solely to deliver your Routine Ritual PDF and 9:16 Phone Lock-Screen Card.' : 'DermLogic provides cosmetic chemistry guidance (verified skin pH compatibility, active ingredient stability, and EU CosIng pore-safety scores) for educational skincare planning. Content published on DermLogic is authored for informational cosmetic-chemistry purposes and does not replace individualized medical diagnosis or prescription treatment by a board-certified dermatologist.'}</p></div>
+      <div class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;"><h2 class="serif-display" style="font-size:1.4rem;margin-bottom:8px;">${isPrivacy ? '2. GDPR / CCPA Rights, Cookies &amp; Retail Links' : '2. 30-Day Guarantee, Self-Serve Fulfillment &amp; Retail Links'}</h2><p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.62;max-width:none;">${isPrivacy ? 'Visitors may reject non-essential analytics via the Cookie Consent ribbon at any time and request complete deletion of order or telemetry records by emailing concierge@dermlogic.io. Outbound product links to authorized retailers (including Sephora, Dermstore, Ulta Beauty, and Amazon) include rel="sponsored" attributes and may earn an affiliate commission at no additional cost to you.' : 'All $0.99 Lock-Screen Cards, $1.99 Single-Routine Passes, $4.99 Complete Routine Kits, and $19.99/yr Unlimited Shelf Passes are fulfilled immediately in the browser and include an unconditional 30-day satisfaction guarantee. Outbound links to authorized retail partners may earn an affiliate commission as detailed in our Editorial &amp; FTC Policy.'}</p></div>
     </div>
   </div></div></div></div></section>`;
   return renderBaseDocument({ title, description: title, canonicalPath: isPrivacy ? '/privacy' : '/terms', ogSlug: type, jsonLdObjects: [], hideNav: false, bodyHtml });
 }
 
 function render404Page() {
-  const bodyHtml = `<section class="section-block"><div class="container" style="max-width:680px;text-align:center;padding:42px 20px;"><div class="z-vessel-center"><div class="porcelain-vessel-core" style="align-items:center;">
-    <div class="badge-clash mono" style="margin-bottom:12px;">HTTP 404 · Vessel Not Found</div>
-    <h1 class="hero-h1" style="font-size:2.4rem;">This Skincare Ritual Page Could Not Be Found</h1>
-    <p style="color:var(--text-secondary);margin-bottom:24px;">Return to the DermLogic Routine Harmony Checker or explore all skincare layering guides.</p>
-    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-      <a href="/#analyzer" class="btn-primary"><span>Open Routine Harmony Checker</span><span class="btn-icon-circle">&rarr;</span></a>
-      <a href="/directory" class="btn-secondary">Browse Layering Guides</a>
-    </div>
-  </div></div></div></section>`;
+  const bodyHtml = `<section class="section-block"><div class="container" style="max-width:680px;text-align:center;padding:42px 20px;"><div class="z-vessel-center"><div class="porcelain-vessel-core" style="align-items:center;"><div class="badge-clash mono" style="margin-bottom:12px;">HTTP 404 · Vessel Not Found</div><h1 class="hero-h1" style="font-size:2.4rem;">This Skincare Ritual Page Could Not Be Found</h1><p style="color:var(--text-secondary);margin-bottom:24px;">Return to the DermLogic Routine Harmony Checker or explore all skincare layering guides.</p><div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;"><a href="/#analyzer" class="btn-primary"><span>Open Routine Harmony Checker</span><span class="btn-icon-circle">&rarr;</span></a><a href="/directory" class="btn-secondary">Browse Layering Guides</a></div></div></div></div></section>`;
   return renderBaseDocument({ title: '404 Page Not Found | DermLogic', description: 'Page not found on DermLogic Formulation Atelier.', canonicalPath: '/404', ogSlug: '404', jsonLdObjects: [], hideNav: false, bodyHtml });
 }
 

@@ -34,6 +34,7 @@ const SHARED_CSS = `
   :root {
     --bg-canvas: #FDF8F6; --bg-oat: #F8EFE6; --bg-pouch: #F3E1E5; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
     --bg-empty-slot: #EAE0D7; --bg-empty-slot-active: #E3D3C8; --text-empty-slot: #7D5660;
+    --bg-pouch-card: #FFFFFF; --text-pouch-card: #3A1F27; --sub-pouch-card: #285B44;
     --bg-deep: #3A1F27; --ink-on-deep: #FDF8F6; --border-hairline: transparent; --border-strong: transparent;
     --text-primary: #3A1F27; --text-secondary: #6E4B55; --text-muted: #8E6B75;
     --rose-brand: #8A3448; --rose-brand-hover: #722739; --accent-ink: #FFFFFF; --rose-pill-bg: #EED6DC; --rose-pill-border: transparent;
@@ -48,6 +49,7 @@ const SHARED_CSS = `
   body.vanity-night, html[data-theme="night"] body {
     --bg-canvas: #221319; --bg-oat: #2C1921; --bg-pouch: #371F29; --bg-surface: #311C25; --bg-porcelain: #3B222D;
     --bg-empty-slot: #26151C; --bg-empty-slot-active: #3F2430; --text-empty-slot: #C9A3AC;
+    --bg-pouch-card: #311C25; --text-pouch-card: #FDF6F7; --sub-pouch-card: #88C9A8;
     --bg-deep: #1C0F14; --ink-on-deep: #FDF6F7; --border-hairline: transparent; --border-strong: transparent;
     --text-primary: #FDF6F7; --text-secondary: #E0C6CD; --text-muted: #B8969F;
     --rose-brand: #E8A5B2; --rose-brand-hover: #F2B8C4; --accent-ink: #221319; --rose-pill-bg: #462834; --rose-pill-border: transparent;
@@ -94,18 +96,18 @@ const SHARED_CSS = `
   .affiliate-micro-link:hover { color: var(--rose-brand); }
 
   /* Hero: Uneven Editorial Gallery & Nocturnal Plinth */
-  .hero-section { padding: 12px 0 18px; }
-  .editorial-top-banner { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: stretch; margin-bottom: 16px; }
+  .hero-section { padding: 8px 0 14px; }
+  .editorial-top-banner { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 20px; align-items: stretch; margin-bottom: 12px; }
   .hero-copy-col { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; }
   .hero-photo-col { min-width: 0; display: flex; flex-direction: column; }
-  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.35rem, 4.1vw, 3.65rem); font-weight: 400; line-height: 0.96; letter-spacing: -0.04em; color: var(--text-primary); margin-bottom: 10px; }
+  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.15rem, 3.6vw, 3.25rem); font-weight: 400; line-height: 0.98; letter-spacing: -0.035em; color: var(--text-primary); margin-bottom: 8px; }
   .hero-h1-line1 { display: block; }
   .hero-h1-line2 { display: block; padding-left: 0; }
-  .hero-sub { color: var(--text-secondary); font-size: var(--step-lead); line-height: 1.38; max-width: 54ch; margin-bottom: 12px; }
-  .editorial-photo-shell { background: var(--bg-oat); border-radius: 28px; padding: 20px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-  .editorial-photo-inner { overflow: hidden; border-radius: 20px; position: relative; min-height: 290px; height: 100%; flex: 1; background: var(--bg-porcelain); }
+  .hero-sub { color: var(--text-secondary); font-size: clamp(1rem, 0.96rem + 0.2vw, 1.12rem); line-height: 1.42; max-width: 58ch; margin-bottom: 10px; }
+  .editorial-photo-shell { background: var(--bg-oat); border-radius: 26px; padding: 14px 16px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .editorial-photo-inner { overflow: hidden; border-radius: 18px; position: relative; min-height: 196px; max-height: 224px; height: 100%; flex: 1; background: var(--bg-porcelain); }
   .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 180ms ease-out; }
-  .editorial-photo-diptych { display: flex; flex-direction: column; min-height: 290px; height: 100%; flex: 1; }
+  .editorial-photo-diptych { display: flex; flex-direction: column; min-height: 196px; max-height: 224px; height: 100%; flex: 1; }
   .editorial-photo-diptych .editorial-photo-inner { height: 100%; flex: 1; }
   #eb-hero-trust-strip { display: none !important; }
   .vessel-photo-frame { background: var(--bg-oat); border-radius: 18px; overflow: hidden; padding: 0; margin-bottom: 14px; }
@@ -333,25 +335,25 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             </span>
           </div>
           <div id="dl-pouch-bottles-grid" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;text-align:center;">
-            <div id="dl-pouch-card-0" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_0');window.__dlSelectVanitySlot(0);}" style="background:var(--bg-surface);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-0" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_0');window.__dlSelectVanitySlot(0);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><rect x="13" y="4" width="12" height="6" rx="2" fill="#D8B4A0"/><path d="M9 10H29L31 15V40C31 41.5 29.8 42.5 28.5 42.5H9.5C8.2 42.5 7 41.5 7 40V15L9 10Z" fill="#CBE2F6"/><rect x="10.5" y="19" width="17" height="13" rx="3" fill="#FFFFFF"/><text x="19" y="27.5" text-anchor="middle" font-size="6" fill="#3A1F27">Mist</text></svg>
-              <div id="dl-pouch-slot-name-0" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">SOS Mist</div>
-              <span id="dl-pouch-slot-sub-0" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
+              <div id="dl-pouch-slot-name-0" style="font-size:0.76rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">SOS Mist</div>
+              <span id="dl-pouch-slot-sub-0" style="font-size:0.68rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">In Pouch</span>
             </div>
-            <div id="dl-pouch-card-1" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_1');window.__dlSelectVanitySlot(1);}" style="background:var(--bg-surface);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-1" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_1');window.__dlSelectVanitySlot(1);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M15.5 6C15.5 4 17 2.5 19 2.5C21 2.5 22.5 4 22.5 6V9.5H15.5V6Z" fill="#D8B4A0"/><path d="M9 12.5H29L31 17.5V40C31 41.5 29.8 42.5 28.5 42.5H9.5C8.2 42.5 7 41.5 7 40V17.5L9 12.5Z" fill="#F7DFAD"/><rect x="10.5" y="21" width="17" height="13" rx="3" fill="#FFFFFF"/><text x="19" y="29.5" text-anchor="middle" font-size="6" fill="#3A1F27">Serum</text></svg>
-              <div id="dl-pouch-slot-name-1" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">C E Ferulic</div>
-              <span id="dl-pouch-slot-sub-1" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
+              <div id="dl-pouch-slot-name-1" style="font-size:0.76rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">C E Ferulic</div>
+              <span id="dl-pouch-slot-sub-1" style="font-size:0.68rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">In Pouch</span>
             </div>
-            <div id="dl-pouch-card-2" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_2');window.__dlSelectVanitySlot(2);}" style="background:var(--bg-surface);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-2" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_2');window.__dlSelectVanitySlot(2);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 40 46" fill="none"><rect x="7" y="11" width="26" height="6" rx="2.5" fill="#D8B4A0"/><rect x="5" y="17" width="30" height="23" rx="6" fill="#CBEAD9"/><rect x="9" y="23" width="22" height="11" rx="3" fill="#FFFFFF"/><text x="20" y="30.5" text-anchor="middle" font-size="6" fill="#3A1F27">Lotion</text></svg>
-              <div id="dl-pouch-slot-name-2" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Aestura 365</div>
-              <span id="dl-pouch-slot-sub-2" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
+              <div id="dl-pouch-slot-name-2" style="font-size:0.76rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Aestura 365</div>
+              <span id="dl-pouch-slot-sub-2" style="font-size:0.68rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">In Pouch</span>
             </div>
-            <div id="dl-pouch-card-3" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_4');window.__dlSelectVanitySlot(4);}" style="background:var(--bg-surface);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
+            <div id="dl-pouch-card-3" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_4');window.__dlSelectVanitySlot(4);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M7 6H31L27 33H11L7 6Z" fill="#E2D2F2"/><rect x="14" y="33" width="10" height="7" rx="2" fill="#D8B4A0"/><text x="19" y="22" text-anchor="middle" font-size="6" fill="#3A1F27">Night</text></svg>
-              <div id="dl-pouch-slot-name-3" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Tretinoin</div>
-              <span id="dl-pouch-slot-sub-3" style="font-size:0.68rem;color:var(--sage-safe);font-weight:500;">In Pouch</span>
+              <div id="dl-pouch-slot-name-3" style="font-size:0.76rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Tretinoin</div>
+              <span id="dl-pouch-slot-sub-3" style="font-size:0.68rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">In Pouch</span>
             </div>
             <div id="dl-empty-bottle-slot" onclick="if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();" style="background:var(--bg-empty-slot);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;">
               <svg width="34" height="42" viewBox="0 0 38 46" fill="none"><path d="M7 6H31L27 33H11L7 6Z" fill="#8A3448" fill-opacity="0.16"/><rect x="14" y="33" width="10" height="7" rx="2" fill="#8A3448" fill-opacity="0.3"/><text x="19" y="22" text-anchor="middle" font-size="6.5" fill="var(--rose-brand)" font-weight="600">+SPF</text></svg>
@@ -601,19 +603,14 @@ function renderAnalysisResultHtml(res) {
             <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.76rem;padding:4px 8px;min-height:26px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Unfixed (${conflictCount} ${conflictCount === 1 ? 'Clash' : 'Clashes'} &middot; -$${wastedUsd})</button>
           </div>
         </div>
-        <div id="dl-postscan-conversion-strip" style="padding:12px 14px;border-radius:18px;background:var(--bg-canvas);margin-bottom:10px;display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
-            <span class="mono" style="font-size:0.76rem;font-weight:600;color:var(--text-primary);">Keep Your Fixed AM/PM Split ($${wastedUsd || 184} Saved):</span>
-            <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
-              <a id="dl-postscan-keep-99c" href="/buy/micro_pass?source=postscan_sweetspot" class="btn-primary mono" style="padding:5px 12px;min-height:28px;font-size:0.75rem;text-decoration:none;">Save 9:16 Phone Card (99&cent;) &rarr;</a>
-              <a href="/api/affiliate?product=${escapeHtml((pmCream && pmCream.id) || (matchedProds[0] && matchedProds[0].id) || 'aestura-atobarrier-365')}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">Restock ${escapeHtml((pmCream && pmCream.brand) || (matchedProds[0] && matchedProds[0].brand) || 'Aestura')} ($${(pmCream && pmCream.priceUsd) || (matchedProds[0] && matchedProds[0].priceUsd) || 32}) &nearr;</a>
-            </div>
+        <div id="dl-postscan-conversion-strip" style="padding:10px 12px;border-radius:18px;background:var(--bg-canvas);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+          <div style="font-size:0.79rem;color:var(--text-secondary);line-height:1.35;">
+            <strong class="mono" style="color:var(--text-primary);">Why This Split Saves $${wastedUsd || 184}:</strong> Separates low-pH &amp; oxidative actives between <span style="color:var(--sage-safe);font-weight:600;">7:30 AM</span> and <span style="color:var(--rose-brand);font-weight:600;">9:30 PM</span> so zero potency is lost.
           </div>
-          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'postscan_results')">
-            <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Enter email for free 4-Night .ICS + 24h routine link..." style="background:var(--bg-oat);padding:7px 12px;font-size:0.76rem;min-height:32px;" />
-            <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:32px;font-size:0.75rem;white-space:nowrap;">Send Free .ICS &rarr;</button>
-            <div class="dl-inline-ics-status mono" style="display:none;grid-column:1/-1;font-size:0.74rem;color:var(--sage-safe);"></div>
-          </form>
+          <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <button type="button" class="btn-secondary mono" onclick="window.__dlSwitchResultStep(2)" style="padding:5px 11px;min-height:28px;font-size:0.75rem;background:var(--rose-pill-bg);color:var(--rose-brand);">See AM &amp; PM Order &rarr;</button>
+            <a href="/api/affiliate?product=${escapeHtml((pmCream && pmCream.id) || (matchedProds[0] && matchedProds[0].id) || 'aestura-atobarrier-365')}&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">Check ${escapeHtml((pmCream && pmCream.brand) || (matchedProds[0] && matchedProds[0].brand) || 'Aestura')} ($${(pmCream && pmCream.priceUsd) || (matchedProds[0] && matchedProds[0].priceUsd) || 32}) &nearr;</a>
+          </div>
         </div>
 
         <!-- Slow-Paced 3-Step Journey Switcher -->

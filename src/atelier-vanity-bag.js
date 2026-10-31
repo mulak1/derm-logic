@@ -435,7 +435,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         var nmEl = document.getElementById(m.nameId);
         var sbEl = document.getElementById(m.subId);
         if (cardEl) {
-          cardEl.style.background = isFilled ? 'var(--bg-surface)' : 'var(--bg-empty-slot)';
+          cardEl.style.background = isFilled ? 'var(--bg-pouch-card, var(--bg-surface))' : 'var(--bg-empty-slot)';
           cardEl.style.position = 'relative';
           cardEl.onmouseenter = (isFilled && b) ? function(ev) { window.__dlShowProdInfo(cardEl, b.id, ev); } : null;
           cardEl.onmouseleave = window.__dlHideProdInfo;
@@ -447,8 +447,8 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
             cardEl.appendChild(pi);
           }
         }
-        if (nmEl) { nmEl.textContent = isFilled && b ? b.short : m.emptyName; nmEl.style.color = isFilled ? 'var(--text-primary)' : 'var(--rose-brand)'; }
-        if (sbEl) { sbEl.textContent = isFilled ? 'In Pouch' : m.emptySub; sbEl.style.color = isFilled ? 'var(--sage-safe)' : 'var(--text-secondary)'; }
+        if (nmEl) { nmEl.textContent = isFilled && b ? b.short : m.emptyName; nmEl.style.color = isFilled ? 'var(--text-pouch-card, var(--text-primary))' : 'var(--rose-brand)'; }
+        if (sbEl) { sbEl.textContent = isFilled ? 'In Pouch' : m.emptySub; sbEl.style.color = isFilled ? 'var(--sub-pouch-card, var(--sage-safe))' : 'var(--text-secondary)'; }
       });
       var stLbl = document.getElementById('dl-pouch-status-label');
       var pctTxt = document.getElementById('dl-pouch-pct-text');
