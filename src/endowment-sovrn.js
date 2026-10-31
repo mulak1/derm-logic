@@ -273,7 +273,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       localStorage.setItem(window.__dlShelfStateKey, JSON.stringify(state));
       var badge = document.getElementById('shelfDraftSavedBadge');
       if (badge) {
-        badge.textContent = 'Saved (' + checked.length + ' bottles)';
+        badge.textContent = (window.__dlCustomizationsCount || 1) + ' Calibrations Active · Unsaved Tab Session (' + checked.length + ' bottles)';
       }
     } catch (_) {}
   };

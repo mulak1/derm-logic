@@ -506,9 +506,10 @@ function renderPersonaInteractiveWorkbenchAddons() {
     pouchBudgetToggleHtml: `
       <div id="dl-pouch-budget-bar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(122,35,50,0.12);">
         <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);font-weight:600;">Shelf Budget Mode:</span>
-        <div role="group" aria-label="Switch between Iconic Luxury Shelf and Chemist Budget Dupes" style="display:inline-flex;gap:4px;background:var(--bg-surface);padding:3px;border-radius:999px;">
-          <button type="button" id="dl-btn-mode-luxury" class="vanity-light-btn active mono" style="padding:4px 10px;font-size:0.74rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('luxury', this)">Iconic Shelf ($275)</button>
-          <button type="button" id="dl-btn-mode-dupe" class="vanity-light-btn mono" style="padding:4px 10px;font-size:0.74rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('dupe', this)">Chemist Dupes ($83 &middot; Save $192)</button>
+        <div role="group" aria-label="Switch between Iconic Luxury Shelf and Chemist Budget Dupes" style="display:inline-flex;gap:4px;background:var(--bg-surface);padding:3px;border-radius:999px;flex-wrap:wrap;">
+          <button type="button" id="dl-btn-mode-luxury" class="vanity-light-btn active mono" style="padding:4px 9px;font-size:0.73rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('luxury', this)">Iconic ($275)</button>
+          <button type="button" id="dl-btn-mode-dupe" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('dupe', this)">Chemist Dupes ($83 &middot; Save $192)</button>
+          <button type="button" id="dl-btn-mode-under35" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('under35', this)">Under $35 ($30 Total)</button>
         </div>
       </div>
       <div id="dl-budget-dupe-banner" style="display:none;margin-top:10px;padding:10px 12px;border-radius:14px;background:var(--bg-surface);font-size:0.79rem;color:var(--text-primary);line-height:1.45;"></div>`,
@@ -615,16 +616,22 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
   window.__dlSwitchShelfBudgetMode = function(mode, btnEl) {
     var luxBtn = document.getElementById('dl-btn-mode-luxury');
     var dupeBtn = document.getElementById('dl-btn-mode-dupe');
+    var u35Btn = document.getElementById('dl-btn-mode-under35');
     if (luxBtn) luxBtn.classList.toggle('active', mode === 'luxury');
     if (dupeBtn) dupeBtn.classList.toggle('active', mode === 'dupe');
-    var targetIds = mode === 'dupe'
-      ? ['cosrx-snail-96-mucin', 'timeless-20-vitamin-c', 'illiyoon-ceramide-ato', 'to-glycolic-acid-7']
-      : ['skinceuticals-ce-ferulic', 'to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005'];
+    if (u35Btn) u35Btn.classList.toggle('active', mode === 'under35');
+    var targetIds = mode === 'under35'
+      ? ['to-glycolic-acid-7', 'cerave-pm-lotion']
+      : (mode === 'dupe'
+        ? ['cosrx-snail-96-mucin', 'timeless-20-vitamin-c', 'illiyoon-ceramide-ato', 'to-glycolic-acid-7']
+        : ['skinceuticals-ce-ferulic', 'to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005']);
     window.__dlApplyCheckedIdsAndSync(targetIds);
     var banner = document.getElementById('dl-budget-dupe-banner');
     if (banner) {
       banner.style.display = 'block';
-      if (mode === 'dupe') {
+      if (mode === 'under35') {
+        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">Under-$35 Student Essentials ($30 Total &middot; Save $245/yr):</strong> <strong>The Ordinary Glycolic Acid 7% ($13)</strong> + <strong>CeraVe PM Niacinamide &amp; Ceramide Lotion ($17)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=cerave-pm-lotion&amp;partner=ulta" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $17 CeraVe PM &nearr;</a><a href="/buy/micro_pass?source=under35_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save $30 Routine Card (99&cent;) &rarr;</a></div></div>';
+      } else if (mode === 'dupe') {
         banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">Chemist Dupe Shelf Loaded ($83 Total &middot; You Save $192/yr):</strong> Swapped $182 SkinCeuticals &rarr; <strong>Timeless 20% Vit C ($26, pH 2.7)</strong> + <strong>ILLIYOON Ceramide ($19)</strong> + <strong>COSRX Snail 96 ($25)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=timeless-20-vitamin-c&amp;partner=amazon" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $26 Vit C Dupe &nearr;</a><a href="/buy/micro_pass?source=dupe_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save Dupe Card (99&cent;) &rarr;</a></div></div>';
       } else {
         banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--rose-brand);">Iconic Clinical Shelf ($275 Value):</strong> Protecting <strong>SkinCeuticals C E Ferulic ($182)</strong> + <strong>Paula\\'s Choice 2% BHA ($35)</strong> + <strong>Night Retinoid ($45)</strong> from pH neutralization.</div><a href="/api/affiliate?product=skinceuticals-ce-ferulic&amp;partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Authorized Dermstore Restock &nearr;</a></div>';
