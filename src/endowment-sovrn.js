@@ -205,12 +205,12 @@ function renderPersonalizedResultsHeaderHtml(res) {
   const climateMode = String((res && res.climateMode) || 'indoor_dry').trim();
   const meta = getClimateProtocolMeta(climateMode);
   const heading = formatMonogramHeading(shelfName);
-  return `<div id="personalizedRoutineBanner" style="padding:0 0 8px 0;margin-bottom:8px;display:flex;flex-direction:column;gap:3px;min-width:0;">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;min-width:0;">
-      <strong id="personalizedRoutineTitle" class="serif-display" style="font-size:1.3rem;color:var(--text-primary);font-weight:400;min-width:0;">${escapeHtml(heading)}</strong>
-      <span id="personalizedClimateBadge" class="badge-safe mono" style="font-size:0.74rem;padding:2px 8px;">${escapeHtml(meta.badge)}</span>
+  return `<div id="personalizedRoutineBanner" style="padding:0 0 4px 0;margin-bottom:4px;display:flex;flex-direction:column;gap:2px;min-width:0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;min-width:0;">
+      <strong id="personalizedRoutineTitle" class="serif-display" style="font-size:1.32rem;color:var(--text-primary);font-weight:400;min-width:0;">${escapeHtml(heading)}</strong>
+      <span id="personalizedClimateBadge" class="badge-safe mono" style="font-size:0.72rem;padding:2px 8px;">${escapeHtml(meta.badge)}</span>
     </div>
-    <div id="personalizedClimateRule" style="font-size:0.79rem;color:var(--text-secondary);line-height:1.38;min-width:0;">${escapeHtml(meta.rule)}</div>
+    <div id="personalizedClimateRule" style="display:none;">${escapeHtml(meta.rule)}</div>
   </div>`;
 }
 
