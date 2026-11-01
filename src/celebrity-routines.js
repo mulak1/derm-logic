@@ -504,15 +504,15 @@ function getAllCelebrityRoutines() {
 function renderPersonaInteractiveWorkbenchAddons() {
   return {
     pouchBudgetToggleHtml: `
-      <div id="dl-pouch-budget-bar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(122,35,50,0.12);">
-        <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);font-weight:600;">Routine Price Range:</span>
-        <div role="group" aria-label="Switch between Cult Favorites and Affordable Dupes" style="display:inline-flex;gap:4px;background:var(--bg-surface);padding:3px;border-radius:999px;flex-wrap:wrap;">
-          <button type="button" id="dl-btn-mode-luxury" class="vanity-light-btn active mono" style="padding:4px 9px;font-size:0.73rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('luxury', this)">Cult Favorites ($275)</button>
-          <button type="button" id="dl-btn-mode-dupe" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('dupe', this)">Affordable Dupes ($83 &middot; Save $192)</button>
-          <button type="button" id="dl-btn-mode-under35" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('under35', this)">Drugstore Under $35</button>
+      <div id="dl-pouch-budget-bar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding:6px 10px;border-radius:12px;background:var(--bg-surface);">
+        <span class="mono" style="font-size:0.74rem;color:var(--text-secondary);font-weight:600;">Price &amp; Dupes:</span>
+        <div role="group" aria-label="Switch between Cult Favorites and Affordable Dupes" style="display:inline-flex;gap:3px;background:var(--bg-oat);padding:2px;border-radius:999px;flex-wrap:wrap;">
+          <button type="button" id="dl-btn-mode-luxury" class="vanity-light-btn active mono" style="padding:3px 9px;font-size:0.72rem;min-height:22px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('luxury', this)">Cult ($275)</button>
+          <button type="button" id="dl-btn-mode-dupe" class="vanity-light-btn mono" style="padding:3px 9px;font-size:0.72rem;min-height:22px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('dupe', this)">Smart Dupes ($83 &middot; Save $192)</button>
+          <button type="button" id="dl-btn-mode-under35" class="vanity-light-btn mono" style="padding:3px 9px;font-size:0.72rem;min-height:22px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('under35', this)">Under $35</button>
         </div>
       </div>
-      <div id="dl-budget-dupe-banner" style="display:none;margin-top:10px;padding:10px 12px;border-radius:14px;background:var(--bg-surface);font-size:0.79rem;color:var(--text-primary);line-height:1.45;"></div>`,
+      <div id="dl-budget-dupe-banner" style="display:none;margin-top:6px;padding:8px 11px;border-radius:12px;background:var(--bg-surface);font-size:0.77rem;color:var(--text-primary);line-height:1.4;"></div>`,
     reactionTriageHtml: `
       <div id="dl-reaction-triage-bar" style="margin-bottom:8px;">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
@@ -572,15 +572,15 @@ function renderInteractiveFourNightCalendarHtml(n1Label, n1Val, n2Label, n2Val, 
           <div style="font-size:0.78rem;color:var(--text-primary);font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ n1Val }</div>
         </button>
         <button type="button" class="dl-night-cal-tab" data-night="2" onclick="window.__dlSelectCyclingNight(2, this)" style="padding:9px 8px;background:var(--bg-surface);border:1px solid rgba(122,35,50,0.14);border-radius:12px;text-align:left;cursor:pointer;min-width:0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--honey-warn);font-weight:700;">${ n2Label }</span><span class="mono" style="font-size:0.66rem;color:var(--text-muted);">Bone-Dry</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--honey-warn);font-weight:700;">${ n2Label }</span><span class="mono" style="font-size:0.66rem;color:var(--text-muted);">Dry Skin</span></div>
           <div style="font-size:0.78rem;color:var(--text-primary);font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ n2Val }</div>
         </button>
         <button type="button" class="dl-night-cal-tab" data-night="3" onclick="window.__dlSelectCyclingNight(3, this)" style="padding:9px 8px;background:var(--bg-surface);border:1px solid rgba(122,35,50,0.14);border-radius:12px;text-align:left;cursor:pointer;min-width:0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:700;">${ n3Label }</span><span class="mono dl-gated-night-val" data-unlocked-text="Damp Seal" style="font-size:0.66rem;color:var(--sage-safe);">Rest</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:700;">${ n3Label }</span><span class="mono dl-gated-night-val" data-unlocked-text="On Damp Skin" style="font-size:0.66rem;color:var(--sage-safe);">Rest</span></div>
           <div style="font-size:0.78rem;color:var(--text-primary);font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ n3Val }</div>
         </button>
         <button type="button" class="dl-night-cal-tab" data-night="4" onclick="window.__dlSelectCyclingNight(4, this)" style="padding:9px 8px;background:var(--bg-surface);border:1px solid rgba(122,35,50,0.14);border-radius:12px;text-align:left;cursor:pointer;min-width:0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:700;">Night 4 &middot; Seal</span><span class="mono dl-gated-night-val" data-unlocked-text="3:1:1 Lipids" style="font-size:0.66rem;color:var(--sage-safe);">Lipids</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:2px;"><span class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:700;">Night 4 &middot; Seal</span><span class="mono dl-gated-night-val" data-unlocked-text="Ceramide Cream" style="font-size:0.66rem;color:var(--sage-safe);">Rich Cream</span></div>
           <div style="font-size:0.78rem;color:var(--text-primary);font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ n4Val }</div>
         </button>
       </div>
@@ -599,9 +599,8 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
     window.__dlCustomizationsCount = (window.__dlCustomizationsCount || 1) + 1;
     var badge = document.getElementById('shelfDraftSavedBadge');
     if (badge) {
-      badge.textContent = window.__dlCustomizationsCount + ' Routine Changes · Unsaved';
-      badge.style.background = 'var(--rose-pill-bg)';
-      badge.style.color = 'var(--rose-brand)';
+      var cbs = document.querySelectorAll('input[name="routineProduct"]:checked');
+      badge.textContent = 'Saved in Browser · ' + (cbs ? cbs.length : 4) + ' Bottles Selected';
     }
   };
 
@@ -616,7 +615,7 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
         lbl.classList.toggle('selected', cb.checked);
         var pill = lbl.querySelector('span.mono');
         if (pill) {
-          pill.textContent = cb.checked ? '✓ In Bag' : '+ Vanity Bag';
+          pill.textContent = cb.checked ? '✓ Selected' : '+ Select';
           pill.style.background = cb.checked ? 'var(--rose-brand)' : 'var(--bg-oat)';
           pill.style.color = cb.checked ? 'var(--accent-ink)' : 'var(--rose-brand)';
         }
@@ -628,21 +627,28 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
   };
 
   window.__dlSwitchShelfBudgetMode = function(mode, btnEl) {
-    var luxBtn = document.getElementById('dl-btn-mode-luxury');
-    var dupeBtn = document.getElementById('dl-btn-mode-dupe');
-    var u35Btn = document.getElementById('dl-btn-mode-under35');
-    if (luxBtn) luxBtn.classList.toggle('active', mode === 'luxury');
-    if (dupeBtn) dupeBtn.classList.toggle('active', mode === 'dupe');
-    if (u35Btn) u35Btn.classList.toggle('active', mode === 'under35');
+    window.__dlActiveBudgetMode = mode;
     var targetIds = mode === 'under35'
       ? ['to-glycolic-acid-7', 'cerave-pm-lotion']
       : (mode === 'dupe'
         ? ['cosrx-snail-96-mucin', 'timeless-20-vitamin-c', 'illiyoon-ceramide-ato', 'to-glycolic-acid-7']
         : ['skinceuticals-ce-ferulic', 'to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005']);
     window.__dlApplyCheckedIdsAndSync(targetIds);
+    window.__dlSyncBudgetModeLinks();
+    window.__dlBumpCustomizationCount(mode);
+    if (typeof runRoutineAnalysis === 'function') runRoutineAnalysis(null, true);
+  };
+
+  window.__dlSyncBudgetModeLinks = function() {
+    var mode = window.__dlActiveBudgetMode || 'luxury';
+    var luxBtn = document.getElementById('dl-btn-mode-luxury');
+    var dupeBtn = document.getElementById('dl-btn-mode-dupe');
+    var u35Btn = document.getElementById('dl-btn-mode-under35');
+    if (luxBtn) luxBtn.classList.toggle('active', mode === 'luxury');
+    if (dupeBtn) dupeBtn.classList.toggle('active', mode === 'dupe');
+    if (u35Btn) u35Btn.classList.toggle('active', mode === 'under35');
     var banner = document.getElementById('dl-budget-dupe-banner');
-    window.__dlActiveBudgetMode = mode;
-    if (banner) {
+    if (banner && window.__dlActiveBudgetMode) {
       banner.style.display = 'block';
       if (mode === 'under35') {
         banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">2-Step Drugstore Starter Routine ($30 Total &middot; Saves $245):</strong> <strong>The Ordinary Glycolic Acid 7% ($13)</strong> + <strong>CeraVe PM Moisturizing Lotion ($17)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=cerave-pm-lotion&amp;partner=ulta" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $17 CeraVe PM (Ulta) &nearr;</a><a href="/buy/micro_pass?source=under35_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'micro_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save $30 Routine Card (99&cent;) &rarr;</a></div></div>';
@@ -652,26 +658,19 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
         banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--rose-brand);">Cult-Favorite Shelf ($275 Total):</strong> Keep <strong>SkinCeuticals C E Ferulic ($182)</strong> in the morning and <strong>Retinol ($45)</strong> at night so your serums stay fresh and effective.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=dieux-instant-angel&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop Dieux Moisturizer ($45 &middot; Sephora) &nearr;</a><a href="/buy/onetime_499?source=luxury_vault" onclick="if(typeof openCheckoutModal===\\'function\\'){openCheckoutModal(\\'onetime_499\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Get Complete 28-Day Planner ($4.99) &rarr;</a></div></div>';
       }
     }
-    window.__dlSyncBudgetModeLinks();
-    window.__dlBumpCustomizationCount(mode);
-    if (typeof runRoutineAnalysis === 'function') runRoutineAnalysis(null, true);
-  };
-
-  window.__dlSyncBudgetModeLinks = function() {
-    var mode = window.__dlActiveBudgetMode || 'luxury';
     var postStripLink = document.querySelector('#dl-postscan-conversion-strip a.affiliate-link-pill');
     var nightCta = document.getElementById('dl-night-cal-rescue-cta');
     var swapLinks = document.querySelectorAll('.dl-conflict-swap-link');
     if (mode === 'under35') {
       if (postStripLink) { postStripLink.textContent = 'Shop CeraVe PM ($17 · Ulta) ↗'; postStripLink.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
       if (nightCta) { nightCta.textContent = 'Shop $17 CeraVe PM Buffer (Ulta) ↗'; nightCta.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
-      for (var i = 0; i < swapLinks.length; i++) { swapLinks[i].textContent = 'Option B (Under-$35 Dupe): Cushion with CeraVe PM ($17) at Ulta →'; swapLinks[i].href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
+      for (var i = 0; i < swapLinks.length; i++) { swapLinks[i].textContent = 'Drugstore Pick: Cushion with CeraVe PM ($17) at Ulta →'; swapLinks[i].href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
     } else if (mode === 'dupe') {
       if (postStripLink) { postStripLink.textContent = 'Shop ILLIYOON Dupe ($19 · Amazon) ↗'; postStripLink.href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
       if (nightCta) { nightCta.textContent = 'Shop $19 ILLIYOON Buffer (Amazon) ↗'; nightCta.href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
-      for (var j = 0; j < swapLinks.length; j++) { swapLinks[j].textContent = 'Option B (Chemist Dupe): Cushion with ILLIYOON Ceramide ($19) at Amazon →'; swapLinks[j].href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
+      for (var j = 0; j < swapLinks.length; j++) { swapLinks[j].textContent = 'Smart Dupe: Cushion with ILLIYOON Ceramide ($19) at Amazon →'; swapLinks[j].href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
     } else {
-      if (postStripLink) { postStripLink.textContent = 'Shop Dieux Instant Angel ($45 · Sephora) ↗'; postStripLink.href = '/api/affiliate?product=dieux-instant-angel&partner=sephora'; }
+      if (postStripLink) { postStripLink.textContent = 'Shop Soothing Cicaplast B5+ ($17 · Ulta) ↗'; postStripLink.href = '/api/affiliate?product=lrp-cicaplast-baume-b5&partner=ulta'; }
       if (nightCta) { nightCta.textContent = 'Shop Dieux Lipid Buffer ($45 · Sephora) ↗'; nightCta.href = '/api/affiliate?product=dieux-instant-angel&partner=sephora'; }
     }
   };

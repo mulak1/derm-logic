@@ -71,22 +71,33 @@ function getSovrnMerchantLink(productId, preferredPartner = 'dermstore') {
 
 function getConflictSafeSwap(conflict) {
   const text = `${conflict.ruleId || ''} ${conflict.title || ''} ${conflict.ingredientA || ''} ${conflict.ingredientB || ''}`.toLowerCase();
-  if (/copper|vitamin c|ascorbic/.test(text)) {
+  if (/copper/.test(text) || (/ascorbic|vitamin c/.test(text) && /tretinoin|retinol|retinal|adapalene/.test(text))) {
     const m = getSovrnMerchantLink('aestura-atobarrier-365', 'sephora');
     return {
-      freeFix: 'Option A ($0 Fix): Wear Vitamin C at 7:30 AM under SPF and save Copper Peptides for 9:30 PM.',
-      swapLabel: 'Option B (Same-Routine Swap): Cushion with Aestura Atobarrier 365 Ceramide Cream ($32)',
+      freeFix: 'Free Timing Fix: Wear Vitamin C at 7:30 AM under SPF and save Retinol or Peptides for 9:30 PM.',
+      swapLabel: 'Soothing Cushion: Aestura Atobarrier 365 Ceramide Cream ($32)',
       directUrl: m.directUrl,
       beaconUrl: m.beaconUrl,
       retailer: m.retailer,
       productId: 'aestura-atobarrier-365'
     };
   }
-  if (/benzoyl|bpo|tretinoin|retinol|adapalene/.test(text)) {
+  if (/benzoyl|bpo/.test(text)) {
     const m = getSovrnMerchantLink('lrp-cicaplast-baume-b5', 'dermstore');
     return {
-      freeFix: 'Option A ($0 Fix): Move Benzoyl Peroxide to morning shower rinse and apply Retinoid on bone-dry skin at night.',
-      swapLabel: 'Option B (Barrier Buffer): Sandwich Retinoid over La Roche-Posay Cicaplast Baume B5+ ($17)',
+      freeFix: 'Free Timing Fix: Use Benzoyl Peroxide in the morning shower and apply Retinoid on dry skin at bedtime.',
+      swapLabel: 'Soothing Buffer: La Roche-Posay Cicaplast Baume B5+ ($17)',
+      directUrl: m.directUrl,
+      beaconUrl: m.beaconUrl,
+      retailer: m.retailer,
+      productId: 'lrp-cicaplast-baume-b5'
+    };
+  }
+  if (/tretinoin|retinol|retinal|adapalene/.test(text)) {
+    const m = getSovrnMerchantLink('lrp-cicaplast-baume-b5', 'dermstore');
+    return {
+      freeFix: 'Free Timing Fix: Alternate your Exfoliating Acid (Night 1) and Retinoid (Night 2) — never layer on the same night.',
+      swapLabel: 'Soothing Buffer: La Roche-Posay Cicaplast Baume B5+ ($17)',
       directUrl: m.directUrl,
       beaconUrl: m.beaconUrl,
       retailer: m.retailer,
@@ -96,8 +107,8 @@ function getConflictSafeSwap(conflict) {
   if (/glycolic|salicylic|bha|lactic|acid/.test(text)) {
     const m = getSovrnMerchantLink('tower28-sos-spray', 'sephora');
     return {
-      freeFix: 'Option A ($0 Fix): Alternate Exfoliating Acids (Night 1) and Retinoids/Peptides (Night 2) on a 4-night cycle.',
-      swapLabel: 'Option B (Zero-Sting Prep): Calm pH with Tower 28 SOS Hypochlorous Mist ($28)',
+      freeFix: 'Free Timing Fix: Alternate Exfoliating Acids (Night 1) and Retinoids (Night 2) on a 4-night cycle.',
+      swapLabel: 'Calm Redness: Tower 28 SOS Daily Rescue Mist ($28)',
       directUrl: m.directUrl,
       beaconUrl: m.beaconUrl,
       retailer: m.retailer,
@@ -106,8 +117,8 @@ function getConflictSafeSwap(conflict) {
   }
   const m = getSovrnMerchantLink('dieux-instant-angel', 'sephora');
   return {
-    freeFix: 'Option A ($0 Fix): Space active serums 60 seconds apart from thinnest watery drop to richest cream.',
-    swapLabel: 'Option B (Barrier Cushion): Seal with Dieux Instant Angel Lipid Cream ($45)',
+    freeFix: 'Free Timing Fix: Space active serums 60 seconds apart from thinnest watery drop to richest cream.',
+    swapLabel: 'Rich Cushion: Dieux Instant Angel Lipid Cream ($45)',
     directUrl: m.directUrl,
     beaconUrl: m.beaconUrl,
     retailer: m.retailer,
@@ -153,29 +164,29 @@ function getClimateProtocolMeta(climateMode) {
       badge: 'Retinoid Purge Protocol Active',
       shortLabel: 'Retinoid Purge Mode',
       waitBadge: 'Wait 15m · Dry Skin',
-      pmNote: 'Sandwich Method: Apply thin ceramide layer first, wait 15m, apply pea-sized retinoid, then seal with barrier cream.',
-      rule: '15-Minute Dry-Skin Buffer + Ceramide Sandwich Method applied to Bedtime Routine to stop flaking and retinization sting.'
+      pmNote: 'Sandwich Method: Apply thin soothing cream first, wait 15m, apply pea-sized retinoid, then seal with barrier cream.',
+      rule: 'Wait 15 minutes after washing so skin is dry, then buffer your retinoid over a soothing cream to stop flaking and stinging.'
     },
     pregnancy_nursing: {
       badge: 'Pregnancy-Safe Filter Active',
       shortLabel: 'Pregnancy-Safe Mode',
       waitBadge: 'Swap Retinoids',
       pmNote: 'Pregnancy-Safe Note: Pause Tretinoin, Retinol & Adapalene; substitute Azelaic Acid 15% or Bakuchiol peptide serum.',
-      rule: 'Retinoids (Tretinoin, Retinol, Adapalene) and high-dose Salicylic Acid are flagged for swap to Azelaic Acid 15% + Bakuchiol.'
+      rule: 'Retinoids (Tretinoin, Retinol, Adapalene) and strong Salicylic Acid are flagged for swap to Azelaic Acid 15% + Bakuchiol.'
     },
     humid_oily: {
-      badge: 'Humid / Dewy Climate Protocol',
+      badge: 'Humid Weather · Light Layers',
       shortLabel: 'Humid / Dewy Mode',
-      waitBadge: 'Wait 90s · Gel Dry-Down',
-      pmNote: 'Humid Climate Note: Use water-light gel-creams at night and allow 90s full absorption before morning SPF 50.',
-      rule: '90-second water-light serum dry-down applied before SPF 50 to prevent humid-weather shine and makeup pilling.'
+      waitBadge: 'Wait 90s · Light Layers',
+      pmNote: 'Humid Weather Note: Use lightweight gel-creams at night and allow 90s full absorption before morning SPF 50.',
+      rule: 'Give lightweight serums 90 seconds to absorb before SPF 50 to prevent humid-weather shine and makeup pilling.'
     },
     indoor_dry: {
-      badge: 'AC / Dry Heat Barrier Protocol',
+      badge: 'Dry Indoor Air / AC Comfort',
       shortLabel: 'AC / Dry Heat Mode',
       waitBadge: 'Seal in 60s · Damp Skin',
-      pmNote: 'AC / Dry Heat Note: Mist skin before humectant serums and lock in within 60 seconds using a 3:1:1 ceramide cream.',
-      rule: 'Apply watery humectants on mist-dampened skin and seal within 60 seconds with a 3:1:1 ceramide barrier cream.'
+      pmNote: 'Dry Air Note: Mist skin before hydrating serums and lock in moisture within 60 seconds using a rich soothing cream.',
+      rule: 'Pat hydrating serums onto damp skin, then lock in moisture within 60 seconds with a rich soothing ceramide cream.'
     }
   };
   return map[climateMode] || map.indoor_dry;
@@ -194,32 +205,30 @@ function renderPersonalizedResultsHeaderHtml(res) {
   const climateMode = String((res && res.climateMode) || 'indoor_dry').trim();
   const meta = getClimateProtocolMeta(climateMode);
   const heading = formatMonogramHeading(shelfName);
-  return `<div id="personalizedRoutineBanner" style="padding:0 0 12px 0;border-bottom:1px solid var(--border-hairline);margin-bottom:14px;display:flex;flex-direction:column;gap:6px;min-width:0;">
+  return `<div id="personalizedRoutineBanner" style="padding:0 0 8px 0;margin-bottom:8px;display:flex;flex-direction:column;gap:3px;min-width:0;">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;min-width:0;">
-      <strong id="personalizedRoutineTitle" class="serif-display" style="font-size:1.35rem;color:var(--text-primary);font-weight:400;min-width:0;">${escapeHtml(heading)}</strong>
-      <span id="personalizedClimateBadge" class="badge-safe mono" style="font-size:0.78rem;padding:3px 9px;">${escapeHtml(meta.badge)}</span>
+      <strong id="personalizedRoutineTitle" class="serif-display" style="font-size:1.3rem;color:var(--text-primary);font-weight:400;min-width:0;">${escapeHtml(heading)}</strong>
+      <span id="personalizedClimateBadge" class="badge-safe mono" style="font-size:0.74rem;padding:2px 8px;">${escapeHtml(meta.badge)}</span>
     </div>
-    <div id="personalizedClimateRule" style="font-size:0.84rem;color:var(--text-secondary);line-height:1.45;min-width:0;">${escapeHtml(meta.rule)}</div>
+    <div id="personalizedClimateRule" style="font-size:0.79rem;color:var(--text-secondary);line-height:1.38;min-width:0;">${escapeHtml(meta.rule)}</div>
   </div>`;
 }
 
 function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShelfName = '') {
-  return `<div id="endowmentPersonalizationBar" style="padding:8px 10px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:6px;min-width:0;">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
-      <span class="mono" style="font-size:0.76rem;color:var(--text-secondary);font-weight:500;">Optional: Climate &amp; Custom Shelf Name</span>
-      <span id="shelfDraftSavedBadge" class="badge-safe mono" style="font-size:0.72rem;padding:1px 7px;">1 Calibration Active &middot; Unsaved Tab Session</span>
+  return `<div id="endowmentPersonalizationBar" style="display:flex;flex-direction:column;gap:4px;min-width:0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
+      <div id="climateContextPills" role="group" aria-label="Climate and Barrier Context" style="display:inline-flex;gap:3px;background:var(--bg-oat);padding:2px;border-radius:999px;flex-wrap:wrap;">
+        <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="padding:3px 8px;font-size:0.72rem;min-height:22px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry</button>
+        <button type="button" class="vanity-light-btn mono ${initialClimate === 'humid_oily' ? 'active' : ''}" data-climate="humid_oily" aria-pressed="${initialClimate === 'humid_oily' ? 'true' : 'false'}" style="padding:3px 8px;font-size:0.72rem;min-height:22px;" onclick="window.__dlSetClimate('humid_oily', this)">Humid</button>
+        <button type="button" class="vanity-light-btn mono ${initialClimate === 'retinoid_retinization' ? 'active' : ''}" data-climate="retinoid_retinization" aria-pressed="${initialClimate === 'retinoid_retinization' ? 'true' : 'false'}" style="padding:3px 8px;font-size:0.72rem;min-height:22px;" onclick="window.__dlSetClimate('retinoid_retinization', this)">Retinoid Purge</button>
+        <button type="button" class="vanity-light-btn mono ${initialClimate === 'pregnancy_nursing' ? 'active' : ''}" data-climate="pregnancy_nursing" aria-pressed="${initialClimate === 'pregnancy_nursing' ? 'true' : 'false'}" style="padding:3px 8px;font-size:0.72rem;min-height:22px;" onclick="window.__dlSetClimate('pregnancy_nursing', this)">Pregnancy</button>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:5px;flex:1;min-width:170px;">
+        <input id="shelfNameInput" type="text" maxlength="44" aria-label="Custom Shelf Name" class="input-box" style="padding:4px 9px;font-size:0.76rem;border-radius:999px;" placeholder="Routine name (e.g., Maya's Shelf)..." value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(typeof runRoutineAnalysis==='function')runRoutineAnalysis(null,true);}" />
+        <span id="shelfDraftSavedBadge" class="mono" style="display:none;">Saved</span>
+      </div>
     </div>
-    <div id="climateContextPills" role="group" aria-label="Climate and Barrier Context" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;background:var(--bg-oat);padding:3px;">
-      <button type="button" class="vanity-light-btn mono ${initialClimate === 'indoor_dry' ? 'active' : ''}" data-climate="indoor_dry" aria-pressed="${initialClimate === 'indoor_dry' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:4px 4px;font-size:0.74rem;min-height:24px;" onclick="window.__dlSetClimate('indoor_dry', this)">AC / Dry</button>
-      <button type="button" class="vanity-light-btn mono ${initialClimate === 'humid_oily' ? 'active' : ''}" data-climate="humid_oily" aria-pressed="${initialClimate === 'humid_oily' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:4px 4px;font-size:0.74rem;min-height:24px;" onclick="window.__dlSetClimate('humid_oily', this)">Humid</button>
-      <button type="button" class="vanity-light-btn mono ${initialClimate === 'retinoid_retinization' ? 'active' : ''}" data-climate="retinoid_retinization" aria-pressed="${initialClimate === 'retinoid_retinization' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:4px 4px;font-size:0.74rem;min-height:24px;" onclick="window.__dlSetClimate('retinoid_retinization', this)">Retinoid Purge</button>
-      <button type="button" class="vanity-light-btn mono ${initialClimate === 'pregnancy_nursing' ? 'active' : ''}" data-climate="pregnancy_nursing" aria-pressed="${initialClimate === 'pregnancy_nursing' ? 'true' : 'false'}" style="width:100%;text-align:center;padding:4px 4px;font-size:0.74rem;min-height:24px;" onclick="window.__dlSetClimate('pregnancy_nursing', this)">Pregnancy</button>
-    </div>
-    <div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:center;">
-      <label for="shelfNameInput" class="mono" style="font-size:0.76rem;color:var(--text-secondary);white-space:nowrap;">Shelf Name:</label>
-      <input id="shelfNameInput" type="text" maxlength="44" class="input-box" style="padding:4px 8px;font-size:0.78rem;" placeholder="e.g., Maya's Evening Ritual (Optional)" value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(typeof runRoutineAnalysis==='function')runRoutineAnalysis(null,true);}" />
-    </div>
-    <div id="analyzeBtnFeedback" role="status" aria-live="polite" style="display:none;padding:6px 9px;background:var(--sage-bg);color:var(--sage-safe);border-left:3px solid var(--sage-safe);font-size:0.78rem;font-weight:500;line-height:1.35;"></div>
+    <div id="analyzeBtnFeedback" role="status" aria-live="polite" style="display:none;padding:5px 8px;background:var(--sage-bg);color:var(--sage-safe);border-left:3px solid var(--sage-safe);font-size:0.76rem;font-weight:500;line-height:1.3;"></div>
   </div>`;
 }
 
@@ -273,7 +282,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       localStorage.setItem(window.__dlShelfStateKey, JSON.stringify(state));
       var badge = document.getElementById('shelfDraftSavedBadge');
       if (badge) {
-        badge.textContent = (window.__dlCustomizationsCount || 1) + ' Calibrations Active · Unsaved Tab Session (' + checked.length + ' bottles)';
+        badge.textContent = 'Saved in Browser · ' + checked.length + ' Bottles Selected';
       }
     } catch (_) {}
   };
@@ -356,22 +365,22 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     retinoid_retinization: {
       badge: 'Retinoid Purge Protocol Active',
       shortLabel: 'Retinoid Purge Mode',
-      rule: '15-Minute Dry-Skin Buffer + Ceramide Sandwich Method applied to Bedtime Routine to stop flaking and retinization sting.'
+      rule: 'Wait 15 minutes after washing so skin is dry, then buffer your retinoid over a soothing cream to stop flaking and stinging.'
     },
     pregnancy_nursing: {
       badge: 'Pregnancy-Safe Filter Active',
       shortLabel: 'Pregnancy-Safe Mode',
-      rule: 'Retinoids (Tretinoin, Retinol, Adapalene) and high-dose Salicylic Acid are flagged for swap to Azelaic Acid 15% + Bakuchiol.'
+      rule: 'Retinoids (Tretinoin, Retinol, Adapalene) and strong Salicylic Acid are flagged for swap to Azelaic Acid 15% + Bakuchiol.'
     },
     humid_oily: {
-      badge: 'Humid / Dewy Climate Protocol',
+      badge: 'Humid Weather · Light Layers',
       shortLabel: 'Humid / Dewy Mode',
-      rule: '90-second water-light serum dry-down applied before SPF 50 to prevent humid-weather shine and makeup pilling.'
+      rule: 'Give lightweight serums 90 seconds to absorb before SPF 50 to prevent humid-weather shine and makeup pilling.'
     },
     indoor_dry: {
-      badge: 'AC / Dry Heat Barrier Protocol',
+      badge: 'Dry Indoor Air / AC Comfort',
       shortLabel: 'AC / Dry Heat Mode',
-      rule: 'Apply watery humectants on mist-dampened skin and seal within 60 seconds with a 3:1:1 ceramide barrier cream.'
+      rule: 'Pat hydrating serums onto damp skin, then lock in moisture within 60 seconds with a rich soothing ceramide cream.'
     }
   };
 

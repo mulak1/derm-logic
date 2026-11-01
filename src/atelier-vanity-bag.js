@@ -97,13 +97,13 @@ function renderAtelierVanityDrawerHtml() {
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
           <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
             <button type="button" id="dl-vanity-harmony-pill" class="badge-safe mono" onclick="window.__dlSetDossierTab('clashes')" style="font-size:0.75rem;padding:3px 9px;border:none;cursor:pointer;">96% Harmony &middot; 0 Clashes</button>
-            <span id="dl-vanity-hold-countdown" class="mono" style="color:var(--text-secondary);font-size:0.75rem;">Reserved for 23h 59m</span>
+            <span id="dl-vanity-hold-countdown" class="mono" style="color:var(--text-secondary);font-size:0.75rem;">Saved for 24h in Browser</span>
             <span id="dl-vanity-bag-id" class="mono" style="display:none;">#DL-4829</span>
           </div>
           <button type="button" id="dl-vanity-drawer-close" class="btn-secondary mono" onclick="window.__dlCloseVanityDrawer()" style="padding:4px 10px;min-height:26px;font-size:0.76rem;">Close &times;</button>
         </div>
         <h3 id="dl-vanity-bag-title" class="serif-display" style="font-size:1.45rem;font-weight:400;line-height:1.15;color:var(--text-primary);margin:0;">Your 5-Slot Calibrated Vanity Bag</h3>
-        <div id="dl-vanity-exit-alert" style="display:none;padding:8px 10px;border-radius:14px;background:var(--rose-pill-bg);margin-top:8px;font-size:0.78rem;color:var(--text-primary);line-height:1.38;"><strong style="color:var(--rose-brand);">Your Vanity Bag Is Reserved for 24 Hours:</strong> Save your 9:16 Lock-Screen Card or email yourself a free restore link below before leaving.</div>
+        <div id="dl-vanity-exit-alert" style="display:none;padding:8px 10px;border-radius:14px;background:var(--rose-pill-bg);margin-top:8px;font-size:0.78rem;color:var(--text-primary);line-height:1.38;"><strong style="color:var(--rose-brand);">Saved in Your Browser:</strong> Download your 9:16 Lock-Screen Card or email yourself a free restore link below anytime.</div>
         <div id="dl-vanity-clash-banner" style="display:none;padding:9px 12px;border-radius:14px;background:var(--berry-bg);margin-top:8px;font-size:0.8rem;color:var(--text-primary);line-height:1.38;justify-content:space-between;align-items:center;gap:10px;">
           <div id="dl-vanity-clash-banner-text" style="min-width:0;flex:1;"></div>
           <button type="button" class="mono" onclick="window.__dlAutoFixBagClashes()" style="padding:5px 10px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.75rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;">1-Tap Fix &rarr;</button>
@@ -397,55 +397,74 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var diffMs = Math.max(60000, (expiresAt || (Date.now() + 86400000)) - Date.now());
       var hrs = Math.floor(diffMs / 3600000);
       var mins = Math.floor((diffMs % 3600000) / 60000);
-      return 'Reserved for ' + hrs + 'h ' + mins + 'm';
+      return 'Saved for ' + hrs + 'h ' + mins + 'm';
     }
+
+    window.__dlTapPouchCreamSlot = function() {
+      var creamCb = document.querySelector('input[name="routineProduct"][value="aestura-atobarrier-365"]') || document.querySelector('input[name="routineProduct"][value="lrp-cicaplast-baume-b5"]');
+      if (creamCb && !creamCb.checked) {
+        creamCb.checked = true;
+        if (typeof toggleProductChip === 'function') toggleProductChip(creamCb);
+        showVanityToast('Added Aestura 365 Barrier Cream to cushion your evening routine!');
+        return;
+      }
+      if (window.__dlSelectVanitySlot) window.__dlSelectVanitySlot(2);
+      if (window.__dlOpenVanityDrawer) window.__dlOpenVanityDrawer('pouch_slot_2');
+    };
 
     window.__dlTapPouchSpfSlot = function() {
       var st = window.__dlVanityState;
-      var curSpf = getBottleForSlot(st, 3);
-      if (st.pouchSpfSealed && curSpf) {
-        if (window.__dlSelectVanitySlot) window.__dlSelectVanitySlot(3);
-        if (window.__dlOpenVanityDrawer) window.__dlOpenVanityDrawer('pouch_slot_3');
-        return;
-      }
       var spfCb = document.querySelector('input[name="routineProduct"][value="boj-relief-sun-spf50"]') || document.querySelector('input[name="routineProduct"][value="eltamd-uv-clear-spf46"]');
       if (spfCb && !spfCb.checked) {
         spfCb.checked = true;
         if (typeof toggleProductChip === 'function') toggleProductChip(spfCb);
+        st.pouchSpfSealed = true;
+        if (st.slotSelections[3] === -1 || typeof st.slotSelections[3] !== 'number') st.slotSelections[3] = 0;
+        saveVanityState(st);
+        window.__dlRenderVanityDrawer();
+        showVanityToast('Added Relief Sun SPF 50+ to complete your morning shield!');
+        return;
       }
-      st.pouchSpfSealed = true;
-      if (st.slotSelections[3] === -1 || typeof st.slotSelections[3] !== 'number') st.slotSelections[3] = 0;
-      saveVanityState(st);
-      window.__dlRenderVanityDrawer();
-      showVanityToast('Sealed your 5-Slot Soft Pinch Vanity Pouch with ' + (getBottleForSlot(st, 3) ? getBottleForSlot(st, 3).short : 'Relief Sun SPF 50+') + '!');
+      if (window.__dlSelectVanitySlot) window.__dlSelectVanitySlot(3);
+      if (window.__dlOpenVanityDrawer) window.__dlOpenVanityDrawer('pouch_slot_3');
     };
 
     function syncSelectorVanityCaddy(st) {
       var checkedEls = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked'));
-      var checkedIds = checkedEls.map(function(el) { return el.value; });
-      var spfCheckedOnShelf = checkedIds.some(function(id) { return /spf|sun|uv/i.test(id); });
-      var nonSpfChecked = checkedIds.filter(function(id) { return !/spf|sun|uv/i.test(id); });
+      var byGroup = { prep: [], serum: [], cream: [], pm: [], spf: [] };
+      checkedEls.forEach(function(el) {
+        var lbl = el.closest('.prod-check-item');
+        var grp = (lbl && lbl.getAttribute('data-tex-group')) || 'serum';
+        var stTitle = (lbl && lbl.querySelector('strong')) ? lbl.querySelector('strong').textContent.trim() : '';
+        if (!byGroup[grp]) byGroup[grp] = [];
+        byGroup[grp].push({ id: el.value, title: stTitle });
+      });
       var cardMap = [
-        { cardId: 'dl-pouch-card-0', nameId: 'dl-pouch-slot-name-0', subId: 'dl-pouch-slot-sub-0', slotIdx: 0, shelfIdx: 0, emptyName: 'Add Mist', emptySub: 'Step 01' },
-        { cardId: 'dl-pouch-card-1', nameId: 'dl-pouch-slot-name-1', subId: 'dl-pouch-slot-sub-1', slotIdx: 1, shelfIdx: 1, emptyName: 'Add Serum', emptySub: 'Step 02' },
-        { cardId: 'dl-pouch-card-2', nameId: 'dl-pouch-slot-name-2', subId: 'dl-pouch-slot-sub-2', slotIdx: 2, shelfIdx: 2, emptyName: 'Add Cream', emptySub: 'Step 03' },
-        { cardId: 'dl-pouch-card-3', nameId: 'dl-pouch-slot-name-3', subId: 'dl-pouch-slot-sub-3', slotIdx: 4, shelfIdx: 3, emptyName: 'Add Night', emptySub: 'Step 04' },
-        { cardId: 'dl-empty-bottle-slot', nameId: 'dl-pouch-slot-name-4', subId: 'dl-pouch-slot-sub-4', slotIdx: 3, shelfIdx: -1, emptyName: 'Add SPF 50', emptySub: 'Final Step', isSpf: true }
+        { cardId: 'dl-pouch-card-0', nameId: 'dl-pouch-slot-name-0', subId: 'dl-pouch-slot-sub-0', slotIdx: 0, grp: 'prep', emptyName: '+ Add Prep', emptySub: 'Step 01' },
+        { cardId: 'dl-pouch-card-1', nameId: 'dl-pouch-slot-name-1', subId: 'dl-pouch-slot-sub-1', slotIdx: 1, grp: 'serum', emptyName: '+ Add Serum', emptySub: 'Step 02' },
+        { cardId: 'dl-pouch-card-2', nameId: 'dl-pouch-slot-name-2', subId: 'dl-pouch-slot-sub-2', slotIdx: 2, grp: 'cream', emptyName: '+ Add Cream', emptySub: 'Stops Sting' },
+        { cardId: 'dl-pouch-card-3', nameId: 'dl-pouch-slot-name-3', subId: 'dl-pouch-slot-sub-3', slotIdx: 4, grp: 'pm', emptyName: '+ Add Night', emptySub: 'Step 04' },
+        { cardId: 'dl-empty-bottle-slot', nameId: 'dl-pouch-slot-name-4', subId: 'dl-pouch-slot-sub-4', slotIdx: 3, grp: 'spf', emptyName: '+ Add SPF 50', emptySub: 'Daily Shield', isSpf: true }
       ];
       var pouchFilled = 0;
+      var missingNames = [];
       cardMap.forEach(function(m) {
-        var b = getBottleForSlot(st, m.slotIdx);
-        if (!m.isSpf && nonSpfChecked.length > 0 && m.shelfIdx >= 0) {
-          var sId = nonSpfChecked[m.shelfIdx];
-          if (sId && PROD_INFO[sId]) {
-            var pInfo = PROD_INFO[sId];
-            b = { id: sId, short: (pInfo.name || sId).split(' ').slice(0, 2).join(' ').slice(0, 14) };
-          } else if (m.shelfIdx >= nonSpfChecked.length) {
-            b = null;
+        var grpItems = byGroup[m.grp] || [];
+        var b = null;
+        if (checkedEls.length > 0) {
+          if (grpItems.length > 0) {
+            var item0 = grpItems[0];
+            var rawNm = item0.title || (PROD_INFO[item0.id] && PROD_INFO[item0.id].name) || item0.id;
+            var shortBase = rawNm.replace(/^(The Ordinary|La Roche-Posay|Paula's Choice|Beauty of Joseon|SkinCeuticals|Rx Generic|Rx Dermatology)\s+/i, '').replace(/\s+(Vitamin C Serum|Toner|Liquid Exfoliant|Night Cream|Moisturizing Lotion|Concentrate Cream)$/i, '').split(' ').slice(0, 3).join(' ').slice(0, 14);
+            b = { id: item0.id, short: shortBase, extraCount: grpItems.length - 1 };
           }
+        } else {
+          b = getBottleForSlot(st, m.slotIdx);
+          if (m.isSpf && !st.pouchSpfSealed) b = null;
         }
-        var isFilled = m.isSpf ? Boolean(b && (st.pouchSpfSealed || spfCheckedOnShelf)) : Boolean(b);
+        var isFilled = Boolean(b);
         if (isFilled) pouchFilled++;
+        else missingNames.push(m.grp === 'cream' ? 'Cream' : m.grp === 'spf' ? 'SPF 50' : m.grp === 'pm' ? 'Night Active' : m.grp === 'prep' ? 'Prep' : 'Serum');
         var cardEl = document.getElementById(m.cardId);
         var nmEl = document.getElementById(m.nameId);
         var sbEl = document.getElementById(m.subId);
@@ -454,22 +473,15 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           cardEl.style.position = 'relative';
           cardEl.onmouseenter = (isFilled && b) ? function(ev) { window.__dlShowProdInfo(cardEl, b.id, ev); } : null;
           cardEl.onmouseleave = window.__dlHideProdInfo;
-          var oldI = cardEl.querySelector('.dl-pouch-i');
-          if (oldI) oldI.remove();
-          if (isFilled && b) {
-            var pi = document.createElement('span'); pi.className = 'dl-info-i dl-pouch-i'; pi.style.cssText = 'position:absolute;top:5px;right:5px;margin:0;width:13px;height:13px;font-size:0.6rem;'; pi.textContent = 'i';
-            pi.onpointerdown = pi.onclick = function(ev) { window.__dlShowProdInfo(pi, b.id, ev); };
-            cardEl.appendChild(pi);
-          }
         }
         if (nmEl) { nmEl.textContent = isFilled && b ? b.short : m.emptyName; nmEl.style.color = isFilled ? 'var(--text-pouch-card, var(--text-primary))' : 'var(--rose-brand)'; }
-        if (sbEl) { sbEl.textContent = isFilled ? 'In Pouch' : m.emptySub; sbEl.style.color = isFilled ? 'var(--sub-pouch-card, var(--sage-safe))' : 'var(--text-secondary)'; }
+        if (sbEl) { sbEl.textContent = isFilled ? (b.extraCount > 0 ? ('+' + b.extraCount + ' more in step') : 'On Shelf') : m.emptySub; sbEl.style.color = isFilled ? 'var(--sub-pouch-card, var(--sage-safe))' : 'var(--text-secondary)'; }
       });
       var stLbl = document.getElementById('dl-pouch-status-label');
       var pctTxt = document.getElementById('dl-pouch-pct-text');
       var prog = document.getElementById('dl-pouch-progress-fill');
-      if (stLbl) stLbl.textContent = pouchFilled + ' of 5 Comfort Steps Zip-Ready';
-      if (pctTxt) pctTxt.textContent = pouchFilled === 5 ? 'Full · 100%' : (pouchFilled === 4 ? 'Almost Full · 80%' : (pouchFilled * 20) + '% Ready');
+      if (stLbl) stLbl.textContent = pouchFilled + ' of 5 Routine Steps Covered';
+      if (pctTxt) pctTxt.textContent = pouchFilled === 5 ? 'All 5 Steps Covered' : ('Missing: ' + missingNames.slice(0, 2).join(' & '));
       if (prog) prog.style.width = (pouchFilled * 20) + '%';
       return pouchFilled;
     }
@@ -482,13 +494,27 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var pouchCount = syncSelectorVanityCaddy(st);
       var hasCaddy = Boolean(document.getElementById('dl-selector-vanity-caddy'));
       var filledCount = hasCaddy ? pouchCount : [0, 1, 2, 3, 4].filter(function(i) { return Boolean(getBottleForSlot(st, i)); }).length;
+      var shelfRes = window.__DERMLOGIC_LAST_RESULT;
+      var shelfClashes = (shelfRes && Array.isArray(shelfRes.conflicts)) ? shelfRes.conflicts.length : 0;
 
       var countEl = document.getElementById('dl-header-vanity-count');
-      if (countEl) countEl.textContent = filledCount === 5 ? '5 of 5 Full' : (filledCount + ' of 5');
+      if (countEl) countEl.textContent = filledCount === 5 ? '5 of 5 Steps' : (filledCount + ' of 5 Steps');
       var dockCountEl = document.getElementById('dl-dock-vanity-count');
-      if (dockCountEl) dockCountEl.textContent = filledCount === 5 ? '5 / 5 Full' : (filledCount + ' / 5');
+      if (dockCountEl) dockCountEl.textContent = filledCount === 5 ? '5 / 5 Steps' : (filledCount + ' / 5 Steps');
       var dockHarmEl = document.getElementById('dl-dock-vanity-harmony');
-      if (dockHarmEl) dockHarmEl.textContent = clashes.length > 0 ? (clashes.length + ' Clash') : 'Harmonized';
+      var dockDotEl = document.getElementById('dl-dock-vanity-status-dot');
+      if (dockHarmEl) {
+        if (clashes.length > 0) {
+          dockHarmEl.textContent = clashes.length + ' Clash';
+          if (dockDotEl) dockDotEl.style.background = '#9E2A3A';
+        } else if (shelfClashes > 0) {
+          dockHarmEl.textContent = 'Split AM/PM';
+          if (dockDotEl) dockDotEl.style.background = '#D97706';
+        } else {
+          dockHarmEl.textContent = '0 Clashes';
+          if (dockDotEl) dockDotEl.style.background = '#10B981';
+        }
+      }
       ['dl-dock-vanity-bars', 'dl-header-vanity-bars'].forEach(function(bId) {
         var bEl = document.getElementById(bId);
         if (bEl) bEl.innerHTML = [0, 1, 2, 3, 4].map(function(i) { var hasB = Boolean(getBottleForSlot(st, i)); var w = bId.indexOf('dock') !== -1 ? 'width:6px;height:3px;' : 'width:5px;height:2.5px;'; return '<span style="' + w + 'border-radius:99px;background:' + (hasB ? (i === 0 ? '#10B981' : '#8A3448') : 'rgba(138,52,72,0.22)') + ';"></span>'; }).join('');
@@ -914,55 +940,29 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
 
     window.__dlSyncVanityFromCheckboxes = function(isClearAll) {
       var st = window.__dlVanityState;
-      if (isClearAll) {
-        st.slotSelections = [-1, -1, -1, -1, -1];
-        st.customSlotBottle = {};
-        st.pouchSpfSealed = false;
-      } else {
-        st.slotSelections = [-1, -1, -1, -1, -1];
-        st.customSlotBottle = {};
-        st.pouchSpfSealed = false;
+      st.slotSelections = [-1, -1, -1, -1, -1]; st.customSlotBottle = {}; st.pouchSpfSealed = false;
+      if (!isClearAll) {
         document.querySelectorAll('input[name="routineProduct"]:checked').forEach(function(cb) {
-          var prodId = cb.value;
-          var lbl = cb.closest('.prod-check-item');
-          var titleEl = lbl ? lbl.querySelector('strong') : null;
-          var title = titleEl ? titleEl.textContent.trim() : prodId;
-          var mapped = mapProductIdToSlot(prodId, title, '');
+          var prodId = cb.value, lbl = cb.closest('.prod-check-item'), titleEl = lbl ? lbl.querySelector('strong') : null;
+          var title = titleEl ? titleEl.textContent.trim() : prodId, mapped = mapProductIdToSlot(prodId, title, '');
           if (mapped.slotIdx === 3) st.pouchSpfSealed = true;
-          if (mapped.choiceIdx >= 0) {
-            st.slotSelections[mapped.slotIdx] = mapped.choiceIdx;
-          } else {
-            st.slotSelections[mapped.slotIdx] = 0;
-            st.customSlotBottle[mapped.slotIdx] = makeCustomSlot(prodId, title, '');
-          }
+          if (mapped.choiceIdx >= 0) st.slotSelections[mapped.slotIdx] = mapped.choiceIdx;
+          else { st.slotSelections[mapped.slotIdx] = 0; st.customSlotBottle[mapped.slotIdx] = makeCustomSlot(prodId, title, ''); }
         });
       }
-      saveVanityState(st);
-      window.__dlRenderVanityDrawer();
-      window.__dlRefreshPageAddButtons();
+      saveVanityState(st); window.__dlRenderVanityDrawer(); window.__dlRefreshPageAddButtons();
     };
 
     document.addEventListener('change', function(e) {
       if (e.target && e.target.name === 'routineProduct') {
-        var prodId = e.target.value;
-        var lbl = e.target.closest('.prod-check-item');
-        var titleEl = lbl ? lbl.querySelector('strong') : null;
-        var title = titleEl ? titleEl.textContent.trim() : prodId;
-        var mapped = mapProductIdToSlot(prodId, title, '');
+        var prodId = e.target.value, lbl = e.target.closest('.prod-check-item'), titleEl = lbl ? lbl.querySelector('strong') : null;
+        var title = titleEl ? titleEl.textContent.trim() : prodId, mapped = mapProductIdToSlot(prodId, title, '');
         if (e.target.checked) {
           if (mapped.slotIdx === 3) window.__dlVanityState.pouchSpfSealed = true;
-          if (mapped.choiceIdx >= 0) {
-            window.__dlVanityState.slotSelections[mapped.slotIdx] = mapped.choiceIdx;
-            if (window.__dlVanityState.customSlotBottle) delete window.__dlVanityState.customSlotBottle[mapped.slotIdx];
-          } else {
-            window.__dlVanityState.slotSelections[mapped.slotIdx] = 0;
-            if (!window.__dlVanityState.customSlotBottle) window.__dlVanityState.customSlotBottle = {};
-            window.__dlVanityState.customSlotBottle[mapped.slotIdx] = makeCustomSlot(prodId, title, '');
-          }
+          if (mapped.choiceIdx >= 0) { window.__dlVanityState.slotSelections[mapped.slotIdx] = mapped.choiceIdx; if (window.__dlVanityState.customSlotBottle) delete window.__dlVanityState.customSlotBottle[mapped.slotIdx]; }
+          else { window.__dlVanityState.slotSelections[mapped.slotIdx] = 0; if (!window.__dlVanityState.customSlotBottle) window.__dlVanityState.customSlotBottle = {}; window.__dlVanityState.customSlotBottle[mapped.slotIdx] = makeCustomSlot(prodId, title, ''); }
           saveVanityState(window.__dlVanityState);
-          if (!navigator.webdriver || window.__dlAllowToastInTest) {
-            showVanityToast('Added ' + title + ' to Vanity Bag (Slot 0' + (mapped.slotIdx + 1) + ')');
-          }
+          if (!navigator.webdriver || window.__dlAllowToastInTest) showVanityToast('Added ' + title + ' to Vanity Bag (Slot 0' + (mapped.slotIdx + 1) + ')');
         } else {
           var cur = getBottleForSlot(window.__dlVanityState, mapped.slotIdx);
           if (cur && cur.id === prodId) {
@@ -976,10 +976,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       }
     }, { passive: true });
 
-    window.addEventListener('DOMContentLoaded', function() {
-      window.__dlRenderVanityDrawer();
-      window.__dlRefreshPageAddButtons();
-    });
+    window.addEventListener('DOMContentLoaded', function() { window.__dlRenderVanityDrawer(); window.__dlRefreshPageAddButtons(); });
   })();
 `;
 
