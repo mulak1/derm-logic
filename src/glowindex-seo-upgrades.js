@@ -259,14 +259,16 @@ function computeComparisonTelemetry(resolved) {
     const effScore = sameCat ? Math.max(88, 100 - Math.round(deltaPh * 12)) : analysis.compatibilityScore;
     return {
       kind: 'product', sameCat,
-      title: `${pA.brand} ${pA.name} ($${numA}) vs. ${pB.brand} ${pB.name} ($${numB}): ${diffPrice >= 15 ? `Save $${diffPrice} · ` : ''}Head-to-Head Dupe & pH Showdown`,
+      title: sameCat
+        ? `${pA.brand} ${pA.name} ($${numA}) vs. ${pB.brand} ${pB.name} ($${numB}): ${diffPrice >= 15 ? `Save $${diffPrice} · ` : ''}Head-to-Head Dupe & Formula Comparison`
+        : `${pA.brand} ${pA.name} ($${numA}) vs. ${pB.brand} ${pB.name} ($${numB}): Can You Layer Them Together? (AM & PM Guide)`,
       nameA: `${pA.brand} ${pA.name}`, nameB: `${pB.brand} ${pB.name}`, idA: pA.id, idB: pB.id,
-      phRangeA: `pH ${midPhA} (Optimal ${ingA.phMin}–${ingA.phMax})`, phRangeB: `pH ${midPhB} (Optimal ${ingB.phMin}–${ingB.phMax})`,
-      pkaA: ingA.pka != null ? `${ingA.pka} pKa` : 'Neutral (Gentle)', pkaB: ingB.pka != null ? `${ingB.pka} pKa` : 'Neutral (Gentle)',
-      freeAcidA: `${hhA.freeAcidPct}% Active Potency`, freeAcidB: `${hhB.freeAcidPct}% Active Potency`,
-      mixedFreeAcidA: `${shiftedHhA.freeAcidPct}% at combined pH ${((midPhA + midPhB) / 2).toFixed(2)}`,
-      mwA: `${ingA.molecularWeightDa} Da (${ingA.molecularWeightDa <= 500 ? 'Deep Absorption' : 'Surface Barrier Seal'})`,
-      mwB: `${ingB.molecularWeightDa} Da (${ingB.molecularWeightDa <= 500 ? 'Deep Absorption' : 'Surface Barrier Seal'})`,
+      phRangeA: `pH ${midPhA} (Ideal ${ingA.phMin}–${ingA.phMax})`, phRangeB: `pH ${midPhB} (Ideal ${ingB.phMin}–${ingB.phMax})`,
+      pkaA: ingA.pka != null ? `pH ${ingA.pka} Balance` : 'Gentle & Neutral', pkaB: ingB.pka != null ? `pH ${ingB.pka} Balance` : 'Gentle & Neutral',
+      freeAcidA: `${hhA.freeAcidPct}% Active Strength`, freeAcidB: `${hhB.freeAcidPct}% Active Strength`,
+      mixedFreeAcidA: `${shiftedHhA.freeAcidPct}% when layered together (pH ${((midPhA + midPhB) / 2).toFixed(2)})`,
+      mwA: `${ingA.molecularWeightDa <= 500 ? 'Light Serum (Sinks In Fast)' : 'Rich Barrier Cushion'}`,
+      mwB: `${ingB.molecularWeightDa <= 500 ? 'Light Serum (Sinks In Fast)' : 'Rich Barrier Cushion'}`,
       comedoA: ingA.comedogenicity === 0 ? 'Won\'t Clog Pores (0/5)' : `Pore Score ${ingA.comedogenicity}/5`, comedoB: ingB.comedogenicity === 0 ? 'Won\'t Clog Pores (0/5)' : `Pore Score ${ingB.comedogenicity}/5`,
       malasseziaA: ingA.malasseziaTrigger ? 'Avoid if Fungal-Acne Prone' : 'Fungal-Acne Safe',
       malasseziaB: ingB.malasseziaTrigger ? 'Avoid if Fungal-Acne Prone' : 'Fungal-Acne Safe',
@@ -274,7 +276,7 @@ function computeComparisonTelemetry(resolved) {
       priceA: `$${numA}`, priceB: `$${numB}`, numA, numB, diffPrice, descA: pA.summary || '', descB: pB.summary || '',
       deltaPh, harmonyScore: effScore,
       verdictLabel: sameCat && diffPrice >= 15 ? `SAVE $${diffPrice} WITH ${cheaperName.split(' ').slice(0, 3).join(' ').toUpperCase()} · PICK ONE FOR THIS STEP` : (effScore < 55 ? 'DO NOT LAYER SAME-STEP · SPLIT AM / PM' : (effScore < 75 ? 'PICK ONE OR WAIT 60 SECONDS BETWEEN LAYERS' : 'SAFE TO LAYER IN SAME ROUTINE')),
-      summary: `Side-by-side bottle & formula comparison: ${pA.brand} ${pA.name} ($${numA}, pH ${midPhA}, ${hhA.freeAcidPct}% active strength) vs. ${pB.brand} ${pB.name} ($${numB}, pH ${midPhB}, ${hhB.freeAcidPct}% active strength). ${diffPrice >= 15 ? `Save $${diffPrice} per bottle with ${cheaperName} (${effScore}/100 Formula Match, pH difference ${deltaPh}).` : `Formulation pH difference is ${deltaPh} with a Routine Harmony Score of ${effScore}/100.`}`,
+      summary: `Side-by-side bottle & formula comparison: ${pA.brand} ${pA.name} ($${numA}, pH ${midPhA}) vs. ${pB.brand} ${pB.name} ($${numB}, pH ${midPhB}). ${sameCat && diffPrice >= 15 ? `Save $${diffPrice} per bottle with ${cheaperName} (${effScore}/100 Formula Match).` : `See whether to layer them together or split across Morning and Bedtime (${effScore}/100 Routine Harmony Score).`}`,
       productIds: [pA.id, pB.id]
     };
   }
