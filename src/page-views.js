@@ -811,7 +811,9 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div>
         </div>
 
-        <div class="z-cascade-stage" style="margin-bottom:24px;">
+        ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: page.presetProducts, initialRawInci: page.product ? page.product.inciList : '' })}
+
+        <div class="z-cascade-stage" style="margin-top:24px;margin-bottom:24px;">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
               <div class="vessel-photo-frame"><img src="/public/editorial-segment-2.jpg" alt="Woman inspecting serum dropper compatibility in sunlit limestone atelier" style="object-position:center 22%;" loading="lazy" /></div>
@@ -930,8 +932,6 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
             </details>
           </div>
         </div>
-
-        ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: page.presetProducts, initialRawInci: page.product ? page.product.inciList : '' })}
       </div>
     </section>
 
