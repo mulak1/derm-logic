@@ -602,7 +602,7 @@ function renderBottleDetailPage(prod) {
           </div>
           <p class="hero-sub" style="margin-bottom:18px;">${escapeHtml(prod.summary)}</p>
           <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-            <a href="/?products=${escapeHtml(prod.id)}#analyzer" class="btn-primary"><span>Test This Bottle with My Shelf</span><span class="btn-icon-circle">&rarr;</span></a>
+            <a href="/?products=${escapeHtml(`${prod.id},${prod.id === 'skinceuticals-ce-ferulic' ? 'to-glycolic-acid-7' : 'skinceuticals-ce-ferulic'},${prod.id === 'rx-tretinoin-005' ? 'paulas-choice-2-bha' : 'rx-tretinoin-005'}`)}#analyzer" class="btn-primary"><span>Test This Bottle with My Shelf</span><span class="btn-icon-circle">&rarr;</span></a>
             <a href="/api/affiliate?product=${escapeHtml(prod.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="btn-secondary"><span>Shop at ${partner === 'dermstore' ? 'Dermstore' : 'Sephora'} ($${prod.priceUsd}) &rarr;</span></a>
             <button type="button" id="dl-bag-btn-${escapeHtml(prod.id)}" data-dl-bag-prod="${escapeHtml(prod.id)}" data-dl-bag-title="${escapeHtml(prod.brand + ' ' + shortBottleName)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(prod.id)}','${escapeHtml((prod.brand + ' ' + shortBottleName).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button>
           </div>

@@ -1,0 +1,77 @@
+{
+  "project_id": "derm-logic",
+  "production_url": "https://www.dermlogic.io",
+  "stage": "Stage B: Live Traffic / Low Conversion",
+  "spearhead_assets": [
+    "/",
+    "/bottle/cosrx-snail-96-mucin",
+    "/compare/skinceuticals-ce-ferulic-vs-to-glycolic-acid-7"
+  ],
+  "tier_1_permanent_laws": [
+    {
+      "id": "LAW-01",
+      "category": "visual_symmetry_and_whitespace",
+      "rule": "Left (.grader-card) and Right (.results-panel) columns in #analyzer must maintain 0px dead bottom white-space gap and match outer/inner heights (~720px-750px) so the entire workbench fits comfortably on a single laptop screen.",
+      "confidence": 0.99
+    },
+    {
+      "id": "LAW-02",
+      "category": "single_view_cognitive_load",
+      "rule": "Never stack the AM/PM schedule cards AND the full Clash breakdown cards simultaneously on initial load. Enforce a strict mutually-exclusive 3-Tab Stage (1. AM & PM Order | 2. Why Clashed | 3. 4-Night & Card) with One-In, One-Out DOM complexity.",
+      "confidence": 0.99
+    },
+    {
+      "id": "LAW-03",
+      "category": "womens_everyday_beauty_english",
+      "rule": "100% everyday women's beauty English (Sephora/Glossier/Rhode tone). Strictly ban developer, B2B, actuarial, or raw chemistry jargon (Sunk-Cost, Bioavailability, Culprit Autopsy, Perioral Sting, Nasolabial, Micro-Fissures, PAO Oxidation, Bos & Meinardi, Ester Hydrolysis, Stratum Corneum, Transepidermal, TEWL, Equilibration, pKa, Daltons, Unsaved Tab Session).",
+      "confidence": 0.99
+    },
+    {
+      "id": "LAW-04",
+      "category": "no_auto_popups_on_load",
+      "rule": "Never auto-pop the 5-Slot Vanity Bag drawer or any modal on initial page load. Drawers and modals open strictly on explicit user click.",
+      "confidence": 0.99
+    },
+    {
+      "id": "LAW-05",
+      "category": "compare_category_accuracy",
+      "rule": "On /compare/* pages, only label a cheaper bottle a 'Dupe' when both bottles belong to the same category/step (sameCat === true). Cross-category pairs must be framed as 'Can You Layer Them Together? (AM & PM Guide)'.",
+      "confidence": 0.98
+    },
+    {
+      "id": "LAW-06",
+      "category": "module_line_cap",
+      "rule": "Every file in src/*.js must stay strictly < 1,000 lines and pass node test/verify.js (Playwright desktop 1440x900 + mobile 390x844).",
+      "confidence": 0.99
+    }
+  ],
+  "tier_2_contextual_hypotheses": [
+    {
+      "id": "HYP-01",
+      "node": "Node 3 & Node 4A (Free Cannibalization Gate + 1-Field Email Save Bridge)",
+      "hypothesis": "Adding a 1-field 'Email My 4-Night Calendar & Lock-Screen Pass (Free)' bridge directly inside the Tab 1 summary card (replacing duplicate tab buttons under One-In, One-Out) while gating the Night 3-4 exact recovery rotation behind Email/Kit unlock will lift Engage-to-Lead from 0% to >=12% without increasing column height.",
+      "status": "ACTIVE_SPRINT_TEST"
+    },
+    {
+      "id": "HYP-02",
+      "node": "Node 5 (Zero Price Shock in Checkout Modal)",
+      "hypothesis": "Aligning #checkoutModal radio options with the $1.99 button label ($1.99 Single Routine Kit vs. $4.99 Unlimited Multi-Shelf Pass) removes the $1.99 -> $4.99 price shock.",
+      "status": "ACTIVE_SPRINT_TEST"
+    },
+    {
+      "id": "HYP-03",
+      "node": "Node 6 (1-Tap Voice-of-Customer Hesitation Poll)",
+      "hypothesis": "A 1-tap inline micro-poll ('Missing a bottle? [Request Bottle] [Want Cheaper Dupes] [Just Browsing]') logged to telemetry captures real shopper objections.",
+      "status": "ACTIVE_SPRINT_TEST"
+    }
+  ],
+  "sprint_history": [
+    {
+      "sprint_id": "SPRINT-04",
+      "timestamp": "2026-11-01T07:18:00Z",
+      "focus": "Calm 737px Single-View Tab Stage & 50% Lower Cognitive Density",
+      "commit": "42ec821",
+      "outcome": "UX & symmetry solved (737px === 737px), but Node 4A (Lead Capture = 0) and Node 5 ($1.99 vs $4.99 modal price shock) remained unaddressed."
+    }
+  ]
+}

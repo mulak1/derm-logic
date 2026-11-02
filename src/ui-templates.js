@@ -430,13 +430,15 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Save Your Complete Morning &amp; Bedtime Routine Kit</h3>
         <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:16px;">Includes your printable 4-Night Skin-Cycling schedule, pore-safe product swaps, and 9:16 bathroom mirror phone lock-screen card.</p>
         <div style="margin-bottom:16px;"><a href="/buy/flash_pass" onclick="if(window.__dlBuyFromVanity)return window.__dlBuyFromVanity('flash_pass',this);if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none;padding:13px 20px;font-size:0.95rem;"><span>Download Complete 3-File Routine Kit ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a></div>
-        <form id="checkoutForm" onsubmit="submitSelfServeCheckout(event)" style="padding-top:12px;">
+        <form id="checkoutForm" onsubmit="submitSelfServeCheckout(event)" style="padding-top:10px;">
           <input type="hidden" id="checkoutPlanId" value="onetime_499" /><input type="text" name="website_hp" id="checkoutHoneypot" style="display:none !important" tabindex="-1" autocomplete="off" />
           <div style="margin-bottom:10px;"><label class="field-label" for="checkoutEmailInput">Email for Instant Routine Delivery</label><input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="reader@dermlogic.io" /></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><label class="prod-check-item selected" id="planOption499" onclick="selectCheckoutPlan('onetime_499')"><input type="radio" name="planChoice" value="onetime_499" checked /><span><strong style="display:block;">$4.99 Multi-Shelf Kit</strong></span></label><label class="prod-check-item" id="planOption1999" onclick="selectCheckoutPlan('annual_1999')"><input type="radio" name="planChoice" value="annual_1999" /><span><strong style="display:block;">$19.99/yr Unlimited</strong></span></label></div>
-          <button type="submit" id="checkoutSubmitBtn" class="btn-secondary" style="width:100%;">Complete Plan Checkout &rarr;</button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;"><label class="prod-check-item selected" id="planOption499" onclick="selectCheckoutPlan('onetime_499')"><input type="radio" name="planChoice" value="onetime_499" checked /><span><strong style="display:block;">$1.99 Complete 3-File Kit</strong></span></label><label class="prod-check-item" id="planOption1999" onclick="selectCheckoutPlan('annual_1999')"><input type="radio" name="planChoice" value="annual_1999" /><span><strong style="display:block;">$4.99 Multi-Shelf Pass</strong></span></label></div>
+          <button type="submit" id="checkoutSubmitBtn" class="btn-secondary" style="width:100%;">Complete Kit Checkout ($1.99) &rarr;</button>
+          <div class="mono" style="margin-top:8px;font-size:0.72rem;color:var(--sage-safe);text-align:center;">&#10003; Instant 3-File Download &middot; 30-Day 1-Click Refund Guarantee</div>
         </form>
-        <div id="checkoutSuccessBox" style="display:none;margin-top:16px;padding:14px;background:var(--sage-bg);color:var(--sage-safe);"></div>
+        <div id="vocPollBox" style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:0.73rem;color:var(--text-secondary);"><span>Missing something today?</span><span style="display:inline-flex;gap:4px;flex-wrap:wrap;"><button type="button" class="mono" style="background:var(--bg-oat);border:none;border-radius:999px;padding:3px 8px;font-size:0.69rem;cursor:pointer;color:var(--text-primary);" onclick="window.__dlVoteVoc('missing_bottle')">My bottle isn't listed</button><button type="button" class="mono" style="background:var(--bg-oat);border:none;border-radius:999px;padding:3px 8px;font-size:0.69rem;cursor:pointer;color:var(--text-primary);" onclick="window.__dlVoteVoc('want_dupes')">Want cheaper dupes</button><button type="button" class="mono" style="background:var(--bg-oat);border:none;border-radius:999px;padding:3px 8px;font-size:0.69rem;cursor:pointer;color:var(--text-primary);" onclick="window.__dlVoteVoc('just_browsing')">Just browsing</button></span></div>
+        <div id="checkoutSuccessBox" style="display:none;margin-top:12px;padding:12px;background:var(--sage-bg);color:var(--sage-safe);"></div>
       </div>
     </div>
   `;
@@ -637,17 +639,16 @@ function renderAnalysisResultHtml(res) {
             </div>
           </div>
 
-          <div style="padding:13px 15px;border-radius:16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:8px;">
-            <div style="font-size:0.81rem;line-height:1.42;color:var(--text-secondary);">
-              <strong style="color:var(--sage-safe);">✓ Why This Split Saves Your Skin:</strong> ${escapeHtml(topSummaryLine)}
+          <div style="padding:12px 14px;border-radius:16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:0.8rem;line-height:1.38;color:var(--text-secondary);">
+              <span><strong style="color:var(--sage-safe);">✓ Why This Split Works:</strong> ${escapeHtml(topSummaryLine)}</span>
+              <a href="${escapeHtml(topSwap.directUrl)}" data-sovrn-beacon="${escapeHtml(topSwap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="font-size:0.71rem;padding:3px 9px;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)} &nearr;</a>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-              <a href="${escapeHtml(topSwap.directUrl)}" data-sovrn-beacon="${escapeHtml(topSwap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="font-size:0.72rem;padding:4px 10px;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)} &nearr;</a>
-              <div style="display:inline-flex;gap:5px;flex-wrap:wrap;">
-                <button type="button" class="mono" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:4px 10px;font-size:0.72rem;font-weight:600;cursor:pointer;" onclick="window.__dlSwitchResultStep(1)">See All ${conflictCount} Clashes &rarr;</button>
-                <button type="button" class="mono" style="background:var(--bg-surface);color:var(--text-primary);border:none;border-radius:999px;padding:4px 10px;font-size:0.72rem;font-weight:600;cursor:pointer;" onclick="window.__dlSwitchResultStep(3)">4-Night Calendar &rarr;</button>
-              </div>
-            </div>
+            <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'workbench_tab1')" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0;" data-no-bag-inject="1">
+              <input type="email" required class="dl-inline-ics-email input-box" placeholder="Email my free 4-Night Schedule (.ICS) &amp; AM/PM link..." aria-label="Email my free 4-Night Schedule" style="flex:1;min-width:170px;padding:6px 10px;min-height:30px;font-size:0.75rem;background:var(--bg-surface);" />
+              <button type="submit" class="dl-inline-ics-btn btn-secondary mono" style="padding:5px 11px;min-height:30px;font-size:0.72rem;background:var(--rose-brand);color:var(--accent-ink);white-space:nowrap;">Send Free 4-Night Plan &rarr;</button>
+              <span class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.71rem;color:var(--sage-safe);"></span>
+            </form>
           </div>
           <button type="button" id="dl-btn-next-step-3" class="btn-secondary" style="display:none;" onclick="window.__dlSwitchResultStep(3)">Next</button>
         </div>
@@ -864,13 +865,18 @@ const CLIENT_SCRIPT = `
     if (planId === 'annual_1999') {
       if (p499) p499.classList.remove('selected');
       if (p1999) p1999.classList.add('selected');
-      if (btn) btn.innerHTML = '<span>Complete Plan Checkout ($19.99/yr) &rarr;</span>';
+      if (btn) btn.innerHTML = '<span>Complete Multi-Shelf Pass ($4.99) &rarr;</span>';
     } else {
       if (p499) p499.classList.add('selected');
       if (p1999) p1999.classList.remove('selected');
-      if (btn) btn.innerHTML = '<span>Complete Plan Checkout ($4.99) &rarr;</span>';
+      if (btn) btn.innerHTML = '<span>Complete Kit Checkout ($1.99) &rarr;</span>';
     }
   }
+  window.__dlVoteVoc = function(reason) {
+    var box = document.getElementById('vocPollBox');
+    if (box) box.innerHTML = '<span class="mono" style="color:var(--sage-safe);font-weight:600;">&#10003; Thanks! Logged for our skincare team.</span>';
+    fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'voc_poll', path: window.location.pathname, metadata: { reason: reason } }) }).catch(function() {});
+  };
   async function submitSelfServeCheckout(ev) {
     ev.preventDefault();
     const planId = (document.getElementById('checkoutPlanId') || {}).value || 'onetime_499';
