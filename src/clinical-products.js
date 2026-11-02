@@ -925,7 +925,7 @@ const VANITY_SLOT_OPTIONS = [
 ];
 
 const US_TOP_SELLERS_BY_CATEGORY = {
-  lastSyncedAt: '2026-10-29T07:42:00Z',
+  lastSyncedAt: '2026-11-02T17:00:00Z',
   syncCadence: 'weekly_monday_0900_pdt',
   retailSources: ['Sephora US Bestsellers', 'Ulta Beauty Top Rated', 'Amazon US Luxury & Derm Beauty', 'Dermstore Bestsellers'],
   categories: [
