@@ -792,6 +792,7 @@ function formatMetaDescription(rawText, maxLen = 155) {
 }
 
 function toPlainConsumerPair(item, ingA, ingB) {
+  if (item && item.customPlain) return { conflictType: item.conflictType, summary: item.summary };
   const nameA = cleanIngName(ingA ? ingA.commonName : item.activeA);
   const nameB = cleanIngName(ingB ? ingB.commonName : item.activeB);
   const friendlyRole = (ing, fallback) => {
@@ -869,7 +870,7 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
   const initialPairs = [...PAIR_SEO_SEEDS, ...EXPANDED_PAIR_SEEDS];
   for (const item of initialPairs) {
     seenSlugs.add(item.slug);
-    if (item.activeA && item.activeB) seenPairKeys.add([item.activeA, item.activeB].sort().join('::'));
+    if (item.activeA && item.activeB && item.category !== 'Viral Bottle Pairing') seenPairKeys.add([item.activeA, item.activeB].sort().join('::'));
   }
   const combinatorialPairs = buildCombinatorialPairSeeds(ingredientsMap, seenPairKeys, seenSlugs, cleanIngName);
 
