@@ -341,11 +341,10 @@ app.get('/api/affiliate', (req, res) => {
   const rawMerchantUrl = partner === 'sephora'
     ? `https://www.sephora.com/search?keyword=${queryTerm}`
     : partner === 'amazon'
-      ? `https://www.amazon.com/s?k=${queryTerm}&tag=${affTag}`
+      ? `https://www.amazon.com/s?k=${queryTerm}&tag=${encodeURIComponent(affTag)}`
       : `https://www.dermstore.com/elysium.search?search=${queryTerm}`;
 
-  const sovrnKey = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || process.env.VIGLINK_API_KEY || '77092b74b2ef39a0fcc70907f5f6216d';
-  const destinationUrl = `https://redirect.viglink.com?key=${encodeURIComponent(sovrnKey)}&u=${encodeURIComponent(rawMerchantUrl)}&cuid=${encodeURIComponent(productId)}`;
+  const destinationUrl = rawMerchantUrl;
 
   recordMetaEvent({
     event_id: `dl_aff_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,

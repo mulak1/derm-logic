@@ -9,7 +9,8 @@
 const { CULT_PRODUCTS, CLINICAL_INGREDIENTS } = require('./clinical-data');
 const { renderInteractiveFourNightCalendarHtml, PERSONA_INTERACTIVE_CLIENT_JS } = require('./celebrity-routines');
 
-const SOVRN_KEY = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || process.env.VIGLINK_API_KEY || '77092b74b2ef39a0fcc70907f5f6216d';
+const SOVRN_KEY = process.env.SOVRN_API_KEY || process.env.SOVRN_COMMERCE_KEY || process.env.VIGLINK_API_KEY || '';
+const AMAZON_TAG = process.env.AMAZON_ASSOCIATE_TAG || 'dermlogic-20';
 
 function escapeHtml(str) {
   if (str == null) return '';
@@ -17,7 +18,7 @@ function escapeHtml(str) {
 }
 
 const DIRECT_MERCHANT_URLS = {
-  'skinceuticals-ce-ferulic': { url: 'https://sovrn.co/n3acz14', directMerchantUrl: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-30ml/11289609/', retailer: 'Dermstore', partner: 'dermstore' },
+  'skinceuticals-ce-ferulic': { url: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-30ml/11289609/', directMerchantUrl: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-30ml/11289609/', retailer: 'Dermstore', partner: 'dermstore' },
   'paulas-choice-2-bha': { url: 'https://www.sephora.com/product/skin-perfecting-2-bha-liquid-exfoliant-P469502', retailer: 'Sephora', partner: 'sephora' },
   'lrp-cicaplast-baume-b5': { url: 'https://www.ulta.com/p/cicaplast-baume-b5-soothing-therapeutic-multi-purpose-cream-pimprod2018267', retailer: 'Ulta Beauty', partner: 'dermstore' },
   'aestura-atobarrier-365': { url: 'https://www.sephora.com/product/atobarrier365-cream-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515494', retailer: 'Sephora', partner: 'sephora' },
@@ -28,14 +29,14 @@ const DIRECT_MERCHANT_URLS = {
   'tower28-sos-spray': { url: 'https://www.sephora.com/product/sos-save-our-skin-daily-rescue-facial-spray-P448852', retailer: 'Sephora', partner: 'sephora' },
   'medik8-crystal-retinal-6': { url: 'https://www.dermstore.com/p/medik8-crystal-retinal-6-stable-retinal-night-serum-30ml/12902821/', retailer: 'Dermstore', partner: 'dermstore' },
   'eltamd-uv-clear-spf46': { url: 'https://www.dermstore.com/p/eltamd-uv-clear-broad-spectrum-spf-46/11370303/', retailer: 'Dermstore', partner: 'dermstore' },
-  'rohto-melano-cc': { url: 'https://www.amazon.com/dp/B08R82XGV2', retailer: 'Amazon', partner: 'amazon' },
+  'rohto-melano-cc': { url: `https://www.amazon.com/dp/B08R82XGV2?tag=${AMAZON_TAG}`, retailer: 'Amazon', partner: 'amazon' },
   'differin-adapalene-01': { url: 'https://www.ulta.com/p/adapalene-gel-01-acne-treatment-xlsImpprod15791005', retailer: 'Ulta Beauty', partner: 'dermstore' },
-  'timeless-20-vitamin-c': { url: 'https://www.amazon.com/s?k=Timeless+Skin+Care+20%25+Vitamin+C+E+Ferulic+Acid+Serum', retailer: 'Amazon', partner: 'amazon' },
+  'timeless-20-vitamin-c': { url: `https://www.amazon.com/s?k=Timeless+Skin+Care+20%25+Vitamin+C+E+Ferulic+Acid+Serum&tag=${AMAZON_TAG}`, retailer: 'Amazon', partner: 'amazon' },
   'cosrx-snail-96-mucin': { url: 'https://www.ulta.com/p/advanced-snail-96-mucin-power-essence-xlsImpprod15641052', retailer: 'Ulta Beauty', partner: 'dermstore' },
   'cerave-pm-lotion': { url: 'https://www.ulta.com/p/pm-facial-moisturizing-lotion-xlsImpprod5140027', retailer: 'Ulta Beauty', partner: 'dermstore' },
-  'illiyoon-ceramide-ato': { url: 'https://www.amazon.com/s?k=ILLIYOON+Ceramide+Ato+Concentrate+Cream', retailer: 'Amazon', partner: 'amazon' },
-  'stratia-lipid-gold': { url: 'https://www.amazon.com/s?k=Stratia+Lipid+Gold+Barrier+Lotion', retailer: 'Amazon', partner: 'amazon' },
-  'boj-relief-sun-spf50': { url: 'https://www.amazon.com/s?k=Beauty+of+Joseon+Relief+Sun+SPF+50', retailer: 'Amazon', partner: 'amazon' },
+  'illiyoon-ceramide-ato': { url: `https://www.amazon.com/s?k=ILLIYOON+Ceramide+Ato+Concentrate+Cream&tag=${AMAZON_TAG}`, retailer: 'Amazon', partner: 'amazon' },
+  'stratia-lipid-gold': { url: `https://www.amazon.com/s?k=Stratia+Lipid+Gold+Barrier+Lotion&tag=${AMAZON_TAG}`, retailer: 'Amazon', partner: 'amazon' },
+  'boj-relief-sun-spf50': { url: `https://www.amazon.com/s?k=Beauty+of+Joseon+Relief+Sun+SPF+50&tag=${AMAZON_TAG}`, retailer: 'Amazon', partner: 'amazon' },
   'to-glycolic-acid-7': { url: 'https://www.sephora.com/product/the-ordinary-deciem-glycolic-acid-7-toning-solution-P427406', retailer: 'Sephora', partner: 'sephora' },
   'to-niacinamide-10-zinc': { url: 'https://www.sephora.com/product/the-ordinary-deciem-niacinamide-10-zinc-1-P427417', retailer: 'Sephora', partner: 'sephora' }
 };
@@ -57,7 +58,7 @@ function getSovrnMerchantLink(productId, preferredPartner = 'dermstore') {
   const directUrl = partner === 'sephora'
     ? `https://www.sephora.com/search?keyword=${q}`
     : partner === 'amazon'
-      ? `https://www.amazon.com/s?k=${q}`
+      ? `https://www.amazon.com/s?k=${q}&tag=${encodeURIComponent(AMAZON_TAG)}`
       : `https://www.dermstore.com/elysium.search?search=${q}`;
   const retailer = partner === 'sephora' ? 'Sephora' : partner === 'amazon' ? 'Amazon' : 'Dermstore';
   return {
@@ -137,13 +138,6 @@ function renderAboveFoldSovrnDisclosureBar() {
 
 function renderSovrnVglnkScript() {
   return `<script type="text/javascript">
-  var vglnk = { key: '${SOVRN_KEY}' };
-  (function(d, t) {
-    if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' || window.location.hostname === '0.0.0.0') return;
-    if (d.querySelector('script[src*="viglink.com/api/vglnk.js"]')) return;
-    var s = d.createElement(t); s.type = 'text/javascript'; s.async = true; s.src = '//cdn.viglink.com/api/vglnk.js';
-    var r = d.getElementsByTagName(t)[0]; if (r && r.parentNode) r.parentNode.insertBefore(s, r);
-  }(document, 'script'));
   document.addEventListener('click', function(e) {
     var a = e.target && e.target.closest ? e.target.closest('a[data-sovrn-beacon]') : null;
     if (!a) return;
@@ -920,47 +914,47 @@ const ENDOWMENT_CLIENT_SCRIPT = `
 `;
 
 function renderEditorialPolicyPage({ renderBaseDocument }) {
-  const title = 'Editorial Policy, Cosmetic Chemistry Review Board & FTC Affiliate Disclosure | DermLogic';
-  const description = 'DermLogic editorial standards, cosmetic chemistry formulation review methodology (Henderson-Hasselbalch pKa, EU CosIng comedogenicity), and FTC / Sovrn Commerce affiliate disclosure.';
+  const title = 'Editorial Policy, Formulation Methodology & FTC Affiliate Disclosure | DermLogic';
+  const description = 'DermLogic editorial standards, cosmetic chemistry formulation review methodology (INCI compatibility, pH windows, EU CosIng pore-safety), and FTC / Amazon Associates affiliate disclosure.';
   const bodyHtml = `<section class="section-block" style="padding-top:36px;">
     <div class="container">
       <div class="porcelain-vessel-core" style="padding:36px 40px;background:var(--bg-surface);gap:22px;">
         <div>
-          <span class="badge-safe mono" style="margin-bottom:10px;">Editorial Governance &amp; Network Quality Verification</span>
+          <span class="badge-safe mono" style="margin-bottom:10px;">Editorial Governance &amp; Publisher Transparency</span>
           <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.6vw,3.2rem);margin-bottom:10px;max-width:none;">Editorial Policy, Formulation Methodology &amp; FTC Affiliate Disclosure</h1>
-          <p style="color:var(--text-secondary);font-size:0.94rem;max-width:none;">Last Reviewed: October 27, 2026 &middot; Editorial Contact: <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a> &middot; Publication Domain: <strong>https://www.dermlogic.io</strong></p>
+          <p style="color:var(--text-secondary);font-size:0.94rem;max-width:none;">Last Reviewed: November 2, 2026 &middot; Editorial &amp; Support Desk: <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a> &middot; Publication Domain: <strong>https://www.dermlogic.io</strong></p>
         </div>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px;">
           <div class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;">
-            <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">1. Cosmetic Chemistry &amp; Esthetics Review Board</h2>
+            <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">1. DermLogic Formulation Research Methodology</h2>
             <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;margin-bottom:10px;max-width:none;">
-              DermLogic Atelier C&eacute;ramique is an independent skincare formulation and routine-compatibility publication. Every ingredient pairing guide, cult bottle teardown, and 4-night skin-cycling schedule is authored and audited against peer-reviewed cosmetic chemistry literature:
+              DermLogic is an independent skincare routine-compatibility and ingredient research publication. Every pairing guide, bottle breakdown, and 4-night skin-cycling schedule is verified by the <strong>DermLogic Formulation Research Desk</strong> against published cosmetic science and official brand disclosures:
             </p>
             <ul style="padding-left:20px;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;">
-              <li><strong>Dr. Camille Laurent, PhD (Cosmetic Formulation Lead):</strong> Specializes in Henderson-Hasselbalch p<em>K</em><sub>a</sub> free-acid bioavailability, L-Ascorbic Acid oxidation kinetics, and peptide chelation stability.</li>
-              <li><strong>Elena Rostova, LE (Senior Licensed Master Esthetician):</strong> Specializes in post-retinoid barrier recovery, perioral dermatitis protocols, and 3:1:1 ceramide-cholesterol-fatty acid lipid ratios.</li>
-              <li><strong>Primary Scientific Sources:</strong> European Commission CosIng Annex Database, <em>Journal of Investigative Dermatology</em> (500-Dalton Rule &amp; stratum corneum pH gradients), and <em>International Journal of Cosmetic Science</em>.</li>
+              <li><strong>Deterministic pH &amp; Layering Engine:</strong> Evaluates active-ingredient pH windows, L-Ascorbic Acid and Benzoyl Peroxide oxidation rules, peptide stability, and moisture-barrier recovery pacing.</li>
+              <li><strong>Official INCI &amp; Retail Verification:</strong> Every bottle&rsquo;s ingredient list (INCI), formulation pH, and price per ounce is audited against manufacturer specifications and authorized U.S. retailers (Sephora, Ulta Beauty, Dermstore, and Amazon).</li>
+              <li><strong>Primary Scientific &amp; Regulatory Sources:</strong> European Commission CosIng Ingredient Database, U.S. FDA Over-the-Counter (OTC) Monograph Guidelines, <em>Journal of Investigative Dermatology</em>, and <em>International Journal of Cosmetic Science</em>.</li>
             </ul>
           </div>
 
           <div id="affiliate-disclosure" class="bento-cell" style="background:var(--bg-oat);padding:24px 26px;border-left:3px solid var(--rose-brand);">
             <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">2. FTC &amp; Retail Affiliate Disclosure</h2>
             <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;margin-bottom:10px;max-width:none;">
-              In compliance with the U.S. Federal Trade Commission (FTC) 16 CFR Part 255 Guides Concerning the Use of Endorsements and Testimonials in Advertising and affiliate network quality guidelines:
+              In compliance with the U.S. Federal Trade Commission (FTC) 16 CFR Part 255 Guides Concerning the Use of Endorsements and Testimonials in Advertising:
             </p>
             <ul style="padding-left:20px;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;">
-              <li><strong>Above-the-Fold Disclosure on Every Page:</strong> Every page on DermLogic features a clear, conspicuous disclosure bar at the top of the viewport before any outbound merchant link appears.</li>
-              <li><strong>Authorized Retail Partners:</strong> Outbound product links to authorized retailers including <strong>Sephora</strong>, <strong>Dermstore</strong>, <strong>Ulta Beauty</strong>, and <strong>Amazon</strong> may earn DermLogic a referral commission via Sovrn Commerce (VigLink) or direct merchant programs at zero additional cost to the reader.</li>
-              <li><strong>100% Editorial Independence:</strong> Retailers and skincare brands cannot pay to alter a product&rsquo;s pH readout, comedogenicity score (0 to 5), Malassezia fungal-acne flag, or active conflict verdict. Every clash card always provides a <strong>$0 behavioral timing fix first</strong> alongside optional barrier-safe product swaps.</li>
+              <li><strong>Above-the-Fold Disclosure on Every Page:</strong> Every page on DermLogic features a clear disclosure bar at the top of the viewport before any outbound retail link appears.</li>
+              <li><strong>Amazon Associates &amp; Authorized Retail Partners:</strong> As an Amazon Associate, DermLogic earns from qualifying purchases. Outbound product links to authorized retailers including <strong>Amazon</strong>, <strong>Sephora</strong>, <strong>Dermstore</strong>, and <strong>Ulta Beauty</strong> may earn DermLogic a referral commission at zero additional cost to you.</li>
+              <li><strong>100% Editorial Independence:</strong> Retailers and skincare brands cannot pay to alter a product&rsquo;s pH readout, pore-clogging score (0 to 5), fungal-acne safety flag, or routine conflict verdict. Every clash card always provides a <strong>$0 timing fix first</strong> alongside optional product swaps.</li>
             </ul>
           </div>
         </div>
 
         <div class="bento-cell" style="background:var(--bg-oat);padding:22px 26px;">
-          <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">3. Medical Disclaimer &amp; Publisher Verification</h2>
+          <h2 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">3. Medical Disclaimer &amp; Publisher Ownership</h2>
           <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;max-width:none;">
-            Content published on DermLogic is for informational and educational cosmetic-chemistry purposes only and does not constitute medical advice, diagnosis, or prescription dermatology treatment. For affiliate network inquiries, press, or formulation corrections, contact our editorial desk at <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a>.
+            Content published on DermLogic (operated by DermLogic Digital Publishing, San Francisco, CA) is for informational and educational skincare-routine purposes only and does not constitute medical advice, diagnosis, or prescription dermatology treatment. Always consult a board-certified dermatologist for prescription treatments. For editorial corrections, customer support, or partnership inquiries, contact <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a>.
           </p>
         </div>
       </div>

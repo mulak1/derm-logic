@@ -953,14 +953,6 @@ function buildClientRuntimeScript(cfg) {
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __ebBootAll); else __ebBootAll();
 })();
-</script>
-<script type="text/javascript">
-  var vglnk = { key: '${SOVRN_KEY}' };
-  (function(d, t) {
-    if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' || window.location.hostname === '0.0.0.0') return;
-    var s = d.createElement(t); s.type = 'text/javascript'; s.async = true; s.src = '//cdn.viglink.com/api/vglnk.js';
-    var r = d.getElementsByTagName(t)[0]; if (r && r.parentNode) r.parentNode.insertBefore(s, r);
-  }(document, 'script'));
 </script>`;
 }
 function renderExactBaselineEnhancements(html, cfg, reqPath) {
