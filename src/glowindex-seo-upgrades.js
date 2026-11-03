@@ -175,7 +175,7 @@ function recordBotOrHumanHit(req) {
   const cleanUrl = String(req.path || '/').replace(/\.md$/i, '');
   let matchedBot = null;
   for (const b of BOT_FAMILIES) { if (b.regex.test(ua)) { matchedBot = b.id; break; } }
-  if (!matchedBot && /(bot|crawler|spider|slurp|archiver|facebookexternalhit|bytespider|ccbot|cohere)/i.test(ua)) matchedBot = 'OtherBot';
+  if (!matchedBot && ((!/127\.0\.0\.1|localhost/.test(String(req.headers.host || '')) && !req.headers['accept-language']) || /(bot|crawler|spider|slurp|archiver|facebookexternalhit|bytespider|ccbot|cohere|semrush|ahrefs|dotbot|amazonbot|reflectionbot)/i.test(ua))) matchedBot = 'OtherBot';
   if (matchedBot) {
     TELEMETRY_LEDGER.botAgentTotals[matchedBot] = (TELEMETRY_LEDGER.botAgentTotals[matchedBot] || 0) + 1;
     TELEMETRY_LEDGER.botHitsByFamily[fam] = (TELEMETRY_LEDGER.botHitsByFamily[fam] || 0) + 1;

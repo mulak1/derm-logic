@@ -532,9 +532,10 @@ function renderCelebrityDetailPage(celeb) {
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:34px;">${activePills}</div>
 
       <h2 class="serif-display" style="font-size:1.55rem;margin-bottom:14px;">Explore More Iconic Routines by Skin Type</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:28px;">
         ${otherCelebs.map((o) => `<a href="/celebrity/${escapeHtml(o.slug)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:18px 20px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:8px;"><div><span class="badge-safe mono" style="font-size:0.7rem;margin-bottom:6px;display:inline-block;">${escapeHtml(o.skinProfile)}</span><strong class="serif-display" style="font-size:1.2rem;display:block;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(o.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(o.moniker)}</span></div><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">Inspect Routine &rarr;</span></a>`).join('')}
       </div>
+      ${renderHubSaveBanner(`${celeb.name}’s Routine`, `celeb_${celeb.slug}`, preloadHref)}
     </div>
   </section>`;
 
@@ -637,6 +638,7 @@ function renderBottleDetailPage(prod) {
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:24px;">
         ${celebUsers.map((c) => `<a href="/celebrity/${escapeHtml(c.slug)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;text-decoration:none;"><span class="badge-safe mono" style="margin-bottom:6px;display:inline-block;">${escapeHtml(c.skinProfile)}</span><strong class="serif-display" style="font-size:1.25rem;display:block;margin-bottom:4px;">${escapeHtml(c.name)}</strong><span style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(c.moniker)} &rarr;</span></a>`).join('')}
       </div>` : ''}
+      ${renderHubSaveBanner(`${prod.brand} ${shortBottleName}`, `bottle_${prod.id}`, `/?products=${encodeURIComponent(prod.id)},skinceuticals-ce-ferulic,rx-tretinoin-005#analyzer`)}
     </div>
   </section>`;
 
@@ -853,20 +855,7 @@ function renderConcernDetailPage(concern) {
         ${celebs.map((c) => `<a href="/celebrity/${escapeHtml(c.slug)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:18px 20px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:8px;"><div><div class="vessel-photo-frame" style="height:145px;margin-bottom:10px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} routine" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};" /></div><span class="badge-safe mono" style="font-size:0.72rem;margin-bottom:6px;display:inline-block;">${escapeHtml(c.skinProfile)}</span><strong class="serif-display" style="font-size:1.22rem;display:block;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(c.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(c.moniker)}</span></div><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">View Full Routine &amp; Dupes &rarr;</span></a>`).join('')}
       </div>` : ''}
 
-      <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:24px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
-        <div style="max-width:640px;">
-          <span class="badge-safe mono" style="margin-bottom:6px;display:inline-block;">9:16 Phone Lock-Screen Card + 4-Night Schedule</span>
-          <h2 class="serif-display" style="font-size:1.48rem;margin:4px 0 6px;">Save This ${escapeHtml(concern.title)} to Your Phone ($1.99)</h2>
-          <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">Keep the exact morning &amp; bedtime application order, wait times, and chemist swaps right on your bathroom lock screen (one-time payment, never a subscription).</p>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:8px;flex:1;min-width:280px;">
-          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'concern_${escapeHtml(concern.slug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;"><input type="email" required class="input-box dl-inline-ics-email" placeholder="Email my free 4-Night Schedule (.ICS)..." aria-label="Email my free 4-Night Schedule (.ICS)" style="flex:1;min-width:190px;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" /><button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:8px 14px;font-size:0.78rem;border-radius:999px;font-weight:600;color:var(--rose-brand);border-color:var(--rose-brand);white-space:nowrap;">Send Free 4-Night Plan &rarr;</button><div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);padding-top:2px;"></div></form>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <a href="/buy/flash_pass?guide=${encodeURIComponent(concern.slug)}" class="btn-primary"><span>Save Complete Routine Kit ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a>
-            <a href="${preloadHref}" class="btn-secondary"><span>Customize in Shelf Checker &rarr;</span></a>
-          </div>
-        </div>
-      </div>
+      ${renderHubSaveBanner(concern.title, `concern_${concern.slug}`, preloadHref)}
     </div>
   </section>`;
 
@@ -878,6 +867,10 @@ function renderConcernDetailPage(concern) {
     faqItems: [{ q: `How do I follow the ${concern.title}?`, a: `${concern.steps.join(' ')} ${concern.avoidNote}` }],
     bodyHtml
   });
+}
+
+function renderHubSaveBanner(titleText, tagSlug, preloadHref) {
+  return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:24px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div style="max-width:600px;"><span class="badge-safe mono" style="margin-bottom:6px;display:inline-block;">9:16 Phone Lock-Screen Card + Free 4-Night Schedule</span><h2 class="serif-display" style="font-size:1.45rem;margin:4px 0 6px;">Save ${escapeHtml(titleText)} to Your Phone</h2><p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">Email your free 4-Night Schedule (.ICS) or unlock the complete 3-file routine kit ($1.99 one-time, 30-day refund guarantee).</p></div><div style="display:flex;flex-direction:column;gap:8px;flex:1;min-width:280px;"><form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, '${escapeHtml(tagSlug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;"><input type="email" required class="input-box dl-inline-ics-email" placeholder="Email my free 4-Night Schedule (.ICS)..." aria-label="Email my free 4-Night Schedule (.ICS)" style="flex:1;min-width:190px;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" /><button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:8px 14px;font-size:0.78rem;border-radius:999px;font-weight:600;color:var(--rose-brand);border-color:var(--rose-brand);white-space:nowrap;">Send Free 4-Night Plan &rarr;</button><div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);padding-top:2px;"></div></form><div style="display:flex;gap:10px;flex-wrap:wrap;"><a href="/buy/flash_pass?guide=${encodeURIComponent(tagSlug)}" class="btn-primary"><span>Save Complete Routine Kit ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a><a href="${preloadHref}" class="btn-secondary"><span>Customize in Shelf Checker &rarr;</span></a></div></div></div>`;
 }
 
 function getAllSemanticHubUrls(hostUrl) {
