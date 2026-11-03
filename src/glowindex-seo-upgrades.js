@@ -2,7 +2,7 @@
 
 const { CLINICAL_INGREDIENTS, CULT_PRODUCTS } = require('./clinical-data');
 const { CELEBRITY_ROUTINES } = require('./celebrity-routines');
-const { PAIR_SEO_SEEDS, PRODUCT_SEO_SEEDS } = require('./pseo-catalog');
+const { PAIR_SEO_SEEDS, PRODUCT_SEO_SEEDS, buildSeoPagesCatalog } = require('./pseo-catalog');
 const { CONCERN_HUBS, getAllBrandHubs } = require('./seo-hubs');
 const { analyzeRoutine } = require('./engine');
 const { escapeHtml, SHARED_CSS, CLIENT_SCRIPT, renderHeader, renderFooter } = require('./ui-templates');
@@ -125,7 +125,7 @@ const BOT_FAMILIES = [
 
 const ROUTE_FAMILIES_META = {
   core_hubs: { label: 'Core Platform & Directory (/, /directory, /lp)', totalCanonical: 6 },
-  seo_guides: { label: 'Active-Pair & Bottle Layering Guides (/seo/:slug)', totalCanonical: (PAIR_SEO_SEEDS?.length || 274) + (PRODUCT_SEO_SEEDS?.length || 44) },
+  seo_guides: { label: 'Active-Pair & Bottle Layering Guides (/seo/:slug)', totalCanonical: (typeof buildSeoPagesCatalog === 'function' ? buildSeoPagesCatalog().length : (PAIR_SEO_SEEDS?.length || 274) + (PRODUCT_SEO_SEEDS?.length || 44)) },
   compare_matrix: { label: 'Head-to-Head Active & Bottle Comparisons (/compare/:a-vs-:b)', totalCanonical: ALL_COMPARE_SLUGS.length },
   ingredient_hubs: { label: 'Clinical Active Hubs (/ingredient/:slug)', totalCanonical: CLINICAL_INGREDIENTS.length },
   entity_subcat: { label: 'Entity x Sub-Category Matrices (/ingredient/:slug/:cat & /concern/:slug/:cat)', totalCanonical: (CLINICAL_INGREDIENTS.length + (CONCERN_HUBS?.length || 9) + SCENARIO_GUIDES.length) * 4 },
@@ -922,7 +922,7 @@ function attachGlowIndexSeoUpgrades(app) {
   });
 
   app.get('/sitemap-seo-guides.xml', (req, res) => {
-    const seeds = [...(PAIR_SEO_SEEDS || []), ...(PRODUCT_SEO_SEEDS || [])];
+    const seeds = typeof buildSeoPagesCatalog === 'function' ? buildSeoPagesCatalog() : [...(PAIR_SEO_SEEDS || []), ...(PRODUCT_SEO_SEEDS || [])];
     return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(seeds.map((s) => `${HOST_URL}/seo/${s.slug}`)));
   });
 
