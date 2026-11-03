@@ -591,17 +591,13 @@ const GLOWINDEX_CLIENT_SCRIPT = `<script id="gi-glow-session-script">
       var qSkin = params.get('skin') || params.get('season') || params.get('depth'), qClimate = params.get('climate'), qProds = params.get('products');
       if (qSkin || qClimate || qProds) {
         saveSession({ skinType: qSkin || undefined, climate: qClimate || undefined, productIds: qProds ? qProds.split(',').filter(Boolean) : undefined });
-        var skinSel = document.getElementById('skinTypeSelect');
-        if (skinSel && qSkin) skinSel.value = qSkin;
+        var skinSel = document.getElementById('skinTypeSelect'); if (skinSel && qSkin) skinSel.value = qSkin;
       } else {
-        var existing = loadSession();
-        renderEndowmentBar(existing);
-        var skinSel2 = document.getElementById('skinTypeSelect');
-        if (skinSel2 && existing.skinType) skinSel2.value = existing.skinType;
+        var existing = loadSession(); renderEndowmentBar(existing);
+        var skinSel2 = document.getElementById('skinTypeSelect'); if (skinSel2 && existing.skinType) skinSel2.value = existing.skinType;
       }
       document.addEventListener('click', function(ev) {
-        var el = ev.target && ev.target.closest ? ev.target.closest('a[href*="#analyzer"],a[href*="/buy/"],#analyzeBtn,.preset-chip,.dl-add-to-bag-btn,.affiliate-link-pill,.btn-primary,#checkoutSubmitBtn') : null;
-        if (!el) return;
+        var el = ev.target && ev.target.closest ? ev.target.closest('a[href*="#analyzer"],a[href*="/buy/"],#analyzeBtn,.preset-chip,.dl-add-to-bag-btn,.affiliate-link-pill,.btn-primary,#checkoutSubmitBtn') : null; if (!el) return;
         window.__giFireBeacon('p_seo_cta_click', { id: el.id || '', href: el.getAttribute('href') || '' });
         if (el.id === 'analyzeBtn' || el.classList.contains('preset-chip')) window.__giFireBeacon('tool_initiated', { id: el.id || 'preset' });
         if ((el.getAttribute('href') || '').indexOf('/buy/') !== -1 || el.id === 'checkoutSubmitBtn') window.__giFireBeacon('checkout_initiated', { id: el.id || 'buy_link' });
