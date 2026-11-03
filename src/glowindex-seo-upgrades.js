@@ -174,15 +174,13 @@ function recordBotOrHumanHit(req) {
   const fam = classifyRouteFamily(req.path);
   const cleanUrl = String(req.path || '/').replace(/\.md$/i, '');
   let matchedBot = null;
-  for (const b of BOT_FAMILIES) {
-    if (b.regex.test(ua)) { matchedBot = b.id; break; }
-  }
+  for (const b of BOT_FAMILIES) { if (b.regex.test(ua)) { matchedBot = b.id; break; } }
   if (!matchedBot && /(bot|crawler|spider|slurp|archiver|facebookexternalhit|bytespider|ccbot|cohere)/i.test(ua)) matchedBot = 'OtherBot';
   if (matchedBot) {
     TELEMETRY_LEDGER.botAgentTotals[matchedBot] = (TELEMETRY_LEDGER.botAgentTotals[matchedBot] || 0) + 1;
     TELEMETRY_LEDGER.botHitsByFamily[fam] = (TELEMETRY_LEDGER.botHitsByFamily[fam] || 0) + 1;
     if (TELEMETRY_LEDGER.botCrawledUrlsByFamily[fam]) TELEMETRY_LEDGER.botCrawledUrlsByFamily[fam].add(cleanUrl);
-  } else if (req.method === 'GET' && !req.path.startsWith('/api/') && !req.path.startsWith('/public/')) {
+  } else if (req.method === 'GET' && !req.path.startsWith('/api/') && !req.path.startsWith('/public/') && !/\.(xml|txt|svg|js|json|css|ico|png|jpg)$/i.test(req.path) && !/(headless|playwright|curl|wget|python|node|go-http|axios)/i.test(ua) && ua.length > 24) {
     if (TELEMETRY_LEDGER.funnelByFamily[fam]) TELEMETRY_LEDGER.funnelByFamily[fam].p_seo_page_view += 1;
   }
 }
@@ -601,6 +599,13 @@ const GLOWINDEX_CLIENT_SCRIPT = `<script id="gi-glow-session-script">
         var skinSel2 = document.getElementById('skinTypeSelect');
         if (skinSel2 && existing.skinType) skinSel2.value = existing.skinType;
       }
+      document.addEventListener('click', function(ev) {
+        var el = ev.target && ev.target.closest ? ev.target.closest('a[href*="#analyzer"],a[href*="/buy/"],#analyzeBtn,.preset-chip,.dl-add-to-bag-btn,.affiliate-link-pill,.btn-primary,#checkoutSubmitBtn') : null;
+        if (!el) return;
+        window.__giFireBeacon('p_seo_cta_click', { id: el.id || '', href: el.getAttribute('href') || '' });
+        if (el.id === 'analyzeBtn' || el.classList.contains('preset-chip')) window.__giFireBeacon('tool_initiated', { id: el.id || 'preset' });
+        if ((el.getAttribute('href') || '').indexOf('/buy/') !== -1 || el.id === 'checkoutSubmitBtn') window.__giFireBeacon('checkout_initiated', { id: el.id || 'buy_link' });
+      }, { passive: true });
     } catch (_) {}
   });
 })();
