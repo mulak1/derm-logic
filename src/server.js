@@ -204,7 +204,9 @@ app.get('/seo/:slug', (req, res) => {
   res.status(200).type('html').send(html);
 });
 
-// 5. Legal Routes (/privacy, /terms) & Creative Design Previews
+// 5. Legal Routes (/privacy, /terms), Telemetry Aliases & Creative Design Previews
+app.get('/api/glow-analytics', (req, res) => res.redirect(307, '/api/seo/telemetry'));
+app.get('/api/stats', (req, res) => res.redirect(307, '/api/telemetry/pst-report?hours=24'));
 app.use('/previews', express.static(path.join(__dirname, '..', 'public', 'previews')));
 app.get('/design-previews', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'design-previews.html'));

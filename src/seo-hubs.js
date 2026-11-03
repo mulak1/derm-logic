@@ -655,10 +655,12 @@ function renderBottleDetailPage(prod) {
   });
 }
 
+const plainMech = (m) => String(m || '').replace(/stratum corneum/gi, 'skin surface').replace(/transepidermal water loss \(TEWL\)|TEWL/gi, 'moisture loss').replace(/erythema/gi, 'redness').replace(/xerosis/gi, 'dryness and flaking').replace(/corneodesmosomes|corneocytes/gi, 'dead surface cells').replace(/keratolytic/gi, 'pore-smoothing').replace(/desquamating|desquamation/gi, 'surface shedding').replace(/follicular infundibulum/gi, 'deep inside pores').replace(/nociceptor/gi, 'skin').replace(/\(\d+\s*Da\)/gi, '(lightweight)');
+
 function renderIngredientIndexPage() {
   const cards = CLINICAL_INGREDIENTS.map((a) => {
     const bottleCount = CULT_PRODUCTS.filter((p) => (p.primaryActives || []).includes(a.id)).length;
-    return `<a href="/ingredient/${escapeHtml(a.id)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 22px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:10px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">pH ${a.phMin}–${a.phMax}</span><span class="badge-safe mono">Pore Score ${a.comedogenicity}/5</span></div><strong class="serif-display" style="font-size:1.25rem;display:block;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(a.commonName)}</strong><p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(a.clinicalMechanism)}</p></div><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">Found in ${bottleCount} Cult ${bottleCount === 1 ? 'Bottle' : 'Bottles'} &rarr;</div></a>`;
+    return `<a href="/ingredient/${escapeHtml(a.id)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 22px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:10px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">pH ${a.phMin}–${a.phMax}</span><span class="badge-safe mono">Pore Score ${a.comedogenicity}/5</span></div><strong class="serif-display" style="font-size:1.25rem;display:block;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(a.commonName)}</strong><p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(plainMech(a.clinicalMechanism))}</p></div><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">Found in ${bottleCount} Cult ${bottleCount === 1 ? 'Bottle' : 'Bottles'} &rarr;</div></a>`;
   }).join('');
   return renderShell({
     title: '65 Clinical Skincare Ingredients: pH Windows, Pore-Safety & Layering | DermLogic',
@@ -678,7 +680,7 @@ function renderIngredientDetailPage(ing) {
       <div>
         <h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,2.9rem);margin-bottom:10px;">${escapeHtml(ing.commonName)} Layering Guide</h1>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;"><span class="badge-safe mono">Optimal pH ${ing.phMin}–${ing.phMax}</span><span class="badge-safe mono">Pore-Clog Score: ${ing.comedogenicity}/5</span><span class="mono" style="font-size:0.82rem;color:var(--text-secondary);">Bottle Label (INCI): ${escapeHtml(ing.inciName)} · Fungal Acne: ${ing.malasseziaTrigger ? 'Trigger' : '100% Safe'}</span></div>
-        <p class="hero-sub" style="margin-bottom:16px;"><strong>Role:</strong> ${escapeHtml(ing.functionRole)}. ${escapeHtml(ing.clinicalMechanism)}</p>
+        <p class="hero-sub" style="margin-bottom:16px;"><strong>Role:</strong> ${escapeHtml(ing.functionRole)}. ${escapeHtml(plainMech(ing.clinicalMechanism))}</p>
         <a href="/?inci=${encodeURIComponent(ing.inciName)}#analyzer" class="btn-primary"><span>Test ${escapeHtml(ing.commonName)} in Routine Checker</span><span class="btn-icon-circle">&rarr;</span></a>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><img src="/public/editorial-segment-2.jpg" alt="${escapeHtml(ing.commonName)} clinical pH and INCI consultation" loading="eager" style="width:100%;height:185px;object-fit:cover;object-position:center 22%;border-radius:10px;" /><img src="/public/editorial-woman-morning.jpg" alt="${escapeHtml(ing.commonName)} morning and evening routine compatibility" loading="lazy" style="width:100%;height:185px;object-fit:cover;object-position:center 22%;border-radius:10px;" /></div>
@@ -857,9 +859,12 @@ function renderConcernDetailPage(concern) {
           <h2 class="serif-display" style="font-size:1.48rem;margin:4px 0 6px;">Save This ${escapeHtml(concern.title)} to Your Phone ($1.99)</h2>
           <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">Keep the exact morning &amp; bedtime application order, wait times, and chemist swaps right on your bathroom lock screen (one-time payment, never a subscription).</p>
         </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a href="/buy/flash_pass?guide=${encodeURIComponent(concern.slug)}" class="btn-primary"><span>Save Complete Routine Kit ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a>
-          <a href="${preloadHref}" class="btn-secondary"><span>Customize in Shelf Checker &rarr;</span></a>
+        <div style="display:flex;flex-direction:column;gap:8px;flex:1;min-width:280px;">
+          <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'concern_${escapeHtml(concern.slug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;"><input type="email" required class="input-box dl-inline-ics-email" placeholder="Email my free 4-Night Schedule (.ICS)..." aria-label="Email my free 4-Night Schedule (.ICS)" style="flex:1;min-width:190px;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" /><button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:8px 14px;font-size:0.78rem;border-radius:999px;font-weight:600;color:var(--rose-brand);border-color:var(--rose-brand);white-space:nowrap;">Send Free 4-Night Plan &rarr;</button><div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);padding-top:2px;"></div></form>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="/buy/flash_pass?guide=${encodeURIComponent(concern.slug)}" class="btn-primary"><span>Save Complete Routine Kit ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a>
+            <a href="${preloadHref}" class="btn-secondary"><span>Customize in Shelf Checker &rarr;</span></a>
+          </div>
         </div>
       </div>
     </div>
