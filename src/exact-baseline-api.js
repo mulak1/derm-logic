@@ -217,22 +217,22 @@ const VERTICAL_CONFIGS = {
       radiusCard: '0px', radiusPill: '0px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMsIaoGnkXxS8ru7bwyQe',
-    corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 4.99, coreLabel: 'Complete Morning & Night Routine Kit ($4.99)',
-    proPriceEnv: 'STRIPE_PRICE_ANNUAL_1999', proPriceUsd: 19.99, proLabel: 'Unlimited Skincare Shelf & Esthetician Pass ($19.99/yr)',
+    corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 9, coreLabel: 'Complete Atelier Vanity Dossier: 300-DPI Apple Wallet / Phone Shopping Swatch Card + AM/PM Ingredient Conflict Schedule + $240 Clinical Dupe Substitution List ($9)',
+    proPriceEnv: 'STRIPE_PRICE_ANNUAL_1999', proPriceUsd: 29, proLabel: 'For Estheticians & Color Stylists: Client White-Label Dossier Pass ($29)',
     lockedTitle: 'Morning vs. Night Layering Order',
-    deliverableName: '4-Night Skincare Schedule + 9:16 Phone Wallpaper Card + Pore-Safe Swaps',
-    freeDeliverableName: '9:16 Morning/Night Routine Card & 4-Night Schedule',
-    unlockBannerTitle: 'Personalized AM & PM Routine Card',
+    deliverableName: '300-DPI Apple Wallet / Phone Shopping Swatch Card + AM/PM Ingredient Conflict Schedule + $240 Clinical Dupe Substitution List',
+    freeDeliverableName: '300-DPI Apple Wallet Swatch Card + AM/PM Conflict Schedule + $240 Dupe List',
+    unlockBannerTitle: 'Complete Atelier Vanity Dossier',
     explainerText: 'See which products clash, how long to wait between steps, and your safe Morning & Night order',
     hudLabel: 'Vanity Shelf HUD', redditSub: 'SkincareAddiction',
     sliderLabel: 'Products', sliderMin: 2, sliderMax: 8, sliderVal: 4,
     searchPlaceholder: 'Search ingredient or product (e.g. Retinol)...',
-    tier1Tag: 'SINGLE-ROUTINE PASS • SAVE 60% VS $4.99',
-    tier1Desc: 'Instantly unlocks your 9:16 phone lockscreen routine card, exact wait times between serums, and 4-Night phone bedtime reminders.',
-    tier2Tag: 'COMPLETE AM/PM ROUTINE RESCUE KIT',
-    tier2Desc: 'Printable Morning & Night Vanity Card PDF, full ingredient compatibility chart, and gentle pore-safe product swaps.',
-    tier3Tag: 'UNLIMITED SHELF & ESTHETICIAN PASS',
-    tier3Desc: 'Full year of unlimited ingredient checks, fungal-acne safe screening, pregnancy-safe filters, and seasonal routine updates.',
+    tier1Tag: 'SINGLE-ROUTINE PASS • $1.99 INSTANT UNLOCK',
+    tier1Desc: 'Instantly unlocks your 300-DPI Apple Wallet / Phone Shopping Swatch Card + AM/PM Ingredient Conflict Schedule + $240 Clinical Dupe Substitution List.',
+    tier2Tag: 'COMPLETE ATELIER VANITY DOSSIER ($9)',
+    tier2Desc: 'Complete Atelier Vanity Dossier: 300-DPI Apple Wallet / Phone Shopping Swatch Card + AM/PM Ingredient Conflict Schedule + $240 Clinical Dupe Substitution List.',
+    tier3Tag: 'FOR ESTHETICIANS & COLOR STYLISTS ($29)',
+    tier3Desc: 'For Estheticians & Color Stylists: Client White-Label Dossier Pass ($29) with unbranded client swatch cards, AM/PM schedules & dupe handouts.',
     battlecard: {
       heading: 'Why Skincare Lovers & Estheticians Choose DermLogic Over Generic Apps',
       colLegacy: '$150 Derm Visit / Guesswork', colManual: 'Single-Product Barcode Apps',
@@ -287,9 +287,9 @@ const VERTICAL_CONFIGS = {
       summary: 'Calculates free-acid bio-availability, Cu2+/Retinoid redox inactivation, and 4-night skin-cycling schedules.'
     },
     deliverableFiles: [
-      { file: 'am-pm-vanity-card-9x16.pdf', label: 'Phone Routine Card (PDF)', size: '48.2 KB', schema: 'Step-by-step Morning & Bedtime order tailored to your selected bottles with exact pH dry-down wait times', status: 'VALID' },
-      { file: '4-night-skin-cycling.ics', label: '4-Night Calendar (.ICS)', size: '3.1 KB', schema: '1-click Apple & Google Calendar rotation separating your conflicting acids, retinoids, and peptides across 4 nights', status: 'VALID' },
-      { file: 'non-comedogenic-swaps.csv', label: 'Pore-Safe Swaps (.CSV)', size: '5.5 KB', schema: '1-to-1 non-comedogenic, fungal-safe product swaps that layer cleanly with your active serums without pilling', status: 'VALID' }
+      { file: 'am-pm-vanity-card-9x16.pdf', label: '300-DPI Apple Wallet / Phone Shopping Swatch Card', size: '48.2 KB', schema: '300-DPI Apple Wallet & Phone Shopping Swatch Card + step-by-step Morning & Bedtime order', status: 'VALID' },
+      { file: '4-night-skin-cycling.ics', label: 'AM/PM Ingredient Conflict Schedule (.ICS)', size: '3.1 KB', schema: '1-click Apple & Google Calendar rotation separating conflicting acids, retinoids, and peptides across 4 nights', status: 'VALID' },
+      { file: 'non-comedogenic-swaps.csv', label: '$240 Clinical Dupe Substitution List (.CSV)', size: '5.5 KB', schema: '$240 Clinical Dupe Substitution List & non-comedogenic, fungal-safe product swaps', status: 'VALID' }
     ],
     remediationDiff: {
       beforeLine: 'Morning (7:30 AM): Gentle Rinse -> Antioxidant Serum (exact wait time locked in PDF) -> Barrier Moisturizer & SPF 50.',
@@ -866,7 +866,7 @@ function attachExactBaselinePack(app, options = {}) {
     const emailDispatched = await sendOneClickLeadEmail(email, summaryText, isTest);
     res.json({ ok: true, email, summary_sent: true, email_dispatched: emailDispatched, direct_buy_links: directBuyLinks, tripwire_offer: { tier: 'micro_pass', sku: `${cfg.moduleId}_micro_pass`, price_usd: 0.99, buy_url: directBuyLinks.micro_pass, flash_buy_url: directBuyLinks.flash_pass, headline: 'Summary Sent! Unblur All Remaining Rows + File for 99¢' } });
   }
-  app.post(['/api/leads/capture', '/api/leads/consumer', '/api/studio/trial-signup'], handleLeadCaptureAndFollowUp);
+  app.post(['/api/leads', '/api/leads/capture', '/api/leads/consumer', '/api/studio/trial-signup'], handleLeadCaptureAndFollowUp);
   let lastBackfillMs = 0;
   app.all('/api/leads/resend-backfill', async (req, res) => {
     const humanLeads = store.getHumanLeads();
@@ -919,7 +919,7 @@ function attachExactBaselinePack(app, options = {}) {
     const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList}. One-time payment, never renews.`;
 
     const buildInlineParams = () => {
-      const p = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&target=${encodeURIComponent(rawTarget)}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}&target=${encodeURIComponent(rawTarget)}`, 'mode': isOneTime ? 'payment' : 'subscription', 'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)), 'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][price_data][product_data][description]': prodDesc, 'line_items[0][quantity]': '1', 'custom_text[submit][message]': `Instant browser redirect: your ${filesList} download automatically the second payment completes.`, 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[target]': rawTarget, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
+      const p = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&target=${encodeURIComponent(rawTarget)}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}&target=${encodeURIComponent(rawTarget)}`, 'mode': isOneTime ? 'payment' : 'subscription', 'allow_promotion_codes': 'false', 'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)), 'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][price_data][product_data][description]': prodDesc, 'line_items[0][quantity]': '1', 'custom_text[submit][message]': `Instant browser redirect: your ${filesList} download automatically the second payment completes.`, 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[target]': rawTarget, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
       if (!isOneTime) p.set('line_items[0][price_data][recurring][interval]', verticalId === 'derm_logic' ? 'year' : 'month');
       if (userEmail && userEmail.includes('@')) p.set('customer_email', userEmail);
       return p;
@@ -930,7 +930,7 @@ function attachExactBaselinePack(app, options = {}) {
       try {
         let stData = null;
         if (!isOneTime && priceId && priceId.startsWith('price_')) {
-          const params = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}`, 'mode': 'subscription', 'line_items[0][price]': priceId, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
+          const params = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}`, 'mode': 'subscription', 'allow_promotion_codes': 'false', 'line_items[0][price]': priceId, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
           if (userEmail && userEmail.includes('@')) params.set('customer_email', userEmail);
           stData = await (await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: params })).json();
         }

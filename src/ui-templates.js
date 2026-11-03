@@ -426,16 +426,16 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
 
     <div id="checkoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" data-ui="checkout-dialog" onclick="if(event.target===this)closeCheckoutModal()">
       <div class="modal-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="badge-safe mono" id="modalBanditBadge">Instant Download · $1.99 Complete Routine Kit</span><button type="button" class="btn-secondary" style="padding:6px 14px;min-height:34px;" onclick="closeCheckoutModal()">Close</button></div>
-        <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Save Your Complete Morning &amp; Bedtime Routine Kit</h3>
-        <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:16px;">Includes your printable 4-Night Skin-Cycling schedule, pore-safe product swaps, and 9:16 bathroom mirror phone lock-screen card.</p>
-        <div style="margin-bottom:16px;"><a href="/buy/flash_pass" onclick="if(window.__dlBuyFromVanity)return window.__dlBuyFromVanity('flash_pass',this);if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none;padding:13px 20px;font-size:0.95rem;"><span>Download Complete 3-File Routine Kit ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="badge-safe mono" id="modalBanditBadge">Instant Download · Complete Atelier Vanity Dossier</span><button type="button" class="btn-secondary" style="padding:6px 14px;min-height:34px;" onclick="closeCheckoutModal()">Close</button></div>
+        <h3 id="checkoutModalTitle" class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Complete Atelier Vanity Dossier ($1.99 Single Pass / $9 Complete Dossier)</h3>
+        <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:16px;">Includes your <strong>300-DPI Apple Wallet / Phone Shopping Swatch Card + AM/PM Ingredient Conflict Schedule + $240 Clinical Dupe Substitution List</strong>.</p>
+        <div style="margin-bottom:16px;"><a href="/buy/flash_pass" onclick="if(window.__dlBuyFromVanity)return window.__dlBuyFromVanity('flash_pass',this);if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none;padding:13px 20px;font-size:0.95rem;"><span>Download 300-DPI Swatch Card + Conflict Schedule + $240 Dupe List ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a></div>
         <form id="checkoutForm" onsubmit="submitSelfServeCheckout(event)" style="padding-top:10px;">
           <input type="hidden" id="checkoutPlanId" value="onetime_499" /><input type="text" name="website_hp" id="checkoutHoneypot" style="display:none !important" tabindex="-1" autocomplete="off" />
-          <div style="margin-bottom:10px;"><label class="field-label" for="checkoutEmailInput">Email for Instant Routine Delivery</label><input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="reader@dermlogic.io" /></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;"><label class="prod-check-item selected" id="planOption499" onclick="selectCheckoutPlan('onetime_499')"><input type="radio" name="planChoice" value="onetime_499" checked /><span><strong style="display:block;">$1.99 Complete 3-File Kit</strong></span></label><label class="prod-check-item" id="planOption1999" onclick="selectCheckoutPlan('annual_1999')"><input type="radio" name="planChoice" value="annual_1999" /><span><strong style="display:block;">$4.99 Multi-Shelf Pass</strong></span></label></div>
+          <div style="margin-bottom:10px;"><label class="field-label" for="checkoutEmailInput">Email for Instant Routine &amp; Swatch Card Delivery</label><input id="checkoutEmailInput" type="email" required class="input-box" placeholder="you@skincare-ritual.com" value="reader@dermlogic.io" /></div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px;"><label class="prod-check-item selected" id="planOption499" onclick="selectCheckoutPlan('onetime_499')"><input type="radio" name="planChoice" value="onetime_499" checked /><span><strong style="display:block;font-size:0.78rem;">$1.99 Single Dossier Pass</strong></span></label><label class="prod-check-item" id="planOption1999" onclick="selectCheckoutPlan('annual_1999')"><input type="radio" name="planChoice" value="annual_1999" /><span><strong style="display:block;font-size:0.78rem;">$9 Complete Vanity Dossier</strong></span></label><label class="prod-check-item" id="planOptionStylist29" onclick="selectCheckoutPlan('stylist_29')"><input type="radio" name="planChoice" value="stylist_29" /><span><strong style="display:block;font-size:0.78rem;">$29 Esthetician &amp; Stylist Pass</strong></span></label></div>
           <button type="submit" id="checkoutSubmitBtn" class="btn-secondary" style="width:100%;">Complete Kit Checkout ($1.99) &rarr;</button>
-          <div class="mono" style="margin-top:8px;font-size:0.72rem;color:var(--sage-safe);text-align:center;">&#10003; Instant 3-File Download &middot; 30-Day 1-Click Refund Guarantee</div>
+          <div class="mono" style="margin-top:8px;font-size:0.72rem;color:var(--sage-safe);text-align:center;">&#10003; 300-DPI Apple Wallet Card + AM/PM Schedule + $240 Dupe List &middot; 30-Day Refund Guarantee</div>
         </form>
         <div id="vocPollBox" style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:0.73rem;color:var(--text-secondary);"><span>Missing something today?</span><span style="display:inline-flex;gap:4px;flex-wrap:wrap;"><button type="button" class="mono" style="background:var(--bg-oat);border:none;border-radius:999px;padding:3px 8px;font-size:0.69rem;cursor:pointer;color:var(--text-primary);" onclick="window.__dlVoteVoc('missing_bottle')">My bottle isn't listed</button><button type="button" class="mono" style="background:var(--bg-oat);border:none;border-radius:999px;padding:3px 8px;font-size:0.69rem;cursor:pointer;color:var(--text-primary);" onclick="window.__dlVoteVoc('want_dupes')">Want cheaper dupes</button><button type="button" class="mono" style="background:var(--bg-oat);border:none;border-radius:999px;padding:3px 8px;font-size:0.69rem;cursor:pointer;color:var(--text-primary);" onclick="window.__dlVoteVoc('just_browsing')">Just browsing</button></span></div>
         <div id="checkoutSuccessBox" style="display:none;margin-top:12px;padding:12px;background:var(--sage-bg);color:var(--sage-safe);"></div>
@@ -634,7 +634,7 @@ function renderAnalysisResultHtml(res) {
                 ${pmStepsHtml}
               </div>
               <button type="button" class="btn-primary" style="width:100%;font-size:0.74rem;padding:8px 10px;min-height:34px;margin-top:6px;background:#F3E1E5;color:#3A1F27;white-space:nowrap;text-align:center;" onclick="openCheckoutModal('onetime_499')">
-                <span>Save Morning &amp; Night Kit ($1.99) &rarr;</span>
+                <span>Get 300-DPI Swatch Card + Conflict Schedule + $240 Dupes ($1.99) &rarr;</span>
               </button>
             </div>
           </div>
@@ -644,11 +644,20 @@ function renderAnalysisResultHtml(res) {
               <span><strong style="color:var(--sage-safe);">✓ Why This Split Works:</strong> ${escapeHtml(topSummaryLine)}</span>
               <a href="${escapeHtml(topSwap.directUrl)}" data-sovrn-beacon="${escapeHtml(topSwap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="font-size:0.71rem;padding:3px 9px;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)} &nearr;</a>
             </div>
-            <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'workbench_tab1')" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0;" data-no-bag-inject="1">
-              <input type="email" required class="dl-inline-ics-email input-box" placeholder="Email my free 4-Night Schedule (.ICS) &amp; AM/PM link..." aria-label="Email my free 4-Night Schedule" style="flex:1;min-width:170px;padding:6px 10px;min-height:30px;font-size:0.75rem;background:var(--bg-surface);" />
-              <button type="submit" class="dl-inline-ics-btn btn-secondary mono" style="padding:5px 11px;min-height:30px;font-size:0.72rem;background:var(--rose-brand);color:var(--accent-ink);white-space:nowrap;">Send Free 4-Night Plan &rarr;</button>
+            <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'workbench_tab1')" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0;" data-no-bag-inject="1">
+              <span class="mono" style="width:100%;font-size:0.72rem;font-weight:700;color:var(--rose-brand);">Enter email ($0) to unmask 2 Clinical Dupes + your Top 4 Hex Swatches &amp; save your Routine:</span>
+              <input type="email" id="dl-inline-sample-email" required class="dl-inline-ics-email input-box" placeholder="Enter email ($0) to unmask 2 Clinical Dupes + your Top 4 Hex Swatches &amp; save your Routine" aria-label="Enter email ($0) to unmask 2 Clinical Dupes + your Top 4 Hex Swatches &amp; save your Routine" style="flex:1;min-width:170px;padding:6px 10px;min-height:30px;font-size:0.75rem;background:var(--bg-surface);" />
+              <button type="submit" class="dl-inline-ics-btn btn-secondary mono" style="padding:5px 11px;min-height:30px;font-size:0.72rem;background:var(--rose-brand);color:var(--accent-ink);white-space:nowrap;">Unmask 2 Dupes + 4 Swatches ($0) &rarr;</button>
               <span class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.71rem;color:var(--sage-safe);"></span>
             </form>
+            <div id="dl-unmasked-sample-dupes-swatches" style="display:none;padding:8px 10px;border-radius:12px;background:var(--sage-bg);font-size:0.74rem;color:var(--text-primary);gap:6px;flex-direction:column;">
+              <div><strong style="color:var(--sage-safe);">✓ Unmasked 2 Clinical Dupes:</strong> (1) Timeless 20% C+E+Ferulic ($26 vs. $182 SkinCeuticals &middot; Save $156) &middot; (2) Aestura Atobarrier 365 ($32 vs. $116 Triple Lipid &middot; Save $84)</div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><strong style="color:var(--rose-brand);">Top 4 Undertone Hex Swatches:</strong><span class="mono" style="padding:2px 7px;border-radius:99px;background:#F4E6DC;color:#3A1F27;font-size:0.68rem;">#F4E6DC Porcelain</span><span class="mono" style="padding:2px 7px;border-radius:99px;background:#EAD2C0;color:#3A1F27;font-size:0.68rem;">#EAD2C0 Neutral Silk</span><span class="mono" style="padding:2px 7px;border-radius:99px;background:#D9B69E;color:#3A1F27;font-size:0.68rem;">#D9B69E Warm Olive</span><span class="mono" style="padding:2px 7px;border-radius:99px;background:#B98D72;color:#FFF;font-size:0.68rem;">#B98D72 Golden Amber</span></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding-top:2px;font-size:0.72rem;color:var(--text-secondary);">
+              <span>Need client-ready PDF &amp; swatch handouts?</span>
+              <button type="button" class="mono" onclick="openCheckoutModal('stylist_29')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;font-size:0.72rem;padding:0;">For Estheticians &amp; Color Stylists: Client White-Label Dossier Pass ($29) &rarr;</button>
+            </div>
           </div>
           <button type="button" id="dl-btn-next-step-3" class="btn-secondary" style="display:none;" onclick="window.__dlSwitchResultStep(3)">Next</button>
         </div>
@@ -846,8 +855,12 @@ const CLIENT_SCRIPT = `
     const modal = document.getElementById('checkoutModal');
     if (modal) modal.style.display = 'flex';
     const emailEl = document.getElementById('checkoutEmailInput');
+    try {
+      const savedEm = (document.getElementById('dl-inline-sample-email') && document.getElementById('dl-inline-sample-email').value.trim()) || localStorage.getItem('dl_captured_email') || localStorage.getItem('eb_captured_email') || '';
+      if (emailEl && savedEm && savedEm.includes('@')) emailEl.value = savedEm;
+    } catch (_) {}
     if (emailEl) setTimeout(() => emailEl.focus(), 40);
-    fireMetaCapiEvent('StartTrial', planId === 'annual_1999' ? 19.99 : 4.99, { planId });
+    fireMetaCapiEvent('StartTrial', planId === 'stylist_29' ? 29.00 : (planId === 'annual_1999' ? 9.00 : 1.99), { planId });
   }
   function closeCheckoutModal() {
     const modal = document.getElementById('checkoutModal');
@@ -859,18 +872,11 @@ const CLIENT_SCRIPT = `
   function selectCheckoutPlan(planId) {
     const hidden = document.getElementById('checkoutPlanId');
     if (hidden) hidden.value = planId;
-    const p499 = document.getElementById('planOption499');
-    const p1999 = document.getElementById('planOption1999');
-    const btn = document.getElementById('checkoutSubmitBtn');
-    if (planId === 'annual_1999') {
-      if (p499) p499.classList.remove('selected');
-      if (p1999) p1999.classList.add('selected');
-      if (btn) btn.innerHTML = '<span>Complete Multi-Shelf Pass ($4.99) &rarr;</span>';
-    } else {
-      if (p499) p499.classList.add('selected');
-      if (p1999) p1999.classList.remove('selected');
-      if (btn) btn.innerHTML = '<span>Complete Kit Checkout ($1.99) &rarr;</span>';
-    }
+    const p499 = document.getElementById('planOption499'), p1999 = document.getElementById('planOption1999'), p29 = document.getElementById('planOptionStylist29'), btn = document.getElementById('checkoutSubmitBtn');
+    if (p499) p499.classList.toggle('selected', planId === 'onetime_499');
+    if (p1999) p1999.classList.toggle('selected', planId === 'annual_1999');
+    if (p29) p29.classList.toggle('selected', planId === 'stylist_29');
+    if (btn) btn.innerHTML = planId === 'stylist_29' ? '<span>Complete Client White-Label Dossier Pass ($29) &rarr;</span>' : (planId === 'annual_1999' ? '<span>Complete Atelier Vanity Dossier ($9) &rarr;</span>' : '<span>Complete Kit Checkout ($1.99) &rarr;</span>');
   }
   window.__dlVoteVoc = function(reason) {
     var box = document.getElementById('vocPollBox');
@@ -880,7 +886,7 @@ const CLIENT_SCRIPT = `
   async function submitSelfServeCheckout(ev) {
     ev.preventDefault();
     const planId = (document.getElementById('checkoutPlanId') || {}).value || 'onetime_499';
-    const email = (document.getElementById('checkoutEmailInput') || {}).value || 'patient@dermlogic.io';
+    const email = (document.getElementById('checkoutEmailInput') || {}).value || (localStorage.getItem('dl_captured_email') || localStorage.getItem('eb_captured_email') || 'patient@dermlogic.io');
     const website_hp = (document.getElementById('checkoutHoneypot') || {}).value || '';
     const btn = document.getElementById('checkoutSubmitBtn');
     if (btn) { btn.disabled = true; btn.innerHTML = '<span>Preparing Ritual Pass...</span>'; }
@@ -888,7 +894,7 @@ const CLIENT_SCRIPT = `
       const resp = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planId, email, website_hp, routineSummary: window.__DERMLOGIC_LAST_RESULT || {} })
+        body: JSON.stringify({ planId, email, customer_email: email, allow_promotion_codes: false, website_hp, routineSummary: window.__DERMLOGIC_LAST_RESULT || {} })
       });
       const res = await resp.json();
       const box = document.getElementById('checkoutSuccessBox');

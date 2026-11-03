@@ -640,31 +640,25 @@ const ENDOWMENT_CLIENT_SCRIPT = `
   };
 
   window.__dlCopyRedditRoutineHelp = function(btn) {
+    var hasEm = Boolean(window.__dlSampleEmailUnlocked || window.__ebIsUnlocked || (localStorage.getItem('dl_captured_email') || localStorage.getItem('eb_captured_email')));
+    if (!hasEm) {
+      if (window.__dlSwitchResultStep) window.__dlSwitchResultStep(2);
+      var emIn = document.getElementById('dl-inline-sample-email') || document.querySelector('.dl-inline-ics-email');
+      if (emIn) { emIn.focus(); if (emIn.scrollIntoView) emIn.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      if (btn) btn.textContent = 'Enter Email ($0) Above to Unmask Dupes & Copy →';
+      return;
+    }
     var checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map(function(cb) {
-      var lbl = cb.closest('.prod-check-item');
-      var st = lbl ? lbl.querySelector('strong') : null;
+      var lbl = cb.closest('.prod-check-item'), st = lbl ? lbl.querySelector('strong') : null;
       return st ? st.textContent.trim() : cb.value;
     });
     var skin = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
     var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim() || 'My AM/PM Routine';
     var res = window.__DERMLOGIC_LAST_RESULT || {};
     var conflicts = (res.conflicts || []).map(function(c) { return '- **Clash Flagged**: ' + (c.title || '') + ' -> *Fix*: ' + (c.resolution || 'Split AM & PM'); }).join('\\n');
-    var md = [
-      '**[Routine Help] ' + shelfName + ' (' + skin + ' skin) - Checked via DermLogic**',
-      '',
-      '**Current Bottles (' + checked.length + '):** ' + (checked.join(', ') || 'Custom INCI Stack'),
-      conflicts ? ('\\n**Active Clashes Spotted:**\\n' + conflicts) : '\\n**Verdict:** 0 Active Clashes (100% Barrier Safe)',
-      '',
-      '**Fixed AM / PM Order & 4-Night Schedule:** Checked at https://www.dermlogic.io'
-    ].join('\\n');
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(md).catch(function(){});
-    }
-    if (btn) {
-      var orig = btn.textContent;
-      btn.textContent = 'Copied [Routine Help] Markdown!';
-      setTimeout(function() { btn.textContent = orig; }, 3000);
-    }
+    var md = ['**[Routine Help] ' + shelfName + ' (' + skin + ' skin) - Checked via DermLogic**', '', '**Current Bottles (' + checked.length + '):** ' + (checked.join(', ') || 'Custom INCI Stack'), conflicts ? ('\\n**Active Clashes Spotted:**\\n' + conflicts) : '\\n**Verdict:** 0 Active Clashes (100% Barrier Safe)', '', '**Fixed AM / PM Order & 4-Night Schedule:** Checked at https://www.dermlogic.io'].join('\\n');
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(md).catch(function(){});
+    if (btn) { var orig = btn.textContent; btn.textContent = 'Copied [Routine Help] Markdown!'; setTimeout(function() { btn.textContent = orig; }, 3000); }
   };
 
   window.__dlIngProductMap = {
@@ -888,27 +882,19 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     var emIn = formEl ? formEl.querySelector('.dl-inline-ics-email') : null;
     var email = emIn && emIn.value ? emIn.value.trim() : '';
     if (!email) return false;
+    window.__dlSampleEmailUnlocked = true;
+    try { localStorage.setItem('dl_captured_email', email); localStorage.setItem('eb_captured_email', email); } catch (_) {}
+    var unmaskedBox = document.getElementById('dl-unmasked-sample-dupes-swatches');
+    if (unmaskedBox) unmaskedBox.style.display = 'flex';
     var btnEl = formEl ? formEl.querySelector('.dl-inline-ics-btn') : null;
     var statusEl = formEl ? formEl.querySelector('.dl-inline-ics-status') : null;
-    if (btnEl) { btnEl.textContent = '✓ Sent + .ICS Ready!'; btnEl.style.background = 'var(--sage-safe)'; }
+    if (btnEl) { btnEl.textContent = '✓ Dupes & 4 Swatches Unmasked!'; btnEl.style.background = 'var(--sage-safe)'; }
     if (statusEl) {
       statusEl.style.display = 'block';
-      statusEl.innerHTML = '✓ Free 4-Night .ICS Calendar &amp; 24h Restore Link sent to <strong>' + email.replace(/[<>&"']/g, '') + '</strong> &middot; <a href="/api/github-upgrade/skin-cycling.ics" download="dermlogic-4-night-skin-cycling.ics" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Download .ICS Now</a> &middot; <a href="/buy/micro_pass?source=post_ics_lead" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Save 9:16 Lock-Screen Card (99&cent;) &rarr;</a>';
+      statusEl.innerHTML = '✓ 2 Clinical Dupes + Top 4 Hex Swatches Unmasked &amp; Routine Saved for <strong>' + email.replace(/[<>&"']/g, '') + '</strong> &middot; <a href="/api/github-upgrade/skin-cycling.ics" download="dermlogic-4-night-skin-cycling.ics" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Download .ICS</a> &middot; <a href="/buy/flash_pass?email=' + encodeURIComponent(email) + '" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Get 300-DPI Apple Wallet Card + $240 Dupe List ($1.99) &rarr;</a>';
     }
-    fetch('/api/leads/capture', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'inline_ics_' + (sourceTag || 'web') })
-    }).catch(function() {});
-    try {
-      var dlLink = document.createElement('a');
-      dlLink.href = '/api/github-upgrade/skin-cycling.ics';
-      dlLink.download = 'dermlogic-4-night-skin-cycling.ics';
-      dlLink.style.display = 'none';
-      document.body.appendChild(dlLink);
-      dlLink.click();
-      setTimeout(function() { if (dlLink.parentNode) dlLink.parentNode.removeChild(dlLink); }, 600);
-    } catch (_) {}
+    fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'inline_sample_' + (sourceTag || 'web') }) }).catch(function() {});
+    try { var dlLink = document.createElement('a'); dlLink.href = '/api/github-upgrade/skin-cycling.ics'; dlLink.download = 'dermlogic-4-night-skin-cycling.ics'; dlLink.style.display = 'none'; document.body.appendChild(dlLink); dlLink.click(); setTimeout(function() { if (dlLink.parentNode) dlLink.parentNode.removeChild(dlLink); }, 600); } catch (_) {}
     return false;
   };
 `;

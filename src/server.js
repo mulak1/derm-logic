@@ -454,12 +454,12 @@ app.post('/api/meta-capi', (req, res) => {
 
 // 12. Self-Serve Stripe / Thompson-Sampling Paywall Checkout (POST /api/checkout)
 app.post('/api/checkout', async (req, res) => {
-  const { planId, email, website_hp, routineSummary } = req.body || {};
+  const { planId, email, customer_email, customerEmail, website_hp, routineSummary } = req.body || {};
   // Pre-Launch Checklist #18: Honeypot Spam Protection
   if (website_hp && String(website_hp).trim() !== '') {
     return res.status(400).json({ ok: false, error: 'Automated spam submission rejected.' });
   }
-  const cleanEmail = String(email || 'patient@dermlogic.io').trim();
+  const cleanEmail = String(customer_email || customerEmail || email || 'patient@dermlogic.io').trim();
   if (!cleanEmail.includes('@')) {
     return res.status(400).json({ ok: false, error: 'Please provide a valid email address.' });
   }
@@ -472,15 +472,16 @@ app.post('/api/checkout', async (req, res) => {
     cleanEmail.endsWith('@example.com') ||
     /HeadlessChrome|Playwright|Puppeteer|curl|node/i.test(ua);
 
+  const isStylist29 = planId === 'stylist_29' || planId === 'pro_b2b';
   const isAnnual = planId === 'annual_1999';
-  const isFlash199 = planId === 'flash_199' || planId === 'flash_pass';
-  const selectedPlanId = isAnnual ? 'annual_1999' : isFlash199 ? 'flash_199' : 'onetime_499';
-  const amountCents = isAnnual ? 1999 : isFlash199 ? 199 : 499;
-  const planName = isAnnual
-    ? '$19.99/yr Unlimited Shelf Scanner + Fungal-Acne & Rx Tracker'
-    : isFlash199
-      ? '$1.99 Complete 3-File AM/PM Glow Schedule, 4-Night Cycling Calendar & 9:16 Phone Card'
-      : '$4.99 One-Time Clinical Routine Rescue PDF & 9:16 Apple-Wallet Card';
+  const isFlash199 = planId === 'flash_199' || planId === 'flash_pass' || planId === 'onetime_499';
+  const selectedPlanId = isStylist29 ? 'stylist_29' : isAnnual ? 'annual_1999' : isFlash199 ? 'onetime_499' : 'onetime_499';
+  const amountCents = isStylist29 ? 2900 : isAnnual ? 900 : 199;
+  const planName = isStylist29
+    ? 'For Estheticians & Color Stylists: Client White-Label Dossier Pass ($29)'
+    : isAnnual
+      ? 'Complete Atelier Vanity Dossier: 300-DPI Apple Wallet / Phone Shopping Swatch Card + AM/PM Ingredient Conflict Schedule + $240 Clinical Dupe Substitution List ($9)'
+      : '300-DPI Apple Wallet / Phone Shopping Swatch Card + AM/PM Ingredient Conflict Schedule + $240 Clinical Dupe Substitution List ($1.99)';
   const armId = isAnnual ? 'arm_unlimited_1999' : 'arm_rescue_499';
 
   let orderId = `dl_ord_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
@@ -489,10 +490,11 @@ app.post('/api/checkout', async (req, res) => {
 
   if (!isAutomatedTest && process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith('sk_')) {
     try {
-      const priceId = isAnnual ? process.env.STRIPE_PRICE_ANNUAL_1999 : isFlash199 ? process.env.STRIPE_PRICE_FLASH_199 : process.env.STRIPE_PRICE_VANITY_499;
+      const priceId = isStylist29 ? process.env.STRIPE_PRICE_STYLIST_29 : isAnnual ? process.env.STRIPE_PRICE_ANNUAL_1999 : isFlash199 ? process.env.STRIPE_PRICE_FLASH_199 : process.env.STRIPE_PRICE_VANITY_499;
       const params = new URLSearchParams({
-        mode: isAnnual ? 'subscription' : 'payment',
+        mode: 'payment',
         customer_email: cleanEmail,
+        allow_promotion_codes: 'false',
         success_url: `${PUBLIC_URL}/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${PUBLIC_URL}/?checkout=cancelled`,
         'line_items[0][quantity]': '1'
@@ -503,7 +505,6 @@ app.post('/api/checkout', async (req, res) => {
         params.set('line_items[0][price_data][currency]', 'usd');
         params.set('line_items[0][price_data][unit_amount]', String(amountCents));
         params.set('line_items[0][price_data][product_data][name]', `DermLogic: ${planName}`);
-        if (isAnnual) params.set('line_items[0][price_data][recurring][interval]', 'year');
       }
       const sRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {
         method: 'POST',
