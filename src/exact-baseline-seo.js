@@ -439,7 +439,10 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
   };
 
   app.get('/sitemap-index.xml', (req, res) => {
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap><loc>${hostUrl}/sitemap-pages.xml</loc><lastmod>${todayIso}</lastmod></sitemap>\n  <sitemap><loc>${hostUrl}/sitemap-seo.xml</loc><lastmod>${todayIso}</lastmod></sitemap>\n  <sitemap><loc>${hostUrl}/sitemap-scans.xml</loc><lastmod>${todayIso}</lastmod></sitemap>\n</sitemapindex>`;
+    const shards = cfg.moduleId === 'derm_logic'
+      ? ['/sitemap-core.xml', '/sitemap-seo-guides.xml', '/sitemap-comparisons.xml', '/sitemap-bottles-actives.xml', '/sitemap-celebrities-concerns.xml', '/sitemap-scans.xml', '/sitemap-pages.xml', '/sitemap-seo.xml']
+      : ['/sitemap-pages.xml', '/sitemap-seo.xml', '/sitemap-scans.xml'];
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${shards.map((s) => `  <sitemap><loc>${hostUrl}${s}</loc><lastmod>${todayIso}</lastmod></sitemap>`).join('\n')}\n</sitemapindex>`;
     res.status(200).type('application/xml; charset=utf-8').send(xml);
   });
   app.get('/sitemap.xml', (req, res) => {

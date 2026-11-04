@@ -426,9 +426,8 @@ function attachAutonomousGrowthEngine(app, cfg, store, renderHtmlFn, classifyFn)
     const cleanSlug = isMd ? rawSlug.slice(0, -3) : rawSlug;
     const list = isCompare ? g.comparisons : g.tools;
     const exactMatch = list.find((entry) => entry.slug === cleanSlug);
-    const item = exactMatch || list[0];
-    if (!item) return next();
-    if (!exactMatch && !isMd) return res.redirect(301, `/${isCompare ? 'compare' : 'tools'}/${item.slug}`);
+    if (!exactMatch) return next();
+    const item = exactMatch;
 
     if (isMd) {
       res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
