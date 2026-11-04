@@ -39,7 +39,7 @@ function renderHomeSeoDiscoveryBlock() {
     </div>
     <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 24px;">
       <h3 class="serif-display" style="font-size:1.4rem;margin:0 0 12px;">Common Questions About Serum Routines &amp; Layering</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:12px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px;">
         ${faqs.map((f) => `<details style="background:var(--bg-surface);padding:12px 16px;"><summary class="serif-display" style="cursor:pointer;font-size:1.02rem;font-weight:400;color:var(--text-primary);">${escapeHtml(f.q)}</summary><p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.52;margin:8px 0 0;">${escapeHtml(f.a)}</p></details>`).join('')}
       </div>
     </div>
@@ -399,7 +399,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     <section class="section-block" id="actives-matrix">
       <div id="inci-table"></div>
       <div class="container">
-        <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,0.65fr);gap:24px;align-items:center;margin-bottom:24px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:24px;align-items:center;margin-bottom:24px;">
           <div>
             <h2 class="serif-display" style="font-size:clamp(1.6rem, 2.8vw, 2.2rem);margin-bottom:8px;">Inside every bottle.</h2>
             <p style="color:var(--text-secondary);font-size:var(--step-body);margin-bottom:14px;max-width:62ch;">
@@ -446,7 +446,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           </div>
           <a href="/directory" class="btn-primary"><span>Explore All ${seoPages.length} Layering Guides</span><span class="btn-icon-circle">&rarr;</span></a>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:22px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;margin-bottom:22px;">
           ${featuredSeoLinks}
         </div>
         <div style="padding:18px 22px;background:var(--bg-surface);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">

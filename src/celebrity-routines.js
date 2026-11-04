@@ -504,11 +504,11 @@ function getAllCelebrityRoutines() {
 function renderPersonaInteractiveWorkbenchAddons() {
   return {
     pouchBudgetToggleHtml: `
-      <div id="dl-pouch-budget-bar" style="display:inline-flex;align-items:center;gap:6px;flex-wrap:nowrap;">
-        <div role="group" aria-label="Switch between Cult Favorites and Affordable Dupes" style="display:inline-flex;gap:2px;background:var(--bg-oat);padding:2px;border-radius:999px;flex-wrap:nowrap;">
-          <button type="button" id="dl-btn-mode-luxury" class="vanity-light-btn active mono" style="padding:3px 8px;font-size:0.71rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('luxury', this)">Cult ($275)</button>
-          <button type="button" id="dl-btn-mode-dupe" class="vanity-light-btn mono" style="padding:3px 8px;font-size:0.71rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('dupe', this)">Smart Dupes ($83)</button>
-          <button type="button" id="dl-btn-mode-under35" class="vanity-light-btn mono" style="padding:3px 8px;font-size:0.71rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('under35', this)">Under $35</button>
+      <div id="dl-pouch-budget-bar" style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;max-width:100%;min-width:0;">
+        <div role="group" aria-label="Switch between Cult Favorites and Affordable Dupes" style="display:inline-flex;gap:2px;background:var(--bg-oat);padding:2px;border-radius:999px;flex-wrap:wrap;max-width:100%;min-width:0;">
+          <button type="button" id="dl-btn-mode-luxury" class="vanity-light-btn active mono" style="padding:3px 7px;font-size:0.7rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('luxury', this)">Cult ($275)</button>
+          <button type="button" id="dl-btn-mode-dupe" class="vanity-light-btn mono" style="padding:3px 7px;font-size:0.7rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('dupe', this)">Smart Dupes ($83)</button>
+          <button type="button" id="dl-btn-mode-under35" class="vanity-light-btn mono" style="padding:3px 7px;font-size:0.7rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('under35', this)">Under $35</button>
         </div>
       </div>
       <div id="dl-budget-dupe-banner" style="display:none;margin-top:6px;padding:7px 10px;border-radius:12px;background:var(--bg-surface);font-size:0.76rem;color:var(--text-primary);line-height:1.38;"></div>`,
