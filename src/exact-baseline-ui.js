@@ -196,6 +196,7 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     </details>
   </div>
   <div id="eb-sovrn-affiliate-strip" class="eb-panel-card"><h3 style="margin:0 0 10px 0;font-size:18px;font-family:${t.fontDisplay};font-weight:600;color:${t.textPrimary};">Recommended Companion Tools &amp; Products</h3><div class="eb-gbb-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">${affiliatesHtml}</div></div>
+  <div id="eb-ecosystem-handoff-banner" class="eb-panel-card" style="padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:14px;color:${t.textSecondary};"><span><strong>Checked your skincare actives?</strong> Find your 12-Season Color Palette &amp; $8 Makeup Dupes or plan a wedding reception:</span><a id="eb-ecosystem-handoff-link" href="/color-season-analyzer?utm_source=dermlogic&amp;utm_medium=ecosystem_handoff" style="color:${t.brandPrimary};font-weight:700;text-decoration:underline;">Open GlowIndex 12-Season Color &amp; Dupe Studio &rarr;</a></div>
   ${buildMobileSeoCrawlMeshHtml(cfg, reqPath)}
 </section>
 
