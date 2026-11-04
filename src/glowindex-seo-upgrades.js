@@ -330,6 +330,17 @@ function renderDualInlineVerdictSelector(comp, canonicalSlug, positionId) {
       <div class="gi-verdict-live-text" style="font-size:0.88rem;color:var(--text-primary);"><strong>Verdict (${comp.harmonyScore}/100 · pH Diff ${comp.deltaPh}):</strong> ${escapeHtml(comp.verdictLabel)}. Tap any skin-goal pill above to highlight the winning column.</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;"><button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml((comp.productIds && comp.productIds[0]) || 'skinceuticals-ce-ferulic')}','${escapeHtml((comp.productIds && comp.productIds[1]) || 'aestura-atobarrier-365')}'],'compare_${escapeHtml(canonicalSlug)}')" style="padding:8px 14px;font-size:0.8rem;min-height:36px;"><span>${escapeHtml(ctaBtnLabel)}</span><span class="btn-icon-circle">&rarr;</span></button><a class="btn-secondary mono gi-verdict-cta-link" href="/?products=${prodQuery}&amp;skin=combination&amp;ref=compare_${escapeHtml(canonicalSlug)}#analyzer" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(canonicalSlug)}',pos:'${escapeHtml(positionId)}'})" style="padding:8px 14px;font-size:0.8rem;min-height:36px;text-decoration:none;background:var(--bg-oat);"><span>Test in My Routine &rarr;</span></a></div>
     </div>
+    <div id="dl-compare-top-inline-unlock" style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border-hairline);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'compare_top_${escapeHtml(canonicalSlug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:1 1 320px;margin:0;">
+        <input type="email" required class="input-box mono dl-inline-ics-email" placeholder="Enter email to unblur Wait-Time Schedule &amp; save free AM/PM routine ($0)..." aria-label="Email to unblur wait time schedule and save free routine" style="flex:1 1 210px;padding:7px 12px;font-size:0.78rem;min-height:34px;border-radius:999px;" />
+        <button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;background:var(--rose-brand);color:#fff;border:none;font-weight:700;white-space:nowrap;">Unblur AM/PM Schedule ($0) &rarr;</button>
+        <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+      </form>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+        <a href="/buy/micro_pass?compare=${encodeURIComponent(canonicalSlug)}" onclick="if(window.__giFireBeacon)window.__giFireBeacon('checkout_initiated',{tier:'micro_pass',slug:'${escapeHtml(canonicalSlug)}'})" class="btn-secondary mono" style="padding:7px 12px;min-height:34px;font-size:0.76rem;border-radius:999px;text-decoration:none;white-space:nowrap;">📲 99&cent; Lock-Screen Card &rarr;</a>
+        <a href="/buy/flash_pass?compare=${encodeURIComponent(canonicalSlug)}" onclick="if(window.__giFireBeacon)window.__giFireBeacon('checkout_initiated',{tier:'flash_pass',slug:'${escapeHtml(canonicalSlug)}'})" class="btn-primary mono" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;text-decoration:none;white-space:nowrap;"><span>⚡ $1.99 Full 3-File Kit &rarr;</span></a>
+      </div>
+    </div>
   </div>`;
 }
 
@@ -528,7 +539,23 @@ const GLOWINDEX_CLIENT_SCRIPT = `<script id="gi-glow-session-script">
     } catch (_) { return {}; }
   }
   window.__giFireBeacon = function(stage, meta) {
-    try { fetch('/api/seo/beacon', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stage: stage, path: window.location.pathname, meta: meta || {} }) }).catch(function(){}); } catch (_) {}
+    try {
+      fetch('/api/seo/beacon', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stage: stage, path: window.location.pathname, meta: meta || {} }) }).catch(function(){});
+      var mappedEvent = stage === 'tool_initiated' ? 'calculate' : (stage === 'checkout_initiated' ? 'checkout_intent' : (stage === 'p_seo_cta_click' ? 'view_paywall' : ''));
+      if (mappedEvent) {
+        fetch('/api/analytics/event', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          keepalive: true,
+          body: JSON.stringify({
+            event_type: mappedEvent,
+            page_url: window.location.pathname + window.location.search,
+            device_type: window.innerWidth <= 768 ? 'mobile' : 'desktop',
+            metadata: Object.assign({ pseo_stage: stage, js_hydrated: true }, meta || {})
+          })
+        }).catch(function(){});
+      }
+    } catch (_) {}
   };
   window.__giSelectCompareVerdict = function(col, skinProfile, winnerName, winnerId, prodQuery, btn) {
     var allBtns = document.querySelectorAll('.gi-verdict-btn');
