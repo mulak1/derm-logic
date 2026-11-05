@@ -876,6 +876,10 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     } catch (_) {}
   }, { passive: true });
 
+  window.__dlFocusSampleEmail = function() {
+    var inp = document.getElementById('dl-inline-sample-email') || document.querySelector('.dl-inline-ics-email');
+    if (inp) { inp.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function() { inp.focus(); }, 80); }
+  };
   window.__dlCaptureFreeIcsLead = function(ev, sourceTag) {
     if (ev && ev.preventDefault) ev.preventDefault();
     var formEl = (ev && ev.target && ev.target.tagName === 'FORM') ? ev.target : document.querySelector('.dl-inline-ics-form');
@@ -884,6 +888,8 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     if (!email) return false;
     window.__dlSampleEmailUnlocked = true;
     try { localStorage.setItem('dl_captured_email', email); localStorage.setItem('eb_captured_email', email); } catch (_) {}
+    document.querySelectorAll('.dl-locked-badge-c2').forEach(function(el) { el.style.display = 'none'; });
+    document.querySelectorAll('.dl-unlocked-c2-proof').forEach(function(el) { el.style.display = 'block'; });
     var unmaskedBox = document.getElementById('dl-unmasked-sample-dupes-swatches');
     if (unmaskedBox) unmaskedBox.style.display = 'flex';
     var btnEl = formEl ? formEl.querySelector('.dl-inline-ics-btn') : null;

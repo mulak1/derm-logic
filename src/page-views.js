@@ -243,8 +243,13 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
               <span id="dl-spark-savings-pill" class="badge-safe mono" style="font-size:13px;padding:4px 10px;font-weight:700;">Unmasked Proof #1 &middot; Save $156</span>
             </div>
             <div id="dl-spark-unmasked-proof" style="font-size:13.5px;line-height:1.42;color:var(--text-primary);">
-              <strong style="color:var(--rose-brand);">Retinol + AHA/Vit C Clash:</strong> Low-acid pH 3.4 clashes with pH 5.8 night retinoid &mdash; <strong>Fix:</strong> Move Vitamin C to 7:30 AM &amp; Retinol to 9:30 PM (Swap $182 C E Ferulic &rarr; $26 Timeless Dupe).
+              <strong style="color:var(--rose-brand);">✓ Conflict #1 (Free Proof):</strong> Low-acid pH 3.4 clashes with pH 5.8 night retinoid &mdash; <strong>Fix:</strong> Move Vitamin C to 7:30 AM &amp; Retinol to 9:30 PM (Swap $182 C E Ferulic &rarr; $26 Timeless Dupe).
             </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+              <button type="button" id="dl-locked-badge-conflict2" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:6px 11px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:12.5px;font-weight:600;border:none;cursor:pointer;filter:none !important;">🔒 Conflict #2 &amp; $9 Clinical Dupe Swap — Enter Email to Reveal Free ($0) ↑</button>
+              <button type="button" id="dl-locked-badge-routine7" class="dl-locked-spec-badge mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:6px 11px;border-radius:10px;background:var(--bg-surface);color:var(--text-primary);font-size:12.5px;font-weight:600;border:none;cursor:pointer;filter:none !important;">🔒 Complete AM/PM Calendar &amp; Dupe Sheet ($7 Pack) ↑</button>
+            </div>
+            <div id="dl-unlocked-conflict2-box" class="dl-unlocked-c2-proof" style="display:none;padding:8px 11px;border-radius:10px;background:var(--sage-bg);color:var(--sage-safe);font-size:12.5px;font-weight:600;">✓ Conflict #2 Unlocked ($0): Glycolic 7% + BHA 2% Over-Exfoliation Trap &mdash; Alternate Night 1 Polish &amp; Swap $116 Triple Lipid &rarr; $32 Aestura 365 Dupe (Save $84).</div>
           </div>
 
           <div id="dl-screen1-group3" style="padding:15px 18px;border-radius:16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;">

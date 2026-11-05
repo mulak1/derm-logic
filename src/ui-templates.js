@@ -165,8 +165,15 @@ const SHARED_CSS = `
   /* Closing Editorial Footer */
   .site-footer { padding: 72px 0 48px; background: var(--bg-deep); color: var(--ink-on-deep); font-size: var(--step-small); }
   .footer-wordmark { font-size: clamp(3.25rem, 11vw, 9.5rem); font-weight: 300; line-height: 0.88; letter-spacing: -0.04em; margin: 36px 0 24px; color: var(--ink-on-deep); }
-  .cookie-banner { width: 100%; background: var(--bg-oat); padding: 14px 0; display: none; }
-  .cookie-banner-inner { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+  .cookie-banner { width: 100%; background: var(--bg-oat); padding: 10px 0; display: none; }
+  .cookie-banner-inner { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: nowrap; }
+  @media (max-width: 768px) {
+    #cookieBanner.cookie-banner { position: fixed !important; left: 10px !important; right: 10px !important; bottom: 10px !important; width: auto !important; max-width: calc(100vw - 20px) !important; box-sizing: border-box !important; padding: 8px 12px !important; font-size: 11.5px !important; line-height: 1.3 !important; border-radius: 10px !important; z-index: 9999 !important; max-height: 54px !important; box-shadow: 0 8px 24px rgba(0,0,0,0.22); }
+    #cookieBanner .cookie-banner-inner { padding: 0 !important; gap: 8px !important; flex-wrap: nowrap !important; width: 100% !important; }
+    #cookieBanner .cookie-banner-inner > div:first-child { font-size: 11.5px !important; line-height: 1.25 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; min-width: 0 !important; flex: 1 !important; }
+    #cookieBanner button { padding: 5px 9px !important; font-size: 11.5px !important; min-height: 28px !important; white-space: nowrap !important; }
+  }
+  .dl-locked-spec-badge { filter: none !important; }
   .modal-backdrop { position: fixed; inset: 0; background: rgba(12, 10, 8, 0.65); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 80; }
   .modal-card { background: var(--bg-surface); max-width: 560px; width: 100%; padding: 32px; }
 
@@ -621,7 +628,7 @@ function renderAnalysisResultHtml(res) {
 
         <!-- Tab 1 (Default Active): Unmasked Primary Clash Proof + Spacious Side-by-Side Morning & Bedtime Order + 1 Calm Summary Card -->
         <div id="dl-res-step-2" style="display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;flex:1;"><span id="walletConflicts" style="display:none;"></span>
-          ${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}</div>` : ''}
+          ${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;"><button type="button" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;">🔒 Conflict #2 &amp; $9 Clinical Dupe Swap — Enter Email to Reveal Free ($0) ↑</button><button type="button" class="dl-locked-spec-badge mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--bg-canvas);color:var(--text-primary);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;">🔒 Complete AM/PM Calendar &amp; Dupe Sheet ($7 Pack) ↑</button></div><div class="dl-unlocked-c2-proof" style="display:none;margin-top:4px;padding:7px 10px;border-radius:10px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.75rem;font-weight:600;">✓ Conflict #2 Unlocked ($0): Secondary pH &amp; Barrier Over-Exfoliation Swap Revealed + $32 Aestura 365 Dupe.</div></div>` : ''}
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;min-width:0;flex:1;" id="appleWalletCardPreview">
             <div style="padding:16px;border-radius:18px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
