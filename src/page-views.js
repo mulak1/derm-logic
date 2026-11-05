@@ -254,7 +254,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
 
           <div id="dl-screen1-group3" style="padding:15px 18px;border-radius:16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;">
             <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'screen1_spark')" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;" data-no-bag-inject="1">
-              <input type="email" id="dl-inline-sample-email" required class="dl-inline-ics-email input-box" placeholder="Enter email ($0) to unmask 2 Dupes + 4 Hex Swatches..." aria-label="Enter email ($0) to unmask 2 Clinical Dupes + your Top 4 Hex Swatches &amp; save your Routine" style="flex:1 1 200px;min-width:0;padding:8px 12px;min-height:38px;font-size:13.5px;background:var(--bg-surface);" />
+              <input type="email" id="dl-inline-sample-email" required class="dl-inline-ics-email input-box" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email ($0) to unmask 2 Clinical Dupes + your Top 4 Hex Swatches &amp; save your Routine" style="flex:1 1 200px;min-width:0;padding:8px 12px;min-height:38px;font-size:13.5px;background:var(--bg-surface);" />
               <button type="submit" id="dl-screen1-email-btn" class="dl-inline-ics-btn btn-secondary mono" style="padding:8px 14px;min-height:38px;font-size:13.5px;background:var(--rose-brand);color:var(--accent-ink);font-weight:600;white-space:nowrap;">Unmask 2 Dupes + 4 Swatches ($0) &rarr;</button>
               <span class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:13px;color:var(--sage-safe);"></span>
             </form>
