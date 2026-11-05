@@ -515,7 +515,7 @@ function createTelemetryStore(dataDir, moduleId) {
       const seoBurstUrls = new Set(baseClean.filter((e) => e.page_url && e.page_url.startsWith('/seo/') && Number(e.meta && e.meta.vw) === 1024 && !(e.meta && e.meta.ref)).filter((e, _, arr) => arr.filter((x) => x.page_url === e.page_url && Math.abs(new Date(x.created_at).getTime() - new Date(e.created_at).getTime()) <= 5000).length >= 3).map((e) => `${e.page_url}|${Math.floor(new Date(e.created_at).getTime() / 10000)}`));
       const isWrsBurst = (e) => Boolean(e.page_url && seoBurstUrls.has(`${e.page_url}|${Math.floor(new Date(e.created_at).getTime() / 10000)}`));
       const jsVerifiedIps = new Set(baseClean.filter((e) => !isWrsBurst(e) && (e.event_type === 'view_paywall' || e.event_type === 'checkout_intent' || e.event_type === 'session_exit' || Boolean(e.meta && (e.meta.js_hydrated || e.meta.vid)))).map((e) => e.client_ip));
-      const isJsVerifiedHuman = (e) => isWrsBurst(e) ? false : ((e.event_type === 'visit' || e.event_type === 'calculate') ? (jsVerifiedIps.has(e.client_ip) || Boolean(e.meta && (e.meta.js_hydrated || e.meta.vid)) || (nowMs - new Date(e.created_at).getTime() <= 20000)) : true);
+      const isJsVerifiedHuman = (e) => isWrsBurst(e) ? false : ((e.event_type === 'visit' || e.event_type === 'calculate') ? (jsVerifiedIps.has(e.client_ip) || Boolean(e.meta && (e.meta.js_hydrated || e.meta.vid))) : true);
       const unhydratedAll = baseClean.filter((e) => !isJsVerifiedHuman(e));
       const rawCandidates = baseClean.filter(isJsVerifiedHuman);
       const humanEvents = []; const seenPw = new Map(), seenVis = new Map();

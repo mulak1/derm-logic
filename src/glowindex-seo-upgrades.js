@@ -543,16 +543,24 @@ const GLOWINDEX_CLIENT_SCRIPT = `<script id="gi-glow-session-script">
       fetch('/api/seo/beacon', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stage: stage, path: window.location.pathname, meta: meta || {} }) }).catch(function(){});
       var mappedEvent = stage === 'tool_initiated' ? 'calculate' : (stage === 'checkout_initiated' ? 'checkout_intent' : (stage === 'p_seo_cta_click' ? 'view_paywall' : ''));
       if (mappedEvent) {
+        var evPayload = JSON.stringify({
+          event_type: mappedEvent,
+          page_url: window.location.pathname + window.location.search,
+          device_type: window.innerWidth <= 768 ? 'mobile' : 'desktop',
+          meta: Object.assign({ pseo_stage: stage, js_hydrated: 1 }, meta || {}),
+          metadata: Object.assign({ pseo_stage: stage, js_hydrated: 1 }, meta || {})
+        });
+        fetch('/api/telemetry/event', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          keepalive: true,
+          body: evPayload
+        }).catch(function(){});
         fetch('/api/analytics/event', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           keepalive: true,
-          body: JSON.stringify({
-            event_type: mappedEvent,
-            page_url: window.location.pathname + window.location.search,
-            device_type: window.innerWidth <= 768 ? 'mobile' : 'desktop',
-            metadata: Object.assign({ pseo_stage: stage, js_hydrated: true }, meta || {})
-          })
+          body: evPayload
         }).catch(function(){});
       }
     } catch (_) {}
