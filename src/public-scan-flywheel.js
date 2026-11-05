@@ -47,7 +47,7 @@ const FLYWHEEL_SEED = {
     ]
   },
   derm_logic: {
-    cnnModel: 'PaddleOCR-v4 INCI Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)',
+    cnnModel: 'PaddleOCR-v4 Ingredient Label Reader + MediaPipe 468-Zone Erythema CNN (11ms)',
     cnnSensorLabel: 'Ingredient Label & Skin Barrier Safety Check',
     inputPlaceholder: 'VitC+Cu, Tret+BPO, Retinol+Glycolic, or any routine...',
     entities: [
@@ -306,7 +306,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
         <span style="font-size:13px;font-weight:600;color:${idx === 0 ? esc(primaryCol) : safeCol};">${medals[idx]}</span>
         <span style="padding:3px 10px;border-radius:${t.radiusPill || '0px'};background:${safeSoft};color:${safeCol};font-variant-numeric:tabular-nums;font-size:13px;font-weight:600;">${esc(item.grade)} (${item.score}/100)</span>
       </div>
-      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:18px;font-weight:500;color:${esc(t.textPrimary)};text-decoration:none;display:block;margin-bottom:4px;">${esc(item.target)} ↗</a>
+      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:18px;font-weight:500;color:${esc(t.textPrimary)};text-decoration:none;display:block;margin-bottom:4px;">${esc(item.target)} →</a>
       <div style="font-size:13.5px;font-weight:600;color:${esc(primaryCol)};margin-bottom:6px;">${esc(item.kpi1)} • ${esc(item.kpi2)}</div>
       <div style="width:100%;height:7px;border-radius:${t.radiusPill || '0px'};background:${t.border || 'var(--border-hairline)'};overflow:hidden;margin-bottom:8px;"><div style="width:${item.score}%;height:100%;background:${safeCol};border-radius:${t.radiusPill || '0px'};"></div></div>
       <p style="font-size:13.5px;color:${esc(t.textSecondary)};margin:0;line-height:1.45;">${esc(item.cnnReadout)}</p>
@@ -323,7 +323,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
     const rowTier = isTop ? 'fame' : 'fix';
     return `<tr data-lb-tier="${rowTier}" data-lb-text="${esc((item.target + ' ' + item.kpi1 + ' ' + item.kpi2 + ' ' + item.cnnReadout + ' ' + item.issue).toLowerCase())}">
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-weight:600;font-size:14px;">#${idx + 1}</td>
-    <th scope="row" style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(primaryCol)};font-weight:600;text-decoration:none;">${esc(item.target)} ↗</a></th>
+    <th scope="row" style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(primaryCol)};font-weight:600;text-decoration:none;">${esc(item.target)} →</a></th>
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};min-width:150px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-variant-numeric:tabular-nums;font-weight:600;font-size:14px;color:${barColor};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:6px;background:${t.border || 'var(--border-hairline)'};border-radius:${t.radiusPill || '0px'};overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:500;">${esc(item.kpi1)} • ${esc(item.kpi2)}</td>
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-size:13.5px;color:${esc(t.textSecondary)};">${esc(item.cnnReadout)}</td>

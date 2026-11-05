@@ -73,9 +73,9 @@ function loadVerticalSeoCatalog(cfg, srcDir) {
         for (const p of list) {
           entries.push({
             slug: p.slug,
-            title: String(p.title || p.slug),
-            category: p.category || p.pageType || 'Clinical INCI & pH Compatibility',
-            summary: String(p.summary || p.metaDescription || p.conflictHighlights || cfg.explainerText).slice(0, 158)
+            title: String(p.title || p.slug).replace(/\bINCI\b/g, 'Ingredients'),
+            category: String(p.category || p.pageType || 'Ingredient & pH Compatibility').replace(/\bINCI\b/g, 'Ingredient'),
+            summary: String(p.summary || p.metaDescription || p.conflictHighlights || cfg.explainerText).replace(/\bINCI\b/g, 'ingredient list').slice(0, 158)
           });
         }
       }

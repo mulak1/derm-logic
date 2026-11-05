@@ -546,8 +546,8 @@ function renderPersonaInteractiveWorkbenchAddons() {
             <span id="dl-timer-readout" style="font-size:0.79rem;color:var(--text-secondary);display:block;">Tap a timer while doing your skincare so layers absorb smoothly without pilling:</span>
           </div>
           <div style="display:inline-flex;gap:5px;flex-wrap:wrap;">
-            <button type="button" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:25px;" onclick="window.__dlStartMirrorTimer(60, '60-Second Serum Wait')">&#9201; 60s Vitamin C / Toner Wait</button>
-            <button type="button" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:25px;" onclick="window.__dlStartMirrorTimer(600, '10-Minute Dry-Skin Retinol Wait')">&#9201; 10m Dry-Skin Retinol Wait</button>
+            <button type="button" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:25px;" onclick="window.__dlStartMirrorTimer(60, '60-Second Serum Wait')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>60s Vitamin C / Toner Wait</button>
+            <button type="button" class="vanity-light-btn mono" style="padding:4px 9px;font-size:0.73rem;min-height:25px;" onclick="window.__dlStartMirrorTimer(600, '10-Minute Dry-Skin Retinol Wait')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>10m Dry-Skin Retinol Wait</button>
           </div>
         </div>
         <div style="height:6px;border-radius:999px;background:var(--bg-oat);overflow:hidden;"><div id="dl-mirror-timer-fill" style="width:0%;height:100%;background:linear-gradient(90deg,var(--rose-brand),#10B981);transition:width 0.3s linear;"></div></div>

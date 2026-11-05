@@ -858,7 +858,7 @@ function attachExactBaselinePack(app, options = {}) {
     const email = String(req.body?.email || req.body?.customerEmail || '').trim();
     const summaryText = String(req.body?.summaryText || `${cfg.brandName} Diagnostic Summary & Row #4 Reveal`).trim();
     const utmSource = String(req.body?.utmSource || req.path.replace('/api/', '') || 'exit_downsell').trim();
-    if (!email || !email.includes('@')) return res.status(400).json({ ok: false, error: 'Please enter a valid email address.' });
+    if (!email || !email.includes('@') || email.length > 254) return res.status(400).json({ ok: false, error: 'Please enter a valid email address.' });
     const { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, email);
     const directBuyLinks = buildBuyLinks(email);
     store.recordLead({ email, summaryText: `${summaryText} [Buy: ${directBuyLinks.micro_pass}]`, utmSource, isTest, isOwnerIp, clientIp });

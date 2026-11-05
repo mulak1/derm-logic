@@ -663,7 +663,7 @@ const CLINICAL_INGREDIENTS = [
     activeClass: 'comedogenic_lipid',
     phMin: 4.5, phMax: 7.5, pka: null, molecularWeightDa: 639.00,
     comedogenicity: 4, irritationIndex: 0, malasseziaTrigger: true, pregnancySafe: 'SAFE',
-    functionRole: 'Lauric-Rich Triglyceride Occlusive',
+    functionRole: 'Lauric-Rich Triglyceride Moisture Seal',
     clinicalMechanism: 'Contains ~48% C12 lauric acid triglycerides; heavily comedogenic (4/5) on facial sebaceous zones and feeds Malassezia.'
   },
   {
@@ -676,7 +676,7 @@ const CLINICAL_INGREDIENTS = [
     phMin: 4.5, phMax: 7.5, pka: null, molecularWeightDa: 861.40,
     comedogenicity: 4, irritationIndex: 0, malasseziaTrigger: true, pregnancySafe: 'SAFE',
     functionRole: 'Oleic/Stearic Triglyceride Butter',
-    clinicalMechanism: 'Grade 4/5 comedogenicity due to dense C18 oleic/stearic triglycerides that trap desquamating corneocytes.'
+    clinicalMechanism: 'Grade 4/5 comedogenicity due to dense C18 oleic/stearic triglycerides that trap shedding surface skin cells.'
   },
   {
     id: 'acetylated-lanolin',
@@ -687,7 +687,7 @@ const CLINICAL_INGREDIENTS = [
     activeClass: 'comedogenic_ester',
     phMin: 4.5, phMax: 7.5, pka: null, molecularWeightDa: 450.00,
     comedogenicity: 4, irritationIndex: 2, malasseziaTrigger: true, pregnancySafe: 'SAFE',
-    functionRole: 'Modified Wool-Wax Occlusive',
+    functionRole: 'Modified Wool-Wax Moisture Seal',
     clinicalMechanism: 'Penetrates follicular infundibulum more deeply than pure lanolin; Grade 4/5 comedogenic and contact allergen.'
   },
   {
@@ -747,7 +747,7 @@ const CLINICAL_INGREDIENTS = [
     activeClass: 'silicone',
     phMin: 3.0, phMax: 8.0, pka: null, molecularWeightDa: 740.00,
     comedogenicity: 1, irritationIndex: 0, malasseziaTrigger: false, pregnancySafe: 'SAFE',
-    functionRole: 'Breathable Siloxane Occlusive',
+    functionRole: 'Breathable Siloxane Moisture Seal',
     clinicalMechanism: 'Carbon-free Si-O backbone cannot be digested by C. acnes or Malassezia; reduces TEWL without clogging pores.'
   },
   {
@@ -760,7 +760,7 @@ const CLINICAL_INGREDIENTS = [
     phMin: 4.0, phMax: 7.5, pka: null, molecularWeightDa: 46.07,
     comedogenicity: 0, irritationIndex: 3, malasseziaTrigger: false, pregnancySafe: 'SAFE',
     functionRole: 'Volatile Penetration Enhancer',
-    clinicalMechanism: 'In top 5 INCI positions, extracts intercellular stratum corneum lipids and amplifies retinoid/acid stinging.'
+    clinicalMechanism: 'In top 5 Ingredient List positions, extracts moisture barrier lipids and amplifies retinoid/acid stinging.'
   },
   {
     id: 'fragrance-limonene',

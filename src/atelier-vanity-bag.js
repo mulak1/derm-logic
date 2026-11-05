@@ -670,7 +670,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           var bPriceMatch = currentBottle && currentBottle.label ? currentBottle.label.match(/\$(\d+)/) : null;
           var bPriceNum = bPriceMatch ? Number(bPriceMatch[1]) : 32;
           var restockPartner = bPriceNum <= 26 ? 'amazon' : 'dermstore';
-          var restockLabel = bPriceNum <= 26 ? ('Shop $' + bPriceNum + ' Dupe (Amazon/Ulta) ↗') : ('Shop Bottle ($' + bPriceNum + ') ↗');
+          var restockLabel = bPriceNum <= 26 ? ('Shop $' + bPriceNum + ' Dupe (Amazon/Ulta) →') : ('Shop Bottle ($' + bPriceNum + ') →');
           var nextBtnHtml = idx < 4
             ? '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + nextIdx + ')" style="padding:5px 11px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Next Bottle (0' + (nextIdx + 1) + ') &rarr;</button>'
             : '<button type="button" class="mono" onclick="window.__dlSetDossierTab(\\'pass\\')" style="padding:5px 11px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);border:none;font-size:0.74rem;font-weight:600;cursor:pointer;white-space:nowrap;">Preview 9:16 Card &rarr;</button>';
@@ -756,7 +756,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         passPanel.innerHTML = '<div style="background:linear-gradient(155deg,#3A1F27 0%,#28141A 100%);color:#FDF8F6;border-radius:20px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;border:none;">'
           + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><div><span class="mono" style="font-size:0.68rem;color:#EED6DC;font-weight:700;letter-spacing:0.06em;display:block;">ATELIER 9:16 LOCK-SCREEN WALLPAPER</span><span style="font-size:0.74rem;color:#F3E1E5;">Tap AM or PM to flip your live phone lock-screen</span></div>'
           + '<div style="display:inline-flex;background:rgba(255,255,255,0.1);border-radius:999px;padding:3px;">'
-            + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'am\\')" style="padding:5px 10px;border-radius:999px;font-size:0.71rem;border:none;cursor:pointer;background:' + (isAm ? 'var(--rose-brand)' : 'transparent') + ';color:#FDF8F6;font-weight:700;">☀ 7:30 AM</button>'
+            + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'am\\')" style="padding:5px 10px;border-radius:999px;font-size:0.71rem;border:none;cursor:pointer;background:' + (isAm ? 'var(--rose-brand)' : 'transparent') + ';color:#FDF8F6;font-weight:700;">7:30 AM</button>'
             + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'pm\\')" style="padding:5px 10px;border-radius:999px;font-size:0.71rem;border:none;cursor:pointer;background:' + (!isAm ? '#C9A45A' : 'transparent') + ';color:' + (!isAm ? '#3A1F27' : '#FDF8F6') + ';font-weight:700;">☾ 9:30 PM</button>'
           + '</div></div>'
           + '<div style="max-width:340px;width:100%;margin:0 auto;border-radius:24px;padding:7px;background:linear-gradient(145deg,#5A303D,#28141A);box-shadow:0 14px 32px rgba(58,31,39,0.36);">'

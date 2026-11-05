@@ -226,28 +226,28 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div id="dl-screen1-group1" style="display:flex;flex-direction:column;gap:8px;">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
               <span class="badge-clash mono" style="font-size:13px;padding:4px 10px;">Cosmetic Chemist Shelf X-Ray &middot; ${products.length} Cult Bottles</span>
-              <span class="mono" style="font-size:13px;color:var(--sage-safe);font-weight:600;">&#9679; JCAD/PubMed &amp; 2026 INCI Verified</span>
+              <span class="mono" style="font-size:13px;color:var(--sage-safe);font-weight:600;">&#9679; JCAD/PubMed &amp; 2026 Ingredient List Verified</span>
             </div>
             <h1 class="hero-h1" style="font-size:clamp(1.38rem,2.3vw,1.95rem);line-height:1.18;margin:0;max-width:none;">Is your $280 skincare shelf secretly canceling itself out?</h1>
             <div id="dl-spark-tester-bar" role="group" aria-label="1-Tap AM/PM Conflict Spark Tester" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-              <button type="button" class="vanity-light-btn active mono" data-spark="retinol-aha" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('retinol-aha','viral-tiktok-destroyer',this)">&#9889; Retinol + AHA/Vit C</button>
-              <button type="button" class="vanity-light-btn mono" data-spark="copper-vitc" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('copper-vitc','copper-vitc-oxidation',this)">&#129514; Copper + Vit C</button>
-              <button type="button" class="vanity-light-btn mono" data-spark="tret-bpo" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('tret-bpo','viral-tiktok-destroyer',this)">&#128293; Tretinoin + BPO</button>
-              <button type="button" class="vanity-light-btn mono" data-spark="calm-barrier" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('calm-barrier','glass-skin-recovery',this)">&#10024; Calm Barrier Split</button>
+              <button type="button" class="vanity-light-btn active mono" data-spark="retinol-aha" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('retinol-aha','viral-tiktok-destroyer',this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Retinol + AHA/Vit C</button>
+              <button type="button" class="vanity-light-btn mono" data-spark="copper-vitc" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('copper-vitc','copper-vitc-oxidation',this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>Copper + Vit C</button>
+              <button type="button" class="vanity-light-btn mono" data-spark="tret-bpo" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('tret-bpo','viral-tiktok-destroyer',this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Tretinoin + BPO</button>
+              <button type="button" class="vanity-light-btn mono" data-spark="calm-barrier" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('calm-barrier','glass-skin-recovery',this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Calm Barrier Split</button>
             </div>
           </div>
 
           <div id="dl-screen1-group2" style="padding:15px 18px;border-radius:16px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
-              <span id="dl-ph-clash-badge" class="badge-clash mono" style="font-size:13px;padding:4px 10px;font-weight:700;">&#9889; pH 3.4 vs. 5.8 Clash &middot; 72h Barrier Reset</span>
+              <span id="dl-ph-clash-badge" class="badge-clash mono" style="font-size:13px;padding:4px 10px;font-weight:700;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Acid + Retinol Irritation Clash &middot; 3-Day Skin Recovery Plan</span>
               <span id="dl-spark-savings-pill" class="badge-safe mono" style="font-size:13px;padding:4px 10px;font-weight:700;">Unmasked Proof #1 &middot; Save $156</span>
             </div>
             <div id="dl-spark-unmasked-proof" style="font-size:13.5px;line-height:1.42;color:var(--text-primary);">
-              <strong style="color:var(--rose-brand);">✓ Conflict #1 (Free Proof):</strong> Low-acid pH 3.4 clashes with pH 5.8 night retinoid &mdash; <strong>Fix:</strong> Move Vitamin C to 7:30 AM &amp; Retinol to 9:30 PM (Swap $182 C E Ferulic &rarr; $26 Timeless Dupe).
+              <strong style="color:var(--rose-brand);">✓ Conflict #1 (Free Proof):</strong> Morning acid serum clashes with evening retinol on the same night &mdash; <strong>Fix:</strong> Move Vitamin C to 7:30 AM &amp; Retinol to 9:30 PM (Swap $182 C E Ferulic &rarr; $26 Timeless Dupe).
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-              <button type="button" id="dl-locked-badge-conflict2" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:6px 11px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:12.5px;font-weight:600;border:none;cursor:pointer;filter:none !important;">🔒 Conflict #2 &amp; $9 Clinical Dupe Swap — Enter Email to Reveal Free ($0) ↑</button>
-              <button type="button" id="dl-locked-badge-routine7" class="dl-locked-spec-badge mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:6px 11px;border-radius:10px;background:var(--bg-surface);color:var(--text-primary);font-size:12.5px;font-weight:600;border:none;cursor:pointer;filter:none !important;">🔒 Complete AM/PM Calendar &amp; Dupe Sheet ($7 Pack) ↑</button>
+              <button type="button" id="dl-locked-badge-conflict2" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:6px 11px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:12.5px;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Conflict #2 &amp; $9 Clinical Dupe Swap — Enter Email to Reveal Free ($0) ↑</button>
+              <button type="button" id="dl-locked-badge-routine7" class="dl-locked-spec-badge mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:6px 11px;border-radius:10px;background:var(--bg-surface);color:var(--text-primary);font-size:12.5px;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Complete AM/PM Calendar &amp; Dupe Sheet ($7 Pack) ↑</button>
             </div>
             <div id="dl-unlocked-conflict2-box" class="dl-unlocked-c2-proof" style="display:none;padding:8px 11px;border-radius:10px;background:var(--sage-bg);color:var(--sage-safe);font-size:12.5px;font-weight:600;">✓ Conflict #2 Unlocked ($0): Glycolic 7% + BHA 2% Over-Exfoliation Trap &mdash; Alternate Night 1 Polish &amp; Swap $116 Triple Lipid &rarr; $32 Aestura 365 Dupe (Save $84).</div>
           </div>
@@ -434,11 +434,11 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
         </div>
 
         <details class="science-footnote-drawer" data-ui="science-drawer" style="margin-top:18px;padding:16px 20px;background:var(--bg-oat);">
-          <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.86rem;">Esthetician &amp; Bottle Label Reference (pH Comfort Range, Texture Weight &amp; Official Bottle Names [INCI])</summary>
+          <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.86rem;">Esthetician &amp; Bottle Label Reference (pH Comfort Range, Texture Weight &amp; Official Ingredient List)</summary>
           <div style="margin-top:14px;overflow-x:auto;">
-            <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:10px;">Quick bottle-label reference: ideal skin pH range, whether the formula feels tangy or gentle, texture weight for layering, pore-safety rating (0–5), and official INCI names printed on every skincare box.</p>
+            <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:10px;">Quick bottle-label reference: ideal skin pH range, whether the formula feels tangy or gentle, texture weight for layering, pore-safety rating (0–5), and official Ingredient List names printed on every skincare box.</p>
             <table>
-              <thead><tr><th>Official Bottle Ingredient Name (INCI)</th><th>Skin pH Range</th><th>Skin Feel</th><th>Texture Weight</th><th>Pore-Clog Score (0–5)</th><th>Fungal-Acne Safe</th></tr></thead>
+              <thead><tr><th>Official Bottle Ingredient List Name</th><th>Skin pH Range</th><th>Skin Feel</th><th>Texture Weight</th><th>Pore-Clog Score (0–5)</th><th>Fungal-Acne Safe</th></tr></thead>
               <tbody>${chemistrySpecsRows}</tbody>
             </table>
           </div>
@@ -930,11 +930,11 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               </table>
             </div>
             <details class="science-footnote-drawer" style="margin-top:14px;padding:14px 16px;background:var(--bg-canvas);">
-              <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.84rem;">Esthetician &amp; Bottle Label Reference (pH Comfort Range, Texture Weight &amp; Official Bottle Names [INCI])</summary>
+              <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.84rem;">Esthetician &amp; Bottle Label Reference (pH Comfort Range, Texture Weight &amp; Official Ingredient List)</summary>
               <div style="margin-top:12px;overflow-x:auto;">
                 <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:8px;"><strong>Why This Order Works (${escapeHtml(page.labConflictType || page.conflictType)}):</strong> ${escapeHtml(page.labSummary || page.summary)}</p>
                 <table>
-                  <thead><tr><th>Official Bottle Ingredient Name (INCI)</th><th>Skin pH Range</th><th>Skin Feel</th><th>Texture Weight</th><th>Pore-Clog Score (0–5)</th><th>Fungal-Acne Safe</th></tr></thead>
+                  <thead><tr><th>Official Bottle Ingredient List Name</th><th>Skin pH Range</th><th>Skin Feel</th><th>Texture Weight</th><th>Pore-Clog Score (0–5)</th><th>Fungal-Acne Safe</th></tr></thead>
                   <tbody>${seoChemistrySpecsRows}</tbody>
                 </table>
               </div>
