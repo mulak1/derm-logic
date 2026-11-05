@@ -21,7 +21,7 @@ const CLINICAL_INGREDIENTS = [
   {
     id: 'thd-ascorbate',
     inciName: 'Tetrahexyldecyl Ascorbate',
-    commonName: 'THD Ascorbate (Lipid Vitamin C)',
+    commonName: 'Gentle Oil-Soluble Vitamin C',
     aliases: ['tetrahexyldecyl ascorbate', 'thd ascorbate', 'ascorbyl tetraisopalmitate'],
     category: 'antioxidant',
     activeClass: 'vitamin_c_deriv',
@@ -315,7 +315,7 @@ const CLINICAL_INGREDIENTS = [
   {
     id: 'copper-tripeptide-1',
     inciName: 'Copper Tripeptide-1',
-    commonName: 'Copper Peptides (GHK-Cu)',
+    commonName: 'Copper Peptides (Firming Tripeptide)',
     aliases: ['copper tripeptide-1', 'ghk-cu', 'copper peptides', 'bis(tripeptide-1) copper acetate'],
     category: 'peptide',
     activeClass: 'copper_peptide',
@@ -327,7 +327,7 @@ const CLINICAL_INGREDIENTS = [
   {
     id: 'matrixyl-3000',
     inciName: 'Palmitoyl Tripeptide-1',
-    commonName: 'Matrixyl 3000 (Signal Peptides)',
+    commonName: 'Firming Signal Peptides',
     aliases: ['palmitoyl tripeptide-1', 'palmitoyl tetrapeptide-7', 'matrixyl 3000', 'palmitoyl pentapeptide-4'],
     category: 'peptide',
     activeClass: 'signal_peptide',
@@ -339,7 +339,7 @@ const CLINICAL_INGREDIENTS = [
   {
     id: 'argireline',
     inciName: 'Acetyl Hexapeptide-8',
-    commonName: 'Argireline (Neurotransmitter Peptide)',
+    commonName: 'Expression-Smoothing Peptide',
     aliases: ['acetyl hexapeptide-8', 'argireline', 'acetyl hexapeptide-3'],
     category: 'peptide',
     activeClass: 'signal_peptide',

@@ -300,7 +300,7 @@ function renderCelebrityIndexPage() {
         <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.52;margin-bottom:10px;">${escapeHtml(c.summary)}</p>
         <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px;">${bottlePills}</div>
         ${c.dupeSwap && c.dupeSwap.savingsNote ? `<div class="mono" style="font-size:0.75rem;color:var(--sage-safe);background:var(--sage-bg);padding:5px 9px;margin-bottom:8px;font-weight:500;">Chemist Swap: ${escapeHtml(c.dupeSwap.savingsNote)}</div>` : ''}
-        <div style="font-size:11.5px;color:var(--text-muted);line-height:1.38;">Source: <a href="${escapeHtml(c.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(c.sourcePublication)} &#8599;</a> · Independent commentary</div>
+        <div style="font-size:11.5px;color:var(--text-muted);line-height:1.38;">Source: <a href="${escapeHtml(c.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(c.sourcePublication)} &rarr;</a> · Independent commentary</div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border-hairline);">
         <a href="/celebrity/${escapeHtml(c.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Inspect Full Shelf &rarr;</a>
@@ -431,7 +431,7 @@ function renderCelebrityDetailPage(celeb) {
         <div class="celeb-copy-col" style="grid-column:1 / -1;">
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px;">
             <span class="badge-safe mono">${escapeHtml(celeb.skinProfile)}</span>
-            <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:0.78rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Source: ${escapeHtml(cleanSourceCredit)} &#8599;</a>
+            <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:0.78rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Source: ${escapeHtml(cleanSourceCredit)} &rarr;</a>
           </div>
           <h1 class="hero-h1" style="font-size:clamp(2rem,3.6vw,3.1rem);margin-bottom:6px;">${escapeHtml(celeb.name)} Skincare Routine, Bottles &amp; Layering Order</h1>
           <p class="hero-sub" style="margin-bottom:10px;">${escapeHtml(celeb.summary)}</p>
@@ -494,7 +494,7 @@ function renderCelebrityDetailPage(celeb) {
 
       <h2 class="serif-display" style="font-size:1.5rem;margin-bottom:10px;">Key Active Ingredients in This Routine</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:24px;">${activePills}</div>
-      <div id="editorial-source-attribution" style="background:var(--bg-surface);padding:10px 14px;margin-bottom:20px;"><p style="font-size:12px;color:var(--text-secondary);line-height:1.42;margin:0;"><strong>Non-Endorsement Notice:</strong> ${escapeHtml(celeb.name)} has not endorsed, verified, or sponsored this analysis or any brands compared here. Compiled from public reporting in <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(celeb.sourceTitle)} &#8599;</a> for educational skincare commentary.</p></div>
+      <div id="editorial-source-attribution" style="background:var(--bg-surface);padding:10px 14px;margin-bottom:20px;"><p style="font-size:12px;color:var(--text-secondary);line-height:1.42;margin:0;"><strong>Non-Endorsement Notice:</strong> ${escapeHtml(celeb.name)} has not endorsed, verified, or sponsored this analysis or any brands compared here. Compiled from public reporting in <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(celeb.sourceTitle)} &rarr;</a> for educational skincare commentary.</p></div>
       <h2 class="serif-display" style="font-size:1.5rem;margin-bottom:12px;">Explore More Iconic Routines by Skin Type</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:24px;">${otherCelebs.map((o) => `<a href="/celebrity/${escapeHtml(o.slug)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:16px 18px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:6px;"><div><span class="badge-safe mono" style="font-size:0.7rem;margin-bottom:4px;display:inline-block;">${escapeHtml(o.skinProfile)}</span><strong class="serif-display" style="font-size:1.18rem;display:block;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(o.name)}</strong><span style="font-size:0.82rem;color:var(--text-secondary);">${escapeHtml(o.moniker)}</span></div><span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;">Inspect Routine &rarr;</span></a>`).join('')}</div>
       ${renderHubSaveBanner(`${celeb.name}’s Routine`, `celeb_${celeb.slug}`, preloadHref)}

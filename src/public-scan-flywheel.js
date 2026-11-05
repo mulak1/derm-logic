@@ -224,6 +224,17 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
     <nav aria-label="Breadcrumb" style="font-size:13.5px;color:${esc(t.textSecondary)};margin-bottom:12px;">
       <a href="/" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:600;">Home</a> / <a href="/leaderboard" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:600;">Leaderboard</a> / <span id="eb-scan-bc-target">${esc(scan.target)}</span>
     </nav>
+    <div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="padding:12px 16px;background:var(--bg-oat);margin-bottom:16px;display:flex;flex-direction:column;gap:8px;border:1px solid var(--border-hairline);">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <span class="mono" style="font-size:0.78rem;font-weight:700;color:var(--rose-brand);">Free $0 Routine Calendar &amp; 2 Dupes for ${esc(scan.target)}</span>
+        <a href="/buy/onetime_499?guide=scan_${esc(encodeURIComponent(scan.target))}" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or get $9 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
+      </div>
+      <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'scan_${esc(scan.target)}')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+        <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" />
+        <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Send Free Routine &amp; 2 Dupes ($0) &rarr;</span></button>
+        <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+      </form>
+    </div>
     <div>
       <h1 id="eb-scan-h1" data-entity-name="${esc(scan.target)}" class="serif-display" style="margin:0 0 8px 0;font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.15;">${esc(scan.target)} : ${esc(cfg.brandName)} Scorecard &amp; Action Report</h1>
       <p class="pseo-lead" style="margin:0;color:${esc(t.textSecondary)};font-size:16.5px;max-width:72ch;">Verified benchmark report for <strong id="eb-scan-lead-target">${esc(scan.target)}</strong>. Rated <strong id="eb-scan-lead-grade">${esc(scan.grade)} (${scan.score}/100)</strong> based on ${esc(scan.kpi1)} and ${esc(scan.kpi2)}.</p>
@@ -349,7 +360,18 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   ${topHeader}
   <main id="main-content" class="container" style="padding-top:28px;padding-bottom:48px;">
     <h1 class="serif-display" style="margin:0 0 8px 0;font-size:clamp(2rem,3vw,2.6rem);line-height:1.15;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
-    <p class="pseo-lead" style="margin:0 0 18px 0;font-size:16px;color:${esc(t.textSecondary)};max-width:72ch;">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
+    <p class="pseo-lead" style="margin:0 0 14px 0;font-size:16px;color:${esc(t.textSecondary)};max-width:72ch;">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
+    <div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="padding:12px 16px;background:var(--bg-oat);margin-bottom:16px;display:flex;flex-direction:column;gap:8px;border:1px solid var(--border-hairline);">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <span class="mono" style="font-size:0.78rem;font-weight:700;color:var(--rose-brand);">Free $0 Routine Calendar &amp; 2 Chemist Dupes</span>
+        <a href="/buy/onetime_499?guide=leaderboard" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or get $9 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
+      </div>
+      <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'leaderboard')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+        <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" />
+        <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Send Free Routine &amp; 2 Dupes ($0) &rarr;</span></button>
+        <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+      </form>
+    </div>
     <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">${podiumHtml}</section>
     <div id="leaderboard-filter-bar" style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${t.border || 'var(--border-hairline)'};border-radius:${t.radiusCard || '0px'};padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;" role="tablist" aria-label="Filter Leaderboard Categories">

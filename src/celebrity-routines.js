@@ -661,16 +661,16 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
     var nightCta = document.getElementById('dl-night-cal-rescue-cta');
     var swapLinks = document.querySelectorAll('.dl-conflict-swap-link');
     if (mode === 'under35') {
-      if (postStripLink) { postStripLink.textContent = 'Shop CeraVe PM ($17 · Ulta) ↗'; postStripLink.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
-      if (nightCta) { nightCta.textContent = 'Shop $17 CeraVe PM Buffer (Ulta) ↗'; nightCta.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
+      if (postStripLink) { postStripLink.textContent = 'Shop CeraVe PM ($17 · Ulta) →'; postStripLink.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
+      if (nightCta) { nightCta.textContent = 'Shop $17 CeraVe PM Buffer (Ulta) →'; nightCta.href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
       for (var i = 0; i < swapLinks.length; i++) { swapLinks[i].textContent = 'Drugstore Pick: Cushion with CeraVe PM ($17) at Ulta →'; swapLinks[i].href = '/api/affiliate?product=cerave-pm-lotion&partner=ulta'; }
     } else if (mode === 'dupe') {
-      if (postStripLink) { postStripLink.textContent = 'Shop ILLIYOON Dupe ($19 · Amazon) ↗'; postStripLink.href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
-      if (nightCta) { nightCta.textContent = 'Shop $19 ILLIYOON Buffer (Amazon) ↗'; nightCta.href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
+      if (postStripLink) { postStripLink.textContent = 'Shop ILLIYOON Dupe ($19 · Amazon) →'; postStripLink.href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
+      if (nightCta) { nightCta.textContent = 'Shop $19 ILLIYOON Buffer (Amazon) →'; nightCta.href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
       for (var j = 0; j < swapLinks.length; j++) { swapLinks[j].textContent = 'Smart Dupe: Cushion with ILLIYOON Ceramide ($19) at Amazon →'; swapLinks[j].href = '/api/affiliate?product=illiyoon-ceramide-ato&partner=amazon'; }
     } else {
-      if (postStripLink) { postStripLink.textContent = 'Shop Soothing Cicaplast B5+ ($17 · Ulta) ↗'; postStripLink.href = '/api/affiliate?product=lrp-cicaplast-baume-b5&partner=ulta'; }
-      if (nightCta) { nightCta.textContent = 'Shop Dieux Lipid Buffer ($45 · Sephora) ↗'; nightCta.href = '/api/affiliate?product=dieux-instant-angel&partner=sephora'; }
+      if (postStripLink) { postStripLink.textContent = 'Shop Soothing Cicaplast B5+ ($17 · Ulta) →'; postStripLink.href = '/api/affiliate?product=lrp-cicaplast-baume-b5&partner=ulta'; }
+      if (nightCta) { nightCta.textContent = 'Shop Dieux Lipid Buffer ($45 · Sephora) →'; nightCta.href = '/api/affiliate?product=dieux-instant-angel&partner=sephora'; }
     }
   };
 
@@ -696,7 +696,7 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
       detailText.innerHTML = '<strong style="color:var(--berry-clash);">3-Night Soothing Reset:</strong> Take a 3-night break from exfoliating acids and retinol. Wash with lukewarm water and layer a gentle soothing cream like <strong>Cicaplast B5+</strong> onto damp skin until redness fades.';
     }
     if (rescueCta) {
-      rescueCta.textContent = 'Shop Soothing Cicaplast B5+ ($17 · Ulta) ↗';
+      rescueCta.textContent = 'Shop Soothing Cicaplast B5+ ($17 · Ulta) →';
       rescueCta.href = '/api/affiliate?product=lrp-cicaplast-baume-b5&partner=ulta';
     }
     if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas(0);
@@ -749,7 +749,7 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
         title: 'Why It Stung: Strong Acid + Retinol Used Too Close Together',
         body: shelfPrefix + 'Using exfoliating acids or Vitamin C in the same routine as Retinol—or applying Retinol onto damp skin—causes stinging around the corners of your nose and mouth.',
         rescueProd: 'lrp-cicaplast-baume-b5',
-        rescueLabel: 'Calm Redness Fast: La Roche-Posay Cicaplast B5+ ($17 at Ulta) ↗',
+        rescueLabel: 'Calm Redness Fast: La Roche-Posay Cicaplast B5+ ($17 at Ulta) →',
         partner: 'ulta'
       },
       pill: {
@@ -758,7 +758,7 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
         title: 'Why It Pilled: Serum Didn\\'t Dry Before Sunscreen',
         body: shelfPrefix + 'Applying sunscreen or makeup right on top of Niacinamide or Snail Mucin before it dries causes layers to roll into little flakes. Pat gently and wait 60 seconds.',
         rescueProd: 'boj-relief-sun-spf50',
-        rescueLabel: 'No-Pill Sunscreen: Beauty of Joseon Relief Sun SPF 50 ($18) ↗',
+        rescueLabel: 'No-Pill Sunscreen: Beauty of Joseon Relief Sun SPF 50 ($18) →',
         partner: 'sephora'
       },
       bumps: {
@@ -767,7 +767,7 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
         title: 'Why Bumps Appeared: Rich Cream Trapped Over Clogged Pores',
         body: shelfPrefix + 'Layering a thick night cream over unexfoliated pores can trap oil overnight. Try a gentle BHA toner 2 nights a week and a lighter gel-cream.',
         rescueProd: 'paulas-choice-2-bha',
-        rescueLabel: 'Clear Clogged Pores: Paula\\'s Choice 2% BHA ($35) ↗',
+        rescueLabel: 'Clear Clogged Pores: Paula\\'s Choice 2% BHA ($35) →',
         partner: 'sephora'
       },
       tight: {
@@ -776,7 +776,7 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
         title: 'Why Skin Feels Tight: Too Many Exfoliants Without Rest Nights',
         body: shelfPrefix + 'Using exfoliating acids and retinols back-to-back without rest nights dries out your moisture barrier, leaving skin tight, shiny, and flaky.',
         rescueProd: 'illiyoon-ceramide-ato',
-        rescueLabel: 'Comfort Dry Skin: ILLIYOON Ceramide Ato Cream ($19) ↗',
+        rescueLabel: 'Comfort Dry Skin: ILLIYOON Ceramide Ato Cream ($19) →',
         partner: 'amazon'
       }
     };
@@ -819,7 +819,7 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
     detailText.innerHTML = notes[nightNum] || notes[1];
     if (rescueCta) {
       if (nightNum === 2) {
-        rescueCta.textContent = 'Add Retinoid Sandwich Cream ($17) ↗';
+        rescueCta.textContent = 'Add Retinoid Sandwich Cream ($17) →';
         rescueCta.href = '/api/affiliate?product=lrp-cicaplast-baume-b5&partner=ulta';
       } else {
         window.__dlSyncBudgetModeLinks();
