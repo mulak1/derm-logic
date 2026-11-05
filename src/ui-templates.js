@@ -89,18 +89,18 @@ const SHARED_CSS = `
   .affiliate-micro-link:hover { color: var(--rose-brand); }
 
   /* Hero: Uneven Editorial Gallery & Nocturnal Plinth */
-  .hero-section { padding: 8px 0 14px; }
-  .editorial-top-banner { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 20px; align-items: stretch; margin-bottom: 12px; }
+  .hero-section { padding: 6px 0 12px; }
+  .editorial-top-banner { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 16px; align-items: stretch; margin-bottom: 10px; }
   .hero-copy-col { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; }
   .hero-photo-col { min-width: 0; display: flex; flex-direction: column; }
-  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.15rem, 3.6vw, 3.25rem); font-weight: 400; line-height: 0.98; letter-spacing: -0.035em; color: var(--text-primary); margin-bottom: 8px; }
+  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2rem, 3.3vw, 2.95rem); font-weight: 400; line-height: 0.98; letter-spacing: -0.035em; color: var(--text-primary); margin-bottom: 6px; }
   .hero-h1-line1 { display: block; }
   .hero-h1-line2 { display: block; padding-left: 0; }
-  .hero-sub { color: var(--text-secondary); font-size: clamp(1rem, 0.96rem + 0.2vw, 1.12rem); line-height: 1.42; max-width: 58ch; margin-bottom: 10px; }
-  .editorial-photo-shell { background: var(--bg-oat); border-radius: 26px; padding: 14px 16px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-  .editorial-photo-inner { overflow: hidden; border-radius: 18px; position: relative; min-height: 196px; max-height: 224px; height: 100%; flex: 1; background: var(--bg-porcelain); }
+  .hero-sub { color: var(--text-secondary); font-size: clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem); line-height: 1.38; max-width: 58ch; margin-bottom: 8px; }
+  .editorial-photo-shell { background: var(--bg-oat); border-radius: 24px; padding: 10px 14px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .editorial-photo-inner { overflow: hidden; border-radius: 16px; position: relative; min-height: 148px; max-height: 172px; height: 100%; flex: 1; background: var(--bg-porcelain); }
   .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 180ms ease-out; }
-  .editorial-photo-diptych { display: flex; flex-direction: column; min-height: 196px; max-height: 224px; height: 100%; flex: 1; }
+  .editorial-photo-diptych { display: flex; flex-direction: column; min-height: 148px; max-height: 172px; height: 100%; flex: 1; }
   .editorial-photo-diptych .editorial-photo-inner { height: 100%; flex: 1; }
   #eb-hero-trust-strip { display: none !important; }
   .vessel-photo-frame { background: var(--bg-oat); border-radius: 18px; overflow: hidden; padding: 0; margin-bottom: 14px; }
@@ -185,18 +185,28 @@ const SHARED_CSS = `
     .nav-links { width: 100%; order: 3; justify-content: space-between; gap: 4px; font-size: 0.72rem; padding-top: 8px; flex-wrap: wrap; white-space: normal; }
   }
   @media (max-width: 640px) {
-    .container { padding: 0 18px; }
-    .grader-card, .results-panel { padding: 16px; }
-    .preset-row, .score-strip, .viscosity-seq-list, .shelf-search-row, .product-selector-grid, #appleWalletCardPreview, #hero-3step-promise { grid-template-columns: 1fr !important; }
-    #hero-3step-promise { gap: 10px !important; }
+    .container { padding: 0 14px; }
+    #sovrn-ftc-disclosure-bar, .site-header .nav-links, .hero-photo-col, #hero-3step-promise, .hero-copy-col .btn-primary, .hero-copy-col .btn-secondary, #dl-pseo-top-conversion-bar { display: none !important; }
+    .site-header .nav-inner { min-height: 54px !important; padding: 6px 0 !important; flex-wrap: nowrap !important; gap: 6px !important; }
+    #dl-header-vanity-pill { padding: 4px 8px !important; font-size: 0.71rem !important; min-height: 28px !important; }
+    #vanityLightToggle { padding: 2px !important; }
+    #vanityLightToggle .vanity-light-btn { padding: 4px 8px !important; font-size: 0.72rem !important; min-height: 26px !important; }
+    .hero-section { padding: 4px 0 8px !important; }
+    .editorial-top-banner { margin-bottom: 6px !important; row-gap: 4px !important; }
+    .hero-h1 { font-size: 1.55rem !important; line-height: 1.06 !important; margin-bottom: 2px !important; }
+    .hero-sub { font-size: 0.8rem !important; line-height: 1.3 !important; margin-bottom: 2px !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .grader-card, .results-panel, .porcelain-vessel-core { padding: 10px 12px !important; gap: 6px !important; }
+    .shelf-search-row { grid-template-columns: 1.3fr 0.7fr !important; gap: 6px !important; }
+    .preset-row { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 4px !important; }
+    .product-selector-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; max-height: 152px !important; min-height: 148px !important; padding: 6px !important; }
+    .score-strip, .viscosity-seq-list, #appleWalletCardPreview { grid-template-columns: 1fr !important; }
     .editorial-photo-caption { flex-wrap: wrap !important; gap: 8px !important; }
-    #dl-pouch-bottles-grid { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
-    #dl-pouch-bottles-grid > div:nth-child(-n+3) { grid-column: span 2; }
-    #dl-pouch-bottles-grid > div:nth-child(n+4) { grid-column: span 3; }
-    #dl-pouch-bottles-grid [id^="dl-pouch-slot-name-"] { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; line-height: 1.18 !important; }
-    #textureFilterTabs { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    #dl-pouch-bottles-grid { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 4px !important; }
+    #dl-pouch-bottles-grid [id^="dl-pouch-slot-name-"] { white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; font-size: 0.65rem !important; }
+    #textureFilterTabs { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; gap: 2px !important; padding: 2px !important; }
+    #textureFilterTabs .vanity-light-btn { font-size: 0.65rem !important; padding: 4px 2px !important; min-height: 24px !important; }
     #dl-results-step-bar .vanity-light-btn, #heroRitualToggleBar .vanity-light-btn { white-space: normal !important; line-height: 1.2 !important; font-size: 0.72rem !important; padding: 6px 4px !important; min-width: 0; }
-    .brand-logo-link { font-size: 1.15rem; gap: 8px; }
+    .brand-logo-link { font-size: 1.05rem; gap: 6px; }
     .brand-atelier-word { display: none; }
     .vanity-light-btn { padding: 6px 10px; font-size: 0.84rem; white-space: normal; min-height: 32px; }
     .site-header .btn-primary { display: none; } .btn-primary, .btn-secondary, .btn-primary span, .btn-secondary span { white-space: normal !important; max-width: 100%; min-width: 0; text-align: center; flex-wrap: wrap; }
@@ -352,6 +362,19 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               </select>
             </div>
 
+            <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:var(--bg-canvas);border-radius:14px;">
+              <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">
+                ${presetButtonsHtml}
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;">
+                <textarea id="rawInciTextarea" aria-label="Paste bottle ingredient list" class="textarea-box mono" rows="1" style="flex:1 1 130px;min-width:0;height:26px;min-height:26px;max-height:54px;resize:none;font-size:0.72rem;padding:4px 9px;border-radius:999px;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="Optional: paste bottle ingredients (INCI) for pore check...">${escapeHtml(initialRawInci || '')}</textarea>
+                <button type="button" class="btn-secondary mono" style="padding:3px 8px;font-size:0.7rem;min-height:25px;flex-shrink:0;" onclick="pasteSampleComedogenicInci()">Try Sample INCI</button>
+                <button type="button" id="analyzeBtn" class="btn-secondary mono" style="padding:3px 10px;font-size:0.71rem;min-height:25px;flex-shrink:0;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;" onclick="runRoutineAnalysis(null, true)"><span>Check My Bathroom Shelf</span></button>
+              </div>
+              <div id="rawInciFeedbackBox"></div>
+              ${renderPersonalizationBarHtml('indoor_dry', '')}
+            </div>
+
             <div id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Vanity Bag Step">
               <button type="button" data-tex="all" class="vanity-light-btn active mono" aria-pressed="true" onclick="filterShelfByTexture('all', this)">All (${products.length})</button>
               <button type="button" data-tex="prep" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('prep', this)">Prep (${prepCount})</button>
@@ -401,19 +424,6 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
                 </div>
               </div>
               <div style="display:none;"><div id="dl-pouch-progress-fill"></div></div>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:var(--bg-canvas);border-radius:14px;">
-              <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">
-                ${presetButtonsHtml}
-              </div>
-              <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;">
-                <textarea id="rawInciTextarea" aria-label="Paste bottle ingredient list" class="textarea-box mono" rows="1" style="flex:1 1 130px;min-width:0;height:26px;min-height:26px;max-height:54px;resize:none;font-size:0.72rem;padding:4px 9px;border-radius:999px;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="Optional: paste bottle ingredients (INCI) for pore check...">${escapeHtml(initialRawInci || '')}</textarea>
-                <button type="button" class="btn-secondary mono" style="padding:3px 8px;font-size:0.7rem;min-height:25px;flex-shrink:0;" onclick="pasteSampleComedogenicInci()">Try Sample INCI</button>
-                <button type="button" id="analyzeBtn" class="btn-secondary mono" style="padding:3px 10px;font-size:0.71rem;min-height:25px;flex-shrink:0;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;" onclick="runRoutineAnalysis(null, true)"><span>Check My Bathroom Shelf</span></button>
-              </div>
-              <div id="rawInciFeedbackBox"></div>
-              ${renderPersonalizationBarHtml('indoor_dry', '')}
             </div>
           </div>
         </div>
@@ -609,8 +619,9 @@ function renderAnalysisResultHtml(res) {
           <button type="button" id="dl-res-tab-3" class="vanity-light-btn mono" style="padding:5px 6px;font-size:0.74rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(3)">3 &middot; 4-Night &amp; Card</button>
         </div>
 
-        <!-- Tab 1 (Default Active): Spacious Side-by-Side Morning & Bedtime Order + 1 Calm Summary Card -->
+        <!-- Tab 1 (Default Active): Unmasked Primary Clash Proof + Spacious Side-by-Side Morning & Bedtime Order + 1 Calm Summary Card -->
         <div id="dl-res-step-2" style="display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;flex:1;"><span id="walletConflicts" style="display:none;"></span>
+          ${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}</div>` : ''}
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;min-width:0;flex:1;" id="appleWalletCardPreview">
             <div style="padding:16px;border-radius:18px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
