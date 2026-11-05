@@ -172,6 +172,7 @@ const SHARED_CSS = `
     #cookieBanner .cookie-banner-inner { padding: 0 !important; gap: 8px !important; flex-wrap: nowrap !important; width: 100% !important; }
     #cookieBanner .cookie-banner-inner > div:first-child { font-size: 11.5px !important; line-height: 1.25 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; min-width: 0 !important; flex: 1 !important; }
     #cookieBanner button { padding: 5px 9px !important; font-size: 11.5px !important; min-height: 28px !important; white-space: nowrap !important; }
+    #cookieBanner a { display: none !important; }
   }
   .dl-locked-spec-badge { filter: none !important; }
   .modal-backdrop { position: fixed; inset: 0; background: rgba(12, 10, 8, 0.65); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 80; }
