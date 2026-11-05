@@ -607,13 +607,17 @@ function renderDirectoryPage({ seoPages }) {
       <div class="container">
         <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Skincare Serum Layering Chart &amp; What Not to Mix (${seoPages.length} Guides)</h1>
         <p class="hero-sub" style="margin-bottom:16px;">Find out which serums belong in the morning, which belong at bedtime, how long to wait between layers, and which active combinations cancel on contact.</p>
-        <div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 20px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
-          <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:0.84rem;color:var(--text-primary);">
-            <span><strong class="mono" style="color:var(--rose-brand);">Rule 1:</strong> Vitamin C (AM) &ne; Copper Peptides / Retinol (PM)</span>
-            <span><strong class="mono" style="color:var(--rose-brand);">Rule 2:</strong> Retinoids &ne; AHA/BHA Acids Same-Night</span>
-            <span><strong class="mono" style="color:var(--rose-brand);">Rule 3:</strong> Benzoyl Peroxide &ne; Tretinoin (Adapalene is Safe)</span>
+        <div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:14px 18px;margin-bottom:14px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:0.82rem;color:var(--text-primary);justify-content:space-between;align-items:center;">
+            <span><strong class="mono" style="color:var(--rose-brand);">Rule 1 (Free Proof):</strong> Vitamin C (AM) &ne; Copper Peptides / Retinol (PM)</span>
+            <span class="dl-locked-badge-c2 mono" style="color:var(--rose-brand);font-weight:600;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Rules 2–3 &amp; 2 Free Dupes Locked ($0 Email Below)</span>
           </div>
-          <a href="/#analyzer" class="btn-primary" style="padding:9px 16px;min-height:38px;font-size:0.84rem;"><span>Check My Whole Shelf Together (5s)</span><span class="btn-icon-circle">&rarr;</span></a>
+          <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'directory_top')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 200px;min-width:0;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" />
+            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Unlock 2 Free Dupes &amp; AM/PM Rules ($0) &rarr;</span></button>
+            <a href="/buy/onetime_499?source=directory_top" class="btn-secondary mono" style="padding:8px 14px;min-height:36px;font-size:0.76rem;border-radius:999px;text-decoration:none;"><span>$9 Complete AM/PM Schedule &rarr;</span></a>
+            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+          </form>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;background:var(--bg-surface);margin-bottom:14px;" role="navigation" aria-label="Semantic Skincare Silo Hubs">
           <a href="/celebrity" class="affiliate-link-pill mono">Iconic Routines (14) &rarr;</a>
@@ -793,31 +797,38 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         </div>
         <h1 class="hero-h1" style="font-size:clamp(2.15rem,3.6vw,3.25rem);">${escapeHtml(page.title)}</h1>
         <p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(String(page.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor|matrix|chelator|derivative)[^)]*\)/gi, ''))}</p>
-        <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:18px 22px;background:var(--bg-oat);margin-bottom:22px;display:flex;flex-direction:column;gap:14px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-oat);margin-bottom:18px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
             <div>
-              <span class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">10-SECOND BATHROOM SINK X-RAY &middot; ${page.compatibilityScore}/100 HARMONY</span>
-              <strong class="serif-display" style="font-size:1.3rem;color:var(--text-primary);font-weight:400;">What happens on your skin &amp; the exact $0 timing fix:</strong>
+              <span class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">10-SECOND BATHROOM SINK X-RAY &middot; ${page.compatibilityScore}/100 HARMONY</span>
+              <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);font-weight:400;">What happens on your skin &amp; the exact $0 timing fix:</strong>
             </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml(primaryProdId)}','${escapeHtml(secondaryProdId)}'],'seo_${escapeHtml(page.slug)}')" style="padding:8px 15px;min-height:36px;font-size:0.79rem;"><span>Load Both Bottles in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button>
-              <a href="#analyzer" class="btn-secondary mono" style="padding:8px 14px;min-height:36px;font-size:0.78rem;background:var(--bg-surface);color:var(--text-primary);text-decoration:none;"><span>Test With My Full Shelf &darr;</span></a>
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
-            <div style="padding:12px 14px;border-radius:16px;background:var(--bg-surface);">
-              <div class="mono" style="font-size:0.73rem;color:var(--berry-clash);font-weight:600;margin-bottom:4px;">01 &middot; THE COMMON MISTAKE</div>
-              <div style="font-size:0.86rem;color:var(--text-primary);line-height:1.45;">${page.compatibilityScore < 55 ? 'Layering both in the same routine shifts skin pH and neutralizes active potency on contact, causing stinging or pilling.' : 'Applying strong actives onto soaking-wet skin pulls molecules too rapidly into the barrier, causing redness around the mouth and nose.'}</div>
-            </div>
-            <div style="padding:12px 14px;border-radius:16px;background:var(--bg-surface);">
-              <div class="mono" style="font-size:0.73rem;color:var(--sage-safe);font-weight:600;margin-bottom:4px;">02 &middot; DAYLIGHT / PREP RULE</div>
-              <div style="font-size:0.86rem;color:var(--text-primary);line-height:1.45;">${escapeHtml(page.amRule || 'Apply water-light serums first on clean skin, give 60 seconds to absorb, and seal with broad-spectrum SPF 50.')}</div>
-            </div>
-            <div style="padding:12px 14px;border-radius:16px;background:var(--bg-surface);">
-              <div class="mono" style="font-size:0.73rem;color:var(--honey-warn);font-weight:600;margin-bottom:4px;">03 &middot; BEDTIME RECOVERY RULE</div>
-              <div style="font-size:0.86rem;color:var(--text-primary);line-height:1.45;">${escapeHtml(page.pmRule || 'Allow hydrating layers to dry completely before retinoids, then seal with a 3:1:1 ceramide barrier cream.')}</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button type="button" class="btn-secondary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml(primaryProdId)}','${escapeHtml(secondaryProdId)}'],'seo_${escapeHtml(page.slug)}')" style="padding:6px 12px;min-height:32px;font-size:0.75rem;"><span>Load in 5-Slot Vanity Bag &rarr;</span></button>
             </div>
           </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+            <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
+              <div class="mono" style="font-size:0.71rem;color:var(--berry-clash);font-weight:600;margin-bottom:3px;">01 &middot; THE COMMON MISTAKE (FREE PROOF)</div>
+              <div style="font-size:0.82rem;color:var(--text-primary);line-height:1.4;">${page.compatibilityScore < 55 ? 'Layering both in the same routine shifts skin balance and cancels active potency on contact, causing stinging or pilling.' : 'Applying strong actives onto soaking-wet skin pulls molecules too rapidly into the barrier, causing redness around the mouth and nose.'}</div>
+            </div>
+            <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
+              <div class="mono" style="font-size:0.71rem;color:var(--sage-safe);font-weight:600;margin-bottom:3px;">02 &middot; MORNING TIMING &amp; $14 DUPE SWAP</div>
+              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;line-height:1.38;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Enter Email Below ($0) to Reveal Morning Rule &amp; $14 Chemist Dupe &darr;</div>
+              <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.82rem;color:var(--text-primary);line-height:1.4;">${escapeHtml(page.amRule || 'Apply water-light serums first on clean skin, give 60 seconds to absorb, and seal with broad-spectrum SPF 50.')}</div>
+            </div>
+            <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
+              <div class="mono" style="font-size:0.71rem;color:var(--honey-warn);font-weight:600;margin-bottom:3px;">03 &middot; BEDTIME RECOVERY SCHEDULE</div>
+              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="font-size:0.8rem;color:var(--text-primary);font-weight:600;line-height:1.38;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Included in $0 Email Preview / $9 Complete AM/PM Calendar &darr;</div>
+              <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.82rem;color:var(--text-primary);line-height:1.4;">${escapeHtml(page.pmRule || 'Allow hydrating layers to dry completely before retinoids, then seal with a ceramide barrier cream.')}</div>
+            </div>
+          </div>
+          <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'seo_top_${escapeHtml(page.slug)}')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;padding-top:4px;border-top:1px solid var(--border-hairline);" data-no-bag-inject="1">
+            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 190px;min-width:0;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" />
+            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Unlock Morning Rule &amp; 2 Dupes ($0) &rarr;</span></button>
+            <a href="/buy/onetime_499?guide=${encodeURIComponent(page.slug)}" class="btn-secondary mono" style="padding:8px 12px;min-height:36px;font-size:0.75rem;border-radius:999px;background:var(--bg-surface);color:var(--text-primary);text-decoration:none;"><span>$9 Complete AM/PM Schedule &amp; Dupe Pack &rarr;</span></a>
+            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+          </form>
         </div>
 
         ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: page.presetProducts, initialRawInci: page.product ? page.product.inciList : '' })}
@@ -906,7 +917,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               if (cEl) cEl.setAttribute('href', '/buy/micro_pass?source=pseo_inline_calc&guide=${encodeURIComponent(page.slug)}&skin_type=' + encodeURIComponent(profile));
               var notes = {
                 sensitive: '<strong style="color:var(--text-primary);">Sensitive / Rosacea Protocol:</strong> Buffer active treatments over a thin layer of 3:1:1 ceramide moisturizer, wait 10 minutes after cleansing so damp skin never amplifies stinging, and split strong actives across a 4-night recovery cycle.',
-                dry: '<strong style="color:var(--text-primary);">Dry / Barrier-Stressed Protocol:</strong> Press hydrating humectants onto damp skin first, let dry for 90 seconds, and sandwich nighttime retinoids or BPO between ceramide cream layers to prevent flaking.',
+                dry: '<strong style="color:var(--text-primary);">Dry / Barrier-Stressed Protocol:</strong> Press hydrating humectants onto damp skin first, let dry for 90 seconds, and sandwich nighttime retinoids or acne cream between ceramide cream layers to prevent flaking.',
                 combination: '<strong style="color:var(--text-primary);">Balanced / Combination Protocol:</strong> ' + ${JSON.stringify(defaultCalcProtocol)},
                 oily_acne: '<strong style="color:var(--text-primary);">Blemish-Prone (5+ Serums) Protocol:</strong> Keep pore-clogging esters at 0/5, use Benzoyl Peroxide in the morning or buffered over moisturizer, and cushion nighttime Adapalene with a ceramide cream to prevent peeling.'
               };
@@ -918,41 +929,24 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </script>
         </div>
 
-        <div style="margin-bottom:28px;padding:12px;background:var(--bg-oat);">
-          <div class="porcelain-vessel-core" style="padding:22px;">
-            <h2 class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Can You Use ${escapeHtml(searchIntentSubject)} Together? Skincare Guide &amp; Layering Rules</h2>
-            <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:14px;">Routine Verdict: <strong class="mono" style="color:var(--rose-brand);">${escapeHtml(formatVerdictLabel(page.verdict))}</strong>. Explore each ingredient's daily skincare notes and full layering guide below.</p>
-            ${seoSwatchesHtml}
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>Ingredient &amp; Category</th><th>Pore-Clog Score</th><th>Skin Sensitivity</th><th>Best Time to Use</th><th>Texture &amp; Layering Step</th><th>Custom Morning / Night Schedule</th></tr></thead>
-                <tbody>${comparisonRowsHtml}</tbody>
-              </table>
-            </div>
-            <details class="science-footnote-drawer" style="margin-top:14px;padding:14px 16px;background:var(--bg-canvas);">
-              <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.84rem;">Esthetician &amp; Bottle Label Reference (pH Comfort Range, Texture Weight &amp; Official Ingredient List)</summary>
-              <div style="margin-top:12px;overflow-x:auto;">
-                <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:8px;"><strong>Why This Order Works (${escapeHtml(page.labConflictType || page.conflictType)}):</strong> ${escapeHtml(page.labSummary || page.summary)}</p>
-                <table>
-                  <thead><tr><th>Official Bottle Ingredient List Name</th><th>Skin pH Range</th><th>Skin Feel</th><th>Texture Weight</th><th>Pore-Clog Score (0–5)</th><th>Fungal-Acne Safe</th></tr></thead>
-                  <tbody>${seoChemistrySpecsRows}</tbody>
-                </table>
-              </div>
-            </details>
-          </div>
-        </div>
+        <div style="margin-bottom:28px;padding:12px;background:var(--bg-oat);"><div class="porcelain-vessel-core" style="padding:22px;">
+          <h2 class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Can You Use ${escapeHtml(searchIntentSubject)} Together? Skincare Guide &amp; Layering Rules</h2>
+          <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:14px;">Routine Verdict: <strong class="mono" style="color:var(--rose-brand);">${escapeHtml(formatVerdictLabel(page.verdict))}</strong>. Explore each ingredient's daily skincare notes and full layering guide below.</p>
+          ${seoSwatchesHtml}
+          <div class="table-wrap"><table><thead><tr><th>Ingredient &amp; Category</th><th>Pore-Clog Score</th><th>Skin Sensitivity</th><th>Best Time to Use</th><th>Texture &amp; Layering Step</th><th>Custom Morning / Night Schedule</th></tr></thead><tbody>${comparisonRowsHtml}</tbody></table></div>
+          <details class="science-footnote-drawer" style="margin-top:14px;padding:14px 16px;background:var(--bg-canvas);">
+            <summary class="mono" style="cursor:pointer;font-weight:500;color:var(--text-primary);font-size:0.84rem;">Esthetician &amp; Bottle Label Reference (Comfort Range, Texture Weight &amp; Official Ingredient List)</summary>
+            <div style="margin-top:12px;overflow-x:auto;"><p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:8px;"><strong>Why This Order Works (${escapeHtml(page.labConflictType || page.conflictType)}):</strong> ${escapeHtml(page.labSummary || page.summary)}</p><table><thead><tr><th>Official Bottle Ingredient List Name</th><th>Skin pH Range</th><th>Skin Feel</th><th>Texture Weight</th><th>Pore-Clog Score (0–5)</th><th>Fungal-Acne Safe</th></tr></thead><tbody>${seoChemistrySpecsRows}</tbody></table></div>
+          </details>
+        </div></div>
       </div>
     </section>
-
-    <section class="section-block-alt">
-      <div class="container">
-        <h2 class="serif-display" style="font-size:1.95rem;margin-bottom:16px;">Common Questions About ${escapeHtml(searchIntentSubject)}</h2>
-        ${faqHtml}
-        <h3 class="serif-display" style="font-size:1.55rem;margin:34px 0 14px;">Related Skincare Layering Guides</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">${relatedHtml}</div>
-      </div>
-    </section>
-  `;
+    <section class="section-block-alt"><div class="container">
+      <h2 class="serif-display" style="font-size:1.95rem;margin-bottom:16px;">Common Questions About ${escapeHtml(searchIntentSubject)}</h2>
+      ${faqHtml}
+      <h3 class="serif-display" style="font-size:1.55rem;margin:34px 0 14px;">Related Skincare Layering Guides</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">${relatedHtml}</div>
+    </div></section>`;
 
   const verdictTag = formatVerdictLabel(page.verdict);
   return renderBaseDocument({ title: `${page.title} (${verdictTag}) | DermLogic`, description: `${verdictTag}: ${page.metaDescription || page.summary}`, canonicalPath: `/seo/${page.slug}`, ogSlug: page.slug, jsonLdObjects: jsonLd, hideNav: false, bodyHtml });

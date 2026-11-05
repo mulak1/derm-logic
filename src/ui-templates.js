@@ -194,7 +194,7 @@ const SHARED_CSS = `
   }
   @media (max-width: 640px) {
     .container { padding: 0 14px; }
-    #sovrn-ftc-disclosure-bar, .site-header .nav-links, .hero-photo-col, #hero-3step-promise, .hero-copy-col .btn-primary, .hero-copy-col .btn-secondary, #dl-pseo-top-conversion-bar { display: none !important; }
+    #sovrn-ftc-disclosure-bar, .site-header .nav-links, .hero-photo-col, #hero-3step-promise, .hero-copy-col .btn-primary, .hero-copy-col .btn-secondary { display: none !important; }
     .site-header .nav-inner { min-height: 50px !important; padding: 6px 0 !important; flex-wrap: wrap !important; gap: 4px !important; max-width: 100% !important; overflow: hidden !important; }
     #dl-header-vanity-pill { padding: 4px 8px !important; font-size: 0.71rem !important; min-height: 28px !important; }
     #dl-header-vanity-count, .brand-logo-link .serif-italic { display: none !important; }
@@ -271,7 +271,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
   const presetShortLabelMap = {
     'viral-tiktok-destroyer': 'Acids + Retinol',
     'copper-vitc-oxidation': 'Copper + Vit C',
-    'acne-rx-bpo-tretinoin': 'Tretinoin + BPO',
+    'acne-rx-bpo-tretinoin': 'Tretinoin + Acne Cream',
     'glass-skin-recovery': 'Calm Barrier'
   };
   const presetShortBadgeMap = {
@@ -562,7 +562,8 @@ function renderAnalysisResultHtml(res) {
     { title: amSerum ? '2. Vitamin C Shield' : (bpoProd && !isWash(bpoProd) && pmRetin ? '2. Morning Blemish Gel' : '2. Hydrating Serum'), sub: amSerum ? shortBottle(amSerum) : (bpoProd && !isWash(bpoProd) && pmRetin ? shortBottle(bpoProd) : 'Pat onto damp skin · 60s'), badge: 'Wait 60s', click: '' },
     { title: amShield ? '3. Daily SPF 50+ Shield' : '3. Morning SPF 50', sub: amShield ? shortBottle(amShield) : '+ Tap to add Joseon SPF ($18)', badge: amShield ? 'SPF 50' : '+ $18', click: amShield ? '' : 'if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();' }
   ];
-  const amStepsHtml = amDynamicSteps.map((st) => `<div ${st.click ? `role="button" onclick="${st.click}"` : ''} style="padding:8px 11px;background:var(--bg-surface);border-radius:11px;display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:7px;min-width:0;${st.click ? 'cursor:pointer;' : ''}"><div style="min-width:0;font-size:0.8rem;line-height:1.3;"><strong style="color:var(--text-primary);display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.title)}</strong><span style="color:${st.click ? 'var(--rose-brand)' : 'var(--text-secondary)'};font-size:0.73rem;font-weight:${st.click ? '600' : '400'};display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.sub)}</span></div><span class="mono" style="font-size:0.7rem;padding:2px 7px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;flex-shrink:0;white-space:nowrap;">${st.badge}</span></div>`).join('');
+  const renderStepRow = (st, isPm) => `<div ${st.click ? `role="button" onclick="${st.click}"` : ''} style="padding:8px 11px;background:${isPm ? 'rgba(244,239,232,0.09)' : 'var(--bg-surface)'};border-radius:11px;display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:7px;min-width:0;${st.click ? 'cursor:pointer;' : ''}"><div style="min-width:0;font-size:0.8rem;line-height:1.3;${isPm ? 'color:#F4EFE8;' : ''}"><strong style="${isPm ? '' : 'color:var(--text-primary);'}display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.title)}</strong><span style="color:${st.click ? (isPm ? '#F7DFAD' : 'var(--rose-brand)') : (isPm ? '#EED6DC' : 'var(--text-secondary)')};font-size:0.73rem;font-weight:${st.click ? '600' : '400'};display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.sub)}</span></div><span class="mono" style="font-size:0.7rem;padding:2px 7px;border-radius:999px;background:${isPm ? '#7A2332' : 'var(--rose-pill-bg)'};color:${isPm ? '#F4EFE8' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;white-space:nowrap;">${st.badge}</span></div>`;
+  const amStepsHtml = renderStepRow(amDynamicSteps[0], false) + `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="padding:10px 11px;background:var(--rose-pill-bg);border:1px dashed var(--rose-pill-border);border-radius:11px;cursor:pointer;margin-bottom:7px;filter:none !important;"><strong style="color:var(--rose-brand);display:block;font-size:0.76rem;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Steps 2–3 &amp; $26 Dupe Locked ($0)</strong><span style="color:var(--text-secondary);font-size:0.71rem;display:block;margin-top:2px;">Enter email ($0) to reveal Morning Steps 2–3 &amp; wait timer &uarr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${amDynamicSteps.slice(1).map((st) => renderStepRow(st, false)).join('')}</div>`;
 
   const cMode = String(res.climateMode || 'indoor_dry');
   const pmStep2Obj = cMode === 'pregnancy_nursing'
@@ -575,7 +576,7 @@ function renderAnalysisResultHtml(res) {
     { title: pmStep2Obj.title, sub: pmStep2Obj.sub, badge: 'Night 2', click: '' },
     { title: pmCream ? '3. Soothing Barrier Cream' : '3. Barrier Cream', sub: pmCream ? shortBottle(pmCream) : '+ Tap to add Aestura 365 ($32)', badge: pmCream ? 'Cushion' : '+ $32', click: pmCream ? '' : 'if(window.__dlTapPouchCreamSlot)window.__dlTapPouchCreamSlot();' }
   ];
-  const pmStepsHtml = pmDynamicSteps.map((st) => `<div ${st.click ? `role="button" onclick="${st.click}"` : ''} style="padding:8px 11px;background:rgba(244,239,232,0.09);border-radius:11px;display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:7px;min-width:0;${st.click ? 'cursor:pointer;' : ''}"><div style="min-width:0;font-size:0.8rem;line-height:1.3;color:#F4EFE8;"><strong style="display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.title)}</strong><span style="color:${st.click ? '#F7DFAD' : '#EED6DC'};font-size:0.73rem;font-weight:${st.click ? '600' : '400'};display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.sub)}</span></div><span class="mono" style="font-size:0.7rem;padding:2px 7px;border-radius:999px;background:#7A2332;color:#F4EFE8;font-weight:600;flex-shrink:0;white-space:nowrap;">${st.badge}</span></div>`).join('');
+  const pmStepsHtml = `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="padding:12px 11px;background:rgba(244,239,232,0.11);border:1px dashed rgba(243,225,229,0.45);border-radius:11px;cursor:pointer;margin-bottom:7px;filter:none !important;"><strong style="color:#F7DFAD;display:block;font-size:0.76rem;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Bedtime 3-Step Recovery Order Locked</strong><span style="color:#EED6DC;font-size:0.71rem;display:block;margin-top:3px;">Enter email ($0) to reveal Evening Order + Dupe, or unlock $9 Complete Schedule &uarr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${pmDynamicSteps.map((st) => renderStepRow(st, true)).join('')}</div>`;
 
   const poreCount = res.comedogenicFlags.length;
   const topPoreName = poreCount > 0 ? String(res.comedogenicFlags[0].commonName || res.comedogenicFlags[0].inciName).split('(')[0].trim() : '';
@@ -649,7 +650,7 @@ function renderAnalysisResultHtml(res) {
             <div style="padding:16px;border-radius:18px;background:#3A1F27;color:#FDF8F6;display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
                 <div style="margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
-                  <span class="mono" style="display:inline-flex;align-items:center;gap:4px;font-size:0.79rem;font-weight:700;color:#F7DFAD;">☾ 9:30 PM &middot; Bedtime</span>
+                  <span class="mono" style="display:inline-flex;align-items:center;gap:4px;font-size:0.79rem;font-weight:700;color:#F7DFAD;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>9:30 PM &middot; Bedtime</span>
                   <span class="mono" style="font-size:0.69rem;color:#EED6DC;">Alternate Nights</span>
                 </div>
                 ${pmStepsHtml}
@@ -847,7 +848,7 @@ const CLIENT_SCRIPT = `
       const data = await resp.json();
       window.__DERMLOGIC_LAST_RESULT = data;
       const container = document.getElementById('liveResultsContainer');
-      if (container && data.renderedHtml) container.innerHTML = data.renderedHtml;
+      if (container && data.renderedHtml) { container.innerHTML = data.renderedHtml; if (window.__dlSampleEmailUnlocked) { container.querySelectorAll('.dl-locked-badge-c2').forEach((el) => { el.style.display = 'none'; }); container.querySelectorAll('.dl-unlocked-c2-proof').forEach((el) => { el.style.display = 'block'; }); } }
       const fbBox = document.getElementById('rawInciFeedbackBox');
       const pCard = container ? container.querySelector('#pastedInciCard') : null;
       if (fbBox) fbBox.innerHTML = pCard ? pCard.outerHTML : '';

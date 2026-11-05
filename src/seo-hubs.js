@@ -91,7 +91,7 @@ const CONCERN_HUBS = [
       '2. Hydrate with pure Hyaluronic Acid, Niacinamide, or Propolis (zero Galactomyces or Polysorbates).',
       '3. Moisturize exclusively with 5% Urea + Caprylic/Capric Triglyceride or 100% Sugarcane Squalane.'
     ],
-    avoidNote: 'Avoid Isopropyl Myristate, Coconut Oil, Polysorbate 20/60/80, Sorbitan Olivate, and fermented yeast essences.',
+    avoidNote: 'Avoid heavy pore-clogging oils, Coconut Oil, Polysorbate 20/60/80, Sorbitan Olivate, and fermented yeast essences.',
     productIds: ['nizoral-ketoconazole-1', 'malezia-5-urea-moisturizer', 'tower28-sos-spray', 'eltamd-uv-clear-spf46'],
     activeIds: ['ketoconazole', 'urea', 'squalane', 'niacinamide'],
     celebSlugs: ['madison-beer', 'kendall-jenner', 'zendaya']
@@ -251,7 +251,23 @@ function renderShell({ title, description, canonicalPath, breadcrumbs, faqItems,
 </html>`;
 }
 
-function renderSiloNavStrip(activeSilo) {
+const LOCK_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+
+function renderTopSubpageEmailBar(tagSlug) {
+  return `<div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:11px 14px;margin-bottom:14px;display:flex;flex-direction:column;gap:7px;border:1px solid var(--rose-pill-border);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:0.78rem;">
+      <span class="mono" style="color:var(--rose-brand);font-weight:700;">${LOCK_SVG}Step #1 &amp; Bottle #1 Free Proof &middot; Unlock Full Routine &amp; 2 Dupes ($0):</span>
+      <a href="/buy/onetime_499?guide=${encodeURIComponent(tagSlug)}" class="mono" style="color:var(--text-primary);font-weight:700;text-decoration:underline;font-size:0.74rem;">Or get $9 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
+    </div>
+    <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, '${escapeHtml(tagSlug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+      <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:7px 12px;font-size:0.78rem;border-radius:999px;background:var(--bg-surface);" />
+      <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;"><span>Unlock Full Routine &amp; 2 Dupes ($0) &rarr;</span></button>
+      <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.73rem;color:var(--sage-safe);"></div>
+    </form>
+  </div>`;
+}
+
+function renderSiloNavStrip(activeSilo, skipTopBar) {
   const celebCount = getAllCelebrityRoutines().length;
   const silos = [
     { id: 'celebrity', href: '/celebrity', label: `Iconic Routines (${celebCount})` },
@@ -261,9 +277,7 @@ function renderSiloNavStrip(activeSilo) {
     { id: 'brand', href: '/brand', label: 'Skincare Brands (27)' },
     { id: 'directory', href: '/directory', label: 'Layering Combos (318)' }
   ];
-  return `<div style="display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px;background:var(--bg-oat);margin-bottom:26px;" role="navigation" aria-label="Skincare Knowledge Silos">
-    ${silos.map((s) => `<a href="${s.href}" class="vanity-light-btn mono ${activeSilo === s.id ? 'active' : ''}" style="text-decoration:none;padding:7px 13px;font-size:0.82rem;">${escapeHtml(s.label)}</a>`).join('')}
-  </div>`;
+  return `<div style="display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;background:var(--bg-oat);margin-bottom:12px;" role="navigation" aria-label="Skincare Knowledge Silos">${silos.map((s) => `<a href="${s.href}" class="vanity-light-btn mono ${activeSilo === s.id ? 'active' : ''}" style="text-decoration:none;padding:5px 10px;font-size:0.76rem;">${escapeHtml(s.label)}</a>`).join('')}</div>${skipTopBar ? '' : renderTopSubpageEmailBar('silo_' + activeSilo)}`;
 }
 
 function renderCelebrityIndexPage() {
@@ -358,10 +372,15 @@ const CELEB_STEP_BOTTLES = {
 function formatStepWithBottle(stepStr, idx, isPm, bottles, celeb) {
   const cleanBase = String(stepStr || '').replace(/\s*\((?:Wait[^)]*|[^)]*Week|No Acids[^)]*|Press[^)]*|Buffered|Alternating)\)/gi, (m) => m);
   const mapped = CELEB_STEP_BOTTLES[celeb.slug] && CELEB_STEP_BOTTLES[celeb.slug][isPm ? 'pm' : 'am'] && CELEB_STEP_BOTTLES[celeb.slug][isPm ? 'pm' : 'am'][idx];
-  const fallbackBottle = !isPm
-    ? (idx === 0 ? (bottles.find((b) => /wash|cleans|mist|toner/i.test(b.category + ' ' + b.name)) || bottles[0]) : idx === 1 ? (bottles.find((b) => /serum|essence|toner|acid/i.test(b.category + ' ' + b.name)) || bottles[1] || bottles[0]) : (bottles.find((b) => /spf|sun|moistur|cream/i.test(b.category + ' ' + b.name)) || bottles[bottles.length - 1]))
-    : (idx === 0 ? (bottles.find((b) => /wash|cleans|toner/i.test(b.category + ' ' + b.name)) || bottles[0]) : idx === 1 ? (bottles.find((b) => /retin|acid|peptid|bha|p50|acne/i.test(b.category + ' ' + b.name)) || bottles[0]) : (bottles.find((b) => /cream|moistur|baume|angel|atobarrier|lotion/i.test(b.category + ' ' + b.name)) || bottles[bottles.length - 1]));
-  const bottleLabel = mapped || (fallbackBottle ? `${fallbackBottle.brand} ${fallbackBottle.name.replace(/\s*\([^)]*\)/g, '')}` : '');
+  const washBottle = bottles.find((b) => /wash|cleans|mist|toner/i.test(b.category + ' ' + b.name));
+  const amSerumBottle = bottles.find((b) => /antioxidant|brighten|vitamin c|ceo|ferulic|faded/i.test(b.category + ' ' + b.name)) || bottles[1] || bottles[0];
+  const pmSerumBottle = bottles.find((b) => /retin|peptid|bha|p50|acne/i.test(b.category + ' ' + b.name)) || bottles[0];
+  const spfBottle = bottles.find((b) => /spf|sun/i.test(b.category + ' ' + b.name)) || bottles[bottles.length - 1];
+  const creamBottle = bottles.find((b) => /cream|moistur|baume|angel|atobarrier|lotion/i.test(b.category + ' ' + b.name)) || bottles[1] || bottles[0];
+  const fallbackLabel = !isPm
+    ? (idx === 0 ? (washBottle ? `${washBottle.brand} ${washBottle.name.replace(/\s*\([^)]*\)/g, '')}` : 'Tower 28 SOS Facial Mist') : idx === 1 ? (amSerumBottle ? `${amSerumBottle.brand} ${amSerumBottle.name.replace(/\s*\([^)]*\)/g, '')}` : '') : (spfBottle ? `${spfBottle.brand} ${spfBottle.name.replace(/\s*\([^)]*\)/g, '')}` : ''))
+    : (idx === 0 ? (washBottle ? `${washBottle.brand} ${washBottle.name.replace(/\s*\([^)]*\)/g, '')}` : 'Bioderma Sensibio Micellar Cleanse') : idx === 1 ? (pmSerumBottle ? `${pmSerumBottle.brand} ${pmSerumBottle.name.replace(/\s*\([^)]*\)/g, '')}` : '') : (creamBottle ? `${creamBottle.brand} ${creamBottle.name.replace(/\s*\([^)]*\)/g, '')}` : ''));
+  const bottleLabel = mapped || fallbackLabel;
   if (!bottleLabel) return cleanBase;
   const stripped = cleanBase.replace(/\s*\((?:SkinCeuticals[^)]+|PanOxyl[^)]+|5%\s*Niacinamide)\)/gi, '').trim();
   return `${stripped} (${bottleLabel})`;
@@ -387,154 +406,97 @@ function renderCelebrityDetailPage(celeb) {
   const actives = celeb.activeIds.map((id) => CLINICAL_INGREDIENTS.find((a) => a.id === id)).filter(Boolean);
   const otherCelebs = getAllCelebrityRoutines().filter((c) => c.slug !== celeb.slug).slice(0, 4);
 
-  const bottleCards = bottles.map((b) => {
+  const renderBottleCard = (b, idx) => {
     const partner = b.priceUsd >= 50 ? 'dermstore' : 'sephora';
     const roleTag = /Retinoid/i.test(b.category) ? 'Night Renewal · Apply Dry' : /Exfoliating|Acne/i.test(b.category) ? 'Night 1 Polish · Alternate PM' : /Antioxidant/i.test(b.category) ? 'AM Step 2 · Wait 60s' : /Sunscreen/i.test(b.category) ? 'AM Final Step · Zero-Pilling SPF' : /Peptide|Hydrating/i.test(b.category) ? 'AM/PM Hydration · 0/5 Pore-Safe' : 'AM/PM Barrier Seal · Ceramide Cushion';
-    return `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;position:relative;">
-      <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-          <a href="/brand/${slugifyBrand(b.brand)}" class="mono" style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(b.brand)}</a>
-          <span class="badge-safe mono">pH ${b.ph} · $${b.priceUsd}</span>
-        </div>
-        <div class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">${roleTag}</div>
-        <a href="/bottle/${escapeHtml(b.id)}" class="serif-display" style="display:block;font-size:1.22rem;color:var(--text-primary);margin-bottom:6px;">${escapeHtml(b.name)}</a>
-        <p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(b.summary)}</p>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-top:6px;">
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
-          <a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.79rem;color:var(--rose-brand);font-weight:500;">Bottle Breakdown &amp; Dupes &rarr;</a>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-            <a href="/api/affiliate?product=${escapeHtml(b.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ($${b.priceUsd}) &rarr;</a>
-            <button type="button" id="dl-bag-btn-${escapeHtml(b.id)}" data-dl-bag-prod="${escapeHtml(b.id)}" data-dl-bag-title="${escapeHtml(b.brand + ' ' + b.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(b.id)}','${escapeHtml((b.brand + ' ' + b.name).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button>
-          </div>
-        </div>
-        <div style="width:54px;height:60px;background:var(--bg-oat);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="${escapeHtml(b.brand)} ${escapeHtml(b.name)}">${renderBottleVesselSvg(b)}</div>
-      </div>
-    </div>`;
-  }).join('');
-
-  const activePills = actives.map((a) => `<a href="/ingredient/${escapeHtml(a.id)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:10px 14px;text-decoration:none;display:inline-flex;flex-direction:column;gap:2px;"><span class="mono" style="font-size:0.72rem;color:var(--rose-brand);">pH ${a.phMin}–${a.phMax} · Pore ${a.comedogenicity}/5</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(a.commonName)} &rarr;</strong><span style="font-size:0.76rem;color:var(--text-secondary);">${escapeHtml(a.functionRole)}</span></a>`).join('');
+    const fullCard = `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;position:relative;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><a href="/brand/${slugifyBrand(b.brand)}" class="mono" style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(b.brand)}</a><span class="badge-safe mono">${b.ph < 4.0 ? 'Active Polish' : 'Gentle Skin Balance'} · $${b.priceUsd}</span></div><div class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">${roleTag}</div><a href="/bottle/${escapeHtml(b.id)}" class="serif-display" style="display:block;font-size:1.22rem;color:var(--text-primary);margin-bottom:6px;">${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, ''))}</a><p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(b.summary)}</p></div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-top:6px;"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;"><a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.79rem;color:var(--rose-brand);font-weight:500;">Bottle Breakdown &amp; Dupes &rarr;</a><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;"><a href="/api/affiliate?product=${escapeHtml(b.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ($${b.priceUsd}) &rarr;</a><button type="button" id="dl-bag-btn-${escapeHtml(b.id)}" data-dl-bag-prod="${escapeHtml(b.id)}" data-dl-bag-title="${escapeHtml(b.brand + ' ' + b.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(b.id)}','${escapeHtml((b.brand + ' ' + b.name).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button></div></div><div style="width:54px;height:60px;background:var(--bg-oat);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="${escapeHtml(b.brand)} ${escapeHtml(b.name)}">${renderBottleVesselSvg(b)}</div></div></div>`;
+    if (idx === 0) return fullCard;
+    return `<div role="button" tabindex="0" class="porcelain-vessel-core dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="background:var(--bg-oat);padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;border:1px dashed var(--rose-pill-border);cursor:pointer;"><div><span class="badge-safe mono" style="margin-bottom:6px;display:inline-block;">${roleTag}</span><strong class="serif-display" style="display:block;font-size:1.18rem;color:var(--rose-brand);margin-bottom:6px;">${LOCK_SVG}Vanity Bottle #${idx + 1} &amp; Chemist Dupe Locked ($0)</strong><p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.45;margin:0;">Enter your email at the top ($0) to reveal ${escapeHtml(celeb.name)}’s Bottle #${idx + 1} (${escapeHtml(b.category)}) + affordable chemist swap &uarr;</p></div><span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:700;">Tap to Reveal Bottle #${idx + 1} Free ($0) &uarr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${fullCard}</div>`;
+  };
+  const bottleCards = bottles.map(renderBottleCard).join('');
+  const activePills = actives.map((a) => `<a href="/ingredient/${escapeHtml(a.id)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:10px 14px;text-decoration:none;display:inline-flex;flex-direction:column;gap:2px;"><span class="mono" style="font-size:0.72rem;color:var(--rose-brand);">Gentle Skin Balance · Pore ${a.comedogenicity}/5</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(a.commonName)} &rarr;</strong><span style="font-size:0.76rem;color:var(--text-secondary);">${escapeHtml(a.functionRole)}</span></a>`).join('');
   const cleanSourceCredit = String(celeb.sourceNote || '').toLowerCase().includes(String(celeb.sourcePublication || '').toLowerCase()) ? celeb.sourceNote : `${celeb.sourcePublication} (${celeb.sourceNote})`;
 
-  const bodyHtml = `<section class="section-block" style="padding-top:16px;">
+  const renderAmStep = (s, idx) => {
+    const fullStep = `<div style="padding:12px 14px;background:var(--bg-surface);border-left:2.5px solid rgba(164,107,29,0.45);margin-bottom:8px;"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px;"><strong style="font-size:0.9rem;">${escapeHtml(formatStepWithBottle(s.step, idx, false, bottles, celeb))}</strong><span class="mono" style="font-size:0.7rem;padding:2px 7px;background:var(--bg-oat);color:var(--honey-warn);white-space:nowrap;flex-shrink:0;">${idx === 0 ? 'Step 1 · Free Proof' : idx === 1 ? 'Step 2 · Wait 60s' : 'Step 3 · SPF Seal'}</span></div><span style="font-size:0.84rem;color:var(--text-secondary);line-height:1.45;">${escapeHtml(s.detail)}</span></div>`;
+    if (idx === 0) return fullStep;
+    return `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="padding:12px 14px;background:var(--bg-surface);border:1px dashed var(--rose-pill-border);border-radius:10px;margin-bottom:8px;cursor:pointer;"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:2px;"><strong style="font-size:0.86rem;color:var(--rose-brand);">${LOCK_SVG}Morning Step ${idx + 1} (${idx === 1 ? 'Active Serum & 60s Wait Rule' : 'Zero-Pilling SPF Seal & Dupe'}) Locked</strong><span class="mono" style="font-size:0.68rem;padding:2px 7px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:700;">$0 Email &uarr;</span></div><span style="font-size:0.78rem;color:var(--text-secondary);">Enter email above ($0) to unmask ${escapeHtml(celeb.name)}’s Morning Step ${idx + 1} bottle &amp; $19 dupe swap &uarr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${fullStep}</div>`;
+  };
+  const renderPmStep = (s, idx) => `<div style="padding:12px 14px;background:rgba(244,239,232,0.08);border-left:2.5px solid rgba(201,164,90,0.5);margin-bottom:8px;"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px;"><strong style="font-size:0.9rem;color:#F4EFE8;">${escapeHtml(formatStepWithBottle(s.step, idx, true, bottles, celeb))}</strong><span class="mono" style="font-size:0.7rem;padding:2px 7px;background:rgba(201,164,90,0.2);color:#E5C67E;white-space:nowrap;flex-shrink:0;">${idx === 0 ? 'Step 1 · Melt' : idx === 1 ? 'Step 2 · Treatment' : 'Step 3 · Cushion'}</span></div><span style="font-size:0.84rem;color:#B5ACA3;line-height:1.45;">${escapeHtml(s.detail)}</span></div>`;
+
+  const bodyHtml = `<section class="section-block" style="padding-top:12px;">
     <div class="container">
-      ${renderSiloNavStrip('celebrity')}
-      <div class="editorial-top-banner" style="margin-bottom:22px;">
-        <div class="hero-copy-col">
+      ${renderSiloNavStrip('celebrity', true)}
+      <div class="editorial-top-banner" style="margin-bottom:14px;">
+        <div class="celeb-copy-col" style="grid-column:1 / -1;">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px;">
+            <span class="badge-safe mono">${escapeHtml(celeb.skinProfile)}</span>
+            <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:0.78rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Source: ${escapeHtml(cleanSourceCredit)} &#8599;</a>
+          </div>
+          <h1 class="hero-h1" style="font-size:clamp(2rem,3.6vw,3.1rem);margin-bottom:6px;">${escapeHtml(celeb.name)} Skincare Routine, Bottles &amp; Layering Order</h1>
+          <p class="hero-sub" style="margin-bottom:10px;">${escapeHtml(celeb.summary)}</p>
+          ${renderTopSubpageEmailBar('celeb_' + celeb.slug)}
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:28px;">
+        <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 22px;position:relative;overflow:hidden;justify-content:space-between;">
+          <div style="position:relative;z-index:1;">
+            <div style="margin-bottom:12px;">
+              <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--honey-warn);font-weight:500;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg><span>7:30 AM · Morning Prep Under Makeup</span></span>
+              <h2 class="serif-display" style="font-size:1.38rem;margin:4px 0 0;">Morning Layering Sequence</h2>
+            </div>
+            ${celeb.amSteps.map(renderAmStep).join('')}
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;font-size:0.76rem;position:relative;z-index:1;"><span class="mono" style="color:var(--text-secondary);">Zero-Pilling 60s Dry-Down</span><a href="#vanity-bottles" class="mono" style="color:var(--rose-brand);font-weight:600;text-decoration:none;">Inspect Morning Bottles &darr;</a></div>
+        </div>
+        <div class="porcelain-vessel-core" style="background:#3A1F27;color:#FDF8F6;padding:20px 22px;position:relative;overflow:hidden;justify-content:space-between;">
+          <div style="position:relative;z-index:1;">
+            <div style="margin-bottom:12px;">
+              <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;color:#C9A45A;font-weight:500;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>9:30 PM · Bedtime Barrier Recovery</span></span>
+              <h2 class="serif-display" style="font-size:1.38rem;margin:4px 0 0;color:#F4EFE8;">Evening Recovery Sequence</h2>
+            </div>
+            <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="padding:14px 16px;background:rgba(244,239,232,0.1);border:1px dashed rgba(229,198,126,0.5);border-radius:12px;margin-bottom:8px;cursor:pointer;">
+              <strong style="display:block;font-size:0.9rem;color:#F7DFAD;margin-bottom:4px;">${LOCK_SVG}Evening 3-Step Recovery &amp; Night Serum Order Locked</strong>
+              <span style="display:block;font-size:0.8rem;color:#EED6DC;line-height:1.45;">Enter your email at the top ($0) to reveal ${escapeHtml(celeb.name)}’s 3-Step Bedtime Recovery Order + 2 Free Dupes, or unlock the $9 Complete AM/PM Schedule &uarr;</span>
+            </div>
+            <div class="dl-unlocked-c2-proof" style="display:none;">${celeb.pmSteps.map(renderPmStep).join('')}</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;font-size:0.76rem;position:relative;z-index:1;"><span class="mono" style="color:#B5ACA3;">Overnight Barrier Recovery</span><a href="/buy/onetime_499?guide=celeb_${encodeURIComponent(celeb.slug)}" class="mono" style="color:#E5C67E;font-weight:600;text-decoration:none;">Get $9 Complete AM/PM Calendar &rarr;</a></div>
+        </div>
+      </div>
+
+      <h2 id="vanity-bottles" class="serif-display" style="font-size:1.65rem;margin-bottom:14px;">Bottles on ${escapeHtml(celeb.name)}’s Vanity Shelf (Bottle #1 Free Proof)</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px;">${bottleCards}</div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:32px;">
+        <div class="porcelain-vessel-core" style="background:var(--berry-bg);padding:22px 24px;border:1px solid var(--berry-border);justify-content:space-between;">
           <div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
-              <span class="badge-safe mono">${escapeHtml(celeb.skinProfile)}</span>
-              <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:0.8rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Public Vanity Source: ${escapeHtml(cleanSourceCredit)} &#8599;</a>
-            </div>
-            <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.8vw,3.3rem);margin-bottom:10px;">${escapeHtml(celeb.name)} Skincare Routine, Bottles &amp; Layering Order</h1>
-            <div class="serif-italic" style="font-size:1.22rem;color:var(--rose-brand);margin-bottom:12px;">${escapeHtml(celeb.moniker)} · ${escapeHtml(celeb.signatureLook)}</div>
-            <p class="hero-sub" style="margin-bottom:18px;">${escapeHtml(celeb.summary)}</p>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
-              <a href="${preloadHref}" class="btn-primary"><span>Test ${escapeHtml(celeb.name)}’s Serums With My Shelf</span><span class="btn-icon-circle">&rarr;</span></a>
-              <a href="#vanity-bottles" class="btn-secondary"><span>See ${bottles.length} Bottles &amp; Chemist Dupes &darr;</span></a>
-            </div>
-            <div id="editorial-source-attribution" style="background:var(--bg-surface);padding:10px 14px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:3px;">
-                <span class="mono" style="font-size:11px;color:var(--rose-brand);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">Editorial Independence &amp; Source Credit</span>
-                <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:11.5px;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Read Original ${escapeHtml(celeb.sourcePublication)} Feature &#8599;</a>
-              </div>
-              <p style="font-size:12px;color:var(--text-secondary);line-height:1.42;margin:0;"><strong>Non-Endorsement Notice:</strong> ${escapeHtml(celeb.name)} has not endorsed, verified, or sponsored this analysis or any brands compared here. Compiled from public reporting in <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(celeb.sourceTitle)} &#8599;</a> for educational skincare commentary.</p>
-            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span class="badge-clash mono">${LOCK_SVG.replace('<rect', '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/><rect style="display:none"')}Critical Layering Rule</span></div>
+            <h3 class="serif-display" style="font-size:1.32rem;margin:0 0 10px;">What Never to Mix on ${escapeHtml(celeb.name)}’s Shelf</h3>
+            <div style="background:var(--bg-surface);border-left:3px solid var(--berry-clash);border-radius:10px;padding:12px 14px;margin-bottom:10px;"><p style="font-size:0.88rem;color:var(--text-primary);line-height:1.55;margin:0;">${escapeHtml(celeb.clashWarning)}</p></div>
           </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.76rem;color:var(--text-secondary);"><span class="mono">Wait 60s or Alternate Nights</span><a href="${preloadHref}" class="mono" style="color:var(--berry-clash);font-weight:600;text-decoration:none;">Test Shelf Harmony &rarr;</a></div>
         </div>
-        <div class="hero-photo-col">
-          <div class="editorial-photo-shell">
-            <div class="editorial-photo-inner" style="min-height:390px;height:100%;flex:1;">
-              <img src="${escapeHtml(celeb.heroImg)}" alt="Illustrative skincare ritual for ${escapeHtml(celeb.name)} routine commentary" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(celeb.imgPos || '50% 25%')};" />
-            </div>
-            <div class="editorial-photo-caption">
-              <div>
-                <strong class="serif-display" style="font-size:1.02rem;">Illustrative Editorial Ritual</strong>
-                <div style="font-size:0.78rem;color:var(--text-secondary);">Independent DermLogic pH Commentary · Unendorsed</div>
-              </div>
-              <span class="badge-safe mono" style="white-space:nowrap;align-self:center;flex-shrink:0;">${bottles.length} Publicly Cited Bottles</span>
+        <div class="porcelain-vessel-core" style="background:var(--sage-bg);padding:22px 24px;border:1px solid var(--sage-border);justify-content:space-between;">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span class="badge-safe mono">Chemist Dupe Comparison</span></div>
+            <h3 class="serif-display" style="font-size:1.32rem;margin:0 0 10px;">Luxury Shelf vs. Barrier-Identical Swap</h3>
+            <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:10px;">
+              <div style="background:var(--bg-surface);border:1px solid var(--border-hairline);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;">Luxury Original</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.luxury)}</strong></div>
+              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="background:var(--bg-surface);border:1px dashed var(--sage-border);border-radius:10px;padding:10px 13px;cursor:pointer;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--rose-brand);font-weight:700;margin-bottom:2px;">${LOCK_SVG}Chemist Dupe Swap Locked ($0 Email)</span><strong style="font-size:0.84rem;color:var(--text-primary);">Enter email at top ($0) to reveal ${escapeHtml(celeb.dupeSwap.savingsNote)} &uarr;</strong></div>
+              <div class="dl-unlocked-c2-proof" style="display:none;background:var(--bg-surface);border:1px solid var(--sage-border);border-left:3px solid var(--sage-safe);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--sage-safe);margin-bottom:2px;">Chemist Barrier-Identical Swap</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong></div>
             </div>
           </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;"><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;background:rgba(46,90,68,0.09);padding:5px 10px;border-radius:999px;">${escapeHtml(celeb.dupeSwap.savingsNote)}</span><a href="${preloadHref}" class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;text-decoration:none;">Test Dupe Shelf &rarr;</a></div>
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:44px;">
-        <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;position:relative;overflow:hidden;justify-content:space-between;">
-          <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:112px;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse 68% 95% at 80% 10%, rgba(214,152,58,0.28) 0%, rgba(232,190,118,0.12) 52%, transparent 82%),linear-gradient(90deg, rgba(255,248,234,0.5) 0%, rgba(222,168,84,0.22) 100%);-webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 55%, transparent 100%);mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 55%, transparent 100%);">
-            <svg width="100%" height="112" viewBox="0 0 640 112" preserveAspectRatio="xMidYMin slice" fill="none"><defs><radialGradient id="amSunGlow" cx="78%" cy="28%" r="48%"><stop offset="0%" stop-color="#D99B38" stop-opacity="0.42"/><stop offset="55%" stop-color="#D99B38" stop-opacity="0.12"/><stop offset="100%" stop-color="#D99B38" stop-opacity="0"/></radialGradient></defs><rect width="640" height="112" fill="url(#amSunGlow)"/><path d="M-20 92 Q 260 44 660 84" stroke="#A46B1D" stroke-opacity="0.22" stroke-width="1.2"/><path d="M-20 104 Q 300 62 660 98" stroke="#A46B1D" stroke-opacity="0.14" stroke-width="1" stroke-dasharray="4 6"/><circle cx="512" cy="34" r="22" fill="#E3A84B" fill-opacity="0.22" stroke="#A46B1D" stroke-opacity="0.42" stroke-width="1.3"/><circle cx="512" cy="34" r="38" stroke="#A46B1D" stroke-opacity="0.22" stroke-width="1" stroke-dasharray="3 5"/><circle cx="512" cy="34" r="58" stroke="#A46B1D" stroke-opacity="0.14" stroke-width="0.9"/><path d="M512 2V10M512 58V66M474 34H482M542 34H550M485 7L491 13M533 55L539 61M539 7L533 13M491 55L485 61M420 22L464 30M360 14L448 26" stroke="#A46B1D" stroke-opacity="0.28" stroke-width="1.15" stroke-linecap="round"/></svg>
-          </div>
-          <div style="position:relative;z-index:1;">
-            <div style="margin-bottom:16px;">
-              <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--honey-warn);font-weight:500;"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg><span>7:30 AM · Morning Prep Under Makeup</span></span>
-              <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;">Morning Layering Sequence</h2>
-            </div>
-            ${celeb.amSteps.map((s, idx) => `<div style="padding:13px 16px;background:var(--bg-surface);border-left:2.5px solid rgba(164,107,29,0.45);margin-bottom:9px;"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px;"><strong style="font-size:0.93rem;">${escapeHtml(formatStepWithBottle(s.step, idx, false, bottles, celeb))}</strong><span class="mono" style="font-size:0.7rem;padding:2px 7px;background:var(--bg-oat);color:var(--honey-warn);white-space:nowrap;flex-shrink:0;">${idx === 0 ? 'Step 1 · Cleanse' : idx === 1 ? 'Step 2 · Wait 60s' : 'Step 3 · SPF Seal'}</span></div><span style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;font-size:0.78rem;position:relative;z-index:1;"><span class="mono" style="color:var(--text-secondary);">Zero-Pilling 60s Dry-Down</span><a href="#vanity-bottles" class="mono" style="color:var(--rose-brand);font-weight:600;text-decoration:none;">Inspect Morning Bottles &darr;</a></div>
-        </div>
-        <div class="porcelain-vessel-core" style="background:#3A1F27;color:#FDF8F6;padding:26px 28px;position:relative;overflow:hidden;justify-content:space-between;">
-          <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:112px;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse 68% 95% at 80% 12%, rgba(201,164,90,0.28) 0%, rgba(142,110,56,0.12) 52%, transparent 84%),linear-gradient(90deg, rgba(58,31,39,0.15) 0%, rgba(201,164,90,0.16) 100%);-webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.68) 55%, transparent 100%);mask-image:linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.68) 55%, transparent 100%);">
-            <svg width="100%" height="112" viewBox="0 0 640 112" preserveAspectRatio="xMidYMin slice" fill="none"><defs><radialGradient id="pmMoonGlow" cx="78%" cy="28%" r="48%"><stop offset="0%" stop-color="#C9A45A" stop-opacity="0.38"/><stop offset="55%" stop-color="#C9A45A" stop-opacity="0.12"/><stop offset="100%" stop-color="#C9A45A" stop-opacity="0"/></radialGradient></defs><rect width="640" height="112" fill="url(#pmMoonGlow)"/><path d="M-20 88 Q 280 38 660 80" stroke="#C9A45A" stroke-opacity="0.22" stroke-width="1.15"/><path d="M-20 102 Q 310 56 660 96" stroke="#C9A45A" stroke-opacity="0.14" stroke-width="0.95" stroke-dasharray="3 6"/><path d="M518 16C504.5 16 493.5 27 493.5 40.5C493.5 54 504.5 65 518 65C524 65 529.4 62.8 533.6 59.4C524.8 61.3 515.7 55.8 513.8 47C511.9 38.2 517.4 29.1 526.2 27.2C523.6 20.5 521 16 518 16Z" fill="#C9A45A" fill-opacity="0.24" stroke="#C9A45A" stroke-opacity="0.55" stroke-width="1.3"/><circle cx="514" cy="40" r="36" stroke="#C9A45A" stroke-opacity="0.22" stroke-width="0.95" stroke-dasharray="2 5"/><path d="M446 22L448 27L453 29L448 31L446 36L444 31L439 29L444 27L446 22Z" fill="#C9A45A" fill-opacity="0.45"/><path d="M568 20L569.2 23.5L572.7 24.7L569.2 25.9L568 29.4L566.8 25.9L563.3 24.7L566.8 23.5L568 20Z" fill="#C9A45A" fill-opacity="0.4"/><circle cx="388" cy="28" r="1.4" fill="#C9A45A" fill-opacity="0.45"/><circle cx="418" cy="44" r="1.2" fill="#C9A45A" fill-opacity="0.35"/><circle cx="586" cy="48" r="1.4" fill="#C9A45A" fill-opacity="0.4"/></svg>
-          </div>
-          <div style="position:relative;z-index:1;">
-            <div style="margin-bottom:16px;">
-              <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;color:#C9A45A;font-weight:500;"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/><path d="M18 4l.6 1.9L20.5 6.5l-1.9.6L18 9l-.6-1.9-1.9-.6 1.9-.6L18 4z"/></svg><span>9:30 PM · Bedtime Barrier Recovery</span></span>
-              <h2 class="serif-display" style="font-size:1.48rem;margin:5px 0 0;color:#F4EFE8;">Evening Recovery Sequence</h2>
-            </div>
-            ${celeb.pmSteps.map((s, idx) => `<div style="padding:13px 16px;background:rgba(244,239,232,0.08);border-left:2.5px solid rgba(201,164,90,0.5);margin-bottom:9px;"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px;"><strong style="font-size:0.93rem;color:#F4EFE8;">${escapeHtml(formatStepWithBottle(s.step, idx, true, bottles, celeb))}</strong><span class="mono" style="font-size:0.7rem;padding:2px 7px;background:rgba(201,164,90,0.2);color:#E5C67E;white-space:nowrap;flex-shrink:0;">${idx === 0 ? 'Step 1 · Melt' : idx === 1 ? 'Step 2 · Treatment' : 'Step 3 · Cushion'}</span></div><span style="font-size:0.86rem;color:#B5ACA3;line-height:1.5;">${escapeHtml(s.detail)}</span></div>`).join('')}
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;font-size:0.78rem;position:relative;z-index:1;"><span class="mono" style="color:#B5ACA3;">Overnight Barrier Recovery</span><a href="${preloadHref}" class="mono" style="color:#E5C67E;font-weight:600;text-decoration:none;">Load AM/PM in Checker &rarr;</a></div>
-        </div>
-      </div>
-
-      <h2 id="vanity-bottles" class="serif-display" style="font-size:1.75rem;margin-bottom:16px;">Bottles on ${escapeHtml(celeb.name)}’s Vanity Shelf</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-bottom:44px;">${bottleCards}</div>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px;margin-bottom:44px;">
-        <div class="porcelain-vessel-core" style="background:var(--berry-bg);padding:26px 28px;position:relative;overflow:hidden;border:1px solid var(--berry-border);justify-content:space-between;">
-          <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:96px;pointer-events:none;background:radial-gradient(ellipse 65% 90% at 84% 12%,rgba(139,38,53,0.14) 0%,transparent 75%);"><svg width="100%" height="96" viewBox="0 0 560 96" preserveAspectRatio="xMaxYMin slice" fill="none"><circle cx="486" cy="34" r="24" stroke="#8B2635" stroke-opacity="0.22" stroke-width="1.2" stroke-dasharray="3 4"/><circle cx="458" cy="46" r="20" stroke="#8B2635" stroke-opacity="0.18" stroke-width="1.1"/><path d="M466 30L478 50M478 30L466 50" stroke="#8B2635" stroke-opacity="0.34" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-          <div style="position:relative;z-index:1;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-              <span class="badge-clash mono" style="display:inline-flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Critical Layering Rule</span>
-              <span class="mono" style="font-size:0.72rem;color:var(--berry-clash);letter-spacing:0.06em;text-transform:uppercase;">· pH Barrier Guardrail</span>
-            </div>
-            <h3 class="serif-display" style="font-size:1.38rem;margin:0 0 12px;">What Never to Mix on ${escapeHtml(celeb.name)}’s Shelf</h3>
-            <div style="background:var(--bg-surface);border-left:3px solid var(--berry-clash);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
-              <p style="font-size:0.91rem;color:var(--text-primary);line-height:1.6;margin:0;">${escapeHtml(celeb.clashWarning)}</p>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;color:var(--text-secondary);position:relative;z-index:1;">
-            <span class="mono">Wait Window: 15 to 20 mins or Alternate PM</span>
-            <a href="${preloadHref}" class="mono" style="color:var(--berry-clash);font-weight:600;text-decoration:none;">Test Shelf Harmony &rarr;</a>
-          </div>
-        </div>
-        <div class="porcelain-vessel-core" style="background:var(--sage-bg);padding:26px 28px;position:relative;overflow:hidden;border:1px solid var(--sage-border);justify-content:space-between;">
-          <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:96px;pointer-events:none;background:radial-gradient(ellipse 65% 90% at 84% 12%,rgba(46,90,68,0.14) 0%,transparent 75%);"><svg width="100%" height="96" viewBox="0 0 560 96" preserveAspectRatio="xMaxYMin slice" fill="none"><rect x="448" y="18" width="22" height="36" rx="5" stroke="#2E5A44" stroke-opacity="0.22" stroke-width="1.2"/><rect x="486" y="18" width="22" height="36" rx="5" stroke="#2E5A44" stroke-opacity="0.32" stroke-width="1.2" fill="#2E5A44" fill-opacity="0.08"/><path d="M474 36H482" stroke="#2E5A44" stroke-opacity="0.4" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-          <div style="position:relative;z-index:1;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-              <span class="badge-safe mono" style="display:inline-flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Chemist Dupe Comparison</span>
-              <span class="mono" style="font-size:0.72rem;color:var(--sage-safe);letter-spacing:0.06em;text-transform:uppercase;">· Ingredient Label (INCI) Match</span>
-            </div>
-            <h3 class="serif-display" style="font-size:1.38rem;margin:0 0 12px;">Luxury Shelf vs. Barrier-Identical Swap</h3>
-            <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:12px;">
-              <div style="background:var(--bg-surface);border:1px solid var(--border-hairline);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:2px;">Luxury Original</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.luxury)}</strong></div>
-              <div style="background:var(--bg-surface);border:1px solid var(--sage-border);border-left:3px solid var(--sage-safe);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--sage-safe);margin-bottom:2px;">Chemist Barrier-Identical Swap</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong></div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:relative;z-index:1;">
-            <span class="mono" style="font-size:0.78rem;color:var(--sage-safe);font-weight:600;background:rgba(46,90,68,0.09);padding:6px 11px;border-radius:999px;">${escapeHtml(celeb.dupeSwap.savingsNote)}</span>
-            <a href="${preloadHref}" class="mono" style="font-size:0.78rem;color:var(--sage-safe);font-weight:600;text-decoration:none;">Test Dupe Shelf &rarr;</a>
-          </div>
-        </div>
-      </div>
-
-      <h2 class="serif-display" style="font-size:1.55rem;margin-bottom:12px;">Key Active Ingredients in This Routine</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:34px;">${activePills}</div>
-
-      <h2 class="serif-display" style="font-size:1.55rem;margin-bottom:14px;">Explore More Iconic Routines by Skin Type</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:28px;">
-        ${otherCelebs.map((o) => `<a href="/celebrity/${escapeHtml(o.slug)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:18px 20px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:8px;"><div><span class="badge-safe mono" style="font-size:0.7rem;margin-bottom:6px;display:inline-block;">${escapeHtml(o.skinProfile)}</span><strong class="serif-display" style="font-size:1.2rem;display:block;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(o.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(o.moniker)}</span></div><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:500;">Inspect Routine &rarr;</span></a>`).join('')}
-      </div>
+      <h2 class="serif-display" style="font-size:1.5rem;margin-bottom:10px;">Key Active Ingredients in This Routine</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:24px;">${activePills}</div>
+      <div id="editorial-source-attribution" style="background:var(--bg-surface);padding:10px 14px;margin-bottom:20px;"><p style="font-size:12px;color:var(--text-secondary);line-height:1.42;margin:0;"><strong>Non-Endorsement Notice:</strong> ${escapeHtml(celeb.name)} has not endorsed, verified, or sponsored this analysis or any brands compared here. Compiled from public reporting in <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(celeb.sourceTitle)} &#8599;</a> for educational skincare commentary.</p></div>
+      <h2 class="serif-display" style="font-size:1.5rem;margin-bottom:12px;">Explore More Iconic Routines by Skin Type</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:24px;">${otherCelebs.map((o) => `<a href="/celebrity/${escapeHtml(o.slug)}" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:16px 18px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:6px;"><div><span class="badge-safe mono" style="font-size:0.7rem;margin-bottom:4px;display:inline-block;">${escapeHtml(o.skinProfile)}</span><strong class="serif-display" style="font-size:1.18rem;display:block;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(o.name)}</strong><span style="font-size:0.82rem;color:var(--text-secondary);">${escapeHtml(o.moniker)}</span></div><span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;">Inspect Routine &rarr;</span></a>`).join('')}</div>
       ${renderHubSaveBanner(`${celeb.name}’s Routine`, `celeb_${celeb.slug}`, preloadHref)}
     </div>
   </section>`;
@@ -555,14 +517,13 @@ function renderCelebrityDetailPage(celeb) {
 
 function renderBottleIndexPage() {
   const cards = CULT_PRODUCTS.map((b) => {
-    const celebUsers = getAllCelebrityRoutines().filter((c) => c.productIds.includes(b.id));
     return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
           <a href="/brand/${slugifyBrand(b.brand)}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">${escapeHtml(b.brand)}</a>
-          <span class="badge-safe mono">pH ${b.ph} · $${b.priceUsd}</span>
+          <span class="badge-safe mono">${b.ph < 4.0 ? 'Active Polish' : 'Gentle Skin Balance'} · $${b.priceUsd}</span>
         </div>
-        <a href="/bottle/${escapeHtml(b.id)}" class="serif-display" style="display:block;font-size:1.3rem;color:var(--text-primary);margin-bottom:8px;">${escapeHtml(b.name)}</a>
+        <a href="/bottle/${escapeHtml(b.id)}" class="serif-display" style="display:block;font-size:1.3rem;color:var(--text-primary);margin-bottom:8px;">${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, ''))}</a>
         <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.55;">${escapeHtml(b.summary)}</p>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;">
@@ -623,9 +584,8 @@ function renderBottleDetailPage(prod) {
         </div>
         <div class="porcelain-vessel-core" style="background:var(--sage-bg);padding:22px 24px;">
           <span class="badge-safe mono" style="margin-bottom:8px;display:inline-block;">${escapeHtml(dupeInfo.type)}</span>
-          <h2 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;"><a href="/bottle/${escapeHtml(dupeInfo.bottle.id)}">${escapeHtml(dupeInfo.bottle.brand)} ${escapeHtml(dupeInfo.bottle.name)} ($${dupeInfo.bottle.priceUsd})</a></h2>
-          <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.55;margin-bottom:10px;">${escapeHtml(dupeInfo.bottle.summary)}</p>
-          <a href="/bottle/${escapeHtml(dupeInfo.bottle.id)}" class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;">Compare pH ${dupeInfo.bottle.ph} Formulation &rarr;</a>
+          <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="padding:12px 14px;background:var(--bg-surface);border:1px dashed var(--sage-border);border-radius:10px;cursor:pointer;"><strong style="display:block;font-size:0.95rem;color:var(--rose-brand);margin-bottom:4px;">${LOCK_SVG}Chemist Dupe Swap ($${dupeInfo.bottle.priceUsd}) Locked</strong><span style="font-size:0.84rem;color:var(--text-secondary);">Enter email at top ($0) to reveal the $${dupeInfo.bottle.priceUsd} barrier-identical swap &uarr;</span></div>
+          <div class="dl-unlocked-c2-proof" style="display:none;"><h2 class="serif-display" style="font-size:1.35rem;margin-bottom:8px;"><a href="/bottle/${escapeHtml(dupeInfo.bottle.id)}">${escapeHtml(dupeInfo.bottle.brand)} ${escapeHtml(dupeInfo.bottle.name)} ($${dupeInfo.bottle.priceUsd})</a></h2><p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.55;margin-bottom:10px;">${escapeHtml(dupeInfo.bottle.summary)}</p><a href="/bottle/${escapeHtml(dupeInfo.bottle.id)}" class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;">Compare Formulation &rarr;</a></div>
         </div>
       </div>
 
@@ -773,28 +733,9 @@ function renderConcernDetailPage(concern) {
   const bottleCards = bottles.map((b, idx) => {
     const partner = b.priceUsd >= 50 ? 'dermstore' : 'sephora';
     const dupe = findDupeForProduct(b);
-    return `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
-      <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-          <a href="/brand/${slugifyBrand(b.brand)}" class="mono" style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(b.brand)}</a>
-          <span class="badge-safe mono">pH ${b.ph} · $${b.priceUsd}</span>
-        </div>
-        <div class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Protocol Bottle ${idx + 1} · ${escapeHtml(b.category)}</div>
-        <a href="/bottle/${escapeHtml(b.id)}" class="serif-display" style="display:block;font-size:1.22rem;color:var(--text-primary);margin-bottom:6px;">${escapeHtml(b.name)}</a>
-        <p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;margin-bottom:8px;">${escapeHtml(b.summary)}</p>
-        <div class="mono" style="font-size:0.73rem;color:var(--sage-safe);background:var(--sage-bg);padding:4px 8px;">${escapeHtml(dupe.type)}: ${escapeHtml(dupe.bottle.brand)} ($${dupe.bottle.priceUsd})</div>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-top:6px;">
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
-          <a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.79rem;color:var(--rose-brand);font-weight:500;">Bottle Breakdown &amp; Dupes &rarr;</a>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-            <a href="/api/affiliate?product=${escapeHtml(b.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ($${b.priceUsd}) &rarr;</a>
-            <button type="button" id="dl-bag-btn-${escapeHtml(b.id)}" data-dl-bag-prod="${escapeHtml(b.id)}" data-dl-bag-title="${escapeHtml(b.brand + ' ' + b.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(b.id)}','${escapeHtml((b.brand + ' ' + b.name).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button>
-          </div>
-        </div>
-        <div style="width:54px;height:60px;background:var(--bg-oat);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="${escapeHtml(b.brand)} ${escapeHtml(b.name)}">${renderBottleVesselSvg(b)}</div>
-      </div>
-    </div>`;
+    const fullCard = `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><a href="/brand/${slugifyBrand(b.brand)}" class="mono" style="font-size:0.78rem;color:var(--text-secondary);font-weight:500;">${escapeHtml(b.brand)}</a><span class="badge-safe mono">Gentle Skin Balance · $${b.priceUsd}</span></div><div class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Protocol Bottle ${idx + 1} · ${escapeHtml(b.category)}</div><a href="/bottle/${escapeHtml(b.id)}" class="serif-display" style="display:block;font-size:1.22rem;color:var(--text-primary);margin-bottom:6px;">${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, ''))}</a><p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;margin-bottom:8px;">${escapeHtml(b.summary)}</p></div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-top:6px;"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;"><a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.79rem;color:var(--rose-brand);font-weight:500;">Bottle Breakdown &amp; Dupes &rarr;</a><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;"><a href="/api/affiliate?product=${escapeHtml(b.id)}&partner=${partner}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ($${b.priceUsd}) &rarr;</a><button type="button" id="dl-bag-btn-${escapeHtml(b.id)}" data-dl-bag-prod="${escapeHtml(b.id)}" data-dl-bag-title="${escapeHtml(b.brand + ' ' + b.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(b.id)}','${escapeHtml((b.brand + ' ' + b.name).replace(/'/g, ''))}','',this)">+ Add to Vanity Bag</button></div></div><div style="width:54px;height:60px;background:var(--bg-oat);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="${escapeHtml(b.brand)} ${escapeHtml(b.name)}">${renderBottleVesselSvg(b)}</div></div></div>`;
+    if (idx === 0) return fullCard;
+    return `<div role="button" tabindex="0" class="porcelain-vessel-core dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="background:var(--bg-oat);padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;border:1px dashed var(--rose-pill-border);cursor:pointer;"><div><span class="badge-safe mono" style="margin-bottom:6px;display:inline-block;">Protocol Bottle ${idx + 1} · ${escapeHtml(b.category)}</span><strong class="serif-display" style="display:block;font-size:1.18rem;color:var(--rose-brand);margin-bottom:6px;">${LOCK_SVG}Bottle #${idx + 1} &amp; $${dupe.bottle.priceUsd} Dupe Locked ($0)</strong><p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.45;margin:0;">Enter email at top ($0) to reveal Protocol Bottle #${idx + 1} + chemist swap &uarr;</p></div><span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:700;">Tap to Reveal Free ($0) &uarr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${fullCard}</div>`;
   }).join('');
 
   const bodyHtml = `<section class="section-block" style="padding-top:16px;">
@@ -826,7 +767,7 @@ function renderConcernDetailPage(concern) {
           <div style="position:relative;z-index:1;">
             <span class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">Step-by-Step Clinical Order</span>
             <h2 class="serif-display" style="font-size:1.48rem;margin:4px 0 14px;">3-Step Application Sequence</h2>
-            ${concern.steps.map((s, idx) => { const b = bottles[idx]; return `<div style="padding:13px 16px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);margin-bottom:10px;"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px;"><span class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;">STEP 0${idx + 1}</span>${b ? `<a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.74rem;color:var(--text-secondary);text-decoration:underline;">Pair with: ${escapeHtml(b.brand)} ${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 22))} &rarr;</a>` : ''}</div><div style="font-size:0.92rem;line-height:1.52;color:var(--text-primary);">${escapeHtml(s.replace(/^\d+\.\s*/, ''))}</div></div>`; }).join('')}
+            ${concern.steps.map((s, idx) => { const b = bottles[idx]; const fullSt = `<div style="padding:13px 16px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);margin-bottom:10px;"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px;"><span class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;">STEP 0${idx + 1}</span>${b ? `<a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.74rem;color:var(--text-secondary);text-decoration:underline;">Pair with: ${escapeHtml(b.brand)} ${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 22))} &rarr;</a>` : ''}</div><div style="font-size:0.92rem;line-height:1.52;color:var(--text-primary);">${escapeHtml(s.replace(/^\d+\.\s*/, ''))}</div></div>`; return idx === 0 ? fullSt : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="padding:12px 14px;background:var(--bg-surface);border:1px dashed var(--rose-pill-border);border-radius:10px;margin-bottom:10px;cursor:pointer;"><strong style="display:block;font-size:0.86rem;color:var(--rose-brand);">${LOCK_SVG}Step 0${idx + 1} &amp; Bottle Pairing Locked ($0 Email)</strong><span style="font-size:0.78rem;color:var(--text-secondary);">Enter email at top ($0) to reveal Step 0${idx + 1} timing &amp; dupe swap &uarr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${fullSt}</div>`; }).join('')}
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;font-size:0.78rem;position:relative;z-index:1;"><span class="mono" style="color:var(--text-secondary);">60s Dry-Down Between Layers</span><a href="${preloadHref}" class="mono" style="color:var(--rose-brand);font-weight:600;text-decoration:none;">Customize in Shelf Checker &rarr;</a></div>
         </div>
@@ -920,8 +861,8 @@ function findFuzzyItem(list, rawSlug, getSearchText) {
 }
 
 function attachSemanticSeoHubs(app, render404Page) {
-  app.get(['/celebrity', '/celebrities'], (req, res) => res.status(200).type('html').send(renderCelebrityIndexPage()));
-  app.get('/celebrity/:slug', (req, res) => {
+  app.get(['/celebrity', '/celebrities', '/celebrity-routines'], (req, res) => res.status(200).type('html').send(renderCelebrityIndexPage()));
+  app.get(['/celebrity/:slug', '/routine/:slug'], (req, res) => {
     const celebs = getAllCelebrityRoutines();
     const celeb = celebs.find((c) => c.slug === req.params.slug);
     if (!celeb) {
@@ -961,7 +902,7 @@ function attachSemanticSeoHubs(app, render404Page) {
     res.status(200).type('html').send(renderBrandDetailPage(brandHub));
   });
 
-  app.get(['/concern', '/concerns'], (req, res) => res.status(200).type('html').send(renderConcernIndexPage()));
+  app.get(['/concern', '/concerns', '/skin-concerns'], (req, res) => res.status(200).type('html').send(renderConcernIndexPage()));
   app.get('/concern/:slug', (req, res) => {
     const concern = CONCERN_HUBS.find((c) => c.slug === req.params.slug);
     if (!concern) return res.status(404).type('html').send(render404Page ? render404Page() : 'Not found');

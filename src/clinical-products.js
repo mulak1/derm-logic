@@ -55,7 +55,7 @@ const CULT_PRODUCTS = [
     priceUsd: 45,
     primaryActives: ['tretinoin', 'isopropyl-myristate'],
     inciList: 'Tretinoin 0.05%, Stearic Acid, Isopropyl Myristate, Polyoxyl 40 Stearate, Stearyl Alcohol, Xanthan Gum, Sorbic Acid, Butylated Hydroxytoluene, Purified Water',
-    summary: 'Prescription RAR nuclear agonist. Note: generic cream vehicle uses Isopropyl Myristate (Grade 5/5 comedogen).'
+    summary: 'Prescription nightly renewal cream. Note: generic cream base contains a heavy pore-clogging oil (5/5 Pore-Clogging Alert).'
   },
   {
     id: 'to-buffet-copper-peptides',
@@ -66,7 +66,7 @@ const CULT_PRODUCTS = [
     priceUsd: 32,
     primaryActives: ['copper-tripeptide-1', 'matrixyl-3000', 'argireline', 'hyaluronic-acid'],
     inciList: 'Aqua (Water), Glycerin, Lactococcus Ferment Lysate, Copper Tripeptide-1, Acetyl Hexapeptide-8, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7, Sodium Hyaluronate, Allantoin',
-    summary: '1% pure GHK-Cu + Matrixyl 3000 + Argireline at pH 6.2. Strictly incompatible with L-Ascorbic Acid, Glycolic Acid, and Salicylic Acid.'
+    summary: 'Smoothing multi-peptide serum for firming and bounce. Do not layer in the same routine with pure Vitamin C or exfoliating acids.'
   },
   {
     id: 'cerave-pm-lotion',
@@ -467,13 +467,13 @@ const CULT_PRODUCTS = [
   {
     id: 'sunday-riley-ceo-15',
     brand: 'Sunday Riley',
-    name: 'C.E.O. 15% Vitamin C Brightening Serum (THD Ascorbate)',
+    name: 'C.E.O. 15% Vitamin C Brightening Serum',
     category: 'Antioxidant Serum',
     ph: 5.5,
     priceUsd: 85,
     primaryActives: ['thd-ascorbate', 'glycolic-acid', 'squalane', 'bisabolol'],
     inciList: 'Water/Eau/Aqua, Tetrahexyldecyl Ascorbate 15%, Squalane, Polyglyceryl-6 Distearate, PEG-8 Beeswax, Limonene, Citrus Sinensis Oil, Glycolic Acid, Bisabolol, Tocopherol, Phytosterols',
-    summary: '15% lipid-soluble THD Ascorbate at pH 5.5. Does not require low pH, making it gentler than L-Ascorbic Acid.'
+    summary: 'Gentle 15% oil-soluble brightening Vitamin C serum that cushions skin and never stings sensitive barriers.'
   },
   {
     id: 'caudalie-vinoperfect',
@@ -808,8 +808,8 @@ const VANITY_SLOT_CALIBRATORS = {
     row1: [
       { id: 'redness_sos', label: 'Redness / Post-Gym', pickIdx: 0, note: 'Hypochlorous Mist (pH 4.8): Calms flushing & bacteria. Let dry 45s before Vitamin C.' },
       { id: 'dry_tight', label: 'Dry / Tight Barrier', pickIdx: 1, note: 'Heartleaf 77% Toner (pH 5.7): Restores hydration without stripping natural lipids.' },
-      { id: 'blemish_prone', label: 'Active Blemishes', pickIdx: 2, note: 'PanOxyl 10% BPO Wash: Rinse 100% clean so residual peroxide never oxidizes AM Vitamin C.' },
-      { id: 'dull_texture', label: 'Rough Texture', pickIdx: 3, note: 'Glycolic 7% Toner (pH 3.6): Resurfaces dull skin, but do not stack directly under Copper Peptides.' }
+      { id: 'blemish_prone', label: 'Active Blemishes', pickIdx: 2, note: 'PanOxyl 10% Acne Wash: Rinse 100% clean so residual peroxide never cancels out morning Vitamin C.' },
+      { id: 'dull_texture', label: 'Rough Texture', pickIdx: 3, note: 'Glycolic 7% Toner: Resurfaces dull skin, but do not stack directly under Copper Peptides.' }
     ],
     row2Label: 'Water & Cleanse Rule',
     row2Key: 'prepSecond',
@@ -824,9 +824,9 @@ const VANITY_SLOT_CALIBRATORS = {
     row1Label: 'Primary Serum Focus',
     row1Key: 'serumFocus',
     row1: [
-      { id: 'sun_spots', label: 'Sun Spots & Glow', pickIdx: 0, sensitivePickIdx: 3, note: 'Targets dark spots & UV free radicals. Uses 15% Vitamin C (pH 3.2) or pH 5.5 Tranexamic Acid if sensitive.' },
-      { id: 'aging_firmness', label: 'Aging & Firmness', pickIdx: 4, sensitivePickIdx: 4, note: 'Copper Peptides 1% (GHK-Cu + Matrixyl, pH 6.2): Remodels collagen without low-pH acid stinging.' },
-      { id: 'pores_oil', label: 'Pores & Oil Control', pickIdx: 2, sensitivePickIdx: 2, note: 'Niacinamide 10% + Zinc 1% (pH 6.0): Balances sebum and visibly tightens pores under SPF.' },
+      { id: 'sun_spots', label: 'Sun Spots & Glow', pickIdx: 0, sensitivePickIdx: 3, note: 'Targets dark spots & UV free radicals. Uses 15% Vitamin C or pH 5.5 Tranexamic Acid if sensitive.' },
+      { id: 'aging_firmness', label: 'Aging & Firmness', pickIdx: 4, sensitivePickIdx: 4, note: 'Copper Peptides 1% (Smoothing Multi-Peptide): Firms skin without acid stinging.' },
+      { id: 'pores_oil', label: 'Pores & Oil Control', pickIdx: 2, sensitivePickIdx: 2, note: 'Niacinamide 10% + Zinc 1%: Balances oil and visibly tightens pores under SPF.' },
       { id: 'stubborn_pigment', label: 'Post-Blemish Marks', pickIdx: 3, sensitivePickIdx: 3, note: 'Topicals Faded (Tranexamic + Azelaic + Kojic, pH 5.5): Fades dark marks with zero acid burn.' }
     ],
     row2Label: 'Skin Sensitivity & pH Tolerance',
@@ -879,7 +879,7 @@ const VANITY_SLOT_OPTIONS = [
   { slotNum: '01 · AM PREP', shortSlot: '01 · PREP', vesselType: 'mist', role: 'Morning Cleanse & pH Prep', timing: '7:30 AM · Step 1 (pH Reset · Wait 45s)', choices: [
     { id: 'tower28-sos-spray', label: 'Tower 28 SOS Hypochlorous Mist ($28)', short: 'Tower 28', ph: '4.8', tag: 'HOCl', desc: 'US #1 Sephora Soothing Mist: National Eczema Assoc. accepted pH 4.8 Hypochlorous Acid mist. Calms redness & post-gym bacteria in 45s.' },
     { id: 'anua-heartleaf-77-toner', label: 'Anua Heartleaf 77% Soothing Toner ($23)', short: 'Anua 77%', ph: '5.7', tag: 'pH5', desc: 'US #1 Amazon/K-Beauty Soothing Toner: 77% Heartleaf + Panthenol + Cica (pH 5.7). Cools reactive skin and preps dry barriers.' },
-    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl', ph: '5.2', tag: 'BPO', desc: 'US #1 Amazon/Ulta Acne Wash: Short-contact 10% Benzoyl Peroxide wash clears acne bacteria in 60s; rinse clean before Vitamin C.' },
+    { id: 'panoxyl-10-bpo-wash', label: 'PanOxyl 10% Benzoyl Peroxide Wash ($11)', short: 'PanOxyl', ph: '5.2', tag: 'Wash', desc: 'US #1 Amazon/Ulta Acne Wash: Short-contact 10% Benzoyl Peroxide wash clears acne bacteria in 60s; rinse clean before Vitamin C.' },
     { id: 'to-glycolic-acid-7', label: 'The Ordinary Glycolic Acid 7% Toner ($13)', short: 'Glycolic 7', ph: '3.6', tag: 'AHA', desc: 'US #1 Ulta Exfoliating Toner: High-strength pH 3.6 7% Glycolic AHA + Tasmanian Pepperberry resurfacing toner for smooth glow.' },
     { id: 'glow-recipe-pha-bha-toner', label: 'Glow Recipe Watermelon PHA+BHA Toner ($35)', short: 'Glow PHA', ph: '4.5', tag: 'PHA', desc: 'US #1 Sephora Pore Toner: Cactus water + Hyaluronic Acid + gentle PHA/BHA (pH 4.5) that hydrates and tightens pores with zero sting.' },
     { id: 'laneige-cream-skin-toner', label: 'LANEIGE Cream Skin Cerapeptide Toner ($36)', short: 'Cream Skin', ph: '5.6', tag: 'Cera', desc: 'US #1 Sephora Milky Toner: Micro-emulsified Ceramide NP + Acetyl Tetrapeptide-11 + White Leaf Tea for dewy morning barrier prep.' }
@@ -889,8 +889,8 @@ const VANITY_SLOT_OPTIONS = [
     { id: 'rohto-melano-cc', label: 'Rohto Melano CC Vitamin C Essence ($14)', short: 'Melano CC', ph: '3.5', tag: 'VitC', desc: 'Cult Japanese airless tube combining pure Vitamin C + Vitamin E + Dipotassium Glycyrrhizate to fade dark spots without oxidizing.' },
     { id: 'to-niacinamide-10-zinc', label: 'The Ordinary Niacinamide 10% + Zinc 1% ($6)', short: 'B3 + Zinc', ph: '6.0', tag: '10%', desc: 'US #1 Ulta/Amazon Pore Serum: Oil-balancing pH 6.0 10% Vitamin B3 + 1% Zinc PCA serum that minimizes shine and tightens pores.' },
     { id: 'topicals-faded-serum', label: 'Topicals Faded Brightening Serum ($38)', short: 'Faded TXA', ph: '5.5', tag: 'TXA', desc: 'US #1 Sephora Dark-Spot Serum: Tranexamic Acid, Azelaic Acid, Kojic Acid & Niacinamide (pH 5.5) for stubborn marks & melasma.' },
-    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%', desc: 'US #1 Peptide Serum: 1% pure GHK-Cu Copper Tripeptide + Matrixyl 3000 + Argireline (pH 6.2). Plumps fine lines with zero acid sting.' },
-    { id: 'sunday-riley-ceo-15', label: 'Sunday Riley C.E.O. 15% Vitamin C Serum ($85)', short: 'CEO 15%C', ph: '5.5', tag: 'THD', desc: 'US #1 Sephora/Ulta Vitamin C Serum: 15% oil-soluble THD Ascorbate + Phytosterols (pH 5.5) that brightens rapidly with zero low-pH acid sting.' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper 1% ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%', desc: 'US #1 Peptide Serum: 1% pure Copper Peptides + smoothing amino peptides. Plumps fine lines with zero acid sting.' },
+    { id: 'sunday-riley-ceo-15', label: 'Sunday Riley C.E.O. 15% Vitamin C Serum ($85)', short: 'CEO 15%C', ph: '5.5', tag: 'VitC', desc: 'US #1 Sephora/Ulta Vitamin C Serum: 15% gentle oil-soluble Vitamin C + plant lipids that brightens rapidly with zero acid sting.' },
     { id: 'olehenriksen-banana-bright-15', label: 'Olehenriksen Banana Bright 15% Vitamin C ($68)', short: 'Banana 15%', ph: '3.6', tag: '15%C', desc: 'US #2 Sephora Vitamin C Serum: 15% Vitamin C + 5% PHA Gluconolactone + Hyaluronic Acid for instant luminosity and dark spot fading.' },
     { id: 'glow-recipe-dew-drops', label: 'Glow Recipe Watermelon Niacinamide Dew Drops ($35)', short: 'Dew Drops', ph: '5.8', tag: 'Dew', desc: 'US #1 Sephora Glow Serum: Mica-free Watermelon + Niacinamide + Hyaluronic Acid hybrid serum (pH 5.8) for instant glass-skin sheen.' }
   ] },
@@ -915,7 +915,7 @@ const VANITY_SLOT_OPTIONS = [
     { id: 'rx-tretinoin-005', label: 'Rx Tretinoin 0.05% Night Cream ($35)', short: 'Tret 0.05%', ph: '5.8', tag: 'Tret', desc: 'US #1 Prescription Retinoid: 0.05% All-Trans Retinoic Acid directly binds nuclear RAR receptors to remodel collagen & clear pores.' },
     { id: 'medik8-crystal-retinal-6', label: 'Medik8 Crystal Retinal 6 Night Serum ($85)', short: 'Retinal 6', ph: '5.9', tag: 'Ret6', desc: 'US #1 Derm Retinaldehyde: Encapsulated 0.06% Retinaldehyde (acts 11x faster than standard retinol) in a gentle carrot-seed cushion.' },
     { id: 'paulas-choice-2-bha', label: "Paula's Choice 2% BHA Liquid Exfoliant ($35)", short: 'Paula BHA', ph: '3.5', tag: 'BHA', desc: 'US #1 Sephora & Amazon Exfoliant: Cult oil-soluble 2% Salicylic Acid + Green Tea liquid (pH 3.5) that clears blackheads & shrinks pores.' },
-    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%', desc: 'Retinoid-free night firming option: 1% pure Copper Tripeptide-1 + Matrixyl 3000 repairs elasticity with zero peeling or sun sensitivity.' },
+    { id: 'to-buffet-copper-peptides', label: 'The Ordinary Multi-Peptide + Copper Serum ($32)', short: 'Copper 1%', ph: '6.2', tag: 'Cu1%', desc: 'Retinoid-free night firming option: 1% pure Copper Peptides + smoothing amino peptides repair elasticity with zero peeling or sun sensitivity.' },
     { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($16)', short: 'Differin', ph: '5.5', tag: '0.1%', desc: 'US #2 OTC Acne Retinoid: 3rd-generation RAR-beta/gamma retinoid gel that prevents clogged pores with less irritation than tretinoin.' },
     { id: 'biologique-recherche-p50-1970', label: 'Biologique Recherche Lotion P50 1970 ($115)', short: 'Lotion P50', ph: '3.0', tag: 'P50', desc: 'Iconic French facial-in-a-bottle combining AHA, BHA, PHA & Niacinamide at pH 3.0 to press-and-release dead cells for instant radiance.' },
     { id: 'finacea-15-azelaic', label: 'Finacea 15% Azelaic Acid Gel ($55)', short: 'Finacea 15', ph: '4.9', tag: 'AzA', desc: 'US #1 Derm Rosacea & Melasma Gel: 15% micronized Azelaic Acid hydrogel (pH 4.9). Calms flushing, fades PIE, and is pregnancy-safe.' },

@@ -352,7 +352,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Prescription Tretinoin 0.05% or Azelaic Acid', detail: 'Applies a pea-sized retinoid on dry skin, alternating with Azelaic Acid.' },
       { step: '3. 100% Fungal-Acne Safe Gel-Cream', detail: 'Moisturizes with ester-free urea/squalane or ceramide PM lotion.' }
     ],
-    clashWarning: 'Many prescription Tretinoin creams contain Isopropyl Myristate (a 5/5 pore-clogger). If you’re acne-prone like Kendall, pair retinoids with oil-free CeraVe PM or Malezia 5% Urea Moisturizer.',
+    clashWarning: 'Many prescription Tretinoin creams contain heavy pore-clogging oils (5/5 pore-clogger alert). If you’re acne-prone like Kendall, pair retinoids with oil-free CeraVe PM or Malezia 5% Urea Moisturizer.',
     dupeSwap: {
       luxury: 'Custom Dermatologist Compound ($120) + Luxury Oil-Free Gel ($78)',
       gentleDupe: 'Differin Adapalene 0.1% ($16) + EltaMD UV Clear SPF 46 ($43) + CeraVe PM ($16)',

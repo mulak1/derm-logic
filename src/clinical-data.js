@@ -363,7 +363,7 @@ const CLINICAL_INGREDIENTS = [
   {
     id: 'benzoyl-peroxide',
     inciName: 'Benzoyl Peroxide',
-    commonName: 'Benzoyl Peroxide (BPO 2.5%-10%)',
+    commonName: 'Benzoyl Peroxide (Acne Cream 2.5%-10%)',
     aliases: ['benzoyl peroxide', 'bpo'],
     category: 'acne_active',
     activeClass: 'benzoyl_peroxide',
@@ -633,7 +633,7 @@ const CLINICAL_INGREDIENTS = [
   {
     id: 'isopropyl-myristate',
     inciName: 'Isopropyl Myristate',
-    commonName: 'Isopropyl Myristate (High Pore-Clogger)',
+    commonName: 'Heavy Cream Ester (5/5 Pore-Clogger)',
     aliases: ['isopropyl myristate', 'myristyl myristate', 'isopropyl isostearate'],
     category: 'emollient_hazard',
     activeClass: 'comedogenic_ester',

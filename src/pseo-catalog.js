@@ -806,9 +806,7 @@ function toPlainConsumerPair(item, ingA, ingB) {
   };
   const roleA = friendlyRole(ingA, 'active serum');
   const roleB = friendlyRole(ingB, 'treatment');
-  const midA = ingA ? Number(((ingA.phMin + ingA.phMax) / 2).toFixed(1)) : 5.5;
-  const midB = ingB ? Number(((ingB.phMin + ingB.phMax) / 2).toFixed(1)) : 5.5;
-  const phNote = ingA && ingB ? `(pH ${midA} vs. pH ${midB})` : '';
+  const phNote = '';
   const waitMin = Number(item.waitTimeMinutes) || 1;
   const waitPhrase = waitMin >= 10 ? `wait ${waitMin} minutes for your skin to dry completely` : 'allow 60 seconds to absorb';
   const score = Number(item.compatibilityScore) || 50;

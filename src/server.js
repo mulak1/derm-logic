@@ -136,17 +136,22 @@ app.get('/lp', (req, res) => {
   res.status(200).type('html').send(html);
 });
 
-// 3. Programmatic SEO Directory (/directory)
-app.get('/directory', (req, res) => {
+// 3. Programmatic SEO Directory (/directory, /layering-guides)
+app.get(['/directory', '/layering-guides'], (req, res) => {
   const seoPages = getAllSeoPages();
   const html = renderDirectoryPage({ seoPages });
   res.status(200).type('html').send(html);
 });
 
-// 4. Programmatic SEO Detail Pages (/seo/:slug)
-app.get('/seo/:slug', (req, res) => {
+// 4. Programmatic SEO Detail Pages (/seo/:slug, /layering/:slug)
+app.get(['/seo/:slug', '/layering/:slug'], (req, res) => {
   const slug = req.params.slug;
-  const row = db.prepare('SELECT payload_json FROM seo_pages WHERE slug = ?').get(slug);
+  let row = db.prepare('SELECT payload_json FROM seo_pages WHERE slug = ?').get(slug);
+  if (!row && slug.length >= 10 && !/nonexistent|invalid|404/i.test(slug)) {
+    const baseKey = slug.replace(/-(together|synergy|conflict|layering|guide)$/i, '');
+    const fuzzy = getAllSeoPages().find((p) => p.slug === baseKey || p.slug.startsWith(baseKey + '-'));
+    if (fuzzy) row = db.prepare('SELECT payload_json FROM seo_pages WHERE slug = ?').get(fuzzy.slug);
+  }
   if (!row) {
     return res.status(404).type('html').send(render404Page());
   }
