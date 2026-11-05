@@ -194,10 +194,12 @@ const SHARED_CSS = `
   @media (max-width: 640px) {
     .container { padding: 0 14px; }
     #sovrn-ftc-disclosure-bar, .site-header .nav-links, .hero-photo-col, #hero-3step-promise, .hero-copy-col .btn-primary, .hero-copy-col .btn-secondary, #dl-pseo-top-conversion-bar { display: none !important; }
-    .site-header .nav-inner { min-height: 54px !important; padding: 6px 0 !important; flex-wrap: nowrap !important; gap: 6px !important; }
+    .site-header .nav-inner { min-height: 50px !important; padding: 6px 0 !important; flex-wrap: wrap !important; gap: 4px !important; max-width: 100% !important; overflow: hidden !important; }
     #dl-header-vanity-pill { padding: 4px 8px !important; font-size: 0.71rem !important; min-height: 28px !important; }
+    #dl-header-vanity-count, .brand-logo-link .serif-italic { display: none !important; }
     #vanityLightToggle { padding: 2px !important; }
-    #vanityLightToggle .vanity-light-btn { padding: 4px 8px !important; font-size: 0.72rem !important; min-height: 26px !important; }
+    #vanityLightToggle .vanity-light-btn { padding: 3px 6px !important; font-size: 0.68rem !important; min-height: 24px !important; }
+    a { max-width: 100%; overflow-wrap: anywhere; }
     .hero-section { padding: 4px 0 8px !important; }
     .editorial-top-banner { margin-bottom: 6px !important; row-gap: 4px !important; }
     .hero-h1 { font-size: 1.55rem !important; line-height: 1.06 !important; margin-bottom: 2px !important; }
