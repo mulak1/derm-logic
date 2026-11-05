@@ -220,45 +220,49 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
   const homeSwatchesHtml = renderPorcelainSwatchCards(prioritizedIngredients.slice(0, 3));
 
   const bodyHtml = `
-    <section class="hero-section">
+    <section class="hero-section" style="padding-top:10px;padding-bottom:18px;">
       <div class="container">
-        <div id="home-executive-brief" class="editorial-top-banner">
-          <div class="hero-copy-col">
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span class="badge-clash mono" style="font-size:0.75rem;padding:4px 10px;">Cosmetic Chemist Shelf X-Ray &middot; ${products.length} Cult Bottles</span><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;">&#9679; JCAD/PubMed &amp; 2026 INCI Verified</span></div>
-              <h1 class="hero-h1"><span class="hero-h1-line1">Is your $280 skincare shelf</span><span class="hero-h1-line2">secretly canceling itself out?</span></h1>
-              <p class="hero-sub">Mixing Copper Peptides with Vitamin C—or layering Tretinoin over damp Snail Mucin—deactivates your most expensive serums on contact. Tap a famous routine mystery below or tap your own bottles to see what clashes:</p>
-              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-                <a href="#analyzer" class="btn-primary" style="padding:10px 20px;min-height:40px;"><span>Check My Shelf Below (5s)</span><span class="btn-icon-circle">&rarr;</span></a>
-                <a href="/compare" class="btn-secondary" style="padding:9px 18px;min-height:40px;"><span>Compare Cult Bottles &amp; Dupes</span></a>
-                <a href="/celebrity" class="btn-secondary" style="padding:9px 18px;min-height:40px;"><span>Celebrity Shelves</span></a>
-              </div>
+        <div id="home-executive-brief" style="padding:20px 22px;background:var(--bg-surface);border-radius:20px;display:flex;flex-direction:column;gap:12px;margin-bottom:28px;border:1px solid var(--border-subtle);">
+          <div id="dl-screen1-group1" style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+              <span class="badge-clash mono" style="font-size:13px;padding:4px 10px;">Cosmetic Chemist Shelf X-Ray &middot; ${products.length} Cult Bottles</span>
+              <span class="mono" style="font-size:13px;color:var(--sage-safe);font-weight:600;">&#9679; JCAD/PubMed &amp; 2026 INCI Verified</span>
             </div>
-            <div id="hero-3step-promise" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px;background:var(--bg-surface);border-radius:20px;margin-top:10px;font-size:0.82rem;">
-              <div style="cursor:pointer;padding:6px 8px;border-radius:14px;background:var(--bg-oat);transition:transform 150ms ease;" onclick="applyPreset('copper-vitc-oxidation');var el=document.getElementById('analyzer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--rose-brand);display:block;margin-bottom:2px;">&#9889; $210 Vit C + Copper Trap &darr;</strong><span style="color:var(--text-secondary);font-size:0.78rem;line-height:1.3;display:block;">See why C E Ferulic + Copper Peptides oxidize on contact</span></div>
-              <div style="cursor:pointer;padding:6px 8px;border-radius:14px;background:var(--bg-oat);transition:transform 150ms ease;" onclick="applyPreset('viral-tiktok-destroyer');var el=document.getElementById('analyzer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--honey-warn);display:block;margin-bottom:2px;">&#128293; Tretinoin + Acid Peel Mistake &darr;</strong><span style="color:var(--text-secondary);font-size:0.78rem;line-height:1.3;display:block;">Why Glycolic 7% + BHA + Retinoid stings &amp; flakes</span></div>
-              <div style="cursor:pointer;padding:6px 8px;border-radius:14px;background:var(--bg-oat);transition:transform 150ms ease;" onclick="applyPreset('glass-skin-recovery');var el=document.getElementById('analyzer');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth'});"><strong class="mono" style="color:var(--sage-safe);display:block;margin-bottom:2px;">&#10024; Zero-Pilling Glass-Skin AM &darr;</strong><span style="color:var(--text-secondary);font-size:0.78rem;line-height:1.3;display:block;">How to layer Vitamin C, Snail 96 &amp; SPF 50 under makeup</span></div>
+            <h1 class="hero-h1" style="font-size:clamp(1.38rem,2.3vw,1.95rem);line-height:1.18;margin:0;max-width:none;">Is your $280 skincare shelf secretly canceling itself out?</h1>
+            <div id="dl-spark-tester-bar" role="group" aria-label="1-Tap AM/PM Conflict Spark Tester" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+              <button type="button" class="vanity-light-btn active mono" data-spark="retinol-aha" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('retinol-aha','viral-tiktok-destroyer',this)">&#9889; Retinol + AHA/Vit C</button>
+              <button type="button" class="vanity-light-btn mono" data-spark="copper-vitc" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('copper-vitc','copper-vitc-oxidation',this)">&#129514; Copper + Vit C</button>
+              <button type="button" class="vanity-light-btn mono" data-spark="tret-bpo" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('tret-bpo','viral-tiktok-destroyer',this)">&#128293; Tretinoin + BPO</button>
+              <button type="button" class="vanity-light-btn mono" data-spark="calm-barrier" style="font-size:13px;padding:6px 11px;min-height:34px;border-radius:999px;cursor:pointer;" onclick="window.__dlSelectSparkConflict('calm-barrier','glass-skin-recovery',this)">&#10024; Calm Barrier Split</button>
             </div>
           </div>
-          <div class="hero-photo-col">
-            <div class="editorial-photo-shell">
-              <div id="heroRitualToggleBar" class="vanity-light-pill" role="group" aria-label="Preview Morning, Bedtime, or Serum Clash Mode" style="display:flex;width:100%;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px;">
-                <button type="button" data-ritual-mode="am" class="vanity-light-btn active mono" style="flex:1;font-size:0.8rem;padding:6px 8px;" aria-pressed="true" onclick="setHeroRitualMode('am', this)">7:30 AM &middot; Morning</button>
-                <button type="button" data-ritual-mode="pm" class="vanity-light-btn mono" style="flex:1;font-size:0.8rem;padding:6px 8px;" aria-pressed="false" onclick="setHeroRitualMode('pm', this)">9:30 PM &middot; Bedtime</button>
-                <button type="button" data-ritual-mode="clash" class="vanity-light-btn mono" style="flex:1;font-size:0.8rem;padding:6px 8px;" aria-pressed="false" onclick="setHeroRitualMode('clash', this)">Why Serums Clash</button>
-              </div>
-              <div class="editorial-photo-diptych">
-                <div class="editorial-photo-inner">
-                  <img id="heroDiptychImg1" src="/public/editorial-woman-morning.jpg" alt="Woman in linen robe applying morning Vitamin C serum at a sunlit travertine vanity" style="object-position:center 22%;" fetchpriority="high" />
-                </div>
-              </div>
-              <div class="editorial-photo-caption" style="padding-top:6px;">
-                <div>
-                  <strong id="heroDiptychTitle" class="serif-display" style="font-size:1.05rem;color:var(--text-primary);display:block;">7:30 AM &middot; Morning Shield &amp; Zero-Pilling Prep</strong>
-                  <div id="heroDiptychSub" style="color:var(--text-secondary);font-size:0.8rem;margin-top:2px;">Vitamin C (Wait 60s) &middot; Hydrating Serum &middot; Barrier Cream &middot; Broad-Spectrum SPF 50</div>
-                </div>
-                <span id="heroDiptychBadge" class="badge-safe mono" style="flex-shrink:0;">Morning Glow Order</span>
-              </div>
+
+          <div id="dl-screen1-group2" style="padding:15px 18px;border-radius:16px;background:var(--bg-oat);display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+              <span id="dl-ph-clash-badge" class="badge-clash mono" style="font-size:13px;padding:4px 10px;font-weight:700;">&#9889; pH 3.4 vs. 5.8 Clash &middot; 72h Barrier Reset</span>
+              <span id="dl-spark-savings-pill" class="badge-safe mono" style="font-size:13px;padding:4px 10px;font-weight:700;">Unmasked Proof #1 &middot; Save $156</span>
+            </div>
+            <div id="dl-spark-unmasked-proof" style="font-size:13.5px;line-height:1.42;color:var(--text-primary);">
+              <strong style="color:var(--rose-brand);">Retinol + AHA/Vit C Clash:</strong> Low-acid pH 3.4 clashes with pH 5.8 night retinoid &mdash; <strong>Fix:</strong> Move Vitamin C to 7:30 AM &amp; Retinol to 9:30 PM (Swap $182 C E Ferulic &rarr; $26 Timeless Dupe).
+            </div>
+          </div>
+
+          <div id="dl-screen1-group3" style="padding:15px 18px;border-radius:16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:10px;">
+            <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'screen1_spark')" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;" data-no-bag-inject="1">
+              <input type="email" id="dl-inline-sample-email" required class="dl-inline-ics-email input-box" placeholder="Enter email ($0) to unmask 2 Dupes + 4 Hex Swatches..." aria-label="Enter email ($0) to unmask 2 Clinical Dupes + your Top 4 Hex Swatches &amp; save your Routine" style="flex:1 1 200px;min-width:0;padding:8px 12px;min-height:38px;font-size:13.5px;background:var(--bg-surface);" />
+              <button type="submit" id="dl-screen1-email-btn" class="dl-inline-ics-btn btn-secondary mono" style="padding:8px 14px;min-height:38px;font-size:13.5px;background:var(--rose-brand);color:var(--accent-ink);font-weight:600;white-space:nowrap;">Unmask 2 Dupes + 4 Swatches ($0) &rarr;</button>
+              <span class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:13px;color:var(--sage-safe);"></span>
+            </form>
+            <div id="dl-unmasked-sample-dupes-swatches" style="display:none;padding:14px 16px;border-radius:12px;background:var(--sage-bg);font-size:13px;color:var(--text-primary);gap:6px;flex-direction:column;">
+              <div><strong style="color:var(--sage-safe);">&#10003; Unmasked 2 Clinical Dupes:</strong> (1) Timeless 20% C+E+Ferulic ($26 vs. $182 SkinCeuticals &middot; Save $156) &middot; (2) Aestura Atobarrier 365 ($32 vs. $116 Triple Lipid &middot; Save $84)</div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><strong style="color:var(--rose-brand);">Top 4 Undertone Hex Swatches:</strong><span class="mono" style="padding:2px 8px;border-radius:99px;background:#F4E6DC;color:#3A1F27;font-size:13px;">#F4E6DC Porcelain</span><span class="mono" style="padding:2px 8px;border-radius:99px;background:#EAD2C0;color:#3A1F27;font-size:13px;">#EAD2C0 Neutral Silk</span><span class="mono" style="padding:2px 8px;border-radius:99px;background:#D9B69E;color:#3A1F27;font-size:13px;">#D9B69E Warm Olive</span><span class="mono" style="padding:2px 8px;border-radius:99px;background:#B98D72;color:#FFF;font-size:13px;">#B98D72 Golden Amber</span></div>
+            </div>
+            <div id="dl-screen1-paid-cta-row" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+              <button type="button" id="dl-screen1-buy-9" class="btn-primary" style="padding:9px 16px;min-height:40px;font-size:14px;" onclick="openCheckoutModal('annual_1999')">
+                <span>Unlock $9 One-Time Barrier Protocol &rarr;</span>
+              </button>
+              <span id="dl-competitor-price-anchor" class="mono" style="font-size:13px;color:var(--text-secondary);font-weight:600;">$9 One-Time Barrier Protocol &middot; vs. $59/mo Curology Subscription</span>
+              <a href="#analyzer" class="mono" style="font-size:13px;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Full ${products.length}-Bottle Workbench &darr;</a>
             </div>
           </div>
         </div>

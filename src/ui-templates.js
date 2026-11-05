@@ -655,19 +655,9 @@ function renderAnalysisResultHtml(res) {
               <span><strong style="color:var(--sage-safe);">✓ Why This Split Works:</strong> ${escapeHtml(topSummaryLine)}</span>
               <a href="${escapeHtml(topSwap.directUrl)}" data-sovrn-beacon="${escapeHtml(topSwap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="font-size:0.71rem;padding:3px 9px;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)} &nearr;</a>
             </div>
-            <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'workbench_tab1')" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0;" data-no-bag-inject="1">
-              <span class="mono" style="width:100%;font-size:0.72rem;font-weight:700;color:var(--rose-brand);">Enter email ($0) to unmask 2 Clinical Dupes + your Top 4 Hex Swatches &amp; save your Routine:</span>
-              <input type="email" id="dl-inline-sample-email" required class="dl-inline-ics-email input-box" placeholder="Enter email ($0) to unmask 2 Clinical Dupes + your Top 4 Hex Swatches &amp; save your Routine" aria-label="Enter email ($0) to unmask 2 Clinical Dupes + your Top 4 Hex Swatches &amp; save your Routine" style="flex:1 1 150px;min-width:0;padding:6px 10px;min-height:30px;font-size:0.75rem;background:var(--bg-surface);" />
-              <button type="submit" class="dl-inline-ics-btn btn-secondary mono" style="padding:5px 11px;min-height:30px;font-size:0.72rem;background:var(--rose-brand);color:var(--accent-ink);white-space:normal;text-align:center;">Unmask 2 Dupes + 4 Swatches ($0) &rarr;</button>
-              <span class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.71rem;color:var(--sage-safe);"></span>
-            </form>
-            <div id="dl-unmasked-sample-dupes-swatches" style="display:none;padding:8px 10px;border-radius:12px;background:var(--sage-bg);font-size:0.74rem;color:var(--text-primary);gap:6px;flex-direction:column;">
-              <div><strong style="color:var(--sage-safe);">✓ Unmasked 2 Clinical Dupes:</strong> (1) Timeless 20% C+E+Ferulic ($26 vs. $182 SkinCeuticals &middot; Save $156) &middot; (2) Aestura Atobarrier 365 ($32 vs. $116 Triple Lipid &middot; Save $84)</div>
-              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><strong style="color:var(--rose-brand);">Top 4 Undertone Hex Swatches:</strong><span class="mono" style="padding:2px 7px;border-radius:99px;background:#F4E6DC;color:#3A1F27;font-size:0.68rem;">#F4E6DC Porcelain</span><span class="mono" style="padding:2px 7px;border-radius:99px;background:#EAD2C0;color:#3A1F27;font-size:0.68rem;">#EAD2C0 Neutral Silk</span><span class="mono" style="padding:2px 7px;border-radius:99px;background:#D9B69E;color:#3A1F27;font-size:0.68rem;">#D9B69E Warm Olive</span><span class="mono" style="padding:2px 7px;border-radius:99px;background:#B98D72;color:#FFF;font-size:0.68rem;">#B98D72 Golden Amber</span></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding-top:2px;font-size:0.72rem;color:var(--text-secondary);">
-              <span>Need client-ready PDF &amp; swatch handouts?</span>
-              <button type="button" class="mono" onclick="openCheckoutModal('stylist_29')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;font-size:0.72rem;padding:0;white-space:normal;text-align:left;">For Estheticians &amp; Color Stylists: Client White-Label Dossier Pass ($29) &rarr;</button>
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding-top:2px;font-size:0.78rem;color:var(--text-secondary);">
+              <span>Unlock $9 One-Time Barrier Protocol &middot; vs. $59/mo Curology Subscription</span>
+              <button type="button" class="mono" onclick="openCheckoutModal('annual_1999')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;font-size:0.78rem;padding:0;white-space:normal;text-align:left;">Get $9 Barrier Protocol / $29 Stylist Pass &rarr;</button>
             </div>
           </div>
           <button type="button" id="dl-btn-next-step-3" class="btn-secondary" style="display:none;" onclick="window.__dlSwitchResultStep(3)">Next</button>
@@ -951,22 +941,21 @@ const CLIENT_SCRIPT = `
     const heroBtn = document.querySelector('#heroRitualToggleBar .vanity-light-btn[data-ritual-mode="' + (isNight ? 'pm' : 'am') + '"]');
     setHeroRitualMode(isNight ? 'pm' : 'am', heroBtn);
   }
-  function setHeroRitualMode(mode, btn) {
+  window.__dlSelectSparkConflict = function(key, presetId, btn) {
     const map = {
-      am: { img1: '/public/editorial-woman-morning.jpg', alt: 'Woman in linen robe applying morning Vitamin C serum at a sunlit travertine vanity', pos: 'center 22%', title: '7:30 AM · Morning Shield & Zero-Pilling Prep', sub: 'Vitamin C (Wait 60s) · Hydrating Serum · Barrier Cream · Broad-Spectrum SPF 50', badge: 'Morning Glow Order', badgeClass: 'badge-safe mono' },
-      pm: { img1: '/public/editorial-woman-evening.jpg', alt: 'Woman applying evening ceramide recovery cream by warm candlelight', pos: 'center 20%', title: '9:30 PM · Bedtime Renewal & Ceramide Cushion', sub: 'Oil-to-Milk Cleanse · Dry-Skin Retinoid or Peptide · 3:1:1 Ceramide Barrier Seal', badge: 'Bedtime Recovery', badgeClass: 'badge-safe mono' },
-      clash: { img1: '/public/editorial-segment-2.jpg', alt: 'Close-up of woman inspecting active dropper bottle to prevent pH serum clash', pos: 'center 18%', title: 'Why $182 Serums Cancel on Contact', sub: 'Pure Vitamin C (pH 3.2) + Copper Peptides or Retinol + Benzoyl Peroxide deactivate each other', badge: 'Separate AM & PM', badgeClass: 'badge-clash mono' }
+      'retinol-aha': { badge: '⚡ pH 3.4 vs. 5.8 Clash · 72h Barrier Reset', badgeCls: 'badge-clash mono', pill: 'Unmasked Proof #1 · Save $156', proof: '<strong style="color:var(--rose-brand);">Retinol + AHA/Vit C Clash:</strong> Low-acid pH 3.4 clashes with pH 5.8 night retinoid &mdash; <strong>Fix:</strong> Move Vitamin C to 7:30 AM &amp; Retinol to 9:30 PM (Swap $182 C E Ferulic &rarr; $26 Timeless Dupe).' },
+      'copper-vitc': { badge: '⚡ pH 3.2 vs. 6.5 Clash · Copper Ion Oxidation', badgeCls: 'badge-clash mono', pill: 'Unmasked Proof #1 · $210 Saved', proof: '<strong style="color:var(--rose-brand);">Copper Peptides + Vitamin C Clash:</strong> Pure L-Ascorbic Acid (pH 3.2) oxidizes Copper Tripeptide-1 on contact &mdash; <strong>Fix:</strong> Apply Vitamin C at 7:30 AM &amp; Copper Peptides at 9:30 PM.' },
+      'tret-bpo': { badge: '🔥 pH 3.6 vs. 5.5 Clash · 72h Barrier Reset', badgeCls: 'badge-clash mono', pill: 'Unmasked Proof #1 · Zero Peeling', proof: '<strong style="color:var(--rose-brand);">Tretinoin + Benzoyl Peroxide Clash:</strong> Leave-on BPO neutralizes night Tretinoin &mdash; <strong>Fix:</strong> Use BPO as a 60s morning wash &amp; cushion Tretinoin over $32 Aestura 365 Cream.' },
+      'calm-barrier': { badge: '✨ pH 5.2 Balanced Split · 0 Active Clashes', badgeCls: 'badge-safe mono', pill: 'Unmasked Proof #1 · Glass-Skin Ready', proof: '<strong style="color:var(--sage-safe);">Calm Barrier Split Verified:</strong> Morning Vitamin C + Snail 96 + Joseon SPF 50 ($18) and Night Ceramide Cushion layer with zero pilling or stinging.' }
     };
-    const cfg = map[mode] || map.am, tEl = document.getElementById('heroDiptychTitle'), sEl = document.getElementById('heroDiptychSub'), bEl = document.getElementById('heroDiptychBadge'), i1 = document.getElementById('heroDiptychImg1');
-    if (tEl) tEl.textContent = cfg.title;
-    if (sEl) sEl.textContent = cfg.sub;
-    if (bEl) { bEl.textContent = cfg.badge; bEl.className = cfg.badgeClass; }
-    if (i1) { i1.src = cfg.img1; i1.alt = cfg.alt; i1.style.objectPosition = cfg.pos; }
-    document.querySelectorAll('#heroRitualToggleBar .vanity-light-btn').forEach((b) => {
-      const active = b === btn || b.getAttribute('data-ritual-mode') === mode;
-      b.classList.toggle('active', active); b.setAttribute('aria-pressed', active ? 'true' : 'false');
-    });
-  }
+    const cfg = map[key] || map['retinol-aha'], bEl = document.getElementById('dl-ph-clash-badge'), pEl = document.getElementById('dl-spark-savings-pill'), prEl = document.getElementById('dl-spark-unmasked-proof');
+    if (bEl) { bEl.textContent = cfg.badge; bEl.className = cfg.badgeCls; }
+    if (pEl) pEl.textContent = cfg.pill;
+    if (prEl) prEl.innerHTML = cfg.proof;
+    document.querySelectorAll('#dl-spark-tester-bar .vanity-light-btn').forEach((b) => b.classList.toggle('active', b === btn || b.getAttribute('data-spark') === key));
+    if (presetId && typeof applyPreset === 'function') applyPreset(presetId);
+  };
+  function setHeroRitualMode() {}
   function startViscosityTimer(seconds, btn) {
     if (!btn || btn.dataset.running === '1') return;
     btn.dataset.running = '1'; btn.classList.add('running');

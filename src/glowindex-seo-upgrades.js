@@ -90,28 +90,12 @@ const FLAGSHIP_BOTTLE_COMPARE_PAIRS = [
   { slug: 'dr-idriss-major-fade-serum-vs-topicals-faded-serum', title: 'Dr. Idriss Major Fade Hyper Serum vs. Topicals Faded Serum', sub: 'Alpha Arbutin + Kojic Acid vs. Tranexamic + Azelaic + Niacinamide' },
   { slug: 'cerave-hydrating-cleanser-vs-vanicream-gentle-cleanser', title: 'CeraVe Hydrating Facial Cleanser vs. Vanicream Gentle Cleanser', sub: 'Ceramide Emulsion Wash vs. Zero-Ester Minimalist Sensitive Wash' }
 ];
-
 function buildHighIntentComparisonSlugs() {
-  const set = new Set([
-    'copper-tripeptide-1-vs-l-ascorbic-acid', 'retinol-vs-tretinoin', 'glycolic-acid-vs-salicylic-acid',
-    'adapalene-vs-benzoyl-peroxide', 'azelaic-acid-vs-niacinamide', 'aestura-atobarrier-365-vs-skinceuticals-ce-ferulic',
-    ...FLAGSHIP_BOTTLE_COMPARE_PAIRS.map((p) => p.slug)
-  ]);
-  for (const prod of CLINICAL_PRODUCTS) {
-    for (const rival of getBottleRivals(prod, 6)) {
-      const pair = [prod.id, rival.id].sort();
-      set.add(`${pair[0]}-vs-${pair[1]}`);
-    }
-  }
-  for (let i = 0; i < Math.min(20, CLINICAL_INGREDIENTS.length); i++) {
-    for (let j = i + 1; j < Math.min(20, CLINICAL_INGREDIENTS.length); j++) {
-      const pair = [CLINICAL_INGREDIENTS[i].id, CLINICAL_INGREDIENTS[j].id].sort();
-      set.add(`${pair[0]}-vs-${pair[1]}`);
-    }
-  }
+  const set = new Set(['copper-tripeptide-1-vs-l-ascorbic-acid', 'retinol-vs-tretinoin', 'glycolic-acid-vs-salicylic-acid', 'adapalene-vs-benzoyl-peroxide', 'azelaic-acid-vs-niacinamide', 'aestura-atobarrier-365-vs-skinceuticals-ce-ferulic', ...FLAGSHIP_BOTTLE_COMPARE_PAIRS.map((p) => p.slug)]);
+  for (const prod of CLINICAL_PRODUCTS) for (const rival of getBottleRivals(prod, 6)) set.add([prod.id, rival.id].sort().join('-vs-'));
+  for (let i = 0; i < Math.min(20, CLINICAL_INGREDIENTS.length); i++) for (let j = i + 1; j < Math.min(20, CLINICAL_INGREDIENTS.length); j++) set.add([CLINICAL_INGREDIENTS[i].id, CLINICAL_INGREDIENTS[j].id].sort().join('-vs-'));
   return Array.from(set);
 }
-
 const ALL_COMPARE_SLUGS = buildHighIntentComparisonSlugs();
 
 const BOT_FAMILIES = [
@@ -543,25 +527,8 @@ const GLOWINDEX_CLIENT_SCRIPT = `<script id="gi-glow-session-script">
       fetch('/api/seo/beacon', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stage: stage, path: window.location.pathname, meta: meta || {} }) }).catch(function(){});
       var mappedEvent = stage === 'tool_initiated' ? 'calculate' : (stage === 'checkout_initiated' ? 'checkout_intent' : (stage === 'p_seo_cta_click' ? 'view_paywall' : ''));
       if (mappedEvent) {
-        var evPayload = JSON.stringify({
-          event_type: mappedEvent,
-          page_url: window.location.pathname + window.location.search,
-          device_type: window.innerWidth <= 768 ? 'mobile' : 'desktop',
-          meta: Object.assign({ pseo_stage: stage, js_hydrated: 1 }, meta || {}),
-          metadata: Object.assign({ pseo_stage: stage, js_hydrated: 1 }, meta || {})
-        });
-        fetch('/api/telemetry/event', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          keepalive: true,
-          body: evPayload
-        }).catch(function(){});
-        fetch('/api/analytics/event', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          keepalive: true,
-          body: evPayload
-        }).catch(function(){});
+        var evPayload = JSON.stringify({ event_type: mappedEvent, page_url: window.location.pathname + window.location.search, device_type: window.innerWidth <= 768 ? 'mobile' : 'desktop', meta: Object.assign({ pseo_stage: stage, js_hydrated: 1 }, meta || {}), metadata: Object.assign({ pseo_stage: stage, js_hydrated: 1 }, meta || {}) });
+        fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: evPayload }).catch(function(){});
       }
     } catch (_) {}
   };
@@ -952,34 +919,16 @@ function attachGlowIndexSeoUpgrades(app) {
     return res.status(200).type('application/xml; charset=utf-8').send(xml);
   });
 
-  app.get('/sitemap-core.xml', (req, res) => {
-    const urls = [`${HOST_URL}/`, `${HOST_URL}/directory`, `${HOST_URL}/compare`, `${HOST_URL}/scenario`, `${HOST_URL}/leaderboard`, `${HOST_URL}/lp`, ...B2B_STUDIO_FORMULAS.map((f) => `${HOST_URL}/studio/formulas/${f.slug}`), ...B2B_PLAYBOOKS.map((p) => `${HOST_URL}/studio/playbooks/${p.slug}`), ...KIOSK_VERTICALS.map((k) => `${HOST_URL}/kiosk/${k.slug}`), ...B2B_CLIENT_DELIVERABLES.map((c) => `${HOST_URL}/client/${c.slug}`)];
-    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(urls));
-  });
-
-  app.get('/sitemap-seo-guides.xml', (req, res) => {
-    const seeds = typeof buildSeoPagesCatalog === 'function' ? buildSeoPagesCatalog() : [...(PAIR_SEO_SEEDS || []), ...(PRODUCT_SEO_SEEDS || [])];
-    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(seeds.map((s) => `${HOST_URL}/seo/${s.slug}`)));
-  });
-
-  app.get('/sitemap-comparisons.xml', (req, res) => {
-    const urls = ALL_COMPARE_SLUGS.map((slug) => `${HOST_URL}/compare/${slug}`);
-    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(urls));
-  });
-
-  app.get('/sitemap-bottles-actives.xml', (req, res) => {
-    const brandUrls = (typeof getAllBrandHubs === 'function' ? getAllBrandHubs() : []).map((b) => `${HOST_URL}/brand/${b.slug}`);
-    const urls = [`${HOST_URL}/bottle`, ...CLINICAL_PRODUCTS.map((p) => `${HOST_URL}/bottle/${p.id}`), `${HOST_URL}/ingredient`, ...CLINICAL_INGREDIENTS.map((i) => `${HOST_URL}/ingredient/${i.id}`), ...CLINICAL_INGREDIENTS.flatMap((i) => INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/ingredient/${i.id}/${sc.slug}`)), `${HOST_URL}/brand`, ...brandUrls];
-    return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set(urls))));
-  });
-
+  app.get('/sitemap-core.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset([`${HOST_URL}/`, `${HOST_URL}/directory`, `${HOST_URL}/compare`, `${HOST_URL}/scenario`, `${HOST_URL}/leaderboard`, `${HOST_URL}/lp`, ...B2B_STUDIO_FORMULAS.map((f) => `${HOST_URL}/studio/formulas/${f.slug}`), ...B2B_PLAYBOOKS.map((p) => `${HOST_URL}/studio/playbooks/${p.slug}`), ...KIOSK_VERTICALS.map((k) => `${HOST_URL}/kiosk/${k.slug}`), ...B2B_CLIENT_DELIVERABLES.map((c) => `${HOST_URL}/client/${c.slug}`)])));
+  app.get('/sitemap-seo-guides.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset((typeof buildSeoPagesCatalog === 'function' ? buildSeoPagesCatalog() : [...(PAIR_SEO_SEEDS || []), ...(PRODUCT_SEO_SEEDS || [])]).map((s) => `${HOST_URL}/seo/${s.slug}`))));
+  app.get('/sitemap-comparisons.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(ALL_COMPARE_SLUGS.map((slug) => `${HOST_URL}/compare/${slug}`))));
+  app.get('/sitemap-bottles-actives.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set([`${HOST_URL}/bottle`, ...CLINICAL_PRODUCTS.map((p) => `${HOST_URL}/bottle/${p.id}`), `${HOST_URL}/ingredient`, ...CLINICAL_INGREDIENTS.map((i) => `${HOST_URL}/ingredient/${i.id}`), ...CLINICAL_INGREDIENTS.flatMap((i) => INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/ingredient/${i.id}/${sc.slug}`)), `${HOST_URL}/brand`, ...(typeof getAllBrandHubs === 'function' ? getAllBrandHubs() : []).map((b) => `${HOST_URL}/brand/${b.slug}`)])))));
   app.get('/sitemap-celebrities-concerns.xml', (req, res) => {
     const concernList = Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : [];
-    const concernUrls = concernList.flatMap((c) => [`${HOST_URL}/concern/${c.slug}`, ...INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/concern/${c.slug}/${sc.slug}`)]);
-    const scenarioUrls = SCENARIO_GUIDES.flatMap((s) => [`${HOST_URL}/scenario/${s.slug}`, ...INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/scenario/${s.slug}/${sc.slug}`)]);
-    const urls = [`${HOST_URL}/celebrity`, ...CELEBRITY_ROUTINES.map((c) => `${HOST_URL}/celebrity/${c.slug}`), `${HOST_URL}/concern`, ...concernUrls, `${HOST_URL}/scenario`, ...scenarioUrls];
+    const urls = [`${HOST_URL}/celebrity`, ...CELEBRITY_ROUTINES.map((c) => `${HOST_URL}/celebrity/${c.slug}`), `${HOST_URL}/concern`, ...concernList.flatMap((c) => [`${HOST_URL}/concern/${c.slug}`, ...INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/concern/${c.slug}/${sc.slug}`)]), `${HOST_URL}/scenario`, ...SCENARIO_GUIDES.flatMap((s) => [`${HOST_URL}/scenario/${s.slug}`, ...INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/scenario/${s.slug}/${sc.slug}`)])];
     return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set(urls))));
   });
+  app.post('/api/analytics/event', (req, res) => res.status(200).json({ ok: true }));
 
   app.get(/^\/(.+)\.md$/, (req, res, next) => {
     const innerPath = '/' + String(req.params[0] || '');
