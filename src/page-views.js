@@ -800,7 +800,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         <div class="z-cascade-stage" style="margin-top:24px;margin-bottom:24px;">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/editorial-segment-2.jpg" alt="Woman inspecting serum dropper compatibility in sunlit limestone atelier" style="object-position:center 22%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/ugc-model-serum-dropper.jpg" alt="Model applying morning serum with glass dropper" style="object-position:center 25%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Do They Cancel Out?</span><span class="${page.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono">${page.compatibilityScore < 55 ? 'Split AM & PM' : 'Layer Gently'}</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">${escapeHtml(page.conflictType)}</h3>
               <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(cleanSummaryFirstSentence)}</p>
@@ -809,7 +809,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div></div>
           <div class="z-vessel-center"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/editorial-woman-morning.jpg" alt="Woman applying morning serum in warm daylight" style="object-position:center 20%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/ugc-vanity-shelf-bottles.jpg" alt="Aesthetic bathroom vanity counter with skincare bottles" style="object-position:center 35%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--sage-safe);font-weight:500;">Morning Texture &amp; Finish</span><span class="badge-safe mono">Under SPF</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Wear in Daylight</h3>
               <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 12px;border-radius:12px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:0.8rem;font-weight:600;line-height:1.45;cursor:pointer;">${lockSvgInline}Morning Dry-Down Timer &amp; Zero-Pilling SPF Seal Locked — Enter Email Above ($0) to Reveal Free &uarr;</div>
@@ -819,7 +819,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div></div>
           <div class="z-vessel-right"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/editorial-woman-evening.jpg" alt="Woman smoothing ceramide barrier cream onto her cheek at bedtime" style="object-position:center 22%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/ugc-model-cream-application.jpg" alt="Model smoothing soothing ceramide barrier cream onto her cheek at bedtime" style="object-position:center 25%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--honey-warn);font-weight:500;">Bedtime Cushioning</span><span class="badge-safe mono">11 PM Vanity</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Layer at Bedtime</h3>
               <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 12px;border-radius:12px;background:var(--bg-oat);color:var(--text-primary);font-size:0.8rem;font-weight:600;line-height:1.45;cursor:pointer;">${lockSvgInline}Bedtime Ceramide Sandwich &amp; Retinoid Buffering Rule Locked — Included in $0 Email AM/PM Calendar &uarr;</div>

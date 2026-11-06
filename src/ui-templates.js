@@ -369,6 +369,57 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
       </div>
     </div>
 
+    <div class="dl-ugc-community-strip" style="margin-top:28px;margin-bottom:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+        <div>
+          <span class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;display:block;">From Bathroom Counters to Calmer Skin</span>
+          <h3 class="serif-display" style="font-size:1.35rem;font-weight:400;color:var(--text-primary);margin:0;">Real Vanity Routines &middot; Verified Zero-Sting Results</h3>
+        </div>
+        <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);background:var(--bg-canvas);padding:4px 10px;border-radius:999px;">4,200+ Routine Audits Verified</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
+        <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
+          <div style="height:150px;border-radius:12px;overflow:hidden;position:relative;">
+            <img src="/public/ugc-model-serum-dropper.jpg" alt="Model applying morning Vitamin C serum with glass dropper onto glowing skin" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;" loading="lazy" />
+            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:999px;">Morning Glow &middot; 15% Vitamin C</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
+            <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Separated my 15% Vitamin C from my night acids. Smooth, non-pilling barrier under SPF 50 all day.&rdquo;</p>
+            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;">
+              <span>Maya K., Verified Routine</span>
+              <span style="color:var(--sage-safe);font-weight:600;">&#10003; 0 Clashes</span>
+            </div>
+          </div>
+        </div>
+        <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
+          <div style="height:150px;border-radius:12px;overflow:hidden;position:relative;">
+            <img src="/public/ugc-vanity-shelf-bottles.jpg" alt="Aesthetic bathroom vanity counter with Skinceuticals C E Ferulic and barrier creams" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;" loading="lazy" />
+            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:999px;">Bathroom Shelf &middot; C E Ferulic + Barrier</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
+            <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Checked my entire 6-bottle counter in 2 minutes. Cut $140 of overlapping exfoliants that were triggering redness.&rdquo;</p>
+            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;">
+              <span>Elena R., Verified Routine</span>
+              <span style="color:var(--sage-safe);font-weight:600;">&#10003; Saved $140</span>
+            </div>
+          </div>
+        </div>
+        <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
+          <div style="height:150px;border-radius:12px;overflow:hidden;position:relative;">
+            <img src="/public/ugc-model-cream-application.jpg" alt="Model smoothing soothing ceramide barrier cream onto cheeks" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;" loading="lazy" />
+            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:999px;">Night Repair &middot; Rx Tretinoin Buffer</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
+            <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Used the ceramide sandwich method for Tretinoin 0.05%. Peeling and tightness disappeared within one week.&rdquo;</p>
+            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;">
+              <span>Chloe D., Verified Routine</span>
+              <span style="color:var(--sage-safe);font-weight:600;">&#10003; Zero Flaking</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="checkoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" data-ui="checkout-dialog" onclick="if(event.target===this)closeCheckoutModal()">
       <div class="modal-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="badge-safe mono" id="modalBanditBadge">Instant Download · Complete Atelier Vanity Dossier</span><button type="button" class="btn-secondary" style="padding:6px 14px;min-height:34px;" onclick="closeCheckoutModal()">Close</button></div>
