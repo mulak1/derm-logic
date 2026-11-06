@@ -277,7 +277,6 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
         </div>
         <div id="eb-scan-row4-msg" style="display:none !important;"><input id="eb-scan-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" /><button id="eb-scan-row4-btn" type="button">Reveal Row #4 →</button></div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0;">
-          <a id="eb-scan-buy-micro" href="/buy/micro_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="padding:9px 15px;border-radius:${t.radiusPill || '0px'};background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${t.border || 'var(--border-hairline)'};color:${esc(t.textPrimary)};font-size:13.5px;font-weight:600;text-decoration:none;white-space:nowrap;">99¢ Single File</a>
           <a id="eb-scan-buy-flash" href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="padding:10px 20px;border-radius:${t.radiusPill || '0px'};background:${esc(primaryBtnBg)};color:var(--accent-ink,#FFFFFF);font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">Get All 3 Files ($1.99) →</a>
         </div>
       </div>
@@ -311,8 +310,13 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const podium = ledger.slice(0, 3);
   const medals = ['#1 Hall of Fame Leader', '#2 Verified Runner-Up', '#3 Top Category Benchmark'];
+  const podiumPhotos = ['/public/photo_model_glow_skin.jpg', '/public/photo_bathroom_sunlight.jpg', '/public/photo_routine_flatlay.jpg'];
   const podiumHtml = podium.map((item, idx) => `<div style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${t.border || 'var(--border-hairline)'};border-radius:${t.radiusCard || '0px'};padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
     <div>
+      <div style="height:130px;border-radius:10px;overflow:hidden;margin-bottom:12px;position:relative;">
+        <img src="${podiumPhotos[idx]}" alt="${esc(item.target)} skincare bench photo" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;" loading="eager" />
+        <span style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;">${medals[idx]}</span>
+      </div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
         <span style="font-size:13px;font-weight:600;color:${idx === 0 ? esc(primaryCol) : safeCol};">${medals[idx]}</span>
         <span style="padding:3px 10px;border-radius:${t.radiusPill || '0px'};background:${safeSoft};color:${safeCol};font-variant-numeric:tabular-nums;font-size:13px;font-weight:600;">${esc(item.grade)} (${item.score}/100)</span>

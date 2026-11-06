@@ -268,7 +268,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div class="z-vessel-left">
             <div class="porcelain-vessel-core">
               <div>
-                <div class="vessel-photo-frame"><img src="/public/editorial-segment-3.jpg" alt="Woman at golden-hour vanity mirror smoothing peptide and ceramide serum onto her cheek" style="object-position:center 22%;" loading="lazy" /></div>
+                <div class="vessel-photo-frame"><img src="/public/photo_routine_flatlay.jpg" alt="Skincare flatlay with serum bottles and cream jars" style="object-position:center 35%;" loading="lazy" /></div>
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
                   <span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Morning vs. Night</span>
                   <span class="badge-clash mono">Cancels Out · Split AM &amp; PM</span>
@@ -287,7 +287,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div class="z-vessel-center">
             <div class="porcelain-vessel-core">
               <div>
-                <div class="vessel-photo-frame"><img src="/public/routines/emily-french-pharmacy.jpg" alt="Woman in linen robe pressing soothing toner into her cheek at a sunlit marble bathroom sink" style="object-position:center 24%;" loading="lazy" /></div>
+                <div class="vessel-photo-frame"><img src="/public/photo_model_dewy_towel.jpg" alt="Model pressing soothing essence into cheek after washing" style="object-position:center 25%;" loading="lazy" /></div>
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
                   <span class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;">90-Second Absorption</span>
                   <span class="badge-safe mono">Zero Makeup Pilling</span>
@@ -306,7 +306,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div class="z-vessel-right">
             <div class="porcelain-vessel-core">
               <div>
-                <div class="vessel-photo-frame"><img src="/public/editorial-woman-evening.jpg" alt="Woman applying soothing ceramide barrier cream to her cheek at her evening vanity" style="object-position:center 22%;" loading="lazy" /></div>
+                <div class="vessel-photo-frame"><img src="/public/photo_facial_treatment.jpg" alt="Gentle barrier repair and night recovery application" style="object-position:center 25%;" loading="lazy" /></div>
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
                   <span class="mono" style="font-size:0.84rem;color:var(--sage-safe);font-weight:500;">Nighttime Barrier Cushion</span>
                   <span class="badge-safe mono">Stops Retinoid Flaking</span>
@@ -472,7 +472,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           <div class="hero-photo-col">
             <div class="editorial-photo-shell">
               <div class="editorial-photo-inner" style="min-height:240px;height:100%;flex:1;">
-                <img src="/public/editorial-vanity-shelf.jpg" alt="Atelier Céramique stoneware vessels and golden serum dropper on travertine tray" fetchpriority="high" />
+                <img src="/public/photo_shelf_minimal.jpg" alt="Aesthetic minimalist bathroom vanity shelf with active skincare serums" fetchpriority="high" />
               </div>
               <div class="editorial-photo-caption">
                 <span>Daylight Gallery &amp; 11 PM Vanity Ready</span>
@@ -481,7 +481,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
             </div>
           </div>
         </div>
-        ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: presets[1].productIds, initialRawInci: '' })}
+        ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: presets[1].productIds, initialRawInci: '', showUgcStrip: false })}
       </div>
     </section>
     <section class="section-block-alt">
@@ -489,6 +489,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
         <div class="z-cascade-stage">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
+              <div class="vessel-photo-frame" style="height:170px;margin-bottom:12px;border-radius:12px;overflow:hidden;"><img src="/public/photo_amber_bottles.jpg" alt="Amber apothecary bottles and active serums" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--rose-brand);font-size:0.84rem;font-weight:500;">Morning vs. Night</span><span class="badge-clash mono">Split AM / PM</span></div>
               <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">The Copper Peptide + Vitamin C Trap</h3>
               <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Layering Copper Peptides 1% (pH 6.2) with 15% Vitamin C (pH 3.2) oxidizes both serums on contact, leaving your skin tight and dull. Use Vitamin C in the morning and peptides at night.</p>
@@ -497,6 +498,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           </div></div>
           <div class="z-vessel-center"><div class="porcelain-vessel-core">
             <div>
+              <div class="vessel-photo-frame" style="height:170px;margin-bottom:12px;border-radius:12px;overflow:hidden;"><img src="/public/photo_morning_dew.jpg" alt="Morning dew and fresh water droplets on glass" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--sage-safe);font-size:0.84rem;font-weight:500;">90-Second Absorption</span><span class="badge-safe mono">Zero Pilling</span></div>
               <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">Let Acid Toners Dry Before Niacinamide</h3>
               <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Applying Niacinamide or rich creams straight over damp Glycolic or Salicylic Acid shifts skin pH too quickly, triggering warm redness and causing morning sunscreen to pill.</p>
@@ -505,6 +507,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           </div></div>
           <div class="z-vessel-right"><div class="porcelain-vessel-core">
             <div>
+              <div class="vessel-photo-frame" style="height:170px;margin-bottom:12px;border-radius:12px;overflow:hidden;"><img src="/public/photo_model_clean_face.jpg" alt="Clean radiant facial complexion after gentle night buffering" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--sage-safe);font-size:0.84rem;font-weight:500;">Nighttime Cushion</span><span class="badge-safe mono">4-Night Cycle</span></div>
               <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">Keep Acne Washes Away From Retinol</h3>
               <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Benzoyl Peroxide releases oxygen that wipes out over 80% of Tretinoin and Retinol potency on contact. Use peroxide washes in the morning and cushion retinoids over ceramide cream at night.</p>
@@ -574,6 +577,16 @@ function renderDirectoryPage({ seoPages }) {
             <a href="/buy/flash_pass?source=directory_top" class="btn-secondary mono" style="padding:8px 14px;min-height:36px;font-size:0.76rem;border-radius:999px;text-decoration:none;"><span>$1.99 Complete AM/PM Schedule &amp; Dupe Pack &rarr;</span></a>
             <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
           </form>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:18px;">
+          <div style="border-radius:14px;overflow:hidden;height:160px;position:relative;">
+            <img src="/public/photo_routine_flatlay.jpg" alt="Skincare flatlay featuring serum pipettes and facial creams" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="eager" />
+            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;padding:2px 8px;border-radius:999px;">Step-by-Step Sequencing &middot; Morning vs Bedtime</span>
+          </div>
+          <div style="border-radius:14px;overflow:hidden;height:160px;position:relative;">
+            <img src="/public/photo_shelf_minimal.jpg" alt="Aesthetic minimalist bathroom counter with clinical skincare bottles" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="eager" />
+            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;padding:2px 8px;border-radius:999px;">44 Cult Formulas &middot; Verified pH &amp; Pore Scores</span>
+          </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;background:var(--bg-surface);margin-bottom:14px;" role="navigation" aria-label="Semantic Skincare Silo Hubs">
           <a href="/celebrity" class="affiliate-link-pill mono">Iconic Routines (14) &rarr;</a>
@@ -796,11 +809,11 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
             <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
           </form>
         </div>
-        ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: page.presetProducts, initialRawInci: page.resolvedRawInci || (page.product ? page.product.inciList : '') })}
+        ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: page.presetProducts, initialRawInci: page.resolvedRawInci || (page.product ? page.product.inciList : ''), showUgcStrip: false })}
         <div class="z-cascade-stage" style="margin-top:24px;margin-bottom:24px;">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/ugc-model-serum-dropper.jpg" alt="Model applying morning serum with glass dropper" style="object-position:center 25%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/photo_amber_bottles.jpg" alt="Amber apothecary bottles and active serum pairing" style="object-position:center 35%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Do They Cancel Out?</span><span class="${page.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono">${page.compatibilityScore < 55 ? 'Split AM & PM' : 'Layer Gently'}</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">${escapeHtml(page.conflictType)}</h3>
               <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(cleanSummaryFirstSentence)}</p>
@@ -809,7 +822,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div></div>
           <div class="z-vessel-center"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/ugc-vanity-shelf-bottles.jpg" alt="Aesthetic bathroom vanity counter with skincare bottles" style="object-position:center 35%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/photo_morning_dew.jpg" alt="Fresh morning dew and lightweight watery serum finish" style="object-position:center 35%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--sage-safe);font-weight:500;">Morning Texture &amp; Finish</span><span class="badge-safe mono">Under SPF</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Wear in Daylight</h3>
               <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 12px;border-radius:12px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:0.8rem;font-weight:600;line-height:1.45;cursor:pointer;">${lockSvgInline}Morning Dry-Down Timer &amp; Zero-Pilling SPF Seal Locked — Enter Email Above ($0) to Reveal Free &uarr;</div>
@@ -819,7 +832,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div></div>
           <div class="z-vessel-right"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/ugc-model-cream-application.jpg" alt="Model smoothing soothing ceramide barrier cream onto her cheek at bedtime" style="object-position:center 25%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/photo_cream_texture.jpg" alt="Rich soothing ceramide barrier cream texture for bedtime recovery" style="object-position:center 35%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--honey-warn);font-weight:500;">Bedtime Cushioning</span><span class="badge-safe mono">11 PM Vanity</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Layer at Bedtime</h3>
               <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 12px;border-radius:12px;background:var(--bg-oat);color:var(--text-primary);font-size:0.8rem;font-weight:600;line-height:1.45;cursor:pointer;">${lockSvgInline}Bedtime Ceramide Sandwich &amp; Retinoid Buffering Rule Locked — Included in $0 Email AM/PM Calendar &uarr;</div>

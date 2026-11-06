@@ -20,7 +20,7 @@ const CONCERN_HUBS = [
     slug: 'morning-skincare-under-makeup-no-pilling',
     title: 'Morning Skincare Order Under Makeup (Zero Pilling Guide)',
     badge: '60s Dry-Down Rule',
-    heroImg: '/public/editorial-woman-morning.jpg',
+    heroImg: '/public/photo_model_dewy_towel.jpg',
     summary: 'How to layer Vitamin C, Hyaluronic Acid, Niacinamide, and SPF 50 in the morning so foundation and concealer glide on smoothly with zero rolling or flaking.',
     steps: [
       '1. Apply watery Vitamin C or hydrating essence onto clean, slightly damp skin and wait 60 seconds.',
@@ -36,7 +36,7 @@ const CONCERN_HUBS = [
     slug: 'pregnancy-safe-retinol-swaps-routine',
     title: 'Pregnancy-Safe Skincare Routine & Retinol Swaps',
     badge: '100% Retinoid-Free',
-    heroImg: '/public/routines/selena-dewy-bounce.jpg',
+    heroImg: '/public/photo_facial_treatment.jpg',
     summary: 'Gentle, OB-approved swaps for Tretinoin, Retinol, Salicylic Acid peels, and Hydroquinone, using Azelaic Acid 15%, Bakuchiol, Peptides, and Vitamin C.',
     steps: [
       '1. Swap nighttime Tretinoin or Retinol for Copper Peptides + Bakuchiol to maintain bounce and firmness.',
@@ -52,7 +52,7 @@ const CONCERN_HUBS = [
     slug: 'tretinoin-sandwich-method-no-peeling',
     title: 'The Tretinoin & Retinol Sandwich Method (Zero Peeling Guide)',
     badge: 'Nighttime Retinoid Buffer',
-    heroImg: '/public/editorial-woman-evening.jpg',
+    heroImg: '/public/photo_cream_texture.jpg',
     summary: 'Stop retinoid flaking around the mouth and nose by cushioning prescription Tretinoin 0.05% or Retinal between two thin layers of ceramide cream.',
     steps: [
       '1. Cleanse with a non-foaming milk cleanser and apply a thin layer of lightweight ceramide lotion onto damp skin.',
@@ -68,7 +68,7 @@ const CONCERN_HUBS = [
     slug: '72-hour-damaged-skin-barrier-reset',
     title: '72-Hour Damaged Skin Barrier Reset (When Water Stings)',
     badge: 'Emergency Barrier Rescue',
-    heroImg: '/public/editorial-vanity-shelf.jpg',
+    heroImg: '/public/photo_amber_bottles.jpg',
     summary: 'What to put on your face when you over-exfoliated with Glycolic Acid, BHA, and Retinol, and even plain lukewarm water makes your cheeks flush and sting.',
     steps: [
       '1. Pause all Vitamin C, AHAs, BHAs, Retinoids, and foaming cleansers for 72 hours.',
@@ -84,7 +84,7 @@ const CONCERN_HUBS = [
     slug: 'fungal-acne-malassezia-safe-skincare-shelf',
     title: '100% Fungal-Acne (Malassezia) Safe Skincare Routine',
     badge: 'Zero Fatty-Acid Esters',
-    heroImg: '/public/editorial-dossier.jpg',
+    heroImg: '/public/photo_shelf_minimal.jpg',
     summary: 'Eliminate stubborn forehead bumps and itchy jawline texture by swapping out Polysorbate 20, fermented yeast filtrates, and fatty esters for pure Squalane and Urea.',
     steps: [
       '1. Use a 1% Ketoconazole or sulfur clarifying wash for a 3-minute contact mask twice a week.',
@@ -100,7 +100,7 @@ const CONCERN_HUBS = [
     slug: 'rosacea-perioral-dermatitis-calm-routine',
     title: 'Rosacea & Perioral Dermatitis Calm Routine',
     badge: 'Zero-Flush Protocol',
-    heroImg: '/public/routines/sofia-mist.jpg',
+    heroImg: '/public/photo_morning_dew.jpg',
     summary: 'Calm persistent cheek redness, warm flushing, and bumps around the mouth with Hypochlorous Acid, 15% Azelaic Acid, Centella, and Zinc Oxide SPF.',
     steps: [
       '1. Spritz Hypochlorous Acid mist onto clean skin and wait 10 full minutes for it to dry before touching serums.',
@@ -116,7 +116,7 @@ const CONCERN_HUBS = [
     slug: 'hormonal-acne-benzoyl-peroxide-tretinoin-split',
     title: 'Hormonal Acne Routine: How to Use Benzoyl Peroxide & Tretinoin',
     badge: 'AM / PM Oxidation Split',
-    heroImg: '/public/routines/madison-cleanse.jpg',
+    heroImg: '/public/photo_texture_water_gel.jpg',
     summary: 'Clear deep chin and jawline blemishes without burning your barrier or letting Benzoyl Peroxide cancel out your nighttime Tretinoin.',
     steps: [
       '1. Morning: Use a 4%–10% Benzoyl Peroxide wash in the shower for 90 seconds, rinse thoroughly, and apply Niacinamide + SPF.',
@@ -132,7 +132,7 @@ const CONCERN_HUBS = [
     slug: 'post-flight-winter-moisture-sandwich-slugging',
     title: 'Post-Flight & Winter Moisture Sandwich (Safe Slugging Guide)',
     badge: 'Overnight Dewy Recovery',
-    heroImg: '/public/routines/margot-post-flight.jpg',
+    heroImg: '/public/photo_customer_holding.jpg',
     summary: 'Restore parched cabin-air or winter-chapped skin overnight using damp-skin humectants, 3:1:1 ceramides, and targeted balm sealing without chemical burns.',
     steps: [
       '1. Press Hyaluronic Acid, Snail Mucin, and Copper Peptides onto mist-dampened skin.',
@@ -539,7 +539,7 @@ function renderBottleIndexPage() {
     canonicalPath: '/bottle',
     breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Skincare Library', href: '/directory' }, { label: 'Cult Bottles', href: '/bottle' }],
     faqItems: [{ q: 'How are DermLogic bottle guides structured?', a: 'Every bottle includes its verified pH window, primary actives, pore-safety check, celebrity shelves using it, and budget/luxury dupes.' }],
-    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('bottle')}<h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.5rem);margin-bottom:12px;">${CULT_PRODUCTS.length} Cult Skincare Bottles: Layering Order &amp; Dupe Library</h1><p class="hero-sub" style="margin-bottom:26px;">Click any bottle to see what never to layer with it, how long to wait before your next step, which celebrities keep it on their vanity, and chemist-verified dupes.</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;">${cards}</div></div></section>`
+    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('bottle')}<h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.5rem);margin-bottom:12px;">${CULT_PRODUCTS.length} Cult Skincare Bottles: Layering Order &amp; Dupe Library</h1><p class="hero-sub" style="margin-bottom:20px;">Click any bottle to see what never to layer with it, how long to wait before your next step, which celebrities keep it on their vanity, and chemist-verified dupes.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px;"><div style="border-radius:14px;overflow:hidden;height:160px;position:relative;"><img src="/public/photo_amber_bottles.jpg" alt="Amber glass apothecary dropper bottles" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="eager" /><span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;padding:2px 8px;border-radius:999px;">Apothecary &amp; Active pH Windows</span></div><div style="border-radius:14px;overflow:hidden;height:160px;position:relative;"><img src="/public/photo_shelf_minimal.jpg" alt="Aesthetic minimalist skincare shelf" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="eager" /><span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;padding:2px 8px;border-radius:999px;">Vanity Counter Sequencing</span></div></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;">${cards}</div></div></section>`
   });
 }
 
@@ -641,7 +641,7 @@ function renderIngredientIndexPage() {
     canonicalPath: '/ingredient',
     breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Skincare Library', href: '/directory' }, { label: 'Active Ingredients', href: '/ingredient' }],
     faqItems: [{ q: 'How does DermLogic rate ingredient pore safety?', a: 'Each of the 65 compounds is scored 0–5 for comedogenicity and checked for Malassezia fungal-acne triggers.' }],
-    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('ingredient')}<h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.5rem);margin-bottom:12px;">65 Active Skincare Ingredients: pH, Pore Safety &amp; Layering</h1><p class="hero-sub" style="margin-bottom:26px;">Select any active ingredient to see every cult bottle that contains it, which celebrity shelves feature it, and what never to mix on the same night.</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;">${cards}</div></div></section>`
+    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('ingredient')}<h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.5rem);margin-bottom:12px;">65 Active Skincare Ingredients: pH, Pore Safety &amp; Layering</h1><p class="hero-sub" style="margin-bottom:20px;">Select any active ingredient to see every cult bottle that contains it, which celebrity shelves feature it, and what never to mix on the same night.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px;"><div style="border-radius:14px;overflow:hidden;height:160px;position:relative;"><img src="/public/photo_texture_water_gel.jpg" alt="Lightweight water-gel active serum texture" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="eager" /><span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;padding:2px 8px;border-radius:999px;">Lightweight Water &amp; Gel Actives</span></div><div style="border-radius:14px;overflow:hidden;height:160px;position:relative;"><img src="/public/photo_serum_pipette.jpg" alt="Glass pipette dropping active serum" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="eager" /><span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;padding:2px 8px;border-radius:999px;">65 Clinical Formulations Rated</span></div></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;">${cards}</div></div></section>`
   });
 }
 
@@ -656,7 +656,7 @@ function renderIngredientDetailPage(ing) {
         <p class="hero-sub" style="margin-bottom:16px;"><strong>Role:</strong> ${escapeHtml(ing.functionRole)}. ${escapeHtml(plainMech(ing.clinicalMechanism))}</p>
         <a href="/?inci=${encodeURIComponent(ing.inciName)}#analyzer" class="btn-primary"><span>Test ${escapeHtml(ing.commonName)} in Routine Checker</span><span class="btn-icon-circle">&rarr;</span></a>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><img src="/public/editorial-segment-2.jpg" alt="${escapeHtml(ing.commonName)} clinical pH and INCI consultation" loading="eager" style="width:100%;height:185px;object-fit:cover;object-position:center 22%;border-radius:10px;" /><img src="/public/editorial-woman-morning.jpg" alt="${escapeHtml(ing.commonName)} morning and evening routine compatibility" loading="lazy" style="width:100%;height:185px;object-fit:cover;object-position:center 22%;border-radius:10px;" /></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><img src="/public/photo_aesthetic_consult.jpg" alt="${escapeHtml(ing.commonName)} clinical pH and INCI consultation" loading="eager" style="width:100%;height:185px;object-fit:cover;object-position:center 25%;border-radius:10px;" /><img src="/public/photo_model_glow_skin.jpg" alt="${escapeHtml(ing.commonName)} morning and evening routine compatibility" loading="lazy" style="width:100%;height:185px;object-fit:cover;object-position:center 25%;border-radius:10px;" /></div>
     </div>
     <h2 class="serif-display" style="font-size:1.6rem;margin-bottom:14px;">Cult Bottles Formulated with ${escapeHtml(ing.commonName)} (${bottles.length})</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px;">${bottles.length > 0 ? bottles.map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;text-decoration:none;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);">${escapeHtml(b.brand)} · pH ${b.ph} · $${b.priceUsd}</span><strong class="serif-display" style="font-size:1.22rem;display:block;margin:4px 0;">${escapeHtml(b.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(b.summary)}</span></a>`).join('') : `<div style="padding:18px;background:var(--bg-surface);">Paste "${escapeHtml(ing.inciName)}" into our <a href="/#analyzer" style="color:var(--rose-brand);text-decoration:underline;">Ingredient List (INCI) Checker</a> to test any custom bottle.</div>`}</div>

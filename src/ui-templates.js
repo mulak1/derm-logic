@@ -267,7 +267,7 @@ const SHORT_PRODUCT_NAMES = {
   'to-niacinamide-10-zinc': 'Niacinamide 10% + Zinc 1%', 'rhode-glazing-milk': 'Glazing Milk Ceramide Essence'
 };
 
-function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds, initialRawInci, initialSkinType }) {
+function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds, initialRawInci, initialSkinType, showUgcStrip = true }) {
   const selectedSet = new Set(initialProductIds || ['to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005', 'skinceuticals-ce-ferulic']);
   const currentSkin = initialSkinType || (initialAnalysis && initialAnalysis.skinType) || 'combination';
   const presetShortLabelMap = { 'viral-tiktok-destroyer': 'Acids + Retinol', 'copper-vitc-oxidation': 'Copper + Vit C', 'acne-rx-bpo-tretinoin': 'Tretinoin + Acne Cream', 'glass-skin-recovery': 'Calm Barrier' };
@@ -369,7 +369,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
       </div>
     </div>
 
-    <div class="dl-ugc-community-strip" style="margin-top:28px;margin-bottom:24px;">
+    ${showUgcStrip ? `<div class="dl-ugc-community-strip" style="margin-top:28px;margin-bottom:24px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
         <div>
           <span class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;display:block;">From Bathroom Counters to Calmer Skin</span>
@@ -380,7 +380,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
         <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
           <div style="height:150px;border-radius:12px;overflow:hidden;position:relative;">
-            <img src="/public/ugc-model-serum-dropper.jpg" alt="Model applying morning Vitamin C serum with glass dropper onto glowing skin" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;" loading="lazy" />
+            <img src="/public/photo_serum_pipette.jpg" alt="Model applying morning Vitamin C serum with glass dropper onto glowing skin" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="lazy" />
             <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:999px;">Morning Glow &middot; 15% Vitamin C</span>
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
@@ -393,7 +393,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         </div>
         <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
           <div style="height:150px;border-radius:12px;overflow:hidden;position:relative;">
-            <img src="/public/ugc-vanity-shelf-bottles.jpg" alt="Aesthetic bathroom vanity counter with Skinceuticals C E Ferulic and barrier creams" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;" loading="lazy" />
+            <img src="/public/photo_bathroom_sunlight.jpg" alt="Sunlit bathroom vanity counter with luxury and clinical skincare bottles" style="width:100%;height:100%;object-fit:cover;object-position:center 45%;display:block;" loading="lazy" />
             <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:999px;">Bathroom Shelf &middot; C E Ferulic + Barrier</span>
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
@@ -406,7 +406,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         </div>
         <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
           <div style="height:150px;border-radius:12px;overflow:hidden;position:relative;">
-            <img src="/public/ugc-model-cream-application.jpg" alt="Model smoothing soothing ceramide barrier cream onto cheeks" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;" loading="lazy" />
+            <img src="/public/photo_model_radiant.jpg" alt="Smiling model with calm, bouncy skin after ceramide barrier repair" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;" loading="lazy" />
             <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:999px;">Night Repair &middot; Rx Tretinoin Buffer</span>
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
@@ -418,7 +418,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           </div>
         </div>
       </div>
-    </div>
+    </div>` : ''}
 
     <div id="checkoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" data-ui="checkout-dialog" onclick="if(event.target===this)closeCheckoutModal()">
       <div class="modal-card">
