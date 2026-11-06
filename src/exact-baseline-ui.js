@@ -427,7 +427,7 @@ function buildClientRuntimeScript(cfg) {
     var targetEl = document.getElementById('walletConflicts') || document.getElementById('appleWalletCardPreview');
     var isPseoOrDir = pName.indexOf('/seo/') === 0 || pName.indexOf('/tools/') === 0 || pName.indexOf('/compare/') === 0 || pName === '/directory' || pName === '/leaderboard' || pName.indexOf('/scan/') === 0;
     var tbody = document.querySelector('main table tbody, article table tbody');
-    if (tbody && !window.__ebIsUnlocked && !document.getElementById('eb-inline-row4-unlock')) {
+    if (tbody && !tbody.closest('#actives-matrix') && !window.__ebIsUnlocked && !document.getElementById('eb-inline-row4-unlock')) {
       var trs = tbody.querySelectorAll('tr');
       for (var r0 = 0; r0 < trs.length; r0++) {
         if (!trs[r0].hasAttribute('data-eb-live-row') && trs[r0].id !== 'eb-table-row4-gate-tr') {
@@ -575,12 +575,12 @@ function buildClientRuntimeScript(cfg) {
     if (curt && curt.scrollIntoView) { try { curt.scrollIntoView({ behavior: 'smooth', block: 'center' }); curt.style.boxShadow = '0 0 0 3px ' + CFG.theme.brandPrimary + ', 0 12px 28px rgba(15,23,42,0.14)'; } catch (_) {} }
   };
   window.__ebFilterAndCalcTable = function(q) {
-    var tbody = document.querySelector('main table tbody, article table tbody');
+    var tbody = document.querySelector('main table:not(.matrix-table) tbody, article table:not(.matrix-table) tbody');
     if (tbody) { var rows = tbody.querySelectorAll('tr'), low = String(q || '').toLowerCase(); for (var i = 0; i < Math.min(3, rows.length); i++) rows[i].style.display = (!low || rows[i].textContent.toLowerCase().indexOf(low) !== -1) ? '' : 'none'; }
     if (q && q.trim().length > 2) window.__ebCompileCustomCurtain(q.trim());
   };
   window.__ebSortTableRows = function() {
-    var tbody = document.querySelector('main table tbody, article table tbody');
+    var tbody = document.querySelector('main table:not(.matrix-table) tbody, article table:not(.matrix-table) tbody');
     if (tbody) { var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'), 0, 3); rows.reverse().forEach(function(r) { tbody.insertBefore(r, tbody.firstChild); }); }
     window.__ebLogEvent('calculate', { source: 'tanstack_list_sort' });
     var btn = document.getElementById('btn-tanstack-sort'); if (btn) btn.textContent = 'Sorted Top ROI';

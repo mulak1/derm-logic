@@ -127,7 +127,7 @@ const SHARED_CSS = `
   .prod-check-item { position: relative; display: flex; align-items: stretch; gap: 6px; padding: 9px 11px; height: 74px; min-height: 74px; border-radius: 14px; background: var(--bg-surface); border: none; cursor: pointer; font-size: 0.84rem; transition: background-color 180ms ease-out; overflow: hidden; }
   .prod-check-item.selected { background: var(--rose-pill-bg); }
   .prod-check-item input[type="checkbox"] { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
-  [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); border-radius: 16px; padding: 9px 13px; color: var(--text-primary); font-size: 15px; border: none; }
+  [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); border-radius: 16px; padding: 9px 13px; color: var(--text-primary); font-size: 16px; border: none; }
   .input-box:focus, .textarea-box:focus { outline: 2px solid var(--rose-brand); }
 
   .score-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-bottom: 8px; }
@@ -226,8 +226,11 @@ const SHARED_CSS = `
   #eb-pseo-hero-split { grid-template-columns: 1fr !important; }
   #eb-prism-proof-preview { white-space: normal !important; padding: 16px 18px !important; background: var(--bg-canvas) !important; font-family: 'Newsreader', Georgia, serif !important; }
   .dl-inline-ics-form { display: flex !important; flex-wrap: wrap !important; gap: 8px; align-items: center; width: 100%; }
-  .dl-inline-ics-form .input-box, #dl-vanity-email-form .input-box { width: 100%; min-width: 0; border-radius: 999px; background: var(--bg-surface); padding: 7px 14px; font-size: 0.78rem; }
+  .dl-inline-ics-form .input-box, #dl-vanity-email-form .input-box { width: 100%; min-width: 0; border-radius: 999px; background: var(--bg-surface); padding: 7px 14px; font-size: 16px; }
   .dl-inline-ics-btn, #dl-vanity-email-btn { background: var(--rose-pill-bg) !important; color: var(--rose-brand) !important; border-radius: 999px; font-weight: 600; }
+  @media (max-width: 768px) {
+    input[type="email"], input[type="text"], input[type="search"], select, textarea { font-size: 16px !important; }
+  }
 `;
 
 function renderHeader(hideNav = false) {
@@ -316,8 +319,8 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;"><button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 10px;border-radius:999px;font-size:0.74rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;cursor:pointer;font-weight:600;" onclick="clearRoutineSelection()">Clear (${selectedSet.size}) &times;</button><span class="badge-safe mono" id="shelfCountBadge" style="display:none;">${products.length} Bottles</span></div>
             </div>
             <div class="shelf-search-row">
-              <input id="productFilterInput" type="search" aria-label="Search skincare products" class="input-box" style="padding:8px 12px;font-size:0.84rem;" placeholder="Search brand or bottle (e.g., CeraVe, C E Ferulic)..." oninput="filterProductList(this.value)" />
-              <select id="skinTypeSelect" class="input-box" style="padding:8px 10px;font-size:0.84rem;" aria-label="Your Skin Type" onchange="runRoutineAnalysis()">
+              <input id="productFilterInput" type="search" aria-label="Search skincare products" class="input-box" style="padding:8px 12px;font-size:16px;" placeholder="Search brand or bottle (e.g., CeraVe, C E Ferulic)..." oninput="filterProductList(this.value)" />
+              <select id="skinTypeSelect" class="input-box" style="padding:8px 10px;font-size:16px;" aria-label="Your Skin Type" onchange="runRoutineAnalysis()">
                 <option value="combination" ${currentSkin === 'combination' ? 'selected' : ''}>Skin: Combination</option>
                 <option value="sensitive" ${currentSkin === 'sensitive' ? 'selected' : ''}>Skin: Sensitive</option>
                 <option value="oily" ${currentSkin === 'oily' ? 'selected' : ''}>Skin: Oily / Blemish</option>
@@ -328,7 +331,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:var(--bg-canvas);border-radius:14px;">
               <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">${presetButtonsHtml}</div>
               <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;">
-                <textarea id="rawInciTextarea" aria-label="Paste bottle ingredient list" class="textarea-box mono" rows="1" style="flex:1 1 130px;min-width:0;height:26px;min-height:26px;max-height:54px;resize:none;font-size:0.72rem;padding:4px 9px;border-radius:999px;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="Optional: paste bottle Ingredient List for pore check...">${escapeHtml(initialRawInci || '')}</textarea>
+                <textarea id="rawInciTextarea" aria-label="Paste bottle ingredient list" class="textarea-box mono" rows="1" style="flex:1 1 130px;min-width:0;height:30px;min-height:30px;max-height:54px;resize:none;font-size:16px;padding:4px 9px;border-radius:999px;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="Optional: paste bottle Ingredient List for pore check...">${escapeHtml(initialRawInci || '')}</textarea>
                 <button type="button" class="btn-secondary mono" style="padding:3px 8px;font-size:0.7rem;min-height:25px;flex-shrink:0;" onclick="pasteSampleComedogenicInci()">Try Sample Ingredient List</button>
                 <button type="button" id="analyzeBtn" class="btn-secondary mono" style="padding:3px 10px;font-size:0.71rem;min-height:25px;flex-shrink:0;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;" onclick="runRoutineAnalysis(null, true)"><span>Check My Bathroom Shelf</span></button>
               </div>
@@ -554,7 +557,7 @@ function renderAnalysisResultHtml(res) {
 
         <!-- Tab 1 (Default Active): Unmasked Primary Clash Proof + Spacious Side-by-Side Morning & Bedtime Order + 1 Calm Summary Card -->
         <div id="dl-res-step-2" style="display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;flex:1;"><span id="walletConflicts" style="display:none;"></span>
-          ${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;"><button type="button" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Conflict #2 &amp; $9 Clinical Dupe Swap — Enter Email Below Free ($0) &darr;</button><button type="button" class="dl-locked-spec-badge mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--bg-canvas);color:var(--text-primary);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Complete AM/PM Calendar &amp; Dupe Sheet ($9 Dossier) &darr;</button></div><div class="dl-unlocked-c2-proof" style="display:none;margin-top:4px;padding:7px 10px;border-radius:10px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.75rem;font-weight:600;">✓ Conflict #2 Unlocked ($0): Secondary pH &amp; Barrier Over-Exfoliation Swap Revealed + $32 Aestura 365 Dupe.</div></div>` : pastedBoxHtml}
+          ${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;"><button type="button" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Conflict #2 &amp; $26 Clinical Dupe Swap — Enter Email Below Free ($0) &darr;</button><button type="button" class="dl-locked-spec-badge mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--bg-canvas);color:var(--text-primary);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Complete AM/PM Calendar &amp; Dupe Sheet ($9 Dossier) &darr;</button></div><div class="dl-unlocked-c2-proof" style="display:none;margin-top:4px;padding:7px 10px;border-radius:10px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.75rem;font-weight:600;">✓ Conflict #2 Unlocked ($0): Secondary pH &amp; Barrier Over-Exfoliation Swap Revealed + $32 Aestura 365 Dupe.</div></div>` : pastedBoxHtml}
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;min-width:0;flex:1;" id="appleWalletCardPreview">
             <div style="padding:16px;border-radius:18px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
@@ -564,7 +567,10 @@ function renderAnalysisResultHtml(res) {
                 </div>
                 ${amStepsHtml}
               </div>
-              <a href="/api/affiliate?product=timeless-20-vitamin-c&amp;partner=amazon" target="_blank" rel="sponsored noopener noreferrer" class="btn-secondary mono" style="width:100%;font-size:0.74rem;padding:8px 10px;min-height:34px;margin-top:6px;background:var(--rose-pill-bg);color:var(--rose-brand);text-decoration:none;justify-content:center;" data-no-bag-inject="1">
+              <a href="#dl-inline-sample-email" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);return false;" class="btn-secondary mono dl-locked-badge-c2" style="width:100%;font-size:0.74rem;padding:8px 10px;min-height:34px;margin-top:6px;background:var(--rose-pill-bg);color:var(--rose-brand);text-decoration:none;justify-content:center;" data-no-bag-inject="1">
+                <span>Reveal $26 Vitamin C Dupe (Save $156 &middot; $0 Email) &darr;</span>
+              </a>
+              <a href="/api/affiliate?product=timeless-20-vitamin-c&amp;partner=amazon" target="_blank" rel="sponsored noopener noreferrer" class="btn-secondary mono dl-unlocked-c2-proof" style="display:none;width:100%;font-size:0.74rem;padding:8px 10px;min-height:34px;margin-top:6px;background:var(--rose-pill-bg);color:var(--rose-brand);text-decoration:none;justify-content:center;" data-no-bag-inject="1">
                 <span>Shop $26 Vitamin C Dupe (Save $156) &rarr;</span>
               </a>
             </div>
@@ -584,7 +590,7 @@ function renderAnalysisResultHtml(res) {
           </div>
 
           <form id="dl-results-inline-email-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'results_card')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;padding:10px 12px;border-radius:14px;background:var(--bg-oat);" data-no-bag-inject="1">
-            <input type="email" required class="input-box dl-inline-ics-email" placeholder="Enter email to reveal Morning Steps 2–3, Bedtime Order &amp; 2 Dupes ($0)..." aria-label="Enter email to reveal Morning Steps 2–3, Bedtime Order &amp; 2 Dupes ($0)" style="flex:1 1 200px;min-width:0;padding:8px 12px;font-size:0.79rem;border-radius:999px;background:var(--bg-surface);" />
+            <input type="email" required class="input-box dl-inline-ics-email" placeholder="Enter email to reveal Morning Steps 2–3, Bedtime Order &amp; 2 Dupes ($0)..." aria-label="Enter email to reveal Morning Steps 2–3, Bedtime Order &amp; 2 Dupes ($0)" style="flex:1 1 200px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
             <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.77rem;border-radius:999px;flex-shrink:0;"><span>Reveal Full Routine &amp; Dupes ($0) &rarr;</span></button>
             <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
           </form>
@@ -784,6 +790,10 @@ const CLIENT_SCRIPT = `
       if (fbBox) fbBox.innerHTML = pCard ? pCard.outerHTML : '';
       if (window.__dlAfterRoutineAnalysis) window.__dlAfterRoutineAnalysis(data, Boolean(isExplicitClick));
       if (window.__dlRefreshPageAddButtons) window.__dlRefreshPageAddButtons();
+      if (!window.__dlBootRestoring && window.__ebLogEvent) {
+        window.__ebLogEvent('calculate', { source: presetSlug ? ('preset_' + presetSlug) : 'routine_analysis', score: data.compatibilityScore, conflicts: (data.conflicts || []).length });
+        window.__ebLogEvent('view_paywall', { target: 'routine_analysis_results', conflicts: (data.conflicts || []).length });
+      }
       fireMetaCapiEvent('Lead', 0, { compatibilityScore: data.compatibilityScore, conflictsCount: (data.conflicts || []).length });
     } catch (e) {
       console.error('Routine analysis error:', e);
@@ -885,16 +895,20 @@ const CLIENT_SCRIPT = `
   window.__dlSelectSparkConflict = function(key, presetId, btn) {
     const svgBolt = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
     const map = {
-      'retinol-aha': { badge: svgBolt + 'Acid + Retinol Irritation Clash · 3-Day Skin Recovery Plan', badgeCls: 'badge-clash mono', pill: 'Unmasked Proof #1 · Save $156', proof: '<strong style="color:var(--rose-brand);">Retinol + Acids / Vitamin C Clash:</strong> Morning acid serum clashes with evening retinol on the same night &mdash; <strong>Fix:</strong> Move Vitamin C to 7:30 AM &amp; Retinol to 9:30 PM (Swap $182 C E Ferulic &rarr; $26 Timeless Dupe).' },
-      'copper-vitc': { badge: svgBolt + 'Acid + Peptide Irritation Clash · Copper Ion Oxidation', badgeCls: 'badge-clash mono', pill: 'Unmasked Proof #1 · $210 Saved', proof: '<strong style="color:var(--rose-brand);">Copper Peptides + Vitamin C Clash:</strong> Pure L-Ascorbic Acid oxidizes Copper Tripeptide-1 on contact &mdash; <strong>Fix:</strong> Apply Vitamin C at 7:30 AM &amp; Copper Peptides at 9:30 PM.' },
-      'tret-bpo': { badge: svgBolt + 'Retinoid + Peroxide Clash · 3-Day Skin Recovery Plan', badgeCls: 'badge-clash mono', pill: 'Unmasked Proof #1 · Zero Peeling', proof: '<strong style="color:var(--rose-brand);">Tretinoin + Acne Cream Clash:</strong> Leave-on acne cream neutralizes night Tretinoin &mdash; <strong>Fix:</strong> Use acne wash in the morning &amp; cushion Tretinoin over $32 Aestura 365 Cream.' },
-      'calm-barrier': { badge: svgBolt + 'Calm Moisture Barrier Split · 0 Active Clashes', badgeCls: 'badge-safe mono', pill: 'Unmasked Proof #1 · Glass-Skin Ready', proof: '<strong style="color:var(--sage-safe);">Calm Barrier Split Verified:</strong> Morning Vitamin C + Snail 96 + Joseon SPF 50 ($18) and Night Ceramide Cushion layer with zero pilling or stinging.' }
+      'retinol-aha': { badge: svgBolt + 'Acid + Retinol Irritation Clash · 3-Day Skin Recovery Plan', badgeCls: 'badge-clash mono', pill: 'Unmasked Proof #1 · Save $156', proof: '<strong style="color:var(--rose-brand);">Retinol + Acids / Vitamin C Clash:</strong> Morning acid serum clashes with evening retinol on the same night &mdash; <strong>Fix:</strong> Move Vitamin C to 7:30 AM &amp; Retinol to 9:30 PM (Enter Email Free ($0) Below to Unmask $26 Vitamin C Dupe &darr;).' },
+      'copper-vitc': { badge: svgBolt + 'Acid + Peptide Irritation Clash · Copper Ion Oxidation', badgeCls: 'badge-clash mono', pill: 'Unmasked Proof #1 · $210 Saved', proof: '<strong style="color:var(--rose-brand);">Copper Peptides + Vitamin C Clash:</strong> Pure L-Ascorbic Acid oxidizes Copper Tripeptide-1 on contact &mdash; <strong>Fix:</strong> Apply Vitamin C at 7:30 AM &amp; Copper Peptides at 9:30 PM (Enter Email Free ($0) Below to Unmask $26 Dupe &darr;).' },
+      'tret-bpo': { badge: svgBolt + 'Retinoid + Peroxide Clash · 3-Day Skin Recovery Plan', badgeCls: 'badge-clash mono', pill: 'Unmasked Proof #1 · Zero Peeling', proof: '<strong style="color:var(--rose-brand);">Tretinoin + Acne Cream Clash:</strong> Leave-on acne cream neutralizes night Tretinoin &mdash; <strong>Fix:</strong> Use acne wash in the morning &amp; cushion Tretinoin at bedtime (Enter Email Free ($0) Below to Unmask $32 Ceramide Cushion Dupe &darr;).' },
+      'calm-barrier': { badge: svgBolt + 'Calm Moisture Barrier Split · 0 Active Clashes', badgeCls: 'badge-safe mono', pill: 'Unmasked Proof #1 · Glass-Skin Ready', proof: '<strong style="color:var(--sage-safe);">Calm Barrier Split Verified:</strong> Morning Vitamin C + Hydrating Essence + Daily SPF 50 and Night Ceramide Cushion layer with zero pilling or stinging.' }
     };
     const cfg = map[key] || map['retinol-aha'], bEl = document.getElementById('dl-ph-clash-badge'), pEl = document.getElementById('dl-spark-savings-pill'), prEl = document.getElementById('dl-spark-unmasked-proof');
     if (bEl) { bEl.innerHTML = cfg.badge; bEl.className = cfg.badgeCls; }
     if (pEl) pEl.textContent = cfg.pill;
     if (prEl) prEl.innerHTML = cfg.proof;
     document.querySelectorAll('#dl-spark-tester-bar .vanity-light-btn').forEach((b) => b.classList.toggle('active', b === btn || b.getAttribute('data-spark') === key));
+    if (window.__ebLogEvent) {
+      window.__ebLogEvent('calculate', { source: 'spark_conflict_pill', key: key });
+      window.__ebLogEvent('view_paywall', { target: 'spark_conflict_preview', key: key });
+    }
     if (presetId && typeof applyPreset === 'function') applyPreset(presetId);
   };
   function setHeroRitualMode() {}
