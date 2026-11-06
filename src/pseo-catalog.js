@@ -26,8 +26,8 @@ const PAIR_SEO_SEEDS = [
     verdict: 'SPLIT_AM_PM',
     compatibilityScore: 52,
     deltaPh: 2.8,
-    conflictType: 'ΔpH Acid-Mantle Shock & Cumulative Stratum Corneum Irritation',
-    summary: 'Pure L-Ascorbic Acid requires pH 2.6–3.4 to penetrate, whereas Retinol stabilizes at pH 5.5–6.5. Layering them in the same session creates a ΔpH 2.8 shock and spikes transepidermal water loss (TEWL).',
+    conflictType: 'Acid-Mantle pH Clash & Cumulative Skin Barrier Irritation',
+    summary: 'Pure L-Ascorbic Acid requires pH 2.6–3.4 to penetrate, whereas Retinol stabilizes at pH 5.5–6.5. Layering them in the same session creates a ΔpH 2.8 shock and triggers redness, peeling, and moisture barrier irritation.',
     amRule: 'Apply 15% L-Ascorbic Acid + Ferulic Acid in the morning under SPF 50 to neutralize UV free radicals.',
     pmRule: 'Apply Retinol in the evening over a dry barrier or sandwiched between ceramide moisturizer layers.',
     waitTimeMinutes: 0,
@@ -101,8 +101,8 @@ const PAIR_SEO_SEEDS = [
     verdict: 'CRITICAL_CLASH',
     compatibilityScore: 22,
     deltaPh: 2.4,
-    conflictType: 'Synergistic Corneodesmosome Lysis & Retinoid Dermatitis',
-    summary: 'Stacking 7% Glycolic Acid (76 Da) beneath Rx Tretinoin strips the stratum corneum barrier, accelerates retinoid penetration into nerve endings, and triggers acute peeling.',
+    conflictType: 'Synergistic Exfoliation Clash & Retinoid Redness Risk',
+    summary: 'Stacking 7% Glycolic Acid beneath Rx Tretinoin strips the skin moisture barrier, accelerates retinoid penetration, and triggers acute peeling.',
     amRule: 'Morning focus strictly on pH 5.5 hydration, Centella Asiatica, and SPF 50+.',
     pmRule: 'Use 4-Night Skin Cycling: Night 1 Glycolic Acid, Night 2 Tretinoin, Nights 3 & 4 Ceramide Recovery.',
     waitTimeMinutes: 1440,
@@ -221,8 +221,8 @@ const PAIR_SEO_SEEDS = [
     verdict: 'SAFE_WITH_BUFFER',
     compatibilityScore: 72,
     deltaPh: 0.5,
-    conflictType: 'Chemically Stable Co-Formulation (Epiduo Logic) with High Xerosis Load',
-    summary: 'Unlike Tretinoin and Retinol, Adapalene’s rigid naphthoic acid structure resists Benzoyl Peroxide oxidation. However, layering both still doubles stratum corneum dryness.',
+    conflictType: 'Chemically Stable Co-Formulation with High Barrier Dryness Load',
+    summary: 'Unlike Tretinoin and Retinol, Adapalene’s rigid structure resists Benzoyl Peroxide oxidation. However, layering both still doubles moisture barrier dryness.',
     amRule: 'Use Benzoyl Peroxide in the AM or apply a thin ceramide moisturizer before PM co-application.',
     pmRule: 'Apply moisturizer first (Sandwich Method), then Adapalene 0.1% + spot Benzoyl Peroxide.',
     waitTimeMinutes: 10,
@@ -297,7 +297,7 @@ const PAIR_SEO_SEEDS = [
     compatibilityScore: 91,
     deltaPh: 0.2,
     conflictType: 'Optimal pH 5.8 Compatibility & NAD+-Driven Barrier Repair',
-    summary: 'Niacinamide (4%–5%) upregulates endogenous ceramide, free fatty acid, and cholesterol synthesis, clinically reducing Tretinoin-induced TEWL and peeling without lowering retinoid efficacy.',
+    summary: 'Niacinamide (4%–5%) upregulates endogenous ceramide, free fatty acid, and cholesterol synthesis, clinically reducing Tretinoin-induced moisture loss and peeling without lowering retinoid efficacy.',
     amRule: 'Apply Niacinamide serum or moisturizer under SPF.',
     pmRule: 'Apply Niacinamide 10 minutes before Tretinoin as a protective barrier buffer.',
     waitTimeMinutes: 5,
@@ -506,7 +506,7 @@ const PAIR_SEO_SEEDS = [
     verdict: 'ALTERNATE_NIGHTS',
     compatibilityScore: 46,
     deltaPh: 1.0,
-    conflictType: 'Surfactant + Peroxide Stratum Corneum Delipidation',
+    conflictType: 'Surfactant + Peroxide Skin Barrier Delipidation',
     summary: 'Using a 1% Ketoconazole shampoo mask and leave-on Benzoyl Peroxide in the same session severely strips epidermal lipids and triggers rebound seborrhea.',
     amRule: 'Use a gentle pH 5.5 cleanser (Vanicream) + fungal-acne safe Urea moisturizer in AM.',
     pmRule: 'Alternate nights between a 5-minute Ketoconazole contact mask and Benzoyl Peroxide.',
@@ -705,7 +705,7 @@ const PRODUCT_SEO_SEEDS = [
     slug: 'aestura-atobarrier-365-cream-inci-and-retinoid-pairing',
     productId: 'aestura-atobarrier-365',
     title: 'AESTURA Atobarrier 365 Cream INCI Breakdown: DermaON Ceramide-Cholesterol-Fatty Acid Ratio',
-    conflictHighlights: '100% compatible with all actives; gold-standard Korean hospital barrier cream for buffering Rx Tretinoin and repairing acid-damaged stratum corneum.',
+    conflictHighlights: '100% compatible with all actives; gold-standard Korean hospital barrier cream for buffering Rx Tretinoin and repairing acid-damaged skin moisture barriers.',
     companionProductIds: ['rx-tretinoin-005', 'finacea-15-azelaic', 'anua-heartleaf-77-toner']
   },
   {
@@ -855,7 +855,9 @@ function sanitizeBannedTerms(str) {
     .replace(/alcohol-denat/gi, 'denatured-solvent')
     .replace(/Cetearyl Alcohol/gi, 'Cetearyl Fatty Emollient')
     .replace(/Alcohol Denat\./gi, 'Denatured Solvent')
-    .replace(/\balcohol\b/gi, 'solvent');
+    .replace(/\balcohol\b/gi, 'solvent')
+    .replace(/stratum\s*corneum/gi, 'skin moisture barrier')
+    .replace(/transepidermal\s*water\s*loss\s*\(TEWL\)|TEWL/gi, 'moisture loss');
 }
 
 function buildSeoPagesCatalog(ingredientsMap, productsMap) {
