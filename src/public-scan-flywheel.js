@@ -227,7 +227,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
     <div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="padding:12px 16px;background:var(--bg-oat);margin-bottom:16px;display:flex;flex-direction:column;gap:8px;border:1px solid var(--border-hairline);">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
         <span class="mono" style="font-size:0.78rem;font-weight:700;color:var(--rose-brand);">Free $0 Routine Calendar &amp; 2 Dupes for ${esc(scan.target)}</span>
-        <a href="/buy/onetime_499?guide=scan_${esc(encodeURIComponent(scan.target))}" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
+        <a href="/buy/flash_pass?guide=scan_${esc(encodeURIComponent(scan.target))}" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
       </div>
       <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'scan_${esc(scan.target)}')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
         <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
@@ -364,7 +364,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
     <div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="padding:12px 16px;background:var(--bg-oat);margin-bottom:16px;display:flex;flex-direction:column;gap:8px;border:1px solid var(--border-hairline);">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
         <span class="mono" style="font-size:0.78rem;font-weight:700;color:var(--rose-brand);">Free $0 Routine Calendar &amp; 2 Chemist Dupes</span>
-        <a href="/buy/onetime_499?guide=leaderboard" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
+        <a href="/buy/flash_pass?guide=leaderboard" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
       </div>
       <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'leaderboard')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
         <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />

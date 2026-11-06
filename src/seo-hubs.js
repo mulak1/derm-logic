@@ -257,7 +257,7 @@ function renderTopSubpageEmailBar(tagSlug) {
   return `<div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:11px 14px;margin-bottom:14px;display:flex;flex-direction:column;gap:7px;border:1px solid var(--rose-pill-border);">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:0.78rem;">
       <span class="mono" style="color:var(--rose-brand);font-weight:700;">${LOCK_SVG}Step #1 &amp; Bottle #1 Free Proof &middot; Unlock Full Routine &amp; 2 Dupes ($0):</span>
-      <a href="/buy/onetime_499?guide=${encodeURIComponent(tagSlug)}" class="mono" style="color:var(--text-primary);font-weight:700;text-decoration:underline;font-size:0.74rem;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
+      <a href="/buy/flash_pass?guide=${encodeURIComponent(tagSlug)}" class="mono" style="color:var(--text-primary);font-weight:700;text-decoration:underline;font-size:0.74rem;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
     </div>
     <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, '${escapeHtml(tagSlug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
       <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:7px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
@@ -458,11 +458,11 @@ function renderCelebrityDetailPage(celeb) {
             </div>
             <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="padding:14px 16px;background:rgba(244,239,232,0.1);border:1px dashed rgba(229,198,126,0.5);border-radius:12px;margin-bottom:8px;cursor:pointer;">
               <strong style="display:block;font-size:0.9rem;color:#F7DFAD;margin-bottom:4px;">${LOCK_SVG}Evening 3-Step Recovery &amp; Night Serum Order Locked</strong>
-              <span style="display:block;font-size:0.8rem;color:#EED6DC;line-height:1.45;">Enter your email at the top ($0) to reveal ${escapeHtml(celeb.name)}’s 3-Step Bedtime Recovery Order + 2 Free Dupes, or unlock the $9 Complete AM/PM Schedule &uarr;</span>
+              <span style="display:block;font-size:0.8rem;color:#EED6DC;line-height:1.45;">Enter your email at the top ($0) to reveal ${escapeHtml(celeb.name)}’s 3-Step Bedtime Recovery Order + 2 Free Dupes, or unlock the $1.99 Complete AM/PM Schedule &uarr;</span>
             </div>
             <div class="dl-unlocked-c2-proof" style="display:none;">${celeb.pmSteps.map(renderPmStep).join('')}</div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;font-size:0.76rem;position:relative;z-index:1;"><span class="mono" style="color:#B5ACA3;">Overnight Barrier Recovery</span><a href="/buy/onetime_499?guide=celeb_${encodeURIComponent(celeb.slug)}" class="mono" style="color:#E5C67E;font-weight:600;text-decoration:none;">Get $9 Complete AM/PM Calendar &rarr;</a></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;font-size:0.76rem;position:relative;z-index:1;"><span class="mono" style="color:#B5ACA3;">Overnight Barrier Recovery</span><a href="/buy/flash_pass?guide=celeb_${encodeURIComponent(celeb.slug)}" class="mono" style="color:#E5C67E;font-weight:600;text-decoration:none;">Get $1.99 Complete AM/PM Calendar &rarr;</a></div>
         </div>
       </div>
 
