@@ -148,12 +148,12 @@ function renderAtelierVanityDrawerHtml() {
       <div id="dl-dossier-panel-pass" style="display:none;flex-direction:column;gap:8px;"></div>
       <div id="dl-vanity-vault-footer" style="position:sticky;bottom:-20px;z-index:6;padding:12px 14px;border-radius:18px;background:var(--bg-oat);box-shadow:0 -8px 24px rgba(58,31,39,0.08);display:flex;flex-direction:column;gap:8px;">
         <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:8px;">
-          <a id="dl-vanity-keep-99c" href="/buy/micro_pass?source=vanity_bag_99c" onclick="return window.__dlBuyFromVanity('micro_pass', this)" class="btn-primary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.8rem;white-space:nowrap;"><span>Save 9:16 Phone Card (99&cent;) &rarr;</span></a>
-          <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_199" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;background:var(--bg-surface);color:var(--rose-brand);"><span>Complete 3-File Kit ($1.99)</span></a>
+          <a id="dl-vanity-keep-99c" href="/buy/flash_pass?source=vanity_bag_299" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-primary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.8rem;white-space:nowrap;"><span>Unlock Complete Routine Kit ($2.99) &rarr;</span></a>
+          <a id="dl-vanity-keep-199" href="/buy/pro_b2b?source=vanity_bag_pro" onclick="return window.__dlBuyFromVanity('pro_b2b', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;background:var(--bg-surface);color:var(--rose-brand);"><span>Unlimited Shelf ($19.99/yr)</span></a>
         </div>
         <form id="dl-vanity-email-form" onsubmit="return window.__dlSendVanityHoldEmail(event)" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;">
-          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Enter email to save your free 4-Night routine summary..." style="width:100%;padding:7px 12px;font-size:0.76rem;min-height:32px;background:var(--bg-surface);border-radius:999px;" />
-          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.75rem;white-space:nowrap;">Email Free Summary &rarr;</button>
+          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Enter email to unlock 1-Day Sample Clash Summary ($0)..." style="width:100%;padding:7px 12px;font-size:0.76rem;min-height:32px;background:var(--bg-surface);border-radius:999px;" />
+          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.75rem;white-space:nowrap;">Email Sample ($0) &rarr;</button>
         </form>
         <div id="dl-vanity-email-status" class="mono" style="display:none;font-size:0.75rem;color:var(--sage-safe);font-weight:600;"></div>
       </div>
@@ -709,88 +709,37 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         }
       }
 
-      // Render Tab 03: 4-Night Skin Cycling Calendar
+      // Render Tab 03: 4-Night Skin Cycling Calendar (Night 1 Sample Free; Nights 2-4 Gated Behind $2.99 Kit)
       var cyclePanel = document.getElementById('dl-dossier-panel-cycle');
       if (cyclePanel) {
-        var b2 = getBottleForSlot(st, 2) || SLOT_OPTIONS[2].choices[0];
-        var b4 = getBottleForSlot(st, 4) || SLOT_OPTIONS[4].choices[0];
-        cyclePanel.innerHTML = '<div style="padding:12px 14px;border-radius:18px;background:var(--bg-surface);border:none;display:flex;flex-direction:column;gap:6px;">'
-          + '<div class="mono" style="font-size:0.72rem;font-weight:700;color:var(--rose-brand);text-transform:uppercase;">4-Night Bedtime Skin-Cycling Schedule (9:30 PM)</div>'
-          + '<div style="padding:8px 10px;border-radius:12px;background:var(--bg-canvas);font-size:0.77rem;"><strong>Night 1 (Active Renewal):</strong> Cleanse + Dry 10m + <strong>' + esc(b4.short) + '</strong> + ' + esc(b2.short) + '</div>'
-          + '<div style="padding:8px 10px;border-radius:12px;background:var(--sage-bg);font-size:0.77rem;"><strong>Night 2 (Barrier Recovery):</strong> Pause Slot 05 actives · Flood skin with <strong>' + esc(b2.short) + '</strong></div>'
-          + '<div style="padding:8px 10px;border-radius:12px;background:var(--bg-canvas);font-size:0.77rem;"><strong>Night 3 (Second Renewal):</strong> Re-apply pea-sized <strong>' + esc(b4.short) + '</strong> buffered over cream</div>'
-          + '<div style="padding:8px 10px;border-radius:12px;background:var(--sage-bg);font-size:0.77rem;"><strong>Night 4 (Deep Lipid Cushion):</strong> 3:1:1 Ceramide recovery with <strong>' + esc(b2.short) + '</strong> before repeating cycle</div></div>';
+        var b2 = getBottleForSlot(st, 2) || SLOT_OPTIONS[2].choices[0], b4 = getBottleForSlot(st, 4) || SLOT_OPTIONS[4].choices[0];
+        var nights2to4Html = window.__ebIsUnlocked
+          ? '<div style="padding:8px 10px;border-radius:12px;background:var(--sage-bg);font-size:0.77rem;"><strong>Night 2 (Barrier Recovery):</strong> Pause Slot 05 actives · Flood skin with <strong>' + esc(b2.short) + '</strong></div><div style="padding:8px 10px;border-radius:12px;background:var(--bg-canvas);font-size:0.77rem;"><strong>Night 3 (Second Renewal):</strong> Re-apply pea-sized <strong>' + esc(b4.short) + '</strong> buffered over cream</div><div style="padding:8px 10px;border-radius:12px;background:var(--sage-bg);font-size:0.77rem;"><strong>Night 4 (Deep Lipid Cushion):</strong> 3:1:1 Ceramide recovery with <strong>' + esc(b2.short) + '</strong> before repeating cycle</div>'
+          : '<div style="padding:10px 12px;border-radius:12px;background:var(--rose-pill-bg);font-size:0.77rem;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;"><span><strong>Nights 2–4 Rotation + .ICS Calendar Locked:</strong> Separate conflicting night actives &amp; download 9:16 Phone Card.</span><a href="/buy/flash_pass?source=vanity_cycle_tab" onclick="return window.__dlBuyFromVanity(\'flash_pass\', this)" class="mono" style="padding:5px 10px;border-radius:999px;background:var(--rose-brand);color:var(--accent-ink);text-decoration:none;font-weight:700;font-size:0.72rem;white-space:nowrap;">Unlock Nights 2–4 ($2.99) &rarr;</a></div>';
+        cyclePanel.innerHTML = '<div style="padding:12px 14px;border-radius:18px;background:var(--bg-surface);border:none;display:flex;flex-direction:column;gap:6px;"><div class="mono" style="font-size:0.72rem;font-weight:700;color:var(--rose-brand);text-transform:uppercase;">4-Night Bedtime Skin-Cycling Schedule (9:30 PM)</div><div style="padding:8px 10px;border-radius:12px;background:var(--bg-canvas);font-size:0.77rem;"><strong>Night 1 Sample (Free):</strong> Cleanse + Dry 10m + <strong>' + esc(b4.short) + '</strong> + ' + esc(b2.short) + '</div>' + nights2to4Html + '</div>';
       }
 
       // Render Tab 04: Luxury Editorial 9:16 Phone Lock-Screen Pass
       var passPanel = document.getElementById('dl-dossier-panel-pass');
       if (passPanel) {
-        var side = st.passSide === 'pm' ? 'pm' : 'am';
-        var isAm = side === 'am';
-        var b0 = getBottleForSlot(st, 0) || SLOT_OPTIONS[0].choices[0];
-        var b1 = getBottleForSlot(st, 1) || SLOT_OPTIONS[1].choices[0];
-        var b2p = getBottleForSlot(st, 2) || SLOT_OPTIONS[2].choices[0];
-        var b3 = getBottleForSlot(st, 3) || SLOT_OPTIONS[3].choices[0];
-        var b4p = getBottleForSlot(st, 4) || SLOT_OPTIONS[4].choices[0];
+        var side = st.passSide === 'pm' ? 'pm' : 'am', isAm = side === 'am';
+        var b0 = getBottleForSlot(st, 0) || SLOT_OPTIONS[0].choices[0], b1 = getBottleForSlot(st, 1) || SLOT_OPTIONS[1].choices[0], b2p = getBottleForSlot(st, 2) || SLOT_OPTIONS[2].choices[0], b3 = getBottleForSlot(st, 3) || SLOT_OPTIONS[3].choices[0], b4p = getBottleForSlot(st, 4) || SLOT_OPTIONS[4].choices[0];
         var steps = isAm
-          ? [
-              { vt: 'mist', num: '01', name: b0.short, role: 'Morning pH Prep', pill: 'pH ' + b0.ph + ' · 45s', col: '#8A3448', bg: '#F3E1E5' },
-              { vt: 'dropper', num: '02', name: b1.short, role: 'Antioxidant Shield', pill: 'pH ' + b1.ph + ' · 60s', col: '#8A3448', bg: '#F3E1E5' },
-              { vt: 'jar', num: '03', name: b2p.short, role: '3:1:1 Ceramide Seal', pill: 'pH ' + b2p.ph + ' · Cushion', col: '#285B44', bg: '#E9F4EE' },
-              { vt: 'tube', num: '04', name: b3.short, role: uMeta.label + ' · ' + fMeta.label, pill: b3.tag + ' · 90s', col: '#285B44', bg: '#E9F4EE' }
-            ]
-          : [
-              { vt: 'mist', num: '01', name: 'Gentle Milk Cleanse', role: 'Pat 100% Dry Before Actives', pill: 'Wait 10m Dry', col: '#C9A45A', bg: 'rgba(201,164,90,0.16)' },
-              { vt: 'pm_bottle', num: '02', name: b4p.short, role: 'Nights 1 & 3 Active Renewal', pill: 'pH ' + b4p.ph + ' · Pea Size', col: '#E8C6B0', bg: 'rgba(138,52,72,0.45)' },
-              { vt: 'jar', num: '03', name: b2p.short, role: 'Every Night Sandwich Buffer', pill: 'pH ' + b2p.ph + ' · 3:1:1 Seal', col: '#A7D7C5', bg: 'rgba(40,91,68,0.42)' }
-            ];
+          ? [{ vt: 'mist', num: '01', name: b0.short, role: 'Morning pH Prep', pill: 'pH ' + b0.ph + ' · 45s', col: '#8A3448', bg: '#F3E1E5' }, { vt: 'dropper', num: '02', name: b1.short, role: 'Antioxidant Shield', pill: 'pH ' + b1.ph + ' · 60s', col: '#8A3448', bg: '#F3E1E5' }, { vt: 'jar', num: '03', name: b2p.short, role: '3:1:1 Ceramide Seal', pill: 'pH ' + b2p.ph + ' · Cushion', col: '#285B44', bg: '#E9F4EE' }, { vt: 'tube', num: '04', name: b3.short, role: uMeta.label + ' · ' + fMeta.label, pill: b3.tag + ' · 90s', col: '#285B44', bg: '#E9F4EE' }]
+          : [{ vt: 'mist', num: '01', name: 'Gentle Milk Cleanse', role: 'Pat 100% Dry Before Actives', pill: 'Wait 10m Dry', col: '#C9A45A', bg: 'rgba(201,164,90,0.16)' }, { vt: 'pm_bottle', num: '02', name: b4p.short, role: 'Nights 1 & 3 Active Renewal', pill: 'pH ' + b4p.ph + ' · Pea Size', col: '#E8C6B0', bg: 'rgba(138,52,72,0.45)' }, { vt: 'jar', num: '03', name: b2p.short, role: 'Every Night Sandwich Buffer', pill: 'pH ' + b2p.ph + ' · 3:1:1 Seal', col: '#A7D7C5', bg: 'rgba(40,91,68,0.42)' }];
         var stepsHtml = steps.map(function(s) {
           var miniSvg = renderMiniVesselSvg(s.vt, s.num, false, false).replace('width="34" height="42"', 'width="24" height="30"').replace('width="36" height="42"', 'width="26" height="30"');
-          return '<div style="display:flex;align-items:center;gap:8px;padding:6px 9px;background:' + (isAm ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.07)') + ';border:none;border-radius:12px;box-shadow:0 2px 6px rgba(58,31,39,0.05);">'
-            + '<div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:28px;height:32px;background:' + (isAm ? '#F8EFE6' : 'rgba(255,255,255,0.06)') + ';border-radius:6px;">' + miniSvg + '</div>'
-            + '<div style="flex:1;min-width:0;"><div style="font-size:0.78rem;font-weight:700;color:' + (isAm ? '#3A1F27' : '#FDF8F6') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(s.num) + ' &middot; ' + esc(s.name) + '</div>'
-            + '<div style="font-size:0.68rem;color:' + (isAm ? '#6E4B55' : '#D5CBC0') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(s.role) + '</div></div>'
-            + '<span class="mono" style="font-size:0.64rem;font-weight:700;padding:3px 7px;border-radius:99px;background:' + s.bg + ';color:' + s.col + ';white-space:nowrap;flex-shrink:0;">' + esc(s.pill) + '</span></div>';
+          return '<div style="display:flex;align-items:center;gap:8px;padding:6px 9px;background:' + (isAm ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.07)') + ';border:none;border-radius:12px;box-shadow:0 2px 6px rgba(58,31,39,0.05);"><div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:28px;height:32px;background:' + (isAm ? '#F8EFE6' : 'rgba(255,255,255,0.06)') + ';border-radius:6px;">' + miniSvg + '</div><div style="flex:1;min-width:0;"><div style="font-size:0.78rem;font-weight:700;color:' + (isAm ? '#3A1F27' : '#FDF8F6') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(s.num) + ' &middot; ' + esc(s.name) + '</div><div style="font-size:0.68rem;color:' + (isAm ? '#6E4B55' : '#D5CBC0') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(s.role) + '</div></div><span class="mono" style="font-size:0.64rem;font-weight:700;padding:3px 7px;border-radius:99px;background:' + s.bg + ';color:' + s.col + ';white-space:nowrap;flex-shrink:0;">' + esc(s.pill) + '</span></div>';
         }).join('');
-
-        passPanel.innerHTML = '<div style="background:linear-gradient(155deg,#3A1F27 0%,#28141A 100%);color:#FDF8F6;border-radius:20px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;border:none;">'
-          + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><div><span class="mono" style="font-size:0.68rem;color:#EED6DC;font-weight:700;letter-spacing:0.06em;display:block;">ATELIER 9:16 LOCK-SCREEN WALLPAPER</span><span style="font-size:0.74rem;color:#F3E1E5;">Tap AM or PM to flip your live phone lock-screen</span></div>'
-          + '<div style="display:inline-flex;background:rgba(255,255,255,0.1);border-radius:999px;padding:3px;">'
-            + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'am\\')" style="padding:5px 10px;border-radius:999px;font-size:0.71rem;border:none;cursor:pointer;background:' + (isAm ? 'var(--rose-brand)' : 'transparent') + ';color:#FDF8F6;font-weight:700;">7:30 AM</button>'
-            + '<button type="button" class="mono" onclick="window.__dlFlipPassSide(\\'pm\\')" style="padding:5px 10px;border-radius:999px;font-size:0.71rem;border:none;cursor:pointer;background:' + (!isAm ? '#C9A45A' : 'transparent') + ';color:' + (!isAm ? '#3A1F27' : '#FDF8F6') + ';font-weight:700;">☾ 9:30 PM</button>'
-          + '</div></div>'
-          + '<div style="max-width:340px;width:100%;margin:0 auto;border-radius:24px;padding:7px;background:linear-gradient(145deg,#5A303D,#28141A);box-shadow:0 14px 32px rgba(58,31,39,0.36);">'
-            + '<div style="border-radius:19px;padding:11px 12px 10px;background:' + (isAm ? 'linear-gradient(175deg,#FDF8F6 0%,#F8EFE6 55%,#F3E1E5 100%)' : 'linear-gradient(175deg,#28141A 0%,#3A1F27 58%,#4A2832 100%)') + ';color:' + (isAm ? '#3A1F27' : '#FDF8F6') + ';display:flex;flex-direction:column;gap:6px;position:relative;">'
-              + '<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.62rem;opacity:0.75;padding:0 4px;" class="mono"><span>DERMLOGIC ATELIER</span><span style="width:52px;height:11px;background:#3A1F27;border-radius:99px;display:inline-block;"></span><span>5G &middot; 100%</span></div>'
-              + '<div style="text-align:center;padding:2px 0 4px;">'
-                + '<div class="mono" style="font-size:0.63rem;letter-spacing:0.08em;color:' + (isAm ? '#8A3448' : '#EED6DC') + ';font-weight:700;">' + (isAm ? 'MORNING ANTIOXIDANT &amp; SPF SHIELD' : 'BEDTIME RENEWAL &amp; BARRIER RECOVERY') + '</div>'
-                + '<div class="serif-display" style="font-size:1.75rem;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin:1px 0;">' + (isAm ? '07:30' : '21:30') + '</div>'
-                + '<div class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.63rem;padding:2px 8px;border-radius:99px;background:' + (isAm ? '#E9F4EE' : 'rgba(201,164,90,0.16)') + ';color:' + (isAm ? '#285B44' : '#E8C6B0') + ';font-weight:700;"><span>96% Harmony &middot; 0 Clashes</span><span>&bull;</span><span>' + esc(uMeta.label) + '</span></div>'
-              + '</div>'
-              + '<div style="display:flex;flex-direction:column;gap:5px;">' + stepsHtml + '</div>'
-              + '<div class="mono" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;font-size:0.6rem;text-align:center;padding-top:2px;">'
-                + '<span style="padding:3px 2px;border-radius:5px;background:#8A3448;color:#FFF;font-weight:700;">N1: ' + esc(b4p.tag) + '</span>'
-                + '<span style="padding:3px 2px;border-radius:5px;background:#285B44;color:#FFF;font-weight:700;">N2: Rest</span>'
-                + '<span style="padding:3px 2px;border-radius:5px;background:#8A3448;color:#FFF;font-weight:700;">N3: ' + esc(b4p.tag) + '</span>'
-                + '<span style="padding:3px 2px;border-radius:5px;background:#285B44;color:#FFF;font-weight:700;">N4: Lipid</span>'
-              + '</div>'
-              + '<div style="width:76px;height:3px;background:' + (isAm ? 'rgba(58,31,39,0.22)' : 'rgba(255,255,255,0.28)') + ';border-radius:99px;margin:2px auto 0;"></div>'
-            + '</div></div>'
-          + '<div style="padding:8px 10px;border-radius:12px;background:rgba(255,255,255,0.08);font-size:0.72rem;line-height:1.4;color:#F3E1E5;">'
-            + '<strong class="mono" style="color:#EED6DC;display:block;font-size:0.68rem;margin-bottom:2px;">INCLUDED IN YOUR 99&cent; HIGH-RES WALLPAPER DOWNLOAD:</strong>'
-            + '<div>&bull; Crisp 1080&times;1920 Retina AM + PM Lock-Screen PNGs (auto-positioned below iOS/Android clock)</div>'
-            + '<div>&bull; Exact pH windows, wait timers, sensitive-skin sandwich buffer rules &amp; 4-Night schedule</div></div></div>';
+        passPanel.innerHTML = '<div style="background:linear-gradient(155deg,#3A1F27 0%,#28141A 100%);color:#FDF8F6;border-radius:20px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;border:none;"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><div><span class="mono" style="font-size:0.68rem;color:#EED6DC;font-weight:700;letter-spacing:0.06em;display:block;">ATELIER 9:16 LOCK-SCREEN WALLPAPER</span><span style="font-size:0.74rem;color:#F3E1E5;">Tap AM or PM to preview your phone lock-screen</span></div><div style="display:inline-flex;background:rgba(255,255,255,0.1);border-radius:999px;padding:3px;"><button type="button" class="mono" onclick="window.__dlFlipPassSide(\'am\')" style="padding:5px 10px;border-radius:999px;font-size:0.71rem;border:none;cursor:pointer;background:' + (isAm ? 'var(--rose-brand)' : 'transparent') + ';color:#FDF8F6;font-weight:700;">7:30 AM</button><button type="button" class="mono" onclick="window.__dlFlipPassSide(\'pm\')" style="padding:5px 10px;border-radius:999px;font-size:0.71rem;border:none;cursor:pointer;background:' + (!isAm ? '#C9A45A' : 'transparent') + ';color:' + (!isAm ? '#3A1F27' : '#FDF8F6') + ';font-weight:700;">☾ 9:30 PM</button></div></div><div style="max-width:340px;width:100%;margin:0 auto;border-radius:24px;padding:7px;background:linear-gradient(145deg,#5A303D,#28141A);box-shadow:0 14px 32px rgba(58,31,39,0.36);"><div style="border-radius:19px;padding:11px 12px 10px;background:' + (isAm ? 'linear-gradient(175deg,#FDF8F6 0%,#F8EFE6 55%,#F3E1E5 100%)' : 'linear-gradient(175deg,#28141A 0%,#3A1F27 58%,#4A2832 100%)') + ';color:' + (isAm ? '#3A1F27' : '#FDF8F6') + ';display:flex;flex-direction:column;gap:6px;position:relative;"><div style="display:flex;justify-content:space-between;align-items:center;font-size:0.62rem;opacity:0.75;padding:0 4px;" class="mono"><span>DERMLOGIC ATELIER</span><span style="width:52px;height:11px;background:#3A1F27;border-radius:99px;display:inline-block;"></span><span>5G &middot; 100%</span></div><div style="text-align:center;padding:2px 0 4px;"><div class="mono" style="font-size:0.63rem;letter-spacing:0.08em;color:' + (isAm ? '#8A3448' : '#EED6DC') + ';font-weight:700;">' + (isAm ? 'MORNING ANTIOXIDANT &amp; SPF SHIELD' : 'BEDTIME RENEWAL &amp; BARRIER RECOVERY') + '</div><div class="serif-display" style="font-size:1.75rem;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin:1px 0;">' + (isAm ? '07:30' : '21:30') + '</div><div class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.63rem;padding:2px 8px;border-radius:99px;background:' + (isAm ? '#E9F4EE' : 'rgba(201,164,90,0.16)') + ';color:' + (isAm ? '#285B44' : '#E8C6B0') + ';font-weight:700;"><span>96% Harmony &middot; 0 Clashes</span><span>&bull;</span><span>' + esc(uMeta.label) + '</span></div></div><div style="display:flex;flex-direction:column;gap:5px;">' + stepsHtml + '</div><div class="mono" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;font-size:0.6rem;text-align:center;padding-top:2px;"><span style="padding:3px 2px;border-radius:5px;background:#8A3448;color:#FFF;font-weight:700;">N1: ' + esc(b4p.tag) + '</span><span style="padding:3px 2px;border-radius:5px;background:#285B44;color:#FFF;font-weight:700;">N2: Locked</span><span style="padding:3px 2px;border-radius:5px;background:#8A3448;color:#FFF;font-weight:700;">N3: Locked</span><span style="padding:3px 2px;border-radius:5px;background:#285B44;color:#FFF;font-weight:700;">N4: Locked</span></div><div style="width:76px;height:3px;background:' + (isAm ? 'rgba(58,31,39,0.22)' : 'rgba(255,255,255,0.28)') + ';border-radius:99px;margin:2px auto 0;"></div></div></div><div style="padding:8px 10px;border-radius:12px;background:rgba(255,255,255,0.08);font-size:0.72rem;line-height:1.4;color:#F3E1E5;"><strong class="mono" style="color:#EED6DC;display:block;font-size:0.68rem;margin-bottom:2px;">INCLUDED IN YOUR $2.99 COMPLETE ROUTINE KIT:</strong><div>&bull; Crisp 1080&times;1920 Retina AM + PM Lock-Screen PNGs + 4-Night .ICS Calendar + Pore-Safe Swaps</div></div></div>';
       }
     };
 
     window.__dlBuyFromVanity = function(tier, btnEl) {
-      if (window.__ebIsUnlocked && tier === 'micro_pass' && typeof window.__dlDownloadOrUnlockWallpaper === 'function') {
-        window.__dlDownloadOrUnlockWallpaper();
-        return false;
-      }
+      if (window.__ebIsUnlocked && typeof window.__dlDownloadOrUnlockWallpaper === 'function') { window.__dlDownloadOrUnlockWallpaper(); return false; }
       if (btnEl) { btnEl.style.opacity = '0.85'; btnEl.innerHTML = '<span>Opening Checkout...</span>'; }
-      if (typeof window.__ebCheckout === 'function') { window.__ebCheckout(tier || 'micro_pass', true); return false; }
-      window.location.href = '/buy/' + encodeURIComponent(tier || 'micro_pass') + '?source=vanity_bag';
+      if (typeof window.__ebCheckout === 'function') { window.__ebCheckout(tier || 'flash_pass', true); return false; }
+      window.location.href = '/buy/' + encodeURIComponent(tier || 'flash_pass') + '?source=vanity_bag';
       return false;
     };
 
@@ -908,14 +857,12 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
 
     window.__dlSendVanityHoldEmail = function(ev) {
       if (ev && ev.preventDefault) ev.preventDefault();
-      var emIn = document.getElementById('dl-vanity-hold-email');
-      var email = emIn && emIn.value ? emIn.value.trim() : '';
+      var emIn = document.getElementById('dl-vanity-hold-email'), email = emIn && emIn.value ? emIn.value.trim() : '';
       if (!email) return false;
       var statusEl = document.getElementById('dl-vanity-email-status'), btnEl = document.getElementById('dl-vanity-email-btn');
-      if (btnEl) btnEl.textContent = '✓ Sent + .ICS!';
-      if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = '4-Night .ICS Calendar & 24h Restore Link sent to ' + email + ' (Bag #' + (window.__dlVanityState.bagId || 'DL-4829') + ').'; }
+      if (btnEl) btnEl.textContent = '✓ Sample Sent ($0)!';
+      if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = '✓ 1-Day Sample AM/PM Clash Summary & 24h Restore Link sent to ' + email + '. Unlock Nights 2–4 & 9:16 Phone Card above ($2.99).'; }
       fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'atelier_vanity_24h_hold' }) }).catch(function() {});
-      try { var dl = document.createElement('a'); dl.href = '/api/github-upgrade/skin-cycling.ics'; dl.download = 'dermlogic-4-night-skin-cycling.ics'; dl.style.display = 'none'; document.body.appendChild(dl); dl.click(); setTimeout(function() { if (dl.parentNode) dl.parentNode.removeChild(dl); }, 600); } catch (_) {}
       return false;
     };
 

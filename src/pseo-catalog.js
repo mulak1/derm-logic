@@ -873,33 +873,12 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
   const combinatorialPairs = buildCombinatorialPairSeeds(ingredientsMap, seenPairKeys, seenSlugs, cleanIngName);
 
   for (const item of [...initialPairs, ...combinatorialPairs]) {
-    const ingA = ingredientsMap.get(item.activeA);
-    const ingB = ingredientsMap.get(item.activeB);
-    const plain = toPlainConsumerPair(item, ingA, ingB);
-    const baseSummary = plain.summary;
-    const comparisonIngredients = [ingA, ingB].filter(Boolean);
-
+    const ingA = ingredientsMap.get(item.activeA), ingB = ingredientsMap.get(item.activeB), plain = toPlainConsumerPair(item, ingA, ingB), baseSummary = plain.summary, comparisonIngredients = [ingA, ingB].filter(Boolean);
     pages.push({
-      slug: item.slug,
-      pageType: 'active_pair',
-      title: cleanHumanTitle(item.title),
-      metaDescription: formatMetaDescription(baseSummary, 155),
-      category: 'Active Pairing Guide',
-      verdict: item.verdict,
-      compatibilityScore: item.compatibilityScore,
-      deltaPh: item.deltaPh,
-      conflictType: plain.conflictType,
-      summary: plain.summary,
-      labConflictType: item.conflictType,
-      labSummary: item.summary,
-      amRule: item.amRule,
-      pmRule: item.pmRule,
-      waitTimeMinutes: item.waitTimeMinutes,
-      ingredientA: ingA || null,
-      ingredientB: ingB || null,
-      comparisonIngredients,
-      product: null,
-      presetProducts: item.presetProducts,
+      slug: item.slug, pageType: 'active_pair', title: cleanHumanTitle(item.title), metaDescription: formatMetaDescription(baseSummary, 155), category: 'Active Pairing Guide',
+      verdict: item.verdict, compatibilityScore: item.compatibilityScore, deltaPh: item.deltaPh, conflictType: plain.conflictType, summary: plain.summary,
+      labConflictType: item.conflictType, labSummary: item.summary, amRule: item.amRule, pmRule: item.pmRule, waitTimeMinutes: item.waitTimeMinutes,
+      ingredientA: ingA || null, ingredientB: ingB || null, comparisonIngredients, product: null, presetProducts: item.presetProducts,
       faqs: [
         { q: `Can you layer ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} in the same skincare routine?`, a: `${plain.summary}` },
         { q: `Why do ${ingA ? ingA.commonName : item.activeA} and ${ingB ? ingB.commonName : item.activeB} clash or work together?`, a: `They have a pH difference of ΔpH ${item.deltaPh} (${ingA ? `pH ${ingA.phMin} to ${ingA.phMax}` : 'acidic'} vs ${ingB ? `pH ${ingB.phMin} to ${ingB.phMax}` : 'neutral'}). When two products have very different acidity levels, layering them right on top of each other can make them less effective or irritate sensitive skin.` },
@@ -907,35 +886,21 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       ]
     });
   }
-
-  const coveredProductIds = new Set();
-  const initialProductSeeds = [];
+  const coveredProductIds = new Set(), initialProductSeeds = [], autoProductSeeds = [];
   for (const item of [...PRODUCT_SEO_SEEDS, ...EXPANDED_PRODUCT_SEEDS]) {
     if (seenSlugs.has(item.slug)) continue;
-    const isCustomBottle = item.slug.includes('skinoren');
-    if (item.productId && coveredProductIds.has(item.productId) && !isCustomBottle) continue;
-    seenSlugs.add(item.slug);
-    if (item.productId) coveredProductIds.add(item.productId);
-    initialProductSeeds.push(item);
+    if (item.productId && coveredProductIds.has(item.productId) && !item.slug.includes('skinoren')) continue;
+    seenSlugs.add(item.slug); if (item.productId) coveredProductIds.add(item.productId); initialProductSeeds.push(item);
   }
-  const autoProductSeeds = [];
   for (const [prodId, prod] of productsMap.entries()) {
     if (coveredProductIds.has(prodId)) continue;
     const autoSlug = `${prodId}-inci-and-routine-guide`;
     if (seenSlugs.has(autoSlug)) continue;
     seenSlugs.add(autoSlug);
-    autoProductSeeds.push({
-      slug: autoSlug,
-      title: `${prod.brand} ${prod.name}: pH ${prod.ph} Bottle Guide & Routine Order`,
-      productId: prodId,
-      conflictHighlights: prod.summary,
-      companionProductIds: ['skinceuticals-ce-ferulic', 'rx-tretinoin-005', 'aestura-atobarrier-365'].filter((id) => id !== prodId)
-    });
+    autoProductSeeds.push({ slug: autoSlug, title: `${prod.brand} ${prod.name}: pH ${prod.ph} Bottle Guide & Routine Order`, productId: prodId, conflictHighlights: prod.summary, companionProductIds: ['skinceuticals-ce-ferulic', 'rx-tretinoin-005', 'aestura-atobarrier-365'].filter((id) => id !== prodId) });
   }
-
   for (const item of [...initialProductSeeds, ...autoProductSeeds]) {
-    const prod = productsMap.get(item.productId);
-    const plainProd = toPlainConsumerProduct(item, prod);
+    const prod = productsMap.get(item.productId), plainProd = toPlainConsumerProduct(item, prod);
     const primaryIngs = (prod ? prod.primaryActives : []).map((id) => ingredientsMap.get(id)).filter(Boolean);
     const companionIngs = (item.companionProductIds || []).map((pid) => productsMap.get(pid)).filter(Boolean).flatMap((cp) => (cp.primaryActives || []).map((id) => ingredientsMap.get(id))).filter(Boolean);
     const seenIds = new Set(), comparisonIngredients = [];
@@ -943,28 +908,13 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       if (ing && !seenIds.has(ing.id)) { seenIds.add(ing.id); comparisonIngredients.push(ing); }
       if (comparisonIngredients.length >= 4) break;
     }
-    const rawProdMeta = `${plainProd.summary}`;
     pages.push({
-      slug: item.slug,
-      pageType: 'product_teardown',
-      title: sanitizeBannedTerms(cleanHumanTitle(item.title)),
-      metaDescription: sanitizeBannedTerms(formatMetaDescription(rawProdMeta, 155)),
-      category: 'Cult Bottle Guide',
-      verdict: prod && prod.ph <= 3.8 ? 'LOW_PH_ACTIVE' : 'CLINICAL_TEARDOWN',
-      compatibilityScore: prod && prod.ph <= 3.8 ? 64 : 86,
-      deltaPh: prod ? Number(Math.abs(5.5 - prod.ph).toFixed(1)) : 0.5,
-      conflictType: sanitizeBannedTerms(plainProd.conflictType),
-      summary: sanitizeBannedTerms(plainProd.summary),
-      labConflictType: sanitizeBannedTerms(item.conflictHighlights),
-      labSummary: sanitizeBannedTerms(prod ? prod.summary : item.conflictHighlights),
+      slug: item.slug, pageType: 'product_teardown', title: sanitizeBannedTerms(cleanHumanTitle(item.title)), metaDescription: sanitizeBannedTerms(formatMetaDescription(`${plainProd.summary}`, 155)), category: 'Cult Bottle Guide',
+      verdict: prod && prod.ph <= 3.8 ? 'LOW_PH_ACTIVE' : 'CLINICAL_TEARDOWN', compatibilityScore: prod && prod.ph <= 3.8 ? 64 : 86, deltaPh: prod ? Number(Math.abs(5.5 - prod.ph).toFixed(1)) : 0.5,
+      conflictType: sanitizeBannedTerms(plainProd.conflictType), summary: sanitizeBannedTerms(plainProd.summary), labConflictType: sanitizeBannedTerms(item.conflictHighlights), labSummary: sanitizeBannedTerms(prod ? prod.summary : item.conflictHighlights),
       amRule: prod && prod.category.includes('Retinoid') ? 'Use at night only: sunlight breaks down retinoids. Always wear SPF 30 to 50+ the next morning.' : 'Safe for morning use when topped with broad-spectrum SPF 30 to 50+ and kept separate from clashing strong acids.',
-      pmRule: `In your evening routine, apply thin-to-thick and avoid stacking with clashing exfoliants on the same night.`,
-      waitTimeMinutes: prod && prod.ph <= 3.8 ? 15 : 5,
-      ingredientA: comparisonIngredients[0] || null,
-      ingredientB: comparisonIngredients[1] || null,
-      comparisonIngredients,
-      product: prod || null,
-      presetProducts: [item.productId, ...(item.companionProductIds || []).slice(0, 2)],
+      pmRule: `In your evening routine, apply thin-to-thick and avoid stacking with clashing exfoliants on the same night.`, waitTimeMinutes: prod && prod.ph <= 3.8 ? 15 : 5,
+      ingredientA: comparisonIngredients[0] || null, ingredientB: comparisonIngredients[1] || null, comparisonIngredients, product: prod || null, presetProducts: [item.productId, ...(item.companionProductIds || []).slice(0, 2)],
       faqs: [
         { q: `What is the pH and ingredient profile of ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`, a: sanitizeBannedTerms(`${prod ? `${prod.brand} ${prod.name} is formulated at pH ${prod.ph} ($${prod.priceUsd}). Full ingredient list: ${prod.inciList}.` : plainProd.summary}`) },
         { q: `Which skincare ingredients should I avoid mixing with ${prod ? `${prod.brand} ${prod.name}` : item.slug}?`, a: sanitizeBannedTerms(plainProd.summary) },

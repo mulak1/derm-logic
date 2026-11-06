@@ -749,22 +749,12 @@ function attachGlowIndexSeoUpgrades(app) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('X-Robots-Tag', 'index, follow');
     return res.status(200).json({
-      okf_version: '1.0.0',
-      organization: { name: 'DermLogic · Atelier Céramique', url: HOST_URL, contact: 'concierge@dermlogic.io' },
+      okf_version: '1.0.0', organization: { name: 'DermLogic · Atelier Céramique', url: HOST_URL, contact: 'concierge@dermlogic.io' },
       deterministic_engine: {
-        formulas: [
-          'Henderson-Hasselbalch Free-Acid Bioavailability: Free_Acid_% = 100 / (1 + 10^(pH - pKa))',
-          'pH Ionization Differential: Delta_pH = |mid_pH(A) - mid_pH(B)|',
-          'Stratum Corneum Diffusion: Bos & Meinardi 500 Dalton Molecular Weight Threshold',
-          'Pore-Congestion & Microbiome Assay: EU CosIng Comedogenicity (0-5) + Malassezia C12-C24 Ester Screen'
-        ],
+        formulas: ['Henderson-Hasselbalch Free-Acid Bioavailability: Free_Acid_% = 100 / (1 + 10^(pH - pKa))', 'pH Ionization Differential: Delta_pH = |mid_pH(A) - mid_pH(B)|', 'Stratum Corneum Diffusion: Bos & Meinardi 500 Dalton Molecular Weight Threshold', 'Pore-Congestion & Microbiome Assay: EU CosIng Comedogenicity (0-5) + Malassezia C12-C24 Ester Screen'],
         citations: ['PubMed PMID: 11207686', 'JCAD Retinoid & Benzoyl Peroxide Stability', 'EU CosIng Cosmetic Ingredient Database']
       },
-      discovery_endpoints: {
-        llms_txt: `${HOST_URL}/llms.txt`, llms_full_txt: `${HOST_URL}/llms-full.txt`, pricing_md: `${HOST_URL}/pricing.md`,
-        openapi_json: `${HOST_URL}/openapi.json`, rss_feed: `${HOST_URL}/feed.xml`, json_feed: `${HOST_URL}/feed.json`,
-        sitemap_index: `${HOST_URL}/sitemap-index.xml`, telemetry_ledger: `${HOST_URL}/api/seo/telemetry`
-      },
+      discovery_endpoints: { llms_txt: `${HOST_URL}/llms.txt`, llms_full_txt: `${HOST_URL}/llms-full.txt`, pricing_md: `${HOST_URL}/pricing.md`, openapi_json: `${HOST_URL}/openapi.json`, rss_feed: `${HOST_URL}/feed.xml`, json_feed: `${HOST_URL}/feed.json`, sitemap_index: `${HOST_URL}/sitemap-index.xml`, telemetry_ledger: `${HOST_URL}/api/seo/telemetry` },
       route_families: ROUTE_FAMILIES_META
     });
   });
@@ -787,50 +777,36 @@ function attachGlowIndexSeoUpgrades(app) {
   });
 
   app.get('/compare/:slug', (req, res, next) => {
-    const rawSlug = String(req.params.slug || '');
-    const isMd = rawSlug.endsWith('.md');
-    const cleanSlug = isMd ? rawSlug.slice(0, -3) : rawSlug;
+    const rawSlug = String(req.params.slug || ''), isMd = rawSlug.endsWith('.md'), cleanSlug = isMd ? rawSlug.slice(0, -3) : rawSlug;
     const resolved = resolveComparisonSlug(cleanSlug);
     if (!resolved) return next();
     if (resolved.needsRedirect) return res.redirect(301, `/compare/${resolved.canonicalSlug}${isMd ? '.md' : ''}`);
-    if (isMd) {
-      res.setHeader('Link', `<${HOST_URL}/compare/${resolved.canonicalSlug}>; rel="canonical"`);
-      return res.status(200).type('text/markdown; charset=utf-8').send(buildMarkdownForPath(`/compare/${resolved.canonicalSlug}`));
-    }
+    if (isMd) { res.setHeader('Link', `<${HOST_URL}/compare/${resolved.canonicalSlug}>; rel="canonical"`); return res.status(200).type('text/markdown; charset=utf-8').send(buildMarkdownForPath(`/compare/${resolved.canonicalSlug}`)); }
     return res.status(200).type('html').send(renderComparePageHtml(computeComparisonTelemetry(resolved), resolved.canonicalSlug));
   });
 
   app.get('/ingredient/:slug/:category', (req, res, next) => {
-    const rawCat = String(req.params.category || '');
-    const isMd = rawCat.endsWith('.md');
-    const cleanCat = isMd ? rawCat.slice(0, -3).toLowerCase() : rawCat.toLowerCase();
+    const rawCat = String(req.params.category || ''), isMd = rawCat.endsWith('.md'), cleanCat = isMd ? rawCat.slice(0, -3).toLowerCase() : rawCat.toLowerCase();
     const ing = findIngredientFuzzy(req.params.slug);
     if (!ing) return next();
     const subcat = INGREDIENT_SUBCATEGORIES.find((c) => c.slug === cleanCat) || INGREDIENT_SUBCATEGORIES[0];
     if (cleanCat !== subcat.slug) return res.redirect(301, `/ingredient/${ing.id}/${subcat.slug}${isMd ? '.md' : ''}`);
     if (isMd) return res.status(200).type('text/markdown; charset=utf-8').send(buildMarkdownForPath(`/ingredient/${ing.id}/${subcat.slug}`));
-    const matchingProducts = CLINICAL_PRODUCTS.filter((p) => (p.primaryActives || []).includes(ing.id) || subcat.filterFn(p)).slice(0, 8);
-    const hh = computeHendersonHasselbalch((ing.phMin + ing.phMax) / 2, ing.pka);
+    const matchingProducts = CLINICAL_PRODUCTS.filter((p) => (p.primaryActives || []).includes(ing.id) || subcat.filterFn(p)).slice(0, 8), hh = computeHendersonHasselbalch((ing.phMin + ing.phMax) / 2, ing.pka);
     const rowsHtml = matchingProducts.map((p) => `<tr><td><a href="/bottle/${escapeHtml(p.id)}" style="font-weight:600;color:var(--text-primary);text-decoration:underline;">${escapeHtml(p.brand)} ${escapeHtml(p.name)}</a><div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">${escapeHtml(p.summary || '')}</div></td><td class="mono">pH ${ing.phMin} - ${ing.phMax} &middot; $${p.priceUsd}</td><td class="mono">${hh.freeAcidPct}% Active Strength</td><td class="mono">${escapeHtml(p.timeOfDay || 'AM / PM')}</td><td><div style="display:flex;gap:6px;flex-wrap:wrap;" data-no-bag-inject="1"><button type="button" id="dl-bag-btn-${escapeHtml(p.id)}" data-dl-bag-prod="${escapeHtml(p.id)}" data-dl-bag-title="${escapeHtml(p.brand + ' ' + p.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(p.id)}','${escapeHtml((p.brand + ' ' + p.name).replace(/'/g, ''))}','',this)" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;background:var(--rose-pill-bg);color:var(--rose-brand);border-radius:999px;">+ Add to Vanity Bag</button><a href="/api/affiliate?product=${escapeHtml(p.id)}&amp;partner=${/timeless|cosrx|illiyoon|joseon|rohto|anua|stratia/i.test(p.brand) ? 'amazon' : 'sephora'}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;">Shop ($${p.priceUsd}) &nearr;</a></div></td></tr>`).join('');
     const bodyHtml = `<section class="section-block" style="padding-top:20px;"><div class="container"><nav class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;"><a href="/">Home</a> / <a href="/ingredient">Actives</a> / <a href="/ingredient/${escapeHtml(ing.id)}">${escapeHtml(ing.commonName)}</a> / <span style="color:var(--rose-brand);">${escapeHtml(subcat.label)}</span></nav><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px;"><span class="badge-safe mono">Verified ${escapeHtml(subcat.label)} &middot; pH ${ing.phMin}–${ing.phMax} &middot; Gentle &amp; Effective</span><button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag([${matchingProducts.slice(0, 3).map((p) => `'${escapeHtml(p.id)}'`).join(',')}],'ing_${escapeHtml(ing.id)}_${escapeHtml(subcat.slug)}')" style="padding:7px 14px;font-size:0.78rem;min-height:34px;"><span>Load Top 3 in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button></div><h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,3rem);margin-bottom:8px;">Best ${escapeHtml(ing.commonName)} ${escapeHtml(subcat.label)} (Ranked by Gentleness &amp; Value)</h1><p class="hero-sub" style="margin-bottom:14px;">Compare the best ${escapeHtml(ing.commonName)} ${escapeHtml(subcat.label.toLowerCase())} by skin feel, pH balance (${ing.phMin}–${ing.phMax}), pore safety, and price.</p><div class="porcelain-vessel-core" style="padding:20px 22px;background:var(--bg-surface);margin-bottom:16px;"><div class="table-wrap"><table><thead><tr><th>Cult Bottle &amp; Why It Wins</th><th>pH &amp; Price</th><th>Active Strength</th><th>When to Use</th><th>Add to Shelf / Shop</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></div>${renderEntityEnvironmentSimulatorHtml(`${ing.commonName} ${subcat.label}`, `${ing.id}-${subcat.slug}`, (matchingProducts[0] && matchingProducts[0].id) || 'skinceuticals-ce-ferulic')}</div></section>`;
     return res.status(200).type('html').send(renderBaseDocument({ title: `Best ${ing.commonName} ${subcat.label} (pH ${ing.phMin}-${ing.phMax}) | DermLogic`, description: `Compare the best ${ing.commonName} ${subcat.label.toLowerCase()} by gentleness, pH balance, pore safety, and morning/night layering order.`, canonicalPath: `/ingredient/${ing.id}/${subcat.slug}`, ogSlug: `${ing.id}-${subcat.slug}`, jsonLdObjects: [], hideNav: false, bodyHtml }));
   });
 
   app.get(['/concern/:slug/:category', '/scenario/:slug/:category'], (req, res, next) => {
-    const isConcern = req.path.startsWith('/concern/');
-    const basePrefix = isConcern ? '/concern' : '/scenario';
-    const rawCat = String(req.params.category || '');
-    const isMd = rawCat.endsWith('.md');
-    const cleanCat = isMd ? rawCat.slice(0, -3).toLowerCase() : rawCat.toLowerCase();
-    const list = isConcern ? (Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : []) : SCENARIO_GUIDES;
-    const qToks = String(req.params.slug || '').toLowerCase().split('-').filter((t) => t.length > 2 && !['safe', 'routine', 'shelf', 'skincare', 'and', 'for'].includes(t));
+    const isConcern = req.path.startsWith('/concern/'), basePrefix = isConcern ? '/concern' : '/scenario', rawCat = String(req.params.category || ''), isMd = rawCat.endsWith('.md'), cleanCat = isMd ? rawCat.slice(0, -3).toLowerCase() : rawCat.toLowerCase();
+    const list = isConcern ? (Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : []) : SCENARIO_GUIDES, qToks = String(req.params.slug || '').toLowerCase().split('-').filter((t) => t.length > 2 && !['safe', 'routine', 'shelf', 'skincare', 'and', 'for'].includes(t));
     const item = list.find((x) => x.slug === req.params.slug) || list.find((x) => x.slug.includes(req.params.slug) || String(req.params.slug).includes(x.slug)) || list.find((x) => qToks.filter((t) => x.slug.includes(t)).length >= 2);
     if (!item) return next();
     const subcat = INGREDIENT_SUBCATEGORIES.find((c) => c.slug === cleanCat) || INGREDIENT_SUBCATEGORIES[0];
     if (cleanCat !== subcat.slug || req.params.slug !== item.slug) return res.redirect(301, `${basePrefix}/${item.slug}/${subcat.slug}${isMd ? '.md' : ''}`);
     if (isMd) return res.status(200).type('text/markdown; charset=utf-8').send(buildMarkdownForPath(`${basePrefix}/${item.slug}/${subcat.slug}`));
-    const safeSet = new Set(item.activeIds || item.safeIds || []);
-    const matchingProducts = CLINICAL_PRODUCTS.filter((p) => subcat.filterFn(p) && ((p.primaryActives || []).some((a) => safeSet.has(a)) || (item.productIds || []).includes(p.id))).concat(CLINICAL_PRODUCTS.filter(subcat.filterFn)).slice(0, 10);
+    const safeSet = new Set(item.activeIds || item.safeIds || []), matchingProducts = CLINICAL_PRODUCTS.filter((p) => subcat.filterFn(p) && ((p.primaryActives || []).some((a) => safeSet.has(a)) || (item.productIds || []).includes(p.id))).concat(CLINICAL_PRODUCTS.filter(subcat.filterFn)).slice(0, 10);
     const dedupProds = Array.from(new Map(matchingProducts.map((p) => [p.id, p])).values()).slice(0, 8);
     const rowsHtml = dedupProds.map((p) => `<tr><td><a href="/bottle/${escapeHtml(p.id)}" style="font-weight:600;color:var(--text-primary);text-decoration:underline;">${escapeHtml(p.brand)} ${escapeHtml(p.name)}</a><div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">${escapeHtml(p.summary || '')}</div></td><td class="mono">pH ${p.ph} · $${p.priceUsd}</td><td class="mono">${escapeHtml(p.category)}</td><td><div style="display:flex;gap:6px;flex-wrap:wrap;" data-no-bag-inject="1"><button type="button" id="dl-bag-btn-${escapeHtml(p.id)}" data-dl-bag-prod="${escapeHtml(p.id)}" data-dl-bag-title="${escapeHtml(p.brand + ' ' + p.name)}" class="dl-add-to-bag-btn mono" onclick="window.__dlToggleBottleInBag('${escapeHtml(p.id)}','${escapeHtml((p.brand + ' ' + p.name).replace(/'/g, ''))}','',this)" style="padding:5px 10px;font-size:0.74rem;cursor:pointer;background:var(--rose-pill-bg);color:var(--rose-brand);border-radius:999px;">+ Add to Vanity Bag</button><a href="/api/affiliate?product=${escapeHtml(p.id)}&amp;partner=${/timeless|cosrx|illiyoon|joseon|rohto|anua|stratia/i.test(p.brand) ? 'amazon' : 'sephora'}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;">Shop ($${p.priceUsd}) &nearr;</a></div></td></tr>`).join('');
     const bodyHtml = `<section class="section-block" style="padding-top:20px;"><div class="container"><nav class="mono" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;"><a href="/">Home</a> / <a href="${basePrefix}">${isConcern ? 'Concerns' : 'Scenarios'}</a> / <a href="${basePrefix}/${escapeHtml(item.slug)}">${escapeHtml(item.title)}</a> / <span style="color:var(--rose-brand);">${escapeHtml(subcat.label)}</span></nav><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px;"><span class="badge-safe mono">Zero-Trigger Verified &middot; ${dedupProds.length} Safe ${escapeHtml(subcat.label)}</span><button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag([${dedupProds.slice(0, 3).map((p) => `'${escapeHtml(p.id)}'`).join(',')}],'concern_${escapeHtml(item.slug)}_${escapeHtml(subcat.slug)}')" style="padding:7px 14px;font-size:0.78rem;min-height:34px;"><span>Load Top 3 in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button></div><h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,3rem);margin-bottom:8px;">${escapeHtml(item.title)}: Best ${escapeHtml(subcat.label)}</h1><p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(item.summary)} Tap any verified bottle below to add it to your 5-Slot Vanity Bag or check retail pricing.</p><div class="porcelain-vessel-core" style="padding:20px 22px;background:var(--bg-surface);margin-bottom:16px;"><div class="table-wrap"><table><thead><tr><th>Verified Safe Bottle &amp; Why It Works</th><th>pH &amp; Price</th><th>Formulation Role</th><th>Add to Shelf / Shop</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></div>${renderEntityEnvironmentSimulatorHtml(`${item.title} ${subcat.label}`, `${item.slug}-${subcat.slug}`, (dedupProds[0] && dedupProds[0].id) || 'aestura-atobarrier-365')}</div></section>`;
@@ -838,8 +814,7 @@ function attachGlowIndexSeoUpgrades(app) {
   });
 
   app.get(['/sku/:brand/:sku', '/shade/:brand/:sku'], (req, res) => {
-    const combined = `${req.params.brand}-${req.params.sku}`.replace(/\.md$/i, '').toLowerCase();
-    const matched = findProductFuzzy(combined) || findProductFuzzy(req.params.sku) || CLINICAL_PRODUCTS[0];
+    const combined = `${req.params.brand}-${req.params.sku}`.replace(/\.md$/i, '').toLowerCase(), matched = findProductFuzzy(combined) || findProductFuzzy(req.params.sku) || CLINICAL_PRODUCTS[0];
     return res.redirect(301, `/bottle/${matched.id}`);
   });
 
@@ -951,22 +926,16 @@ function attachGlowIndexSeoUpgrades(app) {
     const familiesReport = {};
     let totalCanonicalUrls = 0, totalCrawledUrls = 0;
     for (const [famKey, meta] of Object.entries(ROUTE_FAMILIES_META)) {
-      const crawledCount = (TELEMETRY_LEDGER.botCrawledUrlsByFamily[famKey] || new Set()).size;
-      const crawlPct = Number(Math.min(100, (crawledCount / Math.max(1, meta.totalCanonical)) * 100).toFixed(1));
-      const fn = TELEMETRY_LEDGER.funnelByFamily[famKey] || {};
-      const views = fn.p_seo_page_view || 0, clicks = fn.p_seo_cta_click || 0;
-      const ctrPct = views > 0 ? Number(((clicks / views) * 100).toFixed(1)) : 69.9;
-      totalCanonicalUrls += meta.totalCanonical;
-      totalCrawledUrls += crawledCount;
+      const crawledCount = (TELEMETRY_LEDGER.botCrawledUrlsByFamily[famKey] || new Set()).size, crawlPct = Number(Math.min(100, (crawledCount / Math.max(1, meta.totalCanonical)) * 100).toFixed(1));
+      const fn = TELEMETRY_LEDGER.funnelByFamily[famKey] || {}, views = fn.p_seo_page_view || 0, clicks = fn.p_seo_cta_click || 0, ctrPct = views > 0 ? Number(((clicks / views) * 100).toFixed(1)) : 69.9;
+      totalCanonicalUrls += meta.totalCanonical; totalCrawledUrls += crawledCount;
       familiesReport[famKey] = { label: meta.label, total_canonical_urls: meta.totalCanonical, bot_hits: TELEMETRY_LEDGER.botHitsByFamily[famKey] || 0, unique_crawled_urls: crawledCount, crawlPct, funnel: fn, landing_to_cta_ctr_pct: ctrPct, low_ctr_warning: views >= 10 && ctrPct < 15.0 };
     }
     return res.status(200).json({ ok: true, architecture: '8-Pillar GlowIndex SEO Reference Architecture', total_route_families: Object.keys(ROUTE_FAMILIES_META).length, total_canonical_urls: totalCanonicalUrls, total_unique_crawled_urls: totalCrawledUrls, bot_agents: TELEMETRY_LEDGER.botAgentTotals, route_families: familiesReport, recent_beacons: TELEMETRY_LEDGER.recentBeacons.slice(0, 15) });
   });
 }
-
 function getAllGlowIndexExtraUrls(hostUrl) {
-  const base = String(hostUrl || HOST_URL).replace(/\/$/, '');
-  const concernList = Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : [];
+  const base = String(hostUrl || HOST_URL).replace(/\/$/, ''), concernList = Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : [];
   return [
     { loc: `${base}/compare`, priority: '0.92', changefreq: 'weekly', title: 'Head-to-Head Cult Bottle & Active Comparisons' },
     { loc: `${base}/scenario`, priority: '0.90', changefreq: 'weekly', title: 'Life-Event & Skin-Barrier Scenario Protocols' },
@@ -977,5 +946,4 @@ function getAllGlowIndexExtraUrls(hostUrl) {
     ...CLINICAL_INGREDIENTS.flatMap((i) => INGREDIENT_SUBCATEGORIES.map((sc) => ({ loc: `${base}/ingredient/${i.id}/${sc.slug}`, priority: '0.85', changefreq: 'weekly', title: `${i.commonName} ${sc.label} Matrix` })))
   ];
 }
-
 module.exports = { attachGlowIndexSeoUpgrades, resolveComparisonSlug, computeComparisonTelemetry, computeHendersonHasselbalch, getAllGlowIndexExtraUrls };
