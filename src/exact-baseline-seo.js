@@ -43,21 +43,7 @@ function loadVerticalSeoCatalog(cfg, srcDir) {
   }
   const entries = [];
   try {
-    if (cfg.moduleId === 'abandon_alpha') {
-      const pseoModPath = path.join(srcDir, 'pseo-data.js');
-      if (fs.existsSync(pseoModPath)) {
-        const mod = require(pseoModPath);
-        const list = typeof mod.getAllPseoPages === 'function' ? mod.getAllPseoPages() : (mod.PSEO_PAGES || []);
-        for (const p of list) {
-          entries.push({
-            slug: p.slug,
-            title: String(p.title || p.slug).replace(/`/g, ''),
-            category: p.category || 'Stripe & Checkout Recovery',
-            summary: String(p.summary || cfg.explainerText).replace(/`/g, '').slice(0, 158)
-          });
-        }
-      }
-    } else if (cfg.moduleId === 'derm_logic') {
+    if (cfg.moduleId === 'derm_logic') {
       const catPath = path.join(srcDir, 'pseo-catalog.js');
       if (fs.existsSync(catPath)) {
         const mod = require(catPath);
@@ -68,40 +54,6 @@ function loadVerticalSeoCatalog(cfg, srcDir) {
             title: String(p.title || p.slug).replace(/\bINCI\b/g, 'Ingredients'),
             category: String(p.category || p.pageType || 'Ingredient & pH Compatibility').replace(/\bINCI\b/g, 'Ingredient'),
             summary: String(p.summary || p.metaDescription || p.conflictHighlights || cfg.explainerText).replace(/\bINCI\b/g, 'ingredient list').slice(0, 158)
-          });
-        }
-      }
-    } else if (cfg.moduleId === 'sponsor_radar') {
-      const seedPath = path.join(srcDir, 'seed_data.js');
-      if (fs.existsSync(seedPath)) {
-        const mod = require(seedPath);
-        const list = mod.SEO_PAGES || [];
-        for (const p of list) {
-          entries.push({
-            slug: p.slug,
-            title: String(p.title || p.h1 || p.slug),
-            category: p.category || p.page_type || 'Verified Ad-Read Ledger',
-            summary: String(p.meta_desc || cfg.explainerText).slice(0, 158)
-          });
-        }
-      }
-    } else if (cfg.moduleId === 'citation_forge') {
-      const dbModPath = path.join(srcDir, 'db.js');
-      if (fs.existsSync(dbModPath)) {
-        const mod = require(dbModPath);
-        let rows = [];
-        try {
-          if (typeof mod.queryAll === 'function') rows = mod.queryAll('SELECT slug, title, category, meta_description FROM seo_pages ORDER BY id ASC');
-        } catch (_) {}
-        if ((!rows || rows.length === 0) && typeof mod.buildSeoPagesSeed === 'function') {
-          rows = mod.buildSeoPagesSeed();
-        }
-        for (const r of rows) {
-          entries.push({
-            slug: r.slug,
-            title: String(r.title || r.slug),
-            category: r.category || 'AI Search & GEO Benchmark',
-            summary: String(r.meta_description || r.metaDesc || cfg.explainerText).slice(0, 158)
           });
         }
       }
