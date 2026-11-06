@@ -4,6 +4,10 @@ let AA_VIEWS = null;
 try { AA_VIEWS = require('./views'); } catch (_) {}
 let DL_UI = null;
 try { DL_UI = require('./ui-templates'); } catch (_) {}
+let DL_DATA = null;
+try { DL_DATA = require('./clinical-data'); } catch (_) {}
+let DL_ENG = null;
+try { DL_ENG = require('./engine'); } catch (_) {}
 
 /**
  * Autonomous Zero-HITL Growth & Open-Source Distribution Engine (Iteration 28)
@@ -190,10 +194,55 @@ function renderGrowthPageHtml(cfg, item, kind) {
         { name: 'Ready-to-Use Implementation Pack', kpi: '3-File Bundle Ready', action: 'Download Action Pack Below', status: 'READY' }
       ];
 
-  const trsHtml = rows.map((r, idx) => `<tr${idx === 3 ? ' id="eb-growth-row4-tr"' : ''}><th${idx === 0 ? ' id="eb-growth-r1-name"' : ''} scope="row" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-weight:600;color:${escXml(t.textPrimary)};text-align:left;font-size:14px;">${escXml(r.name)}</th><td${idx === 0 ? ' id="eb-growth-r1-kpi"' : (idx === 1 ? ' id="eb-growth-r2-kpi"' : (idx === 3 ? ' id="eb-growth-row4-val"' : ''))} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-variant-numeric:tabular-nums;font-weight:600;color:${escXml(primaryCol)};font-size:14px;">${escXml(r.kpi)}</td><td style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};color:${escXml(t.textSecondary)};font-size:14px;">${escXml(r.action)}</td><td${idx === 3 ? ' id="eb-growth-row4-status"' : ''} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-size:13px;font-weight:600;color:${escXml(t.safeColor)};">${escXml(r.status)}</td></tr>`).join('');
+  const isDerm = cfg.moduleId === 'derm_logic';
+  const trsHtml = rows.map((r, idx) => {
+    const isGatedRow = isDerm && (idx === 1 || idx === 2);
+    const kpiHtml = isGatedRow
+      ? `<span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);else{var e=document.getElementById('eb-growth-row4-email');if(e)e.focus();}" style="color:${escXml(primaryCol)};font-weight:700;cursor:pointer;">Reveal Rule &amp; Dupe Free ($0) &darr;</span><span class="dl-unlocked-c2-proof" style="display:none;">${escXml(r.kpi)}</span>`
+      : escXml(r.kpi);
+    return `<tr${idx === 3 ? ' id="eb-growth-row4-tr"' : ''}><th${idx === 0 ? ' id="eb-growth-r1-name"' : ''} scope="row" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-weight:600;color:${escXml(t.textPrimary)};text-align:left;font-size:14px;">${escXml(r.name)}</th><td${idx === 0 ? ' id="eb-growth-r1-kpi"' : (idx === 1 ? ' id="eb-growth-r2-kpi"' : (idx === 3 ? ' id="eb-growth-row4-val"' : ''))} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-variant-numeric:tabular-nums;font-weight:600;color:${escXml(primaryCol)};font-size:14px;">${kpiHtml}</td><td style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};color:${escXml(t.textSecondary)};font-size:14px;">${escXml(r.action)}</td><td${idx === 3 ? ' id="eb-growth-row4-status"' : ''} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-size:13px;font-weight:600;color:${escXml(t.safeColor)};">${escXml(r.status)}</td></tr>`;
+  }).join('');
   const headStyles = DL_UI && DL_UI.SHARED_CSS ? `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet"><style>${DL_UI.SHARED_CSS}</style>` : '<link rel="stylesheet" href="/styles.css" />';
   const topHeader = DL_UI && DL_UI.renderHeader ? DL_UI.renderHeader(false) : (AA_VIEWS ? AA_VIEWS.renderUnifiedHeaderHtml(kind === 'compare' ? 'SIDE-BY-SIDE COMPARISON' : 'FREE INTERACTIVE TOOL') : '');
   const bottomFooter = DL_UI && DL_UI.renderFooter ? `${DL_UI.renderFooter()}<script>${DL_UI.CLIENT_SCRIPT}</script>` : '';
+  let dermInteractiveBlock = '';
+  if (isDerm && DL_UI && DL_UI.renderInteractiveCheckerWidget && DL_DATA && DL_ENG) {
+    const presetMap = { 'VitC+Cu': 'copper-vitc-oxidation', 'Tret+BPO': 'acne-rx-bpo-tretinoin', 'TikTok': 'viral-tiktok-destroyer' };
+    const targetPresetId = presetMap[item.target] || 'viral-tiktok-destroyer';
+    const matchedPreset = (DL_DATA.ROUTINE_PRESETS || []).find((p) => p.id === targetPresetId) || DL_DATA.ROUTINE_PRESETS[0];
+    const initialAnalysis = DL_ENG.analyzeRoutine({ productIds: matchedPreset.productIds, rawInci: '', skinType: matchedPreset.skinType || 'combination' });
+    dermInteractiveBlock = `
+    <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-oat);margin:14px 0 18px;display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+        <div>
+          <span class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">10-SECOND BATHROOM SINK X-RAY &middot; ${initialAnalysis.compatibilityScore}/100 HARMONY</span>
+          <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);font-weight:400;">What happens on your skin &amp; the exact $0 timing fix:</strong>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+        <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
+          <div class="mono" style="font-size:0.71rem;color:var(--berry-clash);font-weight:600;margin-bottom:3px;">01 &middot; THE COMMON MISTAKE (FREE PROOF)</div>
+          <div style="font-size:0.82rem;color:var(--text-primary);line-height:1.4;">Layering incompatible actives in the same routine shifts skin balance and cancels active potency on contact, causing stinging or pilling.</div>
+        </div>
+        <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
+          <div class="mono" style="font-size:0.71rem;color:var(--sage-safe);font-weight:600;margin-bottom:3px;">02 &middot; MORNING TIMING &amp; $14 DUPE SWAP</div>
+          <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;line-height:1.38;cursor:pointer;">Enter Email Below ($0) to Reveal Morning Rule &amp; 2 Chemist Dupes &darr;</div>
+          <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.82rem;color:var(--text-primary);line-height:1.4;">Apply water-light serums first on clean skin, give 60 seconds to absorb, and seal with broad-spectrum SPF 50.</div>
+        </div>
+        <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
+          <div class="mono" style="font-size:0.71rem;color:var(--honey-warn);font-weight:600;margin-bottom:3px;">03 &middot; BEDTIME RECOVERY SCHEDULE</div>
+          <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.8rem;color:var(--text-primary);font-weight:600;line-height:1.38;cursor:pointer;">Included in $0 Email AM/PM Calendar Transport &darr;</div>
+          <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.82rem;color:var(--text-primary);line-height:1.4;">Alternate exfoliating acids and retinoids/peptides across nights, then cushion with a 3:1:1 ceramide barrier cream.</div>
+        </div>
+      </div>
+      <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'growth_${escXml(item.slug)}')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;padding-top:4px;border-top:1px solid var(--border-hairline);" data-no-bag-inject="1">
+        <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for AM/PM calendar + 2 free dupes ($0)..." aria-label="Enter email for AM/PM calendar and 2 free dupes ($0)" style="flex:1 1 190px;min-width:0;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" />
+        <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Send Free AM/PM Calendar &amp; 2 Dupes ($0) &rarr;</span></button>
+        <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+      </form>
+    </div>
+    ${DL_UI.renderInteractiveCheckerWidget({ products: DL_DATA.CULT_PRODUCTS, presets: DL_DATA.ROUTINE_PRESETS, initialAnalysis, initialProductIds: matchedPreset.productIds, initialRawInci: '' })}`;
+  }
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -222,7 +271,8 @@ function renderGrowthPageHtml(cfg, item, kind) {
     </nav>
     <h1 class="serif-display" style="font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.15;margin:0 0 8px 0;">${escXml(item.title)}</h1>
     <p class="pseo-lead" style="font-size:16px;color:${escXml(t.textSecondary)};margin:0 0 14px 0;max-width:72ch;">${escXml(item.summary)}</p>
-    <script>window.__ebRunGrowthWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var n=document.getElementById('eb-growth-r1-name'),k1=document.getElementById('eb-growth-r1-kpi'),k2=document.getElementById('eb-growth-r2-kpi'),b=document.getElementById('eb-growth-badge-img'),pl=document.getElementById('eb-growth-permalink-btn');if(n)n.textContent=s.target+' : Live Check';if(k1)k1.textContent=s.grade+' ('+s.score+'/100) • '+s.kpi1;if(k2)k2.textContent=s.kpi2+' • '+s.cnnReadout;if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';if(pl)pl.href='/scan/'+encodeURIComponent(s.target);});};</script>
+    ${dermInteractiveBlock}
+    <script>window.__ebRunGrowthWb=function(v){if(!v)return;if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'growth_tool_wb',target:v});fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var n=document.getElementById('eb-growth-r1-name'),k1=document.getElementById('eb-growth-r1-kpi'),k2=document.getElementById('eb-growth-r2-kpi'),b=document.getElementById('eb-growth-badge-img'),pl=document.getElementById('eb-growth-permalink-btn');if(n)n.textContent=s.target+' : Live Check';if(k1)k1.textContent=s.grade+' ('+s.score+'/100) • '+s.kpi1;if(k2)k2.textContent=s.kpi2+' • '+s.cnnReadout;if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';if(pl)pl.href='/scan/'+encodeURIComponent(s.target);if(window.__ebLogEvent)window.__ebLogEvent('view_paywall',{target:'growth_wb_result',query:s.target});});};</script>
     <section id="eb-onnx-cnn-workbench" style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${escXml(t.border)};color:${escXml(t.textPrimary)};border-radius:${t.radiusCard || '0px'};padding:14px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <span style="font-size:13px;font-weight:600;color:${escXml(primaryCol)};">Live Interactive Calculator:</span>
@@ -243,27 +293,26 @@ function renderGrowthPageHtml(cfg, item, kind) {
       </table>
       <div id="eb-inline-row4-unlock" style="margin-top:16px;padding:14px 18px;border-radius:${t.radiusCard || '0px'};background:${t.subtleBg || 'var(--bg-oat)'};border:1px solid ${escXml(t.border)};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div>
-          <div style="font-size:14px;font-weight:600;color:${escXml(t.textPrimary)};">Download the Ready-to-Use Action Pack</div>
-          <div style="font-size:13px;color:${escXml(t.textSecondary)};margin-top:2px;">Instant download · One-time payment (never a subscription) · 30-day guarantee</div>
+          <div style="font-size:14px;font-weight:600;color:${escXml(t.textPrimary)};">${isDerm ? 'Send Your Free AM/PM Calendar ($0) or Save the Complete 3-File Kit' : 'Download the Ready-to-Use Action Pack'}</div>
+          <div style="font-size:13px;color:${escXml(t.textSecondary)};margin-top:2px;">Instant browser access · One-time payment (never a subscription) · 30-day guarantee</div>
         </div>
-        <div id="eb-growth-row4-msg" style="display:none !important;">
-          <input id="eb-growth-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" />
-          <button id="eb-growth-row4-btn" type="button">Reveal Row #4 →</button>
-        </div>
+        <form id="eb-growth-row4-msg" onsubmit="if(window.__dlCaptureFreeIcsLead)return window.__dlCaptureFreeIcsLead(event,'growth_row4_${escXml(item.slug)}');if(window.__ebSaveInlineScorecard)return window.__ebSaveInlineScorecard(event,'eb-growth-row4-email','eb-growth-row4-msg');return false;" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0;">
+          <input id="eb-growth-row4-email" type="email" required class="dl-inline-ics-email input-box" placeholder="${isDerm ? 'Enter email for free AM/PM rules ($0)...' : 'you@company.com'}" aria-label="Email to unlock free summary" style="padding:8px 12px;border-radius:${t.radiusPill || '999px'};border:1px solid ${escXml(t.border)};background:#FFFFFF;font-size:13px;" />
+          <button id="eb-growth-row4-btn" type="submit" style="padding:8px 14px;border-radius:${t.radiusPill || '999px'};background:${escXml(t.safeColor)};color:#FFFFFF;border:none;font-size:13px;font-weight:700;cursor:pointer;">${isDerm ? 'Unlock Free Rules ($0) →' : 'Reveal Row #4 ($0) →'}</button>
+        </form>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <a href="/buy/micro_pass" rel="nofollow" style="padding:9px 14px;border-radius:${t.radiusPill || '0px'};background:${t.cardBg || 'var(--bg-surface)'};color:${escXml(t.textPrimary)};border:1px solid ${escXml(t.border)};font-size:13.5px;font-weight:600;text-decoration:none;">Single File (99¢)</a>
-          <a href="/buy/flash_pass" rel="nofollow" style="padding:9px 16px;border-radius:${t.radiusPill || '0px'};background:${escXml(primaryCol)};color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">Get Complete 3-File Pack ($1.99) →</a>
+          <a href="/buy/flash_pass" rel="nofollow" style="padding:9px 16px;border-radius:${t.radiusPill || '0px'};background:${escXml(primaryCol)};color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">${isDerm ? 'Complete 3-File Routine Kit ($1.99) →' : 'Get Complete 3-File Pack ($1.99) →'}</a>
         </div>
       </div>
     </section>
-    <details style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${escXml(t.border)};border-radius:${t.radiusCard || '0px'};padding:14px 18px;margin-top:16px;">
+    ${isDerm ? '' : `<details style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${escXml(t.border)};border-radius:${t.radiusCard || '0px'};padding:14px 18px;margin-top:16px;">
       <summary style="cursor:pointer;font-size:14px;font-weight:600;color:${escXml(t.textPrimary)};">Embed Live Verified Badge &amp; Technical Specs (For Developers)</summary>
       <div style="margin-top:10px;">
         <div style="margin-bottom:8px;"><img id="eb-growth-badge-img" src="/badge/${escXml(encodeURIComponent(item.target))}.svg" alt="${escXml(cfg.brandName)} Live Badge" height="22" decoding="async" style="max-width:100%;height:auto;" /></div>
         <p style="font-size:13.5px;color:${escXml(t.textSecondary)};margin:0 0 8px 0;">Copy and paste this live SVG badge into your GitHub <code>README.md</code>, documentation, or media kit:</p>
         <pre style="background:${escXml(t.canvasBg)};border-radius:${t.radiusCard || '0px'};padding:10px 12px;font-size:13px;overflow-x:auto;margin:0;"><code>${escXml(mdBadgeSnippet)}</code></pre>
       </div>
-    </details>
+    </details>`}
   </main>
   ${bottomFooter}
 </body>

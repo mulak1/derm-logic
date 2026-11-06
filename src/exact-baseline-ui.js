@@ -5,12 +5,10 @@
  */
 const SOVRN_KEY = process.env.SOVRN_COMMERCE_KEY || 'ea3d7b74c5752fd817f896be27cd1a01';
 const { buildTopLeaderboardPodiumShowcaseHtml, buildMobileSeoCrawlMeshHtml, enhanceHtmlForSearchAndAiBots } = require('./exact-baseline-seo');
-
 function esc(str) { return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 function getTheme(cfg) {
   return cfg.theme || { canvasBg: '#FAF9F5', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(255, 255, 255, 0.95)', border: '#E4E2DD', accentBorder: '#C7D2FE', textPrimary: '#0F172A', textSecondary: '#475569', textMuted: '#64748B', brandPrimary: cfg.accentColor || '#4F46E5', brandSoftBg: '#EEF2FF', brandText: '#3730A3', safeColor: '#059669', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309', fontDisplay: 'Georgia, serif', fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", radiusCard: '14px', radiusPill: '999px', shadow: '0 12px 32px -12px rgba(15, 23, 42, 0.06)' };
 }
-
 function buildExactBaselineStyles(cfg) {
   const t = getTheme(cfg);
   return `<style id="exact-baseline-cumulative-css">
@@ -91,7 +89,6 @@ function buildExactBaselineStyles(cfg) {
   }
 </style>`;
 }
-
 function buildActionButtonsHtml(cfg, idPrefix) {
   const pfx = idPrefix || '';
   const actions = cfg.exportActions || [{ id: 'btn-copy-shopping-list', label: 'Copy Summary', type: 'copy' }, { id: 'btn-export-csv', label: 'Export .CSV', href: '/api/github-upgrade/export.csv' }, { id: 'btn-export-ics', label: '.ICS Schedule', href: '/api/github-upgrade/skin-cycling.ics' }, { id: 'btn-export-llms', label: 'Protocol .TXT', href: '/api/github-upgrade/llms-bundle.txt' }, { id: 'btn-print-summary', label: 'Print PDF', type: 'print' }, { id: 'btn-showroom-hud', label: cfg.hudLabel, type: 'hud' }, { id: 'btn-cmdk-trigger', label: '⌘K Actions', type: 'cmdk' }, { id: 'btn-reddit-share', label: 'Reddit MD', type: 'reddit' }];
@@ -101,7 +98,6 @@ function buildActionButtonsHtml(cfg, idPrefix) {
     return `<button type="button" id="${esc(pfx + a.id)}" class="eb-action-btn" onclick="${fn}">${esc(a.label)}</button>`;
   }).join('');
 }
-
 function buildScenarioAndExportWorkbenchHtml(cfg) {
   const t = getTheme(cfg);
   const presetsHtml = cfg.presets.map((p, idx) => `<button type="button" class="preset-chip" data-preset="${esc(p.key)}" onclick="window.__ebApplyPreset('${esc(p.key)}', ${idx})">${esc(p.label)}</button>`).join('');
@@ -118,14 +114,12 @@ function buildScenarioAndExportWorkbenchHtml(cfg) {
   </div>
 </div>`;
 }
-
 function buildBottomConversionSuiteHtml(cfg, reqPath) {
   const t = getTheme(cfg);
   const shareUrl = `https://${cfg.domain}${reqPath || '/'}`;
   const redditHref = `https://www.reddit.com/r/${cfg.redditSub}/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(cfg.brandName + ' Benchmark & Protocol')}`;
   const xHref = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent('Ran a live audit on ' + cfg.brandName)}`;
   const mailHref = `mailto:?subject=${encodeURIComponent(cfg.brandName + ' Summary')}&body=${encodeURIComponent('Review this scenario: ' + shareUrl)}`;
-
   const pillsHtml = cfg.coMarketingPills.map((p, i) => `<button type="button" class="store-preview-pill${i === 0 ? ' active' : ''}" data-store="${esc(p.key)}" onclick="window.__ebSelectStorePill('${esc(p.key)}')">${esc(p.label)}</button>`).join('');
   const actionsHtml = buildActionButtonsHtml(cfg);
   const affiliatesHtml = cfg.affiliates.map((a) => `<a href="${esc(a.url)}" target="_blank" rel="noopener sponsored" class="eb-tier-card" style="text-decoration:none;color:${t.textPrimary};" onclick="window.__ebLogEvent('affiliate_click', { partner: '${esc(a.title)}' })"><div><span style="font-size:13.5px;font-weight:700;color:${t.safeColor};">${esc(a.badge)}</span><div style="font-size:15px;font-weight:700;margin-top:4px;color:${t.textPrimary};">${esc(a.title)}</div></div><div style="margin-top:10px;font-size:13.5px;color:${t.brandPrimary};font-weight:700;">${esc(a.cpa)} →</div></a>`).join('');
@@ -189,10 +183,8 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     </details>
   </div>
   <div id="eb-sovrn-affiliate-strip" class="eb-panel-card"><h3 style="margin:0 0 10px 0;font-size:18px;font-family:${t.fontDisplay};font-weight:600;color:${t.textPrimary};">Recommended Companion Tools &amp; Products</h3><div class="eb-gbb-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">${affiliatesHtml}</div></div>
-  <div id="eb-ecosystem-handoff-banner" class="eb-panel-card" style="padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:14px;color:${t.textSecondary};"><span><strong>Scaling B2B &amp; SaaS growth?</strong> Audit your Stripe &amp; Shopify checkout recovery and failed-card dunning free:</span><a id="eb-ecosystem-handoff-link" href="https://abandonalpha.io/?utm_source=sponsorradar&amp;utm_medium=ecosystem_handoff" target="_blank" rel="noopener" style="color:${t.brandPrimary};font-weight:700;text-decoration:underline;">Open AbandonAlpha Checkout Recovery Grader &rarr;</a></div>
   ${buildMobileSeoCrawlMeshHtml(cfg, reqPath)}
 </section>
-
 <!-- Floating Value-Gate Popover (Paid Choice Architecture: Zero $0 Cannibalization) -->
 <div id="eb-floating-gate-popover" role="dialog" aria-label="Instant Deliverable Export Pass">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
@@ -200,32 +192,30 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     <button type="button" onclick="document.getElementById('eb-floating-gate-popover').style.display='none'" style="background:none;border:none;color:${t.textMuted};font-size:15px;">Close</button>
   </div>
   <div id="eb-popover-title" style="font-family:${t.fontDisplay};font-size:16.5px;font-weight:700;color:${t.textPrimary};margin-bottom:4px;">Unlock &amp; Download ${esc(cfg.freeDeliverableName)}</div>
-  <p id="eb-popover-desc" style="font-size:13px;color:${t.textSecondary};margin:0 0 10px 0;line-height:1.4;"><strong>Instant Browser Unlock + Download</strong> • Zero account required • <strong>$19 Creator Pass</strong> vs. <strong>$${esc(cfg.corePriceUsd)} Full 109-Row Buyer Vault</strong>:</p>
+  <p id="eb-popover-desc" style="font-size:13px;color:${t.textSecondary};margin:0 0 10px 0;line-height:1.4;">${cfg.moduleId === 'derm_logic' ? '<strong>Instant Browser Unlock + Download</strong> • Zero account required • <strong>99¢ 9:16 Lockscreen Card</strong> vs. <strong>$1.99 Complete 3-File Routine Kit</strong>:' : `<strong>Instant Browser Unlock + Download</strong> • Zero account required • <strong>$1.99 Single Pass</strong> vs. <strong>$${esc(cfg.corePriceUsd)} Complete Pack</strong>:`}</p>
   <div style="display:grid;gap:6px;">
-    <button type="button" id="btn-popover-flash-pass" onclick="window.__ebCheckout('creator_pass', true)" style="width:100%;padding:10px 14px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;">Unlock Creator Pass ($19) →</button>
-    <button type="button" id="btn-popover-vault-pass" onclick="window.__ebCheckout('playbook_pass', true)" style="width:100%;padding:9px 14px;border-radius:${t.radiusPill};background:${t.safeColor};color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;">Unlock Full 109-Row Buyer Vault ($${esc(cfg.corePriceUsd)}) →</button>
+    <button type="button" id="btn-popover-flash-pass" onclick="window.__ebCheckout('${cfg.moduleId === 'derm_logic' ? 'micro_pass' : 'flash_pass'}', true)" style="width:100%;padding:10px 14px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;">${cfg.moduleId === 'derm_logic' ? 'Save 9:16 Lockscreen Card (99¢) →' : 'Unlock Single-Audit Pass ($1.99) →'}</button>
+    <button type="button" id="btn-popover-vault-pass" onclick="window.__ebCheckout('${cfg.moduleId === 'derm_logic' ? 'flash_pass' : 'playbook_pass'}', true)" style="width:100%;padding:9px 14px;border-radius:${t.radiusPill};background:${t.safeColor};color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;">${cfg.moduleId === 'derm_logic' ? 'Save Complete 3-File Routine Kit ($1.99) →' : `Unlock Complete Pack ($${esc(cfg.corePriceUsd)}) →`}</button>
     <button type="button" id="btn-popover-micro-pass" onclick="window.__ebCheckout('micro_pass', true)" style="display:none;">Or Single File Only: 99¢</button>
   </div>
 </div>
-
 <!-- Exit-Intent Spotlight Toast (#eb-ouibounce-toast) -->
 <div id="eb-ouibounce-toast" role="dialog" aria-label="Send 1-Page Summary Before Leaving">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
     <span id="eb-ouibounce-title" style="font-size:13px;font-weight:700;color:${t.brandPrimary};">${cfg.moduleId === 'derm_logic' ? 'Save Your Routine Card Before Leaving' : 'Save Your Results Before Leaving'}</span>
     <button type="button" onclick="try{localStorage.setItem('eb_toast_dismissed_ts',String(Date.now()));}catch(_){}document.getElementById('eb-ouibounce-toast').style.display='none'" style="background:none;border:none;color:${t.textMuted};font-size:14px;">Close</button>
   </div>
-  <p id="eb-ouibounce-desc" style="font-size:13px;color:${t.textSecondary};margin:0 0 6px 0;line-height:1.4;">${cfg.moduleId === 'derm_logic' ? 'Email yourself the free Morning &amp; Bedtime summary, or save the complete 3-part Routine Kit for <strong>$1.99</strong>:' : 'Unmask 3 Free Verified Buyer Emails ($0) with your work email, or unlock the <strong>Creator Pass ($19)</strong> / <strong>Full 109-Row CSV Vault ($29)</strong>:'}</p>
-  <div id="eb-objection-poll-strip" style="${cfg.moduleId === 'derm_logic' ? 'display:none;' : 'display:flex;'}gap:4px;flex-wrap:wrap;margin-bottom:7px;align-items:center;"><span style="font-size:13px;font-weight:700;color:${t.textMuted};">Quick feedback:</span><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('just_browsing', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">Just checking rates</button><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('need_agency_depth', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">Need Agency / Direct proof</button><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('skip_card', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">No card right now</button></div>
+  <p id="eb-ouibounce-desc" style="font-size:13px;color:${t.textSecondary};margin:0 0 6px 0;line-height:1.4;">${cfg.moduleId === 'derm_logic' ? 'Email yourself the free Morning &amp; Bedtime summary + 2 chemist dupes ($0), or save the complete 3-part Routine Kit for <strong>$1.99</strong>:' : 'Email yourself the free summary ($0), or unlock the complete ready-to-use pack:'}</p>
+  <div id="eb-objection-poll-strip" style="${cfg.moduleId === 'derm_logic' ? 'display:none;' : 'display:flex;'}gap:4px;flex-wrap:wrap;margin-bottom:7px;align-items:center;"><span style="font-size:13px;font-weight:700;color:${t.textMuted};">Quick feedback:</span><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('just_browsing', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">Just checking</button><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('need_agency_depth', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">Need sample proof</button><button type="button" class="eb-obj-pill" onclick="window.__ebLogObjection('skip_card', this)" style="padding:2px 7px;border-radius:999px;background:${t.subtleBg};color:${t.textSecondary};font-size:13px;font-weight:600;cursor:pointer;border:none;">No card right now</button></div>
   <form onsubmit="return window.__ebSendExitSummary(event)" style="display:grid;grid-template-columns:1fr auto;gap:6px;margin-bottom:8px;">
-    <input type="email" id="eb-ouibounce-email" placeholder="${cfg.moduleId === 'derm_logic' ? 'Your email for AM/PM summary...' : 'Work email (3 free buyer credits)...'}" required style="padding:6px 9px;border-radius:7px;background:#FFFFFF;color:${t.textPrimary};font-size:13px;border:none;" />
-    <button type="submit" id="btn-ouibounce-submit" style="padding:6px 11px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13px;font-weight:700;border:none;">Unmask 3 Free ($0) →</button>
+    <input type="email" id="eb-ouibounce-email" placeholder="${cfg.moduleId === 'derm_logic' ? 'Your email for AM/PM summary...' : 'Enter your email...'}" required style="padding:6px 9px;border-radius:7px;background:#FFFFFF;color:${t.textPrimary};font-size:13px;border:none;" />
+    <button type="submit" id="btn-ouibounce-submit" style="padding:6px 11px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13px;font-weight:700;border:none;">${cfg.moduleId === 'derm_logic' ? 'Email AM/PM Summary ($0) →' : 'Send Free Summary ($0) →'}</button>
   </form>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-    <button type="button" id="btn-toast-micro-pass" onclick="window.__ebCheckout('creator_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:#FFFFFF;color:${t.brandPrimary};border:none;font-weight:600;font-size:13px;">${cfg.moduleId === 'derm_logic' ? '9:16 Card (99¢)' : 'Creator Pass ($19)'}</button>
-    <button type="button" onclick="window.__ebCheckout('playbook_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;">${cfg.moduleId === 'derm_logic' ? 'Complete Kit ($1.99) →' : '109-Row Vault ($29) →'}</button>
+    <button type="button" id="btn-toast-micro-pass" onclick="window.__ebCheckout('micro_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:#FFFFFF;color:${t.brandPrimary};border:none;font-weight:600;font-size:13px;">${cfg.moduleId === 'derm_logic' ? '9:16 Card (99¢)' : 'Single File (99¢)'}</button>
+    <button type="button" onclick="window.__ebCheckout('flash_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;">${cfg.moduleId === 'derm_logic' ? 'Complete Kit ($1.99) →' : 'Complete Pack ($1.99) →'}</button>
   </div>
 </div>
-
 <!-- Cmd+K Executive Command Palette -->
 <div id="eb-cmdk-modal" onclick="if(event.target===this)this.style.display='none'">
   <div style="background:${t.cardBg};border-radius:${t.radiusCard};width:92%;max-width:480px;padding:18px;color:${t.textPrimary};">
@@ -234,37 +224,34 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
       <button type="button" onclick="document.getElementById('eb-cmdk-modal').style.display='none'" style="background:none;border:none;color:${t.textMuted};font-size:13px;">ESC</button>
     </div>
     <div style="display:grid;gap:6px;">
-      <button type="button" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;" onclick="window.__ebCheckout('playbook_pass')"><span>Get Full 109-Row CSV + IO Rider Vault</span><strong style="color:${t.brandPrimary};">$29 →</strong></button>
-      <a href="/api/github-upgrade/export.csv" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>Download Benchmark .CSV Table</span><strong>.CSV ↗</strong></a>
-      <a href="${cfg.moduleId === 'sponsor_radar' ? '/api/github-upgrade/pitch.eml' : '/api/github-upgrade/skin-cycling.ics'}" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>${cfg.moduleId === 'sponsor_radar' ? 'Download Counter-Offer &amp; Pitch (.EML)' : 'Download Schedule (.ICS)'}</span><strong>${cfg.moduleId === 'sponsor_radar' ? '.EML ↗' : '.ICS ↗'}</strong></a>
-      <a href="/dossier/sample" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>View Sample Deliverable</span><strong>Open →</strong></a>
+      <button type="button" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;" onclick="window.__ebCheckout('flash_pass')"><span>${cfg.moduleId === 'derm_logic' ? 'Save Complete 3-File AM/PM Routine Kit' : 'Get Complete 3-File Action Pack'}</span><strong style="color:${t.brandPrimary};">$1.99 →</strong></button>
+      <a href="/api/github-upgrade/export.csv" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>Download Pore-Safe &amp; Dupe Swaps (.CSV)</span><strong>.CSV ↗</strong></a>
+      <a href="/api/github-upgrade/skin-cycling.ics" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>Download 4-Night Skin-Cycling Schedule (.ICS)</span><strong>.ICS ↗</strong></a>
+      <a href="/dossier/sample" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>View Sample Routine Deliverable</span><strong>Open →</strong></a>
     </div>
   </div>
 </div>
-
 <!-- Frosted Light Editorial Conversion Dock (#sticky-mobile-bar) -->
 <div id="sticky-mobile-bar" role="region" aria-label="Instant Access Conversion Dock">
   <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
     <span style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:${t.textPrimary};"><span style="width:7px;height:7px;border-radius:50%;background:${t.safeColor};display:inline-block;"></span>${esc(cfg.brandName)}</span>
-    <a href="#in-card-unlock-bar" id="sticky-sub-benefit" style="font-size:13px;color:${t.textSecondary};font-weight:600;text-decoration:none;">109 Verified Buyer &amp; Agency Desk Rows • Save $2,400 Overpay</a>
+    <a href="#in-card-unlock-bar" id="sticky-sub-benefit" style="font-size:13px;color:${t.textSecondary};font-weight:600;text-decoration:none;">${cfg.moduleId === 'derm_logic' ? 'Custom 9:16 Lockscreen Card + 4-Night Calendar (.ICS) + 2 Chemist Dupes' : esc(cfg.unlockBannerTitle)}</a>
   </div>
   <div style="display:flex;align-items:center;gap:6px;">
     <button type="button" id="btn-sticky-micro-unlock" class="eb-action-btn" style="display:none;" onclick="window.__ebCheckout('micro_pass', true)">99¢ File</button>
-    <button type="button" id="btn-sticky-flash-unlock" class="eb-action-btn" style="background:${t.brandPrimary};color:#FFFFFF;font-weight:700;border:none;padding:7px 14px;border-radius:${t.radiusPill};" onclick="window.__ebCheckout('creator_pass', true)">Creator Pass ($19) →</button>
-    <button type="button" id="btn-sticky-vault-unlock" class="eb-action-btn" style="background:${t.safeColor};color:#FFFFFF;font-weight:700;border:none;padding:7px 14px;border-radius:${t.radiusPill};" onclick="window.__ebCheckout('playbook_pass', true)">Full 109-Row CSV Vault ($${esc(cfg.corePriceUsd)}) →</button>
+    <button type="button" id="btn-sticky-flash-unlock" class="eb-action-btn" style="background:${t.brandPrimary};color:#FFFFFF;font-weight:700;border:none;padding:7px 14px;border-radius:${t.radiusPill};" onclick="window.__ebCheckout('micro_pass', true)">${cfg.moduleId === 'derm_logic' ? '9:16 Phone Card (99¢) →' : 'Single File (99¢) →'}</button>
+    <button type="button" id="btn-sticky-vault-unlock" class="eb-action-btn" style="background:${t.safeColor};color:#FFFFFF;font-weight:700;border:none;padding:7px 14px;border-radius:${t.radiusPill};" onclick="window.__ebCheckout('flash_pass', true)">${cfg.moduleId === 'derm_logic' ? 'Complete 3-File Kit ($1.99) →' : `Complete Pack ($1.99) →`}</button>
     <button type="button" id="btn-sticky-dock-close" aria-label="Hide bottom bar" title="Hide bottom bar" onclick="try{sessionStorage.setItem('eb_dock_dismissed','1');}catch(_){}var d=document.getElementById('sticky-mobile-bar');if(d){d.classList.remove('eb-dock-visible');d.style.display='none';}" style="background:transparent;border:none;color:${t.textMuted};font-size:16px;font-weight:700;line-height:1;padding:4px 6px;cursor:pointer;">×</button>
     <button type="button" id="btn-dock-flash-pass" style="display:none;" onclick="window.__ebCheckout('flash_pass', true)">Get Full Pack ($1.99)</button>
   </div>
 </div>`;
 }
-
 function buildClientRuntimeScript(cfg) {
   const t = getTheme(cfg);
   const pillMap = {};
   for (const p of cfg.coMarketingPills) pillMap[p.key] = p.rowText;
   const firstPartner = cfg.affiliates && cfg.affiliates[0] ? cfg.affiliates[0] : { title: 'Verified Partner', url: '#', cpa: 'Explore' };
   const remDiff = cfg.remediationDiff || { beforeLine: '- [BEFORE] Legacy baseline', afterLine: '+ [AFTER] Optimized baseline', roiBadge: 'Verified Lift' };
-
   return `<script id="exact-baseline-client-runtime">
 (function() {
   var CFG = ${JSON.stringify({ moduleId: cfg.moduleId, brandName: cfg.brandName, domain: cfg.domain, corePriceUsd: cfg.corePriceUsd, proPriceUsd: cfg.proPriceUsd, coreLabel: cfg.coreLabel, freeDeliverableName: cfg.freeDeliverableName || 'Production Deliverable', deliverableName: cfg.deliverableName || 'Complete Pro Deliverable', deliverableFiles: cfg.deliverableFiles || [], presets: (cfg.presets || []).slice(0, 3), searchPlaceholder: cfg.searchPlaceholder || 'Enter domain or brand...', sliderLabel: cfg.sliderLabel || 'Scale', theme: t, firstPartner, remDiff, pillMap, presetKpis: cfg.presetKpis || {} }).replace(/</g, '\\u003c')};
@@ -295,7 +282,6 @@ function buildClientRuntimeScript(cfg) {
       localStorage.setItem(STORAGE_KEY, '1');
     }
   } catch (_) {}
-
   try {
     window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); return false; });
     window.__ebVid = localStorage.getItem('vs_vid') || ('v_' + Math.random().toString(36).slice(2, 10) + '_' + Date.now().toString(36));
@@ -321,7 +307,6 @@ function buildClientRuntimeScript(cfg) {
       window.__ebLogEvent('visit_hydrated', { ua_platform: navigator.platform || '', vw: window.innerWidth || 0 });
     }
   } catch (_) {}
-
   window.__ebSaveBundleFile = function() {
     try {
       var targetEl = document.getElementById('compiler-code-output') || document.getElementById('res-pitch-body') || document.getElementById('out-sdk-snippet') || document.getElementById('appleWalletCardPreview');
@@ -335,7 +320,6 @@ function buildClientRuntimeScript(cfg) {
       document.body.removeChild(a);
     } catch (_) {}
   };
-
   document.addEventListener('click', function(e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href*="/api/affiliate"], a[rel*="sponsored"], a.affiliate-link-pill, a.affiliate-micro-link') : null;
     if (a && !a.hasAttribute('onclick')) {
@@ -344,7 +328,6 @@ function buildClientRuntimeScript(cfg) {
     var presetBtn = e.target && e.target.closest ? e.target.closest('[onclick*="recalcPseo"], [onclick*="pasteSample"], [onclick*="filterPlacements"], [onclick*="filterLedgerRows"], [onclick*="switchToolMode"], [onclick*="setBrandPreset"], [onclick*="setPresetDomain"], [onclick*="switchCompilerTab"], [onclick*="applyRoutinePreset"], .preset-btn, .obj-btn') : null;
     if (presetBtn) window.__ebLogEvent('calculate', { source: 'native_interactive_control' });
   }, { passive: true });
-
   window.__ebTriggerPostCalcSpotlight = function(entityName) {
     if (window.__ebIsUnlocked) return;
     var label = entityName ? (' (' + cleanEnt(entityName, 20) + ')') : '';
@@ -356,7 +339,6 @@ function buildClientRuntimeScript(cfg) {
       if (pcTitle) pcTitle.textContent = label ? ('Results Ready' + label + ':') : PERSONA.ctaTitle;
     }
   };
-
   window.__ebFillEmailDomain = function(inputId, domain, formId) {
     var inp = document.getElementById(inputId || 'eb-inline-scorecard-email');
     if (!inp) return;
@@ -371,7 +353,6 @@ function buildClientRuntimeScript(cfg) {
       try { inp.setSelectionRange(0, 0); } catch (_) {}
     }
   };
-
   window.__ebSetCurtainRoiScale = function(mult) {
     var m = Number(mult) || 1;
     var baseUsd = CFG.moduleId === 'citation_forge' ? 1420 : (CFG.moduleId === 'sponsor_radar' ? 4800 : (CFG.moduleId === 'derm_logic' ? 165 : 5600));
@@ -379,7 +360,6 @@ function buildClientRuntimeScript(cfg) {
     if (badge) badge.textContent = 'Est. Value: $' + (baseUsd * m).toLocaleString() + ' (' + Math.round((baseUsd * m) / 0.99).toLocaleString() + 'x vs 99¢ Pass)';
     window.__ebLogEvent('calculate', { source: 'curtain_roi_scale', multiplier: m });
   };
-
   window.__ebCycleHeroScenario = function(ev) {
     if (ev && ev.stopPropagation) ev.stopPropagation();
     var list = (CFG.presets && CFG.presets.length) ? CFG.presets : [{ key: 'custom-benchmark', label: 'Live Scenario' }];
@@ -394,7 +374,6 @@ function buildClientRuntimeScript(cfg) {
     if (cImg) cImg.src = photos[(window.__ebHeroPresetIdx + 2) % photos.length];
     window.__ebCompileCustomCurtain(p.key);
   };
-
   window.__ebGetDermCtx = function(tabIdx) {
     var checked = Array.prototype.slice.call(document.querySelectorAll('input[name="routineProduct"]:checked')), names = [], totalUsd = 0;
     checked.forEach(function(inp) { var lbl = inp.closest ? inp.closest('.prod-check-item') : null, st = lbl ? lbl.querySelector('strong') : null, mn = lbl ? lbl.querySelectorAll('.mono') : []; if (st && st.textContent) names.push(st.textContent.trim()); for (var i = 0; i < mn.length; i++) { var d = (mn[i].textContent || '').split('$')[1]; if (d && parseInt(d, 10) > 0) totalUsd += parseInt(d, 10); } });
@@ -476,7 +455,6 @@ function buildClientRuntimeScript(cfg) {
       window.__ebTriggerPostCalcSpotlight(cEnt);
     }).catch(function(){});
   };
-
   window.__ebMountDeliverableCurtain = function(entityOverride, customBadge, customDiagLine) {
     if (entityOverride) window.__ebActiveEntity = String(entityOverride);
     var pName = window.location.pathname || '/', isDerm = CFG.moduleId === 'derm_logic';
@@ -607,23 +585,28 @@ function buildClientRuntimeScript(cfg) {
       if (prevBox && !(window.__ebActiveTabIdx > 0)) { prevBox.setAttribute('data-demo-open', '0'); prevBox.innerHTML = fullInitPreview; window.__ebLastCurtainPreview = prevBox.innerHTML; }
       var hdrSpan = document.getElementById('eb-curtain-title-span'), rBadge = document.getElementById('eb-curtain-roi-badge'), lHook = document.getElementById('eb-curtain-loss-hook'), cBtn = document.getElementById('btn-curtain-flash-pass'), vBtn = document.getElementById('btn-curtain-vault-pass'), pcBtn = document.getElementById('btn-postcalc-flash-pass');
       if (hdrSpan) hdrSpan.textContent = curtainHdrText; if (rBadge) rBadge.textContent = curtainBadgeText; if (lHook) lHook.textContent = curtainLossHook;
-      if (cBtn) cBtn.textContent = isDerm ? 'Save Complete Routine Kit ($1.99) →' : ('Creator Pass ($19) →');
-      if (vBtn) vBtn.textContent = 'Full 109-Row CSV + IO Rider Vault ($29) →';
-      if (pcBtn && window.__ebUserInteracted && window.__ebActiveEntity) pcBtn.textContent = isDerm ? 'Save Complete Routine Kit ($1.99) →' : ('Full 109-Row CSV Vault ($29) →');
+      if (cBtn) cBtn.textContent = isDerm ? 'Save Complete Routine Kit ($1.99) →' : 'Get All 3 Files ($1.99) →';
+      if (vBtn) vBtn.textContent = isDerm ? 'Complete Multi-Routine Shelf Pass ($4.99) →' : 'Complete Pack ($' + (CFG.corePriceUsd || 29) + ') →';
+      if (pcBtn && window.__ebUserInteracted && window.__ebActiveEntity) pcBtn.textContent = isDerm ? 'Save Complete Routine Kit ($1.99) →' : 'Get Complete Pack ($1.99) →';
       if (window.__ebActiveTabIdx > 0) window.__ebSelectManifestFile(window.__ebActiveTabIdx);
       return;
     }
     var filesHtml = (CFG.deliverableFiles || []).map(function(f, idx) { var rawLbl = f.label || f.file, tabTitle = /^\d+\./.test(rawLbl) ? rawLbl : ((idx + 1) + '. ' + rawLbl), act = idx === (window.__ebActiveTabIdx || 0); return '<span class="eb-manifest-pill' + (act ? ' active' : '') + '" data-file="' + escHtml(f.file) + '" aria-selected="' + (act ? 'true' : 'false') + '" onclick="window.__ebSelectManifestFile(' + idx + ', this)" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:' + (act ? '700' : '600') + ';padding:7px 14px;border-radius:' + CFG.theme.radiusPill + ';background:' + (act ? CFG.theme.brandPrimary : CFG.theme.subtleBg) + ';color:' + (act ? '#FFFFFF' : CFG.theme.textPrimary) + ';"><span>' + escHtml(tabTitle) + '</span></span>'; }).join('');
     var chipsHtml = (CFG.presets || []).map(function(p) { return '<span role="button" tabindex="0" class="eb-curtain-preset-chip" onclick="window.__ebCompileCustomCurtain(\\\'' + String(p.key || '').replace(/'/g, "\\\\'") + '\\\')" style="padding:4px 9px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.subtleBg + ';color:' + CFG.theme.textSecondary + ';font-size:13px;font-weight:600;cursor:pointer;">' + escHtml(p.label) + '</span>'; }).join('');
     var footerNote = isDerm ? 'Tap any tab above to preview how your selected bottles are scheduled' : 'Click any file tab above (1, 2, or 3) to preview what is inside each download', demoBtnText = 'Preview a sample file';
-    var dossierSplitHtml = '<div id="eb-curtain-visual-split"><div id="eb-curtain-dossier-card" class="eb-doppelrand-shell" onclick="window.__ebCheckout(\\\'playbook_pass\\\', true)" style="cursor:pointer;margin:0 !important;" title="Click to get ' + escHtml(PERSONA.dossierTag) + ' ($29)"><div class="eb-doppelrand-inner" style="height:100%;flex:1;"><span id="eb-dossier-format-pill" style="display:none;">' + escHtml(fInit.label || fInit.file) + '</span><img src="' + routeCurtImg + '" alt="' + escHtml(CFG.brandName + ' ' + PERSONA.dossierTag) + '" class="eb-doppelrand-img" style="min-height:165px;height:100%;flex:1;object-fit:cover;" loading="lazy" decoding="async" /><div class="eb-doppelrand-caption" style="padding:8px 12px;"><span style="font-weight:600;font-size:13px;color:#0F172A;min-width:0;overflow:hidden;text-overflow:ellipsis;">' + escHtml(PERSONA.dossierTag) + '</span><span style="color:' + CFG.theme.brandPrimary + ';font-weight:700;font-size:13px;flex-shrink:0;">$29 Vault →</span></div></div></div><div id="eb-prism-proof-frame" style="display:flex;flex-direction:column;justify-content:space-between;border-radius:' + CFG.theme.radiusCard + ';background:' + CFG.theme.subtleBg + ';padding:6px;border:none;overflow:hidden;"><div id="eb-prism-proof-preview" style="margin:0;flex:1;">' + fullInitPreview + '</div><div id="eb-prism-proof-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 16px 4px 16px;background:transparent;border:none;font-size:13.5px;"><span style="color:' + CFG.theme.textSecondary + ';font-weight:500;">' + footerNote + '</span><div style="display:inline-flex;align-items:center;gap:8px;"><span role="button" tabindex="0" id="btn-peek-sample-demo" onclick="window.__ebToggleSampleDemo(this)" style="padding:6px 14px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.brandPrimary + ';font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">' + demoBtnText + '</span><span role="button" id="btn-copy-readme-badge" onclick="window.__ebCopyReadmeBadge(this)" style="display:none;">Copy Badge</span><span role="button" id="btn-nuqs-share-url" onclick="window.__ebCopyScenarioLink(this)" style="display:none;">Share Link</span></div></div></div></div>';
+    var dossierSplitHtml = '<div id="eb-curtain-visual-split"><div id="eb-curtain-dossier-card" class="eb-doppelrand-shell" onclick="window.__ebCheckout(\\\'flash_pass\\\', true)" style="cursor:pointer;margin:0 !important;" title="Click to get ' + escHtml(PERSONA.dossierTag) + ' ($1.99)"><div class="eb-doppelrand-inner" style="height:100%;flex:1;"><span id="eb-dossier-format-pill" style="display:none;">' + escHtml(fInit.label || fInit.file) + '</span><img src="' + routeCurtImg + '" alt="' + escHtml(CFG.brandName + ' ' + PERSONA.dossierTag) + '" class="eb-doppelrand-img" style="min-height:165px;height:100%;flex:1;object-fit:cover;" loading="lazy" decoding="async" /><div class="eb-doppelrand-caption" style="padding:8px 12px;"><span style="font-weight:600;font-size:13px;color:#0F172A;min-width:0;overflow:hidden;text-overflow:ellipsis;">' + escHtml(PERSONA.dossierTag) + '</span><span style="color:' + CFG.theme.brandPrimary + ';font-weight:700;font-size:13px;flex-shrink:0;">$1.99 Kit →</span></div></div></div><div id="eb-prism-proof-frame" style="display:flex;flex-direction:column;justify-content:space-between;border-radius:' + CFG.theme.radiusCard + ';background:' + CFG.theme.subtleBg + ';padding:6px;border:none;overflow:hidden;"><div id="eb-prism-proof-preview" style="margin:0;flex:1;">' + fullInitPreview + '</div><div id="eb-prism-proof-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 16px 4px 16px;background:transparent;border:none;font-size:13.5px;"><span style="color:' + CFG.theme.textSecondary + ';font-weight:500;">' + footerNote + '</span><div style="display:inline-flex;align-items:center;gap:8px;"><span role="button" tabindex="0" id="btn-peek-sample-demo" onclick="window.__ebToggleSampleDemo(this)" style="padding:6px 14px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.brandPrimary + ';font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">' + demoBtnText + '</span><span role="button" id="btn-copy-readme-badge" onclick="window.__ebCopyReadmeBadge(this)" style="display:none;">Copy Badge</span><span role="button" id="btn-nuqs-share-url" onclick="window.__ebCopyScenarioLink(this)" style="display:none;">Share Link</span></div></div></div></div>';
+    var curtainEyebrowSub = isDerm ? 'Custom 9:16 Lockscreen Phone Card (PDF) + 4-Night Skin-Cycling Calendar (.ICS) + 65-Ester Pore-Safe &amp; Dupe Swaps (.CSV)' : escHtml(CFG.freeDeliverableName || 'Complete 3-File Action Pack');
+    var curtainFooterSub = isDerm ? 'Ready-to-Use Vanity Kit · Custom 9:16 Lockscreen Phone Card (PDF) + 4-Night Skin-Cycling Calendar (.ICS) + 65-Ester Pore-Safe &amp; Chemist Dupe Swaps (.CSV)' : escHtml(CFG.deliverableName || 'Complete 3-File Deliverable Bundle');
+    var curtainButtonsHtml = isDerm
+      ? '<button type="button" id="btn-curtain-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\', true)" style="padding:10px 14px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.subtleBg + ';color:' + CFG.theme.textPrimary + ';border:none;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">9:16 Lockscreen Card Only (99¢) →</button><button type="button" id="btn-curtain-flash-pass" onclick="window.__ebCheckout(\\\'flash_pass\\\', true)" style="padding:10px 16px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">Save Complete 3-File Routine Kit ($1.99) →</button><button type="button" id="btn-curtain-vault-pass" onclick="window.__ebCheckout(\\\'playbook_pass\\\', true)" style="padding:10px 16px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.safeColor + ';color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">Complete Multi-Routine Shelf Pass ($4.99) →</button>'
+      : '<button type="button" id="btn-curtain-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\', true)" style="padding:10px 14px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.subtleBg + ';color:' + CFG.theme.textPrimary + ';border:none;font-weight:700;font-size:13px;cursor:pointer;">' + escHtml(PERSONA.microBtn) + '</button><button type="button" id="btn-curtain-flash-pass" onclick="window.__ebCheckout(\\\'flash_pass\\\', true)" style="padding:10px 16px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;">' + escHtml(PERSONA.pureCta) + '</button>';
     var curtain = document.createElement('div'); curtain.id = 'eb-deliverable-curtain';
-    curtain.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:14px;"><div><div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="padding:2px 9px;border-radius:999px;background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;">Step 3 of 3</span><span style="font-size:12.5px;font-weight:700;color:' + CFG.theme.safeColor + ';">Full 109-Row Named-Buyer CSV + Redlined IO Make-Good Rider (.TXT) + Cold Outreach Sequences + 90d Alerts</span></div><span id="eb-curtain-title-span" style="display:block;font-family:' + CFG.theme.fontDisplay + ';font-size:clamp(1.4rem,2.2vw,1.75rem);font-weight:400;letter-spacing:-0.02em;color:' + CFG.theme.textPrimary + ';line-height:1.2;">' + escHtml(curtainHdrText) + '</span></div><div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;"><span id="eb-curtain-roi-badge" style="font-size:13px;color:' + CFG.theme.safeColor + ';font-weight:600;background:' + CFG.theme.safeSoftBg + ';padding:6px 14px;border-radius:' + CFG.theme.radiusPill + ';">' + escHtml(curtainBadgeText) + '</span></div></div>'
+    curtain.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:14px;"><div><div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="padding:2px 9px;border-radius:999px;background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;">Step 3 of 3</span><span style="font-size:12.5px;font-weight:700;color:' + CFG.theme.safeColor + ';">' + curtainEyebrowSub + '</span></div><span id="eb-curtain-title-span" style="display:block;font-family:' + CFG.theme.fontDisplay + ';font-size:clamp(1.4rem,2.2vw,1.75rem);font-weight:400;letter-spacing:-0.02em;color:' + CFG.theme.textPrimary + ';line-height:1.2;">' + escHtml(curtainHdrText) + '</span></div><div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;"><span id="eb-curtain-roi-badge" style="font-size:13px;color:' + CFG.theme.safeColor + ';font-weight:600;background:' + CFG.theme.safeSoftBg + ';padding:6px 14px;border-radius:' + CFG.theme.radiusPill + ';">' + escHtml(curtainBadgeText) + '</span></div></div>'
       + '<div id="eb-curtain-customizer-bar" style="display:none;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px;"><input type="text" id="eb-curtain-entity-input" onchange="if(this.value)window.__ebCompileCustomCurtain(this.value)" placeholder="' + escHtml(CFG.searchPlaceholder) + '..." onkeydown="if(event.keyCode===13){event.preventDefault();window.__ebCompileCustomCurtain();}" style="flex:1;min-width:170px;padding:6px 10px;border-radius:8px;background:#FFFFFF;color:' + CFG.theme.textPrimary + ';font-size:13px;border:none;" /><span role="button" id="btn-curtain-run-custom" onclick="window.__ebCompileCustomCurtain()" style="padding:6px 12px;border-radius:8px;background:' + CFG.theme.brandSoftBg + ';color:' + CFG.theme.brandPrimary + ';font-weight:700;font-size:13px;cursor:pointer;">Preview Custom Output ↵</span>' + chipsHtml + '</div>'
       + (filesHtml ? '<div id="eb-zod-manifest-pills" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;"><div id="eb-manifest-pills-left" style="display:inline-flex;flex-wrap:wrap;gap:8px;align-items:center;">' + filesHtml + '</div><div id="eb-observable-telemetry-pill" style="display:none;"><svg aria-hidden="true" width="1" height="1"></svg><span>Ready</span></div></div>' : '')
       + dossierSplitHtml
-      + '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:10px;width:100%;"><div style="flex:1 1 380px;min-width:280px;width:100%;"><div id="eb-curtain-loss-hook" style="width:100%;font-size:16px;font-weight:600;color:' + CFG.theme.textPrimary + ';line-height:1.35;">' + escHtml(curtainLossHook) + '</div><div style="font-size:13.5px;color:' + CFG.theme.textMuted + ';margin-top:4px;">High-Labor Workflow Deliverable Pack · 109 Verified Buyer &amp; Agency Desk Rows (.CSV) + Redlined IAB IO Make-Good Rider (.TXT) + Cold Outreach Sequences + 90-Day Renewal Alerts</div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%;"><span role="button" id="btn-curtain-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\', true)" style="display:none;">' + escHtml(PERSONA.microBtn) + '</span><button type="button" id="btn-curtain-flash-pass" onclick="window.__ebCheckout(\\\'creator_pass\\\', true)" style="display:none;">Target Pack</button><button type="button" id="btn-curtain-creator-pass" onclick="window.__ebCheckout(\\\'creator_pass\\\', true)" style="padding:10px 14px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFBEB;color:#92400E;border:1px solid #F59E0B;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">Creator Pass ($19) →</button><button type="button" id="btn-curtain-vault-pass" onclick="window.__ebCheckout(\\\'playbook_pass\\\', true)" style="padding:10px 16px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.safeColor + ';color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">Full 109-Row CSV + IO Rider Vault ($29) →</button><button type="button" id="btn-curtain-agency-pass" onclick="window.__ebCheckout(\\\'agency_desk\\\', true)" style="padding:10px 14px;border-radius:' + CFG.theme.radiusPill + ';background:#0F172A;color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">B2B Agency &amp; Talent Desk ($149) →</button></div></div>'
-      + '<div id="eb-click-trigger-bar" style="display:none;"><span>One-time $1.99 or $29 payment</span></div>'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:10px;width:100%;"><div style="flex:1 1 380px;min-width:280px;width:100%;"><div id="eb-curtain-loss-hook" style="width:100%;font-size:16px;font-weight:600;color:' + CFG.theme.textPrimary + ';line-height:1.35;">' + escHtml(curtainLossHook) + '</div><div style="font-size:13.5px;color:' + CFG.theme.textMuted + ';margin-top:4px;">' + curtainFooterSub + '</div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%;">' + curtainButtonsHtml + '</div></div>'
+      + '<div id="eb-click-trigger-bar" style="display:none;"><span>One-time $1.99 or $4.99 payment</span></div>'
       + '<div id="eb-buy-preview-confirm" style="display:none;margin-top:14px;padding:16px 20px;border-radius:' + CFG.theme.radiusCard + ';background:' + CFG.theme.subtleBg + ';align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;"><div style="flex:1;min-width:0;"><div id="eb-buy-preview-title" style="font-size:15.5px;font-weight:700;color:' + CFG.theme.textPrimary + ';">Preview Ready · Review Your Included Files Above</div><div id="eb-buy-preview-sub" style="font-size:13.5px;color:' + CFG.theme.textSecondary + ';margin-top:3px;">Instant download after checkout · One-time payment · 30-day money-back guarantee</div></div><div style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;"><span role="button" id="btn-cancel-preview" onclick="document.getElementById(\\\'eb-buy-preview-confirm\\\').style.display=\\\'none\\\';" style="padding:10px 14px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.textSecondary + ';font-size:13.5px;font-weight:600;cursor:pointer;">Edit Selection</span><span role="button" id="btn-confirm-purchase-stripe" onclick="window.__ebCheckout(window.__ebPendingTier||\\\'flash_pass\\\', true)" style="padding:11px 22px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.safeColor + ';color:#FFFFFF;font-size:14px;font-weight:700;cursor:pointer;white-space:normal;">Confirm Purchase ($1.99) →</span></div></div>';
     var lbShowcase = !isPseoOrDir ? document.getElementById('eb-leaderboard-home-showcase') : null;
     if (mountAnchor.parentNode) {
@@ -640,13 +623,13 @@ function buildClientRuntimeScript(cfg) {
     }
   };
   window.__srFocusRowUnlock = function(rowNum, entityName) {
-    var rNum = Number(rowNum) || 2, ent = cleanEnt(entityName || window.__ebActiveEntity || 'Target Brand', 32);
+    var rNum = Number(rowNum) || 2, ent = cleanEnt(entityName || window.__ebActiveEntity || 'Routine', 32);
     window.__ebActiveEntity = ent; window.__ebUserInteracted = true;
     var hdrSpan = document.getElementById('eb-curtain-title-span'), lHook = document.getElementById('eb-curtain-loss-hook'), cBtn = document.getElementById('btn-curtain-flash-pass'), vBtn = document.getElementById('btn-curtain-vault-pass'), curt = document.getElementById('eb-deliverable-curtain');
-    if (hdrSpan) hdrSpan.textContent = 'Row #' + rNum + ' Unlock vs. 109-Row Vault (' + ent + ')';
-    if (lHook) lHook.textContent = 'Unmask 3 Free Verified Buyer Emails ($0) above, or unlock the Creator Pass ($19) / Full 109-Row CSV + IO Rider Vault ($29).';
-    if (cBtn) cBtn.textContent = 'Creator Pass ($19) →';
-    if (vBtn) vBtn.textContent = 'Full 109-Row CSV + IO Rider Vault ($29) →';
+    if (hdrSpan) hdrSpan.textContent = 'Morning & Night Routine Kit (' + ent + ')';
+    if (lHook) lHook.textContent = 'Enter your email above ($0) to unlock 2 free chemist dupes, or save the Complete 3-File Routine Kit ($1.99).';
+    if (cBtn) cBtn.textContent = 'Save Complete Routine Kit ($1.99) →';
+    if (vBtn) vBtn.textContent = 'Complete Multi-Routine Shelf Pass ($4.99) →';
     window.__ebLogEvent('row_micro_unlock_focus', { row_num: rNum, target: ent, buyer_wedge: window.__ebGetBuyerWedge() });
     if (curt && curt.scrollIntoView) { try { curt.scrollIntoView({ behavior: 'smooth', block: 'center' }); curt.style.boxShadow = '0 0 0 3px ' + CFG.theme.brandPrimary + ', 0 12px 28px rgba(15,23,42,0.14)'; } catch (_) {} }
   };
@@ -674,7 +657,6 @@ function buildClientRuntimeScript(cfg) {
     if (popMicroBtn) popMicroBtn.textContent = 'Download ' + fTitle + ': 99¢ →';
     window.__ebLogEvent('tab_switch', { store_pill: 'file_' + f.file });
   };
-
   window.__ebSaveInlineScorecard = function(ev, inputId, formId) {
     if (ev && ev.preventDefault) ev.preventDefault();
     var inp = document.getElementById(inputId || 'eb-inline-scorecard-email');
@@ -697,7 +679,6 @@ function buildClientRuntimeScript(cfg) {
       }).catch(function(){});
     return false;
   };
-
   window.__ebApplyUnblurState = function() {
     window.__ebIsUnlocked = true;
     try { localStorage.setItem(STORAGE_KEY, '1'); } catch (_) {}
@@ -747,7 +728,6 @@ function buildClientRuntimeScript(cfg) {
     fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'exit_intent_downsell' }) }).then(function() { var btn = document.getElementById('btn-ouibounce-submit'), desc = document.getElementById('eb-ouibounce-desc'); if (btn) btn.textContent = 'Row #4 Revealed!'; if (desc) desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">Row #4 Unblurred &amp; 1-Click Links Sent!</strong> <a href="/buy/micro_pass" style="color:' + CFG.theme.brandPrimary + ';font-weight:700;">Unblur all remaining rows + file for 99¢ →</a>'; }).catch(function() {});
     return false;
   };
-
   var origFetch = window.fetch;
   if (origFetch) {
     window.fetch = function(input, init) {
@@ -803,7 +783,6 @@ function buildClientRuntimeScript(cfg) {
       });
     };
   }
-
   var fuseTimer = null, sliderTimer = null;
   window.__ebRunFuseSearch = function(query) {
     if (!query || query.trim().length < 2) return;
@@ -816,7 +795,6 @@ function buildClientRuntimeScript(cfg) {
       }).catch(function(){});
     }, 300);
   };
-
   window.__ebOnSliderInput = function(val) {
     var num = Number(val) || 10, rd = document.getElementById('eb-slider-readout'), boxes = document.querySelectorAll('#free-metrics-grid .eb-kpi-val');
     if (rd) rd.textContent = CFG.sliderLabel + ': ' + num;
@@ -832,7 +810,6 @@ function buildClientRuntimeScript(cfg) {
       window.__ebShowTripwire();
     }, 450);
   };
-
   try {
     if ('IntersectionObserver' in window) {
       var obs = window.__ebPaywallObserver = new IntersectionObserver(function(entries) {
@@ -843,7 +820,6 @@ function buildClientRuntimeScript(cfg) {
       ['in-card-unlock-bar', 'eb-deliverable-curtain', 'eb-postcalc-inline-cta'].forEach(function(id) { var el = document.getElementById(id); if (el) obs.observe(el); });
     }
   } catch (_) {}
-
   var ouibounceShown = false, pageEnteredAt = Date.now(), nativeCalcTimer = null;
   function showRescueToast(reason) {
     if (ouibounceShown || window.__ebIsUnlocked) return;
@@ -873,7 +849,6 @@ function buildClientRuntimeScript(cfg) {
     if (sb) sb.classList.toggle('eb-dock-visible', y > 650 && !navigator.webdriver);
     if (y > 1100 && (Date.now() - pageEnteredAt) > 25000) showRescueToast('deep_scroll');
   }, { passive: true });
-
   window.__ebToggleCmdk = function() {
     var m = document.getElementById('eb-cmdk-modal');
     if (!m) return;
@@ -886,7 +861,6 @@ function buildClientRuntimeScript(cfg) {
       ['eb-cmdk-modal', 'eb-floating-gate-popover'].forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
     }
   });
-
   window.__ebSelectStorePill = function(key) {
     var pills = document.querySelectorAll('.store-preview-pill[data-store]');
     for (var i = 0; i < pills.length; i++) pills[i].classList.toggle('active', pills[i].getAttribute('data-store') === key);
