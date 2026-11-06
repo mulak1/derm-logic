@@ -878,8 +878,28 @@ const ENDOWMENT_CLIENT_SCRIPT = `
 
   window.__dlFocusSampleEmail = function() {
     var inp = document.getElementById('dl-inline-sample-email') || document.querySelector('.dl-inline-ics-email');
-    if (inp) { inp.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function() { inp.focus(); }, 80); }
+    if (inp) {
+      inp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var bar = document.getElementById('dl-subpage-top-email-bar') || inp.closest('form');
+      if (bar) {
+        bar.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.45)';
+        setTimeout(function() { bar.style.boxShadow = 'none'; }, 2200);
+      }
+      setTimeout(function() { inp.focus(); }, 120);
+    }
   };
+  document.addEventListener('blur', function(ev) {
+    var t = ev && ev.target;
+    if (t && t.classList && t.classList.contains('dl-inline-ics-email')) {
+      var v = (t.value || '').trim();
+      if (v && v.indexOf('@') > 0 && v.split('@')[1].indexOf('.') > 0 && !window.__dlSampleEmailUnlocked) {
+        var fm = t.closest('form');
+        if (fm && typeof window.__dlCaptureFreeIcsLead === 'function') {
+          window.__dlCaptureFreeIcsLead({ preventDefault: function(){}, target: fm }, 'blur_auto_capture');
+        }
+      }
+    }
+  }, true);
   window.__dlCaptureFreeIcsLead = function(ev, sourceTag) {
     if (ev && ev.preventDefault) ev.preventDefault();
     var formEl = (ev && ev.target && ev.target.tagName === 'FORM') ? ev.target : document.querySelector('.dl-inline-ics-form');
