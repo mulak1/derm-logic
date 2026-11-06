@@ -484,10 +484,11 @@ function buildClientRuntimeScript(cfg) {
       return qBar;
     };
     if (isPseoOrDir) {
-      if (existingHeroSplit) {
+      var hasNativePseoBar = Boolean(document.getElementById('dl-pseo-top-conversion-bar') || document.getElementById('dl-subpage-top-email-bar'));
+      if (existingHeroSplit && !hasNativePseoBar) {
         existingHeroSplit.style.alignItems = 'stretch';
         if (h1Node && h1Node.parentNode) { h1Node.parentNode.style.cssText += ';display:flex;flex-direction:column;justify-content:flex-start;gap:12px;height:100%;'; if (!window.__ebIsUnlocked && !document.getElementById('eb-pseo-quick-bar')) h1Node.parentNode.appendChild(buildQBar('eb-pseo-quick-bar')); }
-      } else if (h1Node && h1Node.parentNode && !document.getElementById('eb-pseo-hero-split')) {
+      } else if (!hasNativePseoBar && h1Node && h1Node.parentNode && !document.getElementById('eb-pseo-hero-split')) {
         var splitWrap = document.createElement('div'); splitWrap.id = 'eb-pseo-hero-split';
         var leftCol = document.createElement('div'); leftCol.id = 'eb-pseo-hero-left'; leftCol.style.cssText = 'display:flex;flex-direction:column;justify-content:space-between;gap:12px;min-width:0;height:100%;';
         var leadP = document.querySelector('.pseo-lead, .subhead') || (h1Node.parentNode && h1Node.parentNode.querySelector('p')) || (h1Node.nextElementSibling && h1Node.nextElementSibling.tagName === 'P' ? h1Node.nextElementSibling : null);
@@ -498,7 +499,7 @@ function buildClientRuntimeScript(cfg) {
       }
     } else {
       var homeSubLead = document.querySelector('.hero-sub, .subhead, .editorial-subhead, .hero-lead, main h1 ~ p');
-      if (homeSubLead && homeSubLead.parentNode && !window.__ebIsUnlocked && !document.getElementById('eb-mobile-firstfold-bar')) homeSubLead.parentNode.insertBefore(buildQBar('eb-mobile-firstfold-bar'), homeSubLead.nextSibling);
+      if (homeSubLead && homeSubLead.parentNode && !window.__ebIsUnlocked && !document.getElementById('dl-inline-sample-unlock-form') && !document.getElementById('eb-mobile-firstfold-bar')) homeSubLead.parentNode.insertBefore(buildQBar('eb-mobile-firstfold-bar'), homeSubLead.nextSibling);
     }
     var scoreAnchor = document.querySelector('#liveResultsContainer .score-strip, .telemetry-card .metric-duo, #results-panel .kpi-grid');
     if ((scoreAnchor || targetEl) && !window.__ebIsUnlocked && !isPseoOrDir) {
@@ -707,7 +708,7 @@ function buildClientRuntimeScript(cfg) {
           if (entry.isIntersecting && !window.__ebPaywallLogged && (window.__ebUserInteracted || (window.scrollY || 0) > 120)) { window.__ebPaywallLogged = true; window.__ebLogEvent('view_paywall', { target: entry.target.id || 'eb-deliverable-curtain', scroll_y: Math.round(window.scrollY || 0) }); }
         });
       }, { threshold: 0.15 });
-      ['in-card-unlock-bar', 'eb-deliverable-curtain', 'eb-postcalc-inline-cta'].forEach(function(id) { var el = document.getElementById(id); if (el) obs.observe(el); });
+      ['in-card-unlock-bar', 'eb-deliverable-curtain', 'eb-postcalc-inline-cta', 'dl-pseo-top-conversion-bar', 'dl-subpage-top-email-bar', 'dl-inline-sample-unlock-form', 'dl-results-inline-email-form', 'appleWalletCardPreview', 'pseo-dermlogic-inline-calc'].forEach(function(id) { var el = document.getElementById(id); if (el) obs.observe(el); });
     }
   } catch (_) {}
   var ouibounceShown = false, pageEnteredAt = Date.now(), nativeCalcTimer = null;

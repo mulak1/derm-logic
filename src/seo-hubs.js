@@ -257,10 +257,10 @@ function renderTopSubpageEmailBar(tagSlug) {
   return `<div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:11px 14px;margin-bottom:14px;display:flex;flex-direction:column;gap:7px;border:1px solid var(--rose-pill-border);">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:0.78rem;">
       <span class="mono" style="color:var(--rose-brand);font-weight:700;">${LOCK_SVG}Step #1 &amp; Bottle #1 Free Proof &middot; Unlock Full Routine &amp; 2 Dupes ($0):</span>
-      <a href="/buy/onetime_499?guide=${encodeURIComponent(tagSlug)}" class="mono" style="color:var(--text-primary);font-weight:700;text-decoration:underline;font-size:0.74rem;">Or get $9 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
+      <a href="/buy/onetime_499?guide=${encodeURIComponent(tagSlug)}" class="mono" style="color:var(--text-primary);font-weight:700;text-decoration:underline;font-size:0.74rem;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack &rarr;</a>
     </div>
     <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, '${escapeHtml(tagSlug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
-      <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:7px 12px;font-size:0.78rem;border-radius:999px;background:var(--bg-surface);" />
+      <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:7px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
       <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;"><span>Unlock Full Routine &amp; 2 Dupes ($0) &rarr;</span></button>
       <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.73rem;color:var(--sage-safe);"></div>
     </form>

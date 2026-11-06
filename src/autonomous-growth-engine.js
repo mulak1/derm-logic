@@ -236,7 +236,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
         </div>
       </div>
       <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'growth_${escXml(item.slug)}')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;padding-top:4px;border-top:1px solid var(--border-hairline);" data-no-bag-inject="1">
-        <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for AM/PM calendar + 2 free dupes ($0)..." aria-label="Enter email for AM/PM calendar and 2 free dupes ($0)" style="flex:1 1 190px;min-width:0;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" />
+        <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for AM/PM calendar + 2 free dupes ($0)..." aria-label="Enter email for AM/PM calendar and 2 free dupes ($0)" style="flex:1 1 190px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
         <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Send Free AM/PM Calendar &amp; 2 Dupes ($0) &rarr;</span></button>
         <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
       </form>
