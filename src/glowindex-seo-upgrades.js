@@ -446,8 +446,8 @@ function buildMarkdownForPath(reqPath) {
       '| :--- | :--- | :--- | :--- | :--- | :--- |',
       `| \`micro_pass\` | Single-File 9:16 Phone Lock-Screen Routine Card | $0.99 | One-Time | High-contrast AM/PM bathroom vanity lockscreen card (PDF/PNG) | ${HOST_URL}/buy/micro_pass |`,
       `| \`flash_pass\` | Single-Routine 3-File Export Bundle | $1.99 | One-Time | 9:16 Lock-Screen Card + 4-Night Skin-Cycling Calendar (.ICS) + Pore-Safe Swaps (.CSV) | ${HOST_URL}/buy/flash_pass |`,
-      `| \`complete_dossier\` | Complete AM/PM Ritual & Barrier Rehab Kit | $4.99 | One-Time | Full 65-active INCI clash dossier, custom wait-time schedule & safe-swap shopping list | ${HOST_URL}/buy/complete_dossier |`,
-      `| \`pro_b2b\` | Unlimited Bathroom Shelf & Esthetician Pro Pass | $19.99/yr | Annual | Unlimited routine audits, B2B client permalink generator (/client/:slug) & backbar SOPs | ${HOST_URL}/buy/pro_b2b |`,
+      `| \`complete_dossier\` | Complete AM/PM Ritual & Barrier Rehab Kit | $1.99 | One-Time | Full 65-active INCI clash dossier, custom wait-time schedule & safe-swap shopping list | ${HOST_URL}/buy/complete_dossier |`,
+      `| \`pro_b2b\` | Unlimited Bathroom Shelf & Esthetician Pro Pass | $9/yr | Annual | Unlimited routine audits, B2B client permalink generator (/client/:slug) & backbar SOPs | ${HOST_URL}/buy/pro_b2b |`,
       ''
     ].join('\n');
   }

@@ -591,7 +591,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       var keep99Btn = document.getElementById('dl-vanity-keep-99c');
       var keep199Btn = document.getElementById('dl-vanity-keep-199');
       if (keep99Btn && !window.__ebIsUnlocked) keep99Btn.innerHTML = '<span>' + (bagTotalUsd <= 110 ? ('Save $' + bagTotalUsd + ' Dupe Card (99&cent;) &rarr;') : 'Save 9:16 Phone Card (99&cent;) &rarr;') + '</span>';
-      if (keep199Btn && !window.__ebIsUnlocked) keep199Btn.innerHTML = '<span>' + (bagTotalUsd >= 180 ? 'Complete 28-Day Planner ($1.99 / $4.99)' : 'Complete 3-File Kit ($1.99)') + '</span>';
+      if (keep199Btn && !window.__ebIsUnlocked) keep199Btn.innerHTML = '<span>' + (bagTotalUsd >= 180 ? 'Complete 28-Day Planner ($1.99 / $1.99)' : 'Complete 3-File Kit ($1.99)') + '</span>';
 
       document.querySelectorAll('#dl-undertone-swatches button[data-undertone]').forEach(function(b) {
         b.classList.toggle('active', b.getAttribute('data-undertone') === st.undertone);
@@ -709,7 +709,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         }
       }
 
-      // Render Tab 03: 4-Night Skin Cycling Calendar (Night 1 Sample Free; Nights 2-4 Gated Behind $2.99 Kit)
+      // Render Tab 03: 4-Night Skin Cycling Calendar (Night 1 Sample Free; Nights 2-4 Gated Behind $1.99 Kit)
       var cyclePanel = document.getElementById('dl-dossier-panel-cycle');
       if (cyclePanel) {
         var b2 = getBottleForSlot(st, 2) || SLOT_OPTIONS[2].choices[0], b4 = getBottleForSlot(st, 4) || SLOT_OPTIONS[4].choices[0];
@@ -861,7 +861,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (!email) return false;
       var statusEl = document.getElementById('dl-vanity-email-status'), btnEl = document.getElementById('dl-vanity-email-btn');
       if (btnEl) btnEl.textContent = '✓ Sample Sent ($0)!';
-      if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = '✓ 1-Day Sample AM/PM Clash Summary & 24h Restore Link sent to ' + email + '. Unlock Nights 2–4 & 9:16 Phone Card above ($2.99).'; }
+      if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = '✓ 1-Day Sample AM/PM Clash Summary & 24h Restore Link sent to ' + email + '. Unlock Nights 2–4 & 9:16 Phone Card above ($1.99).'; }
       fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'atelier_vanity_24h_hold' }) }).catch(function() {});
       return false;
     };

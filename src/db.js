@@ -227,7 +227,7 @@ function initDatabase() {
 
     insertArm.run(
       'arm_rescue_499',
-      '$4.99 One-Time Clinical Routine Rescue Card & PDF Protocol',
+      '$1.99 One-Time Clinical Routine Rescue Card & PDF Protocol',
       'onetime_499',
       499,
       'Sub-5ms Henderson-Hasselbalch ΔpH Engine · Instant Apple-Wallet Card',
@@ -238,7 +238,7 @@ function initDatabase() {
     );
     insertArm.run(
       'arm_unlimited_1999',
-      '$19.99/yr Unlimited Shelf Scanner + Fungal-Acne & Rx Tracker',
+      '$9/yr Unlimited Shelf Scanner + Fungal-Acne & Rx Tracker',
       'annual_1999',
       1999,
       'Most Popular with 3+ Active Regimens · Unlimited INCI Audits',

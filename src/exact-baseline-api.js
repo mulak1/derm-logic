@@ -33,8 +33,8 @@ const VERTICAL_CONFIGS = {
       radiusCard: '0px', radiusPill: '0px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMsIaoGnkXxS8ru7bwyQe',
-    corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 4.99, coreLabel: 'Complete Morning & Night Routine Kit ($4.99)',
-    proPriceEnv: 'STRIPE_PRICE_ANNUAL_1999', proPriceUsd: 19.99, proLabel: 'Unlimited Skincare Shelf & Esthetician Pass ($19.99/yr)',
+    corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 1.99, coreLabel: 'Complete Morning & Night Routine Kit ($1.99)',
+    proPriceEnv: 'STRIPE_PRICE_ANNUAL_1999', proPriceUsd: 9.00, proLabel: 'Unlimited Skincare Shelf & Esthetician Pass ($9/yr)',
     lockedTitle: 'Morning vs. Night Layering Order (Nights 2–4)',
     deliverableName: '4-Night Skincare Schedule (.ICS) + 9:16 Phone Wallpaper Card + Pore-Safe Swaps',
     freeDeliverableName: '1-Day Sample AM/PM Clash Summary ($0 Email Unlock)',
@@ -43,11 +43,11 @@ const VERTICAL_CONFIGS = {
     hudLabel: 'Vanity Shelf HUD', redditSub: 'SkincareAddiction',
     sliderLabel: 'Products', sliderMin: 2, sliderMax: 8, sliderVal: 4,
     searchPlaceholder: 'Search ingredient or product (e.g. Retinol)...',
-    tier1Tag: 'SINGLE-ROUTINE PASS ($1.99)',
-    tier1Desc: 'Instant 9:16 Morning & Night Phone Lockscreen Card and exact serum wait-time checklist for this routine ($1.99 one-time).',
-    tier2Tag: 'COMPLETE AM/PM ROUTINE RESCUE KIT ($4.99)',
-    tier2Desc: 'Printable 9:16 Morning & Night Phone Lockscreen Card, 4-Night Skin-Cycling Calendar (.ICS), and gentle pore-safe product swaps ($4.99 one-time).',
-    tier3Tag: 'UNLIMITED SHELF & ESTHETICIAN PASS ($19.99/YR)',
+    tier1Tag: 'FREE EMAIL PREVIEW ($0)',
+    tier1Desc: 'Instant 1-Day Sample AM/PM Clash Summary and 2 chemist dupes unlocked on screen ($0).',
+    tier2Tag: 'COMPLETE AM/PM ROUTINE RESCUE KIT ($1.99)',
+    tier2Desc: 'Printable 9:16 Morning & Night Phone Lockscreen Card, 4-Night Skin-Cycling Calendar (.ICS), and gentle pore-safe product swaps ($1.99 one-time).',
+    tier3Tag: 'UNLIMITED SHELF & ESTHETICIAN PASS ($9/YR)',
     tier3Desc: 'Full year of unlimited ingredient checks, fungal-acne safe screening, pregnancy-safe filters, and seasonal routine updates.',
     battlecard: {
       heading: 'Why Skincare Lovers & Estheticians Choose DermLogic Over Generic Apps',
@@ -55,7 +55,7 @@ const VERTICAL_CONFIGS = {
       rows: [
         ['Checks How Products Layer Together', 'Spots Vitamin C + Copper Peptide & Retinol clashes in 5 seconds', 'Weeks of waiting for a routine check', 'Only scores 1 bottle at a time (misses clashes)'],
         ['Pore-Clogging & Fungal-Acne Check', 'Flags hidden pore-clogging oils & tells you which serum goes first', 'Rarely checks base cream ingredients', 'Confusing "clean/dirty" labels without context'],
-        ['Step-by-Step Morning & Night Plan', '$0 Free Clash Preview, $1.99 Phone Card, or $4.99 Complete 4-Night Kit', '$150+ per consultation', 'No Morning vs. Night layering order']
+        ['Step-by-Step Morning & Night Plan', '$0 Free Clash Preview, $1.99 Complete 4-Night Kit, or $9/yr Unlimited Shelf Pass', '$150+ per consultation', 'No Morning vs. Night layering order']
       ]
     },
     exportActions: [
@@ -519,8 +519,8 @@ function attachExactBaselinePack(app, options = {}) {
   const buildBuyLinks = (email) => ({ micro_pass: `https://${cfg.domain}/buy/micro_pass?email=${encodeURIComponent(email)}`, flash_pass: `https://${cfg.domain}/buy/flash_pass?email=${encodeURIComponent(email)}`, complete_dossier: `https://${cfg.domain}/buy/complete_dossier?email=${encodeURIComponent(email)}`, pro_b2b: `https://${cfg.domain}/buy/pro_b2b?email=${encodeURIComponent(email)}` });
   async function sendOneClickLeadEmail(email, summaryText, isTest) {
     const links = buildBuyLinks(email), safeSum = escMailHtml(summaryText);
-    const textMail = `${summaryText}\n\n1-Click Direct Stripe Checkout Links (No Login Required):\n• 99¢ Single-File Instant Export Pass: ${links.micro_pass}\n• $1.99 Single-Audit Export Bundle (${cfg.freeDeliverableName}): ${links.flash_pass}\n• $${cfg.corePriceUsd} ${cfg.coreLabel}: ${links.complete_dossier}\n• $${cfg.proPriceUsd} ${cfg.proLabel}: ${links.pro_b2b}\n`;
-    const htmlMail = `<div style="font-family:sans-serif;max-width:560px;color:#0F172A;"><h2>${escMailHtml(cfg.brandName)}: Diagnostic Summary &amp; 1-Click Export Links</h2><p>${safeSum}</p><p><strong>Instant 1-Click Stripe Checkout (Apple Pay / Link Ready):</strong></p><ul><li><a href="${links.micro_pass}"><strong>99¢ Single-File Instant Export Pass →</strong></a></li><li><a href="${links.flash_pass}"><strong>$1.99 Single-Audit Export Bundle (${escMailHtml(cfg.freeDeliverableName)}) →</strong></a></li><li><a href="${links.complete_dossier}"><strong>$${cfg.corePriceUsd} ${escMailHtml(cfg.coreLabel)} →</strong></a></li><li><a href="${links.pro_b2b}"><strong>$${cfg.proPriceUsd} ${escMailHtml(cfg.proLabel)} →</strong></a></li></ul></div>`;
+    const textMail = `${summaryText}\n\n1-Click Direct Stripe Checkout Links (No Login Required):\n• $1.99 Complete 3-File Routine Kit (9:16 Phone Card + 4-Night Calendar + Dupes): ${links.flash_pass}\n• $${cfg.proPriceUsd} ${cfg.proLabel}: ${links.pro_b2b}\n`;
+    const htmlMail = `<div style="font-family:sans-serif;max-width:560px;color:#0F172A;"><h2>${escMailHtml(cfg.brandName)}: Morning &amp; Bedtime Routine Summary &amp; 1-Click Kit Links</h2><p>${safeSum}</p><p><strong>Instant 1-Click Stripe Checkout (Apple Pay / Link Ready):</strong></p><ul><li><a href="${links.flash_pass}"><strong>$1.99 Complete 3-File Routine Kit (9:16 Phone Card + 4-Night Calendar + Chemist Dupes) →</strong></a></li><li><a href="${links.pro_b2b}"><strong>$${cfg.proPriceUsd} ${escMailHtml(cfg.proLabel)} →</strong></a></li></ul></div>`;
     const resendKey = process.env.RESEND_API_KEY || '';
     if (SENDGRID_API_KEY && SENDGRID_API_KEY.startsWith('SG.') && !isTest) {
       try {
@@ -538,14 +538,14 @@ function attachExactBaselinePack(app, options = {}) {
   async function handleLeadCaptureAndFollowUp(req, res) {
     const rawEmailIn = String(req.body?.email || req.body?.customerEmail || req.body?.customer_email || '').trim();
     if (rawEmailIn.length > 254) return res.status(400).json({ ok: false, error: 'Email address must be 254 characters or fewer.' });
-    const email = rawEmailIn.slice(0, 254), summaryText = String(req.body?.summaryText || `${cfg.brandName} 3 Free Unmasked Verified Buyer Credits ($0) & Diagnostic Summary`).trim().slice(0, 1000), utmSource = String(req.body?.utmSource || req.path.replace('/api/', '') || 'free_3_buyer_credits').trim().slice(0, 128);
+    const email = rawEmailIn.slice(0, 254), summaryText = String(req.body?.summaryText || `${cfg.brandName} Free Morning & Bedtime Clash Summary & 2 Chemist Dupes ($0)`).trim().slice(0, 1000), utmSource = String(req.body?.utmSource || req.path.replace('/api/', '') || 'free_routine_summary').trim().slice(0, 128);
     const buyerWedge = String(req.body?.buyer_wedge || req.body?.buyerWedge || (String(req.headers.cookie || '').match(/sr_wedge=([^;]+)/) || [])[1] || 'buyer').toLowerCase() === 'creator' ? 'creator' : 'buyer';
     if (!email || !email.includes('@')) return res.status(400).json({ ok: false, error: 'Please enter a valid email address.' });
     const { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, email), directBuyLinks = buildBuyLinks(email);
-    store.recordLead({ email, summaryText: `${summaryText} [Buy: ${directBuyLinks.micro_pass}]`, utmSource, buyerWedge, isTest, isOwnerIp, clientIp });
+    store.recordLead({ email, summaryText: `${summaryText} [Buy: ${directBuyLinks.flash_pass}]`, utmSource, buyerWedge, isTest, isOwnerIp, clientIp });
     store.recordEvent({ eventType: 'lead_capture', pageUrl: String(req.body?.pageUrl || '/'), deviceType: /mobile|iphone|android/i.test(String(req.headers['user-agent'] || '')) ? 'mobile' : 'desktop', utmSource, isTest, isCrawler, isOwnerIp, clientIp, meta: { buyer_wedge: buyerWedge, unlocked_free_credits: 3 } });
     const emailDispatched = await sendOneClickLeadEmail(email, summaryText, isTest);
-    res.json({ ok: true, success: true, email, customer_email: email, allow_promotion_codes: false, unlocked_free_credits: 3, free_credits_badge: '✓ 3 of 3 Free Buyer Credits Unlocked — Verify on LinkedIn', buyer_wedge: buyerWedge, summary_sent: true, email_dispatched: emailDispatched, direct_buy_links: directBuyLinks, tripwire_offer: { tier: 'micro_pass', sku: `${cfg.moduleId}_micro_pass`, price_usd: 0.99, buy_url: directBuyLinks.micro_pass, flash_buy_url: directBuyLinks.flash_pass, headline: '3 Free Buyer Credits Unlocked! Download Full 109-Row CSV + IO Rider + Outreach Pack' } });
+    res.json({ ok: true, success: true, email, customer_email: email, allow_promotion_codes: false, unlocked_free_credits: 3, free_credits_badge: '✓ Morning & Bedtime Summary + 2 Chemist Dupes Unlocked ($0)', buyer_wedge: buyerWedge, summary_sent: true, email_dispatched: emailDispatched, direct_buy_links: directBuyLinks, tripwire_offer: { tier: 'flash_pass', sku: `${cfg.moduleId}_flash_pass`, price_usd: 1.99, buy_url: directBuyLinks.flash_pass, flash_buy_url: directBuyLinks.flash_pass, headline: 'Morning & Bedtime Summary Unlocked! Save Complete 3-File Routine Kit ($1.99)' } });
   }
   app.post(['/api/leads', '/api/leads/capture', '/api/leads/consumer', '/api/studio/trial-signup'], handleLeadCaptureAndFollowUp);
   let lastBackfillMs = 0;
@@ -599,8 +599,8 @@ function attachExactBaselinePack(app, options = {}) {
     }
     const baseUrl = `https://${cfg.domain}`, stripeKey = process.env.STRIPE_SECRET_KEY || '', targetPrefix = rawTarget ? `${rawTarget} · ` : '';
     let checkoutUrl = `https://checkout.stripe.com/c/pay/cs_live_${cfg.moduleId}_${tierName}_${Date.now()}`, sessionId = `cs_live_${cfg.moduleId}_${Date.now()}`, f0Lbl = (cfg.deliverableFiles && cfg.deliverableFiles[0] && (cfg.deliverableFiles[0].label || cfg.deliverableFiles[0].file)) || 'Single Deliverable File';
-    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? `Single-Row Named Buyer + Agency Pass (99¢)` : (isFlash ? `${cfg.freeDeliverableName || 'Full 3-File Deliverable Pack'} ($1.99)` : (isCreator19 ? 'Creator Pro Outreach & 109-Row Named-Buyer CSV + IO Rider Pass ($19)' : (isUpgradeFlash ? `${cfg.coreLabel} ($${upgPrice.toFixed(2)}, $1.99 Pass Credit Applied)` : (isPlaybook ? cfg.coreLabel : (isVault49 ? 'Full 109-Row Named-Buyer & Agency CSV + IO Rider + 90d Alerts Vault ($49)' : (isAgency149 ? 'B2B Agency & Talent Management Desk: 5 Seats + 109-Row CSV + HubSpot/Clay CRM + White-Label Rate Card ($149)' : (isPro ? cfg.proLabel : cfg.coreLabel)))))))}`.slice(0, 120);
-    const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList} + Redlined IAB IO Make-Good Rider (.TXT) + Cold Outreach Sequences + 90-Day Renewal Alerts.`.slice(0, 240);
+    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? '9:16 Morning & Night Phone Lock-Screen Card ($0.99)' : (isFlash ? 'Complete 3-File AM/PM Routine Kit + 9:16 Card + 4-Night Calendar ($1.99)' : (isPro ? cfg.proLabel : cfg.coreLabel))}`.slice(0, 120);
+    const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || '9:16 Phone Card + 4-Night Calendar (.ICS) + Chemist Dupe Swaps', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList} (Morning & Night wait times, ceramide buffering rules, and pore-safe chemist dupes).`.slice(0, 240);
     const validUserEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(userEmail) ? userEmail : (rawEmail && rawEmail.includes('@') ? rawEmail : '');
 
     const buildInlineParams = (minimal) => {
