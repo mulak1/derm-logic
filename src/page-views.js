@@ -221,7 +221,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
               <button type="button" id="dl-locked-badge-conflict2" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:6px 11px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:12.5px;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Conflict #2 &amp; $9 Clinical Dupe Swap — Enter Email to Reveal Free ($0) ↑</button>
-              <button type="button" id="dl-locked-badge-routine7" class="dl-locked-spec-badge mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:6px 11px;border-radius:10px;background:var(--bg-surface);color:var(--text-primary);font-size:12.5px;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Complete AM/PM Calendar &amp; Dupe Sheet ($7 Pack) ↑</button>
+              <button type="button" id="dl-locked-badge-routine7" class="dl-locked-spec-badge mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="text-align:left;padding:6px 11px;border-radius:10px;background:var(--bg-surface);color:var(--text-primary);font-size:12.5px;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Complete AM/PM Calendar &amp; Dupe Sheet ($9 Dossier) ↑</button>
             </div>
             <div id="dl-unlocked-conflict2-box" class="dl-unlocked-c2-proof" style="display:none;padding:8px 11px;border-radius:10px;background:var(--sage-bg);color:var(--sage-safe);font-size:12.5px;font-weight:600;">✓ Conflict #2 Unlocked ($0): Glycolic 7% + BHA 2% Over-Exfoliation Trap &mdash; Alternate Night 1 Polish &amp; Swap $116 Triple Lipid &rarr; $32 Aestura 365 Dupe (Save $84).</div>
           </div>
@@ -439,8 +439,8 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     ${renderHomeSeoDiscoveryBlock()}
   `;
   return renderBaseDocument({
-    title: 'DermLogic | Luxury Skincare Routine Conflict, ΔpH & INCI Harmony Atelier',
-    description: 'Check your skincare routine and INCI ingredients in 5 seconds for ΔpH inactivation, Copper Peptide + Vitamin C oxidation, Tretinoin clashes, and pore-clogging esters.',
+    title: 'DermLogic | Skincare Routine Conflict, Morning & Night Layering Order & Dupe Finder',
+    description: 'Check your skincare routine in 5 seconds for serum clashes, Copper Peptide + Vitamin C canceling out, Tretinoin irritation, and pore-clogging ingredients.',
     canonicalPath: '/',
     ogSlug: 'home',
     jsonLdObjects: jsonLd,
@@ -453,7 +453,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
     {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
-      name: 'DermLogic Instant Skincare Routine Conflict & ΔpH Check',
+      name: 'DermLogic Instant Skincare Routine Conflict & Layering Order Check',
       description: 'Stop wasting $200+ serums that deactivate each other on contact. Run a free 5-second active-ingredient & pore-clogging check.'
     }
   ];
@@ -517,7 +517,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
   `;
   return renderBaseDocument({
     title: 'Is Your $300 Skincare Routine Secretly Canceling Itself Out? | DermLogic',
-    description: 'Check your skincare active ingredient & ΔpH conflicts in 5 seconds. Instant AM/PM glow ritual and pore-clogging ingredient check.',
+    description: 'Check your skincare serum clashes and Morning & Night layering order in 5 seconds. Instant AM/PM glow ritual and pore-clogging ingredient check.',
     canonicalPath: '/lp',
     ogSlug: 'lp-paid-social',
     jsonLdObjects: jsonLd,
@@ -571,7 +571,7 @@ function renderDirectoryPage({ seoPages }) {
           <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'directory_top')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
             <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 200px;min-width:0;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" />
             <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Unlock 2 Free Dupes &amp; AM/PM Rules ($0) &rarr;</span></button>
-            <a href="/buy/onetime_499?source=directory_top" class="btn-secondary mono" style="padding:8px 14px;min-height:36px;font-size:0.76rem;border-radius:999px;text-decoration:none;"><span>$9 Complete AM/PM Schedule &rarr;</span></a>
+            <a href="/buy/flash_pass?source=directory_top" class="btn-secondary mono" style="padding:8px 14px;min-height:36px;font-size:0.76rem;border-radius:999px;text-decoration:none;"><span>$1.99 Complete AM/PM Schedule &amp; Dupe Pack &rarr;</span></a>
             <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
           </form>
         </div>
@@ -702,10 +702,10 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
       : (comparedActives[0] && comparedActives[1] ? `${comparedActives[0].commonName} and ${comparedActives[1].commonName}` : page.title.split(':')[0]);
   const searchIntentSubject = rawSubject.replace(/\s*\([^)]*\)/g, '').trim();
   const jsonLd = [
-    { '@context': 'https://schema.org', '@type': 'MedicalWebPage', headline: page.title, description: page.metaDescription, medicalAudience: 'Patients and Dermatological Practitioners', specialty: 'Dermatology' },
-    { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: (page.faqs || []).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+    { '@context': 'https://schema.org', '@type': 'MedicalWebPage', headline: page.title, description: page.metaDescription, medicalAudience: 'Skincare Consumers and Estheticians', specialty: 'Dermatology' },
+    { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: (page.faqs || []).map((f, idx) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: idx === 0 ? `${String(f.a || '').split(/(?<=[.!?])\s+/)[0]} [Enter Email Free ($0) on DermLogic to Reveal Exact Wait-Time Fix & Cushioning Rule]` : '[Locked in Free Preview — Enter Email Free ($0) on DermLogic to Reveal Full Chemist Answer & AM/PM Rule]' } })) },
     { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'DermLogic Routine Conflict Analyzer', applicationCategory: 'HealthApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: '1.99', priceCurrency: 'USD' } },
-    ...(page.amRule && page.pmRule ? [{ '@context': 'https://schema.org', '@type': 'HowTo', name: `How to layer ${searchIntentSubject}`, description: page.metaDescription, step: [{ '@type': 'HowToStep', name: 'Morning (AM) Protocol', text: page.amRule }, { '@type': 'HowToStep', name: 'Evening (PM) Protocol', text: page.pmRule }] }] : [])
+    ...(page.amRule && page.pmRule ? [{ '@context': 'https://schema.org', '@type': 'HowTo', name: `How to layer ${searchIntentSubject}`, description: page.metaDescription, step: [{ '@type': 'HowToStep', name: 'Morning (AM) Protocol', text: 'Enter Email Free ($0) on DermLogic to reveal your exact Morning timing & $14 chemist dupe.' }, { '@type': 'HowToStep', name: 'Evening (PM) Protocol', text: 'Included in $0 Email Preview or $1.99 Complete AM/PM Calendar on DermLogic.' }] }] : [])
   ];
   const seoSwatchesHtml = renderPorcelainSwatchCards(comparedActives);
   const lockSvgInline = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
@@ -760,12 +760,17 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
             <div>
               <span class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">10-SECOND BATHROOM SINK X-RAY &middot; ${page.compatibilityScore}/100 HARMONY</span>
-              <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);font-weight:400;">What happens on your skin &amp; the exact $0 timing fix:</strong>
+              <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);font-weight:400;">1-Tap Your Skin Type for ${escapeHtml(searchIntentSubject)} Timing &amp; $0 Dupe Fix:</strong>
             </div>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;">
-              <button type="button" class="btn-secondary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml(primaryProdId)}','${escapeHtml(secondaryProdId)}'],'seo_${escapeHtml(page.slug)}')" style="padding:6px 12px;min-height:32px;font-size:0.75rem;"><span>Load in 5-Slot Vanity Bag &rarr;</span></button>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;" role="group" aria-label="1-Tap Skin Type Verdict Above the Fold">
+              <button type="button" class="btn-secondary mono pseo-skin-pill" aria-pressed="false" style="padding:5px 10px;min-height:30px;font-size:0.74rem;" onclick="window.__dlCalcPseoSkin(180,1.35,'sensitive',this)">Sensitive / Rosacea</button>
+              <button type="button" class="btn-secondary mono pseo-skin-pill" aria-pressed="false" style="padding:5px 10px;min-height:30px;font-size:0.74rem;" onclick="window.__dlCalcPseoSkin(240,1.25,'dry',this)">Dry / Stressed</button>
+              <button type="button" class="btn-secondary mono pseo-skin-pill" aria-pressed="true" style="padding:5px 10px;min-height:30px;font-size:0.74rem;border-color:var(--rose-brand);color:var(--rose-brand);" onclick="window.__dlCalcPseoSkin(320,1.0,'combination',this)">Balanced / Combo</button>
+              <button type="button" class="btn-secondary mono pseo-skin-pill" aria-pressed="false" style="padding:5px 10px;min-height:30px;font-size:0.74rem;" onclick="window.__dlCalcPseoSkin(480,1.45,'oily_acne',this)">Blemish-Prone</button>
+              <button type="button" class="btn-secondary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml(primaryProdId)}','${escapeHtml(secondaryProdId)}'],'seo_${escapeHtml(page.slug)}')" style="padding:5px 10px;min-height:30px;font-size:0.74rem;"><span>5-Slot Bag &rarr;</span></button>
             </div>
           </div>
+          <div id="pseo-top-live-verdict" class="mono" style="display:none;padding:7px 11px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:0.77rem;font-weight:600;"></div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
             <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
               <div class="mono" style="font-size:0.71rem;color:var(--berry-clash);font-weight:600;margin-bottom:3px;">01 &middot; ${page.product ? 'BOTTLE FORMULA VERDICT (FREE PROOF)' : 'THE COMMON MISTAKE (FREE PROOF)'}</div>
@@ -855,7 +860,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               <div><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Active Potency Protected</div><div id="pseo-dl-waste-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--sage-safe);">100% Stable (Buffered)</div></div>
               <div><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Ideal Routine Spacing</div><div id="pseo-dl-buffer-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--text-primary);">${Number(page.compatibilityScore) < 55 ? 'Morning & Night Split' : 'Buffer Over Ceramides'}</div></div>
               <div><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Skin Feel After Fix</div><div id="pseo-dl-harmony-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--sage-safe);">Calm &amp; Balanced</div></div>
-              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><a id="pseo-dl-handoff-cta" href="/buy/micro_pass?source=pseo_inline_calc&amp;guide=${encodeURIComponent(page.slug)}&amp;skin_type=combination" class="btn-primary mono" style="padding:10px 16px;font-size:0.84rem;text-decoration:none;display:inline-block;">Save $1.99 Routine Card &rarr;</a></div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><a id="pseo-dl-handoff-cta" href="/buy/flash_pass?source=pseo_inline_calc&amp;guide=${encodeURIComponent(page.slug)}&amp;skin_type=combination" class="btn-primary mono" style="padding:10px 16px;font-size:0.84rem;text-decoration:none;display:inline-block;">Save $1.99 Routine Card &rarr;</a></div>
             </div>
             <div id="pseo-dl-protocol-note" style="font-size:0.88rem;color:var(--text-secondary);padding:10px 14px;background:var(--bg-surface);">
               <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:600;cursor:pointer;font-size:0.82rem;">${lockSvgInline}Tailored Morning &amp; Bedtime Buffering Protocol for ${escapeHtml(searchIntentSubject)} Locked — Enter Email Above ($0) to Reveal Free &uarr;</div>
@@ -869,11 +874,14 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               if (btn) { btn.setAttribute('aria-pressed', 'true'); btn.style.borderColor = 'var(--rose-brand)'; btn.style.color = 'var(--rose-brand)'; }
               var baseLoss = Math.max(0.22, (100 - ${Number(page.compatibilityScore) || 55}) / 100);
               var wasted = Math.round(spend * Math.min(0.88, baseLoss * mult));
-              var wEl = document.getElementById('pseo-dl-waste-out'), bEl = document.getElementById('pseo-dl-buffer-out'), hEl = document.getElementById('pseo-dl-harmony-out'), nEl = document.getElementById('pseo-dl-protocol-unlocked-text'), cEl = document.getElementById('pseo-dl-handoff-cta');
+              var wEl = document.getElementById('pseo-dl-waste-out'), bEl = document.getElementById('pseo-dl-buffer-out'), hEl = document.getElementById('pseo-dl-harmony-out'), nEl = document.getElementById('pseo-dl-protocol-unlocked-text'), cEl = document.getElementById('pseo-dl-handoff-cta'), topV = document.getElementById('pseo-top-live-verdict'), topBtn = document.querySelector('#dl-pseo-top-conversion-bar .dl-inline-ics-btn span');
               if (wEl) wEl.textContent = mult >= 1.3 ? '100% Stable (Cushioned)' : '100% Stable (Buffered)';
               if (bEl) bEl.textContent = mult >= 1.3 ? 'Alternate Nights (4-Night Cycle)' : 'Morning & Night Split';
               if (hEl) hEl.textContent = mult >= 1.3 ? 'Gentle & Cushion-Soft' : 'Calm & Balanced';
-              if (cEl) cEl.setAttribute('href', '/buy/micro_pass?source=pseo_inline_calc&guide=${encodeURIComponent(page.slug)}&skin_type=' + encodeURIComponent(profile));
+              if (cEl) cEl.setAttribute('href', '/buy/flash_pass?source=pseo_inline_calc&guide=${encodeURIComponent(page.slug)}&skin_type=' + encodeURIComponent(profile));
+              var pLbl = { sensitive: 'Sensitive / Rosacea', dry: 'Dry / Barrier-Stressed', combination: 'Balanced / Combo', oily_acne: 'Blemish-Prone' }[profile] || 'Custom';
+              if (topV) { topV.style.display = 'block'; topV.textContent = '✓ ' + pLbl + ' Selected: Saves ~$' + wasted + '/yr in wasted serum potency — Enter email below ($0) to unlock your ' + pLbl + ' Morning & Bedtime wait times + 2 dupes ↓'; }
+              if (topBtn) topBtn.textContent = 'Unlock ' + pLbl + ' Rules & 2 Dupes ($0) →';
               var notes = {
                 sensitive: '<strong style="color:var(--text-primary);">Sensitive / Rosacea Protocol:</strong> Buffer active treatments over a thin layer of 3:1:1 ceramide moisturizer, wait 10 minutes after cleansing so damp skin never amplifies stinging, and split strong actives across a 4-night recovery cycle.',
                 dry: '<strong style="color:var(--text-primary);">Dry / Barrier-Stressed Protocol:</strong> Press hydrating humectants onto damp skin first, let dry for 90 seconds, and sandwich nighttime retinoids or acne cream between ceramide cream layers to prevent flaking.',
@@ -929,7 +937,7 @@ function renderOgSvg(pageOrTitle, subtitle, score, deltaPh) {
   const safeTitle = escapeHtml((pageOrTitle || 'DermLogic · Formulation Atelier').slice(0, 68));
   const safeSub = escapeHtml((subtitle || 'Porcelain Ritual & Viscosity Wait-Time Sequencer · Peptide & Vitamin C Harmony').slice(0, 95));
   const safeScore = score != null ? `${score}/100` : '96/100';
-  const safeDelta = deltaPh != null ? `ΔpH ${deltaPh}` : 'ΔpH 2.8';
+  const safeDelta = deltaPh != null ? `pH Gap ${deltaPh}` : 'pH Gap 2.8';
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#FDF8F6"/><rect x="48" y="48" width="1104" height="534" rx="28" fill="#F8EFE6"/><rect x="88" y="92" width="420" height="42" rx="21" fill="#F3E1E5"/><text x="114" y="119" fill="#8A3448" font-family="Georgia, serif" font-size="16" font-weight="bold">DERMLOGIC · FORMULATION ATELIER</text><text x="88" y="218" fill="#3A1F27" font-family="Georgia, serif" font-size="40" font-weight="bold">${safeTitle}</text><text x="88" y="282" fill="#70525B" font-family="Georgia, serif" font-size="22">${safeSub}</text><rect x="88" y="355" width="290" height="145" rx="22" fill="#E9F4EE"/><text x="116" y="400" fill="#70525B" font-family="Georgia, serif" font-size="15">ROUTINE HARMONY SCORE</text><text x="116" y="466" fill="#285B44" font-family="Georgia, serif" font-size="50" font-weight="bold">${escapeHtml(safeScore)}</text><rect x="406" y="355" width="280" height="145" rx="22" fill="#F3E1E5"/><text x="434" y="400" fill="#8A3448" font-family="Georgia, serif" font-size="15">PH DIFFERENTIAL</text><text x="434" y="466" fill="#8A3448" font-family="Georgia, serif" font-size="50" font-weight="bold">${escapeHtml(safeDelta)}</text><rect x="714" y="355" width="388" height="145" rx="22" fill="#FFFFFF"/><text x="742" y="400" fill="#8A3448" font-family="Georgia, serif" font-size="15">VISCOSITY &amp; WAIT SEQUENCER</text><text x="742" y="452" fill="#3A1F27" font-family="Georgia, serif" font-size="25" font-weight="bold">4-Night Skin Cycling + 9:16 Card</text></svg>`;
 }
 function renderEditorialPolicyRoute() {
