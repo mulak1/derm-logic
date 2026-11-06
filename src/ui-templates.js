@@ -595,8 +595,8 @@ function renderAnalysisResultHtml(res) {
               <a href="${escapeHtml(topSwap.directUrl)}" data-sovrn-beacon="${escapeHtml(topSwap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="font-size:0.71rem;padding:3px 9px;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)} &rarr;</a>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding-top:2px;font-size:0.78rem;color:var(--text-secondary);">
-              <span>Unlock $9 One-Time Barrier Protocol &middot; vs. $59/mo Curology Subscription</span>
-              <button type="button" class="mono" onclick="openCheckoutModal('annual_1999')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;font-size:0.78rem;padding:0;white-space:normal;text-align:left;">Get $9 Barrier Protocol / $29 Stylist Pass &rarr;</button>
+              <span>One-Time $1.99 Phone Card or $4.99 Complete Kit &middot; vs. $59/mo Curology Subscription</span>
+              <button type="button" class="mono" onclick="openCheckoutModal('annual_1999')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;font-size:0.78rem;padding:0;white-space:normal;text-align:left;">Get $4.99 Complete Kit / $19.99/yr Unlimited Pass &rarr;</button>
             </div>
           </div>
           <button type="button" id="dl-btn-next-step-3" class="btn-secondary" style="display:none;" onclick="window.__dlSwitchResultStep(3)">Next</button>

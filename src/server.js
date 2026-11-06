@@ -156,10 +156,32 @@ app.get(['/seo/:slug', '/layering/:slug'], (req, res) => {
     return res.status(404).type('html').send(render404Page());
   }
   const page = JSON.parse(row.payload_json);
+  const dynamicPresetIds = [];
+  const matchProdForActive = (actObj) => {
+    if (!actObj || !actObj.id) return null;
+    const byPrimary = CULT_PRODUCTS.find((p) => Array.isArray(p.primaryActives) && p.primaryActives.includes(actObj.id) && !dynamicPresetIds.includes(p.id));
+    if (byPrimary) return byPrimary.id;
+    const inciLower = String(actObj.inciName || actObj.commonName || '').toLowerCase();
+    const byInci = inciLower ? CULT_PRODUCTS.find((p) => String(p.inciList || '').toLowerCase().includes(inciLower) && !dynamicPresetIds.includes(p.id)) : null;
+    return byInci ? byInci.id : null;
+  };
+  if (page.product && page.product.id) dynamicPresetIds.push(page.product.id);
+  const pA = matchProdForActive(page.ingredientA);
+  if (pA && !dynamicPresetIds.includes(pA)) dynamicPresetIds.push(pA);
+  const pB = matchProdForActive(page.ingredientB);
+  if (pB && !dynamicPresetIds.includes(pB)) dynamicPresetIds.push(pB);
+  for (const fallbackId of (page.presetProducts || ['aestura-atobarrier-365', 'cerave-pm-lotion'])) {
+    if (dynamicPresetIds.length < 3 && !dynamicPresetIds.includes(fallbackId)) dynamicPresetIds.push(fallbackId);
+  }
+  page.presetProducts = dynamicPresetIds.slice(0, 3);
+  const dynamicRawInci = page.product
+    ? page.product.inciList
+    : [page.ingredientA && page.ingredientA.inciName, page.ingredientB && page.ingredientB.inciName].filter(Boolean).join(', ');
+  page.resolvedRawInci = dynamicRawInci;
   const initialAnalysis = analyzeRoutine({
     skinType: 'combination',
     productIds: page.presetProducts || [],
-    rawInciText: page.product ? page.product.inciList : ''
+    rawInciText: dynamicRawInci
   });
   const allPages = getAllSeoPages();
   const curIdx = Math.max(0, allPages.findIndex((p) => p.slug === slug));

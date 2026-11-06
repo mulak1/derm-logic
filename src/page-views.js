@@ -142,38 +142,31 @@ function getRoutineSlotRecommendation(ing) {
   return 'Morning or Night (Safe in either)';
 }
 function renderPorcelainSwatchCards(ingList) {
-  return `<div class="porcelain-swatch-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px;margin-bottom:28px;">${(ingList || []).slice(0, 3).map((ing) => {
+  const lockIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+  return `<div class="porcelain-swatch-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px;margin-bottom:28px;">${(ingList || []).slice(0, 3).map((ing, idx) => {
     const slot = getRoutineSlotRecommendation(ing);
     const step = Number(ing.molecularWeightDa) < 200 ? 'First · Water-Light' : (Number(ing.molecularWeightDa) < 500 ? 'Second · Silky Serum' : 'Third · Velvet Seal');
     const feel = Number(ing.phMin) < 4.0 ? 'Gentle tingle · Wait 60s' : 'Cushion-soft & calm';
     const pore = ing.comedogenicity === 0 ? '0/5 Pore-Safe' : `Low (${ing.comedogenicity}/5)`;
-    return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;justify-content:space-between;gap:14px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Daily Active Note</span><span class="badge-safe mono">${pore}</span></div><h3 class="serif-display" style="font-size:1.36rem;line-height:1.24;margin-bottom:14px;">${escapeHtml(ing.commonName)}</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.84rem;color:var(--text-secondary);">When to Apply</div><div style="font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${slot.split('(')[0].trim()}</div></div><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.84rem;color:var(--text-secondary);">Texture Weight</div><div style="font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${step}</div></div></div></div><div style="font-size:0.86rem;color:var(--text-secondary);padding-top:8px;line-height:1.4;"><strong>On your skin:</strong> ${feel} · <span class="mono">pH ${ing.phMin}–${ing.phMax}</span></div></div>`;
+    const slotDisplay = idx === 0
+      ? `<div style="font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${slot.split('(')[0].trim()}</div>`
+      : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;margin-top:4px;cursor:pointer;">${lockIcon}Reveal AM/PM Slot ($0) &uarr;</div><div class="dl-unlocked-c2-proof" style="display:none;font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${slot.split('(')[0].trim()}</div>`;
+    const stepDisplay = idx === 0
+      ? `<div style="font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${step}</div>`
+      : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;margin-top:4px;cursor:pointer;">${lockIcon}Reveal Layer Step ($0) &uarr;</div><div class="dl-unlocked-c2-proof" style="display:none;font-size:0.88rem;font-weight:500;margin-top:3px;line-height:1.3;">${step}</div>`;
+    const feelDisplay = idx === 0
+      ? `<div style="font-size:0.86rem;color:var(--text-secondary);padding-top:8px;line-height:1.4;"><strong>On your skin (Free Proof):</strong> ${feel} · <span class="mono">pH ${ing.phMin}–${ing.phMax}</span></div>`
+      : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;padding-top:8px;cursor:pointer;">${lockIcon}Tap to Reveal Skin Feel, Wait Time &amp; pH Window ($0) &uarr;</div><div class="dl-unlocked-c2-proof" style="display:none;font-size:0.86rem;color:var(--text-secondary);padding-top:8px;line-height:1.4;"><strong>On your skin:</strong> ${feel} · <span class="mono">pH ${ing.phMin}–${ing.phMax}</span></div>`;
+    return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:26px 28px;justify-content:space-between;gap:14px;"><div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">${idx === 0 ? '✓ Ingredient #1 Free Proof' : `Ingredient #${idx + 1} Pairing Card`}</span><span class="badge-safe mono">${pore}</span></div><h3 class="serif-display" style="font-size:1.36rem;line-height:1.24;margin-bottom:14px;">${escapeHtml(ing.commonName)}</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.84rem;color:var(--text-secondary);">When to Apply</div>${slotDisplay}</div><div style="padding:11px 13px;background:var(--bg-surface);"><div class="mono" style="font-size:0.84rem;color:var(--text-secondary);">Texture Weight</div>${stepDisplay}</div></div></div>${feelDisplay}</div>`;
   }).join('')}</div>`;
 }
 function renderHomePage({ products, ingredients, presets, initialAnalysis, initialProductIds, initialRawInci, initialSkinType, seoPages }) {
   const jsonLd = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'SoftwareApplication',
-      name: 'DermLogic Clinical Skincare & INCI Harmony Atelier',
-      applicationCategory: 'HealthApplication',
-      operatingSystem: 'Web',
-      offers: { '@type': 'Offer', price: '1.99', priceCurrency: 'USD' },
-      description: 'Clinical skincare active-ingredient conflict, ΔpH inactivation, pKa free-acid, comedogenic load & barrier-safety ritual planner.'
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'MedicalWebPage',
-      name: 'DermLogic Active-Ingredient Conflict & ΔpH Inactivation Checker',
-      medicalAudience: 'Patients and Cosmetic Chemists',
-      about: { '@type': 'MedicalCondition', name: 'Irritant Contact Dermatitis, Acne Cosmetica, and Transepidermal Water Loss' }
-    }
+    { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'DermLogic Skincare Routine & Layering Planner', applicationCategory: 'HealthApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: '1.99', priceCurrency: 'USD' }, description: 'Everyday skincare routine conflict checker, morning and night layering order planner, and pore-safe product guide.' },
+    { '@context': 'https://schema.org', '@type': 'MedicalWebPage', name: 'DermLogic Skincare Serum Layering & Pore-Safety Planner', medicalAudience: 'Skincare Consumers and Estheticians', about: { '@type': 'MedicalCondition', name: 'Sensitive Skin Barrier Care and Blemish-Safe Skincare Layering' } }
   ];
   const priorityIngIds = ['l-ascorbic-acid', 'copper-tripeptide-1', 'tretinoin', 'niacinamide', 'glycolic-acid', 'hyaluronic-acid', 'azelaic-acid', 'salicylic-acid', 'retinol', 'ceramide-np', 'adapalene', 'lactic-acid', 'thd-ascorbate', 'tranexamic-acid', 'benzoyl-peroxide', 'centella-asiatica', 'mandelic-acid', 'panthenol'];
-  const prioritizedIngredients = [
-    ...priorityIngIds.map((id) => ingredients.find((i) => i.id === id)).filter(Boolean),
-    ...ingredients.filter((i) => !priorityIngIds.includes(i.id))
-  ].slice(0, 12);
+  const prioritizedIngredients = [...priorityIngIds.map((id) => ingredients.find((i) => i.id === id)).filter(Boolean), ...ingredients.filter((i) => !priorityIngIds.includes(i.id))].slice(0, 12);
   const topIngredientsRows = prioritizedIngredients.map((ing) => {
     const poreClogText = ing.comedogenicity === 0
       ? '<span class="badge-safe mono">Zero (0/5)</span>'
@@ -734,12 +727,14 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
     ? `<tr><td><strong class="mono" style="font-size:0.8125rem;">${escapeHtml(ing.inciName)}</strong> <span class="badge-safe mono" style="padding:1px 6px;font-size:0.68rem;">Free Proof</span></td><td class="mono">pH ${ing.phMin}–${ing.phMax}</td><td class="mono">${Number(ing.phMin) < 4.0 ? 'Tangy / Active' : 'Gentle / Neutral'}</td><td class="mono">${Number(ing.molecularWeightDa) < 250 ? 'Water-Light' : 'Velvet / Cushion'}</td><td class="mono">${ing.comedogenicity}/5</td><td class="mono">${ing.malasseziaTrigger ? 'Watch' : 'Safe'}</td></tr>`
     : `<tr><td><strong class="mono" style="font-size:0.8125rem;">${escapeHtml(ing.inciName)}</strong></td><td colspan="5"><span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.75rem;color:var(--rose-brand);font-weight:600;cursor:pointer;">${lockSvgInline}Enter Email Above ($0) to Reveal Skin pH, Texture Weight &amp; Pore-Safety Specs &uarr;</span><span class="dl-unlocked-c2-proof mono" style="display:none;font-size:0.78rem;color:var(--text-secondary);">pH ${ing.phMin}–${ing.phMax} &middot; ${Number(ing.phMin) < 4.0 ? 'Tangy / Active' : 'Gentle / Neutral'} &middot; ${Number(ing.molecularWeightDa) < 250 ? 'Water-Light' : 'Velvet / Cushion'} &middot; ${ing.comedogenicity}/5 Pore &middot; ${ing.malasseziaTrigger ? 'Watch' : 'Safe'}</span></td></tr>`).join('');
   const faqHtml = (page.faqs || []).map((f, idx) => {
+    const rawAns = String(f.a || '');
+    const firstSent = rawAns.split(/(?<=[.!?])\s+/)[0] || rawAns;
     const answerHtml = idx === 0
-      ? `<p style="color:var(--text-secondary);font-size:0.88rem;">${escapeHtml(f.a)}</p>`
-      : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-size:0.82rem;font-weight:600;cursor:pointer;margin-top:4px;">${lockSvgInline}Enter Email Above ($0) to Reveal Full Chemist Answer &amp; AM/PM Rule &uarr;</div><p class="dl-unlocked-c2-proof" style="display:none;color:var(--text-secondary);font-size:0.88rem;margin-top:4px;">${escapeHtml(f.a)}</p>`;
+      ? `<p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:6px;"><strong style="color:var(--sage-safe);">✓ Free Proof:</strong> ${escapeHtml(firstSent)}</p><div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-size:0.8rem;font-weight:600;cursor:pointer;">${lockSvgInline}Enter Email Above ($0) to Reveal Exact Wait-Time Fix &amp; Cushioning Rule &uarr;</div><p class="dl-unlocked-c2-proof" style="display:none;color:var(--text-secondary);font-size:0.88rem;margin-top:4px;">${escapeHtml(rawAns)}</p>`
+      : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-size:0.82rem;font-weight:600;cursor:pointer;margin-top:4px;">${lockSvgInline}Enter Email Above ($0) to Reveal Full Chemist Answer &amp; AM/PM Rule &uarr;</div><p class="dl-unlocked-c2-proof" style="display:none;color:var(--text-secondary);font-size:0.88rem;margin-top:4px;">${escapeHtml(rawAns)}</p>`;
     return `<div class="porcelain-vessel-core" style="padding:20px 24px;background:var(--bg-surface);margin-bottom:12px;"><h3 class="serif-display" style="font-size:1.28rem;font-weight:400;margin-bottom:6px;">${escapeHtml(f.q)}</h3>${answerHtml}</div>`;
   }).join('');
-  const relatedHtml = (relatedPages || []).slice(0, 8).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="porcelain-vessel-core" style="padding:18px 20px;background:var(--bg-surface);text-decoration:none;"><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">${escapeHtml(formatVerdictLabel(r.verdict))}</div><div class="serif-display" style="font-weight:400;font-size:1.15rem;color:var(--text-primary);">${escapeHtml(r.title)}</div></a>`).join('');
+  const relatedHtml = (relatedPages || []).slice(0, 8).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="porcelain-vessel-core" style="padding:18px 20px;background:var(--bg-surface);text-decoration:none;"><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Morning &amp; Night Guide</div><div class="serif-display" style="font-weight:400;font-size:1.15rem;color:var(--text-primary);">${escapeHtml(r.title)}</div></a>`).join('');
   const seoBadgeClass = page.compatibilityScore < 55 ? 'badge-clash' : page.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe';
   const defaultCalcProtocol = page.amRule && page.pmRule
     ? `${escapeHtml(page.amRule)} ${escapeHtml(page.pmRule)}`
@@ -752,7 +747,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <a href="/">Home</a> / <a href="/directory">Layering Archive</a> / <span style="color:var(--rose-brand);font-weight:500;">${escapeHtml(page.category)}</span>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
-          <span class="${seoBadgeClass} mono">${escapeHtml(formatVerdictLabel(page.verdict))} · Everyday Layering Guide</span>
+          <span class="${seoBadgeClass} mono">Morning &amp; Night Pairing Check · ${page.compatibilityScore}/100 Harmony</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap;" data-no-bag-inject="1">
             <a href="#analyzer" class="affiliate-link-pill mono" style="border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">Test With My Shelf Below &darr;</a>
             <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ${escapeHtml(primaryProdObj.brand)} ${escapeHtml(primaryProdObj.name)} &rarr;</a>
@@ -760,7 +755,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div>
         </div>
         <h1 class="hero-h1" style="font-size:clamp(2.15rem,3.6vw,3.25rem);">${escapeHtml(page.title)}</h1>
-        <p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(cleanSummaryFirstSentence)} Enter your email below ($0) to unlock the exact morning/bedtime wait times and 2 chemist dupes.</p>
+        <p class="hero-sub" style="margin-bottom:14px;">See what happens when you layer ${escapeHtml(searchIntentSubject)} on the same skin barrier — check the free clash preview below or enter your email ($0) to unlock the exact morning/bedtime wait times and 2 chemist dupes.</p>
         <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-oat);margin-bottom:18px;display:flex;flex-direction:column;gap:10px;">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
             <div>
@@ -783,18 +778,18 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
             </div>
             <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
               <div class="mono" style="font-size:0.71rem;color:var(--honey-warn);font-weight:600;margin-bottom:3px;">03 &middot; BEDTIME RECOVERY SCHEDULE</div>
-              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="font-size:0.8rem;color:var(--text-primary);font-weight:600;line-height:1.38;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Included in $0 Email Preview / $9 Complete AM/PM Calendar &darr;</div>
+              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="font-size:0.8rem;color:var(--text-primary);font-weight:600;line-height:1.38;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Included in $0 Email Preview / $1.99 Complete AM/PM Calendar &darr;</div>
               <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.82rem;color:var(--text-primary);line-height:1.4;">${escapeHtml(page.pmRule || 'Allow hydrating layers to dry completely before retinoids, then seal with a ceramide barrier cream.')}</div>
             </div>
           </div>
           <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'seo_top_${escapeHtml(page.slug)}')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;padding-top:4px;border-top:1px solid var(--border-hairline);" data-no-bag-inject="1">
             <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 190px;min-width:0;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" />
             <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Unlock Morning Rule &amp; 2 Dupes ($0) &rarr;</span></button>
-            <a href="/buy/onetime_499?guide=${encodeURIComponent(page.slug)}" class="btn-secondary mono" style="padding:8px 12px;min-height:36px;font-size:0.75rem;border-radius:999px;background:var(--bg-surface);color:var(--text-primary);text-decoration:none;"><span>$9 Complete AM/PM Schedule &amp; Dupe Pack &rarr;</span></a>
+            <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="btn-secondary mono" style="padding:8px 12px;min-height:36px;font-size:0.75rem;border-radius:999px;background:var(--bg-surface);color:var(--text-primary);text-decoration:none;"><span>$1.99 Complete AM/PM Schedule &amp; Dupe Pack &rarr;</span></a>
             <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
           </form>
         </div>
-        ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: page.presetProducts, initialRawInci: page.product ? page.product.inciList : '' })}
+        ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: page.presetProducts, initialRawInci: page.resolvedRawInci || (page.product ? page.product.inciList : '') })}
         <div class="z-cascade-stage" style="margin-top:24px;margin-bottom:24px;">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
@@ -894,7 +889,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         </div>
         <div style="margin-bottom:28px;padding:12px;background:var(--bg-oat);"><div class="porcelain-vessel-core" style="padding:22px;">
           <h2 class="serif-display" style="font-size:1.75rem;margin-bottom:8px;">Can You Use ${escapeHtml(searchIntentSubject)} Together? Skincare Guide &amp; Layering Rules</h2>
-          <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:14px;">Routine Verdict: <strong class="mono" style="color:var(--rose-brand);">${escapeHtml(formatVerdictLabel(page.verdict))}</strong>. Explore each ingredient's daily skincare notes and full layering guide below.</p>
+          <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:14px;">Ingredient #1 shown free below &middot; <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:600;cursor:pointer;">${lockSvgInline}Tap to Reveal Pairing Verdict &amp; Ingredient #2 Timing Free ($0) &uarr;</span><strong class="dl-unlocked-c2-proof mono" style="display:none;color:var(--rose-brand);">${escapeHtml(formatVerdictLabel(page.verdict))}</strong></p>
           ${seoSwatchesHtml}
           <div class="table-wrap"><table><thead><tr><th>Ingredient &amp; Category</th><th>Pore-Clog Score</th><th>Skin Sensitivity</th><th>Best Time to Use</th><th>Texture &amp; Layering Step</th><th>Custom Morning / Night Schedule</th></tr></thead><tbody>${comparisonRowsHtml}</tbody></table></div>
           <details class="science-footnote-drawer" style="margin-top:14px;padding:14px 16px;background:var(--bg-canvas);">
@@ -910,8 +905,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
       <h3 class="serif-display" style="font-size:1.55rem;margin:34px 0 14px;">Related Skincare Layering Guides</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">${relatedHtml}</div>
     </div></section>`;
-  const verdictTag = formatVerdictLabel(page.verdict);
-  return renderBaseDocument({ title: `${page.title} (${verdictTag}) | DermLogic`, description: `${verdictTag}: ${page.metaDescription || page.summary}`, canonicalPath: `/seo/${page.slug}`, ogSlug: page.slug, jsonLdObjects: jsonLd, hideNav: false, bodyHtml });
+  return renderBaseDocument({ title: `${page.title} | DermLogic`, description: `See how to layer ${searchIntentSubject} without stinging or pilling: check the free 1-day clash preview or unlock the Morning & Night schedule.`, canonicalPath: `/seo/${page.slug}`, ogSlug: page.slug, jsonLdObjects: jsonLd, hideNav: false, bodyHtml });
 }
 function renderLegalPage({ type }) {
   const isPrivacy = type === 'privacy';

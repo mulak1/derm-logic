@@ -33,20 +33,20 @@ const VERTICAL_CONFIGS = {
       radiusCard: '0px', radiusPill: '0px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMsIaoGnkXxS8ru7bwyQe',
-    corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 2.99, coreLabel: 'Complete Morning & Night Routine Kit ($2.99)',
+    corePriceEnv: 'STRIPE_PRICE_VANITY_499', corePriceUsd: 4.99, coreLabel: 'Complete Morning & Night Routine Kit ($4.99)',
     proPriceEnv: 'STRIPE_PRICE_ANNUAL_1999', proPriceUsd: 19.99, proLabel: 'Unlimited Skincare Shelf & Esthetician Pass ($19.99/yr)',
     lockedTitle: 'Morning vs. Night Layering Order (Nights 2–4)',
     deliverableName: '4-Night Skincare Schedule (.ICS) + 9:16 Phone Wallpaper Card + Pore-Safe Swaps',
     freeDeliverableName: '1-Day Sample AM/PM Clash Summary ($0 Email Unlock)',
-    unlockBannerTitle: 'Personalized AM & PM Routine Card ($2.99)',
+    unlockBannerTitle: 'Personalized AM & PM Routine Card ($1.99)',
     explainerText: 'See which products clash, how long to wait between steps, and your safe Morning & Night order',
     hudLabel: 'Vanity Shelf HUD', redditSub: 'SkincareAddiction',
     sliderLabel: 'Products', sliderMin: 2, sliderMax: 8, sliderVal: 4,
     searchPlaceholder: 'Search ingredient or product (e.g. Retinol)...',
-    tier1Tag: '$0 EMAIL UNLOCK • 1-DAY SAMPLE AM/PM CLASH SUMMARY',
-    tier1Desc: 'Unlocks your 1-day Morning & Night sample clash summary and Night 1 preview via email ($0).',
-    tier2Tag: 'COMPLETE AM/PM ROUTINE RESCUE KIT ($2.99)',
-    tier2Desc: 'Printable 9:16 Morning & Night Phone Lockscreen Card, 4-Night Skin-Cycling Calendar (.ICS), and gentle pore-safe product swaps.',
+    tier1Tag: 'SINGLE-ROUTINE PASS ($1.99)',
+    tier1Desc: 'Instant 9:16 Morning & Night Phone Lockscreen Card and exact serum wait-time checklist for this routine ($1.99 one-time).',
+    tier2Tag: 'COMPLETE AM/PM ROUTINE RESCUE KIT ($4.99)',
+    tier2Desc: 'Printable 9:16 Morning & Night Phone Lockscreen Card, 4-Night Skin-Cycling Calendar (.ICS), and gentle pore-safe product swaps ($4.99 one-time).',
     tier3Tag: 'UNLIMITED SHELF & ESTHETICIAN PASS ($19.99/YR)',
     tier3Desc: 'Full year of unlimited ingredient checks, fungal-acne safe screening, pregnancy-safe filters, and seasonal routine updates.',
     battlecard: {
@@ -55,7 +55,7 @@ const VERTICAL_CONFIGS = {
       rows: [
         ['Checks How Products Layer Together', 'Spots Vitamin C + Copper Peptide & Retinol clashes in 5 seconds', 'Weeks of waiting for a routine check', 'Only scores 1 bottle at a time (misses clashes)'],
         ['Pore-Clogging & Fungal-Acne Check', 'Flags hidden pore-clogging oils & tells you which serum goes first', 'Rarely checks base cream ingredients', 'Confusing "clean/dirty" labels without context'],
-        ['Step-by-Step Morning & Night Plan', '$0 Free Clash Summary or $2.99 Complete 4-Night Schedule & Phone Card', '$150+ per consultation', 'No Morning vs. Night layering order']
+        ['Step-by-Step Morning & Night Plan', '$0 Free Clash Preview, $1.99 Phone Card, or $4.99 Complete 4-Night Kit', '$150+ per consultation', 'No Morning vs. Night layering order']
       ]
     },
     exportActions: [
@@ -86,9 +86,9 @@ const VERTICAL_CONFIGS = {
       { key: 'Tretinoin + Benzoyl Peroxide', label: 'Tret + BPO' }, { key: 'Fungal-Safe Barrier Care', label: 'Fungal-Safe' }, { key: 'Glass Skin Hydration', label: 'Glass Skin' }
     ],
     coMarketingPills: [
-      { key: 'sephora', label: 'pH Clash Risk', rowText: 'Formulation Alert: Mixing low-pH direct acids (pH 3.2) with neutral peptides (pH 6.0) causes rapid hydrolysis.' },
-      { key: 'dermstore', label: 'Retinoid Oxidation', rowText: 'Formulation Alert: Combining unencapsulated retinoids with peroxides or low-pH acids triggers barrier stinging.' },
-      { key: 'ultrasun', label: 'Pore-Safety Check', rowText: 'Formulation Alert: Heavy esters (Isopropyl Myristate & Coconut Alkanes) trap heat under active serums.' }
+      { key: 'sephora', label: 'pH Clash Risk', rowText: 'Routine Tip: Layering strong exfoliating acids (pH 3.2) right on top of gentle firming peptides (pH 6.0) weakens peptide firming power on contact.' },
+      { key: 'dermstore', label: 'Retinoid Comfort', rowText: 'Routine Tip: Combining strong night retinoids with acne washes or exfoliating toners in the same evening triggers dryness and peeling.' },
+      { key: 'ultrasun', label: 'Pore-Safety Check', rowText: 'Routine Tip: Heavy oils and rich esters (like Isopropyl Myristate) can clog pores when layered under active serums.' }
     ],
     affiliates: [
       { title: 'SkinCeuticals C E Ferulic (Dermstore)', badge: 'Morning Vitamin C Pick', cpa: 'Shop Authorized Clinical', url: 'https://www.dermstore.com/p/skinceuticals-c-e-ferulic-with-15-l-ascorbic-acid-vitamin-c-serum-30ml/11289609/' },
@@ -96,11 +96,11 @@ const VERTICAL_CONFIGS = {
       { title: 'La Roche-Posay Cicaplast Baume B5+', badge: 'Recovery Night Cream', cpa: 'Shop Dermatologist Pick', url: 'https://www.ulta.com/p/cicaplast-baume-b5-soothing-therapeutic-multi-purpose-cream-pimprod2018267' }
     ],
     githubRepo: {
-      name: 'rdkit/rdkit + EU CosIng pKa Matrix + adamgibbons/ics',
-      stars: '159,786 Combined Stars', url: 'https://github.com/rdkit/rdkit',
-      badge: 'Henderson-Hasselbalch pKa + 500-Dalton Layering Engine',
-      title: 'Cosmetic-Chemist ΔpH & 500-Dalton Routine Harmony Engine',
-      summary: 'Calculates free-acid bio-availability, Cu2+/Retinoid redox inactivation, and 4-night skin-cycling schedules.'
+      name: 'Verified Skincare Compatibility & EU CosIng Pore-Safety Database',
+      stars: '81 Cult Bottles + 170 Layering Guides', url: 'https://www.dermlogic.io/directory',
+      badge: 'Everyday AM/PM Routine & Wait-Time Planner',
+      title: 'Everyday Morning & Night Serum Layering & Pore-Safety Planner',
+      summary: 'Checks how your serums layer together, flags pore-clogging ingredients, and builds a gentle 4-night skin-cycling schedule.'
     },
     deliverableFiles: [
       { file: 'am-pm-vanity-card-9x16.pdf', label: 'Phone Routine Card (PDF)', size: '48.2 KB', schema: 'Step-by-step Morning & Bedtime order tailored to your selected bottles with exact pH dry-down wait times', status: 'VALID' },
