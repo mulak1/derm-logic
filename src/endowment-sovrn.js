@@ -242,9 +242,9 @@ function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Va
             <div style="font-size:0.76rem;color:#D5CBC0;margin-top:4px;line-height:1.38;">Includes pH windows, wait timers, ceramide sandwich buffers &amp; 4-Night cycle below your phone clock.</div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-            <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:7px 13px;min-height:32px;font-size:0.8rem;background:#7A2332;color:#FFF;" onclick="window.__dlDownloadOrUnlockWallpaper()">Save 9:16 PNG (99&cent;) &rarr;</button>
+            <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:7px 13px;min-height:32px;font-size:0.8rem;background:#7A2332;color:#FFF;" onclick="window.__dlDownloadOrUnlockWallpaper()">Save 9:16 PNG ($1.99) &rarr;</button>
             <button type="button" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.78rem;background:rgba(255,255,255,0.08);color:#F4EFE8;border-color:rgba(201,164,90,0.4);" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('workbench');if(window.__dlSetDossierTab)window.__dlSetDossierTab('pass');}">Interactive AM/PM Preview &rarr;</button>
-            <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 10px;min-height:32px;font-size:0.76rem;background:transparent;color:#C9BCAE;border-color:#3D322C;" onclick="window.__dlCopyRedditRoutineHelp(this)">Copy Summary</button>
+            <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 10px;min-height:32px;font-size:0.76rem;background:transparent;color:#C9BCAE;border-color:#3D322C;" onclick="window.__dlCopyRedditRoutineHelp(this)">Email / Copy Summary ($0)</button>
           </div>
         </div>
       </div>
@@ -602,7 +602,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       ctx.strokeRect(18, 476, w - 36, 48);
       ctx.fillStyle = '#C9A45A';
       ctx.font = 'bold 11.5px Georgia, serif';
-      ctx.fillText('DERMLOGIC.IO · 99¢ LOCK-SCREEN PASS', 30, 496);
+      ctx.fillText('DERMLOGIC.IO · $1.99 LOCK-SCREEN PASS', 30, 496);
       ctx.fillStyle = '#F4EFE8';
       ctx.font = '11px sans-serif';
       ctx.fillText('Tap to unlock crisp 1080x1920 AM + PM PNGs', 30, 514);
@@ -749,69 +749,19 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     var titleText = isDemo ? 'Sample 9:16 Lock-Screen Card &amp; 4-Night Schedule' : (hasShelf ? ('Your ' + names.length + ' Checked Bottles ($' + usd + ' Shelf)') : 'Custom Morning &amp; Bedtime Routine Preview');
     var pillText = idx === 1 ? '4-Night .ICS Calendar' : (idx === 2 ? 'Pore &amp; pH Swap Sheet' : '9:16 Phone Card + PDF');
 
+    var hasEm = Boolean(window.__dlSampleEmailUnlocked || window.__ebIsUnlocked || (localStorage.getItem('dl_captured_email') || localStorage.getItem('eb_captured_email')));
     var rowsHtml = '';
     if (isDemo) {
-      rowsHtml =
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">9:16 Lock-Screen Wallpaper (PNG):</strong> Instant AM/PM bathroom checklist sized for iPhone &amp; Android</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">1080 &times; 1920 PNG</span>' +
-        '</div>' +
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">4-Night Calendar (.ICS):</strong> 9:00 PM alerts for Night 1 (' + safeText(pmItemA) + ') vs. Night 2 (' + safeText(pmItemB) + ')</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Apple &amp; Google Cal</span>' +
-        '</div>' +
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Pore-Safe Swaps (.CSV):</strong> 1-to-1 non-comedogenic &amp; budget alternatives for your $' + usd + ' shelf</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3 Files in 1 Pack</span>' +
-        '</div>';
+      rowsHtml = '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">9:16 Lock-Screen Wallpaper (PNG):</strong> Instant AM/PM bathroom checklist sized for iPhone &amp; Android</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">1080 &times; 1920 PNG</span></div><div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">4-Night Calendar (.ICS):</strong> 9:00 PM alerts for Night 1 (' + safeText(pmItemA) + ') vs. Night 2 (' + safeText(pmItemB) + ')</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Apple &amp; Google Cal</span></div><div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Pore-Safe Swaps (.CSV):</strong> 1-to-1 non-comedogenic &amp; budget alternatives for your $' + usd + ' shelf</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3 Files in 1 Pack</span></div>';
     } else if (idx === 1) {
-      rowsHtml =
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">Night 1 (Exfoliate):</strong> ' + safeText(amItem) + ' in AM &middot; <strong>' + safeText(pmItemA) + '</strong> at 9:30 PM</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Wait 60s</span>' +
-        '</div>' +
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">Night 2 (Renew):</strong> <strong>' + safeText(pmItemB) + '</strong> on dry skin + Ceramide Buffer</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">9:00 PM Alert</span>' +
-        '</div>' +
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Nights 3 &amp; 4 (Recovery):</strong> Zero acids or retinoids &middot; 3:1:1 Ceramide Cushion</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">Barrier Rest</span>' +
-        '</div>';
+      rowsHtml = '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">Night 1 (Free Proof):</strong> ' + safeText(amItem) + ' in AM &middot; <strong>' + safeText(pmItemA) + '</strong> at 9:30 PM</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Wait 60s</span></div>' + (hasEm ? '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">Night 2 (Renew):</strong> <strong>' + safeText(pmItemB) + '</strong> on dry skin + Ceramide Buffer</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">9:00 PM Alert</span></div><div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Nights 3 &amp; 4 (Recovery):</strong> Zero acids or retinoids &middot; 3:1:1 Ceramide Cushion</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">Barrier Rest</span></div>' : '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">Nights 2&ndash;4 Schedule &amp; Buffer:</strong> Enter email above ($0) to unlock your Night 2&ndash;4 rotation &amp; 2 dupes</div><a href="#dl-inline-sample-email" onclick="var el=document.getElementById(\'dl-inline-sample-email\');if(el){el.focus();el.scrollIntoView({behavior:\'smooth\',block:\'center\'});}return false;" class="mono" style="font-size:0.82rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:700;white-space:nowrap;text-decoration:none;">Unlock Free ($0) &uarr;</a></div>');
     } else if (idx === 2) {
-      rowsHtml =
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Pore-Safety Audit:</strong> Screens your ' + (hasShelf ? (names.length + ' selected bottles') : 'routine') + ' against 65 pore-clogging esters &amp; waxes</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">0/5 Pore-Safe</span>' +
-        '</div>' +
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">1-to-1 Barrier Swaps:</strong> Budget &amp; clinical alternatives that layer with <strong>' + safeText(amItem) + '</strong> without pilling</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">.CSV Included</span>' +
-        '</div>';
+      rowsHtml = '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Pore-Safety Audit (Free Proof):</strong> Screens your ' + (hasShelf ? (names.length + ' selected bottles') : 'routine') + ' against 65 pore-clogging esters &amp; waxes</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">0/5 Pore-Safe</span></div><div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">1-to-1 Barrier Swaps:</strong> ' + (hasEm ? ('Budget &amp; clinical alternatives that layer with <strong>' + safeText(amItem) + '</strong> without pilling') : 'Enter email above ($0) to reveal 2 chemist dupes for your shelf') + '</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">$0 Email / .CSV</span></div>';
     } else {
-      rowsHtml =
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">7:30 AM Morning Shield:</strong> Gentle Rinse &rarr; <strong>' + safeText(amItem) + '</strong> &rarr; 60s pH Wait &rarr; SPF 50</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">Wait 60s &middot; pH 3.2</span>' +
-        '</div>' +
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">9:30 PM Night 1 vs. Night 2:</strong> Splits <strong>' + safeText(pmItemA) + '</strong> and <strong>' + safeText(pmItemB) + '</strong> across alternating nights</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Zero Clash Split</span>' +
-        '</div>' +
-        '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
-          '<div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Every Night Barrier Seal:</strong> 3:1:1 Ceramide recovery cream locks in hydration without clogging pores</div>' +
-          '<span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3:1:1 Lipid Seal</span>' +
-        '</div>';
+      rowsHtml = '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--honey-warn);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--honey-warn);">7:30 AM Morning Shield (Free Proof):</strong> Gentle Rinse &rarr; <strong>' + safeText(amItem) + '</strong> &rarr; 60s Wait &rarr; SPF 50</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--honey-bg);color:var(--honey-warn);font-weight:600;white-space:nowrap;">Wait 60s</span></div>' + (hasEm ? '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">9:30 PM Night 1 vs. Night 2:</strong> Splits <strong>' + safeText(pmItemA) + '</strong> and <strong>' + safeText(pmItemB) + '</strong> across alternating nights</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;white-space:nowrap;">Zero Clash Split</span></div><div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--sage-safe);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--sage-safe);">Every Night Barrier Seal:</strong> 3:1:1 Ceramide recovery cream locks in hydration without clogging pores</div><span class="mono" style="font-size:0.84rem;padding:2px 8px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;white-space:nowrap;">3:1:1 Lipid Seal</span></div>' : '<div style="padding:9px 12px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:10px;"><div style="font-size:0.86rem;line-height:1.38;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);">9:30 PM Night 1 vs. Night 2 Split Locked:</strong> Enter email above ($0) to reveal your bedtime order &amp; 2 chemist dupes</div><a href="#dl-inline-sample-email" onclick="var el=document.getElementById(\'dl-inline-sample-email\');if(el){el.focus();el.scrollIntoView({behavior:\'smooth\',block:\'center\'});}return false;" class="mono" style="font-size:0.82rem;padding:2px 8px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:700;white-space:nowrap;text-decoration:none;">Unlock Free ($0) &uarr;</a></div>');
     }
 
-    pre.innerHTML =
-      '<div class="dl-curtain-rich-card" style="display:flex;flex-direction:column;gap:8px;width:100%;">' +
-        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-bottom:6px;">' +
-          '<span class="serif-display" style="font-size:1.12rem;color:var(--text-primary);font-weight:400;">' + titleText + '</span>' +
-          '<span class="mono" style="font-size:0.84rem;padding:3px 9px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;">' + pillText + '</span>' +
-        '</div>' +
-        rowsHtml +
-      '</div>';
+    pre.innerHTML = '<div class="dl-curtain-rich-card" style="display:flex;flex-direction:column;gap:8px;width:100%;"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-bottom:6px;"><span class="serif-display" style="font-size:1.12rem;color:var(--text-primary);font-weight:400;">' + titleText + '</span><span class="mono" style="font-size:0.84rem;padding:3px 9px;background:var(--sage-bg);color:var(--sage-safe);font-weight:600;">' + pillText + '</span></div>' + rowsHtml + '</div>';
     if (!pre.__dlObserved && typeof MutationObserver === 'function') {
       pre.__dlObserved = true;
       var obs = new MutationObserver(function() {
@@ -986,17 +936,4 @@ function renderEditorialPolicyPage({ renderBaseDocument }) {
   });
 }
 
-module.exports = {
-  SOVRN_KEY,
-  DIRECT_MERCHANT_URLS,
-  getSovrnMerchantLink,
-  getConflictSafeSwap,
-  getClimateProtocolMeta,
-  renderPersonalizedResultsHeaderHtml,
-  renderAboveFoldSovrnDisclosureBar,
-  renderSovrnVglnkScript,
-  renderPersonalizationBarHtml,
-  renderBeforeAfterAndCanvasFooterHtml,
-  ENDOWMENT_CLIENT_SCRIPT,
-  renderEditorialPolicyPage
-};
+module.exports = { SOVRN_KEY, DIRECT_MERCHANT_URLS, getSovrnMerchantLink, getConflictSafeSwap, getClimateProtocolMeta, renderPersonalizedResultsHeaderHtml, renderAboveFoldSovrnDisclosureBar, renderSovrnVglnkScript, renderPersonalizationBarHtml, renderBeforeAfterAndCanvasFooterHtml, ENDOWMENT_CLIENT_SCRIPT, renderEditorialPolicyPage };

@@ -267,53 +267,21 @@ const SHORT_PRODUCT_NAMES = {
 function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds, initialRawInci, initialSkinType }) {
   const selectedSet = new Set(initialProductIds || ['to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005', 'skinceuticals-ce-ferulic']);
   const currentSkin = initialSkinType || (initialAnalysis && initialAnalysis.skinType) || 'combination';
-
-  const presetShortLabelMap = {
-    'viral-tiktok-destroyer': 'Acids + Retinol',
-    'copper-vitc-oxidation': 'Copper + Vit C',
-    'acne-rx-bpo-tretinoin': 'Tretinoin + Acne Cream',
-    'glass-skin-recovery': 'Calm Barrier'
-  };
-  const presetShortBadgeMap = {
-    'viral-tiktok-destroyer': 'Split AM/PM',
-    'copper-vitc-oxidation': 'Cancels Out',
-    'acne-rx-bpo-tretinoin': 'Space Apart',
-    'glass-skin-recovery': '0 Clashes'
-  };
-  const presetButtonsHtml = presets.map((p, idx) => `
-    <button type="button" class="preset-chip ${idx === 0 ? 'active' : ''}" data-preset-id="${escapeHtml(p.id)}" data-products='${JSON.stringify(p.productIds)}' data-skin="${escapeHtml(p.skinType)}" onclick="applyRoutinePreset(this)">
-      <strong>${escapeHtml(presetShortLabelMap[p.id] || p.label)}</strong>
-      <span class="mono">${escapeHtml(presetShortBadgeMap[p.id] || p.badge)}</span>
-    </button>
-  `).join('');
-
+  const presetShortLabelMap = { 'viral-tiktok-destroyer': 'Acids + Retinol', 'copper-vitc-oxidation': 'Copper + Vit C', 'acne-rx-bpo-tretinoin': 'Tretinoin + Acne Cream', 'glass-skin-recovery': 'Calm Barrier' };
+  const presetShortBadgeMap = { 'viral-tiktok-destroyer': 'Split AM/PM', 'copper-vitc-oxidation': 'Cancels Out', 'acne-rx-bpo-tretinoin': 'Space Apart', 'glass-skin-recovery': '0 Clashes' };
+  const presetButtonsHtml = presets.map((p, idx) => `<button type="button" class="preset-chip ${idx === 0 ? 'active' : ''}" data-preset-id="${escapeHtml(p.id)}" data-products='${JSON.stringify(p.productIds)}' data-skin="${escapeHtml(p.skinType)}" onclick="applyRoutinePreset(this)"><strong>${escapeHtml(presetShortLabelMap[p.id] || p.label)}</strong><span class="mono">${escapeHtml(presetShortBadgeMap[p.id] || p.badge)}</span></button>`).join('');
   const shortNameMap = SHORT_PRODUCT_NAMES;
   const categoryLabelMap = {
-    'Antioxidant Serum': 'Morning Vitamin C',
-    'Exfoliating Acid': 'Gentle Exfoliant',
-    'Exfoliating Peel': 'Weekly Smoothing Mask',
-    'Acne Treatment': 'Blemish Treatment',
-    'Acne Cleanser': 'Clarifying Wash',
-    'Fungal Acne Wash': 'Clarifying Wash',
-    'Retinoid (Rx)': 'Night Retinoid',
-    'Retinoid': 'Night Retinoid',
-    'Peptide Serum': 'Firming Peptide Serum',
-    'Barrier Moisturizer': 'Barrier Cream',
-    'Barrier Recovery': 'Barrier Cream',
-    'Barrier Essence': 'Hydrating Essence',
-    'Soothing Toner': 'Soothing Toner',
-    'Acne & Eczema Mist': 'Soothing Mist',
-    'Rosacea & Brightening': 'Redness & Tone Serum',
-    'Brightening Serum': 'Brightening Serum',
-    'Sebum & Pore Serum': 'Pore-Balancing Serum',
-    'Sunscreen (SPF)': 'Morning SPF Shield',
-    'Cleanser': 'Gentle Cleanser'
+    'Antioxidant Serum': 'Morning Vitamin C', 'Exfoliating Acid': 'Gentle Exfoliant', 'Exfoliating Peel': 'Weekly Smoothing Mask',
+    'Acne Treatment': 'Blemish Treatment', 'Acne Cleanser': 'Clarifying Wash', 'Fungal Acne Wash': 'Clarifying Wash',
+    'Retinoid (Rx)': 'Night Retinoid', 'Retinoid': 'Night Retinoid', 'Peptide Serum': 'Firming Peptide Serum',
+    'Barrier Moisturizer': 'Barrier Cream', 'Barrier Recovery': 'Barrier Cream', 'Barrier Essence': 'Hydrating Essence',
+    'Soothing Toner': 'Soothing Toner', 'Acne & Eczema Mist': 'Soothing Mist', 'Rosacea & Brightening': 'Redness & Tone Serum',
+    'Brightening Serum': 'Brightening Serum', 'Sebum & Pore Serum': 'Pore-Balancing Serum', 'Sunscreen (SPF)': 'Morning SPF Shield', 'Cleanser': 'Gentle Cleanser'
   };
   const getTexGroup = (prod) => {
     for (let sIdx = 0; sIdx < VANITY_SLOT_OPTIONS.length; sIdx++) {
-      if (VANITY_SLOT_OPTIONS[sIdx].choices.some((c) => c.id === prod.id)) {
-        return ['prep', 'serum', 'cream', 'spf', 'pm'][sIdx];
-      }
+      if (VANITY_SLOT_OPTIONS[sIdx].choices.some((c) => c.id === prod.id)) return ['prep', 'serum', 'cream', 'spf', 'pm'][sIdx];
     }
     const hay = (prod.id + ' ' + prod.name + ' ' + (prod.category || '')).toLowerCase();
     if (/spf|sun|uv/.test(hay)) return 'spf';
@@ -334,14 +302,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     const roleTag = categoryLabelMap[prod.category] || 'Daily Skincare';
     const cleanProdName = shortNameMap[prod.id] || String(prod.name || '').replace(/\s*\([^)]*\)/g, '').replace(/[()]/g, '').replace(/\s+with\s+.*$/i, '');
     const searchBlob = (prod.brand + ' ' + prod.name + ' ' + (prod.category || '') + ' ' + (prod.inciList || '') + ' ' + (prod.summary || '')).toLowerCase();
-    return `<label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}" data-search="${escapeHtml(searchBlob)}" onmouseenter="if(window.__dlShowProdInfo)window.__dlShowProdInfo(this,'${escapeHtml(prod.id)}',event)" onmouseleave="if(window.__dlHideProdInfo)window.__dlHideProdInfo()">
-        <input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" />
-        <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
-          <span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px;"><span style="font-size:0.75rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.71rem;padding:1px 7px;border-radius:999px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;">${isChecked ? '✓ Selected' : '+ Select'}</span></span>
-          <strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:0.9rem;font-weight:400;line-height:1.2;">${escapeHtml(cleanProdName)}</strong>
-          <span class="mono" style="color:var(--rose-brand);font-size:0.75rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:auto;">${roleTag} &middot; $${prod.priceUsd}</span>
-        </span>
-      </label>`;
+    return `<label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}" data-search="${escapeHtml(searchBlob)}" onmouseenter="if(window.__dlShowProdInfo)window.__dlShowProdInfo(this,'${escapeHtml(prod.id)}',event)" onmouseleave="if(window.__dlHideProdInfo)window.__dlHideProdInfo()"><input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" /><span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;"><span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px;"><span style="font-size:0.75rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.71rem;padding:1px 7px;border-radius:999px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;">${isChecked ? '✓ Selected' : '+ Select'}</span></span><strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:0.9rem;font-weight:400;line-height:1.2;">${escapeHtml(cleanProdName)}</strong><span class="mono" style="color:var(--rose-brand);font-size:0.75rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:auto;">${roleTag} &middot; $${prod.priceUsd}</span></span></label>`;
   }).join('') + `<div id="shelfEmptyState" style="display:none;grid-column:1/-1;padding:16px;background:var(--bg-canvas);font-size:0.86rem;color:var(--text-secondary);text-align:center;">Don't see that bottle in our ${products.length}-bottle catalog? <button type="button" class="btn-primary mono" style="padding:5px 12px;min-height:30px;font-size:0.78rem;margin-left:6px;" onclick="if(window.__dlAddCustomSearchBottle)window.__dlAddCustomSearchBottle()">+ Add Custom Bottle to Vanity Bag &rarr;</button><button type="button" class="btn-secondary mono" style="padding:5px 12px;min-height:30px;font-size:0.78rem;margin-left:6px;" onclick="const q=document.getElementById('productFilterInput').value;const ta=document.getElementById('rawInciTextarea');if(ta&&q){ta.value=q;runRoutineAnalysis();}">Check Ingredient List &rarr;</button></div>`;
 
   return `
@@ -351,16 +312,9 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         <div class="porcelain-vessel-core" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
           <div style="flex:1;display:flex;flex-direction:column;min-height:0;gap:10px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-              <div>
-                <span class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;display:block;">Step 1 of 2 &middot; Pick Your Bottles</span>
-                <strong class="serif-display" style="font-size:1.32rem;font-weight:400;color:var(--text-primary);">What's on Your Bathroom Counter?</strong>
-              </div>
-              <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                <button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 10px;border-radius:999px;font-size:0.74rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;cursor:pointer;font-weight:600;" onclick="clearRoutineSelection()">Clear (${selectedSet.size}) &times;</button>
-                <span class="badge-safe mono" id="shelfCountBadge" style="display:none;">${products.length} Bottles</span>
-              </div>
+              <div><span class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;display:block;">Step 1 of 2 &middot; Pick Your Bottles</span><strong class="serif-display" style="font-size:1.32rem;font-weight:400;color:var(--text-primary);">What's on Your Bathroom Counter?</strong></div>
+              <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;"><button type="button" id="topClearShelfBtn" class="mono" style="padding:3px 10px;border-radius:999px;font-size:0.74rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;cursor:pointer;font-weight:600;" onclick="clearRoutineSelection()">Clear (${selectedSet.size}) &times;</button><span class="badge-safe mono" id="shelfCountBadge" style="display:none;">${products.length} Bottles</span></div>
             </div>
-
             <div class="shelf-search-row">
               <input id="productFilterInput" type="search" aria-label="Search skincare products" class="input-box" style="padding:8px 12px;font-size:0.84rem;" placeholder="Search brand or bottle (e.g., CeraVe, C E Ferulic)..." oninput="filterProductList(this.value)" />
               <select id="skinTypeSelect" class="input-box" style="padding:8px 10px;font-size:0.84rem;" aria-label="Your Skin Type" onchange="runRoutineAnalysis()">
@@ -371,11 +325,8 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
                 <option value="normal" ${currentSkin === 'normal' ? 'selected' : ''}>Skin: Balanced</option>
               </select>
             </div>
-
             <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:var(--bg-canvas);border-radius:14px;">
-              <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">
-                ${presetButtonsHtml}
-              </div>
+              <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">${presetButtonsHtml}</div>
               <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;">
                 <textarea id="rawInciTextarea" aria-label="Paste bottle ingredient list" class="textarea-box mono" rows="1" style="flex:1 1 130px;min-width:0;height:26px;min-height:26px;max-height:54px;resize:none;font-size:0.72rem;padding:4px 9px;border-radius:999px;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="Optional: paste bottle Ingredient List for pore check...">${escapeHtml(initialRawInci || '')}</textarea>
                 <button type="button" class="btn-secondary mono" style="padding:3px 8px;font-size:0.7rem;min-height:25px;flex-shrink:0;" onclick="pasteSampleComedogenicInci()">Try Sample Ingredient List</button>
@@ -384,7 +335,6 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               <div id="rawInciFeedbackBox"></div>
               ${renderPersonalizationBarHtml('indoor_dry', '')}
             </div>
-
             <div id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Vanity Bag Step">
               <button type="button" data-tex="all" class="vanity-light-btn active mono" aria-pressed="true" onclick="filterShelfByTexture('all', this)">All (${products.length})</button>
               <button type="button" data-tex="prep" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('prep', this)">Prep (${prepCount})</button>
@@ -393,52 +343,24 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               <button type="button" data-tex="spf" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('spf', this)">SPF 50 (${spfCount})</button>
               <button type="button" data-tex="pm" class="vanity-light-btn mono" aria-pressed="false" onclick="filterShelfByTexture('pm', this)">Night (${pmCount})</button>
             </div>
-
-            <div class="product-selector-grid" id="productSelectorGrid" data-ui="shelf-grid" style="margin-bottom:0;">
-              ${productCheckboxesHtml}
-            </div>
-
+            <div class="product-selector-grid" id="productSelectorGrid" data-ui="shelf-grid" style="margin-bottom:0;">${productCheckboxesHtml}</div>
             <div id="dl-selector-vanity-caddy" style="background:var(--bg-pouch);border-radius:16px;padding:9px 11px;color:var(--text-primary);">
               <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
                 <span class="mono" style="font-size:0.76rem;color:var(--text-primary);font-weight:600;">5-Step Daily Coverage &middot; <span id="dl-pouch-status-label" style="color:var(--rose-brand);">3 of 5 Routine Steps Covered</span></span>
-                <span id="dl-pouch-pct-pill" style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;background:var(--bg-surface);color:var(--rose-brand);font-size:0.71rem;font-weight:600;">
-                  <span style="width:6px;height:6px;border-radius:999px;background:#D97706;"></span>
-                  <span id="dl-pouch-pct-text">Tap +Cream or +SPF</span>
-                </span>
+                <span id="dl-pouch-pct-pill" style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;background:var(--bg-surface);color:var(--rose-brand);font-size:0.71rem;font-weight:600;"><span style="width:6px;height:6px;border-radius:999px;background:#D97706;"></span><span id="dl-pouch-pct-text">Tap +Cream or +SPF</span></span>
               </div>
               <div id="dl-pouch-bottles-grid" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;text-align:center;">
-                <div id="dl-pouch-card-0" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_0');window.__dlSelectVanitySlot(0);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;">
-                  <span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">01 &middot; PREP</span>
-                  <div id="dl-pouch-slot-name-0" style="font-size:0.72rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Glycolic 7%</div>
-                  <span id="dl-pouch-slot-sub-0" style="font-size:0.62rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">On Shelf</span>
-                </div>
-                <div id="dl-pouch-card-1" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_1');window.__dlSelectVanitySlot(1);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;">
-                  <span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">02 &middot; SERUM</span>
-                  <div id="dl-pouch-slot-name-1" style="font-size:0.72rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">C E Ferulic</div>
-                  <span id="dl-pouch-slot-sub-1" style="font-size:0.62rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">On Shelf</span>
-                </div>
-                <div id="dl-pouch-card-2" onclick="if(window.__dlTapPouchCreamSlot)window.__dlTapPouchCreamSlot();" style="background:var(--bg-empty-slot);border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;">
-                  <span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">03 &middot; CREAM</span>
-                  <div id="dl-pouch-slot-name-2" style="font-size:0.72rem;color:var(--rose-brand);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">+ Add Cream</div>
-                  <span id="dl-pouch-slot-sub-2" style="font-size:0.62rem;color:var(--text-secondary);font-weight:500;">Stops Sting</span>
-                </div>
-                <div id="dl-pouch-card-3" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_4');window.__dlSelectVanitySlot(4);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;">
-                  <span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">04 &middot; NIGHT</span>
-                  <div id="dl-pouch-slot-name-3" style="font-size:0.72rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Tretinoin</div>
-                  <span id="dl-pouch-slot-sub-3" style="font-size:0.62rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">+1 more</span>
-                </div>
-                <div id="dl-empty-bottle-slot" onclick="if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();" style="background:var(--bg-empty-slot);border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;">
-                  <span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">05 &middot; SPF 50</span>
-                  <div id="dl-pouch-slot-name-4" style="font-size:0.72rem;color:var(--rose-brand);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">+ Add SPF 50</div>
-                  <span id="dl-pouch-slot-sub-4" style="font-size:0.62rem;color:var(--text-secondary);">Daily Shield</span>
-                </div>
+                <div id="dl-pouch-card-0" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_0');window.__dlSelectVanitySlot(0);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;"><span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">01 &middot; PREP</span><div id="dl-pouch-slot-name-0" style="font-size:0.72rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Glycolic 7%</div><span id="dl-pouch-slot-sub-0" style="font-size:0.62rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">On Shelf</span></div>
+                <div id="dl-pouch-card-1" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_1');window.__dlSelectVanitySlot(1);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;"><span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">02 &middot; SERUM</span><div id="dl-pouch-slot-name-1" style="font-size:0.72rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">C E Ferulic</div><span id="dl-pouch-slot-sub-1" style="font-size:0.62rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">On Shelf</span></div>
+                <div id="dl-pouch-card-2" onclick="if(window.__dlTapPouchCreamSlot)window.__dlTapPouchCreamSlot();" style="background:var(--bg-empty-slot);border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;"><span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">03 &middot; CREAM</span><div id="dl-pouch-slot-name-2" style="font-size:0.72rem;color:var(--rose-brand);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">+ Add Cream</div><span id="dl-pouch-slot-sub-2" style="font-size:0.62rem;color:var(--text-secondary);font-weight:500;">Stops Sting</span></div>
+                <div id="dl-pouch-card-3" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('pouch_slot_4');window.__dlSelectVanitySlot(4);}" style="background:var(--bg-pouch-card,var(--bg-surface));border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;"><span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">04 &middot; NIGHT</span><div id="dl-pouch-slot-name-3" style="font-size:0.72rem;color:var(--text-pouch-card,var(--text-primary));font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Tretinoin</div><span id="dl-pouch-slot-sub-3" style="font-size:0.62rem;color:var(--sub-pouch-card,var(--sage-safe));font-weight:500;">+1 more</span></div>
+                <div id="dl-empty-bottle-slot" onclick="if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();" style="background:var(--bg-empty-slot);border-radius:11px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;"><span class="mono" style="font-size:0.6rem;color:var(--text-muted);font-weight:600;">05 &middot; SPF 50</span><div id="dl-pouch-slot-name-4" style="font-size:0.72rem;color:var(--rose-brand);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">+ Add SPF 50</div><span id="dl-pouch-slot-sub-4" style="font-size:0.62rem;color:var(--text-secondary);">Daily Shield</span></div>
               </div>
               <div style="display:none;"><div id="dl-pouch-progress-fill"></div></div>
             </div>
           </div>
         </div>
       </div>
-
       <div class="results-panel" id="liveResultsContainer" style="display:flex;flex-direction:column;justify-content:flex-start;">
         ${renderAnalysisResultHtml(initialAnalysis)}
       </div>
