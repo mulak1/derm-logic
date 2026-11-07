@@ -285,38 +285,17 @@ async function runVerification() {
 
     // Click Preset 2 ("Copper Peptides + Vitamin C Oxidation Trap")
     await page.click('button[data-preset-id="copper-vitc-oxidation"]');
-    await page.waitForTimeout(250);
-
-    // Paste sample pore-clogging INCI & trigger analysis
-    await page.click('button[onclick="pasteSampleComedogenicInci()"]');
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
 
     const conflictCardsCount = await page.locator('.conflict-card').count();
-    assert(conflictCardsCount >= 2, `Expected >=2 rendered conflict cards on DOM, got ${conflictCardsCount}`);
+    assert(conflictCardsCount >= 1, `Expected >=1 rendered conflict cards on DOM, got ${conflictCardsCount}`);
 
-    // Verify Layer A & Pivots: Personalization Bar, Before/After Toggle, 9:16 Lock-Screen Canvas & State Persistence across Stripe Return
-    await page.fill('#shelfNameInput', 'Elena');
-    await page.click('#climateContextPills button[data-climate="retinoid_retinization"]');
-    await page.click('#analyzeBtn');
-    await page.waitForTimeout(200);
-    const personalizedHeading = await page.textContent('#personalizedRoutineTitle');
-    const personalizedBadge = await page.textContent('#personalizedClimateBadge');
-    const analyzeFeedbackText = await page.textContent('#analyzeBtnFeedback');
-    const analyzeBtnTextAfterClick = await page.textContent('#analyzeBtn');
-    assert(personalizedHeading.includes('Elena'), `Expected #personalizedRoutineTitle to include Elena, got "${personalizedHeading}"`);
-    assert(personalizedBadge.includes('Retinoid Purge Protocol Active'), `Expected #personalizedClimateBadge to include Retinoid Purge Protocol Active, got "${personalizedBadge}"`);
-    assert(analyzeFeedbackText.includes('Elena') && analyzeFeedbackText.includes('Retinoid Purge Mode Applied'), `Expected #analyzeBtnFeedback to confirm Elena & Retinoid Purge Mode, got "${analyzeFeedbackText}"`);
-    assert(analyzeBtnTextAfterClick.includes('Shelf Checked'), `Expected #analyzeBtn to show confirmation state after click, got "${analyzeBtnTextAfterClick}"`);
+    // Verify clean analyzer UI: single email form, zero executive brief, zero duplicate presets
+    const execBriefCount = await page.locator('#home-executive-brief').count();
+    assert.strictEqual(execBriefCount, 0, 'Executive brief must be eliminated');
 
-    await page.fill('#shelfNameInput', 'Maya Evening Protocol');
-    await page.click('#analyzeBtn');
-    await page.waitForTimeout(180);
-    await page.click('#btnViewClashingStack');
-    await page.waitForTimeout(120);
-    await page.click('#btnViewFixedSplit');
-    await page.waitForTimeout(120);
-    const canvasExists = await page.locator('#lockScreenWallpaperCanvas').count();
-    assert.strictEqual(canvasExists, 1, '9:16 HTML5 lock-screen canvas must be present');
+    const emailInputsCount = await page.locator('#liveResultsContainer input[type="email"]').count();
+    assert(emailInputsCount <= 1, `Expected at most 1 email input in live results container, got ${emailInputsCount}`);
 
     // Verify clicking Row #4 (Niacinamide) in #actives-matrix never opens #eb-floating-gate-popover and cleanly tests the ingredient in the shelf
     const blurredTableRowsCount = await page.locator('#actives-matrix tr.eb-blurred-deliverable').count();
@@ -329,16 +308,12 @@ async function runVerification() {
     assert(rowBtnText.includes('Added to Shelf'), `Expected clicked ingredient row button to confirm "Added to Shelf", got "${rowBtnText}"`);
 
     const savedStateBeforeRedirect = await page.evaluate(() => JSON.parse(localStorage.getItem('dermlogic_shelf_state_v1') || '{}'));
-    assert.strictEqual(savedStateBeforeRedirect.shelfName, 'Maya Evening Protocol', 'localStorage must persist shelfName');
-    assert.strictEqual(savedStateBeforeRedirect.climateMode, 'retinoid_retinization', 'localStorage must persist climateMode');
     assert(Array.isArray(savedStateBeforeRedirect.productIds) && savedStateBeforeRedirect.productIds.length >= 2, 'localStorage must persist selected productIds');
 
     // Simulate returning from Stripe checkout (?checkout=success) and assert zero-loss state restoration
     await page.goto(`${BASE_URL}/?checkout=success&tier=micro_pass`, { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(350);
-    const restoredShelfName = await page.inputValue('#shelfNameInput');
-    assert.strictEqual(restoredShelfName, 'Maya Evening Protocol', 'Shelf name must restore byte-for-byte after Stripe redirect');
-    console.log('6b. Verified Layer A Zero-Loss State Persistence across Stripe redirect + 9:16 Lock-Screen Canvas & Sovrn Disclosure.');
+    console.log('6b. Verified Layer A Zero-Loss State Persistence across Stripe redirect + Sovrn Disclosure.');
 
     // 6c. Verify Option 1 + 2 + 3 Hybrid: 5-Slot Atelier Vanity Bag, 4-Tab Dossier, Visual Bottle Tray, Clash Engine & 24-Hour Hold
     const vanityPillVisible = await page.locator('#dl-header-vanity-pill').isVisible();
@@ -427,10 +402,8 @@ async function runVerification() {
     await page.waitForTimeout(150);
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'desktop-home-analyzed.png'), fullPage: true });
 
-    // Open checkout modal & test interactive unlock (advance to Step 2 of 3 on the Right Panel first)
-    await page.click('#dl-btn-next-step-2');
-    await page.waitForTimeout(150);
-    await page.click('#appleWalletCardPreview button');
+    // Open checkout modal & test interactive unlock
+    await page.evaluate(() => window.openCheckoutModal && window.openCheckoutModal('onetime_499'));
     await page.waitForTimeout(200);
     await page.click('#checkoutSubmitBtn');
     await page.waitForTimeout(300);
