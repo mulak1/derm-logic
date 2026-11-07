@@ -22,32 +22,32 @@ function escapeHtml(str) {
 const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="34" height="34" role="img" aria-label="DermLogic Formulation Atelier Emblem" style="flex-shrink:0;display:block;"><circle cx="20" cy="20" r="19" fill="#F3E1E5" stroke="#8A3448" stroke-width="1.4"/><circle cx="20" cy="20" r="15" fill="none" stroke="#8E6B75" stroke-width="0.75" stroke-dasharray="2 1.5"/><path d="M20 9.5 C20 9.5 26.8 17.6 26.8 22.6 C26.8 26.4 23.8 29.5 20 29.5 C16.2 29.5 13.2 26.4 13.2 22.6 C13.2 17.6 20 9.5 20 9.5 Z" fill="#8A3448"/><path d="M16.5 21.2 C16.2 23.6 17.6 25.8 19.8 26.3" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round"/><path d="M20 29.5 C22.8 29.5 25.5 31.2 26.5 33.2 C23.6 33.6 21.2 32.1 20 29.5 Z" fill="#285B44"/><path d="M20 29.5 C17.2 29.5 14.5 31.2 13.5 33.2 C16.4 33.6 18.8 32.1 20 29.5 Z" fill="#285B44" opacity="0.85"/><circle cx="20" cy="17.2" r="1.3" fill="#FFFFFF"/></svg>`;
 const SHARED_CSS = `
   :root {
-    --bg-canvas: #FDF8F6; --bg-oat: #F8EFE6; --bg-pouch: #F3E1E5; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
-    --bg-empty-slot: #EAE0D7; --bg-empty-slot-active: #E3D3C8; --text-empty-slot: #7D5660;
-    --bg-pouch-card: #FFFFFF; --text-pouch-card: #3A1F27; --sub-pouch-card: #285B44;
-    --bg-deep: #3A1F27; --ink-on-deep: #FDF8F6; --border-hairline: transparent; --border-strong: transparent;
-    --text-primary: #3A1F27; --text-secondary: #6E4B55; --text-muted: #8E6B75;
-    --rose-brand: #8A3448; --rose-brand-hover: #722739; --accent-ink: #FFFFFF; --rose-pill-bg: #EED6DC; --rose-pill-border: transparent;
-    --sage-safe: #285B44; --sage-bg: #E9F4EE; --sage-border: transparent;
-    --honey-warn: #945227; --honey-bg: #FBF0E4; --honey-border: transparent;
-    --berry-clash: #8A3448; --berry-bg: #F6E3E7; --berry-border: transparent;
+    --bg-canvas: #FAF8F5; --bg-oat: #F3ECE2; --bg-pouch: #EAE2D5; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
+    --bg-empty-slot: #E4DCD0; --bg-empty-slot-active: #DDD3C5; --text-empty-slot: #6E5C50;
+    --bg-pouch-card: #FFFFFF; --text-pouch-card: #151417; --sub-pouch-card: #1E4D38;
+    --bg-deep: #151417; --ink-on-deep: #FAF8F5; --border-hairline: #EAE3D7; --border-strong: #D5CBBF;
+    --text-primary: #151417; --text-secondary: #57514B; --text-muted: #8A8177;
+    --rose-brand: #9E3D31; --rose-brand-hover: #832E24; --accent-ink: #FFFFFF; --rose-pill-bg: #FBECE8; --rose-pill-border: #F5CAC5;
+    --sage-safe: #1E4D38; --sage-bg: #EDF7F1; --sage-border: #C8E6D5;
+    --honey-warn: #A2591F; --honey-bg: #FCF4EB; --honey-border: #F3DCBF;
+    --berry-clash: #9E3D31; --berry-bg: #FCEEEC; --berry-border: #F5CAC5;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --margin: 5vw; --step-small: clamp(0.875rem, 0.82rem + 0.15vw, 0.9375rem); --step-body: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
     --step-lead: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem); --step-head: clamp(2rem, 1.45rem + 2.4vw, 3.35rem); --step-hero: clamp(3.5rem, 7.4vw, 6.85rem);
     --radius-shell: 28px; --radius-card: 22px; --radius-input: 999px; --radius-pill: 999px; --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   }
   body.vanity-night, html[data-theme="night"] body {
-    --bg-canvas: #221319; --bg-oat: #2C1921; --bg-pouch: #371F29; --bg-surface: #311C25; --bg-porcelain: #3B222D;
-    --bg-empty-slot: #26151C; --bg-empty-slot-active: #3F2430; --text-empty-slot: #C9A3AC;
-    --bg-pouch-card: #311C25; --text-pouch-card: #FDF6F7; --sub-pouch-card: #88C9A8;
-    --bg-deep: #1C0F14; --ink-on-deep: #FDF6F7; --border-hairline: transparent; --border-strong: transparent;
-    --text-primary: #FDF6F7; --text-secondary: #E0C6CD; --text-muted: #B8969F;
-    --rose-brand: #E8A5B2; --rose-brand-hover: #F2B8C4; --accent-ink: #221319; --rose-pill-bg: #462834; --rose-pill-border: transparent;
-    --sage-safe: #88C9A8; --sage-bg: #1B2D24; --sage-border: transparent;
-    --honey-warn: #E8B98A; --honey-bg: #36251C; --honey-border: transparent;
-    --berry-clash: #F09CA9; --berry-bg: #422028; --berry-border: transparent;
+    --bg-canvas: #121113; --bg-oat: #1C1A1E; --bg-pouch: #262429; --bg-surface: #1E1C21; --bg-porcelain: #2A272E;
+    --bg-empty-slot: #1A181C; --bg-empty-slot-active: #2C2830; --text-empty-slot: #BDB5AB;
+    --bg-pouch-card: #1E1C21; --text-pouch-card: #FAF8F5; --sub-pouch-card: #88C9A8;
+    --bg-deep: #0D0C0E; --ink-on-deep: #FAF8F5; --border-hairline: #2E2B33; --border-strong: #44404C;
+    --text-primary: #FAF8F5; --text-secondary: #D4CDC5; --text-muted: #9E968D;
+    --rose-brand: #E89E92; --rose-brand-hover: #F2B2A7; --accent-ink: #121113; --rose-pill-bg: #382422; --rose-pill-border: #523532;
+    --sage-safe: #88C9A8; --sage-bg: #15291E; --sage-border: #234733;
+    --honey-warn: #E8B98A; --honey-bg: #302217; --honey-border: #4D3725;
+    --berry-clash: #E89E92; --berry-bg: #382422; --berry-border: #523532;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border-color: transparent; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background-color: var(--bg-canvas); color: var(--text-primary); font-family: var(--font-sans); font-weight: 400; font-size: 16px; line-height: 1.58; overflow-x: clip; -webkit-font-smoothing: antialiased; transition: background-color 320ms var(--ease-spring), color 320ms var(--ease-spring); }
   .serif-display, h1, h2, h3 { font-family: 'Newsreader', Georgia, serif; font-weight: 400; letter-spacing: -0.025em; line-height: 1.08; }
   .serif-italic { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 400; }
@@ -101,9 +101,9 @@ const SHARED_CSS = `
   .editorial-photo-caption { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: var(--step-small); color: var(--text-secondary); }
   /* Interactive Shelf Audit Workbench ([data-ui]) */
   .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
-  .grader-card { background: var(--bg-surface); border-radius: 28px; padding: 20px; min-width: 0; max-width: 100%; overflow: hidden; }
-  .results-panel { background: var(--bg-oat); border-radius: 28px; padding: 20px; min-width: 0; max-width: 100%; overflow: hidden; }
-  .porcelain-vessel-core { background: var(--bg-surface); border-radius: 22px; padding: 20px 22px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 14px; min-width: 0; max-width: 100%; overflow: hidden; }
+  .grader-card { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; box-shadow: 0 4px 20px -4px rgba(21,20,23,0.05); }
+  .results-panel { background: var(--bg-oat); border: 1px solid var(--border-hairline); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; box-shadow: 0 4px 20px -4px rgba(21,20,23,0.05); }
+  .porcelain-vessel-core { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 22px; padding: 22px 24px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 14px; min-width: 0; max-width: 100%; overflow: hidden; box-shadow: 0 2px 12px -2px rgba(21,20,23,0.04); }
   #textureFilterTabs { display: grid !important; grid-template-columns: repeat(6, minmax(0, 1fr)) !important; gap: 4px !important; width: 100%; background: var(--bg-oat); padding: 4px; border-radius: 999px; }
   #textureFilterTabs .vanity-light-btn { padding: 6px 4px !important; font-size: 0.76rem !important; white-space: nowrap !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; border-radius: 999px; min-height: 28px; }
   .shelf-search-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 8px; align-items: center; }
@@ -116,8 +116,8 @@ const SHARED_CSS = `
   .preset-chip span { display: none; }
   .field-label { display: block; font-size: 0.84rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
   .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: 74px; gap: 8px; flex: 1 1 auto; min-height: 244px; max-height: 268px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--rose-pill-bg) transparent; padding: 10px; border-radius: 18px; background: var(--bg-canvas); margin-bottom: 0; align-content: start; }
-  .prod-check-item { position: relative; display: flex; align-items: stretch; gap: 6px; padding: 9px 11px; height: 74px; min-height: 74px; border-radius: 14px; background: var(--bg-surface); border: none; cursor: pointer; font-size: 0.84rem; transition: background-color 180ms ease-out; overflow: hidden; }
-  .prod-check-item.selected { background: var(--rose-pill-bg); }
+  .prod-check-item { position: relative; display: flex; align-items: stretch; gap: 6px; padding: 9px 11px; height: 74px; min-height: 74px; border-radius: 14px; background: var(--bg-surface); border: 1px solid var(--border-hairline); cursor: pointer; font-size: 0.84rem; transition: background-color 180ms ease-out, border-color 180ms ease-out; overflow: hidden; }
+  .prod-check-item.selected { background: var(--rose-pill-bg); border-color: var(--rose-brand); }
   .prod-check-item input[type="checkbox"] { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
   [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); border-radius: 16px; padding: 9px 13px; color: var(--text-primary); font-size: 16px; border: none; }
   .input-box:focus, .textarea-box:focus { outline: 2px solid var(--rose-brand); }

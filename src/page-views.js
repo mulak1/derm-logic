@@ -159,9 +159,9 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
   const featuredSeoLinks = featuredSeoPages.map((p, idx) => `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;justify-content:space-between;gap:12px;"><div><div style="height:128px;border-radius:8px;overflow:hidden;margin-bottom:12px;"><img src="${pairPortraits[idx % pairPortraits.length]}" alt="${escapeHtml(p.title)}" loading="lazy" style="width:100%;height:128px;object-fit:cover;object-position:center 24%;display:block;" /></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;"><span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(p.category)}</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.15rem;line-height:1.24;color:var(--text-primary);margin-bottom:8px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.56;">${escapeHtml(String(p.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor)[^)]*\)/gi, ''))}</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;gap:8px;flex-wrap:wrap;"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Read Layering Guide &rarr;</a><a href="/?products=${encodeURIComponent((p.presetProducts || ['skinceuticals-ce-ferulic']).join(','))}#analyzer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.84rem;">Test With My Shelf &rarr;</a></div></div>`).join('');
   const homeSwatchesHtml = renderPorcelainSwatchCards(prioritizedIngredients.slice(0, 3));
   const bodyHtml = `
-    <section class="hero-section" style="padding-top:36px;padding-bottom:48px;">
+    <section class="hero-section" style="padding-top:48px;padding-bottom:64px;">
       <div class="container">
-        <div style="max-width:740px;margin:12px auto 26px;text-align:center;">
+        <div style="max-width:740px;margin:12px auto 32px;text-align:center;">
           <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">Cosmetic Chemist Routine Analyzer &middot; ${products.length} Cult Formulas</div>
           <h1 class="hero-h1" style="font-size:clamp(1.75rem,3.2vw,2.5rem);line-height:1.2;margin:0 0 10px;max-width:none;">Is your skincare shelf secretly canceling itself out?</h1>
           <p class="hero-sub" style="font-size:1.02rem;color:var(--text-secondary);line-height:1.55;margin:0 auto;max-width:62ch;">Select your bottles below to check for pH clashes, avoid inactive combinations, and see your clean morning and bedtime schedule.</p>
@@ -176,7 +176,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
         })}
       </div>
     </section>
-    <section class="section-block-alt" id="viscosity-sequencer" style="padding:36px 0;">
+    <section class="section-block-alt" id="viscosity-sequencer" style="padding:72px 0;">
       <div class="container">
         <div style="max-width:64ch;margin-bottom:18px;">
           <h2 class="serif-display" style="font-size:var(--step-head);margin-bottom:10px;">
