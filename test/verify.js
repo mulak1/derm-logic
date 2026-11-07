@@ -251,7 +251,7 @@ async function runVerification() {
     const initialThemeAttr = await page.getAttribute('html', 'data-theme');
     assert.strictEqual(initialThemeAttr, 'day', 'Initial html[data-theme] must be day');
     const dayBg = await page.evaluate(() => window.getComputedStyle(document.body).backgroundColor);
-    assert.ok(dayBg === 'rgb(250, 248, 245)' || dayBg === 'rgb(253, 248, 246)', `Day Mode body background must be porcelain canvas, got ${dayBg}`);
+    assert.ok(dayBg === 'rgb(250, 248, 245)' || dayBg === 'rgb(253, 248, 246)' || dayBg === 'rgb(252, 250, 247)', `Day Mode body background must be porcelain canvas, got ${dayBg}`);
 
     await page.click('#vanityLightToggle button[data-theme-mode="night"]');
     await page.waitForTimeout(380);
@@ -280,7 +280,7 @@ async function runVerification() {
     }));
     assert.strictEqual(restoredState.theme, 'day', 'Toggling Daylight Gallery must restore html[data-theme="day"]');
     assert.strictEqual(restoredState.hasClass, false, 'Toggling Daylight Gallery must remove body.vanity-night');
-    assert.ok(restoredState.bg === 'rgb(250, 248, 245)' || restoredState.bg === 'rgb(253, 248, 246)', `Day Mode restored background must be porcelain canvas, got ${restoredState.bg}`);
+    assert.ok(restoredState.bg === 'rgb(250, 248, 245)' || restoredState.bg === 'rgb(253, 248, 246)' || restoredState.bg === 'rgb(252, 250, 247)', `Day Mode restored background must be porcelain canvas, got ${restoredState.bg}`);
     assert.strictEqual(restoredState.stored, 'day', 'Daylight Gallery must persist dermlogic_vanity_theme=day in localStorage');
 
     // Click Preset 2 ("Copper Peptides + Vitamin C Oxidation Trap")

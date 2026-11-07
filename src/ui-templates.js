@@ -22,15 +22,15 @@ function escapeHtml(str) {
 const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="34" height="34" role="img" aria-label="DermLogic Formulation Atelier Emblem" style="flex-shrink:0;display:block;"><circle cx="20" cy="20" r="19" fill="#F3E1E5" stroke="#8A3448" stroke-width="1.4"/><circle cx="20" cy="20" r="15" fill="none" stroke="#8E6B75" stroke-width="0.75" stroke-dasharray="2 1.5"/><path d="M20 9.5 C20 9.5 26.8 17.6 26.8 22.6 C26.8 26.4 23.8 29.5 20 29.5 C16.2 29.5 13.2 26.4 13.2 22.6 C13.2 17.6 20 9.5 20 9.5 Z" fill="#8A3448"/><path d="M16.5 21.2 C16.2 23.6 17.6 25.8 19.8 26.3" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round"/><path d="M20 29.5 C22.8 29.5 25.5 31.2 26.5 33.2 C23.6 33.6 21.2 32.1 20 29.5 Z" fill="#285B44"/><path d="M20 29.5 C17.2 29.5 14.5 31.2 13.5 33.2 C16.4 33.6 18.8 32.1 20 29.5 Z" fill="#285B44" opacity="0.85"/><circle cx="20" cy="17.2" r="1.3" fill="#FFFFFF"/></svg>`;
 const SHARED_CSS = `
   :root {
-    --bg-canvas: #FAF8F5; --bg-oat: #F3ECE2; --bg-pouch: #EAE2D5; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
-    --bg-empty-slot: #E4DCD0; --bg-empty-slot-active: #DDD3C5; --text-empty-slot: #6E5C50;
-    --bg-pouch-card: #FFFFFF; --text-pouch-card: #151417; --sub-pouch-card: #1E4D38;
-    --bg-deep: #151417; --ink-on-deep: #FAF8F5; --border-hairline: #EAE3D7; --border-strong: #D5CBBF;
-    --text-primary: #151417; --text-secondary: #57514B; --text-muted: #8A8177;
-    --rose-brand: #9E3D31; --rose-brand-hover: #832E24; --accent-ink: #FFFFFF; --rose-pill-bg: #FBECE8; --rose-pill-border: #F5CAC5;
-    --sage-safe: #1E4D38; --sage-bg: #EDF7F1; --sage-border: #C8E6D5;
-    --honey-warn: #A2591F; --honey-bg: #FCF4EB; --honey-border: #F3DCBF;
-    --berry-clash: #9E3D31; --berry-bg: #FCEEEC; --berry-border: #F5CAC5;
+    --bg-canvas: #FCFAF7; --bg-oat: #F6F1EB; --bg-pouch: #EEE7DE; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
+    --bg-empty-slot: #EAE3D9; --bg-empty-slot-active: #DFD7CC; --text-empty-slot: #57514B;
+    --bg-pouch-card: #FFFFFF; --text-pouch-card: #0F172A; --sub-pouch-card: #166534;
+    --bg-deep: #0F172A; --ink-on-deep: #FCFAF7; --border-hairline: #E8E0D5; --border-strong: #D6CBC0;
+    --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #64748B;
+    --rose-brand: #B43444; --rose-brand-hover: #982836; --accent-ink: #FFFFFF; --rose-pill-bg: #FDF2F4; --rose-pill-border: #F9CDD5;
+    --sage-safe: #166534; --sage-bg: #F0FDF4; --sage-border: #BBF7D0;
+    --honey-warn: #B45309; --honey-bg: #FFFBEB; --honey-border: #FDE68A;
+    --berry-clash: #BE123C; --berry-bg: #FFF1F2; --berry-border: #FECDD3;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --margin: 5vw; --step-small: clamp(0.875rem, 0.82rem + 0.15vw, 0.9375rem); --step-body: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
     --step-lead: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem); --step-head: clamp(2rem, 1.45rem + 2.4vw, 3.35rem); --step-hero: clamp(3.5rem, 7.4vw, 6.85rem);
