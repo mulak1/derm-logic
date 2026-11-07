@@ -73,9 +73,9 @@ function buildExactBaselineStyles(cfg) {
   #stickyDock { display: none !important; }
   #eb-ouibounce-toast { display: none; position: fixed; bottom: 62px; right: 16px; max-width: 350px; z-index: 9991; background: ${t.cardBg}; color: ${t.textPrimary}; border: none; border-radius: ${t.radiusCard}; padding: 15px; font-family: ${t.fontSans}; }
   #eb-cmdk-modal { display: none; position: fixed; inset: 0; z-index: 9995; background: rgba(15, 23, 42, 0.45); align-items: flex-start; justify-content: center; padding-top: 70px; font-family: ${t.fontSans}; }
-  #eb-mobile-firstfold-bar { display: none !important; }
+  #eb-deliverable-curtain, #eb-pseo-quick-bar, #eb-mobile-firstfold-bar, #eb-pseo-hero-split { display: none !important; }
   @media (max-width: 768px) {
-    #eb-mobile-firstfold-bar { display: flex !important; margin: 8px 0 10px 0 !important; } .top-ticker { display: none !important; } .nav-links { flex-wrap: wrap !important; overflow-x: visible !important; white-space: normal !important; }
+    #eb-deliverable-curtain, #eb-pseo-quick-bar, #eb-mobile-firstfold-bar, #eb-pseo-hero-split { display: none !important; } .top-ticker { display: none !important; } .nav-links { flex-wrap: wrap !important; overflow-x: visible !important; white-space: normal !important; }
     .hero-section, main > section:first-child { padding-top: 24px !important; } main h1 { font-size: 2.05rem !important; line-height: 1.22 !important; margin-top: 4px !important; margin-bottom: 14px !important; }
     .hero-sub, .subhead, .editorial-subhead, .hero-lead { font-size: 1rem !important; line-height: 1.48 !important; margin-bottom: 6px !important; } .site-header .btn, header .btn { padding: 6px 10px !important; font-size:13px !important; }
     .preset-row { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 6px !important; } #eb-bottom-conversion-suite { padding: 0 14px; margin: 28px auto 82px auto; } .eb-panel-card, #eb-deliverable-curtain { padding: 16px !important; }
@@ -414,6 +414,7 @@ function buildClientRuntimeScript(cfg) {
     }).catch(function(){});
   };
   window.__ebMountDeliverableCurtain = function(entityOverride, customBadge, customDiagLine) {
+    if (CFG.moduleId === 'derm_logic') return;
     if (entityOverride) window.__ebActiveEntity = String(entityOverride);
     var pName = window.location.pathname || '/';
     var isHubOrDir = pName === '/directory' || pName === '/leaderboard' || new RegExp('^/(celebrity|bottle|ingredient|brand|concern)(/|$)').test(pName);

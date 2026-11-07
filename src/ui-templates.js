@@ -309,13 +309,10 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:var(--bg-canvas);border-radius:14px;">
               <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">${presetButtonsHtml}</div>
-              <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;">
-                <textarea id="rawInciTextarea" aria-label="Paste bottle ingredient list" class="textarea-box mono" rows="1" style="flex:1 1 130px;min-width:0;height:30px;min-height:30px;max-height:54px;resize:none;font-size:16px;padding:4px 9px;border-radius:999px;" oninput="if(window.__inciTimer)clearTimeout(window.__inciTimer);window.__inciTimer=setTimeout(function(){runRoutineAnalysis();},380);" placeholder="Optional: paste bottle Ingredient List for pore check...">${escapeHtml(initialRawInci || '')}</textarea>
-                <button type="button" class="btn-secondary mono" style="padding:3px 8px;font-size:0.7rem;min-height:25px;flex-shrink:0;" onclick="pasteSampleComedogenicInci()">Try Sample Ingredient List</button>
-                <button type="button" id="analyzeBtn" class="btn-secondary mono" style="padding:3px 10px;font-size:0.71rem;min-height:25px;flex-shrink:0;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;" onclick="runRoutineAnalysis(null, true)"><span>Check My Bathroom Shelf</span></button>
+              <div style="display:none;">
+                <textarea id="rawInciTextarea">${escapeHtml(initialRawInci || '')}</textarea>
+                <button type="button" id="analyzeBtn" onclick="runRoutineAnalysis(null, true)">Check</button>
               </div>
-              <div id="rawInciFeedbackBox"></div>
-              ${renderPersonalizationBarHtml('indoor_dry', '')}
             </div>
             <div id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Vanity Bag Step">
               <button type="button" data-tex="all" class="vanity-light-btn active mono" aria-pressed="true" onclick="filterShelfByTexture('all', this)">All (${products.length})</button>
@@ -509,7 +506,7 @@ function renderAnalysisResultHtml(res) {
     { title: amShield ? '3. Daily SPF 50+ Shield' : '3. Morning SPF 50', sub: amShield ? shortBottle(amShield) : '+ Tap to add Joseon SPF ($18)', badge: amShield ? 'SPF 50' : '+ $18', click: amShield ? '' : 'if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();' }
   ];
   const renderStepRow = (st, isPm) => `<div ${st.click ? `role="button" onclick="${st.click}"` : ''} style="padding:8px 11px;background:${isPm ? 'rgba(244,239,232,0.09)' : 'var(--bg-surface)'};border-radius:11px;display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:7px;min-width:0;${st.click ? 'cursor:pointer;' : ''}"><div style="min-width:0;font-size:0.8rem;line-height:1.3;${isPm ? 'color:#F4EFE8;' : ''}"><strong style="${isPm ? '' : 'color:var(--text-primary);'}display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.title)}</strong><span style="color:${st.click ? (isPm ? '#F7DFAD' : 'var(--rose-brand)') : (isPm ? '#EED6DC' : 'var(--text-secondary)')};font-size:0.73rem;font-weight:${st.click ? '600' : '400'};display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.sub)}</span></div><span class="mono" style="font-size:0.7rem;padding:2px 7px;border-radius:999px;background:${isPm ? '#7A2332' : 'var(--rose-pill-bg)'};color:${isPm ? '#F4EFE8' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;white-space:nowrap;">${st.badge}</span></div>`;
-  const amStepsHtml = renderStepRow(amDynamicSteps[0], false) + `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 11px;background:var(--rose-pill-bg);border:1px dashed var(--rose-pill-border);border-radius:11px;cursor:pointer;margin-bottom:7px;filter:none !important;"><strong style="color:var(--rose-brand);display:block;font-size:0.76rem;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Steps 2–3 &amp; $26 Dupe Locked ($0)</strong><span style="color:var(--text-secondary);font-size:0.71rem;display:block;margin-top:2px;">Enter email below ($0) to reveal Morning Steps 2–3 &amp; wait timer &darr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${amDynamicSteps.slice(1).map((st) => renderStepRow(st, false)).join('')}</div>`;
+  const amStepsHtml = amDynamicSteps.map((st) => renderStepRow(st, false)).join('');
   const cMode = String(res.climateMode || 'indoor_dry');
   const pmStep2Obj = cMode === 'pregnancy_nursing'
     ? { title: '2. Pregnancy-Safe Active', sub: 'Swap Retinoid for Azelaic 15%' }
@@ -521,7 +518,7 @@ function renderAnalysisResultHtml(res) {
     { title: pmStep2Obj.title, sub: pmStep2Obj.sub, badge: 'Night 2', click: '' },
     { title: pmCream ? '3. Soothing Barrier Cream' : '3. Barrier Cream', sub: pmCream ? shortBottle(pmCream) : '+ Tap to add Aestura 365 ($32)', badge: pmCream ? 'Cushion' : '+ $32', click: pmCream ? '' : 'if(window.__dlTapPouchCreamSlot)window.__dlTapPouchCreamSlot();' }
   ];
-  const pmStepsHtml = `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:12px 11px;background:rgba(244,239,232,0.11);border:1px dashed rgba(243,225,229,0.45);border-radius:11px;cursor:pointer;margin-bottom:7px;filter:none !important;"><strong style="color:#F7DFAD;display:block;font-size:0.76rem;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Bedtime 3-Step Recovery Order Locked</strong><span style="color:#EED6DC;font-size:0.71rem;display:block;margin-top:3px;">Enter email below ($0) to reveal Evening Order + Dupe, or unlock $1.99 Complete Routine Kit &darr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${pmDynamicSteps.map((st) => renderStepRow(st, true)).join('')}</div>`;
+  const pmStepsHtml = pmDynamicSteps.map((st) => renderStepRow(st, true)).join('');
   const poreCount = res.comedogenicFlags.length;
   const topPoreName = poreCount > 0 ? String(res.comedogenicFlags[0].commonName || res.comedogenicFlags[0].inciName).split('(')[0].trim() : '';
   const poreSummaryText = poreCount === 0 ? 'Pore-Safe' : `Pore Alert (${topPoreName})`;
@@ -543,26 +540,16 @@ function renderAnalysisResultHtml(res) {
     <div class="porcelain-vessel-core" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;">
       <div style="min-width:0;display:flex;flex-direction:column;gap:9px;flex:1;">
         <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
-            <span class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;">Step 2 of 2 &middot; Your Fixed Routine</span>
-            <div style="display:inline-flex;align-items:center;gap:5px;flex-wrap:wrap;">
-              <span class="${badgeClass} mono" style="padding:2px 8px;font-size:0.71rem;" id="compatibilityScoreValue">${conflictCount === 0 ? 'Calm & Safe' : `${conflictCount} Clashes Fixed`}</span>
-              <span class="badge-safe mono" style="padding:2px 8px;font-size:0.71rem;" id="wastedShelfValueReadout">${conflictCount === 0 ? `$${totalUsd} Safe` : `$${wastedUsd}/$${totalUsd} Saved`}</span>
-              <span class="mono" style="font-size:0.71rem;color:var(--text-secondary);">${escapeHtml(poreSummaryText)}</span>
-              <button type="button" class="mono" onclick="if(window.__dlOpenVanityDrawer)window.__dlOpenVanityDrawer('results_top')" style="padding:2px 8px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;font-size:0.71rem;font-weight:600;cursor:pointer;">5-Slot Bag &rarr;</button>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+            <span class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;">Step 2 of 2 &middot; Your Custom Routine</span>
+            <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
+              <span class="${badgeClass} mono" style="padding:2px 8px;font-size:0.72rem;" id="compatibilityScoreValue">${conflictCount === 0 ? '✓ Calm & Safe' : `${conflictCount} Clashes Resolved`}</span>
+              <span class="badge-safe mono" style="padding:2px 8px;font-size:0.72rem;" id="wastedShelfValueReadout">${conflictCount === 0 ? `$${totalUsd} Safe` : `$${wastedUsd}/$${totalUsd} Saved`}</span>
             </div>
           </div>
           ${renderPersonalizedResultsHeaderHtml(res)}
         </div>
-        <div id="beforeAfterSplitBar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding:6px 10px;border-radius:14px;background:var(--bg-canvas);min-width:0;">
-          <span id="beforeAfterStatusText" style="display:none;">Morning &amp; Night Split</span>
-          <div style="display:none;"><div id="dl-potency-meter-fill"></div></div>
-          <div>${renderPersonaInteractiveWorkbenchAddons().pouchBudgetToggleHtml}</div>
-          <div class="vanity-light-pill" role="group" aria-label="Compare Safe Morning & Night Split vs Layered All at Once" style="padding:2px;gap:2px;flex-shrink:0;">
-            <button type="button" id="btnViewFixedSplit" class="vanity-light-btn active mono" style="font-size:0.71rem;padding:3px 8px;min-height:24px;" aria-pressed="true" onclick="window.__dlToggleBeforeAfter('fixed', this)">Split AM/PM</button>
-            <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.71rem;padding:3px 8px;min-height:24px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Clashes (${conflictCount})</button>
-          </div>
-        </div>
+        <div id="beforeAfterSplitBar" style="display:none;"></div>
         <!-- True 3-Tab Switcher at the Top of the Stage (Only 1 View Open at a Time) -->
         <div id="dl-results-step-bar" role="tablist" aria-label="Routine Details" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:var(--bg-oat);padding:4px;border-radius:999px;">
           <button type="button" id="dl-btn-next-step-2" class="vanity-light-btn active mono" style="padding:5px 6px;font-size:0.74rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(2)">1 &middot; AM &amp; PM Order</button>
@@ -571,7 +558,7 @@ function renderAnalysisResultHtml(res) {
         </div>
         <!-- Tab 1 (Default Active): Unmasked Primary Clash Proof + Spacious Side-by-Side Morning & Bedtime Order + 1 Calm Summary Card -->
         <div id="dl-res-step-2" style="display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;flex:1;"><span id="walletConflicts" style="display:none;"></span>
-          ${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;"><button type="button" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Conflict #2 &amp; $26 Clinical Dupe Swap — Enter Email Below Free ($0) &darr;</button><button type="button" class="dl-locked-spec-badge mono" onclick="openCheckoutModal('onetime_499')" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--bg-canvas);color:var(--text-primary);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Complete AM/PM Calendar &amp; Dupe Sheet ($1.99 Kit) &rarr;</button></div><div class="dl-unlocked-c2-proof" style="display:none;margin-top:4px;padding:7px 10px;border-radius:10px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.75rem;font-weight:600;">✓ Conflict #2 Unlocked ($0): Secondary pH &amp; Barrier Over-Exfoliation Swap Revealed + $32 Aestura 365 Dupe.</div></div>` : pastedBoxHtml}
+          ${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}</div>` : pastedBoxHtml}
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;min-width:0;flex:1;" id="appleWalletCardPreview">
             <div style="padding:16px;border-radius:18px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
@@ -581,12 +568,6 @@ function renderAnalysisResultHtml(res) {
                 </div>
                 ${amStepsHtml}
               </div>
-              <a href="#dl-inline-sample-email" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);return false;" class="btn-secondary mono dl-locked-badge-c2" style="width:100%;font-size:0.74rem;padding:8px 10px;min-height:34px;margin-top:6px;background:var(--rose-pill-bg);color:var(--rose-brand);text-decoration:none;justify-content:center;" data-no-bag-inject="1">
-                <span>Reveal $26 Vitamin C Dupe (Save $156 &middot; $0 Email) &darr;</span>
-              </a>
-              <a href="/api/affiliate?product=timeless-20-vitamin-c&amp;partner=amazon" target="_blank" rel="sponsored noopener noreferrer" class="btn-secondary mono dl-unlocked-c2-proof" style="display:none;width:100%;font-size:0.74rem;padding:8px 10px;min-height:34px;margin-top:6px;background:var(--rose-pill-bg);color:var(--rose-brand);text-decoration:none;justify-content:center;" data-no-bag-inject="1">
-                <span>Shop $26 Vitamin C Dupe (Save $156) &rarr;</span>
-              </a>
             </div>
             <div style="padding:16px;border-radius:18px;background:#3A1F27;color:#FDF8F6;display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
@@ -596,24 +577,23 @@ function renderAnalysisResultHtml(res) {
                 </div>
                 ${pmStepsHtml}
               </div>
-              <button type="button" class="btn-primary" style="width:100%;font-size:0.74rem;padding:8px 10px;min-height:34px;margin-top:6px;background:#F3E1E5;color:#3A1F27;white-space:normal;text-align:center;line-height:1.25;" onclick="openCheckoutModal('onetime_499')">
-                <span>Get 300-DPI Swatch Card + Conflict Schedule + $240 Dupes ($1.99) &rarr;</span>
-              </button>
             </div>
           </div>
-          <form id="dl-results-inline-email-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'results_card')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;padding:10px 12px;border-radius:14px;background:var(--bg-oat);" data-no-bag-inject="1">
-            <input type="email" required class="input-box dl-inline-ics-email" placeholder="Enter email to reveal Morning Steps 2–3, Bedtime Order &amp; 2 Dupes ($0)..." aria-label="Enter email to reveal Morning Steps 2–3, Bedtime Order &amp; 2 Dupes ($0)" style="flex:1 1 200px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
-            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.77rem;border-radius:999px;flex-shrink:0;"><span>Reveal Full Routine &amp; Dupes ($0) &rarr;</span></button>
-            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
-          </form>
-          <div style="padding:12px 14px;border-radius:16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:7px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:0.8rem;line-height:1.38;color:var(--text-secondary);">
-              <span><strong style="color:var(--sage-safe);">✓ Why This Split Works:</strong> ${escapeHtml(topSummaryLine)}</span>
-              <a href="${escapeHtml(topSwap.directUrl)}" data-sovrn-beacon="${escapeHtml(topSwap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="font-size:0.71rem;padding:3px 9px;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)} &rarr;</a>
+          <div style="padding:14px 18px;border-radius:16px;background:var(--bg-canvas);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+              <div>
+                <strong class="serif-display" style="font-size:1.08rem;color:var(--text-primary);font-weight:400;display:block;">Save your custom schedule &amp; unlock 2 clinical dupes</strong>
+                <span style="font-size:0.8rem;color:var(--text-secondary);">Free AM/PM calendar with exact absorption wait times sent to your inbox.</span>
+              </div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding-top:2px;font-size:0.78rem;color:var(--text-secondary);">
-              <span>One-Time $1.99 Phone Card or $9 Complete Dossier &middot; vs. $59/mo Curology Subscription</span>
-              <button type="button" class="mono" onclick="openCheckoutModal('annual_1999')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;font-size:0.78rem;padding:0;white-space:normal;text-align:left;">Get $9 Complete Vanity Dossier / $29 Esthetician Pass &rarr;</button>
+            <form id="dl-results-inline-email-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'results_card')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+              <input type="email" required class="input-box dl-inline-ics-email" placeholder="Enter your email ($0)..." aria-label="Enter email to save your routine and unlock dupes" style="flex:1 1 200px;min-width:0;padding:8px 14px;font-size:15px;border-radius:999px;background:var(--bg-surface);" />
+              <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 16px;min-height:38px;font-size:0.8rem;border-radius:999px;white-space:nowrap;"><span>Save Routine Free ($0) &rarr;</span></button>
+              <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.75rem;color:var(--sage-safe);"></div>
+            </form>
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid var(--border-hairline);font-size:0.78rem;">
+              <span style="color:var(--text-secondary);"><strong style="color:var(--sage-safe);">&#10003; Why This Split Works:</strong> ${escapeHtml(topSummaryLine)}</span>
+              <button type="button" class="mono" onclick="openCheckoutModal('onetime_499')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:600;cursor:pointer;text-decoration:underline;padding:0;">Download 300-DPI Phone Swatch Card ($1.99) &rarr;</button>
             </div>
           </div>
           <button type="button" id="dl-btn-next-step-3" class="btn-secondary" style="display:none;" onclick="window.__dlSwitchResultStep(3)">Next</button>
