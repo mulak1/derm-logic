@@ -356,7 +356,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
           <div style="font-size:0.75rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.02em;">Morning Glow &middot; 15% Vitamin C</div>
           <div style="height:150px;border-radius:12px;overflow:hidden;">
-            <img src="/public/photo_serum_pipette.jpg" alt="Model applying morning Vitamin C serum with glass dropper onto glowing skin" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="lazy" />
+            <img src="/public/photo_customer_holding.jpg" alt="Model applying morning Vitamin C serum with glass dropper onto glowing skin" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="lazy" />
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
             <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Separated my 15% Vitamin C from my night acids. Smooth, non-pilling barrier under SPF 50 all day.&rdquo;</p>

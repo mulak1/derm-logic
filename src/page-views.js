@@ -148,7 +148,14 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     ...seoPages.filter((p) => p.pageType === 'active_pair' && homePairRe.test(p.slug)).slice(0, 4),
     ...seoPages.filter((p) => p.pageType === 'product_teardown').slice(0, 2)
   ].slice(0, 6);
-  const pairPortraits = ['/public/editorial-segment-1.jpg', '/public/editorial-segment-2.jpg', '/public/editorial-segment-3.jpg', '/public/routines/sofia-mist.jpg', '/public/routines/selena-dewy-bounce.jpg', '/public/routines/zendaya-calm-balm.jpg'];
+  const pairPortraits = [
+    '/public/photo_amber_bottles.jpg',
+    '/public/photo_serum_pipette.jpg',
+    '/public/photo_texture_water_gel.jpg',
+    '/public/photo_cream_texture.jpg',
+    '/public/photo_morning_dew.jpg',
+    '/public/photo_shelf_minimal.jpg'
+  ];
   const featuredSeoLinks = featuredSeoPages.map((p, idx) => `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;justify-content:space-between;gap:12px;"><div><div style="height:128px;border-radius:8px;overflow:hidden;margin-bottom:12px;"><img src="${pairPortraits[idx % pairPortraits.length]}" alt="${escapeHtml(p.title)}" loading="lazy" style="width:100%;height:128px;object-fit:cover;object-position:center 24%;display:block;" /></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;"><span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(p.category)}</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.15rem;line-height:1.24;color:var(--text-primary);margin-bottom:8px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.56;">${escapeHtml(String(p.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor)[^)]*\)/gi, ''))}</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;gap:8px;flex-wrap:wrap;"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Read Layering Guide &rarr;</a><a href="/?products=${encodeURIComponent((p.presetProducts || ['skinceuticals-ce-ferulic']).join(','))}#analyzer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.84rem;">Test With My Shelf &rarr;</a></div></div>`).join('');
   const homeSwatchesHtml = renderPorcelainSwatchCards(prioritizedIngredients.slice(0, 3));
   const bodyHtml = `
@@ -302,7 +309,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
             </div>
           </div>
           <div class="editorial-photo-shell" style="padding:8px;max-height:200px;overflow:hidden;">
-            <div style="height:142px;max-height:142px;overflow:hidden;"><img src="/public/editorial-segment-2.jpg" alt="Mediterranean woman in sunlit limestone studio inspecting amber glass dropper bottle" style="width:100%;height:142px;object-fit:cover;object-position:center 24%;display:block;" loading="lazy" /></div>
+            <div style="height:142px;max-height:142px;overflow:hidden;"><img src="/public/photo_aesthetic_consult.jpg" alt="Esthetician inspecting formulation pH and clinical active compatibility" style="width:100%;height:142px;object-fit:cover;object-position:center 24%;display:block;" loading="lazy" /></div>
             <div class="editorial-photo-caption" style="margin-top:6px;"><span class="mono" style="font-size:0.84rem;">Water-Light Serums to Velvet Creams</span><span class="badge-safe mono">65 Actives</span></div>
           </div>
         </div>
