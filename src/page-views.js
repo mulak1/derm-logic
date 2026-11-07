@@ -498,9 +498,9 @@ function renderDirectoryPage({ seoPages }) {
             <span class="dl-locked-badge-c2 mono" style="color:var(--rose-brand);font-weight:600;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Rules 2–3 &amp; 2 Free Dupes Locked ($0 Email Below)</span>
           </div>
           <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'directory_top')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
-            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 200px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
-            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Unlock 2 Free Dupes &amp; AM/PM Rules ($0) &rarr;</span></button>
-            <a href="/buy/flash_pass?source=directory_top" class="btn-secondary mono" style="padding:8px 14px;min-height:36px;font-size:0.76rem;border-radius:999px;text-decoration:none;"><span>$1.99 Complete AM/PM Schedule &amp; Dupe Pack &rarr;</span></a>
+            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 200px;min-width:0;padding:8px 14px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
+            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 16px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Unlock 2 Free Dupes ($0) &rarr;</span></button>
+            <div style="width:100%;font-size:0.75rem;color:var(--text-secondary);margin-top:2px;">Need the full phone schedule? <a href="/buy/flash_pass?source=directory_top" style="color:var(--rose-brand);text-decoration:underline;">Save Complete AM/PM Calendar ($1.99) &rarr;</a></div>
             <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
           </form>
         </div>
@@ -739,9 +739,9 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
             </div>
           </div>
           <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'seo_top_${escapeHtml(page.slug)}')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;padding-top:4px;border-top:1px solid var(--border-hairline);" data-no-bag-inject="1">
-            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 190px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
-            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Unlock Morning Rule &amp; 2 Dupes ($0) &rarr;</span></button>
-            <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" class="btn-secondary mono" style="padding:8px 12px;min-height:36px;font-size:0.75rem;border-radius:999px;background:var(--bg-surface);color:var(--text-primary);text-decoration:none;"><span>$1.99 Complete AM/PM Schedule &amp; Dupe Pack &rarr;</span></a>
+            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 190px;min-width:0;padding:8px 14px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
+            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 16px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Unlock Morning Rule &amp; 2 Dupes ($0) &rarr;</span></button>
+            <div style="width:100%;font-size:0.75rem;color:var(--text-secondary);margin-top:2px;">Need the full phone schedule? <a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" style="color:var(--rose-brand);text-decoration:underline;">Save Complete AM/PM Calendar ($1.99) &rarr;</a></div>
             <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
           </form>
         </div>
