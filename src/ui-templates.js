@@ -356,10 +356,10 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);background:var(--bg-canvas);padding:4px 10px;border-radius:999px;">4,200+ Routine Audits Verified</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
-        <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
-          <div style="height:150px;border-radius:12px;overflow:hidden;position:relative;">
+        <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.02em;">Morning Glow &middot; 15% Vitamin C</div>
+          <div style="height:150px;border-radius:12px;overflow:hidden;">
             <img src="/public/photo_serum_pipette.jpg" alt="Model applying morning Vitamin C serum with glass dropper onto glowing skin" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="lazy" />
-            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:999px;">Morning Glow &middot; 15% Vitamin C</span>
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
             <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Separated my 15% Vitamin C from my night acids. Smooth, non-pilling barrier under SPF 50 all day.&rdquo;</p>
@@ -369,10 +369,10 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             </div>
           </div>
         </div>
-        <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
-          <div style="height:150px;border-radius:12px;overflow:hidden;position:relative;">
+        <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.02em;">Bathroom Shelf &middot; C E Ferulic + Barrier</div>
+          <div style="height:150px;border-radius:12px;overflow:hidden;">
             <img src="/public/photo_bathroom_sunlight.jpg" alt="Sunlit bathroom vanity counter with luxury and clinical skincare bottles" style="width:100%;height:100%;object-fit:cover;object-position:center 45%;display:block;" loading="lazy" />
-            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:999px;">Bathroom Shelf &middot; C E Ferulic + Barrier</span>
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
             <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Checked my entire 6-bottle counter in 2 minutes. Cut $140 of overlapping exfoliants that were triggering redness.&rdquo;</p>
@@ -382,10 +382,10 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             </div>
           </div>
         </div>
-        <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
-          <div style="height:150px;border-radius:12px;overflow:hidden;position:relative;">
+        <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.02em;">Night Repair &middot; Rx Tretinoin Buffer</div>
+          <div style="height:150px;border-radius:12px;overflow:hidden;">
             <img src="/public/photo_model_radiant.jpg" alt="Smiling model with calm, bouncy skin after ceramide barrier repair" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;" loading="lazy" />
-            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:999px;">Night Repair &middot; Rx Tretinoin Buffer</span>
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
             <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Used the ceramide sandwich method for Tretinoin 0.05%. Peeling and tightness disappeared within one week.&rdquo;</p>
