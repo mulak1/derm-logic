@@ -508,6 +508,7 @@ function buildClientRuntimeScript(cfg) {
         if (window.__ebPaywallObserver) window.__ebPaywallObserver.observe(pcCta);
       }
     }
+    if (CFG.moduleId === 'derm_logic') return;
     var wbAnchor = document.getElementById('eb-onnx-cnn-workbench'), tBarAnchor = document.getElementById('eb-tanstack-table-bar'), homeFullGrid = document.querySelector('main .bento-grid, main .checker-split, main .hero-split, main .hero-grid');
     var seoTargetEl = isPseoOrDir ? (document.getElementById('eb-inline-row4-unlock') || document.getElementById('leaderboard-filter-bar') || existingHeroSplit || document.getElementById('eb-pseo-hero-split') || homeFullGrid || document.querySelector('main .table-wrap, article .table-wrap, main .posterior-table-wrap') || tBarAnchor || targetEl || document.getElementById('in-card-unlock-bar') || h1Node) : null;
     var mountAnchor = isPseoOrDir ? seoTargetEl : (wbAnchor || homeFullGrid || tBarAnchor || targetEl || document.getElementById('eb-doppelrand-hero-card') || document.getElementById('in-card-unlock-bar'));
