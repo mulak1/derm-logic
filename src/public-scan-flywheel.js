@@ -196,7 +196,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
   const canonicalUrl = `https://${cfg.domain}/scan/${encodeURIComponent(scan.target)}`;
   const badgeUrl = `https://${cfg.domain}/badge/${encodeURIComponent(scan.target)}.svg`;
   const mdSnippet = `[![${cfg.brandName} ${scan.grade}](${badgeUrl})](${canonicalUrl})`;
-  const ledger = loadPublicScanLedger(cfg).slice(0, 8);
+  const ledger = loadPublicScanLedger(cfg).slice(0, 4);
   const recentLinks = ledger.map((item) => `<a href="/scan/${esc(encodeURIComponent(item.target))}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:${t.radiusPill || '0px'};background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${t.border || 'var(--border-hairline)'};font-size:13px;font-weight:500;color:${esc(t.textPrimary)};text-decoration:none;"><span>${esc(item.target)}</span><span style="color:${item.score >= 86 ? (t.safeColor || 'var(--sage-safe)') : primaryBtnBg};font-weight:600;">${esc(item.grade)}</span></a>`).join(' ');
   const fileLabels = (cfg.deliverableFiles || []).map((f) => f.label || f.file).join(' + ') || 'Complete 3-File Action Pack';
   const headStyles = DL_UI && DL_UI.SHARED_CSS ? `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet"><style>${DL_UI.SHARED_CSS}</style>` : '<link rel="stylesheet" href="/styles.css" />';
@@ -313,9 +313,8 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   const podiumPhotos = ['/public/photo_model_glow_skin.jpg', '/public/photo_bathroom_sunlight.jpg', '/public/photo_routine_flatlay.jpg'];
   const podiumHtml = podium.map((item, idx) => `<div style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${t.border || 'var(--border-hairline)'};border-radius:${t.radiusCard || '0px'};padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
     <div>
-      <div style="height:130px;border-radius:10px;overflow:hidden;margin-bottom:12px;position:relative;">
-        <img src="${podiumPhotos[idx]}" alt="${esc(item.target)} skincare bench photo" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;" loading="eager" />
-        <span style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;">${medals[idx]}</span>
+      <div style="height:140px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:var(--bg-oat);">
+        <img src="${podiumPhotos[idx]}" alt="${esc(item.target)} skincare bench photo" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="eager" />
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
         <span style="font-size:13px;font-weight:600;color:${idx === 0 ? esc(primaryCol) : safeCol};">${medals[idx]}</span>

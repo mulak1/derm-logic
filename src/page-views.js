@@ -536,13 +536,23 @@ function renderDirectoryPage({ seoPages }) {
           </form>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:18px;">
-          <div style="border-radius:14px;overflow:hidden;height:160px;position:relative;">
-            <img src="/public/photo_routine_flatlay.jpg" alt="Skincare flatlay featuring serum pipettes and facial creams" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="eager" />
-            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;padding:2px 8px;border-radius:999px;">Step-by-Step Sequencing &middot; Morning vs Bedtime</span>
+          <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:14px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;">
+              <span class="mono" style="color:var(--rose-brand);font-weight:600;">Step-by-Step Sequencing</span>
+              <span class="mono" style="color:var(--text-secondary);">Morning vs Bedtime</span>
+            </div>
+            <div style="height:180px;border-radius:10px;overflow:hidden;background:var(--bg-oat);">
+              <img src="/public/photo_routine_flatlay.jpg" alt="Skincare flatlay featuring serum pipettes and facial creams" style="width:100%;height:100%;object-fit:cover;object-position:center 45%;display:block;" loading="eager" />
+            </div>
           </div>
-          <div style="border-radius:14px;overflow:hidden;height:160px;position:relative;">
-            <img src="/public/photo_shelf_minimal.jpg" alt="Aesthetic minimalist bathroom counter with clinical skincare bottles" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="eager" />
-            <span class="mono" style="position:absolute;bottom:8px;left:8px;background:rgba(26,20,18,0.75);color:#FDF8F6;font-size:0.68rem;padding:2px 8px;border-radius:999px;">44 Cult Formulas &middot; Verified pH &amp; Pore Scores</span>
+          <div class="porcelain-vessel-core" style="padding:12px;background:var(--bg-surface);border-radius:14px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;">
+              <span class="mono" style="color:var(--rose-brand);font-weight:600;">44 Cult Formulas</span>
+              <span class="mono" style="color:var(--text-secondary);">Verified pH &amp; Pore Scores</span>
+            </div>
+            <div style="height:180px;border-radius:10px;overflow:hidden;background:var(--bg-oat);">
+              <img src="/public/photo_shelf_minimal.jpg" alt="Aesthetic minimalist bathroom counter with clinical skincare bottles" style="width:100%;height:100%;object-fit:cover;object-position:center 45%;display:block;" loading="eager" />
+            </div>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;background:var(--bg-surface);margin-bottom:14px;" role="navigation" aria-label="Semantic Skincare Silo Hubs">
