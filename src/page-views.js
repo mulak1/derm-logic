@@ -53,7 +53,7 @@ function formatVerdictLabel(verdict) {
   if (v === 'SAFE_WITH_BUFFER') return 'Buffer With Cream';
   if (v === 'SPLIT_AM_PM' || v === 'ALTERNATE_NIGHTS') return 'Morning & Night Split';
   if (v === 'LOW_PH_ACTIVE') return 'Wait 60s After';
-  if (v === 'CLINICAL_TEARDOWN') return 'Cult Bottle Guide';
+  if (v === 'CLINICAL_TEARDOWN') return 'Pore & Layering Check';
   return v.toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 function getFriendlyBenefit(ing) {
@@ -158,7 +158,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
   ];
   const featuredSeoLinks = featuredSeoPages.map((p, idx) => {
     const verdictLbl = formatVerdictLabel(p.verdict);
-    const catLbl = p.category === verdictLbl ? 'Formula Teardown' : p.category;
+    const catLbl = p.pageType === 'product_teardown' ? 'Bottle Teardown' : (p.category === verdictLbl ? 'Formula Guide' : (p.category || 'Pairing Guide'));
     return `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:22px 24px;justify-content:space-between;gap:14px;border:1px solid var(--border-hairline);border-radius:16px;"><div><div style="height:140px;border-radius:10px;overflow:hidden;margin-bottom:14px;"><img src="${pairPortraits[idx % pairPortraits.length]}" alt="${escapeHtml(p.title)}" loading="lazy" style="width:100%;height:140px;object-fit:cover;object-position:center 24%;display:block;" /></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="mono" style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(catLbl)}</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(verdictLbl)}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.18rem;line-height:1.24;color:var(--text-primary);margin-bottom:8px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.58;">${escapeHtml(String(p.summary || '').replace(/\s*\([^)]*(?:precursor|inhibitor|agonist|cofactor)[^)]*\)/gi, ''))}</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border-hairline);"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:600;">Read Layering Guide &rarr;</a><a href="/?products=${encodeURIComponent((p.presetProducts || ['skinceuticals-ce-ferulic']).join(','))}#analyzer" class="affiliate-link-pill mono" style="padding:6px 12px;font-size:0.82rem;">Test With My Shelf &rarr;</a></div></div>`;
   }).join('');
   const homeSwatchesHtml = renderPorcelainSwatchCards(prioritizedIngredients.slice(0, 3));
