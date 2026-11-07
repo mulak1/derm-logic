@@ -77,8 +77,8 @@ const SHARED_CSS = `
   .btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--bg-oat); color: var(--text-primary); font-weight: 600; font-size: var(--step-small); padding: 12px 22px; min-height: 42px; border: none; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, background-color 200ms ease-out, color 200ms ease-out; }
   .btn-secondary:hover { background: var(--rose-pill-bg); color: var(--rose-brand); }
   .btn-secondary:active { transform: scale(0.97); }
-  .affiliate-link-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: var(--rose-pill-bg); color: var(--rose-brand); font-size: 0.84rem; font-weight: 600; text-decoration: none; transition: opacity 180ms ease-out; }
-  .affiliate-link-pill:hover { opacity: 0.85; }
+  .affiliate-link-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: var(--bg-canvas); color: var(--text-primary); border: 1px solid var(--border-hairline); font-size: 0.84rem; font-weight: 600; text-decoration: none; transition: background 180ms ease-out, color 180ms ease-out, border-color 180ms ease-out; }
+  .affiliate-link-pill:hover { background: var(--rose-pill-bg); color: var(--rose-brand); border-color: var(--rose-pill-border); }
   .affiliate-micro-link { display: inline-block; margin-top: 4px; font-size: 0.82rem; font-weight: 500; color: var(--sage-safe); text-decoration: underline; text-underline-offset: 3px; }
   .affiliate-micro-link:hover { color: var(--rose-brand); }
   /* Hero: Uneven Editorial Gallery & Nocturnal Plinth */
