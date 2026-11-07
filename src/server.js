@@ -604,6 +604,7 @@ app.get('/api/health', (req, res) => {
   const orderCount = db.prepare('SELECT COUNT(*) as c FROM checkout_orders').get().c;
   res.status(200).json({
     status: 'ok',
+    version: 'v1.5-serene-surface',
     service: 'DermLogic (#4)',
     port: PORT,
     counts: {
