@@ -20,7 +20,8 @@ const CELEBRITY_ROUTINES = [
     sourcePublication: 'Vogue',
     sourceTitle: 'Hailey Bieber’s Everyday Glazed-Skin & Barrier Prep Routine (Vogue Beauty Secrets)',
     sourceUrl: 'https://www.vogue.com/article/hailey-bieber-skincare-routine',
-    heroImg: '/public/editorial-woman-morning.jpg',
+    heroImg: '/public/routines/selena-dewy-bounce.jpg',
+    imgPos: '50% 25%',
     signatureLook: 'Dewy, peptide-cushioned glass skin that never pills under sheer complexion fluid',
     summary: 'Hailey Bieber builds her routine around milky ceramide essences, peptide glazing fluids, and rich barrier creams, keeping harsh low-pH exfoliating acids out of her daily morning prep so makeup melts evenly into skin.',
     amSteps: [
@@ -51,7 +52,8 @@ const CELEBRITY_ROUTINES = [
     sourcePublication: 'Harper’s Bazaar',
     sourceTitle: 'Sydney Sweeney Shares Her Nighttime Skincare & Ice-Roller Routine (Go To Bed With Me)',
     sourceUrl: 'https://www.harpersbazaar.com/beauty/skin-care/a38961051/sydney-sweeney-skincare-routine/',
-    heroImg: '/public/editorial-woman-evening.jpg',
+    heroImg: '/public/routines/kendall-guasha.jpg',
+    imgPos: '50% 25%',
     signatureLook: 'Calm, sculpted morning glow with zero congestion after long filming days',
     summary: 'Having struggled with cystic and combination breakouts, Sydney Sweeney relies on thorough oil-to-milk double cleansing, morning ice rolling, pure Vitamin C under SPF 50, and hyaluronic sleeping masks, strictly separating exfoliating acids from nightly barrier creams.',
     amSteps: [
