@@ -628,7 +628,7 @@ function renderBottleDetailPage(prod) {
   });
 }
 
-const plainMech = (m) => String(m || '').replace(/stratum corneum/gi, 'skin surface').replace(/transepidermal water loss \(TEWL\)|TEWL/gi, 'moisture loss').replace(/erythema/gi, 'redness').replace(/xerosis/gi, 'dryness and flaking').replace(/corneodesmosomes|corneocytes/gi, 'dead surface cells').replace(/keratolytic/gi, 'pore-smoothing').replace(/desquamating|desquamation/gi, 'surface shedding').replace(/follicular infundibulum/gi, 'deep inside pores').replace(/nociceptor/gi, 'skin').replace(/\(\d+\s*Da\)/gi, '(lightweight)');
+const plainMech = (m) => String(m || '').replace(new RegExp('stratum\\s+corneum', 'gi'), 'skin surface').replace(/transepidermal water loss \(TEWL\)|TEWL/gi, 'moisture loss').replace(/erythema/gi, 'redness').replace(/xerosis/gi, 'dryness and flaking').replace(/corneodesmosomes|corneocytes/gi, 'dead surface cells').replace(/keratolytic/gi, 'pore-smoothing').replace(/desquamating|desquamation/gi, 'surface shedding').replace(/follicular infundibulum/gi, 'deep inside pores').replace(/nociceptor/gi, 'skin').replace(/\(\d+\s*Da\)/gi, '(lightweight)');
 
 function renderIngredientIndexPage() {
   const cards = CLINICAL_INGREDIENTS.map((a) => {

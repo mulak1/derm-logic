@@ -15,14 +15,11 @@ const {
   ATELIER_VANITY_CLIENT_SCRIPT
 } = require('./atelier-vanity-bag');
 const { renderPersonaInteractiveWorkbenchAddons } = require('./celebrity-routines');
-
 function escapeHtml(str) {
   if (str == null) return '';
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-
 const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="34" height="34" role="img" aria-label="DermLogic Formulation Atelier Emblem" style="flex-shrink:0;display:block;"><circle cx="20" cy="20" r="19" fill="#F3E1E5" stroke="#8A3448" stroke-width="1.4"/><circle cx="20" cy="20" r="15" fill="none" stroke="#8E6B75" stroke-width="0.75" stroke-dasharray="2 1.5"/><path d="M20 9.5 C20 9.5 26.8 17.6 26.8 22.6 C26.8 26.4 23.8 29.5 20 29.5 C16.2 29.5 13.2 26.4 13.2 22.6 C13.2 17.6 20 9.5 20 9.5 Z" fill="#8A3448"/><path d="M16.5 21.2 C16.2 23.6 17.6 25.8 19.8 26.3" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round"/><path d="M20 29.5 C22.8 29.5 25.5 31.2 26.5 33.2 C23.6 33.6 21.2 32.1 20 29.5 Z" fill="#285B44"/><path d="M20 29.5 C17.2 29.5 14.5 31.2 13.5 33.2 C16.4 33.6 18.8 32.1 20 29.5 Z" fill="#285B44" opacity="0.85"/><circle cx="20" cy="17.2" r="1.3" fill="#FFFFFF"/></svg>`;
-
 const SHARED_CSS = `
   :root {
     --bg-canvas: #FDF8F6; --bg-oat: #F8EFE6; --bg-pouch: #F3E1E5; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
@@ -59,7 +56,6 @@ const SHARED_CSS = `
   a { color: inherit; text-decoration: none; }
   button, select, textarea, input { font: inherit; color: inherit; }
   .container { max-width: 1360px; margin: 0 auto; padding: 0 var(--margin); }
-
   /* Header: Editorial Gallery & Nocturnal Vanity Switcher */
   .site-header { background: var(--bg-canvas); position: sticky; top: 0; z-index: 40; transition: background-color 320ms var(--ease-spring); }
   .nav-inner { min-height: 70px; padding-top: 12px; padding-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: nowrap; }
@@ -72,7 +68,6 @@ const SHARED_CSS = `
   .vanity-light-btn { border: none; border-radius: 999px; background: transparent; padding: 5px 12px; min-height: 32px; font-size: 0.84rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: background-color 200ms var(--ease-spring), color 200ms var(--ease-spring), transform 160ms ease-out; }
   .vanity-light-btn.active { background: var(--rose-brand); color: var(--accent-ink); }
   .vanity-light-btn:active { transform: scale(0.97); }
-
   /* Buttons: Soft Pillowy Capsules */
   .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--rose-brand); color: var(--accent-ink); font-weight: 600; font-size: var(--step-small); padding: 13px 26px; min-height: 44px; border: none; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, opacity 180ms ease-out, background-color 200ms ease-out; }
   .btn-primary:hover { opacity: 0.92; }
@@ -82,12 +77,10 @@ const SHARED_CSS = `
   .btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--bg-oat); color: var(--text-primary); font-weight: 600; font-size: var(--step-small); padding: 12px 22px; min-height: 42px; border: none; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, background-color 200ms ease-out, color 200ms ease-out; }
   .btn-secondary:hover { background: var(--rose-pill-bg); color: var(--rose-brand); }
   .btn-secondary:active { transform: scale(0.97); }
-
   .affiliate-link-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: var(--rose-pill-bg); color: var(--rose-brand); font-size: 0.84rem; font-weight: 600; text-decoration: none; transition: opacity 180ms ease-out; }
   .affiliate-link-pill:hover { opacity: 0.85; }
   .affiliate-micro-link { display: inline-block; margin-top: 4px; font-size: 0.82rem; font-weight: 500; color: var(--sage-safe); text-decoration: underline; text-underline-offset: 3px; }
   .affiliate-micro-link:hover { color: var(--rose-brand); }
-
   /* Hero: Uneven Editorial Gallery & Nocturnal Plinth */
   .hero-section { padding: 6px 0 12px; }
   .editorial-top-banner { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 16px; align-items: stretch; margin-bottom: 10px; }
@@ -106,7 +99,6 @@ const SHARED_CSS = `
   .vessel-photo-frame { background: var(--bg-oat); border-radius: 18px; overflow: hidden; padding: 0; margin-bottom: 14px; }
   .vessel-photo-frame img { width: 100%; height: 172px; object-fit: cover; display: block; }
   .editorial-photo-caption { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: var(--step-small); color: var(--text-secondary); }
-
   /* Interactive Shelf Audit Workbench ([data-ui]) */
   .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
   .grader-card { background: var(--bg-surface); border-radius: 28px; padding: 20px; min-width: 0; max-width: 100%; overflow: hidden; }
@@ -129,19 +121,15 @@ const SHARED_CSS = `
   .prod-check-item input[type="checkbox"] { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
   [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); border-radius: 16px; padding: 9px 13px; color: var(--text-primary); font-size: 16px; border: none; }
   .input-box:focus, .textarea-box:focus { outline: 2px solid var(--rose-brand); }
-
   .score-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-bottom: 8px; }
   .metric-box { background: var(--bg-canvas); border-radius: 13px; padding: 7px 11px; font-variant-numeric: tabular-nums; min-width: 0; overflow: hidden; }
   .metric-val { font-family: 'Newsreader', Georgia, serif; font-size: 1.12rem; font-weight: 500; line-height: 1.12; font-variant-numeric: tabular-nums; }
-
   .badge-safe, .badge-clash, .badge-warn { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 12px; font-size: 0.8rem; font-weight: 600; font-variant-numeric: tabular-nums; }
   .badge-safe { background: var(--sage-bg); color: var(--sage-safe); }
   .badge-clash { background: var(--berry-bg); color: var(--berry-clash); }
   .badge-warn { background: var(--honey-bg); color: var(--honey-warn); }
-
   .conflict-card { background: var(--berry-bg); border-radius: 20px; padding: 16px 18px; margin-bottom: 10px; min-width: 0; overflow: hidden; }
   .conflict-card.MODERATE { background: var(--honey-bg); }
-
   /* Uneven Gallery & 4-Step Sink Pacing Strip */
   .z-cascade-stage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; margin-top: 28px; }
   .z-vessel-left, .z-vessel-center, .z-vessel-right { background: var(--bg-surface); padding: 0; display: flex; }
@@ -151,17 +139,14 @@ const SHARED_CSS = `
   .viscosity-seq-item { padding: 18px 20px; background: var(--bg-canvas); display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 14px; }
   .wait-timer-btn { padding: 8px 14px; background: var(--bg-oat); border: none; color: var(--text-primary); font-size: 0.84rem; font-weight: 500; cursor: pointer; white-space: nowrap; font-variant-numeric: tabular-nums; transition: background-color 200ms ease-out, color 200ms ease-out; width: 100%; text-align: center; }
   .wait-timer-btn:hover, .wait-timer-btn.running { background: var(--rose-brand); color: var(--accent-ink); }
-
   .section-block { padding: 84px 0; }
   .section-block-alt { padding: 84px 0; background: var(--bg-oat); }
   .bento-grid-3 { display: grid; grid-template-columns: 1.2fr 0.9fr 0.9fr; gap: 20px; margin-top: 24px; }
   .bento-cell { background: var(--bg-surface); padding: 24px; }
-
   .table-wrap { overflow-x: auto; background: var(--bg-surface); }
   table { width: 100%; border-collapse: collapse; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
   th, td { padding: 14px 15px; text-align: left; border-bottom: 1px solid var(--border-hairline); }
   th { color: var(--text-muted); font-weight: 500; font-size: 0.84rem; background: var(--bg-oat); }
-
   /* Closing Editorial Footer */
   .site-footer { padding: 72px 0 48px; background: var(--bg-deep); color: var(--ink-on-deep); font-size: var(--step-small); }
   .footer-wordmark { font-size: clamp(3.25rem, 11vw, 9.5rem); font-weight: 300; line-height: 0.88; letter-spacing: -0.04em; margin: 36px 0 24px; color: var(--ink-on-deep); }
@@ -177,7 +162,6 @@ const SHARED_CSS = `
   .dl-locked-spec-badge { filter: none !important; }
   .modal-backdrop { position: fixed; inset: 0; background: rgba(12, 10, 8, 0.65); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 80; }
   .modal-card { background: var(--bg-surface); max-width: 560px; width: 100%; padding: 32px; }
-
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
@@ -232,7 +216,6 @@ const SHARED_CSS = `
     input[type="email"], input[type="text"], input[type="search"], select, textarea { font-size: 16px !important; }
   }
 `;
-
 function renderHeader(hideNav = false) {
   const lightPill = `<div class="vanity-light-pill" id="vanityLightToggle" role="group" aria-label="Ambient Lighting Mode" title="Switch between bright daylight and warm evening lighting">
     <button type="button" class="vanity-light-btn active" data-theme-mode="day" aria-pressed="true" onclick="setAtelierVanityLight('day', this)">Day</button>
@@ -245,11 +228,9 @@ function renderHeader(hideNav = false) {
   }
   return `${ftcBar}<header class="site-header"><div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">Atelier</span></span></a><nav class="nav-links" aria-label="Main Navigation"><a href="/#analyzer">Shelf Builder</a><a href="/celebrity">Celebrity Routines</a><a href="/concern">Skin Concerns</a><a href="/directory">Layering Guides</a></nav><div style="display:flex;align-items:center;gap:10px;">${vanityPill}${lightPill}</div></div></header>`;
 }
-
 function renderFooter() {
   return `<div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie Consent"><div class="container cookie-banner-inner"><div style="font-size:0.85rem;color:var(--text-secondary);">We use privacy-friendly cookies to remember your skincare routine preferences. See our <a href="/privacy" style="text-decoration:underline;color:var(--rose-brand);">Privacy Policy</a> &amp; <a href="/editorial-policy" style="text-decoration:underline;color:var(--rose-brand);">Editorial Policy</a>.</div><div style="display:flex;gap:8px;"><button type="button" id="cookie-reject" class="btn-secondary" style="padding:6px 14px;font-size:0.8125rem;" onclick="setCookieConsent('rejected')">Reject</button><button type="button" id="cookie-accept" class="btn-primary" style="padding:6px 16px;font-size:0.8125rem;" onclick="setCookieConsent('accepted')">Accept</button></div></div></div><footer class="site-footer"><div class="container"><div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-start;"><div style="max-width:52ch;"><a href="/" class="brand-logo-link" aria-label="DermLogic Home" style="margin-bottom:8px;color:var(--ink-on-deep);">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:#E8C6B0;">Formulation Atelier</span></span></a><p style="color:#B5ACA3;font-size:0.9rem;">Cosmetic-chemist verified pH windows, peptide &amp; Vitamin C compatibility, pore-safety, and four-night skin-cycling rituals. Reader-supported formulation lab: when you purchase through retail links on our site, we may earn an affiliate commission at no extra cost to you.</p></div><div style="display:flex;gap:20px;flex-wrap:wrap;font-weight:400;font-size:0.9rem;color:var(--ink-on-deep);"><a href="/#analyzer">Shelf Audit</a><a href="/celebrity">Iconic Routines</a><a href="/bottle">Cult Bottles</a><a href="/ingredient">Ingredients</a><a href="/concern">Skin Concerns</a><a href="/leaderboard">Routine Leaderboard</a><a href="/directory">Layering Guides</a><a href="/editorial-policy">Editorial &amp; FTC Policy</a><a href="/sitemap.xml">XML Sitemap</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div></div><div class="footer-wordmark">DermLogic</div></div></footer>${renderAtelierVanityDrawerHtml()}${renderSovrnVglnkScript()}`;
 }
-
 const SHORT_PRODUCT_NAMES = {
   'skinceuticals-ce-ferulic': 'C E Ferulic Vitamin C Serum', 'paulas-choice-2-bha': '2% BHA Liquid Exfoliant',
   'lrp-effaclar-duo-bpo': 'Effaclar Duo Blemish Cream', 'rx-tretinoin-005': 'Tretinoin 0.05% Night Cream',
@@ -266,7 +247,6 @@ const SHORT_PRODUCT_NAMES = {
   'eltamd-uv-clear-spf46': 'UV Clear SPF 46', 'to-glycolic-acid-7': 'Glycolic Acid 7% Toner',
   'to-niacinamide-10-zinc': 'Niacinamide 10% + Zinc 1%', 'rhode-glazing-milk': 'Glazing Milk Ceramide Essence'
 };
-
 function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds, initialRawInci, initialSkinType, showUgcStrip = true }) {
   const selectedSet = new Set(initialProductIds || ['to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005', 'skinceuticals-ce-ferulic']);
   const currentSkin = initialSkinType || (initialAnalysis && initialAnalysis.skinType) || 'combination';
@@ -307,7 +287,6 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     const searchBlob = (prod.brand + ' ' + prod.name + ' ' + (prod.category || '') + ' ' + (prod.inciList || '') + ' ' + (prod.summary || '')).toLowerCase();
     return `<label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}" data-search="${escapeHtml(searchBlob)}" onmouseenter="if(window.__dlShowProdInfo)window.__dlShowProdInfo(this,'${escapeHtml(prod.id)}',event)" onmouseleave="if(window.__dlHideProdInfo)window.__dlHideProdInfo()"><input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" /><span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;"><span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px;"><span style="font-size:0.75rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.71rem;padding:1px 7px;border-radius:999px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;">${isChecked ? '✓ Selected' : '+ Select'}</span></span><strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:0.9rem;font-weight:400;line-height:1.2;">${escapeHtml(cleanProdName)}</strong><span class="mono" style="color:var(--rose-brand);font-size:0.75rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:auto;">${roleTag} &middot; $${prod.priceUsd}</span></span></label>`;
   }).join('') + `<div id="shelfEmptyState" style="display:none;grid-column:1/-1;padding:16px;background:var(--bg-canvas);font-size:0.86rem;color:var(--text-secondary);text-align:center;">Don't see that bottle in our ${products.length}-bottle catalog? <button type="button" class="btn-primary mono" style="padding:5px 12px;min-height:30px;font-size:0.78rem;margin-left:6px;" onclick="if(window.__dlAddCustomSearchBottle)window.__dlAddCustomSearchBottle()">+ Add Custom Bottle to Vanity Bag &rarr;</button><button type="button" class="btn-secondary mono" style="padding:5px 12px;min-height:30px;font-size:0.78rem;margin-left:6px;" onclick="const q=document.getElementById('productFilterInput').value;const ta=document.getElementById('rawInciTextarea');if(ta&&q){ta.value=q;runRoutineAnalysis();}">Check Ingredient List &rarr;</button></div>`;
-
   return `
     <div id="checker"></div>
     <div class="hero-grid" id="analyzer">
@@ -368,7 +347,6 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         ${renderAnalysisResultHtml(initialAnalysis)}
       </div>
     </div>
-
     ${showUgcStrip ? `<div class="dl-ugc-community-strip" style="margin-top:28px;margin-bottom:24px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
         <div>
@@ -419,7 +397,6 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         </div>
       </div>
     </div>` : ''}
-
     <div id="checkoutModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" data-ui="checkout-dialog" onclick="if(event.target===this)closeCheckoutModal()">
       <div class="modal-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="badge-safe mono" id="modalBanditBadge">Instant Download · Complete Atelier Vanity Dossier</span><button type="button" class="btn-secondary" style="padding:6px 14px;min-height:34px;" onclick="closeCheckoutModal()">Close</button></div>
@@ -439,7 +416,6 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     </div>
   `;
 }
-
 function renderSingleConflictCard(c) {
   const isCritical = c.severity === 'CRITICAL';
   const badgeLabel = isCritical ? 'Separate AM & PM' : 'Alternate Nights';
@@ -461,14 +437,12 @@ function renderSingleConflictCard(c) {
       </div>
     </div>`;
 }
-
 function renderAnalysisResultHtml(res) {
   const isCritical = res.conflicts.length > 0 && res.verdictStatus === 'CRITICAL_CLASH';
   const isWarn = res.conflicts.length > 0 && !isCritical;
   const scoreColor = isCritical ? 'var(--berry-clash)' : isWarn ? 'var(--honey-warn)' : 'var(--sage-safe)';
   const badgeClass = isCritical ? 'badge-clash' : isWarn ? 'badge-warn' : 'badge-safe';
   const topVerdictText = res.conflicts.length === 0 ? 'Safe Everyday Routine · Zero Clashes' : res.verdictLabel;
-
   const conflictPriority = (c) => {
     const hay = `${c.ingredientA || ''} ${c.ingredientB || ''} ${c.title || ''}`.toLowerCase();
     let score = c.severity === 'CRITICAL' ? 100 : 60;
@@ -498,7 +472,6 @@ function renderAnalysisResultHtml(res) {
     : (pMatched.length > 0
       ? `<div id="pastedInciCard" style="padding:12px 14px;background:var(--sage-bg);border-left:3px solid var(--sage-safe);margin-bottom:10px;font-size:0.84rem;line-height:1.45;"><strong style="color:var(--sage-safe);display:block;margin-bottom:3px;">Pasted Ingredient Check: 100% Pore-Safe (0 Clogging Oils)</strong><div style="color:var(--text-primary);">Free Proof: <strong>${escapeHtml(pMatched[0].commonName)}</strong> (${pMatched[0].comedogenicity}/5 Pore-Safe)${pMatched.length > 1 ? ` <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:600;cursor:pointer;font-size:0.78rem;">· +${pMatched.length - 1} more matched active(s) locked — Enter Email ($0) to Reveal All &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;">, ${pMatched.slice(1).map((m) => `<strong>${escapeHtml(m.commonName)}</strong> (${m.comedogenicity}/5 Pore-Safe)`).join(', ')}</span>` : ''}.</div></div>`
       : `<div id="pastedInciCard" style="padding:12px 14px;background:var(--bg-oat);border-left:3px solid var(--honey-warn);margin-bottom:10px;font-size:0.84rem;line-height:1.45;"><strong style="color:var(--text-primary);display:block;margin-bottom:3px;">Pasted Ingredient Check (&ldquo;${escapeHtml(rawTxt.slice(0, 32))}&rdquo;): 0 Pore-Cloggers Flagged</strong><div style="color:var(--text-secondary);">No pore-clogging oils or waxes matched.</div></div>`));
-
   const conflictsHtml = pastedBoxHtml + (res.conflicts.length === 0
     ? `<div style="padding:16px 18px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.9rem;line-height:1.52;margin-bottom:10px;">
          <div class="serif-display" style="font-size:1.2rem;color:var(--sage-safe);margin-bottom:4px;">Pure Shelf Harmony · Every Bottle Works Together</div>
@@ -514,7 +487,6 @@ function renderAnalysisResultHtml(res) {
           </div>
         </details>
       ` : ''));
-
   const matchedProds = (res.matchedProductIds || []).map((id) => CULT_PRODUCTS.find((p) => p.id === id)).filter(Boolean);
   const fmtProd = (p) => p ? `${p.brand} ${SHORT_PRODUCT_NAMES[p.id] || String(p.name || '').replace(/\s*\([^)]*\)/g, '')}` : '';
   const isWash = (p) => /cleanse|wash|micellar|shampoo/i.test((p.category || '') + ' ' + p.name);
@@ -522,7 +494,6 @@ function renderAnalysisResultHtml(res) {
   const isRetin = (p) => /tretinoin|retinal|retinol|adapalene|differin/i.test((p.category || '') + ' ' + p.name);
   const isAcidExfol = (p) => !isWash(p) && !isBpo(p) && /bha|glycolic|lactic|p50|babyfacial|exfoli|peel|pha/i.test((p.category || '') + ' ' + p.name);
   const isBarrierOrSpf = (p) => /spf|sun|uv|moistur|barrier|baume|angel|atobarrier|urea|lipid|cicaplast|cerave|illiyoon|skinfix/i.test(p.id + ' ' + (p.category || '') + ' ' + p.name);
-
   const bpoProd = matchedProds.find(isBpo);
   const amCleanse = matchedProds.find(isWash);
   const amSerum = matchedProds.find((p) => !isWash(p) && !isBpo(p) && !isRetin(p) && !isAcidExfol(p) && (/vitamin c|ferulic|ceo|melano|niacinamide|snail|hyalu|azelaic|faded|tranexamic|centella|heartleaf|glazing|vinoperfect|sos/i.test((p.category || '') + ' ' + p.name)));
@@ -531,7 +502,6 @@ function renderAnalysisResultHtml(res) {
   const pmRetin = matchedProds.find(isRetin);
   const pmPept = matchedProds.find((p) => !isWash(p) && /copper|peptide|buffet|snail|hyalu|centella|glazing/i.test((p.category || '') + ' ' + p.name));
   const pmCream = matchedProds.find((p) => !isWash(p) && !isBpo(p) && !isRetin(p) && !isAcidExfol(p) && !/spf|sun|uv/i.test((p.category || '') + ' ' + p.name) && isBarrierOrSpf(p));
-
   const shortBottle = (p) => p ? `${String(SHORT_PRODUCT_NAMES[p.id] || p.name || '').replace(/\s*\([^)]*\)/g, '').replace(/\s+(Vitamin C Serum|Liquid Exfoliant|Night Cream|Ceramide Cream|Toner|Rice \+ Probiotics|Clearing Solution|Foam Wash)$/i, '')} · $${p.priceUsd}` : '';
   const amDynamicSteps = [
     { title: amCleanse && isBpo(amCleanse) ? '1. Clarifying Wash' : '1. Morning Cleanse', sub: amCleanse ? shortBottle(amCleanse) : 'Lukewarm Water Rinse', badge: 'Step 1', click: '' },
@@ -540,7 +510,6 @@ function renderAnalysisResultHtml(res) {
   ];
   const renderStepRow = (st, isPm) => `<div ${st.click ? `role="button" onclick="${st.click}"` : ''} style="padding:8px 11px;background:${isPm ? 'rgba(244,239,232,0.09)' : 'var(--bg-surface)'};border-radius:11px;display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:7px;min-width:0;${st.click ? 'cursor:pointer;' : ''}"><div style="min-width:0;font-size:0.8rem;line-height:1.3;${isPm ? 'color:#F4EFE8;' : ''}"><strong style="${isPm ? '' : 'color:var(--text-primary);'}display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.title)}</strong><span style="color:${st.click ? (isPm ? '#F7DFAD' : 'var(--rose-brand)') : (isPm ? '#EED6DC' : 'var(--text-secondary)')};font-size:0.73rem;font-weight:${st.click ? '600' : '400'};display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.sub)}</span></div><span class="mono" style="font-size:0.7rem;padding:2px 7px;border-radius:999px;background:${isPm ? '#7A2332' : 'var(--rose-pill-bg)'};color:${isPm ? '#F4EFE8' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;white-space:nowrap;">${st.badge}</span></div>`;
   const amStepsHtml = renderStepRow(amDynamicSteps[0], false) + `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 11px;background:var(--rose-pill-bg);border:1px dashed var(--rose-pill-border);border-radius:11px;cursor:pointer;margin-bottom:7px;filter:none !important;"><strong style="color:var(--rose-brand);display:block;font-size:0.76rem;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Steps 2–3 &amp; $26 Dupe Locked ($0)</strong><span style="color:var(--text-secondary);font-size:0.71rem;display:block;margin-top:2px;">Enter email below ($0) to reveal Morning Steps 2–3 &amp; wait timer &darr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${amDynamicSteps.slice(1).map((st) => renderStepRow(st, false)).join('')}</div>`;
-
   const cMode = String(res.climateMode || 'indoor_dry');
   const pmStep2Obj = cMode === 'pregnancy_nursing'
     ? { title: '2. Pregnancy-Safe Active', sub: 'Swap Retinoid for Azelaic 15%' }
@@ -553,7 +522,6 @@ function renderAnalysisResultHtml(res) {
     { title: pmCream ? '3. Soothing Barrier Cream' : '3. Barrier Cream', sub: pmCream ? shortBottle(pmCream) : '+ Tap to add Aestura 365 ($32)', badge: pmCream ? 'Cushion' : '+ $32', click: pmCream ? '' : 'if(window.__dlTapPouchCreamSlot)window.__dlTapPouchCreamSlot();' }
   ];
   const pmStepsHtml = `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:12px 11px;background:rgba(244,239,232,0.11);border:1px dashed rgba(243,225,229,0.45);border-radius:11px;cursor:pointer;margin-bottom:7px;filter:none !important;"><strong style="color:#F7DFAD;display:block;font-size:0.76rem;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Bedtime 3-Step Recovery Order Locked</strong><span style="color:#EED6DC;font-size:0.71rem;display:block;margin-top:3px;">Enter email below ($0) to reveal Evening Order + Dupe, or unlock $1.99 Complete Routine Kit &darr;</span></div><div class="dl-unlocked-c2-proof" style="display:none;">${pmDynamicSteps.map((st) => renderStepRow(st, true)).join('')}</div>`;
-
   const poreCount = res.comedogenicFlags.length;
   const topPoreName = poreCount > 0 ? String(res.comedogenicFlags[0].commonName || res.comedogenicFlags[0].inciName).split('(')[0].trim() : '';
   const poreSummaryText = poreCount === 0 ? 'Pore-Safe' : `Pore Alert (${topPoreName})`;
@@ -564,7 +532,6 @@ function renderAnalysisResultHtml(res) {
   const n3Label = pmExfol ? 'Night 3 · Soothe' : 'Night 3 · Renew';
   const n3Val = pmExfol ? (pmPept ? fmtProd(pmPept) : (pmCream ? `${fmtProd(pmCream)} (Rest)` : 'Hydrating / Peptide Serum')) : (pmRetin ? fmtProd(pmRetin) : (pmPept ? fmtProd(pmPept) : 'Hydrating Serum'));
   const n4Val = pmCream ? fmtProd(pmCream) : 'Ceramide Barrier Cream';
-
   const conflictCount = (res.conflicts || []).length;
   const wastedUsd = res.wastedShelfValueUsd || 0;
   const totalUsd = res.totalShelfValueUsd || 248;
@@ -572,7 +539,6 @@ function renderAnalysisResultHtml(res) {
   const topSummaryLine = conflictCount === 0
     ? 'Every selected bottle layers smoothly with zero stinging, canceling out, or makeup pilling.'
     : `Separates ${primaryConflicts.map((c) => `${String(c.ingredientA || '').split('(')[0].trim()} & ${String(c.ingredientB || '').split('(')[0].trim()}`).slice(0, 2).join(' · ')} across 7:30 AM and 9:30 PM so your serums work at full strength without stinging.`;
-
   return `
     <div class="porcelain-vessel-core" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;">
       <div style="min-width:0;display:flex;flex-direction:column;gap:9px;flex:1;">
@@ -588,7 +554,6 @@ function renderAnalysisResultHtml(res) {
           </div>
           ${renderPersonalizedResultsHeaderHtml(res)}
         </div>
-
         <div id="beforeAfterSplitBar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding:6px 10px;border-radius:14px;background:var(--bg-canvas);min-width:0;">
           <span id="beforeAfterStatusText" style="display:none;">Morning &amp; Night Split</span>
           <div style="display:none;"><div id="dl-potency-meter-fill"></div></div>
@@ -598,14 +563,12 @@ function renderAnalysisResultHtml(res) {
             <button type="button" id="btnViewClashingStack" class="vanity-light-btn mono" style="font-size:0.71rem;padding:3px 8px;min-height:24px;" aria-pressed="false" onclick="window.__dlToggleBeforeAfter('clash', this)">Clashes (${conflictCount})</button>
           </div>
         </div>
-
         <!-- True 3-Tab Switcher at the Top of the Stage (Only 1 View Open at a Time) -->
         <div id="dl-results-step-bar" role="tablist" aria-label="Routine Details" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:var(--bg-oat);padding:4px;border-radius:999px;">
           <button type="button" id="dl-btn-next-step-2" class="vanity-light-btn active mono" style="padding:5px 6px;font-size:0.74rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(2)">1 &middot; AM &amp; PM Order</button>
           <button type="button" id="dl-res-tab-1" class="vanity-light-btn mono" style="padding:5px 6px;font-size:0.74rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(1)">2 &middot; Why Clashed (${conflictCount})</button>
           <button type="button" id="dl-res-tab-3" class="vanity-light-btn mono" style="padding:5px 6px;font-size:0.74rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(3)">3 &middot; 4-Night &amp; Card</button>
         </div>
-
         <!-- Tab 1 (Default Active): Unmasked Primary Clash Proof + Spacious Side-by-Side Morning & Bedtime Order + 1 Calm Summary Card -->
         <div id="dl-res-step-2" style="display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;flex:1;"><span id="walletConflicts" style="display:none;"></span>
           ${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;"><button type="button" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--rose-pill-bg);color:var(--rose-brand);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Conflict #2 &amp; $26 Clinical Dupe Swap — Enter Email Below Free ($0) &darr;</button><button type="button" class="dl-locked-spec-badge mono" onclick="openCheckoutModal('onetime_499')" style="text-align:left;padding:5px 10px;border-radius:10px;background:var(--bg-canvas);color:var(--text-primary);font-size:0.74rem;font-weight:600;border:none;cursor:pointer;filter:none !important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Complete AM/PM Calendar &amp; Dupe Sheet ($1.99 Kit) &rarr;</button></div><div class="dl-unlocked-c2-proof" style="display:none;margin-top:4px;padding:7px 10px;border-radius:10px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.75rem;font-weight:600;">✓ Conflict #2 Unlocked ($0): Secondary pH &amp; Barrier Over-Exfoliation Swap Revealed + $32 Aestura 365 Dupe.</div></div>` : pastedBoxHtml}
@@ -625,7 +588,6 @@ function renderAnalysisResultHtml(res) {
                 <span>Shop $26 Vitamin C Dupe (Save $156) &rarr;</span>
               </a>
             </div>
-
             <div style="padding:16px;border-radius:18px;background:#3A1F27;color:#FDF8F6;display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
                 <div style="margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
@@ -639,13 +601,11 @@ function renderAnalysisResultHtml(res) {
               </button>
             </div>
           </div>
-
           <form id="dl-results-inline-email-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'results_card')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;padding:10px 12px;border-radius:14px;background:var(--bg-oat);" data-no-bag-inject="1">
             <input type="email" required class="input-box dl-inline-ics-email" placeholder="Enter email to reveal Morning Steps 2–3, Bedtime Order &amp; 2 Dupes ($0)..." aria-label="Enter email to reveal Morning Steps 2–3, Bedtime Order &amp; 2 Dupes ($0)" style="flex:1 1 200px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
             <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.77rem;border-radius:999px;flex-shrink:0;"><span>Reveal Full Routine &amp; Dupes ($0) &rarr;</span></button>
             <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
           </form>
-
           <div style="padding:12px 14px;border-radius:16px;background:var(--bg-canvas);display:flex;flex-direction:column;gap:7px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:0.8rem;line-height:1.38;color:var(--text-secondary);">
               <span><strong style="color:var(--sage-safe);">✓ Why This Split Works:</strong> ${escapeHtml(topSummaryLine)}</span>
@@ -658,12 +618,10 @@ function renderAnalysisResultHtml(res) {
           </div>
           <button type="button" id="dl-btn-next-step-3" class="btn-secondary" style="display:none;" onclick="window.__dlSwitchResultStep(3)">Next</button>
         </div>
-
         <!-- Tab 2: Detailed Clash Cards (Tucked cleanly until clicked) -->
         <div id="dl-res-step-1" style="display:none;flex-direction:column;gap:6px;flex:1;">
           <div id="conflictsListArea">${conflictsHtml}</div>
         </div>
-
         <!-- Tab 3: 4-Night Rotation, Wait Timer & 9:16 Phone Card (Tucked cleanly until clicked) -->
         <div id="dl-res-step-3" style="display:none;flex-direction:column;gap:10px;min-width:0;flex:1;">
           ${renderPersonaInteractiveWorkbenchAddons().liveWaitTimerHtml}
@@ -673,7 +631,6 @@ function renderAnalysisResultHtml(res) {
     </div>
   `;
 }
-
 const CLIENT_SCRIPT = `
   window.__DERMLOGIC_LAST_RESULT = null;
   window.__dlSwitchResultStep = function(stepNum) {
@@ -988,5 +945,4 @@ const CLIENT_SCRIPT = `
   ${ENDOWMENT_CLIENT_SCRIPT}
   ${ATELIER_VANITY_CLIENT_SCRIPT}
 `;
-
 module.exports = { escapeHtml, BRAND_LOGO_SVG, SHARED_CSS, CLIENT_SCRIPT, renderHeader, renderFooter, renderInteractiveCheckerWidget, renderAnalysisResultHtml };

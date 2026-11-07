@@ -1,63 +1,20 @@
-/**
- * DermLogic (#4): Taste-Skill v2.1.5 Warm Silk Editorial Gallery (Day) + 3000K Nocturnal Apothecary (Night) Page Views
- * Renders /, /lp, /directory, /seo/:slug (60+ pSEO pages), /privacy, /terms, 404, and /api/og.
- */
-const {
-  escapeHtml,
-  SHARED_CSS,
-  CLIENT_SCRIPT,
-  renderHeader,
-  renderFooter,
-  renderInteractiveCheckerWidget
-} = require('./ui-templates');
-const { CLINICAL_INGREDIENTS } = require('./clinical-data');
-const { getAllCelebrityRoutines } = require('./celebrity-routines');
-const { CONCERN_HUBS } = require('./seo-hubs');
-const { renderEditorialPolicyPage } = require('./endowment-sovrn');
+/** DermLogic (#4): Taste-Skill v2.1.5 Warm Silk Editorial Gallery (Day) + 3000K Nocturnal Apothecary (Night) Page Views */
+const { escapeHtml, SHARED_CSS, CLIENT_SCRIPT, renderHeader, renderFooter, renderInteractiveCheckerWidget } = require('./ui-templates');
+const { CLINICAL_INGREDIENTS } = require('./clinical-data'), { getAllCelebrityRoutines } = require('./celebrity-routines'), { CONCERN_HUBS } = require('./seo-hubs'), { renderEditorialPolicyPage } = require('./endowment-sovrn');
 function renderHomeSeoDiscoveryBlock() {
-  const celebs = getAllCelebrityRoutines().slice(0, 4);
-  const concerns = (CONCERN_HUBS || []).slice(0, 4);
+  const celebs = getAllCelebrityRoutines().slice(0, 4), concerns = (CONCERN_HUBS || []).slice(0, 4);
   const faqs = [
     { q: 'What order should I layer my serums in the morning vs. at night?', a: 'Apply from thinnest watery texture to richest cream: in the morning, rinse with lukewarm water, apply your antioxidant serum (like Vitamin C), wait 60 seconds, then seal with moisturizer and SPF 50. At night, cleanse, apply one targeted active (an exfoliating acid on Night 1 or a retinoid/peptide on Night 2), and cushion with a ceramide barrier cream.' },
     { q: 'Can I use Vitamin C serum and Retinol or Copper Peptides at the same time?', a: 'No. Pure L-Ascorbic Acid (Vitamin C) requires a low pH (around 3.0 to 3.4) that oxidizes Copper Peptides on contact and compounds irritation with Retinol or Tretinoin. Wear Vitamin C in the morning under sunscreen and save Retinol or Copper Peptides for bedtime.' },
     { q: 'Why do my serums pill or roll into little balls under makeup and sunscreen?', a: 'Pilling happens when silicone-heavy or xanthan-gum serums are layered too quickly without a 60-second dry-down window, or when oil-based drops are applied underneath water-based gels. Stick to 1 or 2 watery serums in the morning and wait 60 seconds before applying SPF.' },
     { q: 'How many serums are too many in a single skincare routine?', a: 'Dermatologists and cosmetic chemists recommend no more than two active serums in a single routine. Layering three or more treatment serums back-to-back dilutes absorption, destabilizes pH, and triggers stinging or perioral redness.' }
   ];
-  return `<section class="section-block" id="home-discovery-hubs"><div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
-      <div><h2 class="serif-display" style="font-size:var(--step-head);margin:0;">Iconic Serum Routines &amp; Guides</h2><p style="color:var(--text-secondary);font-size:var(--step-small);margin-top:4px;">Real morning and bedtime shelves with exact layering order and barrier-safe swaps.</p></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;"><a href="/celebrity" class="btn-secondary" style="padding:9px 16px;font-size:0.84rem;">All Iconic Routines &rarr;</a><a href="/concern" class="btn-secondary" style="padding:9px 16px;font-size:0.84rem;">All 8 Skin Concerns &rarr;</a></div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-bottom:22px;">
-      ${celebs.map((c) => `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;"><div><div class="vessel-photo-frame" style="height:145px;margin-bottom:10px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} serum routine" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};" /></div><span class="badge-safe mono" style="font-size:0.82rem;">${escapeHtml(c.skinProfile)}</span><a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.22rem;color:var(--text-primary);margin:4px 0 2px;">${escapeHtml(c.name)}</a><div class="serif-italic" style="font-size:0.86rem;color:var(--rose-brand);margin-bottom:4px;">${escapeHtml(c.moniker)}</div></div><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;padding-top:6px;"><a href="/celebrity/${escapeHtml(c.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">View AM/PM Order &rarr;</a><a href="/?products=${encodeURIComponent(c.productIds.join(','))}#analyzer" class="affiliate-link-pill mono" style="font-size:0.82rem;padding:4px 9px;">Load Shelf &rarr;</a></div></div>`).join('')}
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:24px;">
-      ${concerns.map((cn) => `<a href="/concern/${escapeHtml(cn.slug)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 18px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:8px;"><div><span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:600;">3-Step Protocol · ${cn.productIds.length} Bottles</span><strong class="serif-display" style="display:block;font-size:1.14rem;color:var(--text-primary);margin:4px 0;">${escapeHtml(cn.title)}</strong><p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.45;margin:0;">${escapeHtml(cn.summary.slice(0, 108))}...</p></div><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">See Safe Routine Order &rarr;</span></a>`).join('')}
-    </div>
-    <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 24px;">
-      <h3 class="serif-display" style="font-size:1.4rem;margin:0 0 12px;">Common Questions About Serum Routines &amp; Layering</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px;">
-        ${faqs.map((f) => `<details style="background:var(--bg-surface);padding:12px 16px;"><summary class="serif-display" style="cursor:pointer;font-size:1.02rem;font-weight:400;color:var(--text-primary);">${escapeHtml(f.q)}</summary><p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.52;margin:8px 0 0;">${escapeHtml(f.a)}</p></details>`).join('')}
-      </div>
-    </div>
-  </div></section>`;
+  return `<section class="section-block" id="home-discovery-hubs"><div class="container"><div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:18px;"><div><h2 class="serif-display" style="font-size:var(--step-head);margin:0;">Iconic Serum Routines &amp; Guides</h2><p style="color:var(--text-secondary);font-size:var(--step-small);margin-top:4px;">Real morning and bedtime shelves with exact layering order and barrier-safe swaps.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><a href="/celebrity" class="btn-secondary" style="padding:9px 16px;font-size:0.84rem;">All Iconic Routines &rarr;</a><a href="/concern" class="btn-secondary" style="padding:9px 16px;font-size:0.84rem;">All 8 Skin Concerns &rarr;</a></div></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-bottom:22px;">${celebs.map((c) => `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;"><div><div class="vessel-photo-frame" style="height:145px;margin-bottom:10px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} serum routine" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};" /></div><span class="badge-safe mono" style="font-size:0.82rem;">${escapeHtml(c.skinProfile)}</span><a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.22rem;color:var(--text-primary);margin:4px 0 2px;">${escapeHtml(c.name)}</a><div class="serif-italic" style="font-size:0.86rem;color:var(--rose-brand);margin-bottom:4px;">${escapeHtml(c.moniker)}</div></div><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;padding-top:6px;"><a href="/celebrity/${escapeHtml(c.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">View AM/PM Order &rarr;</a><a href="/?products=${encodeURIComponent(c.productIds.join(','))}#analyzer" class="affiliate-link-pill mono" style="font-size:0.82rem;padding:4px 9px;">Load Shelf &rarr;</a></div></div>`).join('')}</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:24px;">${concerns.map((cn) => `<a href="/concern/${escapeHtml(cn.slug)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 18px;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;gap:8px;"><div><span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:600;">3-Step Protocol · ${cn.productIds.length} Bottles</span><strong class="serif-display" style="display:block;font-size:1.14rem;color:var(--text-primary);margin:4px 0;">${escapeHtml(cn.title)}</strong><p style="font-size:0.84rem;color:var(--text-secondary);line-height:1.45;margin:0;">${escapeHtml(cn.summary.slice(0, 108))}...</p></div><span class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">See Safe Routine Order &rarr;</span></a>`).join('')}</div><div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 24px;"><h3 class="serif-display" style="font-size:1.4rem;margin:0 0 12px;">Common Questions About Serum Routines &amp; Layering</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px;">${faqs.map((f) => `<details style="background:var(--bg-surface);padding:12px 16px;"><summary class="serif-display" style="cursor:pointer;font-size:1.02rem;font-weight:400;color:var(--text-primary);">${escapeHtml(f.q)}</summary><p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.52;margin:8px 0 0;">${escapeHtml(f.a)}</p></details>`).join('')}</div></div></div></section>`;
 }
 function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdObjects, hideNav, bodyHtml }) {
-  const baseUrl = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://www.dermlogic.io').replace(/\/$/, '');
-  const canonicalUrl = `${baseUrl}${canonicalPath || '/'}`;
-  const ogImageUrl = `${baseUrl}/api/og?slug=${encodeURIComponent(ogSlug || 'home')}`;
-  const jsonLdScripts = (jsonLdObjects || [])
-    .map((obj) => `<script type="application/ld+json">${JSON.stringify(obj.url ? obj : { ...obj, url: canonicalUrl }).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')}</script>`)
-    .join('\n');
-  return `<!DOCTYPE html>
-<html lang="en" data-theme="day">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(description)}" />
-  <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
-  <meta property="og:title" content="${escapeHtml(title)}" />
+  const baseUrl = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://www.dermlogic.io').replace(/\/$/, ''), canonicalUrl = `${baseUrl}${canonicalPath || '/'}`, ogImageUrl = `${baseUrl}/api/og?slug=${encodeURIComponent(ogSlug || 'home')}`;
+  const jsonLdScripts = (jsonLdObjects || []).map((obj) => `<script type="application/ld+json">${JSON.stringify(obj.url ? obj : { ...obj, url: canonicalUrl }).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')}</script>`).join('\n');
+  return `<!DOCTYPE html><html lang="en" data-theme="day"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}" /><link rel="canonical" href="${escapeHtml(canonicalUrl)}" /><meta property="og:title" content="${escapeHtml(title)}" />
   <meta property="og:description" content="${escapeHtml(description)}" />
   <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />
   <meta property="og:type" content="website" />
@@ -126,7 +83,7 @@ function getFriendlyBenefit(ing) {
   };
   if (map[id]) return map[id].trim();
   return String(ing.clinicalMechanism || '')
-    .replace(/stratum corneum/gi, 'skin surface')
+    .replace(new RegExp('stratum\\s+corneum', 'gi'), 'skin surface')
     .replace(/transepidermal water loss \(TEWL\)|TEWL/gi, 'moisture loss')
     .replace(/erythema/gi, 'redness')
     .replace(/xerosis/gi, 'dryness and flaking')

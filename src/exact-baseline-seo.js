@@ -584,7 +584,7 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       module_id: cfg.moduleId,
       github_repos: [
         'formkit/auto-animate (★ 12,800+) & TanStack/query (★ 43,000+): Post-Calculation Results-Adjacent Action Bar (#eb-postcalc-inline-cta) mounted directly above native calculator output + synchronized KPI/entity spotlight',
-        'downshift-js/downshift (★ 11,900+) & algolia/autocomplete (★ 4,000+): 1-Tap Email Domain Auto-Chip Completer (.eb-domain-chip: @gmail.com, @icloud.com, @outlook.com) for zero-friction mobile/desktop lead capture'
+        'downshift-js/downshift (★ 11,900+) & algolia/autocomplete (★ 4,000+): 1-Field Email Capture Bar for zero-friction mobile/desktop lead capture'
       ],
       features: {
         postcalc_results_adjacent_action_bar: true,

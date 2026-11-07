@@ -321,8 +321,7 @@ function renderDualInlineVerdictSelector(comp, canonicalSlug, positionId) {
         <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
       </form>
       <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-        <a href="/buy/micro_pass?compare=${encodeURIComponent(canonicalSlug)}" onclick="if(window.__giFireBeacon)window.__giFireBeacon('checkout_initiated',{tier:'micro_pass',slug:'${escapeHtml(canonicalSlug)}'})" class="btn-secondary mono" style="padding:7px 12px;min-height:34px;font-size:0.76rem;border-radius:999px;text-decoration:none;white-space:nowrap;">📲 99&cent; Lock-Screen Card &rarr;</a>
-        <a href="/buy/flash_pass?compare=${encodeURIComponent(canonicalSlug)}" onclick="if(window.__giFireBeacon)window.__giFireBeacon('checkout_initiated',{tier:'flash_pass',slug:'${escapeHtml(canonicalSlug)}'})" class="btn-primary mono" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;text-decoration:none;white-space:nowrap;"><span>⚡ $1.99 Full 3-File Kit &rarr;</span></a>
+        <a href="/buy/flash_pass?compare=${encodeURIComponent(canonicalSlug)}" onclick="if(window.__giFireBeacon)window.__giFireBeacon('checkout_initiated',{tier:'flash_pass',slug:'${escapeHtml(canonicalSlug)}'})" class="btn-primary mono" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;text-decoration:none;white-space:nowrap;"><span>$1.99 Full 3-File Kit &rarr;</span></a>
       </div>
     </div>
   </div>`;
@@ -369,7 +368,7 @@ function renderComparePageHtml(comp, canonicalSlug) {
       creator: { '@type': 'Organization', name: 'DermLogic Cosmetic Chemistry Atelier', url: HOST_URL },
       license: 'https://creativecommons.org/licenses/by/4.0/',
       isAccessibleForFree: true,
-      measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Stratum Corneum Diffusion & EU CosIng Comedogenicity Assay',
+      measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Skin Barrier Diffusion & EU CosIng Comedogenicity Assay',
       citation: 'https://www.dermlogic.io/okf/index.json',
       variableMeasured: ['Formulation pH Window', 'pKa Dissociation Constant', 'Free-Acid Bioavailability %', 'Molecular Weight (Daltons)', 'EU CosIng Comedogenicity (0-5)', 'Malassezia Ester Safety'],
       distribution: [
@@ -719,7 +718,7 @@ function attachGlowIndexSeoUpgrades(app) {
           } catch (_) { return full; }
         });
         if (!out.includes('"measurementTechnique"')) {
-          const extraGraph = `<script id="gi-enriched-dataset-schema" type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'Dataset', '@id': `${HOST_URL}${req.path}#deterministic-chemistry-dataset`, name: `DermLogic Cosmetic Chemistry & pH Compatibility Dataset (${req.path})`, description: dsDesc, url: `${HOST_URL}${req.path}`, creator: dsCreator, isAccessibleForFree: true, measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Stratum Corneum Diffusion & EU CosIng Comedogenicity Assay', citation: ['PubMed PMID: 11207686 (Pinnell et al., L-Ascorbic Acid Percutaneous Absorption)', 'JCAD Retinoid & Benzoyl Peroxide Oxidation Kinetics', 'EU CosIng Cosmetic Ingredient Database'], license: 'https://creativecommons.org/licenses/by/4.0/', distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${HOST_URL}/okf/index.json` }] }] })}</script>`;
+          const extraGraph = `<script id="gi-enriched-dataset-schema" type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'Dataset', '@id': `${HOST_URL}${req.path}#deterministic-chemistry-dataset`, name: `DermLogic Cosmetic Chemistry & pH Compatibility Dataset (${req.path})`, description: dsDesc, url: `${HOST_URL}${req.path}`, creator: dsCreator, isAccessibleForFree: true, measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Skin Barrier Diffusion & EU CosIng Comedogenicity Assay', citation: ['PubMed PMID: 11207686 (Pinnell et al., L-Ascorbic Acid Percutaneous Absorption)', 'JCAD Retinoid & Benzoyl Peroxide Oxidation Kinetics', 'EU CosIng Cosmetic Ingredient Database'], license: 'https://creativecommons.org/licenses/by/4.0/', distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${HOST_URL}/okf/index.json` }] }] })}</script>`;
           if (out.includes('</head>')) out = out.replace('</head>', `${extraGraph}\n</head>`);
         }
 
@@ -751,7 +750,7 @@ function attachGlowIndexSeoUpgrades(app) {
     return res.status(200).json({
       okf_version: '1.0.0', organization: { name: 'DermLogic · Atelier Céramique', url: HOST_URL, contact: 'concierge@dermlogic.io' },
       deterministic_engine: {
-        formulas: ['Henderson-Hasselbalch Free-Acid Bioavailability: Free_Acid_% = 100 / (1 + 10^(pH - pKa))', 'pH Ionization Differential: Delta_pH = |mid_pH(A) - mid_pH(B)|', 'Stratum Corneum Diffusion: Bos & Meinardi 500 Dalton Molecular Weight Threshold', 'Pore-Congestion & Microbiome Assay: EU CosIng Comedogenicity (0-5) + Malassezia C12-C24 Ester Screen'],
+        formulas: ['Henderson-Hasselbalch Free-Acid Bioavailability: Free_Acid_% = 100 / (1 + 10^(pH - pKa))', 'pH Ionization Differential: Delta_pH = |mid_pH(A) - mid_pH(B)|', 'Skin Barrier Diffusion: Bos & Meinardi 500 Dalton Molecular Weight Threshold', 'Pore-Congestion & Microbiome Assay: EU CosIng Comedogenicity (0-5) + Malassezia C12-C24 Ester Screen'],
         citations: ['PubMed PMID: 11207686', 'JCAD Retinoid & Benzoyl Peroxide Stability', 'EU CosIng Cosmetic Ingredient Database']
       },
       discovery_endpoints: { llms_txt: `${HOST_URL}/llms.txt`, llms_full_txt: `${HOST_URL}/llms-full.txt`, pricing_md: `${HOST_URL}/pricing.md`, openapi_json: `${HOST_URL}/openapi.json`, rss_feed: `${HOST_URL}/feed.xml`, json_feed: `${HOST_URL}/feed.json`, sitemap_index: `${HOST_URL}/sitemap-index.xml`, telemetry_ledger: `${HOST_URL}/api/seo/telemetry` },
