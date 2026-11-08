@@ -180,9 +180,10 @@ app.get(['/seo/:slug', '/layering/:slug'], (req, res) => {
     : [page.ingredientA && page.ingredientA.inciName, page.ingredientB && page.ingredientB.inciName].filter(Boolean).join(', ');
   page.resolvedRawInci = dynamicRawInci;
   const initialAnalysis = analyzeRoutine({
-    skinType: 'combination',
+    skinType: req.query.skin || 'combination',
     productIds: page.presetProducts || [],
-    rawInciText: dynamicRawInci
+    rawInciText: dynamicRawInci,
+    allergies: req.query.allergies
   });
   const allPages = getAllSeoPages();
   const curIdx = Math.max(0, allPages.findIndex((p) => p.slug === slug));

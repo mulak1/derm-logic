@@ -791,6 +791,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               </div>
               <div style="display:flex;gap:8px;flex-wrap:wrap;" role="group" aria-label="Select Skin Barrier Profile">
                 <button type="button" class="btn-secondary mono pseo-skin-pill" aria-pressed="false" style="padding:8px 14px;font-size:0.82rem;" onclick="window.__dlCalcPseoSkin(180,1.35,'sensitive',this)">Sensitive / Rosacea</button>
+                <button type="button" class="btn-secondary mono pseo-skin-pill" aria-pressed="false" style="padding:8px 14px;font-size:0.82rem;" onclick="window.__dlCalcPseoSkin(360,1.5,'allergy_prone',this)">Allergy-Prone / Contact Reactive</button>
                 <button type="button" class="btn-secondary mono pseo-skin-pill" aria-pressed="false" style="padding:8px 14px;font-size:0.82rem;" onclick="window.__dlCalcPseoSkin(240,1.25,'dry',this)">Dry / Barrier-Stressed</button>
                 <button type="button" class="btn-secondary mono pseo-skin-pill" aria-pressed="true" style="padding:8px 14px;font-size:0.82rem;border-color:var(--rose-brand);color:var(--rose-brand);" onclick="window.__dlCalcPseoSkin(320,1.0,'combination',this)">Balanced / Combination</button>
                 <button type="button" class="btn-secondary mono pseo-skin-pill" aria-pressed="false" style="padding:8px 14px;font-size:0.82rem;" onclick="window.__dlCalcPseoSkin(480,1.45,'oily_acne',this)">Blemish-Prone (5+ Serums)</button>
@@ -819,11 +820,12 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               if (bEl) bEl.textContent = mult >= 1.3 ? 'Alternate Nights (4-Night Cycle)' : 'Morning & Night Split';
               if (hEl) hEl.textContent = mult >= 1.3 ? 'Gentle & Cushion-Soft' : 'Calm & Balanced';
               if (cEl) cEl.setAttribute('href', '/buy/flash_pass?source=pseo_inline_calc&guide=${encodeURIComponent(page.slug)}&skin_type=' + encodeURIComponent(profile));
-              var pLbl = { sensitive: 'Sensitive / Rosacea', dry: 'Dry / Barrier-Stressed', combination: 'Balanced / Combo', oily_acne: 'Blemish-Prone' }[profile] || 'Custom';
+              var pLbl = { sensitive: 'Sensitive / Rosacea', allergy_prone: 'Allergy-Prone / Reactive', dry: 'Dry / Barrier-Stressed', combination: 'Balanced / Combo', oily_acne: 'Blemish-Prone' }[profile] || 'Custom';
               if (topV) { topV.style.display = 'block'; topV.textContent = '✓ ' + pLbl + ' Selected: Saves ~$' + wasted + '/yr in wasted serum potency — Enter email below ($0) to unlock your ' + pLbl + ' Morning & Bedtime wait times + 2 dupes ↓'; }
               if (topBtn) topBtn.textContent = 'Unlock ' + pLbl + ' Rules & 2 Dupes ($0) →';
               var notes = {
                 sensitive: '<strong style="color:var(--text-primary);">Sensitive / Rosacea Protocol:</strong> Buffer active treatments over a thin layer of 3:1:1 ceramide moisturizer, wait 10 minutes after cleansing so damp skin never amplifies stinging, and split strong actives across a 4-night recovery cycle.',
+                allergy_prone: '<strong style="color:var(--text-primary);">Allergy-Prone / Contact-Reactive Protocol (EU CosIng 26-Allergen Screen):</strong> Use 100% fragrance-free, lanolin-free barrier formulas, patch-test active serums on your inner forearm for 48 hours, and unlock your hypoallergenic 9:30 PM swap above ($0).',
                 dry: '<strong style="color:var(--text-primary);">Dry / Barrier-Stressed Protocol:</strong> Press hydrating humectants onto damp skin first, let dry for 90 seconds, and sandwich nighttime retinoids or acne cream between ceramide cream layers to prevent flaking.',
                 combination: '<strong style="color:var(--text-primary);">Balanced / Combination Protocol:</strong> ' + ${JSON.stringify(defaultCalcProtocol)},
                 oily_acne: '<strong style="color:var(--text-primary);">Blemish-Prone (5+ Serums) Protocol:</strong> Keep pore-clogging esters at 0/5, use Benzoyl Peroxide in the morning or buffered over moisturizer, and cushion nighttime Adapalene with a ceramide cream to prevent peeling.'

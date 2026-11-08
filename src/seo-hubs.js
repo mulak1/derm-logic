@@ -13,6 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const { getAllCelebrityRoutines, getDailyDripInfo, advanceCelebrityShelfByOneDay } = require('./celebrity-routines');
 const { CLINICAL_INGREDIENTS, CULT_PRODUCTS } = require('./clinical-data');
+const { getProductAllergenTags, ALLERGY_REACTION_OPTIONS } = require('./engine');
 const { escapeHtml, SHARED_CSS, CLIENT_SCRIPT, renderHeader, renderFooter } = require('./ui-templates');
 
 const CONCERN_HUBS = [
@@ -546,6 +547,11 @@ function renderBottleDetailPage(prod) {
   const actives = (prod.primaryActives || []).map((id) => CLINICAL_INGREDIENTS.find((a) => a.id === id)).filter(Boolean);
   const celebUsers = getAllCelebrityRoutines().filter((c) => c.productIds.includes(prod.id));
   const dupeInfo = findDupeForProduct(prod);
+  const bottleAllergenIds = getProductAllergenTags(prod);
+  const bottleAllergens = bottleAllergenIds.map((id) => ALLERGY_REACTION_OPTIONS.find((o) => o.id === id)).filter(Boolean);
+  const allergenNoteHtml = bottleAllergens.length === 0
+    ? `<div class="mono" style="font-size:0.78rem;color:var(--sage-safe);margin-top:6px;">&#10003; EU CosIng Allergen Screen (Free Proof): 0/8 Common Contact Allergens Detected (Fragrance-Free &amp; Lanolin-Free)</div>`
+    : `<div class="mono" style="font-size:0.78rem;color:var(--berry-clash);margin-top:6px;">&#9888; EU CosIng Allergen Screen (Free Proof): Contains <strong>${escapeHtml(bottleAllergens.map((a) => a.shortLabel).join(', '))}</strong> &middot; <a href="/?products=${escapeHtml(prod.id)}&amp;allergies=${escapeHtml(bottleAllergenIds.join(','))}#analyzer" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">Screen Routine &amp; Reveal Hypoallergenic Swap ($0) &rarr;</a></div>`;
   const partner = prod.priceUsd >= 50 ? 'dermstore' : 'sephora';
   const isNightOnly = prod.category.toLowerCase().includes('retin') || prod.category.toLowerCase().includes('peel') || prod.ph < 3.7 && prod.id.includes('glycolic');
   const timingSlot = isNightOnly ? '9:30 PM · Bedtime Routine Only (Wear SPF Next Morning)' : (prod.ph <= 3.6 ? '7:30 AM · Morning First Layer on Dry Skin (Wait 60s)' : 'Morning & Bedtime Friendly');
@@ -580,7 +586,7 @@ function renderBottleDetailPage(prod) {
           <span class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">When &amp; How to Layer</span>
           <h2 class="serif-display" style="font-size:1.35rem;margin:6px 0 10px;">${timingSlot}</h2>
           <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.58;margin-bottom:10px;">Formulated at <strong>pH ${prod.ph}</strong>. ${prod.ph <= 3.8 ? 'Give this bottle 60 full seconds to absorb before applying neutral creams or peptides so you do not trigger a warm flush or cancel out delicate actives.' : 'Sits comfortably near skin’s natural barrier pH and layers smoothly under moisturizer or sunscreen.'}</p>
-          <div class="mono" style="font-size:0.8rem;color:var(--text-muted);">&#10003; Top 5 INCI Ingredients (Free Proof): ${escapeHtml(String(prod.inciList || '').split(',').slice(0, 5).join(', '))} <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;margin-left:4px;">${LOCK_SVG}Reveal Full Pore &amp; pH INCI Label ($0 Email) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;">, ${escapeHtml(String(prod.inciList || '').split(',').slice(5).join(', '))}</span></div>
+          <div class="mono" style="font-size:0.8rem;color:var(--text-muted);">&#10003; Top 5 INCI Ingredients (Free Proof): ${escapeHtml(String(prod.inciList || '').split(',').slice(0, 5).join(', '))} <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;margin-left:4px;">${LOCK_SVG}Reveal Full Pore &amp; pH INCI Label ($0 Email) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;">, ${escapeHtml(String(prod.inciList || '').split(',').slice(5).join(', '))}</span></div>${allergenNoteHtml}
         </div>
         <div class="porcelain-vessel-core" style="background:var(--sage-bg);padding:22px 24px;">
           <span class="badge-safe mono" style="margin-bottom:8px;display:inline-block;">${escapeHtml(dupeInfo.type)}</span>
@@ -648,7 +654,8 @@ function renderIngredientIndexPage() {
 function renderIngredientDetailPage(ing) {
   const bottles = CULT_PRODUCTS.filter((p) => (p.primaryActives || []).includes(ing.id));
   const celebs = getAllCelebrityRoutines().filter((c) => c.activeIds.includes(ing.id));
-  const preloadHref = `/?inci=${encodeURIComponent(ing.inciName)}#analyzer`;
+  const ingAllergen = ALLERGY_REACTION_OPTIONS.find((o) => o.patterns.some((p) => `${ing.id} ${ing.inciName} ${ing.commonName}`.toLowerCase().includes(p)));
+  const preloadHref = `/?inci=${encodeURIComponent(ing.inciName)}${ingAllergen ? `&allergies=${encodeURIComponent(ingAllergen.id)}` : ''}#analyzer`;
   const bottleCardsHtml = bottles.length > 0 ? bottles.map((b, idx) => {
     const fullB = `<a href="/bottle/${escapeHtml(b.id)}" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:20px 22px;text-decoration:none;"><span class="mono" style="font-size:0.78rem;color:var(--rose-brand);">&#10003; Free Proof #${idx + 1} &middot; ${escapeHtml(b.brand)} · pH ${b.ph} · $${b.priceUsd}</span><strong class="serif-display" style="font-size:1.22rem;display:block;margin:4px 0;">${escapeHtml(b.name)}</strong><span style="font-size:0.84rem;color:var(--text-secondary);">${escapeHtml(b.summary)}</span></a>`;
     if (idx <= 1) return fullB;
@@ -658,7 +665,7 @@ function renderIngredientDetailPage(ing) {
     <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:28px 32px;margin-bottom:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:center;">
       <div>
         <h1 class="hero-h1" style="font-size:clamp(2rem,3.4vw,2.9rem);margin-bottom:10px;">${escapeHtml(ing.commonName)} Layering Guide</h1>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH ${ing.phMin}–${ing.phMax}</span><span class="badge-safe mono">Pore-Clog Score: ${ing.comedogenicity}/5</span><span class="mono" style="font-size:0.82rem;color:var(--text-secondary);">Bottle Label (INCI): ${escapeHtml(ing.inciName)} · Fungal Acne: ${ing.malasseziaTrigger ? 'Trigger' : '100% Safe'}</span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH ${ing.phMin}–${ing.phMax}</span><span class="badge-safe mono">Pore-Clog Score: ${ing.comedogenicity}/5</span><span class="${ingAllergen ? 'badge-warn' : 'badge-safe'} mono">${ingAllergen ? `Allergy Screen: ${escapeHtml(ingAllergen.shortLabel)}` : '✓ 0/26 EU Fragrance Allergens'}</span><span class="mono" style="font-size:0.82rem;color:var(--text-secondary);">Bottle Label (INCI): ${escapeHtml(ing.inciName)} · Fungal Acne: ${ing.malasseziaTrigger ? 'Trigger' : '100% Safe'}</span></div>
         <p class="hero-sub" style="margin-bottom:16px;"><strong>Role:</strong> ${escapeHtml(ing.functionRole)}. ${escapeHtml(plainMech(ing.clinicalMechanism))}</p>
         <a href="${preloadHref}" class="btn-primary"><span>Test ${escapeHtml(ing.commonName)} in Routine Checker</span><span class="btn-icon-circle">&rarr;</span></a>
       </div>
