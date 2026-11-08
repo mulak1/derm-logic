@@ -54,6 +54,7 @@ const VERTICAL_CONFIGS = {
       colLegacy: '$150 Derm Visit / Guesswork', colManual: 'Single-Product Barcode Apps',
       rows: [
         ['Checks How Products Layer Together', 'Spots Vitamin C + Copper Peptide & Retinol clashes in 5 seconds', 'Weeks of waiting for a routine check', 'Only scores 1 bottle at a time (misses clashes)'],
+        ['EU CosIng Allergic & Contact-Trigger Screen', 'Screens 8 contact-allergen classes (Fragrance, Snail Dust-Mite, BPO, Salicylates, Glycols, Lanolin)', 'Requires separate patch-test visit', 'Misses dust-mite cross-reactivity & hidden glycols'],
         ['Pore-Clogging & Fungal-Acne Check', 'Flags hidden pore-clogging oils & tells you which serum goes first', 'Rarely checks base cream ingredients', 'Confusing "clean/dirty" labels without context'],
         ['Step-by-Step Morning & Night Plan', '$0 Free Clash Preview, $1.99 Complete 4-Night Kit, or $9/yr Unlimited Shelf Pass', '$150+ per consultation', 'No Morning vs. Night layering order']
       ]
@@ -87,6 +88,7 @@ const VERTICAL_CONFIGS = {
     ],
     coMarketingPills: [
       { key: 'sephora', label: 'pH Clash Risk', rowText: 'Routine Tip: Layering strong exfoliating acids (pH 3.2) right on top of gentle firming peptides (pH 6.0) weakens peptide firming power on contact.' },
+      { key: 'allergy', label: 'Allergy & Contact Screen', rowText: 'Routine Tip: EU CosIng Annex III screening flags Snail Mucin (dust-mite cross-reactive), Salicylates, and Propylene Glycol before they trigger eyelid or neck rashes.' },
       { key: 'dermstore', label: 'Retinoid Comfort', rowText: 'Routine Tip: Combining strong night retinoids with acne washes or exfoliating toners in the same evening triggers dryness and peeling.' },
       { key: 'ultrasun', label: 'Pore-Safety Check', rowText: 'Routine Tip: Heavy oils and rich esters (like Isopropyl Myristate) can clog pores when layered under active serums.' }
     ],
