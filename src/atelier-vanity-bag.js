@@ -88,6 +88,7 @@ function renderAtelierVanityDrawerHtml() {
   <div id="dl-prod-info-tip" role="tooltip" aria-hidden="true"></div>
   <div id="dl-vanity-toast" role="status" aria-live="polite">
     <span id="dl-vanity-toast-text" class="mono">Added to Vanity Bag</span>
+    <button type="button" id="dl-toast-pass-btn" class="mono" onclick="window.__dlOpenSampleModal();document.getElementById('dl-vanity-toast').style.display='none';" style="background:var(--sage-bg);color:var(--sage-safe);border:none;border-radius:999px;padding:4px 10px;font-size:0.73rem;font-weight:700;cursor:pointer;white-space:nowrap;">9:16 Card &rarr;</button>
     <button type="button" class="mono" onclick="window.__dlOpenVanityDrawer('toast');document.getElementById('dl-vanity-toast').style.display='none';" style="background:var(--rose-brand);color:var(--accent-ink);border:none;border-radius:999px;padding:4px 11px;font-size:0.74rem;font-weight:700;cursor:pointer;white-space:nowrap;">Open Bag &rarr;</button>
   </div>
   <div id="dl-atelier-vanity-drawer" role="dialog" aria-modal="true" aria-labelledby="dl-vanity-bag-title" onclick="if(event.target===this)window.__dlCloseVanityDrawer()" style="display:none;position:fixed;inset:0;z-index:10015;background:rgba(58,31,39,0.48);align-items:center;justify-content:flex-end;padding:16px;">
@@ -97,7 +98,7 @@ function renderAtelierVanityDrawerHtml() {
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
           <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
             <button type="button" id="dl-vanity-harmony-pill" class="badge-safe mono" onclick="window.__dlSetDossierTab('clashes')" style="font-size:0.75rem;padding:3px 9px;border:none;cursor:pointer;">96% Harmony &middot; 0 Clashes</button>
-            <span class="mono" style="padding:2px 8px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.72rem;font-weight:700;">&check; Free Proof #1 Dupe: Geek &amp; Gorgeous ($14 vs. $182)</span>
+            <button type="button" id="dl-top-dupe-proof-pill" class="mono" onclick="window.__dlDupeAllFiveVessels('dupe');window.__dlSetDossierTab('pass')" style="padding:3px 9px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.72rem;font-weight:700;border:none;cursor:pointer;">&check; Free Proof #1 Dupe: Geek &amp; Gorgeous ($14 vs. $182) &rarr;</button>
             <span id="dl-vanity-hold-countdown" class="mono" style="color:var(--text-secondary);font-size:0.75rem;">Saved for 24h in Browser</span>
             <span id="dl-vanity-bag-id" class="mono" style="display:none;">#DL-4829</span>
           </div>
