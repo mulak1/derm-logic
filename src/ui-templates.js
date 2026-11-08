@@ -23,34 +23,34 @@ function escapeHtml(str) {
 const BRAND_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="34" height="34" role="img" aria-label="DermLogic Formulation Atelier Emblem" style="flex-shrink:0;display:block;"><circle cx="20" cy="20" r="19" fill="#F3E1E5" stroke="#8A3448" stroke-width="1.4"/><circle cx="20" cy="20" r="15" fill="none" stroke="#8E6B75" stroke-width="0.75" stroke-dasharray="2 1.5"/><path d="M20 9.5 C20 9.5 26.8 17.6 26.8 22.6 C26.8 26.4 23.8 29.5 20 29.5 C16.2 29.5 13.2 26.4 13.2 22.6 C13.2 17.6 20 9.5 20 9.5 Z" fill="#8A3448"/><path d="M16.5 21.2 C16.2 23.6 17.6 25.8 19.8 26.3" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round"/><path d="M20 29.5 C22.8 29.5 25.5 31.2 26.5 33.2 C23.6 33.6 21.2 32.1 20 29.5 Z" fill="#285B44"/><path d="M20 29.5 C17.2 29.5 14.5 31.2 13.5 33.2 C16.4 33.6 18.8 32.1 20 29.5 Z" fill="#285B44" opacity="0.85"/><circle cx="20" cy="17.2" r="1.3" fill="#FFFFFF"/></svg>`;
 const SHARED_CSS = `
   :root {
-    --bg-canvas: #FCFAF7; --bg-oat: #F6F1EB; --bg-pouch: #EEE7DE; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
-    --bg-empty-slot: #EAE3D9; --bg-empty-slot-active: #DFD7CC; --text-empty-slot: #57514B;
-    --bg-pouch-card: #FFFFFF; --text-pouch-card: #0F172A; --sub-pouch-card: #166534;
-    --bg-deep: #0F172A; --ink-on-deep: #FCFAF7; --border-hairline: #E8E0D5; --border-strong: #D6CBC0;
-    --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #64748B;
-    --rose-brand: #B43444; --rose-brand-hover: #982836; --accent-ink: #FFFFFF; --rose-pill-bg: #FDF2F4; --rose-pill-border: #F9CDD5;
-    --sage-safe: #166534; --sage-bg: #F0FDF4; --sage-border: #BBF7D0;
-    --honey-warn: #B45309; --honey-bg: #FFFBEB; --honey-border: #FDE68A;
-    --berry-clash: #BE123C; --berry-bg: #FFF1F2; --berry-border: #FECDD3;
+    --bg-canvas: #FAF8F5; --bg-oat: #F3EFEA; --bg-pouch: #ECE6DF; --bg-surface: #FFFFFF; --bg-porcelain: #FFFFFF;
+    --bg-empty-slot: #EAE3D9; --bg-empty-slot-active: #DFD7CC; --text-empty-slot: #52525B;
+    --bg-pouch-card: #FFFFFF; --text-pouch-card: #18181B; --sub-pouch-card: #1E4D3B;
+    --bg-deep: #18181B; --ink-on-deep: #FAF8F5; --border-hairline: #E5E0D8; --border-strong: #D4CDC3; --border-subtle: #E5E0D8;
+    --text-primary: #18181B; --text-secondary: #52525B; --text-muted: #71717A;
+    --rose-brand: #1E4D3B; --rose-brand-hover: #163A2C; --accent-ink: #FFFFFF; --rose-pill-bg: #EEF3F0; --rose-pill-border: #D5E2DA;
+    --sage-safe: #1E4D3B; --sage-bg: #EEF3F0; --sage-border: #D5E2DA;
+    --honey-warn: #6E4B1F; --honey-bg: #F6F2EB; --honey-border: #E5DEC9;
+    --berry-clash: #6B2D3C; --berry-bg: #F6EFEF; --berry-border: #E6D5D7;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    --margin: 5vw; --step-small: clamp(0.875rem, 0.82rem + 0.15vw, 0.9375rem); --step-body: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
-    --step-lead: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem); --step-head: clamp(2rem, 1.45rem + 2.4vw, 3.35rem); --step-hero: clamp(3.5rem, 7.4vw, 6.85rem);
-    --radius-shell: 28px; --radius-card: 22px; --radius-input: 999px; --radius-pill: 999px; --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+    --margin: 5vw; --step-small: 0.875rem; --step-body: 1rem;
+    --step-lead: 1.25rem; --step-head: clamp(1.65rem, 2.2vw, 2.15rem); --step-hero: clamp(2rem, 3.2vw, 2.65rem);
+    --radius-shell: 20px; --radius-card: 16px; --radius-input: 999px; --radius-pill: 999px; --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   }
   body.vanity-night, html[data-theme="night"] body {
     --bg-canvas: #121113; --bg-oat: #1C1A1E; --bg-pouch: #262429; --bg-surface: #1E1C21; --bg-porcelain: #2A272E;
     --bg-empty-slot: #1A181C; --bg-empty-slot-active: #2C2830; --text-empty-slot: #BDB5AB;
     --bg-pouch-card: #1E1C21; --text-pouch-card: #FAF8F5; --sub-pouch-card: #88C9A8;
-    --bg-deep: #0D0C0E; --ink-on-deep: #FAF8F5; --border-hairline: #2E2B33; --border-strong: #44404C;
+    --bg-deep: #0D0C0E; --ink-on-deep: #FAF8F5; --border-hairline: #2E2B33; --border-strong: #44404C; --border-subtle: #2E2B33;
     --text-primary: #FAF8F5; --text-secondary: #D4CDC5; --text-muted: #9E968D;
-    --rose-brand: #E89E92; --rose-brand-hover: #F2B2A7; --accent-ink: #121113; --rose-pill-bg: #382422; --rose-pill-border: #523532;
+    --rose-brand: #88C9A8; --rose-brand-hover: #A3D9BD; --accent-ink: #121113; --rose-pill-bg: #15291E; --rose-pill-border: #234733;
     --sage-safe: #88C9A8; --sage-bg: #15291E; --sage-border: #234733;
     --honey-warn: #E8B98A; --honey-bg: #302217; --honey-border: #4D3725;
     --berry-clash: #E89E92; --berry-bg: #382422; --berry-border: #523532;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background-color: var(--bg-canvas); color: var(--text-primary); font-family: var(--font-sans); font-weight: 400; font-size: 16px; line-height: 1.58; overflow-x: clip; -webkit-font-smoothing: antialiased; transition: background-color 320ms var(--ease-spring), color 320ms var(--ease-spring); }
-  .serif-display, h1, h2, h3 { font-family: 'Newsreader', Georgia, serif; font-weight: 400; letter-spacing: -0.025em; line-height: 1.08; }
+  .serif-display, h1, h2, h3 { font-family: 'Newsreader', Georgia, serif; font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; }
   .serif-italic { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 400; }
   .mono { font-family: var(--font-sans); font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
   img { display: block; max-width: 100%; object-fit: cover; }
@@ -58,99 +58,93 @@ const SHARED_CSS = `
   button, select, textarea, input { font: inherit; color: inherit; }
   .container { max-width: 1320px; margin: 0 auto; padding: 0 var(--margin); }
   /* Header: Editorial Gallery & Nocturnal Vanity Switcher */
-  .site-header { background: var(--bg-canvas); position: sticky; top: 0; z-index: 40; transition: background-color 320ms var(--ease-spring); }
+  .site-header { background: var(--bg-canvas); border-bottom: 1px solid var(--border-hairline); position: sticky; top: 0; z-index: 40; transition: background-color 320ms var(--ease-spring); }
   .nav-inner { min-height: 70px; padding-top: 12px; padding-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: nowrap; }
   .brand-logo-link { display: inline-flex; align-items: center; gap: 8px; font-size: 1.24rem; font-weight: 400; letter-spacing: -0.02em; color: var(--text-primary); text-decoration: none; white-space: nowrap; transition: opacity 180ms ease-out; }
   .brand-logo-link:hover { opacity: 0.78; }
-  .nav-links { display: flex; align-items: center; gap: 16px; font-size: 0.92rem; font-weight: 500; color: var(--text-secondary); flex-wrap: nowrap; }
+  .nav-links { display: flex; align-items: center; gap: 18px; font-size: 0.9375rem; font-weight: 500; color: var(--text-secondary); flex-wrap: nowrap; }
   .nav-links a { white-space: nowrap; transition: color 180ms ease-out, opacity 180ms ease-out; }
   .nav-links a:hover { color: var(--rose-brand); }
-  .vanity-light-pill { display: inline-flex; background: var(--bg-surface); border-radius: 999px; padding: 4px; gap: 4px; }
-  .vanity-light-btn { border: none; border-radius: 999px; background: transparent; padding: 5px 12px; min-height: 32px; font-size: 0.84rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: background-color 200ms var(--ease-spring), color 200ms var(--ease-spring), transform 160ms ease-out; }
+  .vanity-light-pill { display: inline-flex; background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 999px; padding: 3px; gap: 3px; }
+  .vanity-light-btn { border: none; border-radius: 999px; background: transparent; padding: 5px 12px; min-height: 32px; font-size: 0.84rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: background-color 200ms var(--ease-spring), color 200ms var(--ease-spring); }
   .vanity-light-btn.active { background: var(--rose-brand); color: var(--accent-ink); }
-  .vanity-light-btn:active { transform: scale(0.97); }
-  /* Buttons: Soft Pillowy Capsules */
-  .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--rose-brand); color: var(--accent-ink); font-weight: 600; font-size: var(--step-small); padding: 13px 26px; min-height: 44px; border: none; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, opacity 180ms ease-out, background-color 200ms ease-out; }
+  /* Buttons: Calm Clinical Capsules */
+  .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rose-brand); color: var(--accent-ink); font-weight: 600; font-size: 0.875rem; padding: 11px 22px; min-height: 42px; border: none; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: opacity 180ms ease-out, background-color 200ms ease-out; }
   .btn-primary:hover { opacity: 0.92; }
-  .btn-primary:active { transform: scale(0.97); }
-  .btn-icon-circle { display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: transform 200ms var(--ease-spring); }
-  .btn-primary:hover .btn-icon-circle { transform: translate(2px, -2px); }
-  .btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--bg-oat); color: var(--text-primary); font-weight: 600; font-size: var(--step-small); padding: 12px 22px; min-height: 42px; border: none; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: transform 180ms ease-out, background-color 200ms ease-out, color 200ms ease-out; }
+  .btn-icon-circle { display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-hairline); font-weight: 600; font-size: 0.875rem; padding: 10px 20px; min-height: 40px; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: background-color 200ms ease-out, color 200ms ease-out; }
   .btn-secondary:hover { background: var(--rose-pill-bg); color: var(--rose-brand); }
-  .btn-secondary:active { transform: scale(0.97); }
-  .affiliate-link-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: var(--bg-canvas); color: var(--text-primary); border: 1px solid var(--border-hairline); font-size: 0.84rem; font-weight: 600; text-decoration: none; transition: background 180ms ease-out, color 180ms ease-out, border-color 180ms ease-out; }
+  .affiliate-link-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px; border-radius: 999px; background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-hairline); font-size: 0.84rem; font-weight: 600; text-decoration: none; transition: background 180ms ease-out, color 180ms ease-out, border-color 180ms ease-out; }
   .affiliate-link-pill:hover { background: var(--rose-pill-bg); color: var(--rose-brand); border-color: var(--rose-pill-border); }
-  .affiliate-micro-link { display: inline-block; margin-top: 4px; font-size: 0.82rem; font-weight: 500; color: var(--sage-safe); text-decoration: underline; text-underline-offset: 3px; }
-  .affiliate-micro-link:hover { color: var(--rose-brand); }
-  /* Hero: Uneven Editorial Gallery & Nocturnal Plinth */
-  .hero-section { padding: 6px 0 12px; }
-  .editorial-top-banner { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 16px; align-items: stretch; margin-bottom: 10px; }
+  .affiliate-micro-link { display: inline-block; margin-top: 4px; font-size: 0.84rem; font-weight: 500; color: var(--sage-safe); text-decoration: underline; text-underline-offset: 3px; }
+  /* Hero & Editorial Layout */
+  .hero-section { padding: 16px 0 24px; }
+  .editorial-top-banner { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 20px; align-items: stretch; margin-bottom: 14px; }
   .hero-copy-col { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; }
   .hero-photo-col { min-width: 0; display: flex; flex-direction: column; }
-  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2rem, 3.3vw, 2.95rem); font-weight: 400; line-height: 0.98; letter-spacing: -0.035em; color: var(--text-primary); margin-bottom: 6px; }
-  .hero-h1-line1 { display: block; }
-  .hero-h1-line2 { display: block; padding-left: 0; }
-  .hero-sub { color: var(--text-secondary); font-size: clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem); line-height: 1.38; max-width: 58ch; margin-bottom: 8px; }
-  .editorial-photo-shell { background: var(--bg-oat); border-radius: 24px; padding: 10px 14px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-  .editorial-photo-inner { overflow: hidden; border-radius: 16px; position: relative; min-height: 148px; max-height: 172px; height: 100%; flex: 1; background: var(--bg-porcelain); }
-  .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 180ms ease-out; }
-  .editorial-photo-diptych { display: flex; flex-direction: column; min-height: 148px; max-height: 172px; height: 100%; flex: 1; }
+  .hero-h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(1.85rem, 3vw, 2.55rem); font-weight: 400; line-height: 1.12; letter-spacing: -0.025em; color: var(--text-primary); margin-bottom: 8px; }
+  .hero-h1-line1, .hero-h1-line2 { display: block; }
+  .hero-sub { color: var(--text-secondary); font-size: 1rem; line-height: 1.55; max-width: 62ch; margin-bottom: 10px; }
+  .editorial-photo-shell { background: var(--bg-oat); border-radius: 18px; padding: 10px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--border-hairline); }
+  .editorial-photo-inner { overflow: hidden; border-radius: 12px; position: relative; min-height: 160px; max-height: 200px; height: 100%; flex: 1; background: var(--bg-porcelain); }
+  .editorial-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .editorial-photo-diptych { display: flex; flex-direction: column; min-height: 160px; max-height: 200px; height: 100%; flex: 1; }
   .editorial-photo-diptych .editorial-photo-inner { height: 100%; flex: 1; }
   #eb-hero-trust-strip { display: none !important; }
-  .vessel-photo-frame { background: var(--bg-oat); border-radius: 18px; overflow: hidden; padding: 0; margin-bottom: 14px; }
-  .vessel-photo-frame img { width: 100%; height: 172px; object-fit: cover; display: block; }
-  .editorial-photo-caption { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: var(--step-small); color: var(--text-secondary); }
-  /* Interactive Shelf Audit Workbench ([data-ui]) */
+  .vessel-photo-frame { background: var(--bg-oat); border-radius: 14px; overflow: hidden; padding: 0; margin-bottom: 14px; }
+  .vessel-photo-frame img { width: 100%; height: 190px; object-fit: cover; display: block; }
+  .editorial-photo-caption { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 0.84rem; color: var(--text-secondary); }
+  /* Interactive Shelf Audit Workbench — Flat, Non-Nested Card Containers */
   .hero-grid, .dl-workbench-2col { display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 24px; align-items: start; }
-  .grader-card { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; box-shadow: 0 4px 20px -4px rgba(21,20,23,0.05); }
-  .results-panel { background: var(--bg-oat); border: 1px solid var(--border-hairline); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; box-shadow: 0 4px 20px -4px rgba(21,20,23,0.05); }
-  .porcelain-vessel-core { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 22px; padding: 22px 24px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 14px; min-width: 0; max-width: 100%; overflow: hidden; box-shadow: 0 2px 12px -2px rgba(21,20,23,0.04); }
+  .grader-card { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 20px; padding: 22px; min-width: 0; max-width: 100%; overflow: hidden; }
+  .results-panel { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 20px; padding: 22px; min-width: 0; max-width: 100%; overflow: hidden; }
+  .porcelain-vessel-core { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 16px; padding: 20px 22px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 12px; min-width: 0; max-width: 100%; overflow: hidden; }
+  .grader-card > .porcelain-vessel-core, .results-panel > .porcelain-vessel-core { border: none !important; box-shadow: none !important; background: transparent !important; padding: 0 !important; border-radius: 0 !important; }
   #textureFilterTabs { display: grid !important; grid-template-columns: repeat(6, minmax(0, 1fr)) !important; gap: 4px !important; width: 100%; background: var(--bg-oat); padding: 4px; border-radius: 999px; }
-  #textureFilterTabs .vanity-light-btn { padding: 6px 4px !important; font-size: 0.76rem !important; white-space: nowrap !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; border-radius: 999px; min-height: 28px; }
+  #textureFilterTabs .vanity-light-btn { padding: 6px 4px !important; font-size: 0.8rem !important; white-space: nowrap !important; line-height: 1.2 !important; text-align: center; min-width: 0; width: 100%; border-radius: 999px; min-height: 30px; }
   .shelf-search-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 8px; align-items: center; }
-  .shelf-search-row .input-box { min-width: 0; overflow: hidden; text-overflow: ellipsis; border-radius: 999px; background: var(--bg-canvas); }
-  .preset-row { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 5px !important; margin-bottom: 0; }
-  .preset-chip { background: var(--bg-surface); border-radius: 999px; padding: 4px 8px !important; font-size: 0.73rem; border: none; cursor: pointer; text-align: center !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 4px; white-space: nowrap !important; line-height: 1.2 !important; min-height: 26px; transition: transform 180ms ease-out, background-color 180ms ease-out; overflow: hidden; }
-  .preset-chip:hover, .preset-chip.active { background: var(--rose-pill-bg); }
-  .preset-chip:active { transform: scale(0.98); }
-  .preset-chip strong { display: block; color: var(--text-primary); font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .shelf-search-row .input-box { min-width: 0; overflow: hidden; text-overflow: ellipsis; border-radius: 12px; background: var(--bg-canvas); border: 1px solid var(--border-hairline); }
+  .preset-row { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 6px !important; margin-bottom: 0; }
+  .preset-chip { background: var(--bg-surface); border-radius: 999px; padding: 5px 10px !important; font-size: 0.8rem; border: 1px solid var(--border-hairline); cursor: pointer; text-align: center !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 4px; white-space: nowrap !important; line-height: 1.2 !important; min-height: 30px; overflow: hidden; }
+  .preset-chip:hover, .preset-chip.active { background: var(--rose-pill-bg); border-color: var(--rose-pill-border); }
+  .preset-chip strong { display: block; color: var(--text-primary); font-family: var(--font-sans); font-size: 0.78rem; font-weight: 600; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .preset-chip span { display: none; }
-  .field-label { display: block; font-size: 0.84rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
-  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: 74px; gap: 8px; flex: 1 1 auto; min-height: 244px; max-height: 268px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--rose-pill-bg) transparent; padding: 10px; border-radius: 18px; background: var(--bg-canvas); margin-bottom: 0; align-content: start; }
-  .prod-check-item { position: relative; display: flex; align-items: stretch; gap: 6px; padding: 9px 11px; height: 74px; min-height: 74px; border-radius: 14px; background: var(--bg-surface); border: 1px solid var(--border-hairline); cursor: pointer; font-size: 0.84rem; transition: background-color 180ms ease-out, border-color 180ms ease-out; overflow: hidden; }
+  .field-label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .product-selector-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: 70px; gap: 6px; flex: 1 1 auto; min-height: 168px; max-height: 184px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; padding: 8px; border-radius: 14px; background: var(--bg-canvas); border: 1px solid var(--border-hairline); margin-bottom: 0; align-content: start; }
+  .prod-check-item { position: relative; display: flex; align-items: stretch; gap: 6px; padding: 8px 10px; height: 70px; min-height: 70px; border-radius: 12px; background: var(--bg-surface); border: 1px solid var(--border-hairline); cursor: pointer; font-size: 0.875rem; transition: background-color 180ms ease-out, border-color 180ms ease-out; overflow: hidden; }
   .prod-check-item.selected { background: var(--rose-pill-bg); border-color: var(--rose-brand); }
-  .prod-check-item input[type="checkbox"] { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
-  [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); border-radius: 16px; padding: 9px 13px; color: var(--text-primary); font-size: 16px; border: none; }
+  .prod-check-item input[type="checkbox"], .prod-check-item input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; margin: 0; pointer-events: none; }
+  [data-ui] .input-box, [data-ui] .textarea-box, .input-box, .textarea-box { width: 100%; background: var(--bg-surface); border-radius: 12px; padding: 9px 13px; color: var(--text-primary); font-size: 16px; border: 1px solid var(--border-hairline); }
   .input-box:focus, .textarea-box:focus { outline: 2px solid var(--rose-brand); }
-  .score-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-bottom: 8px; }
-  .metric-box { background: var(--bg-canvas); border-radius: 13px; padding: 7px 11px; font-variant-numeric: tabular-nums; min-width: 0; overflow: hidden; }
-  .metric-val { font-family: 'Newsreader', Georgia, serif; font-size: 1.12rem; font-weight: 500; line-height: 1.12; font-variant-numeric: tabular-nums; }
-  .badge-safe, .badge-clash, .badge-warn { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 12px; font-size: 0.8rem; font-weight: 600; font-variant-numeric: tabular-nums; }
-  .badge-safe { background: var(--sage-bg); color: var(--sage-safe); }
-  .badge-clash { background: var(--berry-bg); color: var(--berry-clash); }
-  .badge-warn { background: var(--honey-bg); color: var(--honey-warn); }
-  .conflict-card { background: var(--berry-bg); border-radius: 20px; padding: 16px 18px; margin-bottom: 10px; min-width: 0; overflow: hidden; }
-  .conflict-card.MODERATE { background: var(--honey-bg); }
+  .score-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 8px; }
+  .metric-box { background: var(--bg-canvas); border-radius: 12px; padding: 8px 12px; font-variant-numeric: tabular-nums; min-width: 0; overflow: hidden; }
+  .metric-val { font-family: 'Newsreader', Georgia, serif; font-size: 1.15rem; font-weight: 500; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .badge-safe, .badge-clash, .badge-warn { display: inline-flex; align-items: center; border-radius: 999px; padding: 4px 11px; font-size: 0.8125rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .badge-safe { background: var(--sage-bg); color: var(--sage-safe); border: 1px solid var(--sage-border); }
+  .badge-clash { background: var(--berry-bg); color: var(--berry-clash); border: 1px solid var(--berry-border); }
+  .badge-warn { background: var(--honey-bg); color: var(--honey-warn); border: 1px solid var(--honey-border); }
+  .conflict-card { background: var(--bg-canvas); border: 1px solid var(--border-hairline); border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; min-width: 0; overflow: hidden; }
+  .conflict-card.MODERATE { background: var(--bg-canvas); }
   /* Uneven Gallery & 4-Step Sink Pacing Strip */
-  .z-cascade-stage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; margin-top: 28px; }
-  .z-vessel-left, .z-vessel-center, .z-vessel-right { background: var(--bg-surface); padding: 0; display: flex; }
-  .z-vessel-left > .porcelain-vessel-core, .z-vessel-center > .porcelain-vessel-core, .z-vessel-right > .porcelain-vessel-core { padding: 28px 30px; justify-content: space-between; flex: 1; gap: 18px; }
-  .sink-pacing-panel { margin-top: 24px; background: var(--bg-surface); padding: 28px 30px; }
-  .viscosity-seq-list { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 18px 0 0; }
-  .viscosity-seq-item { padding: 18px 20px; background: var(--bg-canvas); display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 14px; }
-  .wait-timer-btn { padding: 8px 14px; background: var(--bg-oat); border: none; color: var(--text-primary); font-size: 0.84rem; font-weight: 500; cursor: pointer; white-space: nowrap; font-variant-numeric: tabular-nums; transition: background-color 200ms ease-out, color 200ms ease-out; width: 100%; text-align: center; }
+  .z-cascade-stage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; margin-top: 24px; }
+  .z-vessel-left, .z-vessel-center, .z-vessel-right { background: transparent; padding: 0; display: flex; }
+  .z-vessel-left > .porcelain-vessel-core, .z-vessel-center > .porcelain-vessel-core, .z-vessel-right > .porcelain-vessel-core { padding: 24px; justify-content: space-between; flex: 1; gap: 16px; }
+  .sink-pacing-panel { margin-top: 24px; background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 16px; padding: 24px 28px; }
+  .viscosity-seq-list { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 18px 0 0; }
+  .viscosity-seq-item { padding: 16px 18px; background: var(--bg-canvas); border: 1px solid var(--border-hairline); border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .wait-timer-btn { padding: 8px 14px; background: var(--bg-oat); border: 1px solid var(--border-hairline); border-radius: 999px; color: var(--text-primary); font-size: 0.84rem; font-weight: 600; cursor: pointer; white-space: nowrap; font-variant-numeric: tabular-nums; width: 100%; text-align: center; }
   .wait-timer-btn:hover, .wait-timer-btn.running { background: var(--rose-brand); color: var(--accent-ink); }
-  .section-block { padding: 48px 0; }
-  .section-block-alt { padding: 48px 0; background: var(--bg-oat); }
+  .section-block { padding: 28px 0; }
+  .section-block-alt { padding: 28px 0; background: var(--bg-oat); }
   .bento-grid-3 { display: grid; grid-template-columns: 1.2fr 0.9fr 0.9fr; gap: 20px; margin-top: 24px; }
-  .bento-cell { background: var(--bg-surface); padding: 24px; }
-  .table-wrap { overflow-x: auto; background: var(--bg-surface); }
-  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
-  th, td { padding: 14px 15px; text-align: left; border-bottom: 1px solid var(--border-hairline); }
-  th { color: var(--text-muted); font-weight: 500; font-size: 0.84rem; background: var(--bg-oat); }
+  .bento-cell { background: var(--bg-surface); padding: 24px; border-radius: 16px; border: 1px solid var(--border-hairline); }
+  .table-wrap { overflow-x: auto; background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border-hairline); }
+  th { color: var(--text-secondary); font-weight: 600; font-size: 0.82rem; background: var(--bg-oat); }
   /* Closing Editorial Footer */
-  .site-footer { padding: 72px 0 48px; background: var(--bg-deep); color: var(--ink-on-deep); font-size: var(--step-small); }
-  .footer-wordmark { font-size: clamp(3.25rem, 11vw, 9.5rem); font-weight: 300; line-height: 0.88; letter-spacing: -0.04em; margin: 36px 0 24px; color: var(--ink-on-deep); }
+  .site-footer { padding: 20px 0 16px; background: var(--bg-deep); color: var(--ink-on-deep); font-size: var(--step-small); }
+  .footer-wordmark { display: none; }
   .cookie-banner { width: 100%; background: var(--bg-oat); padding: 10px 0; display: none; }
   .cookie-banner-inner { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: nowrap; }
   @media (max-width: 768px) {
@@ -162,7 +156,7 @@ const SHARED_CSS = `
   }
   .dl-locked-spec-badge { filter: none !important; }
   .modal-backdrop { position: fixed; inset: 0; background: rgba(12, 10, 8, 0.65); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 80; }
-  .modal-card { background: var(--bg-surface); max-width: 560px; width: 100%; padding: 32px; }
+  .modal-card { background: var(--bg-surface); max-width: 560px; width: 100%; padding: 32px; border-radius: 20px; }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
@@ -207,7 +201,7 @@ const SHARED_CSS = `
     .site-header .btn-primary { display: none; } .btn-primary, .btn-secondary, .btn-primary span, .btn-secondary span { white-space: normal !important; max-width: 100%; min-width: 0; text-align: center; flex-wrap: wrap; }
   }
   #appleWalletCardPreview, #appleWalletCardPreview.eb-blurred-deliverable, #actives-matrix tr.eb-blurred-deliverable { filter: none !important; max-height: none !important; overflow: visible !important; opacity: 1 !important; user-select: auto !important; cursor: auto !important; }
-  #liveResultsContainer #eb-postcalc-inline-cta, #actives-matrix #eb-table-row4-gate-tr, #actives-matrix #eb-tanstack-table-bar, #eb-deliverable-curtain, #eb-pseo-quick-bar { display: none !important; }
+  #liveResultsContainer #eb-postcalc-inline-cta, #actives-matrix #eb-table-row4-gate-tr, #actives-matrix #eb-tanstack-table-bar, #eb-deliverable-curtain, #eb-pseo-quick-bar, #eb-executive-strip, #eb-bottom-conversion-suite, #eb-growth-flywheel-hub, #eb-export-utility-bar { display: none !important; }
   #eb-pseo-hero-split { grid-template-columns: 1fr !important; }
   #eb-prism-proof-preview { white-space: normal !important; padding: 16px 18px !important; background: var(--bg-canvas) !important; font-family: 'Newsreader', Georgia, serif !important; }
   .dl-inline-ics-form { display: flex !important; flex-wrap: wrap !important; gap: 8px; align-items: center; width: 100%; }
@@ -230,7 +224,7 @@ function renderHeader(hideNav = false) {
   return `${ftcBar}<header class="site-header"><div class="container nav-inner"><a href="/" class="brand-logo-link" aria-label="DermLogic Home">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:var(--rose-brand);font-size:1.05rem;">Atelier</span></span></a><nav class="nav-links" aria-label="Main Navigation"><a href="/#analyzer">Shelf Builder</a><a href="/compare">Compare &amp; Dupes</a><a href="/celebrity">Celebrity Routines</a><a href="/concern">Skin Concerns</a><a href="/directory">Layering Guides</a></nav><div style="display:flex;align-items:center;gap:10px;">${vanityPill}${lightPill}</div></div></header>`;
 }
 function renderFooter() {
-  const preFooterUnlockBar = `<section class="section-block" style="padding:28px 0 36px;background:var(--bg-oat);border-top:1px solid var(--border-hairline);"><div class="container"><div id="dl-footer-email-unlock-bar" class="porcelain-vessel-core" style="padding:18px 22px;background:var(--bg-surface);border-radius:16px;border:1px solid var(--rose-pill-border);"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;"><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:700;">&#10003; EU CosIng &amp; Lab pH Verified &middot; Free 7:30 AM Proof Above &middot; Unlock 9:30 PM &amp; 2 Chemist Dupes ($0)</span><span class="badge-safe mono" style="font-size:0.68rem;">30-Day Refund Guarantee</span></div><form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'footer_unlock_bar')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;"><input type="email" id="dl-footer-ics-email" class="input-box dl-inline-ics-email" required aria-label="Email for free 9:30 PM schedule and 2 dupes" placeholder="you@email.com — unlock 9:30 PM schedule, 4-Night .ICS &amp; 2 dupes ($0)..." style="flex:1 1 240px;padding:9px 14px;font-size:0.84rem;" /><button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:9px 16px;font-size:0.78rem;min-height:38px;"><span>Unlock 9:30 PM &amp; 2 Dupes ($0)</span><span class="btn-icon-circle">&rarr;</span></button><a href="/buy/flash_pass?source=footer_unlock_bar" class="btn-secondary mono" style="padding:9px 14px;font-size:0.76rem;min-height:38px;text-decoration:none;">Save 9:16 Phone Card ($1.99) &rarr;</a><div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.75rem;color:var(--sage-safe);margin-top:4px;"></div></form></div></div></section>`;
+  const preFooterUnlockBar = `<section class="section-block" style="padding:14px 0 16px;background:var(--bg-oat);border-top:1px solid var(--border-hairline);"><div class="container"><div id="dl-footer-email-unlock-bar" class="porcelain-vessel-core" style="padding:12px 16px;background:var(--bg-surface);border-radius:14px;border:1px solid var(--rose-pill-border);"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;"><span class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:700;">&#10003; EU CosIng &amp; Lab pH Verified &middot; Free 7:30 AM Proof Above &middot; Unlock 9:30 PM &amp; 2 Chemist Dupes ($0)</span><span class="badge-safe mono" style="font-size:0.68rem;">30-Day Refund Guarantee</span></div><form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'footer_unlock_bar')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;"><input type="email" id="dl-footer-ics-email" class="input-box dl-inline-ics-email" required aria-label="Email for free 9:30 PM schedule and 2 dupes" placeholder="you@email.com — unlock 9:30 PM schedule, 4-Night .ICS &amp; 2 dupes ($0)..." style="flex:1 1 240px;padding:7px 12px;font-size:0.82rem;" /><button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 14px;font-size:0.76rem;min-height:34px;"><span>Unlock 9:30 PM &amp; 2 Dupes ($0)</span><span class="btn-icon-circle">&rarr;</span></button><a href="/buy/flash_pass?source=footer_unlock_bar" class="btn-secondary mono" style="padding:7px 12px;font-size:0.75rem;min-height:34px;text-decoration:none;">Save 9:16 Phone Card ($1.99) &rarr;</a><div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.75rem;color:var(--sage-safe);margin-top:4px;"></div></form></div></div></section>`;
   return `${preFooterUnlockBar}<div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie Consent"><div class="container cookie-banner-inner"><div style="font-size:0.85rem;color:var(--text-secondary);">We use privacy-friendly cookies to remember your skincare routine preferences. See our <a href="/privacy" style="text-decoration:underline;color:var(--rose-brand);">Privacy Policy</a> &amp; <a href="/editorial-policy" style="text-decoration:underline;color:var(--rose-brand);">Editorial Policy</a>.</div><div style="display:flex;gap:8px;"><button type="button" id="cookie-reject" class="btn-secondary" style="padding:6px 14px;font-size:0.8125rem;" onclick="setCookieConsent('rejected')">Reject</button><button type="button" id="cookie-accept" class="btn-primary" style="padding:6px 16px;font-size:0.8125rem;" onclick="setCookieConsent('accepted')">Accept</button></div></div></div><footer class="site-footer"><div class="container"><div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-start;"><div style="max-width:52ch;"><a href="/" class="brand-logo-link" aria-label="DermLogic Home" style="margin-bottom:8px;color:var(--ink-on-deep);">${BRAND_LOGO_SVG}<span class="serif-display" style="font-weight:400;">DermLogic <span class="serif-italic" style="color:#E8C6B0;">Formulation Atelier</span></span></a><p style="color:#B5ACA3;font-size:0.9rem;">Cosmetic-chemist verified pH windows, peptide &amp; Vitamin C compatibility, pore-safety, and four-night skin-cycling rituals. Reader-supported formulation lab: when you purchase through retail links on our site, we may earn an affiliate commission at no extra cost to you.</p></div><div style="display:flex;gap:20px;flex-wrap:wrap;font-weight:400;font-size:0.9rem;color:var(--ink-on-deep);"><a href="/#analyzer">Shelf Audit</a><a href="/celebrity">Iconic Routines</a><a href="/bottle">Cult Bottles</a><a href="/ingredient">Ingredients</a><a href="/concern">Skin Concerns</a><a href="/leaderboard">Routine Leaderboard</a><a href="/directory">Layering Guides</a><a href="/editorial-policy">Editorial &amp; FTC Policy</a><a href="/sitemap.xml">XML Sitemap</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div></div><div class="footer-wordmark">DermLogic</div></div></footer>${renderAtelierVanityDrawerHtml()}${renderSovrnVglnkScript()}`;
 }
 const SHORT_PRODUCT_NAMES = {
@@ -349,52 +343,52 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
         ${renderAnalysisResultHtml(initialAnalysis)}
       </div>
     </div>
-    ${showUgcStrip ? `<div class="dl-ugc-community-strip" style="margin-top:28px;margin-bottom:24px;">
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+    ${showUgcStrip ? `<div class="dl-ugc-community-strip" style="margin-top:16px;margin-bottom:6px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
         <div>
-          <span class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;display:block;">From Bathroom Counters to Calmer Skin</span>
-          <h3 class="serif-display" style="font-size:1.35rem;font-weight:400;color:var(--text-primary);margin:0;">Real Vanity Routines &middot; Verified Zero-Sting Results</h3>
+          <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;display:block;">Formulation Atelier &middot; Clinical Shelf Architecture</span>
+          <h3 class="serif-display" style="font-size:1.3rem;font-weight:400;color:var(--text-primary);margin:0;">Real Vanity Routines &middot; Verified Zero-Sting Results</h3>
         </div>
-        <span class="mono" style="font-size:0.75rem;color:var(--sage-safe);background:var(--bg-canvas);padding:4px 10px;border-radius:999px;font-weight:600;">&#10003; EU CosIng &amp; Lab pH &middot; 4,200+ Routine Audits &middot; 30-Day Guarantee</span>
+        <span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH &middot; 4,200+ Routine Audits</span>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
-        <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
-          <div style="font-size:0.75rem;font-weight:700;color:var(--sage-safe);letter-spacing:0.02em;">&#10003; Free Proof #1 &middot; 7:30 AM Morning Glow (15% Vitamin C)</div>
-          <div style="height:150px;border-radius:12px;overflow:hidden;">
-            <img src="/public/photo_customer_holding.jpg" alt="Model applying morning Vitamin C serum with glass dropper onto glowing skin" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="lazy" />
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+        <div class="porcelain-vessel-core" style="padding:12px 14px;background:var(--bg-surface);border-radius:14px;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:0.8125rem;font-weight:600;color:var(--sage-safe);">&#10003; 7:30 AM Morning Glow &middot; 15% Vitamin C + SPF 50</div>
+          <div style="height:130px;border-radius:10px;overflow:hidden;background:var(--bg-oat);">
+            <img src="/public/banana_aesop_vanity_serums.jpg" alt="Warm sunlit travertine bathroom vanity with unbranded amber and frosted glass dropper serums" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="lazy" />
           </div>
-          <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
-            <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Separated my 15% Vitamin C from my night acids. Smooth, non-pilling barrier under SPF 50 all day.&rdquo;</p>
-            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:4px;">
+            <p style="font-size:0.86rem;color:var(--text-primary);line-height:1.42;margin:0;">&ldquo;Separated my 15% Vitamin C from my night acids. Smooth, non-pilling barrier under SPF 50 all day.&rdquo;</p>
+            <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;">
               <span>Maya K., Verified Routine</span>
               <span style="color:var(--sage-safe);font-weight:600;">&#10003; 7:30 AM Free Proof</span>
             </div>
           </div>
         </div>
-        <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
-          <div style="font-size:0.75rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.02em;">Bathroom Shelf &middot; C E Ferulic + Barrier</div>
-          <div style="height:150px;border-radius:12px;overflow:hidden;">
-            <img src="/public/photo_bathroom_sunlight.jpg" alt="Sunlit bathroom vanity counter with luxury and clinical skincare bottles" style="width:100%;height:100%;object-fit:cover;object-position:center 45%;display:block;" loading="lazy" />
+        <div class="porcelain-vessel-core" style="padding:12px 14px;background:var(--bg-surface);border-radius:14px;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:0.8125rem;font-weight:600;color:var(--rose-brand);">Bathroom Shelf &middot; C E Ferulic + Barrier Dupe</div>
+          <div style="height:130px;border-radius:10px;overflow:hidden;background:var(--bg-oat);">
+            <img src="/public/banana_apothecary_shelf_ritual.jpg" alt="Minimalist architectural oak and travertine apothecary shelf with unbranded skincare vessels" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="lazy" />
           </div>
-          <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
-            <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Checked my entire 6-bottle counter in 2 minutes. Cut $140 of overlapping exfoliants that were triggering redness.&rdquo;</p>
-            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:4px;">
+            <p style="font-size:0.86rem;color:var(--text-primary);line-height:1.42;margin:0;">&ldquo;Checked my entire 6-bottle counter in 2 minutes. Cut $140 of overlapping exfoliants that were triggering redness.&rdquo;</p>
+            <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
               <span>Elena R., Verified Routine</span>
-              <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;">&#128274; Unlock $140 Dupe Swap ($0) &uarr;</span>
+              <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:600;cursor:pointer;text-decoration:underline;">&#128274; Unlock $140 Dupe Swap ($0) &uarr;</span>
               <span class="dl-unlocked-c2-proof" style="display:none;color:var(--sage-safe);font-weight:600;">&#10003; Saved $140 (Timeless 20% Swap)</span>
             </div>
           </div>
         </div>
-        <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
-          <div style="font-size:0.75rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.02em;">Night Repair &middot; Rx Tretinoin Buffer</div>
-          <div style="height:150px;border-radius:12px;overflow:hidden;">
-            <img src="/public/photo_model_radiant.jpg" alt="Smiling model with calm, bouncy skin after ceramide barrier repair" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;" loading="lazy" />
+        <div class="porcelain-vessel-core" style="padding:12px 14px;background:var(--bg-surface);border-radius:14px;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:0.8125rem;font-weight:600;color:var(--rose-brand);">Night Repair &middot; 3:1:1 Ceramide Cushion</div>
+          <div style="height:130px;border-radius:10px;overflow:hidden;background:var(--bg-oat);">
+            <img src="/public/banana_ceramide_cream_macro.jpg" alt="Macro editorial shot of rich whipped ceramide barrier cream swirl and hyaluronic serum droplet" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="lazy" />
           </div>
-          <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
-            <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Used the ceramide sandwich method for Tretinoin 0.05%. Peeling and tightness disappeared within one week.&rdquo;</p>
-            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:4px;">
+            <p style="font-size:0.86rem;color:var(--text-primary);line-height:1.42;margin:0;">&ldquo;Used the ceramide sandwich method for Tretinoin 0.05%. Peeling and tightness disappeared within one week.&rdquo;</p>
+            <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
               <span>Chloe D., Verified Routine</span>
-              <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;">&#128274; Unlock 9:30 PM Sandwich ($0) &uarr;</span>
+              <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:600;cursor:pointer;text-decoration:underline;">&#128274; Unlock 9:30 PM Sandwich ($0) &uarr;</span>
               <span class="dl-unlocked-c2-proof" style="display:none;color:var(--sage-safe);font-weight:600;">&#10003; Zero Flaking (Aestura 365 Buffer)</span>
             </div>
           </div>
@@ -512,7 +506,7 @@ function renderAnalysisResultHtml(res) {
     { title: amSerum ? '2. Vitamin C Shield' : (bpoProd && !isWash(bpoProd) && pmRetin ? '2. Morning Blemish Gel' : '2. Hydrating Serum'), sub: amSerum ? shortBottle(amSerum) : (bpoProd && !isWash(bpoProd) && pmRetin ? shortBottle(bpoProd) : 'Pat onto damp skin · 60s'), badge: 'Wait 60s', click: '' },
     { title: amShield ? '3. Daily SPF 50+ Shield' : '3. Morning SPF 50', sub: amShield ? shortBottle(amShield) : '+ Tap to add Joseon SPF ($18)', badge: amShield ? 'SPF 50' : '+ $18', click: amShield ? '' : 'if(window.__dlTapPouchSpfSlot)window.__dlTapPouchSpfSlot();' }
   ];
-  const renderStepRow = (st, isPm) => `<div ${st.click ? `role="button" onclick="${st.click}"` : ''} style="padding:8px 11px;background:${isPm ? 'rgba(244,239,232,0.09)' : 'var(--bg-surface)'};border-radius:11px;display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:7px;min-width:0;${st.click ? 'cursor:pointer;' : ''}"><div style="min-width:0;font-size:0.8rem;line-height:1.3;${isPm ? 'color:#F4EFE8;' : ''}"><strong style="${isPm ? '' : 'color:var(--text-primary);'}display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.title)}</strong><span style="color:${st.click ? (isPm ? '#F7DFAD' : 'var(--rose-brand)') : (isPm ? '#EED6DC' : 'var(--text-secondary)')};font-size:0.73rem;font-weight:${st.click ? '600' : '400'};display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.sub)}</span></div><span class="mono" style="font-size:0.7rem;padding:2px 7px;border-radius:999px;background:${isPm ? '#7A2332' : 'var(--rose-pill-bg)'};color:${isPm ? '#F4EFE8' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;white-space:nowrap;">${st.badge}</span></div>`;
+  const renderStepRow = (st, isPm) => `<div ${st.click ? `role="button" onclick="${st.click}"` : ''} style="padding:9px 12px;background:var(--bg-surface);border:1px solid var(--border-hairline);border-radius:11px;display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:7px;min-width:0;${st.click ? 'cursor:pointer;' : ''}"><div style="min-width:0;font-size:0.84rem;line-height:1.35;color:var(--text-primary);"><strong style="color:var(--text-primary);display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.title)}</strong><span style="color:${st.click ? 'var(--rose-brand)' : 'var(--text-secondary)'};font-size:0.78rem;font-weight:${st.click ? '600' : '400'};display:block;white-space:normal;overflow-wrap:break-word;">${escapeHtml(st.sub)}</span></div><span class="mono" style="font-size:0.74rem;padding:2px 8px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:600;flex-shrink:0;white-space:nowrap;">${st.badge}</span></div>`;
   const amStepsHtml = amDynamicSteps.map((st) => renderStepRow(st, false)).join('');
   const cMode = String(res.climateMode || 'indoor_dry');
   const pmStep2Obj = cMode === 'pregnancy_nursing'
@@ -525,7 +519,7 @@ function renderAnalysisResultHtml(res) {
     { title: pmStep2Obj.title, sub: pmStep2Obj.sub, badge: 'Night 2', click: '' },
     { title: pmCream ? '3. Soothing Barrier Cream' : '3. Barrier Cream', sub: pmCream ? shortBottle(pmCream) : '+ Tap to add Aestura 365 ($32)', badge: pmCream ? 'Cushion' : '+ $32', click: pmCream ? '' : 'if(window.__dlTapPouchCreamSlot)window.__dlTapPouchCreamSlot();' }
   ];
-  const pmLockRowHtml = `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 12px;background:rgba(244,239,232,0.12);border:1px dashed rgba(247,223,173,0.55);border-radius:11px;margin-bottom:7px;cursor:pointer;"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:3px;"><strong style="font-size:0.8rem;color:#F7DFAD;">&#128274; Steps 2&ndash;3 &middot; Night Buffer &amp; Dupe #2 ($0)</strong><span class="mono" style="font-size:0.68rem;padding:2px 7px;border-radius:999px;background:#7A2332;color:#F4EFE8;font-weight:700;">Free Unlock &darr;</span></div><span style="font-size:0.73rem;color:#EED6DC;line-height:1.35;display:block;">Enter your email below ($0) to reveal ${escapeHtml(pmStep2Obj.title.replace(/^2\.\s*/, ''))} wait time, ceramide sandwich ratio &amp; 2nd chemist dupe &darr;</span></div>`;
+  const pmLockRowHtml = `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 12px;background:var(--bg-surface);border:1px dashed var(--border-strong);border-radius:11px;margin-bottom:7px;cursor:pointer;"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:3px;"><strong style="font-size:0.82rem;color:var(--text-primary);">&#128274; Steps 2&ndash;3 &middot; Night Buffer &amp; Dupe #2 ($0)</strong><span class="mono" style="font-size:0.72rem;padding:2px 8px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);font-weight:700;">Free Unlock &darr;</span></div><span style="font-size:0.78rem;color:var(--text-secondary);line-height:1.38;display:block;">Enter your email below ($0) to reveal ${escapeHtml(pmStep2Obj.title.replace(/^2\.\s*/, ''))} wait time, ceramide sandwich ratio &amp; 2nd chemist dupe &darr;</span></div>`;
   const pmStepsHtml = renderStepRow(pmDynamicSteps[0], true) + pmLockRowHtml + `<div class="dl-unlocked-c2-proof" style="display:none;">${pmDynamicSteps.slice(1).map((st) => renderStepRow(st, true)).join('')}</div>`;
   const poreCount = res.comedogenicFlags.length;
   const topPoreName = poreCount > 0 ? String(res.comedogenicFlags[0].commonName || res.comedogenicFlags[0].inciName).split('(')[0].trim() : '';
@@ -549,10 +543,10 @@ function renderAnalysisResultHtml(res) {
       <div style="min-width:0;display:flex;flex-direction:column;gap:9px;flex:1;">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
-            <span class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;">Step 2 of 2 &middot; Your Custom Routine</span>
+            <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;">Step 2 of 2 &middot; Your Custom Routine</span>
             <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
-              <span class="${badgeClass} mono" style="padding:2px 8px;font-size:0.72rem;" id="compatibilityScoreValue">${conflictCount === 0 ? '✓ Calm & Safe' : `${conflictCount} Clashes Resolved`}</span>
-              <span class="badge-safe mono" style="padding:2px 8px;font-size:0.72rem;" id="wastedShelfValueReadout">${conflictCount === 0 ? `$${totalUsd} Safe` : `$${wastedUsd}/$${totalUsd} Saved`}</span>
+              <span class="${badgeClass} mono" id="compatibilityScoreValue">${conflictCount === 0 ? '✓ Calm & Safe' : `${conflictCount} Clashes Resolved`}</span>
+              <span class="badge-safe mono" id="wastedShelfValueReadout">${conflictCount === 0 ? `$${totalUsd} Safe` : `$${wastedUsd}/$${totalUsd} Saved`}</span>
             </div>
           </div>
           ${renderPersonalizedResultsHeaderHtml(res)}
@@ -560,28 +554,28 @@ function renderAnalysisResultHtml(res) {
         <div id="beforeAfterSplitBar" style="display:none;"></div>
         <!-- True 3-Tab Switcher at the Top of the Stage (Only 1 View Open at a Time) -->
         <div id="dl-results-step-bar" role="tablist" aria-label="Routine Details" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:var(--bg-oat);padding:4px;border-radius:999px;">
-          <button type="button" id="dl-btn-next-step-2" class="vanity-light-btn active mono" style="padding:5px 6px;font-size:0.74rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(2)">1 &middot; AM &amp; PM Order</button>
-          <button type="button" id="dl-res-tab-1" class="vanity-light-btn mono" style="padding:5px 6px;font-size:0.74rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(1)">2 &middot; Why Clashed (${conflictCount})</button>
-          <button type="button" id="dl-res-tab-3" class="vanity-light-btn mono" style="padding:5px 6px;font-size:0.74rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(3)">3 &middot; 4-Night &amp; Card</button>
+          <button type="button" id="dl-btn-next-step-2" class="vanity-light-btn active mono" style="padding:5px 6px;font-size:0.78rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(2)">1 &middot; AM &amp; PM Order</button>
+          <button type="button" id="dl-res-tab-1" class="vanity-light-btn mono" style="padding:5px 6px;font-size:0.78rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(1)">2 &middot; Why Clashed (${conflictCount})</button>
+          <button type="button" id="dl-res-tab-3" class="vanity-light-btn mono" style="padding:5px 6px;font-size:0.78rem;text-align:center;border-radius:999px;min-height:28px;" onclick="window.__dlSwitchResultStep(3)">3 &middot; 4-Night &amp; Card</button>
         </div>
         <!-- Tab 1 (Default Active): Unmasked Primary Clash Proof + Spacious Side-by-Side Morning & Bedtime Order + 1 Calm Summary Card -->
         <div id="dl-res-step-2" style="display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;flex:1;"><span id="walletConflicts" style="display:none;"></span>
           ${allergyCardHtml}${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}</div>` : pastedBoxHtml}
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;min-width:0;flex:1;" id="appleWalletCardPreview">
-            <div style="padding:16px;border-radius:18px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
+            <div style="padding:16px;border-radius:16px;background:var(--bg-canvas);border:1px solid var(--border-hairline);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
                 <div style="margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
-                  <span class="mono" style="display:inline-flex;align-items:center;gap:4px;font-size:0.79rem;font-weight:700;color:var(--honey-warn);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7:30 AM &middot; Morning</span>
-                  <span class="mono" style="font-size:0.69rem;color:var(--text-secondary);">Thinnest to Richest</span>
+                  <span class="mono" style="display:inline-flex;align-items:center;gap:4px;font-size:0.8125rem;font-weight:700;color:var(--rose-brand);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7:30 AM &middot; Morning</span>
+                  <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);">Thinnest to Richest</span>
                 </div>
                 ${amStepsHtml}
               </div>
             </div>
-            <div style="padding:16px;border-radius:18px;background:#3A1F27;color:#FDF8F6;display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
+            <div style="padding:16px;border-radius:16px;background:var(--bg-oat);border:1px solid var(--border-hairline);color:var(--text-primary);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
                 <div style="margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
-                  <span class="mono" style="display:inline-flex;align-items:center;gap:4px;font-size:0.79rem;font-weight:700;color:#F7DFAD;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>9:30 PM &middot; Bedtime</span>
-                  <span class="mono" style="font-size:0.69rem;color:#EED6DC;">Alternate Nights</span>
+                  <span class="mono" style="display:inline-flex;align-items:center;gap:4px;font-size:0.8125rem;font-weight:700;color:var(--rose-brand);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>9:30 PM &middot; Bedtime</span>
+                  <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);">Alternate Nights</span>
                 </div>
                 ${pmStepsHtml}
               </div>
