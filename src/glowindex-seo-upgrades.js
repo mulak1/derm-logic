@@ -1,6 +1,6 @@
 'use strict';
 
-const { CLINICAL_INGREDIENTS, CULT_PRODUCTS } = require('./clinical-data');
+const { CLINICAL_INGREDIENTS, CULT_PRODUCTS, ALLERGY_REACTION_OPTIONS } = require('./clinical-data');
 const { CELEBRITY_ROUTINES } = require('./celebrity-routines');
 const { PAIR_SEO_SEEDS, PRODUCT_SEO_SEEDS, buildSeoPagesCatalog } = require('./pseo-catalog');
 const { CONCERN_HUBS, getAllBrandHubs } = require('./seo-hubs');
@@ -25,7 +25,8 @@ const SCENARIO_GUIDES = [
   { slug: 'post-microneedling-recovery', title: '72-Hour Post-Microneedling & Laser Soothing Care Guide', category: 'Post-Treatment Care', phTarget: '5.8 - 6.5', avoidList: 'Vitamin C, Retinol, Glycolic/Salicylic Acid, Fragrance, Chemical Sunscreens (Days 1–2)', safeIds: ['hyaluronic-acid', 'panthenol', 'copper-tripeptide-1', 'ceramide-np', 'centella-asiatica'], productIds: ['la-roche-posay-cicaplast-baume-b5', 'aestura-atobarrier-365', 'the-ordinary-copper-peptides-1'], summary: 'Avoid stinging after microneedling or laser treatments by using only gentle Hyaluronic Acid, Panthenol B5, and Ceramides for the first 72 hours.' },
   { slug: 'winter-barrier-repair', title: 'Winter & Dry Indoor Heating Moisture Barrier Guide', category: 'Weather Scenario', phTarget: '5.0 - 5.6', avoidList: 'Drying Alcohol Toners, Unsealed Hyaluronic Acid in Dry Air, Harsh Foaming Cleansers', safeIds: ['ceramide-np', 'squalane', 'panthenol', 'shea-butter', 'polyglutamic-acid'], productIds: ['aestura-atobarrier-365', 'stratia-lipid-gold', 'la-roche-posay-cicaplast-baume-b5'], summary: 'Keep dry winter air and indoor heating from drying out your skin by sealing watery serums under a rich ceramide and squalane cream within 45 seconds.' },
   { slug: 'wedding-prep-glow-cycle', title: '90-Day Bridal & Event-Ready 4-Night Skincare Schedule', category: 'Life-Event Scenario', phTarget: '3.5 (AM) / 5.6 (PM)', avoidList: 'Starting brand-new strong retinols within 3 weeks of your event, Harsh peels', safeIds: ['l-ascorbic-acid', 'ferulic-acid', 'retinol', 'copper-tripeptide-1', 'ceramide-np'], productIds: ['skinceuticals-ce-ferulic', 'medik8-crystal-retinal-6', 'aestura-atobarrier-365'], summary: 'Pair morning Vitamin C glow protection with a gentle 4-night Exfoliate / Retinol / Rest / Rest schedule for smooth, flake-free makeup.' },
-  { slug: 'flight-cabin-dehydration', title: 'Long-Haul Flight Dry Cabin Hydration & SPF Guide', category: 'Travel Scenario', phTarget: '5.2 - 5.6', avoidList: 'In-flight acid peel pads, Unsealed face mists in dry cabin air, Heavy pore-clogging oils', safeIds: ['polyglutamic-acid', 'panthenol', 'ceramide-np', 'squalane', 'niacinamide'], productIds: ['aestura-atobarrier-365', 'la-roche-posay-cicaplast-baume-b5', 'elmd-uv-clear-spf46'], summary: 'Keep your skin plump and hydrated during dry airplane flights with hydrating serum sealed under a soothing ceramide moisturizer and sheer SPF 50.' }
+  { slug: 'flight-cabin-dehydration', title: 'Long-Haul Flight Dry Cabin Hydration & SPF Guide', category: 'Travel Scenario', phTarget: '5.2 - 5.6', avoidList: 'In-flight acid peel pads, Unsealed face mists in dry cabin air, Heavy pore-clogging oils', safeIds: ['polyglutamic-acid', 'panthenol', 'ceramide-np', 'squalane', 'niacinamide'], productIds: ['aestura-atobarrier-365', 'la-roche-posay-cicaplast-baume-b5', 'elmd-uv-clear-spf46'], summary: 'Keep your skin plump and hydrated during dry airplane flights with hydrating serum sealed under a soothing ceramide moisturizer and sheer SPF 50.' },
+  { slug: 'allergic-contact-rash-recovery', title: 'Allergic Contact Rash & New-Product Reaction 48-Hour Reset', category: 'Allergy Rescue Scenario', phTarget: '5.3 - 5.8', avoidList: '26 EU Fragrance Allergens, Snail Mucin (Dust-Mite Cross-Reactive), Benzoyl Peroxide, Salicylates, Lanolin, Propylene Glycol', safeIds: ['ceramide-np', 'panthenol', 'squalane', 'azelaic-acid', 'zinc-pca'], productIds: ['vanicream-gentle-cleanser', 'aestura-atobarrier-365', 'elmd-uv-clear-spf46'], summary: 'Calm sudden itchiness, hives, or contact redness from a new bottle by pausing all 8 EU CosIng allergen classes and resetting with zero-fragrance ceramides.' }
 ];
 
 const B2B_STUDIO_FORMULAS = [
@@ -226,6 +227,11 @@ function resolveComparisonSlug(rawSlug) {
 }
 
 function computeComparisonTelemetry(resolved) {
+  const getAlgStatus = (hay) => {
+    const h = String(hay || '').toLowerCase();
+    const hits = (ALLERGY_REACTION_OPTIONS || []).filter((o) => o.patterns.some((p) => h.includes(p)));
+    return hits.length === 0 ? '✓ 0/8 EU Contact Allergens' : `Flag: ${hits.map((x) => x.shortLabel).join(', ')}`;
+  };
   if (resolved.kind === 'product') {
     const pA = resolved.entityA, pB = resolved.entityB;
     const analysis = analyzeRoutine({ productIds: [pA.id, pB.id], rawInci: '', skinType: 'combination' });
@@ -254,6 +260,8 @@ function computeComparisonTelemetry(resolved) {
       comedoA: ingA.comedogenicity === 0 ? 'Won\'t Clog Pores (0/5)' : `Pore Score ${ingA.comedogenicity}/5`, comedoB: ingB.comedogenicity === 0 ? 'Won\'t Clog Pores (0/5)' : `Pore Score ${ingB.comedogenicity}/5`,
       malasseziaA: ingA.malasseziaTrigger ? 'Avoid if Fungal-Acne Prone' : 'Fungal-Acne Safe',
       malasseziaB: ingB.malasseziaTrigger ? 'Avoid if Fungal-Acne Prone' : 'Fungal-Acne Safe',
+      allergenA: getAlgStatus(`${pA.id} ${pA.name} ${pA.inciList} ${(pA.primaryActives || []).join(' ')}`),
+      allergenB: getAlgStatus(`${pB.id} ${pB.name} ${pB.inciList} ${(pB.primaryActives || []).join(' ')}`),
       slotA: pA.timeOfDay || 'AM / PM', slotB: pB.timeOfDay || 'AM / PM',
       priceA: `$${numA}`, priceB: `$${numB}`, numA, numB, diffPrice, descA: pA.summary || '', descB: pB.summary || '',
       deltaPh, harmonyScore: effScore,
@@ -283,6 +291,8 @@ function computeComparisonTelemetry(resolved) {
     comedoA: `${ingA.comedogenicity}/5 Pore Score`, comedoB: `${ingB.comedogenicity}/5 Pore Score`,
     malasseziaA: ingA.malasseziaTrigger ? 'Avoid if Fungal-Acne Prone' : 'Fungal-Acne Safe',
     malasseziaB: ingB.malasseziaTrigger ? 'Avoid if Fungal-Acne Prone' : 'Fungal-Acne Safe',
+    allergenA: getAlgStatus(`${ingA.id} ${ingA.inciName} ${ingA.commonName}`),
+    allergenB: getAlgStatus(`${ingB.id} ${ingB.inciName} ${ingB.commonName}`),
     slotA: midPhA < 4.2 ? 'Morning (AM) · Clean Dry Skin' : 'Evening (PM) · Night Step',
     slotB: midPhB < 4.2 ? 'Morning (AM) · Clean Dry Skin' : 'Evening (PM) · Night Step',
     priceA: `${prodA.brand} ${prodA.name}`, priceB: `${prodB.brand} ${prodB.name}`,
@@ -313,7 +323,7 @@ function renderDualInlineVerdictSelector(comp, canonicalSlug, positionId) {
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:11px 15px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);border-radius:14px;">
       <div class="gi-verdict-live-text" style="font-size:0.88rem;color:var(--text-primary);"><strong>Verdict (${comp.harmonyScore}/100 · pH Diff ${comp.deltaPh}):</strong> ${escapeHtml(comp.verdictLabel)}. Tap any skin-goal pill above to highlight the winning column.</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;"><button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml((comp.productIds && comp.productIds[0]) || 'skinceuticals-ce-ferulic')}','${escapeHtml((comp.productIds && comp.productIds[1]) || 'aestura-atobarrier-365')}'],'compare_${escapeHtml(canonicalSlug)}')" style="padding:8px 14px;font-size:0.8rem;min-height:36px;"><span>${escapeHtml(ctaBtnLabel)}</span><span class="btn-icon-circle">&rarr;</span></button><a class="btn-secondary mono gi-verdict-cta-link" href="/?products=${prodQuery}&amp;skin=combination&amp;ref=compare_${escapeHtml(canonicalSlug)}#analyzer" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(canonicalSlug)}',pos:'${escapeHtml(positionId)}'})" style="padding:8px 14px;font-size:0.8rem;min-height:36px;text-decoration:none;background:var(--bg-oat);"><span>Test in My Routine &rarr;</span></a></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;"><button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag(['${escapeHtml((comp.productIds && comp.productIds[0]) || 'skinceuticals-ce-ferulic')}','${escapeHtml((comp.productIds && comp.productIds[1]) || 'aestura-atobarrier-365')}'],'compare_${escapeHtml(canonicalSlug)}')" style="padding:8px 14px;font-size:0.8rem;min-height:36px;"><span>${escapeHtml(ctaBtnLabel)}</span><span class="btn-icon-circle">&rarr;</span></button><a class="btn-secondary mono gi-verdict-cta-link" href="/?products=${prodQuery}&amp;skin=combination&amp;ref=compare_${escapeHtml(canonicalSlug)}#analyzer" onclick="if(window.__giFireBeacon)window.__giFireBeacon('p_seo_cta_click',{slug:'${escapeHtml(canonicalSlug)}',pos:'${escapeHtml(positionId)}'})" style="padding:8px 14px;font-size:0.8rem;min-height:36px;text-decoration:none;background:var(--bg-oat);"><span>Test in My Routine &rarr;</span></a><a class="affiliate-link-pill mono" href="/?products=${prodQuery}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" style="padding:8px 12px;font-size:0.78rem;">&#10003; Screen 8 Allergens ($0) &rarr;</a></div>
     </div>
     <div id="dl-compare-top-inline-unlock" style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border-hairline);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
       <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'compare_top_${escapeHtml(canonicalSlug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:1 1 320px;margin:0;">
@@ -421,6 +431,7 @@ function renderComparePageHtml(comp, canonicalSlug) {
               <tr><td><strong>Texture &amp; Absorption</strong></td><td data-col="a" class="mono gi-col-a">${escapeHtml(comp.mwA)}</td><td data-col="b" class="mono gi-col-b">${escapeHtml(comp.mwB)}</td><td class="mono">Apply lighter, watery serums before rich creams</td></tr>
               <tr><td><strong>Pore-Clogging Score (0–5)</strong></td><td data-col="a" class="mono gi-col-a">${escapeHtml(comp.comedoA)}</td><td data-col="b" class="mono gi-col-b">${escapeHtml(comp.comedoB)}</td><td class="mono">0–1 = Won't Clog Pores · 3+ = Richer for Dry Skin</td></tr>
               <tr><td><strong>Blemish &amp; Fungal-Acne Safe</strong></td><td data-col="a" class="mono gi-col-a">${escapeHtml(comp.malasseziaA)}</td><td data-col="b" class="mono gi-col-b">${escapeHtml(comp.malasseziaB)}</td><td class="mono">Checked for heavy oils &amp; pore triggers</td></tr>
+              <tr><td><strong>Contact-Allergen Screen (EU CosIng)</strong></td><td data-col="a" class="mono gi-col-a">${escapeHtml(comp.allergenA || '✓ 0/8 EU Contact Allergens')}</td><td data-col="b" class="mono gi-col-b">${escapeHtml(comp.allergenB || '✓ 0/8 EU Contact Allergens')}</td><td class="mono"><a href="/?products=${encodeURIComponent((comp.productIds || []).join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" style="color:var(--rose-brand);font-weight:600;text-decoration:underline;">Screen All 8 Allergen Groups ($0) &rarr;</a></td></tr>
               <tr><td><strong>Best Time to Apply</strong></td><td data-col="a" class="gi-col-a"><span class="mono" style="font-size:0.68rem;color:var(--sage-safe);font-weight:700;display:block;">&#10003; Free Proof</span>${escapeHtml(comp.slotA)}</td><td data-col="b" class="gi-col-b"><span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;font-size:0.76rem;cursor:pointer;">&#128274; Reveal 9:30 PM Slot Free ($0) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;">${escapeHtml(comp.slotB)}</span></td><td><span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;font-size:0.76rem;cursor:pointer;">&#128274; Enter Email Above ($0) for Exact Wait Rule &uarr;</span><strong class="dl-unlocked-c2-proof" style="display:none;">${escapeHtml(comp.verdictLabel)}</strong></td></tr>
               <tr><td><strong>Price &amp; Bottle Match</strong></td><td data-col="a" class="mono gi-col-a">${escapeHtml(comp.priceA)}</td><td data-col="b" class="mono gi-col-b">${escapeHtml(comp.priceB)}</td><td><a href="/?products=${encodeURIComponent((comp.productIds || []).join(','))}#analyzer" class="mono" style="color:var(--rose-brand);font-weight:600;text-decoration:underline;">Test Both in My Routine &rarr;</a></td></tr>
             </tbody>
@@ -490,6 +501,7 @@ function buildMarkdownForPath(reqPath) {
         `| Molecular Weight (Da) | ${comp.mwA} | ${comp.mwB} | Rule-of-500 Dalton Threshold |`,
         `| EU CosIng Comedogenicity | ${comp.comedoA} | ${comp.comedoB} | 0-5 Pore-Congestion Scale |`,
         `| Malassezia (Fungal Acne) | ${comp.malasseziaA} | ${comp.malasseziaB} | Lipid Ester Screen |`,
+        `| EU CosIng Contact Allergens | ${comp.allergenA || '✓ 0/8 EU Contact Allergens'} | ${comp.allergenB || '✓ 0/8 EU Contact Allergens'} | 8-Category Contact-Allergen Screen |`,
         `| Optimal Routine Slot | ✓ Free Proof: ${comp.slotA} | 🔒 $0 Email Holdback (${HOST_URL}/compare/${resolved.canonicalSlug}#gi-compare-inline-email-card) | 🔒 Exact Wait Rule ($0 Email) |`,
         ''
       ].join('\n');
