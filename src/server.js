@@ -437,13 +437,17 @@ app.post('/api/analyze-routine', async (req, res) => {
   res.status(200).json(payload);
 });
 
-// 10. Reference Catalog Endpoints
+// 10. Reference Catalog Endpoints (Provenance + Specimen #1–#5 Free Proof vs. $0 Email Holdback)
 app.get('/api/ingredients', (req, res) => {
-  res.status(200).json({ count: CLINICAL_INGREDIENTS.length, ingredients: CLINICAL_INGREDIENTS });
+  const isUnlocked = Boolean(req.query.unlocked === '1' || req.query.email || (req.headers.cookie || '').includes('eb_paid_unlocked'));
+  const list = isUnlocked ? CLINICAL_INGREDIENTS : CLINICAL_INGREDIENTS.map((ing, idx) => idx <= 4 ? { ...ing, specimenProof: 'FREE_SPECIMEN_1_TO_5' } : { id: ing.id, commonName: ing.commonName, inciName: ing.inciName, category: ing.category, activeClass: ing.activeClass, phMin: ing.phMin, phMax: ing.phMax, comedogenicity: ing.comedogenicity, malasseziaTrigger: ing.malasseziaTrigger, pregnancySafe: ing.pregnancySafe, clinicalMechanism: `[LOCKED IN FREE PREVIEW · Unlock 9:30 PM Schedule & Full Mechanism Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar]` });
+  res.status(200).json({ provenance: 'EU CosIng & Lab pH Verified · 30-Day Refund Guarantee', count: CLINICAL_INGREDIENTS.length, unlocked: isUnlocked, ingredients: list });
 });
 
 app.get('/api/products', (req, res) => {
-  res.status(200).json({ count: CULT_PRODUCTS.length, products: CULT_PRODUCTS });
+  const isUnlocked = Boolean(req.query.unlocked === '1' || req.query.email || (req.headers.cookie || '').includes('eb_paid_unlocked'));
+  const list = isUnlocked ? CULT_PRODUCTS : CULT_PRODUCTS.map((p, idx) => idx <= 4 ? { ...p, specimenProof: 'FREE_SPECIMEN_1_TO_5' } : { ...p, inciList: `${String(p.inciList || '').split(',').slice(0, 5).join(', ')}, [Unlock Full INCI Tail & Chemist Dupe #2 Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar]` });
+  res.status(200).json({ provenance: 'EU CosIng & Lab pH Verified · 30-Day Refund Guarantee', count: CULT_PRODUCTS.length, unlocked: isUnlocked, products: list });
 });
 
 app.get('/api/catalog/us-top-sellers', (req, res) => {
