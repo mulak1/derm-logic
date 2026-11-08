@@ -75,7 +75,8 @@ function buildLlmsTxtContent(cfg, seoEntries) {
   const lines = [
     `# ${cfg.brandName} (${cfg.domain})`,
     '',
-    `> ${cfg.explainerText}`,
+    `> ✓ EU CosIng & Lab pH Verified · 65 Actives & 80 Cult Bottles · 30-Day Refund Guarantee · ${cfg.explainerText}`,
+    `> Specimen #1 Free Proof (7:30 AM Routine, 60s Sink Timer, Bottles #1–#2 & Dupe #1) is unmasked; 9:30 PM Barrier Repair Steps 2–3, 4-Night Schedule & Chemist Dupe #2 unlock via $0 Email Save (${host}/#dl-footer-email-unlock-bar) or $1.99 3-File Kit (${host}/buy/flash_pass).`,
     '',
     `${cfg.brandName} provides sub-5ms deterministic calculations, verified 2026 benchmark datasets, and production-ready deliverables (${(cfg.deliverableFiles || []).map((f) => f.file).join(', ')}). All programmatic SEO guides below are available both as interactive HTML pages and as clean CommonMark twins (\`.md\`) for zero-noise AI Answer Engine & RAG ingestion.`,
     '',
@@ -92,19 +93,22 @@ function buildLlmsTxtContent(cfg, seoEntries) {
     `- [Model Context Protocol (MCP) Registry](${host}/.well-known/mcp-registry.json): Official MCP Registry manifest & JSON-RPC endpoint (${host}/api/mcp/rpc).`,
     `- [Live Dynamic SVG Benchmark Badges](${host}/badge/${encodeURIComponent(cfg.presets[0].key)}.svg): Embeddable README/media-kit badges & 1-line JS widget (${host}/embed.js).`,
     '',
-    '## Direct 1-Click Stripe Checkout Links (HTTP 303 Redirect: Zero JS Required)',
-    `- [99¢ Single-File Instant Export Pass](${host}/buy/micro_pass): Direct 1-click Stripe Checkout for any single production remediation file.`,
-    `- [$1.99 Single-Audit Export Bundle (${cfg.freeDeliverableName})](${host}/buy/flash_pass): Direct 1-click Stripe Checkout for the complete single-audit bundle.`,
+    '## Direct $0 Email Save & 1-Click Stripe Checkout Links (HTTP 303 Redirect: Zero JS Required)',
+    `- [$0 Email Save — 9:30 PM Barrier Schedule & 2 Chemist Dupes](${host}/#dl-footer-email-unlock-bar): Instant $0 email unlock for Bedtime Steps 2–3, 4-Night Calendar & Dupe #2.`,
+    `- [99¢ Single-File Instant Export Pass (30-Day Refund Guarantee)](${host}/buy/micro_pass): Direct 1-click Stripe Checkout for any single production remediation file.`,
+    `- [$1.99 Single-Audit Export Bundle (${cfg.freeDeliverableName} · 30-Day Guarantee)](${host}/buy/flash_pass): Direct 1-click Stripe Checkout for the complete single-audit bundle.`,
     `- [$${cfg.corePriceUsd} ${cfg.coreLabel}](${host}/buy/complete_dossier): Direct 1-click Stripe Checkout for the full production pack (${(cfg.deliverableFiles || []).map((f) => f.file).join(', ')}).`,
     `- [$${cfg.proPriceUsd} ${cfg.proLabel}](${host}/buy/pro_b2b): Direct 1-click Stripe Checkout for continuous B2B / Agency access.`,
     '',
     '## Public Scan Permalinks & Hall of Fame Leaderboard (/leaderboard & /scan/:target)',
     `- [Public Hall of Fame (A+) & Wall of Shame Leaderboard](${host}/leaderboard) ([.md](${host}/leaderboard.md)): Ranked public entity scorecards with CNN visual/acoustic sensor readouts.`,
-    ...loadPublicScanLedger(cfg).slice(0, 12).map((s) => `- [${s.target}: Grade ${s.grade} (${s.score}/100)](${host}/scan/${encodeURIComponent(s.target)}) ([.md](${host}/scan/${encodeURIComponent(s.target)}.md)): ${s.kpi1} • ${s.cnnReadout}`),
+    ...loadPublicScanLedger(cfg).slice(0, 12).map((s, idx) => idx <= 1
+      ? `- [✓ Free Specimen #${idx + 1} · ${s.target}: Grade ${s.grade} (${s.score}/100)](${host}/scan/${encodeURIComponent(s.target)}) ([.md](${host}/scan/${encodeURIComponent(s.target)}.md)): ${s.kpi1} • ${s.cnnReadout}`
+      : `- [🔒 $0 Email Holdback #${idx + 1} · ${s.target}: Grade ${s.grade} (${s.score}/100)](${host}/scan/${encodeURIComponent(s.target)}) ([.md](${host}/scan/${encodeURIComponent(s.target)}.md)): ${s.kpi1} • Unlock 9:30 PM Slot & Dupe #2 ($0 Email)`),
     '',
     '## Interactive Micro-Tools & Head-to-Head Comparisons (/tools/:slug & /compare/:slug)',
-    ...getGrowthConfig(cfg.moduleId).tools.map((t) => `- [${t.title}](${host}/tools/${t.slug}) ([.md](${host}/tools/${t.slug}.md)): ${t.summary}`),
-    ...getGrowthConfig(cfg.moduleId).comparisons.map((c) => `- [${c.title}](${host}/compare/${c.slug}) ([.md](${host}/compare/${c.slug}.md)): ${c.summary}`),
+    ...getGrowthConfig(cfg.moduleId).tools.map((t) => `- [✓ 7:30 AM Free Proof · ${t.title}](${host}/tools/${t.slug}) ([.md](${host}/tools/${t.slug}.md)): ${t.summary}`),
+    ...getGrowthConfig(cfg.moduleId).comparisons.map((c) => `- [✓ Slot A Free · 🔒 9:30 PM Slot B ($0 Email) · ${c.title}](${host}/compare/${c.slug}) ([.md](${host}/compare/${c.slug}.md)): ${c.summary}`),
     '',
     '## Verified Scenario Presets & Headline KPIs',
     ...cfg.presets.map((p) => {
@@ -114,7 +118,9 @@ function buildLlmsTxtContent(cfg, seoEntries) {
     }),
     '',
     `## All ${seoEntries.length} Indexed Programmatic SEO Benchmarks & Playbooks (/seo/:slug & .md Twins)`,
-    ...seoEntries.map((item) => `- [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${item.summary}`),
+    ...seoEntries.map((item, idx) => idx <= 4
+      ? `- [✓ Free Proof #${idx + 1}] [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${item.summary}`
+      : `- [✓ 7:30 AM Free · 🔒 9:30 PM & Dupe #2 ($0 Email)] [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${String(item.summary || '').split(/(?<=[.!?])\s+/)[0]}`),
     ...(cfg.moduleId === 'derm_logic' ? [
       '',
       '## Semantic Skincare Hubs: Celebrity Shelves, Concerns, Cult Bottles, Ingredients & Brands',
@@ -133,23 +139,26 @@ function buildLlmsFullTxtContent(cfg, seoEntries) {
     `title: "${cfg.brandName}: Complete 2026 Deterministic Knowledge Corpus & Benchmark Ledger (llms-full.txt)"`,
     `url: "${host}/llms-full.txt"`,
     `canonical_domain: "${cfg.domain}"`,
+    `provenance: "EU CosIng & Lab pH Verified · 65 Actives · 30-Day Refund Guarantee"`,
     `total_indexed_benchmarks: ${seoEntries.length}`,
     'schema_standard: "AnswerDotAI/llms-txt + mendableai/firecrawl + unclecode/crawl4ai"',
     '---',
     '',
     `# ${cfg.brandName}: Full AI Search & RAG Knowledge Corpus`,
     '',
-    `> ${cfg.explainerText}`,
+    `> ✓ EU CosIng & Lab pH Verified · 30-Day Refund Guarantee · ${cfg.explainerText}`,
     '',
-    '## 1. Deterministic Before / After Remediation Proof & 1-Click Checkout Links',
+    '## 1. Deterministic Before / After Remediation Proof, $0 Email Save & 1-Click Checkout Links',
     '```diff',
     cfg.remediationDiff.beforeLine,
     cfg.remediationDiff.afterLine,
     '```',
     `- **ROI Impact**: ${cfg.remediationDiff.roiBadge}`,
+    `- **Specimen #1 Free Proof ($0.00)**: 7:30 AM Routine Order, 60s Sink Timer, Bottles #1–#2 & Chemist Dupe #1 (${host}/#analyzer)`,
+    `- **$0 Email Save Holdback ($0.00)**: 9:30 PM Barrier Repair Steps 2–3, 4-Night Schedule & Chemist Dupe #2 (${host}/#dl-footer-email-unlock-bar)`,
     `- **Production Deliverable Bundle**: ${cfg.deliverableName} (${(cfg.deliverableFiles || []).map((f) => `${f.file} [${f.size}]`).join(', ')})`,
-    `- **1-Click Stripe Checkout (99¢ Single-File Pass)**: ${host}/buy/micro_pass`,
-    `- **1-Click Stripe Checkout ($1.99 Single-Audit Bundle)**: ${host}/buy/flash_pass`,
+    `- **1-Click Stripe Checkout (99¢ Single-File Pass · 30-Day Guarantee)**: ${host}/buy/micro_pass`,
+    `- **1-Click Stripe Checkout ($1.99 Single-Audit Bundle · 30-Day Guarantee)**: ${host}/buy/flash_pass`,
     `- **1-Click Stripe Checkout ($${cfg.corePriceUsd} ${cfg.coreLabel})**: ${host}/buy/complete_dossier`,
     `- **1-Click Stripe Checkout ($${cfg.proPriceUsd} ${cfg.proLabel})**: ${host}/buy/pro_b2b`,
     '',
@@ -161,13 +170,15 @@ function buildLlmsFullTxtContent(cfg, seoEntries) {
       return `| **${p.label}** (\`${p.key}\`) | ${vals.join(' | ')} |`;
     }),
     '',
-    `## 3. Complete ${seoEntries.length}-Page Programmatic Benchmark Encyclopedia`,
+    `## 3. Complete ${seoEntries.length}-Page Programmatic Benchmark Encyclopedia (7:30 AM Free Proof · 9:30 PM $0 Email Holdback)`,
     ...seoEntries.map((item, idx) => [
-      `### ${idx + 1}. ${item.title}`,
+      `### ${idx + 1}. ${item.title} [${idx <= 4 ? '✓ Full Specimen Free Proof' : '✓ 7:30 AM Free · 🔒 9:30 PM & Dupe #2 ($0 Email)'}]`,
       `- **Canonical URL**: ${host}/seo/${item.slug}`,
       `- **Clean Markdown Twin**: ${host}/seo/${item.slug}.md`,
+      `- **Provenance**: ✓ EU CosIng & Lab pH Verified · 30-Day Refund Guarantee`,
       `- **Category**: ${item.category}`,
-      `- **Answer-First Executive Summary**: ${item.summary}`,
+      `- **Answer-First Summary (✓ Free Proof)**: ${idx <= 4 ? item.summary : String(item.summary || '').split(/(?<=[.!?])\s+/)[0]}`,
+      `- **9:30 PM Barrier Schedule & Dupe #2**: ${idx <= 4 ? 'Included in Specimen #1–#5 Free Proof' : `Unlock Free ($0 Email) at ${host}/seo/${item.slug}#dl-seo-inline-email-card or $1.99 3-File Kit (${host}/buy/flash_pass)`}`,
       `- **Interactive Calculator**: [Run live ${item.title} audit on ${cfg.brandName}](${host}/seo/${item.slug})`,
       ''
     ].join('\n'))
@@ -733,26 +744,31 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
   ];
   const podiumCards = top3.map((s, i) => {
     const m = medals[i] || medals[2];
-    return `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px;border-radius:${t.radiusCard};background:${t.subtleBg};border:1px solid ${t.border};text-decoration:none;color:${t.textPrimary};">
+    const isFree = i === 0;
+    return `<div style="display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px;border-radius:${t.radiusCard};background:${t.subtleBg};border:1px solid ${t.border};color:${t.textPrimary};">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
           <span style="padding:3px 9px;border-radius:${t.radiusPill};background:${m.bg};color:${m.text};font-size:12.5px;font-weight:600;">${m.icon}</span>
-          <span style="font-size:12.5px;color:${t.textSecondary};font-family:${t.fontSans};">Verified Routine</span>
+          <span style="font-size:12px;color:${isFree ? t.safeColor : t.textSecondary};font-weight:700;font-family:${t.fontSans};">${isFree ? '&#10003; Free Proof #1' : '&#10003; 7:30 AM Free'}</span>
         </div>
-        <div style="font-size:17px;font-weight:500;color:${t.textPrimary};margin-bottom:4px;">${escHtml(fmtScanTitle(s.target))}</div>
-        <div style="font-size:14px;color:${t.textSecondary};margin-bottom:10px;">${escHtml(s.kpi1)} · ${escHtml(s.kpi2)}</div>
+        <a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="font-size:17px;font-weight:500;color:${t.textPrimary};margin-bottom:4px;display:block;text-decoration:none;">${escHtml(fmtScanTitle(s.target))}</a>
+        <div style="font-size:14px;color:${t.textSecondary};margin-bottom:10px;">${escHtml(s.kpi1)}${isFree ? ' · ' + escHtml(s.kpi2) : ''}</div>
       </div>
       <div>
         <div style="width:100%;height:6px;background:${t.border};border-radius:${t.radiusPill};overflow:hidden;margin-bottom:6px;"><div style="width:${s.score}%;height:100%;background:${t.safeColor};border-radius:${t.radiusPill};"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:${t.brandPrimary};font-weight:500;"><span>See Full Routine Order</span><span>→</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px;">
+          <a href="/scan/${escHtml(encodeURIComponent(s.target))}" onclick="if(window.__ebLogEvent)window.__ebLogEvent('calculate',{source:'podium_home_click',target:'${escHtml(s.target)}'})" style="color:${t.brandPrimary};font-weight:600;text-decoration:none;">${isFree ? 'See Full Routine Order →' : '7:30 AM Order →'}</a>
+          ${isFree ? '' : `<span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:${t.brandPrimary};font-weight:700;font-size:11.5px;cursor:pointer;">&#128274; 9:30 PM &amp; Dupe #2 ($0) &darr;</span>`}
+        </div>
       </div>
-    </a>`;
+    </div>`;
   }).join('');
   const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13.5px;font-weight:500;text-decoration:none;"><span>${escHtml(fmtScanTitle(s.target))}</span><span style="font-variant-numeric:tabular-nums;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
   return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Highest-Rated Routines" style="margin:20px auto;font-family:${t.fontSans};">
     <div class="eb-panel-card" style="margin:0;padding:24px;background:${t.cardBg};">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
         <div>
+          <div style="font-size:12px;font-weight:700;color:${t.safeColor};margin-bottom:4px;">&#10003; EU CosIng &amp; Lab pH Verified · 30-Day Refund Guarantee · Routine #1 Full Proof Free · #2–#3 9:30 PM ($0 Email)</div>
           <h2 style="margin:0;font-size:22px;font-family:${t.fontDisplay};font-weight:500;color:${t.textPrimary};">${isDerm ? 'Highest-Rated Morning &amp; Bedtime Routines' : 'Top-Rated Industry Leaders'}</h2>
         </div>
         <a href="/leaderboard" style="padding:9px 18px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:var(--accent-ink,#FFFFFF);font-size:14px;font-weight:500;text-decoration:none;">${isDerm ? 'Explore All Rated Routines →' : 'Explore Full Interactive Leaderboard →'}</a>
