@@ -97,7 +97,7 @@ function renderAtelierVanityDrawerHtml() {
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
           <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
             <button type="button" id="dl-vanity-harmony-pill" class="badge-safe mono" onclick="window.__dlSetDossierTab('clashes')" style="font-size:0.75rem;padding:3px 9px;border:none;cursor:pointer;">96% Harmony &middot; 0 Clashes</button>
-            <span class="mono" style="padding:2px 8px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.72rem;font-weight:700;">&check; EU CosIng &amp; Lab pH &middot; 30-Day Guarantee</span>
+            <span class="mono" style="padding:2px 8px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.72rem;font-weight:700;">&check; Free Proof #1 Dupe: Geek &amp; Gorgeous ($14 vs. $182)</span>
             <span id="dl-vanity-hold-countdown" class="mono" style="color:var(--text-secondary);font-size:0.75rem;">Saved for 24h in Browser</span>
             <span id="dl-vanity-bag-id" class="mono" style="display:none;">#DL-4829</span>
           </div>
@@ -116,7 +116,7 @@ function renderAtelierVanityDrawerHtml() {
           <div style="display:inline-flex;gap:5px;flex-wrap:wrap;">
             <button type="button" class="mono" onclick="window.__dlDupeAllFiveVessels()" style="background:var(--sage-bg);color:var(--sage-safe);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Try Affordable Dupes ($86) &rarr;</button>
             <button type="button" class="mono" onclick="if(window.__dlSwitchShelfBudgetMode){window.__dlSwitchShelfBudgetMode('allergy');window.__dlCloseVanityDrawer();}" style="background:var(--rose-pill-bg);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Screen 8 Allergens ($0) &rarr;</button>
-            <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:600;cursor:pointer;">Test a Clash &rarr;</button>
+            <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:600;cursor:pointer;">2-Product pH Clash Matrix &rarr;</button>
           </div>
         </div>
         <div id="dl-vanity-visual-tray" class="dl-tray-lineup-grid"></div>
@@ -154,8 +154,8 @@ function renderAtelierVanityDrawerHtml() {
           <a id="dl-vanity-keep-199" href="/buy/flash_pass?source=vanity_bag_9" onclick="return window.__dlBuyFromVanity('flash_pass', this)" class="btn-secondary mono" style="width:100%;justify-content:center;text-decoration:none;padding:9px 12px;font-size:0.78rem;white-space:nowrap;background:var(--bg-surface);color:var(--rose-brand);"><span>Complete 3-File Kit ($1.99)</span></a>
         </div>
         <form id="dl-vanity-email-form" onsubmit="return window.__dlSendVanityHoldEmail(event)" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;">
-          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Enter email to unlock Nights 2–4 &amp; Dupe Pack ($0)..." style="width:100%;padding:7px 12px;font-size:16px;min-height:32px;background:var(--bg-surface);border-radius:999px;" />
-          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.75rem;white-space:nowrap;">Unlock Nights 2–4 ($0) &rarr;</button>
+          <input id="dl-vanity-hold-email" type="email" required class="input-box mono" placeholder="Enter email for Full AM/PM Routine Calendar &amp; Complete Dupe List ($0)..." style="width:100%;padding:7px 12px;font-size:16px;min-height:32px;background:var(--bg-surface);border-radius:999px;" />
+          <button type="submit" id="dl-vanity-email-btn" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.75rem;white-space:nowrap;">Unlock AM/PM Calendar ($0) &rarr;</button>
         </form>
         <div id="dl-vanity-email-status" class="mono" style="display:none;font-size:0.75rem;color:var(--sage-safe);font-weight:600;"></div>
       </div>
@@ -683,7 +683,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
             + '<button type="button" class="mono" onclick="window.__dlSelectVanitySlot(' + prevIdx + ')" style="padding:3px 8px;border-radius:999px;background:var(--bg-oat);color:var(--text-secondary);border:none;font-size:0.72rem;cursor:pointer;flex-shrink:0;">&larr; Prev</button></div>'
             + '<div id="dl-vanity-slot-body-' + idx + '" style="display:' + (isOpen ? 'block' : 'none') + ';padding-top:10px;">'
               + '<div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.48;margin-bottom:8px;">' + extraNote + '</div>'
-              + '<div class="mono" style="font-size:0.7rem;color:var(--sage-safe);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;"><span>&#10003; EU CosIng &amp; Lab pH Verified &middot; Free Proof Slot ' + esc(slot.slotNum) + '</span><button type="button" onclick="var e=document.getElementById(\\'dl-vanity-hold-email\\');if(e){e.focus();e.scrollIntoView({behavior:\\'smooth\\',block:\\'nearest\\'});}" class="mono" style="background:transparent;border:none;color:var(--rose-brand);font-size:0.7rem;font-weight:700;text-decoration:underline;cursor:pointer;padding:0;">&#128274; Email $86 5-Bottle Dupe Set ($0) &darr;</button></div>'
+              + '<div class="mono" style="font-size:0.7rem;color:var(--sage-safe);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;"><span>&#10003; EU CosIng &amp; Lab pH &middot; Free Proof #1 Dupe: Geek &amp; Gorgeous ($14)</span><button type="button" onclick="var e=document.getElementById(\\'dl-vanity-hold-email\\');if(e){e.focus();e.scrollIntoView({behavior:\\'smooth\\',block:\\'nearest\\'});}" class="mono" style="background:transparent;border:none;color:var(--rose-brand);font-size:0.7rem;font-weight:700;text-decoration:underline;cursor:pointer;padding:0;">&#128274; Full AM/PM Calendar &amp; $86 Dupe Set ($0 Email) &darr;</button></div>'
               + '<div class="mono" style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Swap or try another bottle in this slot (Price &amp; Dupe comparison):</div>'
               + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">' + chipsHtml + '</div>'
               + '<div class="mono" style="padding:7px 10px;border-radius:14px;background:var(--bg-oat);font-size:0.74rem;color:var(--rose-brand);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">'
