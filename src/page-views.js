@@ -695,24 +695,26 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         <p class="hero-sub" style="margin-bottom:20px;max-width:68ch;">Cosmetic chemist breakdown: why these formulas interact, exact morning and bedtime application windows, and how to protect your skin barrier.</p>
         <div id="dl-pseo-top-verdict-card" class="porcelain-vessel-core" style="padding:22px 26px;background:#FFFFFF;border:1px solid #EFEAE3;border-radius:18px;margin-bottom:28px;box-shadow:0 4px 18px -4px rgba(28,25,23,0.04);display:flex;flex-direction:column;gap:16px;">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid #F2EDE6;padding-bottom:14px;">
-            <div style="display:flex;align-items:center;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
               <span class="${seoBadgeClass} mono" style="font-size:0.86rem;padding:4px 12px;">${page.compatibilityScore < 55 ? 'Active Clashes Detected · Space Apart' : 'Barrier Compatible · Layer Gently'}</span>
-              <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);font-weight:600;">Harmony Score: ${page.compatibilityScore}/100</span>
+              <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);font-weight:600;">Harmony Score: ${page.compatibilityScore}/100 &middot; pH Gap ${page.deltaPh}</span>
+              <span class="badge-safe mono" style="font-size:0.74rem;padding:3px 9px;">&#10003; EU CosIng &amp; Lab pH Verified</span>
             </div>
             <a href="#analyzer" class="affiliate-link-pill mono" style="font-size:0.84rem;padding:6px 14px;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">Test With My Bottles Below &darr;</a>
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
             <div style="padding:14px 16px;border-radius:14px;background:#FAF8F5;">
-              <div class="mono" style="font-size:0.75rem;color:var(--berry-clash);font-weight:700;margin-bottom:4px;text-transform:uppercase;">01 &middot; Active Compatibility</div>
+              <div class="mono" style="font-size:0.75rem;color:var(--berry-clash);font-weight:700;margin-bottom:4px;text-transform:uppercase;">01 &middot; Free Proof: Active Compatibility</div>
               <div style="font-size:0.9rem;color:var(--text-primary);line-height:1.5;">${page.product ? escapeHtml(cleanSummaryFirstSentence) : (page.compatibilityScore < 55 ? 'Layering both actives on the same night lowers active absorption and triggers irritation. Space them into separate routines.' : 'These actives work synergistically without pH destabilization when allowed 60 seconds to absorb.')}</div>
             </div>
             <div style="padding:14px 16px;border-radius:14px;background:#FAF8F5;">
-              <div class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:700;margin-bottom:4px;text-transform:uppercase;">02 &middot; Morning Application</div>
+              <div class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:700;margin-bottom:4px;text-transform:uppercase;">02 &middot; Free Proof: 7:30 AM Morning Order</div>
               <div style="font-size:0.9rem;color:var(--text-primary);line-height:1.5;">${escapeHtml(page.amRule || 'Apply water-light active serums first onto dry skin, allow 60 seconds to absorb, and finish with broad-spectrum SPF 50.')}</div>
             </div>
             <div style="padding:14px 16px;border-radius:14px;background:#FAF8F5;">
-              <div class="mono" style="font-size:0.75rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;text-transform:uppercase;">03 &middot; Bedtime Application</div>
-              <div style="font-size:0.9rem;color:var(--text-primary);line-height:1.5;">${escapeHtml(page.pmRule || 'Cleanse thoroughly, apply repairing active on dry skin, and seal with a rich ceramide cushion cream.')}</div>
+              <div class="mono" style="font-size:0.75rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;text-transform:uppercase;">03 &middot; 9:30 PM Bedtime Buffer &amp; Chemist Dupe</div>
+              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.84rem;color:var(--rose-brand);font-weight:600;line-height:1.45;cursor:pointer;">${lockSvgInline}Bedtime Ceramide Sandwich Ratio &amp; 2 Chemist Dupes Locked &mdash; Enter Email Below ($0) to Reveal Free &darr;</div>
+              <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.9rem;color:var(--text-primary);line-height:1.5;">${escapeHtml(page.pmRule || 'Cleanse thoroughly, apply repairing active on dry skin, and seal with a rich ceramide cushion cream.')}</div>
             </div>
           </div>
         </div>

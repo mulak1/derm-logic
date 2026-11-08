@@ -518,7 +518,8 @@ function renderAnalysisResultHtml(res) {
     { title: pmStep2Obj.title, sub: pmStep2Obj.sub, badge: 'Night 2', click: '' },
     { title: pmCream ? '3. Soothing Barrier Cream' : '3. Barrier Cream', sub: pmCream ? shortBottle(pmCream) : '+ Tap to add Aestura 365 ($32)', badge: pmCream ? 'Cushion' : '+ $32', click: pmCream ? '' : 'if(window.__dlTapPouchCreamSlot)window.__dlTapPouchCreamSlot();' }
   ];
-  const pmStepsHtml = pmDynamicSteps.map((st) => renderStepRow(st, true)).join('');
+  const pmLockRowHtml = `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 12px;background:rgba(244,239,232,0.12);border:1px dashed rgba(247,223,173,0.55);border-radius:11px;margin-bottom:7px;cursor:pointer;"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:3px;"><strong style="font-size:0.8rem;color:#F7DFAD;">&#128274; Steps 2&ndash;3 &middot; Night Buffer &amp; Dupe #2 ($0)</strong><span class="mono" style="font-size:0.68rem;padding:2px 7px;border-radius:999px;background:#7A2332;color:#F4EFE8;font-weight:700;">Free Unlock &darr;</span></div><span style="font-size:0.73rem;color:#EED6DC;line-height:1.35;display:block;">Enter your email below ($0) to reveal ${escapeHtml(pmStep2Obj.title.replace(/^2\.\s*/, ''))} wait time, ceramide sandwich ratio &amp; 2nd chemist dupe &darr;</span></div>`;
+  const pmStepsHtml = renderStepRow(pmDynamicSteps[0], true) + pmLockRowHtml + `<div class="dl-unlocked-c2-proof" style="display:none;">${pmDynamicSteps.slice(1).map((st) => renderStepRow(st, true)).join('')}</div>`;
   const poreCount = res.comedogenicFlags.length;
   const topPoreName = poreCount > 0 ? String(res.comedogenicFlags[0].commonName || res.comedogenicFlags[0].inciName).split('(')[0].trim() : '';
   const poreSummaryText = poreCount === 0 ? 'Pore-Safe' : `Pore Alert (${topPoreName})`;
@@ -579,16 +580,20 @@ function renderAnalysisResultHtml(res) {
               </div>
             </div>
           </div>
-          <div style="padding:14px 18px;border-radius:16px;background:var(--bg-canvas);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:10px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <div style="padding:14px 18px;border-radius:16px;background:var(--bg-canvas);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
               <div>
-                <strong class="serif-display" style="font-size:1.08rem;color:var(--text-primary);font-weight:400;display:block;">Save your custom schedule &amp; unlock 2 clinical dupes</strong>
-                <span style="font-size:0.8rem;color:var(--text-secondary);">Free AM/PM calendar with exact absorption wait times sent to your inbox.</span>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px;">
+                  <span class="badge-safe mono" style="font-size:0.68rem;padding:2px 8px;">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span>
+                  <span class="mono" style="font-size:0.7rem;color:var(--text-secondary);">30-Day Refund Guarantee</span>
+                </div>
+                <strong class="serif-display" style="font-size:1.08rem;color:var(--text-primary);font-weight:400;display:block;">Unlock 9:30 PM Steps 2&ndash;3, 4-Night Calendar &amp; 2nd Chemist Dupe ($0)</strong>
+                <span style="font-size:0.78rem;color:var(--text-secondary);display:block;margin-top:2px;"><strong style="color:var(--sage-safe);">&#10003; Free Dupe Proof #1:</strong> <a href="${escapeHtml(topSwap.directUrl)}" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)}</a> &middot; <span class="dl-locked-badge-c2" style="color:var(--text-primary);font-weight:600;">&#128274; Dupe #2 + Bedtime Buffer Sent Free ($0)</span></span>
               </div>
             </div>
             <form id="dl-results-inline-email-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'results_card')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
-              <input type="email" required class="input-box dl-inline-ics-email" placeholder="Enter your email ($0)..." aria-label="Enter email to save your routine and unlock dupes" style="flex:1 1 200px;min-width:0;padding:8px 14px;font-size:15px;border-radius:999px;background:var(--bg-surface);" />
-              <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 16px;min-height:38px;font-size:0.8rem;border-radius:999px;white-space:nowrap;"><span>Save Routine Free ($0) &rarr;</span></button>
+              <input type="email" required class="input-box dl-inline-ics-email" placeholder="Enter your email ($0) to reveal 9:30 PM steps &amp; Dupe #2..." aria-label="Enter email to save your routine and unlock dupes" style="flex:1 1 200px;min-width:0;padding:8px 14px;font-size:15px;border-radius:999px;background:var(--bg-surface);" />
+              <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 16px;min-height:38px;font-size:0.8rem;border-radius:999px;white-space:nowrap;"><span>Reveal 9:30 PM Steps &amp; Save Free ($0) &rarr;</span></button>
               <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.75rem;color:var(--sage-safe);"></div>
             </form>
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid var(--border-hairline);font-size:0.78rem;">
