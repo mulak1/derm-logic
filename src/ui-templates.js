@@ -351,11 +351,11 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           <span class="mono" style="font-size:0.75rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;display:block;">From Bathroom Counters to Calmer Skin</span>
           <h3 class="serif-display" style="font-size:1.35rem;font-weight:400;color:var(--text-primary);margin:0;">Real Vanity Routines &middot; Verified Zero-Sting Results</h3>
         </div>
-        <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);background:var(--bg-canvas);padding:4px 10px;border-radius:999px;">4,200+ Routine Audits Verified</span>
+        <span class="mono" style="font-size:0.75rem;color:var(--sage-safe);background:var(--bg-canvas);padding:4px 10px;border-radius:999px;font-weight:600;">&#10003; EU CosIng &amp; Lab pH &middot; 4,200+ Routine Audits &middot; 30-Day Guarantee</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
         <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:10px;">
-          <div style="font-size:0.75rem;font-weight:700;color:var(--rose-brand);letter-spacing:0.02em;">Morning Glow &middot; 15% Vitamin C</div>
+          <div style="font-size:0.75rem;font-weight:700;color:var(--sage-safe);letter-spacing:0.02em;">&#10003; Free Proof #1 &middot; 7:30 AM Morning Glow (15% Vitamin C)</div>
           <div style="height:150px;border-radius:12px;overflow:hidden;">
             <img src="/public/photo_customer_holding.jpg" alt="Model applying morning Vitamin C serum with glass dropper onto glowing skin" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;" loading="lazy" />
           </div>
@@ -363,7 +363,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Separated my 15% Vitamin C from my night acids. Smooth, non-pilling barrier under SPF 50 all day.&rdquo;</p>
             <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;">
               <span>Maya K., Verified Routine</span>
-              <span style="color:var(--sage-safe);font-weight:600;">&#10003; 0 Clashes</span>
+              <span style="color:var(--sage-safe);font-weight:600;">&#10003; 7:30 AM Free Proof</span>
             </div>
           </div>
         </div>
@@ -374,9 +374,10 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
             <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Checked my entire 6-bottle counter in 2 minutes. Cut $140 of overlapping exfoliants that were triggering redness.&rdquo;</p>
-            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;">
+            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
               <span>Elena R., Verified Routine</span>
-              <span style="color:var(--sage-safe);font-weight:600;">&#10003; Saved $140</span>
+              <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;">&#128274; Unlock $140 Dupe Swap ($0) &uarr;</span>
+              <span class="dl-unlocked-c2-proof" style="display:none;color:var(--sage-safe);font-weight:600;">&#10003; Saved $140 (Timeless 20% Swap)</span>
             </div>
           </div>
         </div>
@@ -387,9 +388,10 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
             <p style="font-size:0.84rem;color:var(--text-primary);line-height:1.45;margin:0;">&ldquo;Used the ceramide sandwich method for Tretinoin 0.05%. Peeling and tightness disappeared within one week.&rdquo;</p>
-            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;">
+            <div class="mono" style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
               <span>Chloe D., Verified Routine</span>
-              <span style="color:var(--sage-safe);font-weight:600;">&#10003; Zero Flaking</span>
+              <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;">&#128274; Unlock 9:30 PM Sandwich ($0) &uarr;</span>
+              <span class="dl-unlocked-c2-proof" style="display:none;color:var(--sage-safe);font-weight:600;">&#10003; Zero Flaking (Aestura 365 Buffer)</span>
             </div>
           </div>
         </div>
@@ -837,6 +839,13 @@ const CLIENT_SCRIPT = `
     ev.preventDefault();
     const planId = (document.getElementById('checkoutPlanId') || {}).value || 'onetime_499';
     const email = (document.getElementById('checkoutEmailInput') || {}).value || (localStorage.getItem('dl_captured_email') || localStorage.getItem('eb_captured_email') || 'patient@dermlogic.io');
+    if (email && email.includes('@') && email !== 'reader@dermlogic.io' && email !== 'patient@dermlogic.io') {
+      window.__dlSampleEmailUnlocked = true;
+      try { localStorage.setItem('dl_captured_email', email); localStorage.setItem('eb_captured_email', email); } catch (_) {}
+      document.querySelectorAll('.dl-locked-badge-c2').forEach((el) => { el.style.display = 'none'; });
+      document.querySelectorAll('.dl-unlocked-c2-proof').forEach((el) => { el.style.display = 'block'; });
+      fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, pageUrl: window.location.pathname, utmSource: 'checkout_modal_email' }) }).catch(() => {});
+    }
     const website_hp = (document.getElementById('checkoutHoneypot') || {}).value || '';
     const btn = document.getElementById('checkoutSubmitBtn');
     if (btn) { btn.disabled = true; btn.innerHTML = '<span>Preparing Ritual Pass...</span>'; }
