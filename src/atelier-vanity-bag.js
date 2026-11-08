@@ -347,7 +347,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         st.slotSelections[sIdx] = 0;
         st.customSlotBottle[sIdx] = makeCustomSlot(prodId, prodTitle, prodPrice);
       }
-      st.activeSlotIdx = sIdx;
+      st.activeSlotIdx = sIdx; window.__dlPresetJustLoaded = Date.now();
       saveVanityState(st);
       window.__dlRenderVanityDrawer();
       window.__dlRefreshPageAddButtons();
@@ -395,7 +395,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (window.__dlSwitchShelfBudgetMode && document.querySelector('input[name="routineProduct"]')) {
         window.__dlSwitchShelfBudgetMode(m);
       }
-      st.bagMode = m;
+      st.bagMode = m; window.__dlPresetJustLoaded = Date.now();
       if (m === 'luxury') {
         st.slotSelections = [0, 0, 0, 0, 0];
         st.customSlotBottle = {};
@@ -416,6 +416,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       window.__dlRenderVanityDrawer();
       if (window.__ebLogEvent) window.__ebLogEvent('vanity_dupe_swap', { mode: m });
     };
+    window.__dlQuickLoadShelfPreset = function(p) { return window.__dlDupeAllFiveVessels(String(p || '').indexOf('allerg') !== -1 ? 'allergy' : (p === 'luxury' ? 'luxury' : 'dupe')); };
 
     function formatHoldRemaining(expiresAt) {
       var diffMs = Math.max(60000, (expiresAt || (Date.now() + 86400000)) - Date.now());
@@ -795,7 +796,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         if (mapped.choiceIdx >= 0) { st.slotSelections[sIdx] = mapped.choiceIdx; delete st.customSlotBottle[sIdx]; }
         else { st.slotSelections[sIdx] = 0; st.customSlotBottle[sIdx] = makeCustomSlot(pid, (PROD_INFO[pid] && PROD_INFO[pid].name) || pid, ''); }
       });
-      st.activeSlotIdx = firstSlot; st.dossierTab = 'slots'; saveVanityState(st);
+      st.activeSlotIdx = firstSlot; st.dossierTab = 'slots'; window.__dlPresetJustLoaded = Date.now(); saveVanityState(st);
       window.__dlRenderVanityDrawer(); window.__dlRefreshPageAddButtons();
       if (window.__ebLogEvent) {
         window.__ebLogEvent('p_seo_compare_cta', { source: sourceTag || 'pseo_preload', products: ids });
@@ -864,7 +865,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     };
     window.__dlOpenSampleModal = function() {
       var st = window.__dlVanityState;
-      if (window.location.pathname !== '/') {
+      if (window.location.pathname !== '/' && (!window.__dlPresetJustLoaded || Date.now() - window.__dlPresetJustLoaded > 600)) {
         if (!st.customSlotBottle) st.customSlotBottle = {};
         Array.from(document.querySelectorAll('button[data-dl-bag-prod]')).slice(0, 6).forEach(function(btn) {
           var pid = btn.getAttribute('data-dl-bag-prod'), pTitle = btn.getAttribute('data-dl-bag-title') || pid;
