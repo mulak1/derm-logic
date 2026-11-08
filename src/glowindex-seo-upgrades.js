@@ -702,7 +702,7 @@ function attachGlowIndexSeoUpgrades(app) {
           let crossLinksHtml = '';
           if (famType === 'bottle') {
             const prod = CLINICAL_PRODUCTS.find((p) => p.id === slugPart);
-            const rivals = getBottleRivals(prod, 6);
+            const rivals = getBottleRivals(prod, 3);
             if (prod && rivals.length > 0) {
               const rivalPills = rivals.map((r) => {
                 const pair = [prod.id, r.id].sort();
