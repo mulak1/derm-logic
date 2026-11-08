@@ -225,16 +225,27 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
     <nav aria-label="Breadcrumb" style="font-size:13.5px;color:${esc(t.textSecondary)};margin-bottom:12px;">
       <a href="/" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:600;">Home</a> / <a href="/leaderboard" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:600;">Leaderboard</a> / <span id="eb-scan-bc-target">${esc(scan.target)}</span>
     </nav>
-    <div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="padding:12px 16px;background:var(--bg-oat);margin-bottom:16px;display:flex;flex-direction:column;gap:8px;border:1px solid var(--border-hairline);">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-        <span class="mono" style="font-size:0.78rem;font-weight:700;color:var(--rose-brand);">&#10003; EU CosIng &amp; Lab pH Verified &middot; 8 Contact-Allergen Screens &middot; Free $0 Routine Calendar &amp; 2 Dupes for ${esc(scan.target)}</span>
-        <div style="display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;"><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--sage-safe);text-decoration:underline;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="/buy/flash_pass?guide=scan_${esc(encodeURIComponent(scan.target))}" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack (30-Day Guarantee) &rarr;</a></div>
+    <div id="dl-subpage-top-email-bar" class="porcelain-vessel-core dl-workbench-2col" style="padding:14px 18px;background:var(--bg-oat);margin-bottom:16px;border:1px solid var(--border-hairline);">
+      <div style="display:flex;flex-direction:column;gap:8px;padding:10px 14px;background:var(--bg-surface);border-radius:14px;border:1px solid var(--border-hairline);">
+        <span class="mono" style="font-size:0.76rem;font-weight:700;color:var(--rose-brand);">&#10003; EU CosIng &amp; Lab pH Verified &middot; 8 Contact-Allergen Screens &middot; ${esc(scan.target)}</span>
+        <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'scan_${esc(scan.target)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+          <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 9:30 PM order &amp; 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 170px;min-width:0;padding:7px 12px;font-size:15px;border-radius:999px;background:var(--bg-oat);" />
+          <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.75rem;border-radius:999px;"><span>Send Free Routine ($0) &rarr;</span></button>
+          <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+        </form>
+        <div style="display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;"><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--sage-safe);text-decoration:underline;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="/buy/flash_pass?guide=scan_${esc(encodeURIComponent(scan.target))}" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or $1.99 3-File Kit &rarr;</a></div>
       </div>
-      <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'scan_${esc(scan.target)}')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
-        <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 9:30 PM order &amp; 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
-        <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Send Free Routine &amp; 2 Dupes ($0) &rarr;</span></button>
-        <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
-      </form>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+        <div style="padding:10px 14px;background:var(--bg-surface);border-radius:14px;border-left:3px solid var(--rose-brand);">
+          <div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--rose-brand);">2-PRODUCT PH CLASH MATRIX (&#10003; FREE PROOF)</div>
+          <div style="font-size:0.84rem;color:var(--text-primary);margin-top:3px;"><strong>${esc(scan.target)} (${esc(scan.grade)} · ${scan.score}/100):</strong> ${esc(scan.kpi1)} &middot; ${esc(scan.kpi2)}.</div>
+          <a href="/#analyzer" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:700;text-decoration:underline;display:inline-block;margin-top:4px;">Open 2-Product pH Clash Matrix &rarr;</a>
+        </div>
+        <div style="padding:10px 14px;background:var(--bg-surface);border-radius:14px;border-left:3px solid var(--sage-safe);">
+          <div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--sage-safe);">&#10003; #1 FUNGAL-SAFE &amp; 8-ALLERGEN DUPE</div>
+          <div style="font-size:0.84rem;color:var(--text-primary);margin-top:3px;"><strong>Geek &amp; Gorgeous C-Glow / Vanicream ($12–$14)</strong> &middot; &#10003; 0/8 EU Contact Allergens &middot; &#128274; Dupe #2 &amp; 9:30 PM Calendar Free ($0 Email)</div>
+        </div>
+      </div>
     </div>
     <div>
       <h1 id="eb-scan-h1" data-entity-name="${esc(scan.target)}" class="serif-display" style="margin:0 0 8px 0;font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.15;">${esc(scan.target)} : ${esc(cfg.brandName)} Scorecard &amp; Action Report</h1>
@@ -370,16 +381,27 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   <main id="main-content" class="container" style="padding-top:28px;padding-bottom:48px;">
     <h1 class="serif-display" style="margin:0 0 8px 0;font-size:clamp(2rem,3vw,2.6rem);line-height:1.15;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
     <p class="pseo-lead" style="margin:0 0 14px 0;font-size:16px;color:${esc(t.textSecondary)};max-width:72ch;">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
-    <div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="padding:12px 16px;background:var(--bg-oat);margin-bottom:16px;display:flex;flex-direction:column;gap:8px;border:1px solid var(--border-hairline);">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-        <span class="mono" style="font-size:0.78rem;font-weight:700;color:var(--rose-brand);">&#10003; EU CosIng &amp; Lab pH Verified &middot; 8 Contact-Allergen Screens &middot; Free $0 Routine Calendar &amp; 2 Chemist Dupes</span>
-        <div style="display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;"><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--sage-safe);text-decoration:underline;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="/buy/flash_pass?guide=leaderboard" class="mono" style="font-size:0.75rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack (30-Day Guarantee) &rarr;</a></div>
+    <div id="dl-subpage-top-email-bar" class="porcelain-vessel-core dl-workbench-2col" style="padding:14px 18px;background:var(--bg-oat);margin-bottom:16px;border:1px solid var(--border-hairline);">
+      <div style="display:flex;flex-direction:column;gap:8px;padding:10px 14px;background:var(--bg-surface);border-radius:14px;border:1px solid var(--border-hairline);">
+        <span class="mono" style="font-size:0.76rem;font-weight:700;color:var(--rose-brand);">&#10003; EU CosIng &amp; Lab pH Verified &middot; 8 Contact-Allergen Screens &middot; Free $0 Routine Calendar &amp; 2 Chemist Dupes</span>
+        <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'leaderboard')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+          <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 170px;min-width:0;padding:7px 12px;font-size:15px;border-radius:999px;background:var(--bg-oat);" />
+          <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.75rem;border-radius:999px;"><span>Send Free Routine ($0) &rarr;</span></button>
+          <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
+        </form>
+        <div style="display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;"><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--sage-safe);text-decoration:underline;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="/buy/flash_pass?guide=leaderboard" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or $1.99 3-File Kit &rarr;</a></div>
       </div>
-      <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'leaderboard')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
-        <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:8px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
-        <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 14px;min-height:36px;font-size:0.78rem;border-radius:999px;"><span>Send Free Routine &amp; 2 Dupes ($0) &rarr;</span></button>
-        <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
-      </form>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+        <div style="padding:10px 14px;background:var(--bg-surface);border-radius:14px;border-left:3px solid var(--rose-brand);">
+          <div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--rose-brand);">2-PRODUCT PH CLASH MATRIX (&#10003; FREE PROOF)</div>
+          <div style="font-size:0.84rem;color:var(--text-primary);margin-top:3px;"><strong>#1 Verified Routine (98/100):</strong> Vitamin C 15% (AM) + Copper Peptides 1% (PM) &middot; Zero pH or Metal-Ion Clash.</div>
+          <a href="/#analyzer" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:700;text-decoration:underline;display:inline-block;margin-top:4px;">Open 2-Product pH Clash Matrix &rarr;</a>
+        </div>
+        <div style="padding:10px 14px;background:var(--bg-surface);border-radius:14px;border-left:3px solid var(--sage-safe);">
+          <div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--sage-safe);">&#10003; #1 FUNGAL-SAFE &amp; 8-ALLERGEN DUPE</div>
+          <div style="font-size:0.84rem;color:var(--text-primary);margin-top:3px;"><strong>Geek &amp; Gorgeous C-Glow ($14) &amp; Vanicream ($13)</strong> &middot; Save $168 &middot; &#10003; 0/8 EU Contact Allergens</div>
+        </div>
+      </div>
     </div>
     <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">${podiumHtml}</section>
     <div id="leaderboard-filter-bar" style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${t.border || 'var(--border-hairline)'};border-radius:${t.radiusCard || '0px'};padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
