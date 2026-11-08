@@ -381,26 +381,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       window.__dlRefreshPageAddButtons();
     };
 
-    window.__dlSetDossierTab = function(tabName) {
-      window.__dlVanityState.dossierTab = tabName || 'slots';
-      saveVanityState(window.__dlVanityState);
-      window.__dlRenderVanityDrawer();
-      if (window.__ebLogEvent) window.__ebLogEvent('vanity_tab_switch', { tab: tabName || 'slots' });
-    };
-    window.__dlSelectCycleNight = function(nIdx) {
-      var st = window.__dlVanityState;
-      if (!st) return;
-      st.activeCycleNight = nIdx || 1;
-      saveVanityState(st);
-      window.__dlRenderVanityDrawer();
-    };
-
-    window.__dlFlipPassSide = function(side) {
-      window.__dlVanityState.passSide = side === 'pm' ? 'pm' : 'am';
-      saveVanityState(window.__dlVanityState);
-      window.__dlRenderVanityDrawer();
-      if (window.__ebLogEvent) window.__ebLogEvent('vanity_pass_flip', { side: side || 'am' });
-    };
+    window.__dlSetDossierTab = function(tabName) { window.__dlVanityState.dossierTab = tabName || 'slots'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); if (window.__ebLogEvent) window.__ebLogEvent('vanity_tab_switch', { tab: tabName || 'slots' }); };
+    window.__dlSelectCycleNight = function(nIdx) { var st = window.__dlVanityState; if (!st) return; st.activeCycleNight = nIdx || 1; saveVanityState(st); window.__dlRenderVanityDrawer(); };
+    window.__dlFlipPassSide = function(side) { window.__dlVanityState.passSide = side === 'pm' ? 'pm' : 'am'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); if (window.__ebLogEvent) window.__ebLogEvent('vanity_pass_flip', { side: side || 'am' }); };
 
     window.__dlDupeAllFiveVessels = function(mode) {
       var st = window.__dlVanityState;
@@ -874,8 +857,18 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       if (window.__ebLogEvent) window.__ebLogEvent('view_paywall', { target: 'atelier_vanity_drawer_' + (reason || 'open') });
     };
     window.__dlOpenSampleModal = function() {
-      window.__dlVanityState.dossierTab = 'pass';
-      saveVanityState(window.__dlVanityState);
+      var st = window.__dlVanityState;
+      if (window.location.pathname !== '/') {
+        if (!st.customSlotBottle) st.customSlotBottle = {};
+        Array.from(document.querySelectorAll('button[data-dl-bag-prod]')).slice(0, 6).forEach(function(btn) {
+          var pid = btn.getAttribute('data-dl-bag-prod'), pTitle = btn.getAttribute('data-dl-bag-title') || pid;
+          if (!pid) return;
+          var mapped = mapProductIdToSlot(pid, pTitle, '');
+          if (mapped.choiceIdx >= 0) { st.slotSelections[mapped.slotIdx] = mapped.choiceIdx; delete st.customSlotBottle[mapped.slotIdx]; }
+          else { st.slotSelections[mapped.slotIdx] = 0; st.customSlotBottle[mapped.slotIdx] = makeCustomSlot(pid, pTitle, ''); }
+        });
+      }
+      st.dossierTab = 'pass'; saveVanityState(st);
       window.__dlOpenVanityDrawer('sample_9x16_preview');
       if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas();
     };

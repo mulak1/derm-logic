@@ -388,56 +388,56 @@ function renderCelebrityDetailPage(celeb) {
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:28px;">
-        <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:20px 22px;position:relative;overflow:hidden;justify-content:space-between;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:18px;">
+        <div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:16px 18px;position:relative;overflow:hidden;justify-content:space-between;">
           <div style="position:relative;z-index:1;">
-            <div style="margin-bottom:12px;">
+            <div style="margin-bottom:8px;">
               <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--honey-warn);font-weight:500;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/></svg><span>7:30 AM · Morning Prep Under Makeup</span></span>
-              <h2 class="serif-display" style="font-size:1.38rem;margin:4px 0 0;">Morning Layering Sequence</h2>
+              <h2 class="serif-display" style="font-size:1.3rem;margin:2px 0 0;">Morning Layering Sequence</h2>
             </div>
             ${celeb.amSteps.map(renderAmStep).join('')}
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;font-size:0.76rem;position:relative;z-index:1;"><span class="mono" style="color:var(--text-secondary);">Zero-Pilling 60s Dry-Down</span><a href="#vanity-bottles" class="mono" style="color:var(--rose-brand);font-weight:600;text-decoration:none;">Inspect Morning Bottles &darr;</a></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:4px;font-size:0.76rem;position:relative;z-index:1;"><span class="mono" style="color:var(--text-secondary);">Zero-Pilling 60s Dry-Down</span><a href="#vanity-bottles" class="mono" style="color:var(--rose-brand);font-weight:600;text-decoration:none;">Inspect Morning Bottles &darr;</a></div>
         </div>
-        <div class="porcelain-vessel-core" style="background:#3A1F27;color:#FDF8F6;padding:20px 22px;position:relative;overflow:hidden;justify-content:space-between;">
+        <div class="porcelain-vessel-core" style="background:#3A1F27;color:#FDF8F6;padding:16px 18px;position:relative;overflow:hidden;justify-content:space-between;">
           <div style="position:relative;z-index:1;">
-            <div style="margin-bottom:12px;">
+            <div style="margin-bottom:8px;">
               <span class="mono" style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;color:#C9A45A;font-weight:500;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>9:30 PM · Bedtime Barrier Recovery</span></span>
-              <h2 class="serif-display" style="font-size:1.38rem;margin:4px 0 0;color:#F4EFE8;">Evening Recovery Sequence</h2>
+              <h2 class="serif-display" style="font-size:1.3rem;margin:2px 0 0;color:#F4EFE8;">Evening Recovery Sequence</h2>
             </div>
-            <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="padding:14px 16px;background:rgba(244,239,232,0.1);border:1px dashed rgba(229,198,126,0.5);border-radius:12px;margin-bottom:8px;cursor:pointer;">
-              <strong style="display:block;font-size:0.9rem;color:#F7DFAD;margin-bottom:4px;">${LOCK_SVG}Evening 3-Step Recovery &amp; Night Serum Order Locked</strong>
-              <span style="display:block;font-size:0.8rem;color:#EED6DC;line-height:1.45;">Enter your email at the top ($0) to reveal ${escapeHtml(celeb.name)}’s 3-Step Bedtime Recovery Order + 2 Free Dupes, or unlock the $1.99 Complete AM/PM Schedule &uarr;</span>
+            <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="padding:12px 14px;background:rgba(244,239,232,0.1);border:1px dashed rgba(229,198,126,0.5);border-radius:12px;margin-bottom:6px;cursor:pointer;">
+              <strong style="display:block;font-size:0.88rem;color:#F7DFAD;margin-bottom:3px;">${LOCK_SVG}Evening 3-Step Recovery &amp; Night Serum Order Locked</strong>
+              <span style="display:block;font-size:0.78rem;color:#EED6DC;line-height:1.42;">Enter your email at the top ($0) to reveal ${escapeHtml(celeb.name)}’s 3-Step Bedtime Recovery Order + 2 Free Dupes, or unlock the $1.99 Complete AM/PM Schedule &uarr;</span>
             </div>
             <div class="dl-unlocked-c2-proof" style="display:none;">${celeb.pmSteps.map(renderPmStep).join('')}</div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;font-size:0.76rem;position:relative;z-index:1;"><span class="mono" style="color:#B5ACA3;">Overnight Barrier Recovery</span><a href="/buy/flash_pass?guide=celeb_${encodeURIComponent(celeb.slug)}" class="mono" style="color:#E5C67E;font-weight:600;text-decoration:none;">Get $1.99 Complete AM/PM Calendar &rarr;</a></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:4px;font-size:0.76rem;position:relative;z-index:1;"><span class="mono" style="color:#B5ACA3;">Overnight Barrier Recovery</span><a href="/buy/flash_pass?guide=celeb_${encodeURIComponent(celeb.slug)}" class="mono" style="color:#E5C67E;font-weight:600;text-decoration:none;">Get $1.99 Complete AM/PM Calendar &rarr;</a></div>
         </div>
       </div>
 
-      <h2 id="vanity-bottles" class="serif-display" style="font-size:1.65rem;margin-bottom:14px;">Bottles on ${escapeHtml(celeb.name)}’s Vanity Shelf (Bottle #1 Free Proof)</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px;">${bottleCards}</div>
+      <h2 id="vanity-bottles" class="serif-display" style="font-size:1.5rem;margin-bottom:10px;">Bottles on ${escapeHtml(celeb.name)}’s Vanity Shelf (Bottle #1 Free Proof)</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:18px;">${bottleCards}</div>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:32px;">
-        <div class="porcelain-vessel-core" style="background:var(--berry-bg);padding:22px 24px;border:1px solid var(--berry-border);justify-content:space-between;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:18px;">
+        <div class="porcelain-vessel-core" style="background:var(--berry-bg);padding:16px 18px;border:1px solid var(--berry-border);justify-content:space-between;">
           <div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span class="badge-clash mono">${LOCK_SVG.replace('<rect', '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/><rect style="display:none"')}Critical Layering Rule</span></div>
-            <h3 class="serif-display" style="font-size:1.32rem;margin:0 0 10px;">What Never to Mix on ${escapeHtml(celeb.name)}’s Shelf</h3>
-            <div style="background:var(--bg-surface);border-left:3px solid var(--berry-clash);border-radius:10px;padding:12px 14px;margin-bottom:10px;"><p style="font-size:0.88rem;color:var(--text-primary);line-height:1.55;margin:0;">${escapeHtml(celeb.clashWarning)}</p></div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span class="badge-clash mono">${LOCK_SVG.replace('<rect', '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/><rect style="display:none"')}Critical Layering Rule</span></div>
+            <h3 class="serif-display" style="font-size:1.22rem;margin:0 0 6px;">What Never to Mix on ${escapeHtml(celeb.name)}’s Shelf</h3>
+            <div style="background:var(--bg-surface);border-left:3px solid var(--berry-clash);border-radius:10px;padding:10px 12px;margin-bottom:8px;"><p style="font-size:0.84rem;color:var(--text-primary);line-height:1.48;margin:0;">${escapeHtml(celeb.clashWarning)}</p></div>
           </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:0.76rem;color:var(--text-secondary);"><span class="mono">Wait 60s or Alternate Nights</span><span style="display:inline-flex;gap:10px;align-items:center;"><a href="/?products=${encodeURIComponent(celeb.productIds.join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="mono" style="color:var(--sage-safe);font-weight:700;text-decoration:none;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="${preloadHref}" class="mono" style="color:var(--berry-clash);font-weight:600;text-decoration:none;">Test Shelf Harmony &rarr;</a></span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:0.75rem;color:var(--text-secondary);"><span class="mono">Wait 60s or Alternate Nights</span><span style="display:inline-flex;gap:10px;align-items:center;"><a href="/?products=${encodeURIComponent(celeb.productIds.join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="mono" style="color:var(--sage-safe);font-weight:700;text-decoration:none;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="${preloadHref}" class="mono" style="color:var(--berry-clash);font-weight:600;text-decoration:none;">Test Shelf Harmony &rarr;</a></span></div>
         </div>
-        <div class="porcelain-vessel-core" style="background:var(--sage-bg);padding:22px 24px;border:1px solid var(--sage-border);justify-content:space-between;">
+        <div class="porcelain-vessel-core" style="background:var(--sage-bg);padding:16px 18px;border:1px solid var(--sage-border);justify-content:space-between;">
           <div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span class="badge-safe mono">Chemist Dupe Comparison</span></div>
-            <h3 class="serif-display" style="font-size:1.32rem;margin:0 0 10px;">Luxury Shelf vs. Barrier-Identical Swap</h3>
-            <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:10px;">
-              <div style="background:var(--bg-surface);border:1px solid var(--border-hairline);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;">Luxury Original</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.luxury)}</strong></div>
-              <div style="background:var(--bg-surface);border:1px solid var(--sage-border);border-left:3px solid var(--sage-safe);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--sage-safe);font-weight:700;margin-bottom:2px;">&#10003; Free Proof #1 Cheaper Dupe (Fungal-Safe &amp; 8-Allergen Screened)</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong></div>
-              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="background:var(--bg-surface);border:1px dashed var(--sage-border);border-radius:10px;padding:10px 13px;cursor:pointer;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--rose-brand);font-weight:700;margin-bottom:2px;">${LOCK_SVG}Full AM/PM Routine Calendar &amp; Complete Cheaper-Dupe Shopping List Locked ($0 Email)</span><strong style="font-size:0.84rem;color:var(--text-primary);">Enter email at top ($0) to unlock all ${bottles.length} bottle swaps &amp; 9:30 PM calendar &uarr;</strong></div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span class="badge-safe mono">Chemist Dupe Comparison</span></div>
+            <h3 class="serif-display" style="font-size:1.22rem;margin:0 0 6px;">Luxury Shelf vs. Barrier-Identical Swap</h3>
+            <div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:8px;">
+              <div style="background:var(--bg-surface);border:1px solid var(--border-hairline);border-radius:10px;padding:8px 11px;"><span class="mono" style="display:block;font-size:0.66rem;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;">Luxury Original</span><strong style="font-size:0.85rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.luxury)}</strong></div>
+              <div style="background:var(--bg-surface);border:1px solid var(--sage-border);border-left:3px solid var(--sage-safe);border-radius:10px;padding:8px 11px;"><span class="mono" style="display:block;font-size:0.66rem;text-transform:uppercase;color:var(--sage-safe);font-weight:700;margin-bottom:2px;">&#10003; Free Proof #1 Cheaper Dupe (Fungal-Safe &amp; 8-Allergen Screened)</span><strong style="font-size:0.85rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong></div>
+              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="background:var(--bg-surface);border:1px dashed var(--sage-border);border-radius:10px;padding:8px 11px;cursor:pointer;"><span class="mono" style="display:block;font-size:0.66rem;text-transform:uppercase;color:var(--rose-brand);font-weight:700;margin-bottom:2px;">${LOCK_SVG}Full AM/PM Routine Calendar &amp; Complete Cheaper-Dupe Shopping List Locked ($0 Email)</span><strong style="font-size:0.82rem;color:var(--text-primary);">Enter email at top ($0) to unlock all ${bottles.length} bottle swaps &amp; 9:30 PM calendar &uarr;</strong></div>
             </div>
           </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;"><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;background:rgba(46,90,68,0.09);padding:5px 10px;border-radius:999px;">${escapeHtml(celeb.dupeSwap.savingsNote)}</span><a href="${preloadHref}" class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;text-decoration:none;">Test Dupe Shelf &rarr;</a></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;"><span class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:600;background:rgba(46,90,68,0.09);padding:4px 9px;border-radius:999px;">${escapeHtml(celeb.dupeSwap.savingsNote)}</span><a href="${preloadHref}" class="mono" style="font-size:0.74rem;color:var(--sage-safe);font-weight:600;text-decoration:none;">Test Dupe Shelf &rarr;</a></div>
         </div>
       </div>
 
