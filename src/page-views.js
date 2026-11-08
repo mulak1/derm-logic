@@ -169,7 +169,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     <section class="hero-section" style="padding-top:48px;padding-bottom:64px;">
       <div class="container">
         <div style="max-width:740px;margin:12px auto 32px;text-align:center;">
-          <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">Cosmetic Chemist Routine Analyzer &middot; ${products.length} Cult Formulas</div>
+          <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">Cosmetic Chemist Routine Analyzer &middot; ${products.length} Cult Formulas &middot; &#10003; Free Proof #1 Dupe: Geek &amp; Gorgeous ($14 vs. $182)</div>
           <h1 class="hero-h1" style="font-size:clamp(1.75rem,3.2vw,2.5rem);line-height:1.2;margin:0 0 10px;max-width:none;">Is your skincare shelf secretly canceling itself out?</h1>
           <p class="hero-sub" style="font-size:1.02rem;color:var(--text-secondary);line-height:1.55;margin:0 auto;max-width:62ch;">Select your bottles below to check for pH clashes, avoid inactive combinations, and see your clean morning and bedtime schedule.</p>
         </div>
@@ -396,6 +396,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           <div class="hero-copy-col">
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
               <span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span>
+              <span class="badge-safe mono">&#10003; Free Proof #1 Cheaper Dupe: Geek &amp; Gorgeous ($14 vs. $182)</span>
               <span class="badge-clash mono">&#10003; 8 Contact-Allergen Screens</span>
               <span class="mono" style="font-size:0.78rem;color:var(--text-secondary);">30-Day Refund Guarantee</span>
             </div>
@@ -503,9 +504,9 @@ function renderDirectoryPage({ seoPages }) {
   const bodyHtml = `
     <section class="section-block" style="padding-top:40px;padding-bottom:56px;">
       <div class="container">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span><span class="badge-safe mono">8 Contact-Allergen Screens</span><span class="badge-safe mono">30-Day Refund Guarantee</span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span><span class="badge-safe mono">&#10003; Free Proof #1 Cheaper Dupe: Geek &amp; Gorgeous / Illiyoon ($14–$18 · Fungal &amp; 8-Allergen Safe)</span><span class="badge-safe mono">8 Contact-Allergen Screens</span><span class="badge-safe mono">30-Day Refund Guarantee</span></div>
         <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Skincare Serum Layering Chart &amp; What Not to Mix (${seoPages.length} Guides)</h1>
-        <p class="hero-sub" style="margin-bottom:24px;max-width:68ch;">Find out which serums belong in the morning, which belong at bedtime, how long to wait between layers, and which active combinations cancel on contact.</p>
+        <p class="hero-sub" style="margin-bottom:24px;max-width:68ch;">Find out which serums belong in the morning, which belong at bedtime, how long to wait between layers, and which active combinations cancel on contact. <a href="/#analyzer" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">Open 2-Product pH Clash Matrix &rarr;</a></p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:28px;">
           <div class="porcelain-vessel-core" style="padding:16px;background:#FFFFFF;border-radius:18px;display:flex;flex-direction:column;gap:10px;box-shadow:0 4px 18px -4px rgba(28,25,23,0.04);">
             <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;">
@@ -535,10 +536,10 @@ function renderDirectoryPage({ seoPages }) {
           <a href="/concern/allergic-contact-dermatitis-hypoallergenic-routine" class="affiliate-link-pill mono" style="border-color:var(--sage-border);color:var(--sage-safe);font-weight:600;">&#10003; Allergy-Safe Routine (EU CosIng) &rarr;</a>
         </div>
         <div id="dl-dir-top-email-bar" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:12px 16px;margin-bottom:14px;border:1px solid var(--rose-pill-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-          <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:700;">&#10003; Free Verdict Proof Visible Below &middot; Enter Email ($0) to Reveal All 9:30 PM Buffer Rules &amp; 2 Dupes:</div>
+          <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:700;">&#10003; Free Verdict Proof &amp; #1 Dupe Visible Below &middot; &#128274; Full AM/PM Routine Calendar &amp; Complete Dupe Shopping List ($0 Email):</div>
           <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'directory_hub')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
-            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 9:30 PM rules &amp; 2 dupes ($0)..." aria-label="Enter email for 9:30 PM rules and 2 dupes" style="padding:7px 12px;font-size:0.78rem;border-radius:999px;background:var(--bg-oat);" />
-            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;"><span>Reveal 9:30 PM Rules ($0) &rarr;</span></button>
+            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for full AM/PM calendar &amp; dupes ($0)..." aria-label="Enter email for full AM/PM calendar and dupes" style="padding:7px 12px;font-size:0.78rem;border-radius:999px;background:var(--bg-oat);" />
+            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;"><span>Unlock Calendar ($0) &rarr;</span></button>
             <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.72rem;color:var(--sage-safe);"></div>
           </form>
         </div>
