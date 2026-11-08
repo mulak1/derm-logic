@@ -797,6 +797,15 @@ const ROUTINE_PRESETS = [
     skinType: 'sensitive',
     productIds: ['anua-heartleaf-77-toner', 'cosrx-snail-96-mucin', 'dieux-instant-angel', 'boj-relief-sun-spf50'],
     rawInciText: ''
+  },
+  {
+    id: 'allergy-contact-rash-check',
+    label: 'Allergic Rash & Snail Mucin / Fragrance Check',
+    badge: 'EU CosIng Screen · 3 Swaps',
+    skinType: 'allergy_prone',
+    allergies: ['fragrance', 'snail_mite', 'salicylates'],
+    productIds: ['cosrx-snail-96-mucin', 'paulas-choice-2-bha', 'aestura-atobarrier-365', 'eltamd-uv-clear-spf46'],
+    rawInciText: ''
   }
 ];
 
@@ -809,7 +818,8 @@ const VANITY_SLOT_CALIBRATORS = {
       { id: 'redness_sos', label: 'Redness / Post-Gym', pickIdx: 0, note: 'Hypochlorous Mist (pH 4.8): Calms flushing & bacteria. Let dry 45s before Vitamin C.' },
       { id: 'dry_tight', label: 'Dry / Tight Barrier', pickIdx: 1, note: 'Heartleaf 77% Toner (pH 5.7): Restores hydration without stripping natural lipids.' },
       { id: 'blemish_prone', label: 'Active Blemishes', pickIdx: 2, note: 'PanOxyl 10% Acne Wash: Rinse 100% clean so residual peroxide never cancels out morning Vitamin C.' },
-      { id: 'dull_texture', label: 'Rough Texture', pickIdx: 3, note: 'Glycolic 7% Toner: Resurfaces dull skin, but do not stack directly under Copper Peptides.' }
+      { id: 'dull_texture', label: 'Rough Texture', pickIdx: 3, note: 'Glycolic 7% Toner: Resurfaces dull skin, but do not stack directly under Copper Peptides.' },
+      { id: 'allergy_calm', label: 'Allergy / Contact Rash', pickIdx: 1, note: 'EU CosIng Allergen-Free Prep: Heartleaf 77% + Panthenol (0 Fragrance, 0 Essential Oils, 0 Betaine).' }
     ],
     row2Label: 'Water & Cleanse Rule',
     row2Key: 'prepSecond',
@@ -845,7 +855,8 @@ const VANITY_SLOT_CALIBRATORS = {
       { id: 'ceramide_repair', label: 'Dry / Flaking (3:1:1)', pickIdx: 0, note: 'Aestura Atobarrier 365 (pH 5.5): Hospital-grade encapsulated ceramide-cholesterol-lipid ratio.' },
       { id: 'redness_cica', label: 'Redness (B5 Cica)', pickIdx: 3, note: 'Cicaplast Baume B5+ (5% Panthenol + Madecassoside): Calms heat, windburn, and retinoid irritation.' },
       { id: 'aging_plump', label: 'Plumping & Lines', pickIdx: 1, note: 'Dieux Instant Angel (Lipid + Peptide + Urea): Cushions fine lines and locks in humectants.' },
-      { id: 'pore_safe_light', label: 'Oily / Pore-Safe', pickIdx: 4, note: 'CeraVe PM / Snail 96: Breathable barrier hydration that will not feel heavy under sunscreen.' }
+      { id: 'pore_safe_light', label: 'Oily / Pore-Safe', pickIdx: 4, note: 'CeraVe PM / Snail 96: Breathable barrier hydration that will not feel heavy under sunscreen.' },
+      { id: 'allergy_hypoallergenic', label: 'Allergy / Dust-Mite Safe', pickIdx: 0, note: 'Aestura Atobarrier 365: 100% Snail-Mucin-Free, Lanolin-Free & Fragrance-Free (EU CosIng Verified).' }
     ],
     row2Label: 'Climate & Texture Weight',
     row2Key: 'creamWeight',

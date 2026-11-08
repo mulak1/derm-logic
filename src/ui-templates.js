@@ -252,9 +252,9 @@ const SHORT_PRODUCT_NAMES = {
 function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds, initialRawInci, initialSkinType, showUgcStrip = true }) {
   const selectedSet = new Set(initialProductIds || ['to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005', 'skinceuticals-ce-ferulic']);
   const currentSkin = initialSkinType || (initialAnalysis && initialAnalysis.skinType) || 'combination';
-  const presetShortLabelMap = { 'viral-tiktok-destroyer': 'Acids + Retinol', 'copper-vitc-oxidation': 'Copper + Vit C', 'acne-rx-bpo-tretinoin': 'Tretinoin + Acne Cream', 'glass-skin-recovery': 'Calm Barrier' };
-  const presetShortBadgeMap = { 'viral-tiktok-destroyer': 'Split AM/PM', 'copper-vitc-oxidation': 'Cancels Out', 'acne-rx-bpo-tretinoin': 'Space Apart', 'glass-skin-recovery': '0 Clashes' };
-  const presetButtonsHtml = presets.map((p, idx) => `<button type="button" class="preset-chip ${idx === 0 ? 'active' : ''}" data-preset-id="${escapeHtml(p.id)}" data-products='${JSON.stringify(p.productIds)}' data-skin="${escapeHtml(p.skinType)}" onclick="applyRoutinePreset(this)"><strong>${escapeHtml(presetShortLabelMap[p.id] || p.label)}</strong><span class="mono">${escapeHtml(presetShortBadgeMap[p.id] || p.badge)}</span></button>`).join('');
+  const presetShortLabelMap = { 'viral-tiktok-destroyer': 'Acids + Retinol', 'copper-vitc-oxidation': 'Copper + Vit C', 'acne-rx-bpo-tretinoin': 'Tretinoin + Acne Cream', 'glass-skin-recovery': 'Calm Barrier', 'allergy-contact-rash-check': 'Allergy & Rash Screen' };
+  const presetShortBadgeMap = { 'viral-tiktok-destroyer': 'Split AM/PM', 'copper-vitc-oxidation': 'Cancels Out', 'acne-rx-bpo-tretinoin': 'Space Apart', 'glass-skin-recovery': '0 Clashes', 'allergy-contact-rash-check': 'EU CosIng Check' };
+  const presetButtonsHtml = presets.map((p, idx) => `<button type="button" class="preset-chip ${idx === 0 ? 'active' : ''}" data-preset-id="${escapeHtml(p.id)}" data-products='${JSON.stringify(p.productIds)}' data-skin="${escapeHtml(p.skinType)}" data-allergies='${JSON.stringify(p.allergies || [])}' onclick="applyRoutinePreset(this)"><strong>${escapeHtml(presetShortLabelMap[p.id] || p.label)}</strong><span class="mono">${escapeHtml(presetShortBadgeMap[p.id] || p.badge)}</span></button>`).join('');
   const shortNameMap = SHORT_PRODUCT_NAMES;
   const categoryLabelMap = {
     'Antioxidant Serum': 'Morning Vitamin C', 'Exfoliating Acid': 'Gentle Exfoliant', 'Exfoliating Peel': 'Weekly Smoothing Mask',
@@ -720,9 +720,14 @@ const CLIENT_SCRIPT = `
     document.querySelectorAll('#presetButtonsRow .preset-chip').forEach((b) => b.classList.remove('active'));
     btn.classList.add('active');
     const productIds = JSON.parse(btn.getAttribute('data-products') || '[]');
+    const presetAllergies = JSON.parse(btn.getAttribute('data-allergies') || '[]');
     const skin = btn.getAttribute('data-skin') || 'combination';
     const skinSelect = document.getElementById('skinTypeSelect');
     if (skinSelect) skinSelect.value = skin;
+    if (presetAllergies.length) {
+      document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip').forEach((b) => { const on = presetAllergies.includes(b.getAttribute('data-allergy')); b.classList.toggle('active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+      const clr = document.getElementById('clearAllergiesBtn'); if (clr) { clr.style.display = 'inline-block'; clr.innerHTML = 'Clear Allergies (' + presetAllergies.length + ') &times;'; }
+    }
     const grid = document.getElementById('productSelectorGrid');
     document.querySelectorAll('input[name="routineProduct"]').forEach((cb) => {
       cb.checked = productIds.includes(cb.value);
@@ -781,10 +786,14 @@ const CLIENT_SCRIPT = `
   };
   async function runRoutineAnalysis(presetSlug, isExplicitClick) {
     const checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map((cb) => cb.value);
-    const allergies = Array.from(document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip.active')).map((b) => b.getAttribute('data-allergy')).filter(Boolean);
+    const skinType = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
+    let allergies = Array.from(document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip.active')).map((b) => b.getAttribute('data-allergy')).filter(Boolean);
+    if (skinType === 'allergy_prone' && allergies.length === 0) {
+      allergies = ['fragrance', 'snail_mite', 'salicylates'];
+      document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip').forEach((b) => { const on = allergies.includes(b.getAttribute('data-allergy')); b.classList.toggle('active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    }
     const clrBtn = document.getElementById('topClearShelfBtn');
     if (clrBtn) { clrBtn.style.display = checked.length ? 'inline-block' : 'none'; clrBtn.innerHTML = 'Clear ' + checked.length + ' Selected &times;'; }
-    const skinType = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
     const rawInciText = (document.getElementById('rawInciTextarea') || {}).value || '';
     const shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim();
     const climateMode = window.__dlClimateMode || 'indoor_dry';

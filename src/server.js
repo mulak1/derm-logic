@@ -106,7 +106,7 @@ app.get('/', (req, res) => {
     skinType,
     productIds: queryProductIds,
     rawInciText,
-    allergies: req.query.allergies
+    allergies: req.query.allergies || matchedPreset.allergies
   });
   const seoPages = getAllSeoPages();
   const html = renderHomePage({
