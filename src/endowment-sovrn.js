@@ -202,7 +202,7 @@ function renderPersonalizedResultsHeaderHtml(res) {
   return `<div id="personalizedRoutineBanner" style="padding:0 0 4px 0;margin-bottom:4px;display:flex;flex-direction:column;gap:2px;min-width:0;">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;min-width:0;">
       <strong id="personalizedRoutineTitle" class="serif-display" style="font-size:1.32rem;color:var(--text-primary);font-weight:400;min-width:0;">${escapeHtml(heading)}</strong>
-      <span id="personalizedClimateBadge" class="badge-safe mono" style="font-size:0.72rem;padding:2px 8px;">${escapeHtml(meta.badge)}</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;flex-wrap:wrap;"><span id="personalizedClimateBadge" class="badge-safe mono" style="font-size:0.72rem;padding:2px 8px;">${escapeHtml(meta.badge)}</span><button type="button" id="dl-banner-dupe-card-btn" class="mono" onclick="if(window.__dlQuickLoadShelfPreset)window.__dlQuickLoadShelfPreset('dupe_86');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);border:1px solid var(--sage-border);font-size:0.68rem;font-weight:700;cursor:pointer;white-space:nowrap;">&#10003; $86 Dupe Card &rarr;</button><button type="button" id="dl-banner-pass-card-btn" class="mono" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;font-size:0.68rem;font-weight:700;cursor:pointer;white-space:nowrap;">9:16 Card &rarr;</button></span>
     </div>
     <div id="personalizedClimateRule" style="display:none;">${escapeHtml(meta.rule)}</div>
   </div>`;
