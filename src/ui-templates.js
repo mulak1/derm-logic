@@ -413,7 +413,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     </div>
   `;
 }
-function renderSingleConflictCard(c) {
+function renderSingleConflictCard(c, idx = 0) {
   const isCritical = c.severity === 'CRITICAL';
   const badgeLabel = isCritical ? 'Separate AM & PM' : 'Alternate Nights';
   const nameA = String(c.ingredientA || c.inciA || '').replace(/\s*\([^)]*\)/g, '');
@@ -421,17 +421,15 @@ function renderSingleConflictCard(c) {
   const cleanTitle = String(c.title || '').replace(/\s*\(pH[^)]*\)/gi, '');
   const swap = getConflictSafeSwap(c);
   const oneLineFix = String(swap.freeFix || '').replace(/^Free Timing Fix:\s*/i, '');
+  const bodyBlock = idx === 0
+    ? `<div style="font-size:0.79rem;line-height:1.38;color:var(--text-secondary);margin-bottom:7px;"><strong style="color:var(--sage-safe);">&#10003; Free Proof #1 &middot; ${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(oneLineFix)}</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;font-size:0.73rem;padding:4px 10px;" data-no-bag-inject="1">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div>`
+    : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlSwitchResultStep)window.__dlSwitchResultStep(2);if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);" style="font-size:0.76rem;color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;padding:4px 0;">&#128274; Clash #${idx + 1} (${escapeHtml(cleanTitle)}) &amp; Chemist Dupe #${idx + 1} Locked &mdash; Enter Email ($0) to Reveal &uarr;</div><div class="dl-unlocked-c2-proof" style="display:none;"><div style="font-size:0.79rem;line-height:1.38;color:var(--text-secondary);margin-bottom:7px;"><strong style="color:var(--text-primary);">${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(oneLineFix)}</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;font-size:0.73rem;padding:4px 10px;" data-no-bag-inject="1">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div></div>`;
   return `<div class="conflict-card ${escapeHtml(c.severity)}" data-no-bag-inject="1" style="padding:11px 13px;margin-bottom:7px;border-radius:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap;">
         <strong class="serif-display" style="font-size:1rem;font-weight:500;color:var(--text-primary);">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</strong>
         <span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono" style="padding:2px 8px;font-size:0.71rem;">${badgeLabel}</span>
       </div>
-      <div style="font-size:0.79rem;line-height:1.38;color:var(--text-secondary);margin-bottom:7px;">
-        <strong style="color:var(--text-primary);">${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(oneLineFix)}
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-        <a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;font-size:0.73rem;padding:4px 10px;" data-no-bag-inject="1">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a>
-      </div>
+      ${bodyBlock}
     </div>`;
 }
 function renderAnalysisResultHtml(res) {
@@ -480,7 +478,7 @@ function renderAnalysisResultHtml(res) {
             + See ${extraConflicts.length} more bottle ${extraConflicts.length === 1 ? 'clash' : 'clashes'} on your shelf (${extraConflicts.map((c) => `${String(c.ingredientA || '').split('(')[0].trim()} + ${String(c.ingredientB || '').split('(')[0].trim()}`).slice(0, 2).join(', ')})
           </summary>
           <div style="margin-top:8px;">
-            ${extraConflicts.map(renderSingleConflictCard).join('')}
+            ${extraConflicts.map((c, idx) => renderSingleConflictCard(c, primaryConflicts.length + idx)).join('')}
           </div>
         </details>
       ` : ''));
