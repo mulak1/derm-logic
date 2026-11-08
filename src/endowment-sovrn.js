@@ -237,12 +237,12 @@ function renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Va
         </div>
         <div style="min-width:0;display:flex;flex-direction:column;gap:8px;">
           <div>
-            <span class="mono" style="font-size:0.72rem;color:#C9A45A;font-weight:700;display:block;text-transform:uppercase;letter-spacing:0.05em;">ATELIER 9:16 LOCK-SCREEN WALLPAPER (AM + PM)</span>
+            <span class="mono" style="font-size:0.72rem;color:#C9A45A;font-weight:700;display:block;text-transform:uppercase;letter-spacing:0.05em;">ATELIER 9:16 LOCK-SCREEN WALLPAPER (AM + PM &middot; &check; EU CosIng &amp; Lab pH)</span>
             <div class="serif-display" style="font-size:1.12rem;color:#FBF8F4;line-height:1.22;margin-top:2px;">Keep your 7:30 AM &amp; 9:30 PM order on your iPhone lock screen.</div>
-            <div style="font-size:0.76rem;color:#D5CBC0;margin-top:4px;line-height:1.38;">Includes pH windows, wait timers, ceramide sandwich buffers &amp; 4-Night cycle below your phone clock.</div>
+            <div style="font-size:0.76rem;color:#D5CBC0;margin-top:4px;line-height:1.38;">Includes pH windows, wait timers, ceramide sandwich buffers &amp; 4-Night cycle below your phone clock &middot; 30-day money-back guarantee.</div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-            <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:7px 13px;min-height:32px;font-size:0.8rem;background:#7A2332;color:#FFF;" onclick="window.__dlDownloadOrUnlockWallpaper()">Save 9:16 PNG ($1.99) &rarr;</button>
+            <button type="button" id="btnDownloadLockScreenPng" class="btn-primary mono" style="padding:7px 13px;min-height:32px;font-size:0.8rem;background:#7A2332;color:#FFF;" onclick="window.__dlDownloadOrUnlockWallpaper()">Save 9:16 PNG ($1.99 &middot; 30-Day Guarantee) &rarr;</button>
             <button type="button" class="btn-secondary mono" style="padding:7px 12px;min-height:32px;font-size:0.78rem;background:rgba(255,255,255,0.08);color:#F4EFE8;border-color:rgba(201,164,90,0.4);" onclick="if(window.__dlOpenVanityDrawer){window.__dlOpenVanityDrawer('workbench');if(window.__dlSetDossierTab)window.__dlSetDossierTab('pass');}">Interactive AM/PM Preview &rarr;</button>
             <button type="button" id="btnCopyRedditRoutineHelp" class="btn-secondary mono" style="padding:6px 10px;min-height:32px;font-size:0.76rem;background:transparent;color:#C9BCAE;border-color:#3D322C;" onclick="window.__dlCopyRedditRoutineHelp(this)">Email / Copy Summary ($0)</button>
           </div>
@@ -565,12 +565,15 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     }
 
     // PM Card (Nocturnal Velvet)
+    var hasEmOrPaid = Boolean(window.__dlSampleEmailUnlocked || window.__ebIsUnlocked || window.__ebSavedEmail || (localStorage.getItem('dl_captured_email') || localStorage.getItem('eb_captured_email') || localStorage.getItem('eb_lead_email')));
     ctx.fillStyle = '#241C18'; ctx.fillRect(18, 272, w - 36, 132);
     ctx.strokeStyle = 'rgba(201,164,90,0.4)'; ctx.strokeRect(18, 272, w - 36, 132);
     ctx.fillStyle = '#C9A45A'; ctx.font = 'bold 11.5px Georgia, serif';
     ctx.fillText(window.__dl72HrRescueActive ? '☾ 9:30 PM · ZERO-ACTIVE B5 BARRIER FLOOD' : '☾ 9:30 PM · BEDTIME RENEWAL & BUFFER', 28, 291);
-    var pmSteps = window.__dl72HrRescueActive ? ['1. Lukewarm Water Rinse', '2. Damp-Skin Panthenol / Mist', '3. Cicaplast B5+ + Ceramide Seal'] : [steps[3], steps[4], steps[5]];
-    var pmPills = window.__dl72HrRescueActive ? ['Zero Acid', 'Damp 60s', '3:1:1 Seal'] : ['Dry 10m', 'Pea Size', '3:1:1 Seal'];
+    var pmSteps = window.__dl72HrRescueActive
+      ? ['1. Lukewarm Water Rinse', '2. Damp-Skin Panthenol / Mist', '3. Cicaplast B5+ + Ceramide Seal']
+      : [steps[3], hasEmOrPaid ? steps[4] : '2. [Locked: $0 Email to Reveal]', hasEmOrPaid ? steps[5] : '3. [Locked: $0 Email to Reveal]'];
+    var pmPills = window.__dl72HrRescueActive ? ['Zero Acid', 'Damp 60s', '3:1:1 Seal'] : ['Dry 10m', hasEmOrPaid ? 'Pea Size' : 'Locked ($0)', hasEmOrPaid ? '3:1:1 Seal' : 'Locked ($0)'];
     for (var p = 0; p < 3; p++) {
       var py = 302 + p * 32;
       ctx.fillStyle = 'rgba(255,255,255,0.07)'; ctx.fillRect(26, py, w - 52, 26);
@@ -585,7 +588,9 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     ctx.fillStyle = '#A7D7C5';
     ctx.font = 'bold 11px Georgia, serif';
     ctx.fillText(window.__dl72HrRescueActive ? '72-HR EMERGENCY BARRIER RESET ACTIVE' : '4-NIGHT SKIN-CYCLING ROTATION', 20, 424);
-    var nights = window.__dl72HrRescueActive ? ['N1: B5 Flood', 'N2: B5 Flood', 'N3: Lipid', 'N4: Pea Re-In'] : ['N1: Polish', 'N2: Renew', 'N3: Soothe', 'N4: Lipids'];
+    var nights = window.__dl72HrRescueActive
+      ? ['N1: B5 Flood', 'N2: B5 Flood', 'N3: Lipid', 'N4: Pea Re-In']
+      : ['N1: Polish', hasEmOrPaid ? 'N2: Renew' : 'N2: Locked', hasEmOrPaid ? 'N3: Soothe' : 'N3: Locked', hasEmOrPaid ? 'N4: Lipids' : 'N4: Locked'];
     var selN = (window.__dlSelectedNightIdx || 1) - 1;
     for (var n = 0; n < 4; n++) {
       var nx = 18 + n * 82;
@@ -864,6 +869,7 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     try { localStorage.setItem('dl_captured_email', email); localStorage.setItem('eb_captured_email', email); } catch (_) {}
     document.querySelectorAll('.dl-locked-badge-c2').forEach(function(el) { el.style.display = 'none'; });
     document.querySelectorAll('.dl-unlocked-c2-proof').forEach(function(el) { el.style.display = 'block'; });
+    if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas();
     var unmaskedBox = document.getElementById('dl-unmasked-sample-dupes-swatches');
     if (unmaskedBox) unmaskedBox.style.display = 'flex';
     var btnEl = formEl ? formEl.querySelector('.dl-inline-ics-btn') : null;

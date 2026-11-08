@@ -1,8 +1,8 @@
 {
   "project": "DermLogic Skincare Conflict & Routine Architect (dermlogic.io)",
   "competitors": "INCIDecoder, Skinsort, Paula's Choice Beautypedia",
-  "last_heartbeat_pst": "2026-11-07 07:34:00 PM PST",
-  "last_telemetry_window_start_pst": "2026-11-07 07:34:00 PM PST",
+  "last_heartbeat_pst": "2026-11-07 07:40:15 PM PST",
+  "last_telemetry_window_start_pst": "2026-11-07 07:40:15 PM PST",
   "starvation_index": 1.0,
   "opportunities": [
     {
@@ -17,8 +17,8 @@
       "validation_check": "Live prod end-to-end test: free specimen renders immediately; $0 email save and one-time pass checkout respond in <500ms.",
       "status": "OPEN",
       "created_at": 1794040374.657057,
-      "updated_at": 1794108840.0,
-      "shipped_evidence": "Commits 80fd899 + 9e56cbc + 3c9a10c + f5ecdf4 + 500ba8f + bbc8f86 + 3fac825 + 3e4e770 + Cycle 9: Unified EU CosIng & Lab pH Provenance, 30-Day Refund Guarantee, unmasked Specimen #1 (7:30 AM routine + Interactive 45s Sink Timer + Steps 1-2 + Bottle #1-2 + Dupe #1 + Night 1 Specimen) and 9:30 PM / Bottle #3+ / Nights 2-4 email holdback across /, /lp, /seo/:slug (382 pages), /compare/:slug, /celebrity/:slug, /ingredient/:slug, /ingredient/:slug/:cat, /concern/:slug/:cat, /brand/:slug, /concern/:slug, /scan/:target, /leaderboard, and the 5-Slot Atelier Vanity Bag drawer (#dl-atelier-vanity-drawer).",
+      "updated_at": 1794109215.0,
+      "shipped_evidence": "Commits 80fd899 + 9e56cbc + 3c9a10c + f5ecdf4 + 500ba8f + bbc8f86 + 3fac825 + 3e4e770 + 657ceb4 + Cycle 10: Unified EU CosIng & Lab pH Provenance, 30-Day Refund Guarantee, unmasked Specimen #1 (7:30 AM routine + Interactive 45s/60s Sink Timers + Steps 1-2 + Bottle #1-2 + Dupe #1 + Night 1 Specimen) and 9:30 PM / Bottle #3+ / Nights 2-4 / 10m Retinol Timer / 9:16 Lock-Screen Canvas PM Steps 2-3 email holdback across /, /lp, /seo/:slug (382 pages), /compare/:slug, /celebrity/:slug, /ingredient/:slug, /ingredient/:slug/:cat, /concern/:slug/:cat, /brand/:slug, /concern/:slug, /scan/:target, /leaderboard, the 5-Slot Atelier Vanity Bag drawer, and #lockScreenWallpaperCanvas.",
       "priority_score": 16.9
     },
     {
