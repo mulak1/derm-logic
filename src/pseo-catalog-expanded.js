@@ -6,6 +6,45 @@
 
 const EXPANDED_PAIR_SEEDS = [
   {
+    slug: 'snail-mucin-and-dust-mite-allergy-skincare-guide',
+    title: 'Snail Mucin and Dust-Mite or Shellfish Allergy: Why It Causes Itchy Bumps & Squalane Swaps',
+    category: 'Allergy & Contact Screen',
+    activeA: 'snail-mucin', activeB: 'squalane',
+    verdict: 'COMPATIBLE_WITH_WAIT', compatibilityScore: 88, deltaPh: 0.5, customPlain: true,
+    conflictType: 'EU CosIng Allergen Alert · Dust-Mite Cross-Reactivity Screen',
+    summary: 'If COSRX Snail 96 Mucin Essence gives you tiny red itchy bumps or puffy eyelids within 24 hours, you may have a dust-mite or shellfish cross-allergy (tropomyosin proteins). Switching to 100% sugarcane Squalane + Panthenol B5 delivers the same dewy glass-skin bounce with zero allergen triggers.',
+    amRule: 'Skip snail mucin if you have dust-mite allergies; press 2 drops of pure Squalane + Panthenol serum onto damp skin under broad-spectrum SPF 50.',
+    pmRule: 'At bedtime, layer Panthenol B5 and Ceramide NP barrier cream (like Aestura Atobarrier 365) to calm reactive redness overnight.',
+    waitTimeMinutes: 1,
+    presetProducts: ['cosrx-snail-96-mucin', 'aestura-atobarrier-365', 'cerave-pm-lotion']
+  },
+  {
+    slug: 'fragrance-and-essential-oil-contact-allergy-routine-guide',
+    title: 'Fragrance, Essential Oils & Contact Allergy Guide: How to Stop Eyelid & Neck Hives',
+    category: 'Allergy & Contact Screen',
+    activeA: 'centella-asiatica', activeB: 'panthenol',
+    verdict: 'SYNERGISTIC_COMPATIBLE', compatibilityScore: 97, deltaPh: 0.3, customPlain: true,
+    conflictType: 'EU CosIng 26-Fragrance Screen · 100% Hypoallergenic Calm Pair',
+    summary: 'Parfum, Linalool, Limonene, and citrus/lavender essential oils are the #1 cause of cosmetic contact dermatitis on the eyelids and neck. Pairing pure Centella Asiatica (Cica) with 5% Panthenol (Vitamin B5) calms allergic flare-ups in 48 hours with zero fragrance sensitizers.',
+    amRule: 'Apply fragrance-free Centella Asiatica ampoule onto clean damp skin in the morning, followed by mineral Zinc Oxide SPF 50.',
+    pmRule: 'Smooth 5% Panthenol + Madecassoside balm over reactive areas at bedtime to seal moisture without essential oils or lanolin.',
+    waitTimeMinutes: 1,
+    presetProducts: ['skin1004-centella-ampoule', 'lrp-cicaplast-baume-b5', 'aestura-atobarrier-365']
+  },
+  {
+    slug: 'salicylic-acid-and-aspirin-salicylate-allergy-alternatives',
+    title: 'Salicylic Acid (BHA) and Aspirin / Salicylate Allergy: Safe Pore-Clearing Swaps',
+    category: 'Allergy & Contact Screen',
+    activeA: 'salicylic-acid', activeB: 'azelaic-acid',
+    verdict: 'SPLIT_AM_PM', compatibilityScore: 84, deltaPh: 1.4, customPlain: true,
+    conflictType: 'EU CosIng Salicylate Screen · Swap BHA for 10% Azelaic Acid',
+    summary: 'If you are allergic or sensitive to aspirin (acetylsalicylic acid), leave-on Salicylic Acid (2% BHA), Willow Bark, and Betaine Salicylate can trigger contact hives or warm flushing. 10%–15% Azelaic Acid clears clogged pores and post-blemish redness using a completely salicylate-free pathway.',
+    amRule: 'Replace morning BHA toner with 10%–15% Azelaic Acid serum on clean dry skin, wait 60 seconds, and finish with mineral SPF 50.',
+    pmRule: 'At bedtime, use gentle Gluconolactone (PHA) or Niacinamide 5% with a fragrance-free ceramide lotion to keep pores clear safely.',
+    waitTimeMinutes: 2,
+    presetProducts: ['paulas-choice-2-bha', 'finacea-15-azelaic', 'cerave-pm-lotion']
+  },
+  {
     slug: 'how-to-use-tranexamic-acid-and-tretinoin-together',
     title: 'How to Use Tranexamic Acid and Tretinoin Together: Dark Spot & Melasma Guide',
     category: 'Active Pair Matrix',
@@ -698,6 +737,7 @@ function appendIngredientGuidePages({ ingredientsMap, seenSlugs, pages, sanitize
       faqs: [
         { q: `When should I apply ${safeCommon} in my morning or night routine?`, a: `${safeCommon} works at pH ${ing.phMin} to ${ing.phMax}. Apply watery serums on clean skin before richer creams, and separate strong exfoliants or retinoids into your evening routine.` },
         { q: `Does ${safeCommon} clog pores or trigger fungal-acne bumps?`, a: `${safeCommon} has a pore-clogging rating of ${ing.comedogenicity}/5 and is ${ing.malasseziaTrigger ? 'flagged as a rich lipid to watch if you are prone to fungal-acne bumps' : '100% fungal-acne safe for breakout-prone skin'}.` },
+        { q: `Can ${safeCommon} trigger allergic contact rashes or hives?`, a: `Screen ${safeCommon} (${safeInci}) against 8 EU CosIng contact-allergy groups (fragrance/essential oils, dust-mite snail mucin, salicylates, propylene glycol, lanolin, formaldehyde releasers, cocamidopropyl betaine, and chemical UV filters) in the free DermLogic checker above, and unlock the 9:30 PM hypoallergenic recovery schedule + 2 dupes free ($0 email).` },
         { q: `Can I use ${safeCommon} every day in my skincare routine?`, a: summaryText }
       ]
     });

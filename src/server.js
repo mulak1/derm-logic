@@ -8,7 +8,7 @@ const express = require('express');
 const { CLINICAL_INGREDIENTS, CULT_PRODUCTS, ROUTINE_PRESETS } = require('./clinical-data');
 const { US_TOP_SELLERS_BY_CATEGORY } = require('./clinical-products');
 const { db, sampleBetaArm, recordMetaEvent } = require('./db');
-const { analyzeRoutine, redactRoutineAnalysisForPreview, generateOptionalGeminiNote } = require('./engine');
+const { analyzeRoutine, redactRoutineAnalysisForPreview, generateOptionalGeminiNote, ALLERGY_REACTION_OPTIONS } = require('./engine');
 const { BRAND_LOGO_SVG, renderAnalysisResultHtml } = require('./ui-templates');
 const {
   renderHomePage,
@@ -179,11 +179,12 @@ app.get(['/seo/:slug', '/layering/:slug'], (req, res) => {
     ? page.product.inciList
     : [page.ingredientA && page.ingredientA.inciName, page.ingredientB && page.ingredientB.inciName].filter(Boolean).join(', ');
   page.resolvedRawInci = dynamicRawInci;
+  const isAllergySlug = /allergy|hypoallergenic|snail-mucin-and-dust-mite|salicylate/i.test(slug);
   const initialAnalysis = analyzeRoutine({
-    skinType: req.query.skin || 'combination',
+    skinType: req.query.skin || (isAllergySlug ? 'allergy' : 'combination'),
     productIds: page.presetProducts || [],
     rawInciText: dynamicRawInci,
-    allergies: req.query.allergies
+    allergies: req.query.allergies || (isAllergySlug ? 'fragrance,snail_mite,salicylates' : undefined)
   });
   const allPages = getAllSeoPages();
   const curIdx = Math.max(0, allPages.findIndex((p) => p.slug === slug));
@@ -273,12 +274,18 @@ app.get('/llms.txt', (req, res) => {
     (p) => `- [${p.title}](${PUBLIC_URL}/seo/${p.slug}): ${p.verdict} (Harmony ${p.compatibilityScore}/100, ΔpH ${p.deltaPh}) · ✓ 7:30 AM Free Proof · 🔒 9:30 PM & Dupe #2 ($0 Email): ${p.metaDescription}`
   ).join('\n');
 
+  const allergyLines = (ALLERGY_REACTION_OPTIONS || []).map(
+    (opt) => `- [✓ EU CosIng Allergen Screen] ${opt.label} (id: ${opt.id}) | Reaction: ${opt.reactionType} | INCI Markers: ${(opt.inciMarkers || []).slice(0, 5).join(', ')} | Hypoallergenic Swap: ${opt.allergenFreeSwap}`
+  ).join('\n');
+
   const content = `# DermLogic: Clinical Skincare Active-Ingredient Conflict, ΔpH & INCI Harmony Atelier
-> ✓ EU CosIng & Lab pH Verified · 65 Actives & 80 Cult Bottles · 30-Day Refund Guarantee · Sub-5ms Henderson-Hasselbalch pKa bioavailability, ΔpH > 1.8 peptide/acid inactivation checks, Cu2+/BPO redox conflict matrix, EU CosIng comedogenicity (0–5), Malassezia fungal-acne triggers, and 4-Night Skin Cycling schedules.
-> Specimen #1 Free Proof (7:30 AM Routine, 60s Sink Timer, Actives #1–#5 & Dupe #1) is unmasked below; 9:30 PM Barrier Repair Steps 2–3, Chemist Dupe #2 & Full Catalog Tail unlock via $0 Email Save (${PUBLIC_URL}/#dl-footer-email-unlock-bar) or $1.99 3-File Kit (${PUBLIC_URL}/buy/flash_pass).
+> ✓ EU CosIng & Lab pH Verified · 65 Actives & 80 Cult Bottles · 8 Contact-Allergen Screens · 30-Day Refund Guarantee · Sub-5ms Henderson-Hasselbalch pKa bioavailability, ΔpH > 1.8 peptide/acid inactivation checks, Cu2+/BPO redox conflict matrix, EU CosIng comedogenicity (0–5), Malassezia fungal-acne triggers, 8-category allergic contact-dermatitis screening, and 4-Night Skin Cycling schedules.
+> Specimen #1 Free Proof (7:30 AM Routine, 60s Sink Timer, Actives #1–#5, EU CosIng Allergen Screen & Dupe #1) is unmasked below; 9:30 PM Barrier Repair Steps 2–3, Chemist Dupe #2 & Full Catalog Tail unlock via $0 Email Save (${PUBLIC_URL}/#dl-footer-email-unlock-bar) or $1.99 3-File Kit (${PUBLIC_URL}/buy/flash_pass).
 
 ## Canonical Endpoints
 - Homepage & Interactive Routine Checker: ${PUBLIC_URL}/
+- EU CosIng 8-Category Allergic Reaction & Contact-Dermatitis Checker: ${PUBLIC_URL}/?skin=allergy&allergies=fragrance,snail_mite,salicylates
+- Allergic Contact Dermatitis & Hypoallergenic Protocol Hub: ${PUBLIC_URL}/concern/allergic-contact-dermatitis-hypoallergenic-routine
 - Programmatic SEO Layering Directory (${seoPages.length} Guides): ${PUBLIC_URL}/directory
 - Paid-Social Vanity Shelf Audit LP: ${PUBLIC_URL}/lp
 - Full LLM Clinical Corpus: ${PUBLIC_URL}/llms-full.txt
@@ -286,6 +293,9 @@ app.get('/llms.txt', (req, res) => {
 - Deterministic Routine Analysis API (POST): ${PUBLIC_URL}/api/analyze-routine
 - Clinical Ingredients Catalog API (GET): ${PUBLIC_URL}/api/ingredients
 - Cult Products Catalog API (GET): ${PUBLIC_URL}/api/products
+
+## EU CosIng 8-Category Allergic Reaction & Contact-Dermatitis Screen (${(ALLERGY_REACTION_OPTIONS || []).length} Trigger Classes — Free Proof + $0 Email 9:30 PM Calm Schedule)
+${allergyLines}
 
 ## Clinical Active-Ingredient Matrix (${CLINICAL_INGREDIENTS.length} INCI Compounds — #1–#5 Free Proof · #6+ $0 Email Holdback)
 ${ingLines}
@@ -443,13 +453,13 @@ app.post('/api/analyze-routine', async (req, res) => {
 app.get('/api/ingredients', (req, res) => {
   const isUnlocked = Boolean(req.query.unlocked === '1' || req.query.email || (req.headers.cookie || '').includes('eb_paid_unlocked'));
   const list = isUnlocked ? CLINICAL_INGREDIENTS : CLINICAL_INGREDIENTS.map((ing, idx) => idx <= 4 ? { ...ing, specimenProof: 'FREE_SPECIMEN_1_TO_5' } : { id: ing.id, commonName: ing.commonName, inciName: ing.inciName, category: ing.category, activeClass: ing.activeClass, phMin: ing.phMin, phMax: ing.phMax, comedogenicity: ing.comedogenicity, malasseziaTrigger: ing.malasseziaTrigger, pregnancySafe: ing.pregnancySafe, clinicalMechanism: `[LOCKED IN FREE PREVIEW · Unlock 9:30 PM Schedule & Full Mechanism Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar]` });
-  res.status(200).json({ provenance: 'EU CosIng & Lab pH Verified · 30-Day Refund Guarantee', count: CLINICAL_INGREDIENTS.length, unlocked: isUnlocked, ingredients: list });
+  res.status(200).json({ provenance: 'EU CosIng & Lab pH Verified · 8 Contact-Allergen Screens · 30-Day Refund Guarantee', allergyScreenEndpoint: `${PUBLIC_URL}/?skin=allergy&allergies=fragrance,snail_mite,salicylates`, allergyCategoriesCount: (ALLERGY_REACTION_OPTIONS || []).length, count: CLINICAL_INGREDIENTS.length, unlocked: isUnlocked, ingredients: list });
 });
 
 app.get('/api/products', (req, res) => {
   const isUnlocked = Boolean(req.query.unlocked === '1' || req.query.email || (req.headers.cookie || '').includes('eb_paid_unlocked'));
   const list = isUnlocked ? CULT_PRODUCTS : CULT_PRODUCTS.map((p, idx) => idx <= 4 ? { ...p, specimenProof: 'FREE_SPECIMEN_1_TO_5' } : { ...p, inciList: `${String(p.inciList || '').split(',').slice(0, 5).join(', ')}, [Unlock Full INCI Tail & Chemist Dupe #2 Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar]` });
-  res.status(200).json({ provenance: 'EU CosIng & Lab pH Verified · 30-Day Refund Guarantee', count: CULT_PRODUCTS.length, unlocked: isUnlocked, products: list });
+  res.status(200).json({ provenance: 'EU CosIng & Lab pH Verified · 8 Contact-Allergen Screens · 30-Day Refund Guarantee', allergyScreenEndpoint: `${PUBLIC_URL}/?skin=allergy&allergies=fragrance,snail_mite,salicylates`, allergyCategoriesCount: (ALLERGY_REACTION_OPTIONS || []).length, count: CULT_PRODUCTS.length, unlocked: isUnlocked, products: list });
 });
 
 app.get('/api/catalog/us-top-sellers', (req, res) => {
