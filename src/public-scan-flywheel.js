@@ -52,6 +52,7 @@ const FLYWHEEL_SEED = {
     inputPlaceholder: 'VitC+Cu, Tret+BPO, Retinol+Glycolic, or any routine...',
     entities: [
       { target: 'VitC-AM-Peptides-PM', grade: 'A+', score: 98, status: 'HALL_OF_FAME', kpi1: '98/100 Safety Score', kpi2: 'Safe AM/PM Split', cnnReadout: 'Calms Skin Redness • Protects Moisture Barrier', issue: 'Zero Conflict • Vitamin C in AM, Peptides in PM' },
+      { target: 'Allergy-Safe-Barrier-Stack', grade: 'A+', score: 97, status: 'HALL_OF_FAME', kpi1: '97/100 Safety Score', kpi2: '0 EU CosIng Allergens', cnnReadout: 'Free of Dust-Mite Snail, Fragrance, Salicylates & Glycols', issue: 'Verified Hypoallergenic AM/PM Stack (Vanicream + Squalane)' },
       { target: 'Ceramide-Tretinoin-Buffer', grade: 'A+', score: 95, status: 'HALL_OF_FAME', kpi1: '95/100 Safety Score', kpi2: 'pH 5.6 Balanced', cnnReadout: '96.4% Smooth Barrier • Gentle Retinoid Absorption', issue: '64% Less Peeling with Moisturizer Buffer' },
       { target: 'Azelaic15-Niacinamide5', grade: 'A', score: 92, status: 'HALL_OF_FAME', kpi1: '92/100 Safety Score', kpi2: 'pH 4.9–5.5 Matched', cnnReadout: '94.1% Redness & Blemish Calming', issue: 'Fungal-Acne Safe & Sensitive-Skin Friendly' },
       { target: 'BHA2-SnailMucin-Stack', grade: 'A', score: 89, status: 'HALL_OF_FAME', kpi1: '89/100 Safety Score', kpi2: '15m Wait Step', cnnReadout: '90.5% Pore Clearing Without Dryness', issue: 'Safe 2x/Week Exfoliation Schedule' },
@@ -272,11 +273,13 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
       </table>
       <div id="eb-inline-row4-unlock" style="margin-top:18px;padding:16px 20px;border-radius:${t.radiusCard || '0px'};background:${t.subtleBg || 'var(--bg-oat)'};border:1px solid ${t.border || 'var(--border-hairline)'};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div style="flex:1;min-width:260px;">
-          <div id="eb-scan-step3-title" style="font-size:15px;font-weight:600;color:${esc(t.textPrimary)};">Step 3 · Download the Ready-to-Use Action Pack for ${esc(scan.target)}</div>
-          <div style="font-size:13.5px;color:${esc(t.textSecondary)};margin-top:2px;">Includes ${esc(fileLabels)} · One-time payment</div>
+          <div id="eb-scan-step3-title" style="font-size:15px;font-weight:600;color:${esc(t.textPrimary)};">Step 3 · Unlock 9:30 PM Order &amp; Dupes ($0 Email) or Complete 3-File Kit for ${esc(scan.target)}</div>
+          <div style="font-size:13.5px;color:${esc(t.textSecondary)};margin-top:2px;">&#10003; EU CosIng &amp; Lab pH Verified · Includes ${esc(fileLabels)} · 30-Day Refund Guarantee</div>
         </div>
         <div id="eb-scan-row4-msg" style="display:none !important;"><input id="eb-scan-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" /><button id="eb-scan-row4-btn" type="button">Reveal Row #4 →</button></div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0;">
+          <button type="button" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 16px;border-radius:${t.radiusPill || '0px'};background:var(--bg-surface,#FFFFFF);color:${esc(primaryBtnBg)};border:1px solid ${esc(primaryBtnBg)};font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap;">&#128274; Email 9:30 PM &amp; 2 Dupes ($0) &uarr;</button>
+          <a href="/?allergies=fragrance,snail_mite,salicylates#checker-workbench" style="padding:10px 14px;border-radius:${t.radiusPill || '0px'};background:var(--sage-bg,#ECFDF5);color:var(--sage-safe,#047857);font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;">Screen Allergens ($0) &rarr;</a>
           <a id="eb-scan-buy-flash" href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="padding:10px 20px;border-radius:${t.radiusPill || '0px'};background:${esc(primaryBtnBg)};color:var(--accent-ink,#FFFFFF);font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">Get All 3 Files ($1.99) →</a>
         </div>
       </div>

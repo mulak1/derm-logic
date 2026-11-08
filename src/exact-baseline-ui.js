@@ -187,12 +187,13 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
 </section>
 <div id="eb-floating-gate-popover" role="dialog" aria-label="Instant Deliverable Export Pass">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-    <span style="font-size:13px;font-weight:700;color:${t.brandPrimary};">Instant 1-Click Unlock</span>
+    <span style="font-size:13px;font-weight:700;color:${t.brandPrimary};">&#10003; EU CosIng &amp; Lab pH Verified</span>
     <button type="button" onclick="document.getElementById('eb-floating-gate-popover').style.display='none'" style="background:none;border:none;color:${t.textMuted};font-size:15px;">Close</button>
   </div>
   <div id="eb-popover-title" style="font-family:${t.fontDisplay};font-size:16.5px;font-weight:700;color:${t.textPrimary};margin-bottom:4px;">Unlock &amp; Download ${esc(cfg.freeDeliverableName)}</div>
-  <p id="eb-popover-desc" style="font-size:13px;color:${t.textSecondary};margin:0 0 10px 0;line-height:1.4;"><strong>Instant Browser Unlock + Download</strong> • Zero account required • <strong>$1.99 Complete 3-File Routine Kit</strong>:</p>
+  <p id="eb-popover-desc" style="font-size:13px;color:${t.textSecondary};margin:0 0 10px 0;line-height:1.4;"><strong>Free ($0 Email):</strong> 9:30 PM Bedtime Order + 2 Chemist Dupes · <strong>$1.99 Complete 3-File Kit</strong> (30-Day Refund Guarantee):</p>
   <div style="display:grid;gap:6px;">
+    <button type="button" onclick="document.getElementById('eb-floating-gate-popover').style.display='none';if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);" style="width:100%;padding:8px 14px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};border:none;font-weight:700;font-size:13px;cursor:pointer;">&#128274; Email Free 9:30 PM Order &amp; 2 Dupes ($0) &uarr;</button>
     <button type="button" id="btn-popover-vault-pass" onclick="window.__ebCheckout('flash_pass', true)" style="width:100%;padding:9px 14px;border-radius:${t.radiusPill};background:${t.safeColor};color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;">Save Complete 3-File Routine Kit ($1.99) →</button>
   </div>
 </div>
@@ -217,6 +218,8 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
       <button type="button" onclick="document.getElementById('eb-cmdk-modal').style.display='none'" style="background:none;border:none;color:${t.textMuted};font-size:13px;">ESC</button>
     </div>
     <div style="display:grid;gap:6px;">
+      <button type="button" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;" onclick="document.getElementById('eb-cmdk-modal').style.display='none';if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);"><span>&#128274; Email Free 9:30 PM Routine &amp; 2 Chemist Dupes</span><strong style="color:${t.safeColor};">$0 Free &uarr;</strong></button>
+      <a href="/?allergies=fragrance,snail_mite,salicylates#checker-workbench" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>&#10003; Screen Routine for 8 Contact-Allergy Triggers (EU CosIng)</span><strong style="color:${t.brandPrimary};">Free Screen →</strong></a>
       <button type="button" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;" onclick="window.__ebCheckout('flash_pass')"><span>Save Complete 3-File AM/PM Routine Kit</span><strong style="color:${t.brandPrimary};">$1.99 →</strong></button>
       <a href="/api/github-upgrade/export.csv" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>Download Pore-Safe &amp; Dupe Swaps (.CSV)</span><strong>.CSV ↗</strong></a>
       <a href="/api/github-upgrade/skin-cycling.ics" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>Download 4-Night Skin-Cycling Schedule (.ICS)</span><strong>.ICS ↗</strong></a>
