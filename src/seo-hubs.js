@@ -288,23 +288,23 @@ function renderCelebrityIndexPage() {
     const cBottles = c.productIds.map((id) => CULT_PRODUCTS.find((p) => p.id === id)).filter(Boolean);
     const bottlePills = cBottles.map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.74rem;padding:3px 8px;background:var(--bg-surface);border:1px solid var(--border-hairline);color:var(--text-primary);text-decoration:none;">${escapeHtml(b.brand)} ${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 22))}</a>`).join('');
     const filterBlob = `${c.skinProfile} ${c.moniker} ${c.summary} ${cBottles.map((b) => b.name + ' ' + b.category).join(' ')}`.toLowerCase();
-    return `<div class="porcelain-vessel-core celeb-routine-card" data-celeb-filter="${escapeHtml(filterBlob)}" style="background:var(--bg-oat);padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
+    return `<div class="porcelain-vessel-core celeb-routine-card" data-celeb-filter="${escapeHtml(filterBlob)}" style="background:#FFFFFF;border:1px solid #EFEAE3;border-radius:18px;padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;box-shadow:0 4px 18px -4px rgba(28,25,23,0.04);">
       <div>
-        <div class="vessel-photo-frame" style="height:210px;margin-bottom:12px;overflow:hidden;border-radius:12px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} skincare routine vanity shelf" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};display:block;" /></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
-          <span class="badge-safe mono">${escapeHtml(c.skinProfile)}</span>
-          <span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:500;">${c.amSteps.length} AM / ${c.pmSteps.length} PM Steps</span>
+        <div class="vessel-photo-frame" style="height:210px;margin-bottom:14px;overflow:hidden;border-radius:14px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} skincare routine vanity shelf" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};display:block;" /></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+          <span class="badge-safe mono" style="font-size:0.78rem;padding:3px 10px;background:#EBF4F0;color:#1B4D3E;border:1px solid #C4DFD5;">${escapeHtml(c.skinProfile)}</span>
+          <span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;">${c.amSteps.length} AM / ${c.pmSteps.length} PM Steps</span>
         </div>
-        <a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.45rem;color:var(--text-primary);margin-bottom:3px;">${escapeHtml(c.name)}</a>
+        <a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.45rem;color:var(--text-primary);margin-bottom:3px;line-height:1.24;">${escapeHtml(c.name)}</a>
         <div class="serif-italic" style="font-size:0.96rem;color:var(--rose-brand);margin-bottom:8px;">${escapeHtml(c.moniker)}</div>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.52;margin-bottom:10px;">${escapeHtml(c.summary)}</p>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px;">${bottlePills}</div>
-        ${c.dupeSwap && c.dupeSwap.savingsNote ? `<div class="mono" style="font-size:0.75rem;color:var(--sage-safe);background:var(--sage-bg);padding:5px 9px;margin-bottom:8px;font-weight:500;">Chemist Swap: ${escapeHtml(c.dupeSwap.savingsNote)}</div>` : ''}
+        <p style="font-size:0.90rem;color:var(--text-secondary);line-height:1.56;margin-bottom:12px;">${escapeHtml(c.summary)}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">${bottlePills}</div>
+        ${c.dupeSwap && c.dupeSwap.savingsNote ? `<div class="mono" style="font-size:0.75rem;color:var(--sage-safe);background:var(--sage-bg);padding:6px 10px;border-radius:8px;margin-bottom:10px;font-weight:600;">Chemist Swap: ${escapeHtml(c.dupeSwap.savingsNote)}</div>` : ''}
         <div style="font-size:11.5px;color:var(--text-muted);line-height:1.38;">Source: <a href="${escapeHtml(c.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(c.sourcePublication)} &rarr;</a> · Independent commentary</div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border-hairline);">
-        <a href="/celebrity/${escapeHtml(c.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Inspect Full Shelf &rarr;</a>
-        <a href="${preloadHref}" class="affiliate-link-pill mono">Load Shelf in Checker &rarr;</a>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:1px solid #F2EDE6;">
+        <a href="/celebrity/${escapeHtml(c.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:600;text-decoration:none;">Inspect Full Shelf &rarr;</a>
+        <a href="${preloadHref}" class="affiliate-link-pill mono" style="font-weight:600;">Load Shelf in Checker &rarr;</a>
       </div>
     </div>`;
   }).join('');
@@ -314,26 +314,26 @@ function renderCelebrityIndexPage() {
       ${renderSiloNavStrip('celebrity')}
       <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Iconic Routines: Celebrity Bottles &amp; Morning/Night Layering</h1>
       <p class="hero-sub" style="margin-bottom:16px;">Every serum, barrier cream, and SPF spotted in public vanity tours and beauty interviews, analyzed for pH harmony, morning vs. bedtime timing, and gentle drugstore dupes.</p>
-      <div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:14px 18px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div class="porcelain-vessel-core" style="background:#FFFFFF;border:1px solid #EFEAE3;border-radius:14px;padding:16px 20px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 4px 14px -6px rgba(28,25,23,0.04);">
         <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
           <span class="badge-safe mono">+1 New Routine Daily</span>
-          <span style="font-size:0.9rem;color:var(--text-primary);">Today’s Featured Drop: <a href="/celebrity/${escapeHtml(latestDaily.slug)}" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">${escapeHtml(latestDaily.name)} (${escapeHtml(latestDaily.moniker)})</a></span>
+          <span style="font-size:0.9rem;color:var(--text-primary);">Today’s Featured Drop: <a href="/celebrity/${escapeHtml(latestDaily.slug)}" style="color:var(--rose-brand);font-weight:600;text-decoration:underline;">${escapeHtml(latestDaily.name)} (${escapeHtml(latestDaily.moniker)})</a></span>
           <span class="mono" style="font-size:0.76rem;color:var(--text-secondary);">· ${escapeHtml(latestDaily.skinProfile)}</span>
         </div>
         <a href="/celebrity/${escapeHtml(latestDaily.slug)}" class="affiliate-link-pill mono">View Today’s Shelf &rarr;</a>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:12px 16px;background:var(--bg-oat);margin-bottom:18px;" role="group" aria-label="Filter Celebrity Routines by Skin Profile">
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:14px 18px;background:#FFFFFF;border:1px solid #EFEAE3;border-radius:14px;margin-bottom:24px;box-shadow:0 4px 14px -6px rgba(28,25,23,0.04);" role="group" aria-label="Filter Celebrity Routines by Skin Profile">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <button type="button" class="vanity-light-btn active mono celeb-filter-btn" onclick="window.__filterCelebShelves('all',this)" style="padding:6px 12px;font-size:0.78rem;">All Routines (${celebs.length})</button>
           <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('acne|breakout|bha|oily|congest',this)" style="padding:6px 12px;font-size:0.78rem;">Breakout &amp; Acne-Prone</button>
           <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('dry|eczema|barrier|dehydrat',this)" style="padding:6px 12px;font-size:0.78rem;">Dry &amp; Barrier-Focused</button>
           <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('sensitive|rosacea|dermatitis|calm',this)" style="padding:6px 12px;font-size:0.78rem;">Sensitive &amp; Rosacea</button>
           <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('tretinoin|retinal|adapalene|vitamin c',this)" style="padding:6px 12px;font-size:0.78rem;">Vitamin C &amp; Retinoids</button>
         </div>
-        <a href="/#analyzer" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">Or Check My Own Bottles &rarr;</a>
+        <a href="/#analyzer" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;text-decoration:none;">Or Check My Own Bottles &rarr;</a>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-bottom:20px;">${cards}</div>
-      <div id="celebrity-index-editorial-disclosure" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:12px 16px;gap:4px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-bottom:32px;">${cards}</div>
+      <div id="celebrity-index-editorial-disclosure" class="porcelain-vessel-core" style="background:#FFFFFF;border:1px solid #EFEAE3;border-radius:14px;padding:16px 20px;gap:6px;box-shadow:0 4px 14px -6px rgba(28,25,23,0.04);">
         <div class="mono" style="font-size:11px;color:var(--rose-brand);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">Editorial Independence, Non-Endorsement &amp; Source Attribution</div>
         <p style="font-size:12px;color:var(--text-secondary);line-height:1.45;margin:0;"><strong>Public Information &amp; Non-Endorsement Notice:</strong> None of the individuals featured above have endorsed, verified, or sponsored DermLogic, this formulation analysis, or any third-party brands and chemist dupes compared here. Compiled strictly from public interviews (<em>Vogue Beauty Secrets</em>, <em>Harper’s Bazaar Go To Bed With Me</em>, <em>Allure</em>) with direct links to original sources. Photography is illustrative.</p>
       </div>
