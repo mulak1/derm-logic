@@ -448,7 +448,8 @@ function renderCelebrityDetailPage(celeb) {
             <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:0.78rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Source: ${escapeHtml(cleanSourceCredit)} &rarr;</a>
           </div>
           <h1 class="hero-h1" style="font-size:clamp(2rem,3.6vw,3.1rem);margin-bottom:6px;">${escapeHtml(celeb.name)} Skincare Routine, Bottles &amp; Layering Order</h1>
-          <p class="hero-sub" style="margin-bottom:10px;">${escapeHtml(celeb.summary)}</p>
+          <p class="hero-sub" style="margin-bottom:8px;">${escapeHtml(celeb.summary)}</p>
+          <div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:700;margin-bottom:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;"><span>&#10003; Free Proof #1 Cheaper Dupe: <strong>${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong> (${escapeHtml(celeb.dupeSwap.savingsNote)})</span><a href="/compare/${escapeHtml([bottles[0] ? bottles[0].id : 'skinceuticals-ce-ferulic', bottles[1] ? bottles[1].id : 'aestura-atobarrier-365'].sort().join('-vs-'))}" class="affiliate-link-pill mono" style="padding:3px 10px;font-size:0.75rem;">2-Product pH Clash Matrix &rarr;</a></div>
           ${renderTopSubpageEmailBar('celeb_' + celeb.slug)}
         </div>
       </div>
@@ -498,8 +499,8 @@ function renderCelebrityDetailPage(celeb) {
             <h3 class="serif-display" style="font-size:1.32rem;margin:0 0 10px;">Luxury Shelf vs. Barrier-Identical Swap</h3>
             <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:10px;">
               <div style="background:var(--bg-surface);border:1px solid var(--border-hairline);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;">Luxury Original</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.luxury)}</strong></div>
-              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="background:var(--bg-surface);border:1px dashed var(--sage-border);border-radius:10px;padding:10px 13px;cursor:pointer;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--rose-brand);font-weight:700;margin-bottom:2px;">${LOCK_SVG}Chemist Dupe Swap Locked ($0 Email)</span><strong style="font-size:0.84rem;color:var(--text-primary);">Enter email at top ($0) to reveal ${escapeHtml(celeb.dupeSwap.savingsNote)} &uarr;</strong></div>
-              <div class="dl-unlocked-c2-proof" style="display:none;background:var(--bg-surface);border:1px solid var(--sage-border);border-left:3px solid var(--sage-safe);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--sage-safe);margin-bottom:2px;">Chemist Barrier-Identical Swap</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong></div>
+              <div style="background:var(--bg-surface);border:1px solid var(--sage-border);border-left:3px solid var(--sage-safe);border-radius:10px;padding:10px 13px;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--sage-safe);font-weight:700;margin-bottom:2px;">&#10003; Free Proof #1 Cheaper Dupe (Fungal-Safe &amp; 8-Allergen Screened)</span><strong style="font-size:0.88rem;color:var(--text-primary);">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong></div>
+              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail()" style="background:var(--bg-surface);border:1px dashed var(--sage-border);border-radius:10px;padding:10px 13px;cursor:pointer;"><span class="mono" style="display:block;font-size:0.68rem;text-transform:uppercase;color:var(--rose-brand);font-weight:700;margin-bottom:2px;">${LOCK_SVG}Full AM/PM Routine Calendar &amp; Complete Cheaper-Dupe Shopping List Locked ($0 Email)</span><strong style="font-size:0.84rem;color:var(--text-primary);">Enter email at top ($0) to unlock all ${bottles.length} bottle swaps &amp; 9:30 PM calendar &uarr;</strong></div>
             </div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;"><span class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;background:rgba(46,90,68,0.09);padding:5px 10px;border-radius:999px;">${escapeHtml(celeb.dupeSwap.savingsNote)}</span><a href="${preloadHref}" class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;text-decoration:none;">Test Dupe Shelf &rarr;</a></div>
@@ -805,13 +806,14 @@ function renderConcernDetailPage(concern) {
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
             <span class="badge-safe mono">${escapeHtml(concern.badge)}</span>
             <span class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;">${concern.steps.length}-Step Protocol · ${bottles.length} Verified Bottles</span>
+            <span class="badge-safe mono" style="font-size:0.7rem;">&#10003; Free Proof #1 Cheaper Dupe: ${escapeHtml((findDupeForProduct(bottles[0] || CLINICAL_PRODUCTS[0]).bottle.brand + ' ' + findDupeForProduct(bottles[0] || CLINICAL_PRODUCTS[0]).bottle.name).replace(/\s*\([^)]*\)/g, ''))} ($${findDupeForProduct(bottles[0] || CLINICAL_PRODUCTS[0]).bottle.priceUsd})</span>
           </div>
           <h1 class="hero-h1" style="font-size:clamp(2rem,3.6vw,3.1rem);margin-bottom:10px;">${escapeHtml(concern.title)}</h1>
           <p class="hero-sub" style="margin-bottom:14px;">${escapeHtml(concern.summary)}</p>
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;">${actives.map((a) => `<a href="/ingredient/${escapeHtml(a.id)}" class="mono" style="font-size:0.75rem;padding:4px 9px;background:var(--bg-surface);border:1px solid var(--border-hairline);color:var(--text-primary);text-decoration:none;">Safe Active: ${escapeHtml(a.commonName.replace(/\s*\([^)]*\)/g, ''))} (pH ${a.phMin}–${a.phMax})</a>`).join('')}</div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px;">
             <button type="button" class="btn-primary mono" onclick="window.__dlPreloadBottlesInVanityBag([${bottles.map((b) => `'${escapeHtml(b.id)}'`).join(',')}],'concern_${escapeHtml(concern.slug)}')"><span>Pre-Load ${bottles.length} Bottles in My 5-Slot Vanity Bag</span><span class="btn-icon-circle">&rarr;</span></button>
-            <a href="${preloadHref}" class="btn-secondary"><span>Open in Full Checker &rarr;</span></a>
+            <a href="${preloadHref}" class="btn-secondary"><span>2-Product pH Clash Matrix &rarr;</span></a>
             <a href="/?products=${encodeURIComponent(concern.productIds.join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="btn-secondary"><span>&#10003; Screen 8 Contact Allergens ($0) &rarr;</span></a>
           </div>
         </div>
