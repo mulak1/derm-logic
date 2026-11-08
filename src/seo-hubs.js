@@ -144,6 +144,22 @@ const CONCERN_HUBS = [
     productIds: ['cosrx-snail-96-mucin', 'to-buffet-copper-peptides', 'dieux-instant-angel', 'lrp-cicaplast-baume-b5'],
     activeIds: ['hyaluronic-acid', 'copper-tripeptide-1', 'ceramide-np', 'panthenol'],
     celebSlugs: ['hailey-bieber', 'emily-ratajkowski', 'anne-hathaway']
+  },
+  {
+    slug: 'allergic-contact-dermatitis-hypoallergenic-routine',
+    title: 'Allergic Contact Rashes, Eyelid Hives & Hypoallergenic Routine',
+    badge: 'EU CosIng Allergen-Free',
+    heroImg: '/public/photo_model_clean_face.jpg',
+    summary: 'Calm itchy eyelid, neck, and cheek flares triggered by Snail Mucin (dust-mite cross-reactivity), Fragrance, Salicylates, or Propylene Glycol.',
+    steps: [
+      '1. Pause all fragranced toners, Snail Mucin essences, and Salicylate/BHA liquids for 7 days.',
+      '2. Mist clean skin with pure Hypochlorous Acid and press 100% Sugarcane Squalane onto damp skin.',
+      '3. Seal morning and night with Vanicream Daily Facial Moisturizer (free of dyes, fragrance, lanolin, and formaldehyde releasers).'
+    ],
+    avoidNote: 'Avoid Snail Secretion Filtrate if allergic to dust mites, Linalool/Limonene essential oils, Lanolin Alcohol, and high-dose Propylene Glycol.',
+    productIds: ['vanicream-daily-facial', 'aestura-atobarrier-365', 'tower28-sos-spray', 'eltamd-uv-clear-spf46'],
+    activeIds: ['squalane', 'ceramide-np', 'hypochlorous-acid', 'zinc-oxide'],
+    celebSlugs: ['hailey-bieber', 'sofia-richie-grainge', 'selena-gomez']
   }
 ];
 
@@ -761,7 +777,8 @@ function renderConcernDetailPage(concern) {
   const bottles = concern.productIds.map((id) => CULT_PRODUCTS.find((p) => p.id === id)).filter(Boolean);
   const actives = (concern.activeIds || []).map((id) => CLINICAL_INGREDIENTS.find((a) => a.id === id)).filter(Boolean);
   const celebs = (concern.celebSlugs || []).map((s) => getAllCelebrityRoutines().find((c) => c.slug === s)).filter(Boolean);
-  const preloadHref = `/?products=${encodeURIComponent(concern.productIds.join(','))}#analyzer`;
+  const isAllergyConcern = concern.slug === 'allergic-contact-dermatitis-hypoallergenic-routine';
+  const preloadHref = `/?products=${encodeURIComponent(concern.productIds.join(','))}${isAllergyConcern ? '&skin=allergy&allergies=fragrance,snail_mite,salicylates' : ''}#analyzer`;
 
   const bottleCards = bottles.map((b, idx) => {
     const partner = b.priceUsd >= 50 ? 'dermstore' : 'sephora';
@@ -844,7 +861,7 @@ function renderConcernDetailPage(concern) {
 }
 
 function renderHubSaveBanner(titleText, tagSlug, preloadHref) {
-  return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:24px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div style="max-width:600px;"><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified</span><span class="badge-safe mono">7:30 AM Free Proof</span><span class="affiliate-link-pill mono" style="font-size:0.7rem;padding:2px 8px;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">30-Day Refund Guarantee</span></div><h2 class="serif-display" style="font-size:1.45rem;margin:4px 0 6px;">Save ${escapeHtml(titleText)} (9:30 PM &amp; 2 Dupes) to Your Phone</h2><p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">Email your free 9:30 PM Barrier Schedule, Nights 2–4 (.ICS) &amp; 2 Chemist Dupes ($0), or unlock the complete 3-file routine kit ($1.99 one-time, 30-day refund guarantee).</p></div><div style="display:flex;flex-direction:column;gap:8px;flex:1;min-width:280px;"><form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, '${escapeHtml(tagSlug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;"><input type="email" required class="input-box dl-inline-ics-email" placeholder="Email my 9:30 PM Schedule & 2 Dupes ($0)..." aria-label="Email my 9:30 PM Schedule & 2 Dupes ($0)" style="flex:1;min-width:190px;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" /><button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:8px 14px;font-size:0.78rem;border-radius:999px;font-weight:600;color:var(--rose-brand);border-color:var(--rose-brand);white-space:nowrap;">Unlock 9:30 PM &amp; Dupes ($0) &rarr;</button><div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);padding-top:2px;"></div></form><div style="display:flex;gap:10px;flex-wrap:wrap;"><a href="/buy/flash_pass?guide=${encodeURIComponent(tagSlug)}" class="btn-primary"><span>Save Complete Routine Kit ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a><a href="${preloadHref}" class="btn-secondary"><span>Customize in Shelf Checker &rarr;</span></a></div></div></div>`;
+  return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:24px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div style="max-width:600px;"><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified</span><span class="badge-safe mono">7:30 AM Free Proof</span><span class="affiliate-link-pill mono" style="font-size:0.7rem;padding:2px 8px;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">30-Day Refund Guarantee</span></div><h2 class="serif-display" style="font-size:1.45rem;margin:4px 0 6px;">Save ${escapeHtml(titleText)} (9:30 PM &amp; 2 Dupes) to Your Phone</h2><p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">Email your free 9:30 PM Barrier Schedule, Nights 2–4 (.ICS) &amp; 2 Chemist Dupes ($0), or unlock the complete 3-file routine kit ($1.99 one-time, 30-day refund guarantee).</p></div><div style="display:flex;flex-direction:column;gap:8px;flex:1;min-width:280px;"><form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, '${escapeHtml(tagSlug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;"><input type="email" required class="input-box dl-inline-ics-email" placeholder="Email my 9:30 PM Schedule & 2 Dupes ($0)..." aria-label="Email my 9:30 PM Schedule & 2 Dupes ($0)" style="flex:1;min-width:190px;padding:8px 12px;font-size:0.8rem;border-radius:999px;background:var(--bg-surface);" /><button type="submit" class="btn-secondary mono dl-inline-ics-btn" style="padding:8px 14px;font-size:0.78rem;border-radius:999px;font-weight:600;color:var(--rose-brand);border-color:var(--rose-brand);white-space:nowrap;">Unlock 9:30 PM &amp; Dupes ($0) &rarr;</button><div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);padding-top:2px;"></div></form><div style="display:flex;gap:10px;flex-wrap:wrap;"><a href="/buy/flash_pass?guide=${encodeURIComponent(tagSlug)}" class="btn-primary"><span>Save Complete Routine Kit ($1.99)</span><span class="btn-icon-circle">&rarr;</span></a><a href="${preloadHref}" class="btn-secondary"><span>Customize in Shelf Checker &rarr;</span></a><a href="/?allergies=fragrance,snail_mite,salicylates#checker-workbench" class="affiliate-link-pill mono" style="padding:8px 12px;">Screen 8 Contact Allergens ($0) &rarr;</a></div></div></div>`;
 }
 
 function getAllSemanticHubUrls(hostUrl) {
