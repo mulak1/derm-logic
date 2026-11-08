@@ -191,81 +191,17 @@ function findDupeForProduct(prod) {
 }
 
 function renderShell({ title, description, canonicalPath, breadcrumbs, faqItems, bodyHtml }) {
-  const baseUrl = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://www.dermlogic.io').replace(/\/$/, '');
-  const canonicalUrl = `${baseUrl}${canonicalPath}`;
+  const baseUrl = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://www.dermlogic.io').replace(/\/$/, ''), canonicalUrl = `${baseUrl}${canonicalPath}`;
   const graph = [
-    {
-      '@type': 'Organization',
-      '@id': `${baseUrl}/#organization`,
-      name: 'DermLogic Skincare Formulation Atelier',
-      url: baseUrl,
-      logo: `${baseUrl}/favicon.svg`
-    },
-    {
-      '@type': 'WebSite',
-      '@id': `${baseUrl}/#website`,
-      url: baseUrl,
-      name: 'DermLogic',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: `${baseUrl}/directory?q={search_term_string}`,
-        'query-input': 'required name=search_term_string'
-      }
-    },
-    {
-      '@type': 'BreadcrumbList',
-      itemListElement: (breadcrumbs || []).map((b, i) => ({
-        '@type': 'ListItem',
-        position: i + 1,
-        name: b.label,
-        item: `${baseUrl}${b.href}`
-      }))
-    }
+    { '@type': 'Organization', '@id': `${baseUrl}/#organization`, name: 'DermLogic Skincare Formulation Atelier', url: baseUrl, logo: `${baseUrl}/favicon.svg` },
+    { '@type': 'WebSite', '@id': `${baseUrl}/#website`, url: baseUrl, name: 'DermLogic', potentialAction: { '@type': 'SearchAction', target: `${baseUrl}/directory?q={search_term_string}`, 'query-input': 'required name=search_term_string' } },
+    { '@type': 'BreadcrumbList', itemListElement: (breadcrumbs || []).map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.label, item: `${baseUrl}${b.href}` })) }
   ];
   if (Array.isArray(faqItems) && faqItems.length > 0) {
-    graph.push({
-      '@type': 'FAQPage',
-      mainEntity: faqItems.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a }
-      }))
-    });
+    graph.push({ '@type': 'FAQPage', mainEntity: faqItems.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
   }
-  const bcHtml = (breadcrumbs || []).map((b, i) => i === breadcrumbs.length - 1
-    ? `<span class="mono" style="color:var(--text-primary);font-weight:500;">${escapeHtml(b.label)}</span>`
-    : `<a href="${escapeHtml(b.href)}" class="mono" style="color:var(--text-secondary);">${escapeHtml(b.label)}</a> <span style="color:var(--text-muted);">/</span> `
-  ).join('');
-
-  return `<!DOCTYPE html>
-<html lang="en" data-theme="day">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(description)}" />
-  <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
-  <meta property="og:title" content="${escapeHtml(title)}" />
-  <meta property="og:description" content="${escapeHtml(description)}" />
-  <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="${baseUrl}/api/og?slug=${encodeURIComponent(canonicalPath.replace(/\//g, '-').slice(1) || 'home')}" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
-  <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')}</script>
-  <script>try{if(localStorage.getItem('dermlogic_vanity_theme')==='night')document.documentElement.setAttribute('data-theme','night');}catch(_){}</script>
-  <style>${SHARED_CSS}</style>
-</head>
-<body>
-  ${renderHeader(false)}
-  <main>
-    <div class="container" style="padding-top:22px;padding-bottom:8px;font-size:0.84rem;">${bcHtml}</div>
-    ${bodyHtml}
-  </main>
-  ${renderFooter()}
-  <script>${CLIENT_SCRIPT}</script>
-</body>
-</html>`;
+  const bcHtml = (breadcrumbs || []).map((b, i) => i === breadcrumbs.length - 1 ? `<span class="mono" style="color:var(--text-primary);font-weight:500;">${escapeHtml(b.label)}</span>` : `<a href="${escapeHtml(b.href)}" class="mono" style="color:var(--text-secondary);">${escapeHtml(b.label)}</a> <span style="color:var(--text-muted);">/</span> `).join('');
+  return `<!DOCTYPE html><html lang="en" data-theme="day"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}" /><link rel="canonical" href="${escapeHtml(canonicalUrl)}" /><meta property="og:title" content="${escapeHtml(title)}" /><meta property="og:description" content="${escapeHtml(description)}" /><meta property="og:url" content="${escapeHtml(canonicalUrl)}" /><meta property="og:type" content="article" /><meta property="og:image" content="${baseUrl}/api/og?slug=${encodeURIComponent(canonicalPath.replace(/\//g, '-').slice(1) || 'home')}" /><link rel="icon" type="image/svg+xml" href="/favicon.svg" /><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" /><script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')}</script><script>try{if(localStorage.getItem('dermlogic_vanity_theme')==='night')document.documentElement.setAttribute('data-theme','night');}catch(_){}</script><style>${SHARED_CSS}</style></head><body>${renderHeader(false)}<main><div class="container" style="padding-top:22px;padding-bottom:8px;font-size:0.84rem;">${bcHtml}</div>${bodyHtml}</main>${renderFooter()}<script>${CLIENT_SCRIPT}</script></body></html>`;
 }
 
 const LOCK_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
@@ -434,15 +370,21 @@ function renderCelebrityDetailPage(celeb) {
   const bodyHtml = `<section class="section-block" style="padding-top:12px;">
     <div class="container">
       ${renderSiloNavStrip('celebrity', true)}
-      <div class="editorial-top-banner" style="margin-bottom:14px;">
-        <div class="celeb-copy-col" style="grid-column:1 / -1;">
+      <div class="porcelain-vessel-core dl-workbench-2col" style="background:var(--bg-oat);padding:20px 24px;margin-bottom:18px;">
+        <div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px;">
             <span class="badge-safe mono">${escapeHtml(celeb.skinProfile)}</span>
             <a href="${escapeHtml(celeb.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="mono" style="font-size:0.78rem;color:var(--rose-brand);text-decoration:underline;font-weight:500;">Source: ${escapeHtml(cleanSourceCredit)} &rarr;</a>
           </div>
-          <h1 class="hero-h1" style="font-size:clamp(2rem,3.6vw,3.1rem);margin-bottom:6px;">${escapeHtml(celeb.name)} Skincare Routine, Bottles &amp; Layering Order</h1>
-          <p class="hero-sub" style="margin-bottom:8px;">${escapeHtml(celeb.summary)}</p>
-          <div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:700;margin-bottom:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;"><span>&#10003; Free Proof #1 Cheaper Dupe: <strong>${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong> (${escapeHtml(celeb.dupeSwap.savingsNote)})</span><a href="/compare/${escapeHtml([bottles[0] ? bottles[0].id : 'skinceuticals-ce-ferulic', bottles[1] ? bottles[1].id : 'aestura-atobarrier-365'].sort().join('-vs-'))}" class="affiliate-link-pill mono" style="padding:3px 10px;font-size:0.75rem;">2-Product pH Clash Matrix &rarr;</a></div>
+          <h1 class="hero-h1" style="font-size:clamp(1.9rem,3.3vw,2.75rem);margin-bottom:6px;">${escapeHtml(celeb.name)} Skincare Routine, Bottles &amp; Layering Order</h1>
+          <p class="hero-sub" style="margin-bottom:10px;">${escapeHtml(celeb.summary)}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;"><a href="${preloadHref}" class="btn-primary mono" style="padding:8px 14px;font-size:0.78rem;min-height:36px;"><span>Test ${bottles.length} Bottles in Shelf Checker &rarr;</span></a><a href="/compare/${escapeHtml([bottles[0] ? bottles[0].id : 'skinceuticals-ce-ferulic', bottles[1] ? bottles[1].id : 'aestura-atobarrier-365'].sort().join('-vs-'))}" class="btn-secondary mono" style="padding:8px 14px;font-size:0.78rem;min-height:36px;"><span>2-Product pH Clash Matrix &rarr;</span></a><a href="/?products=${encodeURIComponent(celeb.productIds.join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono" style="font-size:0.75rem;">&#10003; Screen 8 Allergens ($0) &rarr;</a></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;">
+            <div style="padding:12px 14px;background:var(--bg-surface);border-radius:14px;border:1px solid var(--border-hairline);"><span class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:700;">&#10003; 2-Product pH Clash Matrix (Free Proof)</span><strong class="serif-display" style="display:block;font-size:1.05rem;margin:2px 0;">Wait 60s &middot; Split AM/PM Actives</strong><span style="font-size:0.78rem;color:var(--text-secondary);">${escapeHtml(String(celeb.clashWarning || '').slice(0, 110))}...</span></div>
+            <div style="padding:12px 14px;background:var(--sage-bg);border-radius:14px;border:1px solid var(--sage-border);"><span class="mono" style="font-size:0.72rem;color:var(--sage-safe);font-weight:700;">&#10003; #1 Fungal-Safe &amp; 8-Allergen Dupe</span><strong class="serif-display" style="display:block;font-size:1.05rem;margin:2px 0;">${escapeHtml(celeb.dupeSwap.gentleDupe)}</strong><span style="font-size:0.78rem;color:var(--sage-safe);font-weight:600;">${escapeHtml(celeb.dupeSwap.savingsNote)}</span></div>
+          </div>
           ${renderTopSubpageEmailBar('celeb_' + celeb.slug)}
         </div>
       </div>
@@ -746,7 +688,7 @@ function renderBrandDetailPage(brandHub) {
     canonicalPath: `/brand/${brandHub.slug}`,
     breadcrumbs: [{ label: 'DermLogic', href: '/' }, { label: 'Skincare Brands', href: '/brand' }, { label: brandHub.name, href: `/brand/${brandHub.slug}` }],
     faqItems: [{ q: `Can I layer ${brandHub.name} products together?`, a: `Use our 1-tap checker to test ${brandHub.name} bottles alongside your other serums and retinoids.` }],
-    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('brand')}<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:28px 32px;margin-bottom:24px;"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified</span><span class="badge-safe mono">&#10003; Free Proof #1 Cheaper Dupe: ${escapeHtml((topBrandDupe.bottle.brand + ' ' + topBrandDupe.bottle.name).replace(/\s*\([^)]*\)/g, ''))} ($${topBrandDupe.bottle.priceUsd} · pH ${topBrandDupe.bottle.ph})</span><span class="badge-safe mono">30-Day Refund Guarantee</span></div><h1 class="hero-h1" style="font-size:clamp(2.1rem,3.6vw,3.2rem);margin-bottom:10px;">${escapeHtml(brandHub.name)}: Bottle pH &amp; Layering Guide</h1><p class="hero-sub" style="margin-bottom:16px;">Complete formulation breakdown for ${brandHub.products.length} ${escapeHtml(brandHub.name)} ${brandHub.products.length === 1 ? 'bottle' : 'bottles'} in the DermLogic catalog.</p><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;"><a href="${preloadHref}" class="btn-primary"><span>2-Product pH Clash Matrix</span><span class="btn-icon-circle">&rarr;</span></a><a href="/?products=${encodeURIComponent(brandHub.products.map((p) => p.id).join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="btn-secondary"><span>&#10003; Screen ${escapeHtml(brandHub.name)} for 8 Allergens ($0) &rarr;</span></a></div></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-bottom:24px;">${cards}</div>${renderHubSaveBanner(`${brandHub.name} Shelf Guide`, `brand_${brandHub.slug}`, preloadHref)}</div></section>`
+    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('brand')}<div class="porcelain-vessel-core dl-workbench-2col" style="background:var(--bg-oat);padding:24px 28px;margin-bottom:24px;"><div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified</span><span class="badge-safe mono">30-Day Refund Guarantee</span></div><h1 class="hero-h1" style="font-size:clamp(2.1rem,3.6vw,3.1rem);margin-bottom:10px;">${escapeHtml(brandHub.name)}: Bottle pH &amp; Layering Guide</h1><p class="hero-sub" style="margin-bottom:16px;">Complete formulation breakdown for ${brandHub.products.length} ${escapeHtml(brandHub.name)} ${brandHub.products.length === 1 ? 'bottle' : 'bottles'} in the DermLogic catalog.</p><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;"><a href="${preloadHref}" class="btn-primary"><span>2-Product pH Clash Matrix</span><span class="btn-icon-circle">&rarr;</span></a><a href="/?products=${encodeURIComponent(brandHub.products.map((p) => p.id).join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="btn-secondary"><span>&#10003; Screen ${escapeHtml(brandHub.name)} for 8 Allergens ($0) &rarr;</span></a></div></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;"><div style="padding:14px 16px;background:var(--bg-surface);border-radius:14px;border:1px solid var(--border-hairline);"><span class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:700;">&#10003; 2-Product pH Clash Matrix (Free Proof)</span><strong class="serif-display" style="display:block;font-size:1.12rem;margin:3px 0;">${escapeHtml(brandHub.products[0] ? brandHub.products[0].name : brandHub.name)} (pH ${brandHub.products[0] ? brandHub.products[0].ph : 5.5})</strong><span style="font-size:0.8rem;color:var(--text-secondary);">Wait 60s between low-pH serums and barrier creams.</span></div><div style="padding:14px 16px;background:var(--sage-bg);border-radius:14px;border:1px solid var(--sage-border);"><span class="mono" style="font-size:0.72rem;color:var(--sage-safe);font-weight:700;">&#10003; #1 Fungal-Safe &amp; 8-Allergen Dupe</span><strong class="serif-display" style="display:block;font-size:1.12rem;margin:3px 0;"><a href="/bottle/${escapeHtml(topBrandDupe.bottle.id)}" style="color:var(--text-primary);text-decoration:underline;">${escapeHtml((topBrandDupe.bottle.brand + ' ' + topBrandDupe.bottle.name).replace(/\s*\([^)]*\)/g, ''))} ($${topBrandDupe.bottle.priceUsd})</a></strong><span style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">pH ${topBrandDupe.bottle.ph} &middot; 8-Allergen Checked</span></div></div></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-bottom:24px;">${cards}</div>${renderHubSaveBanner(`${brandHub.name} Shelf Guide`, `brand_${brandHub.slug}`, preloadHref)}</div></section>`
   });
 }
 
@@ -822,9 +764,15 @@ function renderConcernDetailPage(concern) {
             <a href="/?products=${encodeURIComponent(concern.productIds.join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="btn-secondary"><span>&#10003; Screen 8 Contact Allergens ($0) &rarr;</span></a>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <img src="${escapeHtml(concern.heroImg || '/public/editorial-woman-morning.jpg')}" alt="${escapeHtml(concern.title)} skincare ritual" loading="eager" style="width:100%;height:220px;object-fit:cover;object-position:center 22%;border-radius:10px;" />
-          <img src="/public/editorial-segment-3.jpg" alt="${escapeHtml(concern.title)} barrier-safe evening routine" loading="eager" style="width:100%;height:220px;object-fit:cover;object-position:center 22%;border-radius:10px;" />
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+            <div style="padding:13px 15px;background:var(--bg-surface);border-radius:14px;border:1px solid var(--border-hairline);"><span class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:700;">&#10003; 2-Product pH Clash Matrix (Free Proof)</span><strong class="serif-display" style="display:block;font-size:1.08rem;margin:3px 0;">${escapeHtml(concern.badge)} &middot; 60s Wait</strong><span style="font-size:0.79rem;color:var(--text-secondary);">${escapeHtml(concern.avoidNote.slice(0, 95))}...</span></div>
+            <div style="padding:13px 15px;background:var(--sage-bg);border-radius:14px;border:1px solid var(--sage-border);"><span class="mono" style="font-size:0.72rem;color:var(--sage-safe);font-weight:700;">&#10003; #1 Fungal-Safe &amp; 8-Allergen Dupe</span><strong class="serif-display" style="display:block;font-size:1.08rem;margin:3px 0;"><a href="/bottle/${escapeHtml(findDupeForProduct(bottles[0] || CLINICAL_PRODUCTS[0]).bottle.id)}" style="color:var(--text-primary);text-decoration:underline;">${escapeHtml((findDupeForProduct(bottles[0] || CLINICAL_PRODUCTS[0]).bottle.brand + ' ' + findDupeForProduct(bottles[0] || CLINICAL_PRODUCTS[0]).bottle.name).replace(/\s*\([^)]*\)/g, ''))} ($${findDupeForProduct(bottles[0] || CLINICAL_PRODUCTS[0]).bottle.priceUsd})</a></strong><span style="font-size:0.79rem;color:var(--sage-safe);font-weight:600;">pH ${findDupeForProduct(bottles[0] || CLINICAL_PRODUCTS[0]).bottle.ph} &middot; 8-Allergen Checked</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <img src="${escapeHtml(concern.heroImg || '/public/editorial-woman-morning.jpg')}" alt="${escapeHtml(concern.title)} skincare ritual" loading="eager" style="width:100%;height:140px;object-fit:cover;object-position:center 22%;border-radius:10px;" />
+            <img src="/public/editorial-segment-3.jpg" alt="${escapeHtml(concern.title)} barrier-safe evening routine" loading="eager" style="width:100%;height:140px;object-fit:cover;object-position:center 22%;border-radius:10px;" />
+          </div>
         </div>
       </div>
 
