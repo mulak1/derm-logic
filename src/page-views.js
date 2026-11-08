@@ -368,7 +368,7 @@ function renderDirectoryPage({ seoPages }) {
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border-hairline);gap:6px;flex-wrap:wrap;">
         <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:600;">Read Guide &rarr;</a>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">${rightCta}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;"><button type="button" class="affiliate-link-pill mono dl-dir-card-pass-btn" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this)" style="background:var(--sage-bg);color:var(--sage-safe);border-color:var(--sage-border);font-weight:700;cursor:pointer;">9:16 Card &rarr;</button>${rightCta}</div>
       </div>
     </div>`;
   }).join('');
@@ -418,7 +418,7 @@ function renderDirectoryPage({ seoPages }) {
         <div id="dl-dir-top-email-bar" class="porcelain-vessel-core dl-workbench-2col" style="background:var(--bg-surface);padding:14px 18px;margin-bottom:14px;border:1px solid var(--border-hairline);">
           <div style="display:flex;flex-direction:column;gap:6px;">
             <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:700;text-transform:uppercase;">Step 1 &middot; Routine &amp; Allergy Workbench</span>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;"><a href="/#analyzer" class="btn-secondary mono" style="padding:6px 12px;min-height:32px;font-size:0.8rem;text-decoration:none;">Pick Bottles / Paste INCI &rarr;</a><button type="button" class="affiliate-link-pill mono" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this)" style="font-size:0.76rem;cursor:pointer;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">Preview 9:16 Lock-Screen Card &rarr;</button><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono">&#10003; Screen 8 EU Allergens ($0) &rarr;</a></div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;"><a href="/#analyzer" class="btn-secondary mono" style="padding:6px 12px;min-height:32px;font-size:0.8rem;text-decoration:none;">Pick Bottles / Paste INCI &rarr;</a><button type="button" id="dl-dir-dupe-pass-btn" class="affiliate-link-pill mono" onclick="if(window.__dlQuickLoadShelfPreset)window.__dlQuickLoadShelfPreset('dupe_86');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this)" style="font-size:0.76rem;cursor:pointer;background:var(--sage-bg);border-color:var(--sage-border);color:var(--sage-safe);font-weight:700;">&#10003; $86 Dupe 9:16 Card &rarr;</button><button type="button" class="affiliate-link-pill mono" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this)" style="font-size:0.76rem;cursor:pointer;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">Preview 9:16 Lock-Screen Card &rarr;</button><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono">&#10003; Screen 8 EU Allergens ($0) &rarr;</a></div>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px;">
             <div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">&#10003; Instant 2-Product pH Clash Matrix + Unmasked #1 Dupe (Geek &amp; Gorgeous $14) &middot; Full AM/PM Calendar ($0):</div>
