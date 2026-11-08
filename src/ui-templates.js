@@ -566,7 +566,7 @@ function renderAnalysisResultHtml(res) {
               <div style="position:relative;z-index:1;min-width:0;">
                 <div style="margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
                   <span class="mono" style="display:inline-flex;align-items:center;gap:4px;font-size:0.8125rem;font-weight:700;color:var(--rose-brand);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7:30 AM &middot; Morning</span>
-                  <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);">Thinnest to Richest</span>
+                  <button type="button" id="dl-res-am-card-btn" class="mono" onclick="if(window.__dlFlipPassSide)window.__dlFlipPassSide('am');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;font-size:0.68rem;font-weight:700;cursor:pointer;white-space:nowrap;">9:16 AM Card &rarr;</button>
                 </div>
                 ${amStepsHtml}
               </div>
@@ -575,7 +575,7 @@ function renderAnalysisResultHtml(res) {
               <div style="position:relative;z-index:1;min-width:0;">
                 <div style="margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;">
                   <span class="mono" style="display:inline-flex;align-items:center;gap:4px;font-size:0.8125rem;font-weight:700;color:var(--rose-brand);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:2px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>9:30 PM &middot; Bedtime</span>
-                  <span class="mono" style="font-size:0.75rem;color:var(--text-secondary);">Alternate Nights</span>
+                  <button type="button" id="dl-res-pm-card-btn" class="mono" onclick="if(window.__dlFlipPassSide)window.__dlFlipPassSide('pm');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--bg-surface);color:var(--rose-brand);border:none;font-size:0.68rem;font-weight:700;cursor:pointer;white-space:nowrap;">9:30 PM Card &rarr;</button>
                 </div>
                 ${pmStepsHtml}
               </div>
@@ -602,7 +602,7 @@ function renderAnalysisResultHtml(res) {
                 <span class="mono" style="font-size:0.7rem;color:var(--text-secondary);">30-Day Refund Guarantee</span>
               </div>
               <strong class="serif-display" style="font-size:1.08rem;color:var(--text-primary);font-weight:400;display:block;">Unlock 9:30 PM Steps 2&ndash;3, 4-Night Calendar &amp; 2nd Chemist Dupe ($0)</strong>
-              <span style="font-size:0.78rem;color:var(--text-secondary);display:block;margin-top:2px;"><strong style="color:var(--sage-safe);">&#10003; Specimen #1 Dupe Proof:</strong> <a href="${escapeHtml(topSwap.directUrl)}" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)}</a> &middot; <button type="button" class="mono" onclick="window.__dlSwitchResultStep(3)" style="background:none;border:none;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;padding:0;font-size:0.76rem;">Preview 9:16 Lock-Screen Card &rarr;</button></span>
+              <span style="font-size:0.78rem;color:var(--text-secondary);display:block;margin-top:2px;"><strong style="color:var(--sage-safe);">&#10003; Specimen #1 Dupe Proof:</strong> <a href="${escapeHtml(topSwap.directUrl)}" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)}</a> &middot; <button type="button" id="dl-res-inline-pass-btn" class="mono" onclick="window.__dlSwitchResultStep(3);if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="background:none;border:none;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;padding:0;font-size:0.76rem;">Preview 9:16 Lock-Screen Card &rarr;</button></span>
             </div>
           </div>
           <form id="dl-results-inline-email-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'results_card')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
