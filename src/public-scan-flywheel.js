@@ -233,17 +233,23 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
           <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.75rem;border-radius:999px;"><span>Send Free Routine ($0) &rarr;</span></button>
           <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
         </form>
-        <div style="display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;"><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--sage-safe);text-decoration:underline;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="/buy/flash_pass?guide=scan_${esc(encodeURIComponent(scan.target))}" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or $1.99 3-File Kit &rarr;</a></div>
+        <div style="display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;"><button type="button" class="affiliate-link-pill mono" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this)" style="font-size:0.74rem;cursor:pointer;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">Preview 9:16 Lock-Screen Card &rarr;</button><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--sage-safe);text-decoration:underline;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="/buy/flash_pass?guide=scan_${esc(encodeURIComponent(scan.target))}" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or $1.99 3-File Kit &rarr;</a></div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
-        <div style="padding:10px 14px;background:var(--bg-surface);border-radius:14px;border-left:3px solid var(--rose-brand);">
-          <div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--rose-brand);">2-PRODUCT PH CLASH MATRIX (&#10003; FREE PROOF)</div>
-          <div style="font-size:0.84rem;color:var(--text-primary);margin-top:3px;"><strong>${esc(scan.target)} (${esc(scan.grade)} · ${scan.score}/100):</strong> ${esc(scan.kpi1)} &middot; ${esc(scan.kpi2)}.</div>
-          <a href="/#analyzer" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:700;text-decoration:underline;display:inline-block;margin-top:4px;">Open 2-Product pH Clash Matrix &rarr;</a>
+        <div style="padding:10px 14px;background:var(--bg-surface);border-radius:14px;border-left:3px solid var(--rose-brand);display:flex;align-items:center;gap:10px;">
+          <img src="/public/banana_clinical_lab_glassware.jpg" alt="${esc(scan.target)} lab pH verification" width="60" height="46" loading="eager" style="width:60px;height:46px;object-fit:cover;border-radius:8px;flex-shrink:0;" />
+          <div>
+            <div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--rose-brand);">2-PRODUCT PH CLASH MATRIX (&#10003; FREE PROOF)</div>
+            <div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;"><strong>${esc(scan.target)} (${esc(scan.grade)} · ${scan.score}/100):</strong> ${esc(scan.kpi1)} &middot; ${esc(scan.kpi2)}.</div>
+            <a href="/#analyzer" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:700;text-decoration:underline;display:inline-block;margin-top:3px;">Open 2-Product pH Clash Matrix &rarr;</a>
+          </div>
         </div>
-        <div style="padding:10px 14px;background:var(--bg-surface);border-radius:14px;border-left:3px solid var(--sage-safe);">
-          <div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--sage-safe);">&#10003; #1 FUNGAL-SAFE &amp; 8-ALLERGEN DUPE</div>
-          <div style="font-size:0.84rem;color:var(--text-primary);margin-top:3px;"><strong>Geek &amp; Gorgeous C-Glow / Vanicream ($12–$14)</strong> &middot; &#10003; 0/8 EU Contact Allergens &middot; &#128274; Dupe #2 &amp; 9:30 PM Calendar Free ($0 Email)</div>
+        <div style="padding:10px 14px;background:var(--bg-surface);border-radius:14px;border-left:3px solid var(--sage-safe);display:flex;align-items:center;gap:10px;">
+          <img src="/public/banana_ceramide_cream_macro.jpg" alt="${esc(scan.target)} barrier &amp; dupe check" width="60" height="46" loading="lazy" style="width:60px;height:46px;object-fit:cover;border-radius:8px;flex-shrink:0;" />
+          <div>
+            <div class="mono" style="font-size:0.7rem;font-weight:700;color:var(--sage-safe);">&#10003; #1 FUNGAL-SAFE &amp; 8-ALLERGEN DUPE</div>
+            <div style="font-size:0.84rem;color:var(--text-primary);margin-top:2px;"><strong>Geek &amp; Gorgeous C-Glow / Vanicream ($12–$14 · Save $168)</strong> &middot; &#10003; 0/8 EU Contact Allergens</div>
+          </div>
         </div>
       </div>
     </div>
@@ -324,7 +330,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const podium = ledger.slice(0, 3);
   const medals = ['#1 Hall of Fame Leader', '#2 Verified Runner-Up', '#3 Top Category Benchmark'];
-  const podiumPhotos = ['/public/photo_model_glow_skin.jpg', '/public/photo_bathroom_sunlight.jpg', '/public/photo_routine_flatlay.jpg'];
+  const podiumPhotos = ['/public/banana_aesop_vanity_serums.jpg', '/public/banana_clinical_lab_glassware.jpg', '/public/banana_apothecary_shelf_ritual.jpg'];
   const podiumHtml = podium.map((item, idx) => `<div style="background:${t.cardBg || 'var(--bg-surface)'};border:1px solid ${t.border || 'var(--border-hairline)'};border-radius:${t.radiusCard || '0px'};padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
     <div>
       <div style="height:140px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:var(--bg-oat);">
@@ -389,7 +395,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
           <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 12px;min-height:34px;font-size:0.75rem;border-radius:999px;"><span>Send Free Routine ($0) &rarr;</span></button>
           <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
         </form>
-        <div style="display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;"><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--sage-safe);text-decoration:underline;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="/buy/flash_pass?guide=leaderboard" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or $1.99 3-File Kit &rarr;</a></div>
+        <div style="display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;"><button type="button" class="affiliate-link-pill mono" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this)" style="font-size:0.74rem;cursor:pointer;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">Preview 9:16 Lock-Screen Card &rarr;</button><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--sage-safe);text-decoration:underline;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="/buy/flash_pass?guide=leaderboard" class="mono" style="font-size:0.74rem;font-weight:700;color:var(--text-primary);text-decoration:underline;">Or $1.99 3-File Kit &rarr;</a></div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
         <div style="padding:10px 14px;background:var(--bg-surface);border-radius:14px;border-left:3px solid var(--rose-brand);">
