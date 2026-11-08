@@ -266,9 +266,9 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           <div class="hero-copy-col">
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
               <span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span>
-              <span class="badge-safe mono">&#10003; Free Proof #1 Cheaper Dupe: Geek &amp; Gorgeous ($14 vs. $182)</span>
+              <span class="badge-safe mono">&#10003; Free Proof #1 Cheaper Dupe: Geek &amp; Gorgeous ($14 vs. $182 · Save $168/Bottle)</span>
               <span class="badge-clash mono">&#10003; 8 Contact-Allergen Screens</span>
-              <span class="mono" style="font-size:0.78rem;color:var(--text-secondary);">30-Day Refund Guarantee</span>
+              <button type="button" class="affiliate-link-pill mono" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this)" style="font-size:0.75rem;cursor:pointer;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">Preview 9:16 Lock-Screen Card &rarr;</button>
             </div>
             <h1 class="hero-h1" style="font-size:clamp(2.5rem,4.5vw,4.2rem);">
               Stop layering serums that cancel out on skin.
@@ -280,7 +280,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           <div class="hero-photo-col">
             <div class="editorial-photo-shell">
               <div class="editorial-photo-inner" style="min-height:240px;height:100%;flex:1;">
-                <img src="/public/photo_shelf_minimal.jpg" alt="Aesthetic minimalist bathroom vanity shelf with active skincare serums" fetchpriority="high" />
+                <img src="/public/banana_aesop_vanity_serums.jpg" alt="Warm sunlit travertine bathroom vanity with unbranded amber and frosted glass dropper serums" fetchpriority="high" />
               </div>
               <div class="editorial-photo-caption">
                 <span>Daylight Gallery &amp; 11 PM Vanity Ready</span>
@@ -297,7 +297,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
         <div class="z-cascade-stage">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame" style="height:170px;margin-bottom:12px;border-radius:12px;overflow:hidden;"><img src="/public/photo_amber_bottles.jpg" alt="Amber apothecary bottles and active serums" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame" style="height:170px;margin-bottom:12px;border-radius:12px;overflow:hidden;"><img src="/public/banana_clinical_lab_glassware.jpg" alt="Calm minimalist cosmetic chemistry lab bench with borosilicate glass beakers and pH electrode probe" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--rose-brand);font-size:0.84rem;font-weight:500;">Morning vs. Night</span><span class="badge-clash mono">Split AM / PM</span></div>
               <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">The Copper Peptide + Vitamin C Trap</h3>
               <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Layering Copper Peptides 1% (pH 6.2) with 15% Vitamin C (pH 3.2) oxidizes both serums on contact, leaving your skin tight and dull. Use Vitamin C in the morning and peptides at night.</p>
@@ -306,7 +306,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           </div></div>
           <div class="z-vessel-center"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame" style="height:170px;margin-bottom:12px;border-radius:12px;overflow:hidden;"><img src="/public/photo_morning_dew.jpg" alt="Morning dew and fresh water droplets on glass" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame" style="height:170px;margin-bottom:12px;border-radius:12px;overflow:hidden;"><img src="/public/banana_apothecary_shelf_ritual.jpg" alt="Minimalist architectural oak and travertine apothecary shelf with unbranded skincare vessels" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--sage-safe);font-size:0.84rem;font-weight:500;">90-Second Absorption</span><span class="badge-safe mono">Zero Pilling</span></div>
               <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">Let Acid Toners Dry Before Niacinamide</h3>
               <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Applying Niacinamide or rich creams straight over damp Glycolic or Salicylic Acid shifts skin pH too quickly, triggering warm redness and causing morning sunscreen to pill.</p>
@@ -315,7 +315,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           </div></div>
           <div class="z-vessel-right"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame" style="height:170px;margin-bottom:12px;border-radius:12px;overflow:hidden;"><img src="/public/photo_model_clean_face.jpg" alt="Clean radiant facial complexion after gentle night buffering" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame" style="height:170px;margin-bottom:12px;border-radius:12px;overflow:hidden;"><img src="/public/banana_ceramide_cream_macro.jpg" alt="Macro editorial shot of rich whipped ceramide barrier cream swirl" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="color:var(--sage-safe);font-size:0.84rem;font-weight:500;">Nighttime Cushion</span><span class="badge-safe mono">4-Night Cycle</span></div>
               <h3 class="serif-display" style="font-size:1.45rem;margin-bottom:8px;">Keep Acne Washes Away From Retinol</h3>
               <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.58;">Benzoyl Peroxide releases oxygen that wipes out over 80% of Tretinoin and Retinol potency on contact. <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;font-size:0.76rem;cursor:pointer;">&#128274; Reveal 9:30 PM Cushion &amp; 4-Night Schedule ($0 Email) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;">Use peroxide washes in the morning and cushion retinoids over ceramide cream at night.</span></p>
@@ -417,7 +417,7 @@ function renderDirectoryPage({ seoPages }) {
         <div id="dl-dir-top-email-bar" class="porcelain-vessel-core dl-workbench-2col" style="background:var(--bg-surface);padding:14px 18px;margin-bottom:14px;border:1px solid var(--border-hairline);">
           <div style="display:flex;flex-direction:column;gap:6px;">
             <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:700;text-transform:uppercase;">Step 1 &middot; Routine &amp; Allergy Workbench</span>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;"><a href="/#analyzer" class="btn-secondary mono" style="padding:6px 12px;min-height:32px;font-size:0.8rem;text-decoration:none;">Pick Bottles / Paste INCI &rarr;</a><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono">&#10003; Screen 8 EU Allergens ($0) &rarr;</a></div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;"><a href="/#analyzer" class="btn-secondary mono" style="padding:6px 12px;min-height:32px;font-size:0.8rem;text-decoration:none;">Pick Bottles / Paste INCI &rarr;</a><button type="button" class="affiliate-link-pill mono" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this)" style="font-size:0.76rem;cursor:pointer;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">Preview 9:16 Lock-Screen Card &rarr;</button><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono">&#10003; Screen 8 EU Allergens ($0) &rarr;</a></div>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px;">
             <div class="mono" style="font-size:0.8rem;color:var(--sage-safe);font-weight:600;">&#10003; Instant 2-Product pH Clash Matrix + Unmasked #1 Dupe (Geek &amp; Gorgeous $14) &middot; Full AM/PM Calendar ($0):</div>
