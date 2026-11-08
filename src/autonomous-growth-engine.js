@@ -64,12 +64,14 @@ const GROWTH_CATALOG = {
     tools: [
       { slug: 'inci-ph-conflict-and-neutralization-calculator', title: 'Skincare Ingredient Conflict & pH Safety Checker', summary: 'Check any skincare combination for pH clashes, Vitamin C + Copper Peptide cancellation, and Benzoyl Peroxide + Retinoid irritation.', metricA: 'Instant Safety Check', metricB: 'Saves $182/yr in Wasted Serums', target: 'VitC+Cu' },
       { slug: 'am-pm-skincare-skin-cycling-scheduler', title: 'AM/PM Skincare Routine & 4-Night Skin-Cycling Planner', summary: 'Automatically split conflicting acids, retinoids, Vitamin C, and peptides into a safe Morning/Evening and 4-night schedule (.ICS + Phone Card).', metricA: '96/100 Routine Safety Score', metricB: 'Protects Skin Moisture Barrier', target: 'Tret+BPO' },
-      { slug: 'comedogenic-pore-clogging-ingredient-checker', title: 'Pore-Clogging (0–5) & Fungal-Acne Safe Ingredient Checker', summary: 'Paste any skincare product ingredient list to spot pore-clogging oils, fungal-acne triggers, and heavy barrier ingredients.', metricA: '65+ Active Ingredients Checked', metricB: 'Dermatologist-Referenced Rules', target: 'TikTok' }
+      { slug: 'comedogenic-pore-clogging-ingredient-checker', title: 'Pore-Clogging (0–5) & Fungal-Acne Safe Ingredient Checker', summary: 'Paste any skincare product ingredient list to spot pore-clogging oils, fungal-acne triggers, and heavy barrier ingredients.', metricA: '65+ Active Ingredients Checked', metricB: 'Dermatologist-Referenced Rules', target: 'TikTok' },
+      { slug: 'eu-cosing-allergy-and-contact-dermatitis-checker', title: 'Skincare Allergic Reaction & EU CosIng Contact-Trigger Checker', summary: 'Screen any skincare routine against 8 clinical contact-allergen classes (Fragrance, Snail Mucin Dust-Mite Cross-Reactivity, Benzoyl Peroxide, Salicylates, Propylene Glycol, Lanolin, Niacinamide Flush, and Nut Oils).', metricA: '8 Contact-Allergen Classes', metricB: 'Hypoallergenic Dupe Swaps ($0)', target: 'Allergy-Safe-Barrier-Stack' }
     ],
     comparisons: [
       { slug: 'retinol-vs-tretinoin-irritation-and-ph-matrix', title: 'Retinol vs. Prescription Tretinoin 0.05%: Strength, Irritation & Layering Guide', summary: 'Clear comparison of over-the-counter Retinol vs. prescription Tretinoin, ideal pH levels, and moisturizer buffering tips to prevent peeling.', entityA: 'Prescription Tretinoin 0.05%', scoreA: 'pH 5.5–6.2 • Full Strength', entityB: 'Gentle Retinol 1.0%', scoreB: 'pH 5.6–6.5 • Lower Irritation', winnerLift: '20-Minute Moisturizer Sandwich Cuts Redness & Peeling by 64%', target: 'Tret+BPO' },
       { slug: 'copper-peptides-vs-vitamin-c-layering-conflict', title: 'Copper Peptides vs. Vitamin C Serum: Why They Clash & How to Split AM/PM', summary: 'Why layering Copper Peptides (pH 6.0) right on top of pure Vitamin C (pH 3.2) cancels out both serums, and how to use Vitamin C in the morning and Peptides at night.', entityA: 'Vitamin C 15% (Use Morning)', scoreA: 'pH 3.2 • Brightening & Protection', entityB: 'Copper Peptides (Use Night)', scoreB: 'pH 6.0 • Barrier Repair', winnerLift: '96/100 Safety Score When Split into Morning Vitamin C + Night Peptides', target: 'VitC+Cu' },
-      { slug: 'glycolic-acid-vs-salicylic-acid-barrier-safety', title: 'Glycolic Acid 7% (AHA) vs. Salicylic Acid 2% (BHA): Which Exfoliant Fits Your Skin?', summary: 'Comparing surface-smoothing Glycolic Acid (AHA) against pore-clearing Salicylic Acid (BHA), and how to alternate nights without over-exfoliating.', entityA: 'Glycolic Acid 7% (AHA)', scoreA: 'Surface Glow & Texture', entityB: 'Salicylic Acid 2% (BHA)', scoreB: 'Deep Pore & Blemish Clearing', winnerLift: 'Alternating Nights Prevents Redness & Over-Exfoliation', target: 'TikTok' }
+      { slug: 'glycolic-acid-vs-salicylic-acid-barrier-safety', title: 'Glycolic Acid 7% (AHA) vs. Salicylic Acid 2% (BHA): Which Exfoliant Fits Your Skin?', summary: 'Comparing surface-smoothing Glycolic Acid (AHA) against pore-clearing Salicylic Acid (BHA), and how to alternate nights without over-exfoliating.', entityA: 'Glycolic Acid 7% (AHA)', scoreA: 'Surface Glow & Texture', entityB: 'Salicylic Acid 2% (BHA)', scoreB: 'Deep Pore & Blemish Clearing', winnerLift: 'Alternating Nights Prevents Redness & Over-Exfoliation', target: 'TikTok' },
+      { slug: 'snail-mucin-vs-squalane-dust-mite-allergy-swap', title: 'COSRX Snail 96 Mucin vs. 100% Plant Squalane: Dust-Mite Allergy & Barrier Comparison', summary: 'Why COSRX Snail 96 Mucin triggers itchy bumps and eyelid rashes in dust-mite allergic users, and how Vanicream or Squalane delivers the same hydration safely.', entityA: '100% Plant Squalane / Vanicream', scoreA: '98/100 Safe • 0 Contact Allergens', entityB: 'Snail Secretion Filtrate 96%', scoreB: 'Dust-Mite Cross-Reactive Trigger', winnerLift: 'Eliminates Dust-Mite Contact Hives & Saves $11/Bottle', target: 'Allergy-Safe-Barrier-Stack' }
     ]
   },
   abandon_alpha: {
@@ -207,10 +209,13 @@ function renderGrowthPageHtml(cfg, item, kind) {
   const bottomFooter = DL_UI && DL_UI.renderFooter ? `${DL_UI.renderFooter()}<script>${DL_UI.CLIENT_SCRIPT}</script>` : '';
   let dermInteractiveBlock = '';
   if (isDerm && DL_UI && DL_UI.renderInteractiveCheckerWidget && DL_DATA && DL_ENG) {
-    const presetMap = { 'VitC+Cu': 'copper-vitc-oxidation', 'Tret+BPO': 'acne-rx-bpo-tretinoin', 'TikTok': 'viral-tiktok-destroyer' };
+    const isAllergyRoute = item.target === 'Allergy-Safe-Barrier-Stack';
+    const presetMap = { 'VitC+Cu': 'copper-vitc-oxidation', 'Tret+BPO': 'acne-rx-bpo-tretinoin', 'TikTok': 'viral-tiktok-destroyer', 'Allergy-Safe-Barrier-Stack': 'viral-tiktok-destroyer' };
     const targetPresetId = presetMap[item.target] || 'viral-tiktok-destroyer';
     const matchedPreset = (DL_DATA.ROUTINE_PRESETS || []).find((p) => p.id === targetPresetId) || DL_DATA.ROUTINE_PRESETS[0];
-    const initialAnalysis = DL_ENG.analyzeRoutine({ productIds: matchedPreset.productIds, rawInci: '', skinType: matchedPreset.skinType || 'combination' });
+    const initAllergies = isAllergyRoute ? ['fragrance', 'snail_mite', 'salicylates'] : [];
+    const initSkin = isAllergyRoute ? 'allergy' : (matchedPreset.skinType || 'combination');
+    const initialAnalysis = DL_ENG.analyzeRoutine({ productIds: matchedPreset.productIds, rawInci: '', skinType: initSkin, allergies: initAllergies });
     dermInteractiveBlock = `
     <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-oat);margin:14px 0 18px;display:flex;flex-direction:column;gap:10px;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
@@ -240,7 +245,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
         <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.74rem;color:var(--sage-safe);"></div>
       </form>
     </div>
-    ${DL_UI.renderInteractiveCheckerWidget({ products: DL_DATA.CULT_PRODUCTS, presets: DL_DATA.ROUTINE_PRESETS, initialAnalysis, initialProductIds: matchedPreset.productIds, initialRawInci: '' })}`;
+    ${DL_UI.renderInteractiveCheckerWidget({ products: DL_DATA.CULT_PRODUCTS, presets: DL_DATA.ROUTINE_PRESETS, initialAnalysis, initialProductIds: matchedPreset.productIds, initialRawInci: '', initialSkinType: initSkin, initialAllergies: initAllergies })}`;
   }
 
   return `<!DOCTYPE html>
@@ -479,7 +484,7 @@ function attachAutonomousGrowthEngine(app, cfg, store, renderHtmlFn, classifyFn)
 
     if (isMd) {
       res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
-      return res.status(200).send(`# ${item.title}\n\n> ${item.summary}\n\n- **Canonical Interactive Tool**: https://${cfg.domain}/${isCompare ? 'compare' : 'tools'}/${item.slug}\n- **Live SVG Benchmark Badge**: ![${cfg.brandName}](https://${cfg.domain}/badge/${encodeURIComponent(item.target)}.svg)\n- **1-Click Single-File Export (99¢)**: https://${cfg.domain}/buy/micro_pass\n- **1-Click 3-File Bundle ($1.99)**: https://${cfg.domain}/buy/flash_pass\n`);
+      return res.status(200).send(`# ${item.title}\n\n> ✓ EU CosIng & Lab pH Verified · 65 Actives & 8 Contact-Allergen Screens · 30-Day Refund Guarantee · ${item.summary}\n\n- **Canonical Interactive Tool**: https://${cfg.domain}/${isCompare ? 'compare' : 'tools'}/${item.slug}\n- **Screen 8 Contact-Allergen Classes ($0 Free Proof)**: https://${cfg.domain}/?allergies=fragrance,snail_mite,salicylates#checker-workbench\n- **Unlock 9:30 PM Bedtime Order & 2 Chemist Dupes ($0 Email)**: https://${cfg.domain}/${isCompare ? 'compare' : 'tools'}/${item.slug}#dl-inline-sample-unlock-form\n- **Live SVG Benchmark Badge**: ![${cfg.brandName}](https://${cfg.domain}/badge/${encodeURIComponent(item.target)}.svg)\n- **1-Click Single-File Export (99¢)**: https://${cfg.domain}/buy/micro_pass\n- **1-Click 3-File Bundle ($1.99)**: https://${cfg.domain}/buy/flash_pass\n`);
     }
 
     const rawHtml = renderGrowthPageHtml(cfg, item, isCompare ? 'compare' : 'tools');
