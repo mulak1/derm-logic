@@ -531,14 +531,15 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     // Lock-Screen Clock & Subhead
     ctx.fillStyle = '#C9A45A';
     ctx.font = 'bold 10.5px Georgia, serif';
-    ctx.fillText('ATELIER 9:16 RITUAL WALLPAPER', 92, 50);
+    ctx.fillText('ATELIER 9:16 WALLPAPER · EU COSING', 78, 50);
     ctx.fillStyle = '#FBF8F4';
     ctx.font = '300 38px Georgia, serif';
     ctx.fillText('07:30 · 21:30', 76, 88);
 
     var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim() || 'Calibrated AM & PM Shelf';
+    var hasAllergyChips = document.querySelectorAll('#allergyTriggerBar input[name="allergyTrigger"]:checked').length > 0;
     var climateLabels = { indoor_dry: 'AC / Dry Heat · 90s Wait', humid_oily: 'Humid Climate · 60s Wait', retinoid_retinization: 'Retinoid Buffer Protocol', pregnancy_nursing: '100% Pregnancy-Safe' };
-    var climateTxt = climateLabels[window.__dlClimateMode] || '60s Dry-Down Protocol';
+    var climateTxt = hasAllergyChips ? 'EU CosIng 8-Allergen Safe' : (climateLabels[window.__dlClimateMode] || '60s Dry-Down Protocol');
     ctx.fillStyle = 'rgba(201,164,90,0.18)';
     ctx.fillRect(36, 98, w - 72, 22);
     ctx.fillStyle = '#E8C6B0';
@@ -618,10 +619,10 @@ const ENDOWMENT_CLIENT_SCRIPT = `
       ctx.strokeRect(18, 476, w - 36, 48);
       ctx.fillStyle = '#C9A45A';
       ctx.font = 'bold 11.5px Georgia, serif';
-      ctx.fillText('DERMLOGIC.IO · $1.99 LOCK-SCREEN PASS', 30, 496);
+      ctx.fillText('DERMLOGIC.IO · $0 EMAIL OR $1.99 KIT (30D GUAR.)', 26, 496);
       ctx.fillStyle = '#F4EFE8';
       ctx.font = '11px sans-serif';
-      ctx.fillText('Tap to unlock crisp 1080x1920 AM + PM PNGs', 30, 514);
+      ctx.fillText('Unlock 9:30 PM Steps 2-3 ($0) or 1080x1920 PNG ($1.99)', 26, 514);
     } else {
       var dlBtn = document.getElementById('btnDownloadLockScreenPng');
       if (dlBtn) dlBtn.textContent = 'Download Clean 9:16 PNG ↓';
@@ -672,7 +673,8 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     var shelfName = ((document.getElementById('shelfNameInput') || {}).value || '').trim() || 'My AM/PM Routine';
     var res = window.__DERMLOGIC_LAST_RESULT || {};
     var conflicts = (res.conflicts || []).map(function(c) { return '- **Clash Flagged**: ' + (c.title || '') + ' -> *Fix*: ' + (c.resolution || 'Split AM & PM'); }).join('\\n');
-    var md = ['**[Routine Help] ' + shelfName + ' (' + skin + ' skin) - Checked via DermLogic**', '', '**Current Bottles (' + checked.length + '):** ' + (checked.join(', ') || 'Custom INCI Stack'), conflicts ? ('\\n**Active Clashes Spotted:**\\n' + conflicts) : '\\n**Verdict:** 0 Active Clashes (100% Barrier Safe)', '', '**Fixed AM / PM Order & 4-Night Schedule:** Checked at https://www.dermlogic.io'].join('\\n');
+    var allergies = (res.allergyAlerts || []).map(function(a) { return '- **EU CosIng Allergen Flag (' + (a.label || '') + ')**: ' + (a.matchedIngredients || []).join(', ') + ' -> *Safe Swap*: ' + (a.safeAlternative || 'Hypoallergenic Barrier Cream'); }).join('\\n');
+    var md = ['**[Routine Help] ' + shelfName + ' (' + skin + ' skin) - ✓ EU CosIng & Lab pH Verified via DermLogic**', '', '**Current Bottles (' + checked.length + '):** ' + (checked.join(', ') || 'Custom INCI Stack'), conflicts ? ('\\n**Active Clashes Spotted:**\\n' + conflicts) : '\\n**Verdict:** 0 Active Clashes (100% Barrier Safe)', allergies ? ('\\n**EU CosIng Contact-Allergen Screen:**\\n' + allergies) : '', '', '**Fixed AM / PM Order, 8-Allergen Screen & 4-Night Schedule:** https://www.dermlogic.io'].filter(Boolean).join('\\n');
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(md).catch(function(){});
     if (btn) { var orig = btn.textContent; btn.textContent = 'Copied [Routine Help] Markdown!'; setTimeout(function() { btn.textContent = orig; }, 3000); }
   };
