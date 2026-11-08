@@ -874,7 +874,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           else { st.slotSelections[mapped.slotIdx] = 0; st.customSlotBottle[mapped.slotIdx] = makeCustomSlot(pid, pTitle, ''); }
         });
       }
-      st.dossierTab = 'pass'; saveVanityState(st);
+      st.dossierTab = 'pass'; saveVanityState(st); window.__dlLastOpenTs = 0;
       window.__dlOpenVanityDrawer('sample_9x16_preview');
       if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas();
     };
