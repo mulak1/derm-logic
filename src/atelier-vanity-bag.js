@@ -398,6 +398,9 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     window.__dlDupeAllFiveVessels = function(mode) {
       var st = window.__dlVanityState;
       if (!st) return;
+      if (window.__dlSwitchShelfBudgetMode && document.querySelector('input[name="routineProduct"]')) {
+        window.__dlSwitchShelfBudgetMode(mode === 'luxury' ? 'luxury' : 'dupe');
+      }
       if (mode === 'luxury') {
         st.slotSelections = [0, 0, 0, 0, 0];
         st.customSlotBottle = {};
@@ -413,7 +416,6 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
       st.pouchSpfSealed = true;
       saveVanityState(st);
       window.__dlRenderVanityDrawer();
-      if (window.__dlSwitchShelfBudgetMode && mode !== 'luxury') window.__dlSwitchShelfBudgetMode('dupe');
       if (window.__ebLogEvent) window.__ebLogEvent('vanity_dupe_swap', { mode: mode || 'dupe' });
     };
 
@@ -923,6 +925,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     window.addEventListener('pagehide', sendExitBeacon);
 
     window.__dlSyncVanityFromCheckboxes = function(isClearAll) {
+      if (!isClearAll && !document.querySelector('input[name="routineProduct"]')) return;
       var st = window.__dlVanityState;
       st.slotSelections = [-1, -1, -1, -1, -1]; st.customSlotBottle = {}; st.pouchSpfSealed = false;
       if (!isClearAll) {
