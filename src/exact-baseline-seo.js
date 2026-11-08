@@ -864,8 +864,8 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
         includedInDataCatalog: { '@type': 'DataCatalog', name: `${cfg.brandName} Formulation & Compatibility Catalog`, url: `${hostUrl}/directory` },
         isAccessibleForFree: true,
         license: 'https://creativecommons.org/licenses/by/4.0/',
-        keywords: ['skincare ingredient compatibility', 'morning and night serum layering order', 'skincare active pairing guide', cfg.brandName],
-        measurementTechnique: 'Formulation pH Comfort Window, Active Serum Pairing Compatibility, Texture Weight Layering Order & EU CosIng Pore-Safety Screening',
+        keywords: ['skincare ingredient compatibility', 'morning and night serum layering order', 'skincare active pairing guide', 'EU CosIng allergic reaction skincare checker', 'hypoallergenic contact dermatitis routine', cfg.brandName],
+        measurementTechnique: 'Formulation pH Comfort Window, Active Serum Pairing Compatibility, Texture Weight Layering Order, EU CosIng Pore-Safety & 8-Category Allergic Contact-Dermatitis Screening',
         variableMeasured: cfg.kpis.map((k) => k.label),
         distribution: [
           { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: `${hostUrl}/api/github-upgrade/export.csv` },
