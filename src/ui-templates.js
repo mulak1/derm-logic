@@ -425,7 +425,7 @@ function renderSingleConflictCard(c, idx = 0) {
   const oneLineFix = String(swap.freeFix || '').replace(/^Free Timing Fix:\s*/i, '');
   const bodyBlock = idx === 0
     ? `<div style="font-size:0.79rem;line-height:1.38;color:var(--text-secondary);margin-bottom:7px;"><strong style="color:var(--sage-safe);">&#10003; Free Proof #1 &middot; ${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(oneLineFix)}</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;font-size:0.73rem;padding:4px 10px;" data-no-bag-inject="1">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div>`
-    : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlSwitchResultStep)window.__dlSwitchResultStep(2);if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);" style="font-size:0.76rem;color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;padding:4px 0;">&#128274; Clash #${idx + 1} (${escapeHtml(cleanTitle)}) &amp; Chemist Dupe #${idx + 1} Locked &mdash; Enter Email ($0) to Reveal &uarr;</div><div class="dl-unlocked-c2-proof" style="display:none;"><div style="font-size:0.79rem;line-height:1.38;color:var(--text-secondary);margin-bottom:7px;"><strong style="color:var(--text-primary);">${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(oneLineFix)}</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;font-size:0.73rem;padding:4px 10px;" data-no-bag-inject="1">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div></div>`;
+    : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);" style="font-size:0.76rem;color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;padding:4px 0;">&#128274; Clash #${idx + 1} (${escapeHtml(cleanTitle)}) &amp; Chemist Dupe #${idx + 1} Locked &mdash; Enter Email ($0) Below to Reveal &darr;</div><div class="dl-unlocked-c2-proof" style="display:none;"><div style="font-size:0.79rem;line-height:1.38;color:var(--text-secondary);margin-bottom:7px;"><strong style="color:var(--text-primary);">${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(oneLineFix)}</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" style="white-space:normal;font-size:0.73rem;padding:4px 10px;" class="affiliate-link-pill mono dl-conflict-swap-link" data-no-bag-inject="1">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div></div>`;
   return `<div class="conflict-card ${escapeHtml(c.severity)}" data-no-bag-inject="1" style="padding:11px 13px;margin-bottom:7px;border-radius:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap;">
         <strong class="serif-display" style="font-size:1rem;font-weight:500;color:var(--text-primary);">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</strong>
@@ -580,31 +580,6 @@ function renderAnalysisResultHtml(res) {
               </div>
             </div>
           </div>
-          <div style="padding:14px 18px;border-radius:16px;background:var(--bg-canvas);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:9px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-              <div>
-                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px;">
-                  <span class="badge-safe mono" style="font-size:0.68rem;padding:2px 8px;">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span>
-                  <span class="mono" style="font-size:0.7rem;color:var(--text-secondary);">30-Day Refund Guarantee</span>
-                </div>
-                <strong class="serif-display" style="font-size:1.08rem;color:var(--text-primary);font-weight:400;display:block;">Unlock 9:30 PM Steps 2&ndash;3, 4-Night Calendar &amp; 2nd Chemist Dupe ($0)</strong>
-                <span style="font-size:0.78rem;color:var(--text-secondary);display:block;margin-top:2px;"><strong style="color:var(--sage-safe);">&#10003; Free Dupe Proof #1:</strong> <a href="${escapeHtml(topSwap.directUrl)}" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)}</a> &middot; <span class="dl-locked-badge-c2" style="color:var(--text-primary);font-weight:600;">&#128274; Dupe #2 + Bedtime Buffer Sent Free ($0)</span></span>
-              </div>
-            </div>
-            <form id="dl-results-inline-email-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'results_card')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
-              <input type="email" required class="input-box dl-inline-ics-email" placeholder="Enter your email ($0) to reveal 9:30 PM steps &amp; Dupe #2..." aria-label="Enter email to save your routine and unlock dupes" style="flex:1 1 200px;min-width:0;padding:8px 14px;font-size:15px;border-radius:999px;background:var(--bg-surface);" />
-              <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 16px;min-height:38px;font-size:0.8rem;border-radius:999px;white-space:nowrap;"><span>Reveal 9:30 PM Steps &amp; Save Free ($0) &rarr;</span></button>
-              <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.75rem;color:var(--sage-safe);"></div>
-            </form>
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid var(--border-hairline);font-size:0.78rem;">
-              <span style="color:var(--text-secondary);"><strong style="color:var(--sage-safe);">&#10003; Why This Split Works:</strong> ${escapeHtml(topSummaryLine)}</span>
-              <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
-                <a href="/compare" class="mono" style="color:var(--text-secondary);text-decoration:underline;">Compare Bottle Dupes</a>
-                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`Checked my skincare shelf on @mulak's DermLogic (${conflictCount} serum clashes resolved · $${wastedUsd} saved): https://www.dermlogic.io`)}" target="_blank" rel="noopener noreferrer" class="mono" style="color:var(--text-secondary);text-decoration:underline;">Share on X</a>
-                <button type="button" class="mono" onclick="openCheckoutModal('onetime_499')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:600;cursor:pointer;text-decoration:underline;padding:0;">Download 300-DPI Phone Swatch Card ($1.99) &rarr;</button>
-              </span>
-            </div>
-          </div>
           <button type="button" id="dl-btn-next-step-3" class="btn-secondary" style="display:none;" onclick="window.__dlSwitchResultStep(3)">Next</button>
         </div>
         <!-- Tab 2: Detailed Clash Cards (Tucked cleanly until clicked) -->
@@ -615,6 +590,32 @@ function renderAnalysisResultHtml(res) {
         <div id="dl-res-step-3" style="display:none;flex-direction:column;gap:10px;min-width:0;flex:1;">
           ${renderPersonaInteractiveWorkbenchAddons().liveWaitTimerHtml}
           ${renderBeforeAfterAndCanvasFooterHtml(res, n1Label, n1Val, n2Label, n2Val, n3Label, n3Val, n4Val)}
+        </div>
+        <!-- Persistent $0 Email Save & Provenance Card across all 3 Tabs -->
+        <div style="padding:14px 18px;border-radius:16px;background:var(--bg-canvas);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:9px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px;">
+                <span class="badge-safe mono" style="font-size:0.68rem;padding:2px 8px;">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span>
+                <span class="mono" style="font-size:0.7rem;color:var(--text-secondary);">30-Day Refund Guarantee</span>
+              </div>
+              <strong class="serif-display" style="font-size:1.08rem;color:var(--text-primary);font-weight:400;display:block;">Unlock 9:30 PM Steps 2&ndash;3, 4-Night Calendar &amp; 2nd Chemist Dupe ($0)</strong>
+              <span style="font-size:0.78rem;color:var(--text-secondary);display:block;margin-top:2px;"><strong style="color:var(--sage-safe);">&#10003; Free Dupe Proof #1:</strong> <a href="${escapeHtml(topSwap.directUrl)}" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)}</a> &middot; <span class="dl-locked-badge-c2" style="color:var(--text-primary);font-weight:600;">&#128274; Dupe #2 + Bedtime Buffer Sent Free ($0)</span></span>
+            </div>
+          </div>
+          <form id="dl-results-inline-email-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'results_card')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+            <input type="email" required class="input-box dl-inline-ics-email" placeholder="Enter your email ($0) to reveal 9:30 PM steps &amp; Dupe #2..." aria-label="Enter email to save your routine and unlock dupes" style="flex:1 1 200px;min-width:0;padding:8px 14px;font-size:15px;border-radius:999px;background:var(--bg-surface);" />
+            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:8px 16px;min-height:38px;font-size:0.8rem;border-radius:999px;white-space:nowrap;"><span>Reveal 9:30 PM Steps &amp; Save Free ($0) &rarr;</span></button>
+            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.75rem;color:var(--sage-safe);"></div>
+          </form>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid var(--border-hairline);font-size:0.78rem;">
+            <span style="color:var(--text-secondary);"><strong style="color:var(--sage-safe);">&#10003; Why This Split Works:</strong> ${escapeHtml(topSummaryLine)}</span>
+            <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <a href="/compare" class="mono" style="color:var(--text-secondary);text-decoration:underline;">Compare Bottle Dupes</a>
+              <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`Checked my skincare shelf on @mulak's DermLogic (${conflictCount} serum clashes resolved · $${wastedUsd} saved): https://www.dermlogic.io`)}" target="_blank" rel="noopener noreferrer" class="mono" style="color:var(--text-secondary);text-decoration:underline;">Share on X</a>
+              <button type="button" class="mono" onclick="openCheckoutModal('onetime_499')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:600;cursor:pointer;text-decoration:underline;padding:0;">Download 300-DPI Phone Swatch Card ($1.99) &rarr;</button>
+            </span>
+          </div>
         </div>
       </div>
     </div>

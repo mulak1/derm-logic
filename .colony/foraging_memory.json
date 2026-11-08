@@ -1,7 +1,7 @@
 {
   "project": "DermLogic Skincare Conflict & Routine Architect (dermlogic.io)",
   "competitors": "INCIDecoder, Skinsort, Paula's Choice Beautypedia",
-  "last_heartbeat_pst": "2026-11-07 09:43:15 PM PST",
+  "last_heartbeat_pst": "2026-11-07 09:49:40 PM PST",
   "last_telemetry_window_start_pst": "2026-11-07 08:18:10 PM PST",
   "starvation_index": 1.0,
   "opportunities": [
@@ -17,8 +17,8 @@
       "validation_check": "Live prod end-to-end test: free specimen renders immediately; $0 email save and one-time pass checkout respond in <500ms.",
       "status": "OPEN",
       "created_at": 1794040374.657057,
-      "updated_at": 1794112995.0,
-      "shipped_evidence": "Commits 80fd899 + 9e56cbc + 3c9a10c + f5ecdf4 + 500ba8f + bbc8f86 + 3fac825 + 3e4e770 + 657ceb4 + 14be850 + 0ce1ab6 + 2e935ec + ea7defc + c73ae00 + 00bca31 + 9e769a4 + b53a99a + 5095576 + Cycle 19: Unified EU CosIng & Lab pH Provenance, 30-Day Refund Guarantee, unmasked Specimen #1 (7:30 AM routine + Interactive 45s/60s Sink Timers + Steps 1-2 + Bottle #1-2 + Top 5 INCI Proof + Clash/Dupe #1 + Actives Matrix Rows #1-4 + FAQs #1-2 + Night 1 Specimen) and 9:30 PM / Clash & Dupe #2+ / Bottle #3+ / Actives Matrix Rows #5-12 / FAQs #3-4 / Z-Cascade PM Retinoid Cushion / Full INCI Tail / Nights 2-4 / 10m Retinol Timer / 9:16 Lock-Screen Canvas PM Steps 2-3 email holdback + site-wide #dl-footer-email-unlock-bar in renderFooter() & #checkoutModal $0 Email Downsell across /, /lp, /directory, /seo/:slug (382 pages), /tools/:slug, /compare, /compare/:slug, /celebrity, /celebrity/:slug, /bottle, /bottle/:slug (80 bottles), /ingredient, /ingredient/:slug, /ingredient/:slug/:cat, /concern, /concern/:slug, /concern/:slug/:cat, /scenario, /scenario/:slug, /studio/formulas/:slug, /client/:slug, /brand, /brand/:slug, /scan/:target, /leaderboard, the 5-Slot Atelier Vanity Bag drawer, and #lockScreenWallpaperCanvas.",
+      "updated_at": 1794113380.0,
+      "shipped_evidence": "Commits 80fd899 + 9e56cbc + 3c9a10c + f5ecdf4 + 500ba8f + bbc8f86 + 3fac825 + 3e4e770 + 657ceb4 + 14be850 + 0ce1ab6 + 2e935ec + ea7defc + c73ae00 + 00bca31 + 9e769a4 + b53a99a + 5095576 + a6504a2 + Cycle 20: Unified EU CosIng & Lab pH Provenance, 30-Day Refund Guarantee, unmasked Specimen #1 (7:30 AM routine + Interactive 45s/60s Sink Timers + Steps 1-2 + Bottle #1-2 + Top 5 INCI Proof + Clash/Dupe #1 + Actives Matrix Rows #1-4 + FAQs #1-2 + Night 1 Specimen) and 9:30 PM / Clash & Dupe #2+ / Bottle #3+ / Actives Matrix Rows #5-12 / FAQs #3-4 / Z-Cascade PM Retinoid Cushion / Full INCI Tail / Nights 2-4 / 10m Retinol Timer / 9:16 Lock-Screen Canvas PM Steps 2-3 email holdback + persistent #dl-results-inline-email-form across all 3 Routine Analyzer tabs (1 AM & PM Order, 2 Why Clashed, 3 4-Night & Card) + site-wide #dl-footer-email-unlock-bar in renderFooter() across /, /lp, /directory, /seo/:slug (382 pages), /tools/:slug, /compare, /compare/:slug, /celebrity, /celebrity/:slug, /bottle, /bottle/:slug (80 bottles), /ingredient, /ingredient/:slug, /ingredient/:slug/:cat, /concern, /concern/:slug, /concern/:slug/:cat, /scenario, /scenario/:slug, /studio/formulas/:slug, /client/:slug, /brand, /brand/:slug, /scan/:target, /leaderboard, the 5-Slot Atelier Vanity Bag drawer, and #lockScreenWallpaperCanvas.",
       "priority_score": 16.9
     },
     {
