@@ -219,6 +219,7 @@ function renderPersonalizationBarHtml(initialClimate = 'indoor_dry', initialShel
       </div>
       <div style="display:inline-flex;align-items:center;gap:5px;flex:1;min-width:170px;">
         <input id="shelfNameInput" type="text" maxlength="44" aria-label="Custom Shelf Name" class="input-box" style="padding:4px 9px;font-size:16px;border-radius:999px;" placeholder="Routine name (e.g., Maya's Shelf)..." value="${escapeHtml(initialShelfName)}" oninput="window.__dlUpdatePersonalization()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(typeof runRoutineAnalysis==='function')runRoutineAnalysis(null,true);}" />
+        <button type="button" id="dl-climate-bar-pass-btn" class="mono" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:3px 9px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;font-size:0.7rem;font-weight:700;cursor:pointer;white-space:nowrap;">9:16 Card &rarr;</button>
         <span id="shelfDraftSavedBadge" class="mono" style="display:none;">Saved</span>
       </div>
     </div>
@@ -399,6 +400,11 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     if (titleEl) titleEl.textContent = window.__dlFormatMonogramHeading(shelfName);
     if (badgeEl) badgeEl.textContent = meta.badge;
     if (ruleEl) ruleEl.textContent = meta.rule;
+    var cBtn = document.getElementById('dl-climate-bar-pass-btn');
+    if (cBtn) {
+      var shortC = cMode === 'pregnancy_nursing' ? 'Pregnancy' : (cMode === 'retinoid_retinization' ? 'Purge' : (cMode === 'humid_oily' ? 'Humid' : 'AC/Dry'));
+      cBtn.innerHTML = '9:16 ' + shortC + ' Card &rarr;';
+    }
   };
 
   window.__dlSetClimate = function(climate, btn) {
