@@ -156,7 +156,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
   ];
   const featuredSeoLinks = featuredSeoPages.map((p, idx) => {
     const verdictLbl = formatVerdictLabel(p.verdict);
-    return `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:14px 16px;justify-content:space-between;gap:8px;border:1px solid var(--border-hairline);border-radius:14px;"><div><div style="height:105px;border-radius:10px;overflow:hidden;margin-bottom:8px;background:var(--bg-oat);"><img src="${pairPortraits[idx]}" alt="${escapeHtml(p.title)}" loading="lazy" style="width:100%;height:105px;object-fit:cover;object-position:center 30%;display:block;" /></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;"><span class="mono" style="font-size:0.78rem;color:var(--text-secondary);font-weight:600;">Pairing Guide</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(verdictLbl)}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.12rem;line-height:1.22;color:var(--text-primary);margin-bottom:4px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.84rem;line-height:1.42;margin:0;">${escapeHtml(String(p.summary || '').slice(0, 88))}...</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border-hairline);flex-wrap:wrap;gap:6px;"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;text-decoration:none;">&#10003; 7:30 AM Free Proof &rarr;</a><button type="button" class="mono dl-pair-card-pass-btn" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);border:1px solid var(--sage-border);font-size:0.72rem;font-weight:700;cursor:pointer;">9:16 Card &rarr;</button><button type="button" class="mono dl-pair-card-copy-btn" onclick="if(window.__dlCopyShareableShelfLink)window.__dlCopyShareableShelfLink(this);" style="padding:2px 8px;border-radius:999px;background:var(--bg-surface);color:var(--text-primary);border:1px solid var(--border-hairline);font-size:0.72rem;font-weight:700;cursor:pointer;">&#128279; Copy Link</button><span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;cursor:pointer;">&#128274; 9:30 PM &amp; Dupe #2 ($0)</span></div></div>`;
+    return `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:14px 16px;justify-content:space-between;gap:8px;border:1px solid var(--border-hairline);border-radius:14px;"><div><div style="height:155px;border-radius:10px;overflow:hidden;margin-bottom:8px;background:var(--bg-oat);"><img src="${pairPortraits[idx]}" alt="${escapeHtml(p.title)}" loading="eager" style="width:100%;height:155px;object-fit:cover;object-position:center 30%;display:block;" /></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;"><span class="mono" style="font-size:0.78rem;color:var(--text-secondary);font-weight:600;">Pairing Guide</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(verdictLbl)}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.12rem;line-height:1.22;color:var(--text-primary);margin-bottom:4px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.84rem;line-height:1.42;margin:0;">${escapeHtml(String(p.summary || '').slice(0, 88))}...</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border-hairline);flex-wrap:wrap;gap:6px;"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;text-decoration:none;">&#10003; 7:30 AM Free Proof &rarr;</a><button type="button" class="mono dl-pair-card-pass-btn" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);border:1px solid var(--sage-border);font-size:0.72rem;font-weight:700;cursor:pointer;">9:16 Card &rarr;</button><button type="button" class="mono dl-pair-card-copy-btn" onclick="if(window.__dlCopyShareableShelfLink)window.__dlCopyShareableShelfLink(this);" style="padding:2px 8px;border-radius:999px;background:var(--bg-surface);color:var(--text-primary);border:1px solid var(--border-hairline);font-size:0.72rem;font-weight:700;cursor:pointer;">&#128279; Copy Link</button><span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;cursor:pointer;">&#128274; 9:30 PM &amp; Dupe #2 ($0)</span></div></div>`;
   }).join('');
   const bodyHtml = `
     <section class="hero-section" style="padding-top:14px;padding-bottom:16px;">
@@ -193,8 +193,8 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
               <a href="/concern/allergic-contact-dermatitis-hypoallergenic-routine" class="badge-safe mono" style="text-decoration:none;">&#10003; EU CosIng 8-Allergen Screen &rarr;</a>
             </div>
           </div>
-          <div class="editorial-photo-shell" style="padding:6px;max-height:145px;overflow:hidden;">
-            <div style="height:105px;max-height:105px;overflow:hidden;"><img src="/public/banana_clinical_lab_glassware.jpg" alt="Calm minimalist cosmetic chemistry lab bench with borosilicate glass beakers and pH electrode probe" style="width:100%;height:105px;object-fit:cover;object-position:center center;display:block;" loading="lazy" /></div>
+          <div class="editorial-photo-shell" style="padding:6px;max-height:195px;overflow:hidden;">
+            <div style="height:155px;max-height:155px;overflow:hidden;"><img src="/public/banana_clinical_lab_glassware.jpg" alt="Calm minimalist cosmetic chemistry lab bench with borosilicate glass beakers and pH electrode probe" style="width:100%;height:155px;object-fit:cover;object-position:center center;display:block;" loading="eager" /></div>
             <div class="editorial-photo-caption" style="margin-top:4px;"><span class="mono" style="font-size:0.8rem;">Water-Light Serums to Velvet Creams</span><span class="badge-safe mono">65 Actives</span></div>
           </div>
         </div>
@@ -461,6 +461,35 @@ function renderDirectoryPage({ seoPages }) {
         <div class="dir-vault-section" data-dir-sec="product" style="margin-bottom:16px;">
           <h3 class="dir-sec-heading serif-display" style="font-size:1.3rem;margin:0 0 12px;color:var(--text-secondary);">Iconic &amp; Cult Bottle Layering Guides (<span class="dir-sec-count">3</span>)</h3>
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;">${renderCardList(productPages.slice(0, 3))}</div>
+        </div>
+        <div id="dl-dir-visual-atelier-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:16px 0 18px;">
+          <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;">
+              <span class="mono" style="color:var(--rose-brand);font-weight:600;">3:1:1 Ceramide Cushion</span>
+              <span class="mono" style="color:var(--text-secondary);">Nighttime Retinoid Buffer</span>
+            </div>
+            <div style="height:160px;border-radius:12px;overflow:hidden;background:var(--bg-oat);">
+              <img src="/public/banana_ceramide_cream_macro.jpg" alt="Macro editorial shot of rich whipped ceramide barrier cream swirl and hyaluronic serum droplet" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="eager" />
+            </div>
+          </div>
+          <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;">
+              <span class="mono" style="color:var(--rose-brand);font-weight:600;">Morning vs. Bedtime Split</span>
+              <span class="mono" style="color:var(--text-secondary);">Zero-Pilling SPF Prep</span>
+            </div>
+            <div style="height:160px;border-radius:12px;overflow:hidden;background:var(--bg-oat);">
+              <img src="/public/editorial-vanity-shelf.jpg" alt="Curated sunlit vanity shelf with morning antioxidant and evening peptide bottles" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="eager" />
+            </div>
+          </div>
+          <div class="porcelain-vessel-core" style="padding:14px;background:var(--bg-surface);border-radius:16px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;">
+              <span class="mono" style="color:var(--rose-brand);font-weight:600;">8 EU Allergen Screens</span>
+              <span class="mono" style="color:var(--text-secondary);">CosIng Verified Swaps</span>
+            </div>
+            <div style="height:160px;border-radius:12px;overflow:hidden;background:var(--bg-oat);">
+              <img src="/public/photo_routine_flatlay.jpg" alt="Editorial flatlay of gentle barrier-safe skincare bottles and dropper serums" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="eager" />
+            </div>
+          </div>
         </div>
         <div id="dl-dir-bottom-save-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-surface);border-radius:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
           <span class="mono" style="font-size:0.82rem;color:var(--text-primary);font-weight:600;">&#10003; Save Your Morning/Bedtime Shelf or 9:16 Lock-Screen Card:</span>
