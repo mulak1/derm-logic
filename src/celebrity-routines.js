@@ -597,7 +597,7 @@ function renderInteractiveFourNightCalendarHtml(n1Label, n1Val, n2Label, n2Val, 
         <div id="dl-night-cal-detail-text" style="flex:1;min-width:220px;line-height:1.45;">
           <strong style="color:var(--text-primary);">Tonight (Night 1 &middot; Free Preview):</strong> Apply <strong style="color:var(--rose-brand);">${ n1Val }</strong> onto clean, dry skin and wait 60 seconds before moisturizer. <a href="#dl-inline-sample-email" onclick="var el=document.getElementById('dl-inline-sample-email');if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'});}return false;" style="color:var(--rose-brand);font-weight:600;text-decoration:underline;">Enter email above ($0) to unlock Nights 2&ndash;4 &rarr;</a>
         </div>
-        <a id="dl-night-cal-rescue-cta" href="/api/affiliate?product=cerave-pm-lotion&amp;partner=ulta" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">Add Night 3–4 Ceramide Buffer ($17) &nearr;</a>
+        <span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;"><button type="button" id="dl-night-cal-pass-btn" class="mono" onclick="if(window.__dlFlipPassSide)window.__dlFlipPassSide('pm');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:5px 10px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;font-size:0.73rem;font-weight:700;cursor:pointer;white-space:nowrap;">9:16 Night Card &rarr;</button><a id="dl-night-cal-rescue-cta" href="/api/affiliate?product=cerave-pm-lotion&amp;partner=ulta" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">Add Night 3–4 Ceramide Buffer ($17) &nearr;</a></span>
       </div>
     </div>`;
 }
@@ -831,6 +831,9 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
   window.__dlSelectCyclingNight = function(nightNum, btnEl) {
     window.__dl72HrRescueActive = false;
     window.__dlSelectedNightIdx = nightNum;
+    if (window.__dlSetCycleNight) window.__dlSetCycleNight(nightNum - 1);
+    var passBtn = document.getElementById('dl-night-cal-pass-btn');
+    if (passBtn) passBtn.innerHTML = '9:16 Night ' + nightNum + ' Card &rarr;';
     var tabs = document.querySelectorAll('.dl-night-cal-tab');
     for (var i = 0; i < tabs.length; i++) {
       var active = tabs[i] === btnEl || Number(tabs[i].getAttribute('data-night')) === nightNum;
