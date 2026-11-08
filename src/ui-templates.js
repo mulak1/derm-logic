@@ -546,7 +546,7 @@ function renderAnalysisResultHtml(res) {
             <span class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;">Step 2 of 2 &middot; Your Custom Routine</span>
             <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">
               <span class="${badgeClass} mono" id="compatibilityScoreValue">${conflictCount === 0 ? '✓ Calm & Safe' : `${conflictCount} Clashes Resolved`}</span>
-              <span class="badge-safe mono" id="wastedShelfValueReadout">${conflictCount === 0 ? `$${totalUsd} Safe` : `$${wastedUsd}/$${totalUsd} Saved`}</span>
+              <span class="badge-safe mono" id="wastedShelfValueReadout">${conflictCount === 0 ? `$${totalUsd} Safe` : `$${wastedUsd}/$${totalUsd} Saved`}</span><button type="button" id="dl-res-header-dupe-btn" class="badge-safe mono" onclick="if(window.__dlQuickLoadShelfPreset)window.__dlQuickLoadShelfPreset('dupe_86');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this);" style="cursor:pointer;border:1px solid var(--sage-border);font-weight:700;">&#10003; $86 Dupe 9:16 Card &rarr;</button><button type="button" id="dl-res-header-copy-btn" class="badge-safe mono" onclick="if(window.__dlCopyShareableShelfLink)window.__dlCopyShareableShelfLink(this);" style="cursor:pointer;border:1px solid var(--border-subtle);background:var(--bg-surface);color:var(--rose-brand);font-weight:700;">&#128279; Copy Shelf Link</button>
             </div>
           </div>
           ${renderPersonalizedResultsHeaderHtml(res)}
@@ -613,7 +613,7 @@ function renderAnalysisResultHtml(res) {
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid var(--border-hairline);font-size:0.78rem;">
             <span style="color:var(--text-secondary);"><strong style="color:var(--sage-safe);">&#10003; Why This Split Works:</strong> ${escapeHtml(topSummaryLine)}</span>
             <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
-              <a href="/compare" class="mono" style="color:var(--text-secondary);text-decoration:underline;">Compare Bottle Dupes</a>
+              <button type="button" id="dl-res-footer-copy-btn" class="mono" onclick="if(window.__dlCopyShareableShelfLink)window.__dlCopyShareableShelfLink(this);" style="background:transparent;border:none;color:var(--sage-safe);font-weight:700;cursor:pointer;text-decoration:underline;padding:0;">&#128279; Copy 5-Bottle Shelf Link</button><a href="/compare" class="mono" style="color:var(--text-secondary);text-decoration:underline;">Compare Bottle Dupes</a>
               <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`Checked my skincare shelf on @mulak's DermLogic (${conflictCount} serum clashes resolved · $${wastedUsd} saved): https://www.dermlogic.io`)}" target="_blank" rel="noopener noreferrer" class="mono" style="color:var(--text-secondary);text-decoration:underline;">Share on X</a>
               <button type="button" class="mono" onclick="openCheckoutModal('onetime_499')" style="background:transparent;border:none;color:var(--rose-brand);font-weight:600;cursor:pointer;text-decoration:underline;padding:0;">Download 300-DPI Phone Swatch Card ($1.99) &rarr;</button>
             </span>
