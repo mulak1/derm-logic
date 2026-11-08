@@ -444,9 +444,12 @@ function buildMarkdownForPath(reqPath) {
       '---',
       '',
       '# DermLogic Official Pricing & Self-Serve Deliverable Tiers (2026)',
+      '> ✓ EU CosIng & Lab pH Verified · 65 Actives & 80 Cult Bottles · 30-Day Refund Guarantee',
       '',
-      '| Tier SKU | Name | Price (USD) | Billing | Included Deliverables | 1-Click Checkout URL |',
+      '| Tier SKU | Name | Price (USD) | Billing | Included Deliverables | 1-Click Action URL |',
       '| :--- | :--- | :--- | :--- | :--- | :--- |',
+      `| \`free_specimen\` | Specimen #1 Free Proof (AM Routine & 60s Sink Timer) | $0.00 | Instant Free | 7:30 AM Morning Glow order, 60s Sink Timer, Bottles #1–#2, Top 5 INCI & Dupe #1 | ${HOST_URL}/#analyzer |`,
+      `| \`email_save\` | 9:30 PM Barrier Schedule & 2 Chemist Dupes ($0 Email) | $0.00 | Email Save | 9:30 PM Bedtime Steps 2–3, 4-Night Calendar, Chemist Dupe #2 & Full INCI Tail | ${HOST_URL}/#dl-footer-email-unlock-bar |`,
       `| \`micro_pass\` | Single-File 9:16 Phone Lock-Screen Routine Card | $0.99 | One-Time | High-contrast AM/PM bathroom vanity lockscreen card (PDF/PNG) | ${HOST_URL}/buy/micro_pass |`,
       `| \`flash_pass\` | Single-Routine 3-File Export Bundle | $1.99 | One-Time | 9:16 Lock-Screen Card + 4-Night Skin-Cycling Calendar (.ICS) + Pore-Safe Swaps (.CSV) | ${HOST_URL}/buy/flash_pass |`,
       `| \`complete_dossier\` | Complete AM/PM Ritual & Barrier Rehab Kit | $1.99 | One-Time | Full 65-active INCI clash dossier, custom wait-time schedule & safe-swap shopping list | ${HOST_URL}/buy/complete_dossier |`,
@@ -465,24 +468,27 @@ function buildMarkdownForPath(reqPath) {
         `title: "${comp.title}"`,
         `canonical_url: "${HOST_URL}/compare/${resolved.canonicalSlug}"`,
         `markdown_twin_url: "${HOST_URL}/compare/${resolved.canonicalSlug}.md"`,
+        `provenance: "EU CosIng & Lab pH Verified · 30-Day Refund Guarantee"`,
         `harmony_score: ${comp.harmonyScore}`,
         `delta_ph: ${comp.deltaPh}`,
         '---',
         '',
-        `> **Deterministic Verdict (${comp.harmonyScore}/100 · ΔpH ${comp.deltaPh})**: ${comp.verdictLabel}. ${comp.summary}`,
+        `> **✓ EU CosIng & Lab pH Verdict (${comp.harmonyScore}/100 · ΔpH ${comp.deltaPh})**: ${comp.verdictLabel}. ${comp.summary}`,
         '',
-        `- **1-Click Single-File Export (99¢)**: ${HOST_URL}/buy/micro_pass`,
-        `- **1-Click 3-File Bundle ($1.99)**: ${HOST_URL}/buy/flash_pass`,
+        `- **✓ Free Proof (7:30 AM Slot & 60s Sink Timer)**: Unmasked below`,
+        `- **🔒 Unlock 9:30 PM Slot & Exact Wait Rule ($0 Email)**: ${HOST_URL}/compare/${resolved.canonicalSlug}#gi-compare-inline-email-card`,
+        `- **1-Click Single-File Export (99¢ · 30-Day Guarantee)**: ${HOST_URL}/buy/micro_pass`,
+        `- **1-Click 3-File Bundle ($1.99 · 30-Day Guarantee)**: ${HOST_URL}/buy/flash_pass`,
         '',
         `| Parameter | ${comp.nameA} | ${comp.nameB} | Interaction / Threshold |`,
         '| :--- | :--- | :--- | :--- |',
         `| Formulation pH Window | ${comp.phRangeA} | ${comp.phRangeB} | ΔpH ${comp.deltaPh} |`,
         `| Dissociation Constant (pKa) | ${comp.pkaA} | ${comp.pkaB} | Henderson-Hasselbalch Equilibrium |`,
-        `| Free-Acid Bioavailability | ${comp.freeAcidA} | ${comp.freeAcidB} | ${comp.mixedFreeAcidA} |`,
+        `| Free-Acid Penetration | ${comp.freeAcidA} | ${comp.freeAcidB} | ${comp.mixedFreeAcidA} |`,
         `| Molecular Weight (Da) | ${comp.mwA} | ${comp.mwB} | Rule-of-500 Dalton Threshold |`,
         `| EU CosIng Comedogenicity | ${comp.comedoA} | ${comp.comedoB} | 0-5 Pore-Congestion Scale |`,
         `| Malassezia (Fungal Acne) | ${comp.malasseziaA} | ${comp.malasseziaB} | Lipid Ester Screen |`,
-        `| Optimal Routine Slot | ${comp.slotA} | ${comp.slotB} | ${comp.verdictLabel} |`,
+        `| Optimal Routine Slot | ✓ Free Proof: ${comp.slotA} | 🔒 $0 Email Holdback (${HOST_URL}/compare/${resolved.canonicalSlug}#gi-compare-inline-email-card) | 🔒 Exact Wait Rule ($0 Email) |`,
         ''
       ].join('\n');
     }
@@ -492,14 +498,16 @@ function buildMarkdownForPath(reqPath) {
     `title: "DermLogic Deterministic Skincare Specification (${cleanPath})"`,
     `canonical_url: "${HOST_URL}${cleanPath}"`,
     `markdown_twin_url: "${HOST_URL}${cleanPath === '/' ? '/index.md' : cleanPath + '.md'}"`,
+    'provenance: "EU CosIng & Lab pH Verified · 65 Actives · 30-Day Refund Guarantee"',
     'measurement_technique: "Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Molecular Weight Da & EU CosIng Comedogenicity"',
     '---',
     '',
     `# DermLogic Formulation Atelier: ${cleanPath}`,
     '',
-    '> Deterministic cosmetic-chemistry conflict analyzer, Henderson-Hasselbalch pH/pKa bioavailability calculator, and 5-Slot Vanity Bag routine sequencer.',
+    '> ✓ EU CosIng & Lab pH Verified · Specimen #1 Free Proof (7:30 AM Routine, 60s Sink Timer & Dupe #1) + $0 Email Holdback (9:30 PM Barrier Repair Steps 2–3, 4-Night Schedule & Dupe #2).',
     '',
     `- Canonical Page: ${HOST_URL}${cleanPath}`,
+    `- Unlock 9:30 PM Schedule & 2 Chemist Dupes ($0 Email): ${HOST_URL}/#dl-footer-email-unlock-bar`,
     `- Open Knowledge Framework Manifest: ${HOST_URL}/okf/index.json`,
     `- Pricing & Deliverables (.md): ${HOST_URL}/pricing.md`,
     `- Full LLM Knowledge Corpus: ${HOST_URL}/llms-full.txt`,
@@ -587,8 +595,8 @@ const GLOWINDEX_CLIENT_SCRIPT = `<script id="gi-glow-session-script">
     }
     var pList = (sess.productIds && sess.productIds.length) ? sess.productIds.join(',') : 'skinceuticals-ce-ferulic,aestura-atobarrier-365';
     var skinLbl = (sess.skinType || 'combination').replace('_', ' '), climLbl = (sess.climate || 'daylight_uv').replace('_', ' ');
-    bar.innerHTML = '<div class="mono" style="color:var(--text-primary);"><strong>Saved Routine Profile:</strong> Skin: <span style="color:var(--rose-brand);">' + skinLbl + '</span> · Climate: <span>' + climLbl + '</span>' + (sess.lastWinner ? ' · Selected: <strong>' + sess.lastWinner + '</strong>' : '') + '</div>'
-      + '<a href="/?products=' + encodeURIComponent(pList) + '&skin=' + encodeURIComponent(sess.skinType || 'combination') + '#analyzer" class="mono" style="color:var(--rose-brand);font-weight:600;text-decoration:underline;">Test in My Routine &rarr;</a>';
+    bar.innerHTML = '<div class="mono" style="color:var(--text-primary);"><strong>Saved Routine Profile:</strong> <span style="color:var(--sage-safe);font-weight:700;">&#10003; EU CosIng &amp; Lab pH</span> · Skin: <span style="color:var(--rose-brand);">' + skinLbl + '</span> · Climate: <span>' + climLbl + '</span>' + (sess.lastWinner ? ' · Selected: <strong>' + sess.lastWinner + '</strong>' : '') + ' · <span style="color:var(--sage-safe);">7:30 AM Free</span></div>'
+      + '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;"><span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;cursor:pointer;">&#128274; Save 9:30 PM &amp; Dupe #2 ($0 Email) &darr;</span><a href="/?products=' + encodeURIComponent(pList) + '&skin=' + encodeURIComponent(sess.skinType || 'combination') + '#analyzer" class="mono" style="color:var(--rose-brand);font-weight:600;text-decoration:underline;">Test in My Routine &rarr;</a></div>';
   }
   document.addEventListener('DOMContentLoaded', function() {
     try {

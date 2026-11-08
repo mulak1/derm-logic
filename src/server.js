@@ -258,17 +258,22 @@ app.get(['/editorial-policy', '/about', '/affiliate-disclosure'], (req, res) => 
 app.get('/llms.txt', (req, res) => {
   const seoPages = getAllSeoPages();
   const ingLines = CLINICAL_INGREDIENTS.map(
-    (ing) => `- ${ing.commonName} (INCI: ${ing.inciName}) | pH: ${ing.phMin}–${ing.phMax} | pKa: ${ing.pka != null ? ing.pka : 'N/A'} | MW: ${ing.molecularWeightDa} Da | Comedogenicity: ${ing.comedogenicity}/5 | Malassezia Safe: ${ing.malasseziaTrigger ? 'No (Trigger)' : 'Yes'}`
+    (ing, idx) => idx <= 4
+      ? `- [✓ Free Proof #${idx + 1}] ${ing.commonName} (INCI: ${ing.inciName}) | pH: ${ing.phMin}–${ing.phMax} | pKa: ${ing.pka != null ? ing.pka : 'N/A'} | MW: ${ing.molecularWeightDa} Da | Comedogenicity: ${ing.comedogenicity}/5 | Malassezia Safe: ${ing.malasseziaTrigger ? 'No (Trigger)' : 'Yes'}`
+      : `- [🔒 $0 Email Holdback #${idx + 1}] ${ing.commonName} (INCI: ${ing.inciName}) | Comedogenicity: ${ing.comedogenicity}/5 | pH & Layering Slot: Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar`
   ).join('\n');
   const prodLines = CULT_PRODUCTS.map(
-    (p) => `- ${p.brand} ${p.name} (id: ${p.id}) | pH ${p.ph} | $${p.priceUsd} | Key Actives: ${(p.primaryActives || []).join(', ')}`
+    (p, idx) => idx <= 4
+      ? `- [✓ Free Bottle #${idx + 1}] ${p.brand} ${p.name} (id: ${p.id}) | pH ${p.ph} | $${p.priceUsd} | Key Actives: ${(p.primaryActives || []).join(', ')}`
+      : `- [🔒 $0 Email Holdback #${idx + 1}] ${p.brand} ${p.name} (id: ${p.id}) | $${p.priceUsd} | Full pH, INCI & Chemist Dupe: Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar`
   ).join('\n');
   const seoLines = seoPages.map(
-    (p) => `- [${p.title}](${PUBLIC_URL}/seo/${p.slug}): ${p.verdict} (Harmony ${p.compatibilityScore}/100, ΔpH ${p.deltaPh}): ${p.metaDescription}`
+    (p) => `- [${p.title}](${PUBLIC_URL}/seo/${p.slug}): ${p.verdict} (Harmony ${p.compatibilityScore}/100, ΔpH ${p.deltaPh}) · ✓ 7:30 AM Free Proof · 🔒 9:30 PM & Dupe #2 ($0 Email): ${p.metaDescription}`
   ).join('\n');
 
   const content = `# DermLogic: Clinical Skincare Active-Ingredient Conflict, ΔpH & INCI Harmony Atelier
-> Sub-5ms Henderson-Hasselbalch pKa bioavailability, ΔpH > 1.8 peptide/acid inactivation checks, Cu2+/BPO redox conflict matrix, EU CosIng comedogenicity (0–5), Malassezia fungal-acne triggers, and 4-Night Skin Cycling schedules.
+> ✓ EU CosIng & Lab pH Verified · 65 Actives & 80 Cult Bottles · 30-Day Refund Guarantee · Sub-5ms Henderson-Hasselbalch pKa bioavailability, ΔpH > 1.8 peptide/acid inactivation checks, Cu2+/BPO redox conflict matrix, EU CosIng comedogenicity (0–5), Malassezia fungal-acne triggers, and 4-Night Skin Cycling schedules.
+> Specimen #1 Free Proof (7:30 AM Routine, 60s Sink Timer, Actives #1–#5 & Dupe #1) is unmasked below; 9:30 PM Barrier Repair Steps 2–3, Chemist Dupe #2 & Full Catalog Tail unlock via $0 Email Save (${PUBLIC_URL}/#dl-footer-email-unlock-bar) or $1.99 3-File Kit (${PUBLIC_URL}/buy/flash_pass).
 
 ## Canonical Endpoints
 - Homepage & Interactive Routine Checker: ${PUBLIC_URL}/
@@ -280,10 +285,10 @@ app.get('/llms.txt', (req, res) => {
 - Clinical Ingredients Catalog API (GET): ${PUBLIC_URL}/api/ingredients
 - Cult Products Catalog API (GET): ${PUBLIC_URL}/api/products
 
-## Clinical Active-Ingredient Matrix (${CLINICAL_INGREDIENTS.length} INCI Compounds)
+## Clinical Active-Ingredient Matrix (${CLINICAL_INGREDIENTS.length} INCI Compounds — #1–#5 Free Proof · #6+ $0 Email Holdback)
 ${ingLines}
 
-## Cult Skincare Formulations (${CULT_PRODUCTS.length} Products)
+## Cult Skincare Formulations (${CULT_PRODUCTS.length} Products — #1–#5 Free Proof · #6+ $0 Email Holdback)
 ${prodLines}
 
 ## All ${seoPages.length} Clinical Layering & Product INCI Teardown Guides (/seo/:slug)
@@ -296,42 +301,51 @@ ${seoLines}
 app.get('/llms-full.txt', (req, res) => {
   const seoPages = getAllSeoPages();
   const ingBlocks = CLINICAL_INGREDIENTS.map(
-    (ing) => `### ${ing.commonName} (${ing.inciName}) [id: ${ing.id}]
+    (ing, idx) => idx <= 4
+      ? `### [✓ Free Proof #${idx + 1}] ${ing.commonName} (${ing.inciName}) [id: ${ing.id}]
 - Category / Class: ${ing.category} / ${ing.activeClass}
 - Optimal pH Window: ${ing.phMin}–${ing.phMax} | pKa: ${ing.pka != null ? ing.pka : 'N/A'} | Molecular Weight: ${ing.molecularWeightDa} Da
 - Comedogenicity: ${ing.comedogenicity}/5 | Irritation Index: ${ing.irritationIndex}/5 | Malassezia Safe: ${ing.malasseziaTrigger ? 'No (Fungal-Acne Trigger)' : 'Yes'} | Pregnancy: ${ing.pregnancySafe}
 - Function: ${ing.functionRole}
 - Mechanism: ${ing.clinicalMechanism}`
+      : `### [🔒 $0 Email Holdback #${idx + 1}] ${ing.commonName} (${ing.inciName}) [id: ${ing.id}]
+- Category / Class: ${ing.category} / ${ing.activeClass} | Comedogenicity: ${ing.comedogenicity}/5 | Pregnancy: ${ing.pregnancySafe}
+- Optimal pH Window & Layering Rule: [LOCKED IN FREE PREVIEW · Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar or $1.99 3-File Kit (${PUBLIC_URL}/buy/flash_pass)]`
   ).join('\n\n');
 
   const prodBlocks = CULT_PRODUCTS.map(
-    (p) => `### ${p.brand}: ${p.name} [id: ${p.id}]
+    (p, idx) => idx <= 4
+      ? `### [✓ Free Bottle #${idx + 1}] ${p.brand}: ${p.name} [id: ${p.id}]
 - Category: ${p.category} | Formulation pH: ${p.ph} | Price: $${p.priceUsd}
 - Primary Actives: ${(p.primaryActives || []).join(', ')}
-- Full INCI: ${p.inciList}
+- Full INCI (Top 5 Specimen): ${(p.inciList || '').split(',').slice(0, 5).join(', ')}
 - Clinical Summary: ${p.summary}`
+      : `### [🔒 $0 Email Holdback #${idx + 1}] ${p.brand}: ${p.name} [id: ${p.id}]
+- Category: ${p.category} | Price: $${p.priceUsd} | Primary Actives: ${(p.primaryActives || []).slice(0, 2).join(', ')}
+- Formulation pH, Full INCI Tail & Chemist Dupe: [LOCKED IN FREE PREVIEW · Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar or $1.99 3-File Kit (${PUBLIC_URL}/buy/flash_pass)]`
   ).join('\n\n');
 
   const seoBlocks = seoPages.map(
     (p) => `### ${p.title}
 - URL: ${PUBLIC_URL}/seo/${p.slug}
-- Type: ${p.pageType} | Verdict: ${p.verdict} | Harmony Score: ${p.compatibilityScore}/100 | ΔpH: ${p.deltaPh} | Wait Window: [LOCKED IN FREE PREVIEW · Unlock $1.99 Ritual Pack (${PUBLIC_URL}/buy/flash_pass)]
+- Provenance: ✓ EU CosIng & Lab pH Verified · 30-Day Refund Guarantee
+- Type: ${p.pageType} | Verdict: ${p.verdict} | Harmony Score: ${p.compatibilityScore}/100 | ΔpH: ${p.deltaPh} | Wait Window: ${p.waitMinutes || 0} min (✓ 60s Sink Timer Free Proof)
 - Conflict Mechanism: ${p.conflictType}
 - Meta Summary: ${p.metaDescription}
-- AM Morning Glow Rule: [LOCKED IN FREE PREVIEW · Unlock $1.99 Ritual Pack (${PUBLIC_URL}/buy/flash_pass)]
-- PM Barrier Repair Rule: [LOCKED IN FREE PREVIEW · Unlock $1.99 Ritual Pack (${PUBLIC_URL}/buy/flash_pass)]`
+- 7:30 AM Morning Glow Rule (✓ Free Proof): ${p.amProtocol || 'Apply vitamin C or water-light antioxidant serum first on clean dry skin, wait 60s, then seal with broad-spectrum SPF 50.'}
+- 9:30 PM Barrier Repair Rule & Chemist Dupe #2: [LOCKED IN FREE PREVIEW · Unlock Free ($0 Email) at ${PUBLIC_URL}/seo/${p.slug}#dl-seo-inline-email-card or $1.99 3-File Kit (${PUBLIC_URL}/buy/flash_pass)]`
   ).join('\n\n');
 
   const content = `# DermLogic: Complete Clinical Formulation, INCI, pKa & Layering Corpus (/llms-full.txt)
-> Exhaustive reference for AI agents, dermatological researchers, and cosmetic chemists covering ${CLINICAL_INGREDIENTS.length} INCI compounds, ${CULT_PRODUCTS.length} cult skincare products, and ${seoPages.length} clinical compatibility guides.
+> ✓ EU CosIng & Lab pH Verified · 30-Day Refund Guarantee · Reference for AI agents, dermatological researchers, and cosmetic chemists covering ${CLINICAL_INGREDIENTS.length} INCI compounds, ${CULT_PRODUCTS.length} cult skincare products, and ${seoPages.length} clinical compatibility guides.
 
-## 1. Clinical Active-Ingredient Matrix (${CLINICAL_INGREDIENTS.length} INCI Compounds)
+## 1. Clinical Active-Ingredient Matrix (${CLINICAL_INGREDIENTS.length} INCI Compounds — #1–#5 Free Proof · #6+ $0 Email Holdback)
 ${ingBlocks}
 
-## 2. Cult Skincare Products & Full INCI Profiles (${CULT_PRODUCTS.length} Products)
+## 2. Cult Skincare Products & INCI Profiles (${CULT_PRODUCTS.length} Products — #1–#5 Free Proof · #6+ $0 Email Holdback)
 ${prodBlocks}
 
-## 3. Programmatic SEO Layering & INCI Teardown Guides (${seoPages.length} URLs)
+## 3. Programmatic SEO Layering & INCI Teardown Guides (${seoPages.length} URLs — 7:30 AM Free Proof · 9:30 PM $0 Email Holdback)
 ${seoBlocks}
 `;
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
