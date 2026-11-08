@@ -479,11 +479,13 @@ function renderDirectoryPage({ seoPages }) {
     return `<div class="dir-vault-card porcelain-vessel-core" data-vault-tag="${vaultTag}" data-vault-type="${vType}" data-vault-verdict="${vVerdict}" data-vault-text="${escapeHtml((cleanCardTitle + ' ' + p.summary + ' ' + p.verdict).toLowerCase())}" style="padding:24px 26px;background:var(--bg-oat);display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-          <span class="${vVerdict === 'clash' ? 'badge-clash' : vVerdict === 'timer' ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(formatVerdictLabel(p.verdict))}</span>
+          <span class="${vVerdict === 'clash' ? 'badge-clash' : vVerdict === 'timer' ? 'badge-warn' : 'badge-safe'} mono">&#10003; ${escapeHtml(formatVerdictLabel(p.verdict))}</span>
           <span class="mono" style="font-size:0.8rem;color:var(--text-secondary);">${timingLabel}</span>
         </div>
         <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-size:1.34rem;font-weight:400;line-height:1.22;margin-bottom:8px;color:var(--text-primary);">${escapeHtml(cleanCardTitle)}</a>
         <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.56;margin-bottom:8px;">${escapeHtml(p.summary)}</p>
+        <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.74rem;color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;">&#128274; Reveal 9:30 PM Buffer &amp; 2 Dupes ($0) &uarr;</div>
+        <div class="dl-unlocked-c2-proof mono" style="display:none;font-size:0.76rem;color:var(--sage-safe);font-weight:600;">&#10003; 9:30 PM Rule: Buffer with 3:1:1 Ceramide Cream &middot; Wait 60s</div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border-hairline);gap:8px;flex-wrap:wrap;">
         <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Read Layering Guide &rarr;</a>
@@ -494,6 +496,7 @@ function renderDirectoryPage({ seoPages }) {
   const bodyHtml = `
     <section class="section-block" style="padding-top:40px;padding-bottom:56px;">
       <div class="container">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span><span class="badge-safe mono">30-Day Refund Guarantee</span></div>
         <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Skincare Serum Layering Chart &amp; What Not to Mix (${seoPages.length} Guides)</h1>
         <p class="hero-sub" style="margin-bottom:24px;max-width:68ch;">Find out which serums belong in the morning, which belong at bedtime, how long to wait between layers, and which active combinations cancel on contact.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:28px;">
@@ -522,6 +525,14 @@ function renderDirectoryPage({ seoPages }) {
           <a href="/bottle" class="affiliate-link-pill mono">Cult Bottles (44) &rarr;</a>
           <a href="/ingredient" class="affiliate-link-pill mono">Active Ingredients (65) &rarr;</a>
           <a href="/brand" class="affiliate-link-pill mono">Skincare Brands (27) &rarr;</a>
+        </div>
+        <div id="dl-dir-top-email-bar" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:12px 16px;margin-bottom:14px;border:1px solid var(--rose-pill-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:700;">&#10003; Free Verdict Proof Visible Below &middot; Enter Email ($0) to Reveal All 9:30 PM Buffer Rules &amp; 2 Dupes:</div>
+          <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'directory_hub')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for 9:30 PM rules &amp; 2 dupes ($0)..." aria-label="Enter email for 9:30 PM rules and 2 dupes" style="padding:7px 12px;font-size:0.78rem;border-radius:999px;background:var(--bg-oat);" />
+            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;"><span>Reveal 9:30 PM Rules ($0) &rarr;</span></button>
+            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.72rem;color:var(--sage-safe);"></div>
+          </form>
         </div>
         <div id="dir-apothecary-vault-bar" data-ui="directory-filter-bar" style="padding:16px 20px;background:var(--bg-oat);margin-bottom:22px;display:flex;flex-direction:column;gap:10px;">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">

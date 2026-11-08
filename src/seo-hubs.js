@@ -286,20 +286,20 @@ function renderCelebrityIndexPage() {
   const cards = celebs.map((c) => {
     const preloadHref = `/?products=${encodeURIComponent(c.productIds.join(','))}#analyzer`;
     const cBottles = c.productIds.map((id) => CULT_PRODUCTS.find((p) => p.id === id)).filter(Boolean);
-    const bottlePills = cBottles.map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.74rem;padding:3px 8px;background:var(--bg-surface);border:1px solid var(--border-hairline);color:var(--text-primary);text-decoration:none;">${escapeHtml(b.brand)} ${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 22))}</a>`).join('');
+    const freeBottlePills = cBottles.slice(0, 2).map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.74rem;padding:3px 8px;background:var(--bg-surface);border:1px solid var(--border-hairline);color:var(--text-primary);text-decoration:none;">&#10003; ${escapeHtml(b.brand)} ${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 20))}</a>`).join('');
+    const lockedBottlePills = cBottles.slice(2).map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.74rem;padding:3px 8px;background:var(--bg-surface);border:1px solid var(--border-hairline);color:var(--text-primary);text-decoration:none;">${escapeHtml(b.brand)} ${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 20))}</a>`).join('');
     const filterBlob = `${c.skinProfile} ${c.moniker} ${c.summary} ${cBottles.map((b) => b.name + ' ' + b.category).join(' ')}`.toLowerCase();
     return `<div class="porcelain-vessel-core celeb-routine-card" data-celeb-filter="${escapeHtml(filterBlob)}" style="background:#FFFFFF;border:1px solid #EFEAE3;border-radius:18px;padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;box-shadow:0 4px 18px -4px rgba(28,25,23,0.04);">
       <div>
         <div class="vessel-photo-frame" style="height:210px;margin-bottom:14px;overflow:hidden;border-radius:14px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} skincare routine vanity shelf" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};display:block;" /></div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-          <span class="badge-safe mono" style="font-size:0.78rem;padding:3px 10px;background:#EBF4F0;color:#1B4D3E;border:1px solid #C4DFD5;">${escapeHtml(c.skinProfile)}</span>
+          <span class="badge-safe mono" style="font-size:0.78rem;padding:3px 10px;background:#EBF4F0;color:#1B4D3E;border:1px solid #C4DFD5;">&#10003; EU CosIng &middot; ${escapeHtml(c.skinProfile)}</span>
           <span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;">${c.amSteps.length} AM / ${c.pmSteps.length} PM Steps</span>
         </div>
         <a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.45rem;color:var(--text-primary);margin-bottom:3px;line-height:1.24;">${escapeHtml(c.name)}</a>
         <div class="serif-italic" style="font-size:0.96rem;color:var(--rose-brand);margin-bottom:8px;">${escapeHtml(c.moniker)}</div>
         <p style="font-size:0.90rem;color:var(--text-secondary);line-height:1.56;margin-bottom:12px;">${escapeHtml(c.summary)}</p>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">${bottlePills}</div>
-        ${c.dupeSwap && c.dupeSwap.savingsNote ? `<div class="mono" style="font-size:0.75rem;color:var(--sage-safe);background:var(--sage-bg);padding:6px 10px;border-radius:8px;margin-bottom:10px;font-weight:600;">Chemist Swap: ${escapeHtml(c.dupeSwap.savingsNote)}</div>` : ''}
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center;">${freeBottlePills}<span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.73rem;color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;">${LOCK_SVG}Reveal +${Math.max(1, cBottles.length - 2)} PM Bottles &amp; Dupe ($0) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;gap:6px;flex-wrap:wrap;">${lockedBottlePills}${c.dupeSwap && c.dupeSwap.savingsNote ? ` <span class="mono" style="font-size:0.73rem;color:var(--sage-safe);font-weight:600;">&#10003; ${escapeHtml(c.dupeSwap.savingsNote)}</span>` : ''}</span></div>
         <div style="font-size:11.5px;color:var(--text-muted);line-height:1.38;">Source: <a href="${escapeHtml(c.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(c.sourcePublication)} &rarr;</a> · Independent commentary</div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:1px solid #F2EDE6;">
@@ -715,19 +715,20 @@ function renderBrandDetailPage(brandHub) {
 function renderConcernIndexPage() {
   const cards = CONCERN_HUBS.map((c) => {
     const cBottles = c.productIds.map((id) => CULT_PRODUCTS.find((p) => p.id === id)).filter(Boolean);
-    const bottleListStr = cBottles.map((b) => `${b.brand} ${b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 20)}`).join(' · ');
+    const freeBottleStr = cBottles.slice(0, 2).map((b) => `${b.brand} ${b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 20)}`).join(' · ');
+    const lockedBottleStr = cBottles.slice(2).map((b) => `${b.brand} ${b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 20)}`).join(' · ');
     const cCelebs = (c.celebSlugs || []).map((s) => getAllCelebrityRoutines().find((ce) => ce.slug === s)).filter(Boolean);
     return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
       <div>
         <div class="vessel-photo-frame" style="height:195px;margin-bottom:12px;overflow:hidden;border-radius:12px;"><img src="${escapeHtml(c.heroImg || '/public/editorial-woman-morning.jpg')}" alt="${escapeHtml(c.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 28%;display:block;" /></div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
-          <span class="badge-safe mono">${escapeHtml(c.badge)}</span>
+          <span class="badge-safe mono">&#10003; EU CosIng &middot; ${escapeHtml(c.badge)}</span>
           <span class="mono" style="font-size:0.74rem;color:var(--text-secondary);">3-Step Protocol &middot; ${c.productIds.length} Bottles</span>
         </div>
         <a href="/concern/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.38rem;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(c.title)}</a>
         <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.54;margin-bottom:10px;">${escapeHtml(c.summary)}</p>
         <div style="background:var(--berry-bg);border-left:2.5px solid var(--rose-brand);padding:8px 10px;font-size:0.8rem;line-height:1.45;margin-bottom:9px;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);font-size:0.72rem;text-transform:uppercase;">Avoid:</strong> ${escapeHtml(c.avoidNote)}</div>
-        <div style="background:var(--bg-surface);padding:7px 10px;font-size:0.78rem;color:var(--text-secondary);"><strong class="mono" style="color:var(--text-primary);font-size:0.72rem;">Verified Lineup:</strong> ${escapeHtml(bottleListStr)}</div>
+        <div style="background:var(--bg-surface);padding:7px 10px;font-size:0.78rem;color:var(--text-secondary);"><strong class="mono" style="color:var(--text-primary);font-size:0.72rem;">&#10003; Free Proof (Steps 1–2):</strong> ${escapeHtml(freeBottleStr)} <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;font-size:0.73rem;cursor:pointer;text-decoration:underline;margin-left:4px;">${LOCK_SVG}Reveal 9:30 PM Bottle #3 &amp; Dupe ($0) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;"> &middot; ${escapeHtml(lockedBottleStr)}</span></div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:8px;border-top:1px solid var(--border-hairline);">
         <a href="/concern/${escapeHtml(c.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Open Step-by-Step Protocol &rarr;</a>
