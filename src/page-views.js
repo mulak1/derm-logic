@@ -596,6 +596,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               <span class="badge-safe mono" style="font-size:0.74rem;padding:3px 9px;">8 Contact-Allergen Screens</span>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="button" class="affiliate-link-pill mono" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal(this)" style="font-size:0.82rem;padding:6px 12px;cursor:pointer;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">Preview 9:16 Lock-Screen Card &rarr;</button>
               <a href="/compare/${escapeHtml(comparePairSlug)}" class="affiliate-link-pill mono" style="font-size:0.82rem;padding:6px 12px;">2-Product pH Clash Matrix &rarr;</a>
               <a href="/?products=${encodeURIComponent((page.presetProducts || [primaryProdId]).join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono" style="font-size:0.82rem;padding:6px 12px;">&#10003; Screen 8 Allergens ($0) &rarr;</a>
               <a href="#analyzer" class="affiliate-link-pill mono" style="font-size:0.84rem;padding:6px 14px;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">Test 2-Product Matrix Below &darr;</a>
@@ -619,10 +620,10 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div>
         </div>
         ${renderInteractiveCheckerWidget({ products, presets, initialAnalysis, initialProductIds: page.presetProducts, initialRawInci: page.resolvedRawInci || (page.product ? page.product.inciList : ''), showUgcStrip: false })}
-        <div class="z-cascade-stage" style="margin-top:24px;margin-bottom:24px;">
+        <div class="z-cascade-stage" style="margin-top:20px;margin-bottom:20px;">
           <div class="z-vessel-left"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/photo_amber_bottles.jpg" alt="Amber apothecary bottles and active serum pairing" style="object-position:center 35%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/banana_aesop_vanity_serums.jpg" alt="Sunlit travertine vanity shelf with unbranded amber and frosted dropper serums" style="object-position:center center;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:500;">Do They Cancel Out?</span><span class="${page.compatibilityScore < 55 ? 'badge-clash' : 'badge-safe'} mono">${page.compatibilityScore < 55 ? 'Split AM & PM' : 'Layer Gently'}</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">${escapeHtml(page.conflictType)}</h3>
               <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">${escapeHtml(cleanSummaryFirstSentence)}</p>
@@ -631,7 +632,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div></div>
           <div class="z-vessel-center"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/photo_morning_dew.jpg" alt="Fresh morning dew and lightweight watery serum finish" style="object-position:center 35%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/banana_clinical_lab_glassware.jpg" alt="Cosmetic chemistry lab bench with glass pipette and serum" style="object-position:center center;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--sage-safe);font-weight:500;">&#10003; Morning Texture &amp; Finish (Free Proof)</span><span class="badge-safe mono">Under SPF</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Wear in Daylight</h3>
               <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.58;">Pat your lightest water-based serum onto clean skin after rinsing, let it settle for 60 seconds so foundation and sunscreen never pill, then seal with lightweight moisturizer and broad-spectrum SPF 50.</p>
@@ -640,7 +641,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           </div></div>
           <div class="z-vessel-right"><div class="porcelain-vessel-core">
             <div>
-              <div class="vessel-photo-frame"><img src="/public/photo_cream_texture.jpg" alt="Rich soothing ceramide barrier cream texture for bedtime recovery" style="object-position:center 35%;" loading="lazy" /></div>
+              <div class="vessel-photo-frame"><img src="/public/banana_ceramide_cream_macro.jpg" alt="Rich soothing ceramide barrier cream texture for bedtime recovery" style="object-position:center center;" loading="lazy" /></div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;"><span class="mono" style="font-size:0.82rem;color:var(--honey-warn);font-weight:500;">Bedtime Cushioning</span><span class="badge-safe mono">11 PM Vanity</span></div>
               <h3 class="serif-display" style="font-size:1.42rem;line-height:1.24;font-weight:400;margin-bottom:10px;">How to Layer at Bedtime</h3>
               <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="padding:10px 12px;border-radius:12px;background:var(--bg-oat);color:var(--text-primary);font-size:0.8rem;font-weight:600;line-height:1.45;cursor:pointer;">${lockSvgInline}Bedtime Ceramide Sandwich &amp; Retinoid Buffering Rule Locked — Included in $0 Email AM/PM Calendar &uarr;</div>
@@ -649,7 +650,8 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
             <a href="/api/affiliate?product=${escapeHtml(secondaryProdId)}&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="justify-content:center;padding:10px 14px;text-align:center;">Shop ${escapeHtml(secondaryProdObj.brand)} ${escapeHtml(secondaryProdObj.name)} &rarr;</a>
           </div></div>
         </div>
-        <div class="sink-pacing-panel" style="margin-top:0;margin-bottom:28px;">
+        <details class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 22px;margin-bottom:14px;"><summary class="mono" style="cursor:pointer;font-size:0.84rem;color:var(--rose-brand);font-weight:600;">Open 60-Second Bathroom Sink Pacing Timer, Skin-Barrier Calculator &amp; Ingredient Table &darr;</summary><div style="margin-top:16px;">
+        <div class="sink-pacing-panel" style="margin-top:0;margin-bottom:20px;">
           <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;">
             <div>
               <div class="mono" style="font-size:0.82rem;color:var(--sage-safe);font-weight:500;margin-bottom:4px;">Thinnest to Richest · Bathroom Sink Pacing</div>
@@ -734,14 +736,15 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
             <div style="margin-top:12px;overflow-x:auto;"><p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:8px;"><strong>Why This Order Works (${escapeHtml(page.conflictType)}):</strong> ${escapeHtml(cleanSummaryFirstSentence)}</p><table><thead><tr><th>Official Bottle Ingredient List Name</th><th>Skin pH Range</th><th>Skin Feel</th><th>Texture Weight</th><th>Pore-Clog Score (0–5)</th><th>Fungal-Acne Safe</th></tr></thead><tbody>${seoChemistrySpecsRows}</tbody></table></div>
           </details>
         </div></div>
+        </div></details>
+        <details class="porcelain-vessel-core" style="background:var(--bg-surface);padding:16px 22px;margin-bottom:14px;"><summary class="mono" style="cursor:pointer;font-size:0.84rem;color:var(--rose-brand);font-weight:600;">Common Questions &amp; Related Skincare Layering Guides (${(page.faqs || []).length} FAQs &middot; ${(relatedPages || []).slice(0, 8).length} Guides) &darr;</summary><div style="margin-top:16px;">
+          <h2 class="serif-display" style="font-size:1.55rem;margin-bottom:12px;">Common Questions About ${escapeHtml(searchIntentSubject)}</h2>
+          ${faqHtml}
+          <h3 class="serif-display" style="font-size:1.35rem;margin:20px 0 12px;">Related Skincare Layering Guides</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">${relatedHtml}</div>
+        </div></details>
       </div>
-    </section>
-    <section class="section-block-alt"><div class="container">
-      <h2 class="serif-display" style="font-size:1.95rem;margin-bottom:16px;">Common Questions About ${escapeHtml(searchIntentSubject)}</h2>
-      ${faqHtml}
-      <h3 class="serif-display" style="font-size:1.55rem;margin:34px 0 14px;">Related Skincare Layering Guides</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">${relatedHtml}</div>
-    </div></section>`;
+    </section>`;
   return renderBaseDocument({ title: `${page.title} | DermLogic`, description: `See how to layer ${searchIntentSubject} without stinging or pilling: check the free 1-day clash preview or unlock the Morning & Night schedule.`, canonicalPath: `/seo/${page.slug}`, ogSlug: page.slug, jsonLdObjects: jsonLd, hideNav: false, bodyHtml });
 }
 function renderLegalPage({ type }) {
