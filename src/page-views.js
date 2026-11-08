@@ -535,13 +535,19 @@ function renderDirectoryPage({ seoPages }) {
           <a href="/brand" class="affiliate-link-pill mono">Skincare Brands (27) &rarr;</a>
           <a href="/concern/allergic-contact-dermatitis-hypoallergenic-routine" class="affiliate-link-pill mono" style="border-color:var(--sage-border);color:var(--sage-safe);font-weight:600;">&#10003; Allergy-Safe Routine (EU CosIng) &rarr;</a>
         </div>
-        <div id="dl-dir-top-email-bar" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:12px 16px;margin-bottom:14px;border:1px solid var(--rose-pill-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-          <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:700;">&#10003; Free Verdict Proof &amp; #1 Dupe Visible Below &middot; &#128274; Full AM/PM Routine Calendar &amp; Complete Dupe Shopping List ($0 Email):</div>
-          <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'directory_hub')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
-            <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for full AM/PM calendar &amp; dupes ($0)..." aria-label="Enter email for full AM/PM calendar and dupes" style="padding:7px 12px;font-size:0.78rem;border-radius:999px;background:var(--bg-oat);" />
-            <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;"><span>Unlock Calendar ($0) &rarr;</span></button>
-            <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.72rem;color:var(--sage-safe);"></div>
-          </form>
+        <div id="dl-dir-top-email-bar" class="porcelain-vessel-core dl-workbench-2col" style="background:var(--bg-surface);padding:14px 18px;margin-bottom:14px;border:1px solid var(--rose-pill-border);">
+          <div style="display:flex;flex-direction:column;gap:6px;padding:10px 12px;background:var(--bg-oat);border-radius:14px;">
+            <span class="mono" style="font-size:0.72rem;color:var(--rose-brand);font-weight:700;text-transform:uppercase;">Step 1 &middot; Routine &amp; Allergy Workbench</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;"><a href="/#analyzer" class="btn-secondary mono" style="padding:6px 11px;min-height:32px;font-size:0.74rem;text-decoration:none;">Pick Bottles / Paste INCI &rarr;</a><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono" style="font-size:0.72rem;padding:5px 10px;color:var(--sage-safe);border-color:var(--sage-border);">&#10003; Screen 8 EU Allergens ($0) &rarr;</a></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div class="mono" style="font-size:0.78rem;color:var(--sage-safe);font-weight:700;">&#10003; Instant 2-Product pH Clash Matrix + Unmasked #1 Dupe (Geek &amp; Gorgeous / Illiyoon $14–$18) &middot; &#128274; Full AM/PM Calendar ($0 Email):</div>
+            <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'directory_hub')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
+              <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email for full AM/PM calendar &amp; dupes ($0)..." aria-label="Enter email for full AM/PM calendar and dupes" style="flex:1 1 180px;padding:7px 12px;font-size:0.78rem;border-radius:999px;background:var(--bg-oat);" />
+              <button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:7px 13px;min-height:34px;font-size:0.76rem;border-radius:999px;"><span>Unlock Calendar ($0) &rarr;</span></button>
+              <div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.72rem;color:var(--sage-safe);"></div>
+            </form>
+          </div>
         </div>
         <div id="dir-apothecary-vault-bar" data-ui="directory-filter-bar" style="padding:16px 20px;background:var(--bg-oat);margin-bottom:22px;display:flex;flex-direction:column;gap:10px;">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">

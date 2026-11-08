@@ -56,7 +56,7 @@ const SHARED_CSS = `
   img { display: block; max-width: 100%; object-fit: cover; }
   a { color: inherit; text-decoration: none; }
   button, select, textarea, input { font: inherit; color: inherit; }
-  .container { max-width: 1360px; margin: 0 auto; padding: 0 var(--margin); }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 var(--margin); }
   /* Header: Editorial Gallery & Nocturnal Vanity Switcher */
   .site-header { background: var(--bg-canvas); position: sticky; top: 0; z-index: 40; transition: background-color 320ms var(--ease-spring); }
   .nav-inner { min-height: 70px; padding-top: 12px; padding-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: nowrap; }
@@ -101,7 +101,7 @@ const SHARED_CSS = `
   .vessel-photo-frame img { width: 100%; height: 172px; object-fit: cover; display: block; }
   .editorial-photo-caption { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: var(--step-small); color: var(--text-secondary); }
   /* Interactive Shelf Audit Workbench ([data-ui]) */
-  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  .hero-grid, .dl-workbench-2col { display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 24px; align-items: start; }
   .grader-card { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; box-shadow: 0 4px 20px -4px rgba(21,20,23,0.05); }
   .results-panel { background: var(--bg-oat); border: 1px solid var(--border-hairline); border-radius: 28px; padding: 24px; min-width: 0; max-width: 100%; overflow: hidden; box-shadow: 0 4px 20px -4px rgba(21,20,23,0.05); }
   .porcelain-vessel-core { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 22px; padding: 22px 24px; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 14px; min-width: 0; max-width: 100%; overflow: hidden; box-shadow: 0 2px 12px -2px rgba(21,20,23,0.04); }
@@ -140,8 +140,8 @@ const SHARED_CSS = `
   .viscosity-seq-item { padding: 18px 20px; background: var(--bg-canvas); display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 14px; }
   .wait-timer-btn { padding: 8px 14px; background: var(--bg-oat); border: none; color: var(--text-primary); font-size: 0.84rem; font-weight: 500; cursor: pointer; white-space: nowrap; font-variant-numeric: tabular-nums; transition: background-color 200ms ease-out, color 200ms ease-out; width: 100%; text-align: center; }
   .wait-timer-btn:hover, .wait-timer-btn.running { background: var(--rose-brand); color: var(--accent-ink); }
-  .section-block { padding: 84px 0; }
-  .section-block-alt { padding: 84px 0; background: var(--bg-oat); }
+  .section-block { padding: 48px 0; }
+  .section-block-alt { padding: 48px 0; background: var(--bg-oat); }
   .bento-grid-3 { display: grid; grid-template-columns: 1.2fr 0.9fr 0.9fr; gap: 20px; margin-top: 24px; }
   .bento-cell { background: var(--bg-surface); padding: 24px; }
   .table-wrap { overflow-x: auto; background: var(--bg-surface); }
@@ -169,7 +169,7 @@ const SHARED_CSS = `
   @media (max-width: 1024px) {
     .editorial-top-banner { grid-template-columns: 1fr; row-gap: 24px; }
     .hero-title-block, .hero-copy-col, .hero-photo-col { grid-column: 1 / -1 !important; }
-    .hero-grid, .z-cascade-stage, .bento-grid-3 { grid-template-columns: 1fr; }
+    .hero-grid, .dl-workbench-2col, .z-cascade-stage, .bento-grid-3 { grid-template-columns: 1fr; }
     .product-selector-grid { max-height: 560px; } .viscosity-seq-list { grid-template-columns: repeat(2, 1fr); }
     .hero-h1-line2 { padding-left: 0; } .nav-links { gap: 12px; font-size: 0.86rem; }
   }
@@ -430,7 +430,7 @@ function renderSingleConflictCard(c, idx = 0) {
   const swap = getConflictSafeSwap(c);
   const oneLineFix = String(swap.freeFix || '').replace(/^Free Timing Fix:\s*/i, '');
   const bodyBlock = idx === 0
-    ? `<div style="font-size:0.79rem;line-height:1.38;color:var(--text-secondary);margin-bottom:7px;"><strong style="color:var(--sage-safe);">&#10003; Free Proof #1 &middot; ${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(oneLineFix)}</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;font-size:0.73rem;padding:4px 10px;" data-no-bag-inject="1">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div>`
+    ? `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;align-items:center;"><div style="font-size:0.79rem;line-height:1.38;color:var(--text-secondary);"><strong style="color:var(--sage-safe);">&#10003; 2-Product pH Clash Matrix (Free Proof #1) &middot; ${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(oneLineFix)}</div><div style="padding:8px 10px;border-radius:10px;background:var(--bg-surface);border:1px solid var(--sage-border);display:flex;flex-direction:column;gap:4px;"><span class="mono" style="font-size:0.68rem;color:var(--sage-safe);font-weight:700;">&#10003; #1 Fungal-Safe &amp; 8-Allergen-Free Cheaper Dupe</span><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono dl-conflict-swap-link" style="white-space:normal;font-size:0.73rem;padding:4px 10px;justify-content:center;" data-no-bag-inject="1">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div></div>`
     : `<div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);" style="font-size:0.76rem;color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;padding:4px 0;">&#128274; Clash #${idx + 1} (${escapeHtml(cleanTitle)}) &amp; Chemist Dupe #${idx + 1} Locked &mdash; Enter Email ($0) Below to Reveal &darr;</div><div class="dl-unlocked-c2-proof" style="display:none;"><div style="font-size:0.79rem;line-height:1.38;color:var(--text-secondary);margin-bottom:7px;"><strong style="color:var(--text-primary);">${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(oneLineFix)}</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><a href="${escapeHtml(swap.directUrl)}" data-sovrn-beacon="${escapeHtml(swap.beaconUrl)}" target="_blank" rel="sponsored noopener noreferrer" style="white-space:normal;font-size:0.73rem;padding:4px 10px;" class="affiliate-link-pill mono dl-conflict-swap-link" data-no-bag-inject="1">${escapeHtml(swap.swapLabel)} at ${escapeHtml(swap.retailer)} &rarr;</a></div></div>`;
   return `<div class="conflict-card ${escapeHtml(c.severity)}" data-no-bag-inject="1" style="padding:11px 13px;margin-bottom:7px;border-radius:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap;">
