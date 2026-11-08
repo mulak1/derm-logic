@@ -66,7 +66,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Alternating Retinoid or Hyaluronic Bounce', detail: 'Uses retinoid renewal 2–3 nights a week and pure hyaluronic acid + ceramide recovery on off-nights.' },
       { step: '3. Overnight Water-Bank Sleeping Mask', detail: 'Seals hydration with a non-comedogenic hyaluronic sleeping mask and lip mask.' }
     ],
-    clashWarning: 'Because Sydney uses potent morning Vitamin C (SkinCeuticals C E Ferulic, pH 3.2), she keeps retinoids and exfoliating acids strictly in her nighttime routine to prevent stinging and redness.',
+    clashWarning: 'Because Sydney uses potent morning Vitamin C (SkinCeuticals C E Ferulic, pH 3.2), she keeps retinoids and exfoliating acids strictly in her nighttime routine to prevent stinging and redness. EU CosIng Allergen Note: If you have a dust-mite or shellfish allergy, swap COSRX Snail 96 Mucin for 100% sugarcane Squalane + Panthenol B5.',
     dupeSwap: {
       luxury: 'SkinCeuticals C E Ferulic ($182) + Luxury Hyaluronic Mask ($48)',
       gentleDupe: 'Timeless 20% Vitamin C + E Ferulic ($26) + COSRX Snail 96 Mucin ($25)',
@@ -130,7 +130,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Biologique Recherche Lotion P50 (Press, Don’t Swipe)', detail: 'Presses P50 acid toner into skin with a cotton pad 2–3 nights a week, never on the same night as Retinol.' },
       { step: '3. Snail Mucin + Cicaplast / Healing Balm Cushion', detail: 'Waits 10 minutes after P50, then floods skin with Snail Mucin and seals with a restorative balm.' }
     ],
-    clashWarning: 'Biologique Recherche Lotion P50 has an ultra-low pH (~3.0). Never layer Copper Peptides, Tretinoin, or Vitamin C in the same evening as Lotion P50.',
+    clashWarning: 'Biologique Recherche Lotion P50 has an ultra-low pH (~3.0). Never layer Copper Peptides, Tretinoin, or Vitamin C in the same evening as Lotion P50. EU CosIng Allergen Note: If you have a dust-mite or salicylate allergy, swap Snail Mucin and BHA-containing P50 for Panthenol B5 + 10% Azelaic Acid.',
     dupeSwap: {
       luxury: 'Biologique Recherche Lotion P50 ($115)',
       gentleDupe: 'Paula’s Choice 2% BHA Liquid ($35) or The Ordinary Glycolic 7% ($13)',

@@ -312,6 +312,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
               <span class="badge-safe mono">0/5 Pore-Safe Swaps</span>
               <span class="badge-safe mono">Morning vs. Bedtime Order</span>
               <span class="badge-safe mono">Gentle Barrier Cushioning</span>
+              <a href="/concern/allergic-contact-dermatitis-hypoallergenic-routine" class="badge-clash mono" style="text-decoration:none;">&#10003; EU CosIng 8-Allergen Screen &rarr;</a>
             </div>
           </div>
           <div class="editorial-photo-shell" style="padding:8px;max-height:200px;overflow:hidden;">
@@ -358,6 +359,8 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <a href="/celebrity/sydney-sweeney" class="affiliate-link-pill mono">Sydney Sweeney Routine &rarr;</a>
             <a href="/celebrity/hailey-bieber" class="affiliate-link-pill mono">Hailey Bieber Glazed Shelf &rarr;</a>
+            <a href="/concern/allergic-contact-dermatitis-hypoallergenic-routine" class="affiliate-link-pill mono">&#10003; Allergic Rash &amp; Contact Screen &rarr;</a>
+            <a href="/seo/snail-mucin-and-dust-mite-allergy-skincare-guide" class="affiliate-link-pill mono">Snail Mucin Dust-Mite Swap &rarr;</a>
             <a href="/concern/morning-skincare-under-makeup-no-pilling" class="affiliate-link-pill mono">Zero-Pilling AM Order &rarr;</a>
             <a href="/concern/pregnancy-safe-retinol-swaps-routine" class="affiliate-link-pill mono">Pregnancy-Safe Swaps &rarr;</a>
           </div>
@@ -392,6 +395,7 @@ function renderPaidSocialLpPage({ products, presets, initialAnalysis }) {
           <div class="hero-copy-col">
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
               <span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span>
+              <span class="badge-clash mono">&#10003; 8 Contact-Allergen Screens</span>
               <span class="mono" style="font-size:0.78rem;color:var(--text-secondary);">30-Day Refund Guarantee</span>
             </div>
             <h1 class="hero-h1" style="font-size:clamp(2.5rem,4.5vw,4.2rem);">
