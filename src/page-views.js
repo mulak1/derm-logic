@@ -698,6 +698,8 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
   }).join('');
   const relatedHtml = (relatedPages || []).slice(0, 8).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="porcelain-vessel-core" style="padding:18px 20px;background:var(--bg-surface);text-decoration:none;"><div class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:500;margin-bottom:4px;">Morning &amp; Night Guide</div><div class="serif-display" style="font-weight:400;font-size:1.15rem;color:var(--text-primary);">${escapeHtml(r.title)}</div></a>`).join('');
   const seoBadgeClass = page.compatibilityScore < 55 ? 'badge-clash' : page.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe';
+  const dupe1Obj = products.find((p) => p.id !== primaryProdId && p.id !== secondaryProdId && Number(p.priceUsd) <= 28 && !/fragrance|parfum|snail/i.test(String(p.inciList || ''))) || products.find((p) => p.id === 'vanicream-daily-facial-moisturizer') || primaryProdObj;
+  const comparePairSlug = [primaryProdObj.id || primaryProdId, secondaryProdObj.id || secondaryProdId].sort().join('-vs-');
   const defaultCalcProtocol = page.amRule && page.pmRule
     ? `${escapeHtml(page.amRule)} ${escapeHtml(page.pmRule)}`
     : 'Apply thinnest watery serum first on clean skin, give 60 seconds to absorb cleanly, and seal with broad-spectrum SPF 50 in daylight.';
@@ -727,23 +729,25 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               <span class="badge-safe mono" style="font-size:0.74rem;padding:3px 9px;">8 Contact-Allergen Screens</span>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a href="/compare/${escapeHtml(comparePairSlug)}" class="affiliate-link-pill mono" style="font-size:0.82rem;padding:6px 12px;">2-Product pH Clash Matrix &rarr;</a>
               <a href="/?products=${encodeURIComponent((page.presetProducts || [primaryProdId]).join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono" style="font-size:0.82rem;padding:6px 12px;">&#10003; Screen 8 Allergens ($0) &rarr;</a>
-              <a href="#analyzer" class="affiliate-link-pill mono" style="font-size:0.84rem;padding:6px 14px;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">Test With My Bottles Below &darr;</a>
+              <a href="#analyzer" class="affiliate-link-pill mono" style="font-size:0.84rem;padding:6px 14px;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">Test 2-Product Matrix Below &darr;</a>
             </div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
             <div style="padding:14px 16px;border-radius:14px;background:#FAF8F5;">
-              <div class="mono" style="font-size:0.75rem;color:var(--berry-clash);font-weight:700;margin-bottom:4px;text-transform:uppercase;">01 &middot; Free Proof: Active Compatibility</div>
-              <div style="font-size:0.9rem;color:var(--text-primary);line-height:1.5;">${page.product ? escapeHtml(cleanSummaryFirstSentence) : (page.compatibilityScore < 55 ? 'Layering both actives on the same night lowers active absorption and triggers irritation. Space them into separate routines.' : 'These actives work synergistically without pH destabilization when allowed 60 seconds to absorb.')}</div>
+              <div class="mono" style="font-size:0.75rem;color:var(--berry-clash);font-weight:700;margin-bottom:4px;text-transform:uppercase;">01 &middot; Free Proof: 2-Product pH Clash &amp; 7:30 AM Order</div>
+              <div style="font-size:0.88rem;color:var(--text-primary);line-height:1.5;"><strong>${escapeHtml(primaryProdObj.brand)}</strong> (pH ${primaryProdObj.ph || 3.3}) vs. <strong>${escapeHtml(secondaryProdObj.brand)}</strong> (pH ${secondaryProdObj.ph || 5.5}) &middot; &Delta;pH ${page.deltaPh}. ${escapeHtml(page.amRule || 'Apply water-light active serums first onto dry skin, allow 60 seconds to absorb, and finish with broad-spectrum SPF 50.')}</div>
             </div>
             <div style="padding:14px 16px;border-radius:14px;background:#FAF8F5;">
-              <div class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:700;margin-bottom:4px;text-transform:uppercase;">02 &middot; Free Proof: 7:30 AM Morning Order</div>
-              <div style="font-size:0.9rem;color:var(--text-primary);line-height:1.5;">${escapeHtml(page.amRule || 'Apply water-light active serums first onto dry skin, allow 60 seconds to absorb, and finish with broad-spectrum SPF 50.')}</div>
+              <div class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:700;margin-bottom:4px;text-transform:uppercase;">02 &middot; Free Proof: #1 Fungal-Safe &amp; Allergen-Free Cheaper Dupe</div>
+              <div style="font-size:0.88rem;color:var(--text-primary);line-height:1.5;">&#10003; Unmasked Dupe #1: <a href="/bottle/${escapeHtml(dupe1Obj.id)}" style="color:var(--text-primary);font-weight:700;text-decoration:underline;">${escapeHtml(dupe1Obj.brand)} ${escapeHtml(dupe1Obj.name)} ($${dupe1Obj.priceUsd} &middot; pH ${dupe1Obj.ph})</a> &mdash; Fungal-Acne Safe &amp; 0/8 EU Contact Allergens. <a href="/compare/${escapeHtml(comparePairSlug)}" class="mono" style="font-size:0.75rem;color:var(--sage-safe);font-weight:700;text-decoration:underline;">Compare Side-by-Side &rarr;</a></div>
             </div>
             <div style="padding:14px 16px;border-radius:14px;background:#FAF8F5;">
-              <div class="mono" style="font-size:0.75rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;text-transform:uppercase;">03 &middot; 9:30 PM Bedtime Buffer &amp; Chemist Dupe</div>
-              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.84rem;color:var(--rose-brand);font-weight:600;line-height:1.45;cursor:pointer;">${lockSvgInline}Bedtime Ceramide Sandwich Ratio &amp; 2 Chemist Dupes Locked &mdash; Enter Email Below ($0) to Reveal Free &darr;</div>
-              <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.9rem;color:var(--text-primary);line-height:1.5;">${escapeHtml(page.pmRule || 'Cleanse thoroughly, apply repairing active on dry skin, and seal with a rich ceramide cushion cream.')}</div>
+              <div class="mono" style="font-size:0.75rem;color:var(--honey-warn);font-weight:700;margin-bottom:4px;text-transform:uppercase;">03 &middot; Holdback: Full AM/PM Calendar &amp; Dupe Shopping List</div>
+              <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;line-height:1.45;cursor:pointer;margin-bottom:6px;">${lockSvgInline}9:30 PM Ceramide Sandwich, 4-Night Calendar (.ICS) &amp; Complete Cheaper-Dupe Shopping List Locked ($0 Email) &darr;</div>
+              <form class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'pseo_fold1_${escapeHtml(page.slug)}')" style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1"><input type="email" required class="input-box dl-inline-ics-email" placeholder="Email full AM/PM calendar &amp; dupes ($0)..." aria-label="Email full AM/PM calendar and dupes" style="flex:1 1 140px;min-width:0;padding:6px 10px;font-size:0.74rem;border-radius:999px;background:#FFFFFF;" /><button type="submit" class="btn-primary mono dl-inline-ics-btn" style="padding:6px 11px;min-height:30px;font-size:0.72rem;border-radius:999px;"><span>Unlock ($0) &rarr;</span></button><div class="dl-inline-ics-status mono" style="display:none;width:100%;font-size:0.7rem;color:var(--sage-safe);"></div></form>
+              <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.88rem;color:var(--text-primary);line-height:1.5;margin-top:4px;">${escapeHtml(page.pmRule || 'Cleanse thoroughly, apply repairing active on dry skin, and seal with a rich ceramide cushion cream.')}</div>
             </div>
           </div>
         </div>
