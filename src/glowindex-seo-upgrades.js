@@ -716,7 +716,7 @@ function attachGlowIndexSeoUpgrades(app) {
           }
           const matchedProd = famType === 'bottle' ? CLINICAL_PRODUCTS.find((p) => p.id === slugPart) : CLINICAL_PRODUCTS.find((p) => (p.primaryActives || []).includes(slugPart));
           const simLabel = matchedProd && famType === 'bottle' ? `${matchedProd.brand} ${matchedProd.name.replace(/\s*\([^)]*\)/g, '')}` : slugPart.replace(/-/g, ' ');
-          const simHtml = `${crossLinksHtml}${renderEntityEnvironmentSimulatorHtml(simLabel, slugPart, (matchedProd && matchedProd.id) || 'skinceuticals-ce-ferulic')}`;
+          const simHtml = `${crossLinksHtml}${famType === 'celebrity' || famType === 'concern' ? '' : renderEntityEnvironmentSimulatorHtml(simLabel, slugPart, (matchedProd && matchedProd.id) || 'skinceuticals-ce-ferulic')}`;
           if (out.includes('</table>')) out = out.replace('</table>', `</table>${simHtml}`);
           else if (out.includes('</main>')) out = out.replace('</main>', `<div class="container">${simHtml}</div></main>`);
         }
