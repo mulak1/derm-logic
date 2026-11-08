@@ -133,9 +133,17 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
   </div>
   <div id="in-card-unlock-bar" class="eb-panel-card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-      <div><h2 id="in-card-unlock-title" style="margin:0;font-size:20px;font-family:${t.fontDisplay};font-weight:600;color:${t.textPrimary};">${esc(cfg.unlockBannerTitle)}</h2><div style="font-size:16px;color:${t.textSecondary};margin-top:4px;">Instant self-serve browser fulfillment • 30-day money-back guarantee</div></div>
-      <div id="tab-btn-dossier" style="font-size:14px;font-weight:700;color:${t.safeColor};background:${t.safeSoftBg};padding:6px 14px;border-radius:${t.radiusPill};">Most Popular: $1.99 Phone Routine Card · $1.99 Complete Kit</div>
+      <div><h2 id="in-card-unlock-title" style="margin:0;font-size:20px;font-family:${t.fontDisplay};font-weight:600;color:${t.textPrimary};">${esc(cfg.unlockBannerTitle)}</h2><div style="font-size:16px;color:${t.textSecondary};margin-top:4px;">&#10003; EU CosIng &amp; Lab pH Verified • Instant self-serve browser fulfillment • 30-day money-back guarantee</div></div>
+      <div id="tab-btn-dossier" style="font-size:14px;font-weight:700;color:${t.safeColor};background:${t.safeSoftBg};padding:6px 14px;border-radius:${t.radiusPill};">Most Popular: $0 Free Email Save · $1.99 Complete Kit</div>
     </div>
+    <form id="eb-save-scorecard-bar" class="dl-inline-ics-form" onsubmit="return (window.__dlCaptureFreeIcsLead ? window.__dlCaptureFreeIcsLead(event, 'bottom_unlock_bar') : window.__ebSaveInlineScorecard(event, 'eb-inline-scorecard-email', 'eb-save-scorecard-bar'))" style="margin-top:14px;padding:12px 16px;border-radius:${t.radiusCard};background:${t.safeSoftBg};display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div style="font-size:14px;color:${t.textPrimary};"><strong>Free Step ($0 Email):</strong> Unlock 9:30 PM Bedtime Order, 4-Night Calendar (.ICS) &amp; 2 Chemist Dupes</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex:1;max-width:440px;justify-content:flex-end;">
+        <input type="email" id="eb-inline-scorecard-email" class="dl-inline-ics-email" placeholder="Enter your email for free AM/PM + 2 dupes ($0)..." required style="flex:1;min-width:200px;padding:8px 12px;border-radius:${t.radiusPill};border:1px solid ${t.safeBorder};background:#FFFFFF;color:${t.textPrimary};font-size:13.5px;" />
+        <button type="submit" class="dl-inline-ics-btn" style="padding:8px 16px;border-radius:${t.radiusPill};background:${t.safeColor};color:#FFFFFF;font-weight:700;font-size:13.5px;border:none;white-space:nowrap;">Unlock AM/PM &amp; 2 Dupes ($0) →</button>
+      </div>
+      <div class="dl-inline-ics-status" style="display:none;width:100%;font-size:13px;color:${t.safeColor};margin-top:4px;"></div>
+    </form>
     <div class="eb-gbb-grid">
       <div class="eb-tier-card featured">
         <div><div class="matrix-price" style="font-family:${t.fontSans};font-size:30px;font-weight:700;margin:4px 0 8px 0;color:${t.textPrimary};">$1.99 <span style="font-family:${t.fontSans};font-size:14px;font-weight:500;color:${t.textMuted};">one-time · no subscription</span></div><p style="font-size:16px;color:${t.textSecondary};margin:0 0 14px 0;line-height:1.5;">${esc(cfg.tier1Desc || `Instantly unlocks ${cfg.deliverableName}, downloadable exports, and 24-hour recalculations.`)}</p></div>
@@ -222,6 +230,7 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     <a href="#in-card-unlock-bar" id="sticky-sub-benefit" style="font-size:13px;color:${t.textSecondary};font-weight:600;text-decoration:none;">Custom 9:16 Lockscreen Card + 4-Night Calendar (.ICS) + 2 Chemist Dupes</a>
   </div>
   <div style="display:flex;align-items:center;gap:6px;">
+    <button type="button" class="eb-action-btn" style="background:${t.brandSoftBg};color:${t.brandPrimary};font-weight:700;border:none;padding:7px 12px;border-radius:${t.radiusPill};" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)">Email AM/PM ($0)</button>
     <button type="button" id="btn-sticky-vault-unlock" class="eb-action-btn" style="background:${t.safeColor};color:#FFFFFF;font-weight:700;border:none;padding:7px 14px;border-radius:${t.radiusPill};" onclick="window.__ebCheckout('flash_pass', true)">Complete 3-File Kit ($1.99) →</button>
     <button type="button" id="btn-sticky-dock-close" aria-label="Hide bottom bar" title="Hide bottom bar" onclick="try{sessionStorage.setItem('eb_dock_dismissed','1');}catch(_){}var d=document.getElementById('sticky-mobile-bar');if(d){d.classList.remove('eb-dock-visible');d.style.display='none';}" style="background:transparent;border:none;color:${t.textMuted};font-size:16px;font-weight:700;line-height:1;padding:4px 6px;cursor:pointer;">×</button>
   </div>
@@ -598,6 +607,10 @@ function buildClientRuntimeScript(cfg) {
     var safeEmail = email.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     var r4 = document.querySelector('tr.eb-blurred-deliverable');
     if (r4) { r4.classList.remove('eb-blurred-deliverable'); r4.style.filter = 'none'; r4.style.background = CFG.theme.safeSoftBg; }
+    window.__dlSampleEmailUnlocked = true;
+    document.querySelectorAll('.dl-locked-badge-c2').forEach(function(el) { el.style.display = 'none'; });
+    document.querySelectorAll('.dl-unlocked-c2-proof').forEach(function(el) { el.style.display = 'block'; });
+    if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas();
     fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'zeigarnik_row4_reveal' }) })
       .then(function() {
         var bar = document.getElementById(formId || 'eb-save-scorecard-bar');
@@ -642,6 +655,10 @@ function buildClientRuntimeScript(cfg) {
     if (ev && ev.preventDefault) ev.preventDefault();
     var input = document.getElementById('eb-ouibounce-email'), email = input ? input.value.trim() : ''; if (!email) return false;
     var r4 = document.querySelector('tr.eb-blurred-deliverable'); if (r4) { r4.classList.remove('eb-blurred-deliverable'); r4.style.background = CFG.theme.safeSoftBg; }
+    window.__dlSampleEmailUnlocked = true;
+    document.querySelectorAll('.dl-locked-badge-c2').forEach(function(el) { el.style.display = 'none'; });
+    document.querySelectorAll('.dl-unlocked-c2-proof').forEach(function(el) { el.style.display = 'block'; });
+    if (window.__dlRenderWallpaperCanvas) window.__dlRenderWallpaperCanvas();
     fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'exit_intent_downsell' }) }).then(function() { var btn = document.getElementById('btn-ouibounce-submit'), desc = document.getElementById('eb-ouibounce-desc'); if (btn) btn.textContent = 'Summary Sent!'; if (desc) desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">AM/PM Summary &amp; Dupes Sent!</strong> <a href="/buy/flash_pass" style="color:' + CFG.theme.brandPrimary + ';font-weight:700;">Save Complete 3-File Routine Kit ($1.99) →</a>'; }).catch(function() {});
     return false;
   };

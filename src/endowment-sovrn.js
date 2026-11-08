@@ -836,7 +836,17 @@ const ENDOWMENT_CLIENT_SCRIPT = `
   window.__dlFocusSampleEmail = function(triggerEl) {
     if (window.__ebLogEvent) window.__ebLogEvent('view_paywall', { source: 'locked_proof_tap' });
     var localRoot = triggerEl && triggerEl.closest ? (triggerEl.closest('#dl-res-step-2') || triggerEl.closest('#liveResultsContainer') || triggerEl.closest('#dl-pseo-top-conversion-bar')) : null;
-    var inp = (localRoot && localRoot.querySelector('.dl-inline-ics-email')) || document.getElementById('dl-inline-sample-email') || document.querySelector('.dl-inline-ics-email');
+    var inp = localRoot && localRoot.querySelector('.dl-inline-ics-email');
+    if (!inp && triggerEl && triggerEl.getBoundingClientRect) {
+      var tTop = triggerEl.getBoundingClientRect().top, bestDist = Infinity;
+      document.querySelectorAll('.dl-inline-ics-email').forEach(function(cand) {
+        if (cand.offsetParent !== null) {
+          var d = Math.abs(cand.getBoundingClientRect().top - tTop);
+          if (d < bestDist) { bestDist = d; inp = cand; }
+        }
+      });
+    }
+    if (!inp) inp = document.getElementById('dl-inline-sample-email') || document.querySelector('.dl-inline-ics-email');
     if (inp) {
       inp.scrollIntoView({ behavior: 'smooth', block: 'center' });
       var bar = inp.closest('form') || document.getElementById('dl-subpage-top-email-bar');
