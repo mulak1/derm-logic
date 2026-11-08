@@ -223,6 +223,11 @@ function renderGrowthPageHtml(cfg, item, kind) {
           <span class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">&#10003; EU COSING &amp; LAB PH VERIFIED &middot; ${initialAnalysis.compatibilityScore}/100 HARMONY &middot; 30-DAY GUARANTEE</span>
           <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);font-weight:400;">What happens on your skin &amp; the exact $0 timing fix:</strong>
         </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+          <button type="button" id="dl-growth-top-dupe-btn" onclick="if(window.__dlQuickOpenPass)window.__dlQuickOpenPass('dupe',this)" class="mono" style="font-size:0.72rem;font-weight:600;color:var(--sage-safe);background:var(--bg-surface);border:1px solid rgba(30,77,59,0.28);padding:5px 10px;border-radius:999px;cursor:pointer;">&#10003; $86 Dupe 9:16 Card &rarr;</button>
+          <button type="button" id="dl-growth-top-pass-btn" onclick="if(window.__dlQuickOpenPass)window.__dlQuickOpenPass('luxury',this)" class="mono" style="font-size:0.72rem;font-weight:600;color:var(--rose-brand);background:var(--bg-surface);border:1px solid var(--border-hairline);padding:5px 10px;border-radius:999px;cursor:pointer;">Preview 9:16 Card &rarr;</button>
+          <button type="button" id="dl-growth-top-copy-btn" onclick="if(window.__dlCopyShareableShelfLink)window.__dlCopyShareableShelfLink('dupe',this)" class="mono" style="font-size:0.72rem;font-weight:600;color:var(--text-primary);background:var(--bg-surface);border:1px solid var(--border-hairline);padding:5px 10px;border-radius:999px;cursor:pointer;">&#128279; Copy Shelf Link</button>
+        </div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
         <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
@@ -282,6 +287,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
         <span style="font-size:13px;font-weight:600;color:${escXml(primaryCol)};">Live Interactive Calculator:</span>
         <input id="eb-cnn-wb-input" type="text" value="${escXml(item.target)}" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:${t.radiusCard || '0px'};border:1px solid ${escXml(t.border)};background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-size:13.5px;width:155px;" />
         <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunGrowthWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}')" style="padding:6px 13px;border-radius:${t.radiusPill || '0px'};border:none;background:${escXml(primaryCol)};color:#FFFFFF;font-size:13.5px;font-weight:600;cursor:pointer;">Check Score ↗</button>
+        <button id="dl-growth-wb-copy-btn" type="button" onclick="if(window.__dlCopyShareableShelfLink)window.__dlCopyShareableShelfLink('dupe',this)" class="mono" style="padding:5px 10px;border-radius:999px;border:1px solid var(--border-hairline);background:var(--bg-oat);color:var(--text-primary);font-size:0.72rem;font-weight:600;cursor:pointer;">&#128279; Copy Shelf Link</button>
         <a id="eb-growth-permalink-btn" href="/scan/${escXml(encodeURIComponent(item.target))}" style="font-size:13px;font-weight:500;color:${escXml(t.textSecondary)};text-decoration:underline;padding:2px 6px;">Full Report ↗</a>
       </div>
       <div id="eb-live-cnn-readout" style="font-variant-numeric:tabular-nums;font-size:13px;color:${escXml(t.safeColor)};font-weight:600;">${escXml(item.target)} → ${escXml(item.metricA || item.scoreA)}</div>
@@ -305,6 +311,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
           <button id="eb-growth-row4-btn" type="submit" style="padding:8px 14px;border-radius:${t.radiusPill || '999px'};background:${escXml(t.safeColor)};color:#FFFFFF;border:none;font-size:13px;font-weight:700;cursor:pointer;">${isDerm ? 'Unlock Free Rules ($0) →' : 'Reveal Row #4 ($0) →'}</button>
         </form>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <button id="dl-growth-row4-copy-btn" type="button" onclick="if(window.__dlCopyShareableShelfLink)window.__dlCopyShareableShelfLink('dupe',this)" class="mono" style="padding:8px 12px;border-radius:999px;border:1px solid var(--border-hairline);background:var(--bg-surface);color:var(--text-primary);font-size:0.74rem;font-weight:600;cursor:pointer;">&#128279; Copy Shelf Link</button>
           <a href="/buy/flash_pass" rel="nofollow" style="padding:9px 16px;border-radius:${t.radiusPill || '0px'};background:${escXml(primaryCol)};color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">${isDerm ? 'Complete 3-File Routine Kit ($1.99) →' : 'Get Complete 3-File Pack ($1.99) →'}</a>
         </div>
       </div>
