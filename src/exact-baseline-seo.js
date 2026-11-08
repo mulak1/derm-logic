@@ -727,9 +727,9 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
   const isDerm = cfg.moduleId === 'derm_logic';
   const fmtScanTitle = (raw) => isDerm ? ({ 'VitC-AM-Peptides-PM': 'Morning Vitamin C + Bedtime Copper Peptides', 'Ceramide-Tretinoin-Buffer': 'Ceramide Cushion + Tretinoin 0.05%', 'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5%', 'BHA2-SnailMucin-Stack': '2% BHA + Snail Mucin 96% Essence', 'VitC+Cu': 'Vitamin C + Copper Peptides (Same Routine)', 'Tret+BPO': 'Tretinoin 0.05% + Benzoyl Peroxide (Same Step)', 'TikTok': '7-Active Acid & Retinol Stack' }[raw] || raw) : raw;
   const medals = [
-    { icon: isDerm ? '#1 MOST LOVED' : '#1 LEADER', bg: t.brandSoftBg, text: t.brandPrimary },
-    { icon: isDerm ? '#2 BARRIER FAVORITE' : '#2 RUNNER-UP', bg: t.subtleBg, text: t.textPrimary },
-    { icon: isDerm ? '#3 REDNESS SAFE' : '#3 TOP TIER', bg: t.safeSoftBg, text: t.safeColor }
+    { icon: 'Clinical Protocol', bg: t.brandSoftBg, text: t.brandPrimary },
+    { icon: 'Barrier Safe', bg: t.subtleBg, text: t.textPrimary },
+    { icon: 'Redness Neutral', bg: t.safeSoftBg, text: t.safeColor }
   ];
   const podiumCards = top3.map((s, i) => {
     const m = medals[i] || medals[2];
@@ -737,7 +737,7 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
           <span style="padding:3px 9px;border-radius:${t.radiusPill};background:${m.bg};color:${m.text};font-size:12.5px;font-weight:600;">${m.icon}</span>
-          <span style="padding:3px 10px;border-radius:${t.radiusPill};background:${t.safeSoftBg};color:${t.safeColor};font-family:${t.fontSans};font-variant-numeric:tabular-nums;font-size:13px;font-weight:600;">Grade ${escHtml(s.grade)} · ${s.score}/100</span>
+          <span style="font-size:12.5px;color:${t.textSecondary};font-family:${t.fontSans};">Verified Routine</span>
         </div>
         <div style="font-size:17px;font-weight:500;color:${t.textPrimary};margin-bottom:4px;">${escHtml(fmtScanTitle(s.target))}</div>
         <div style="font-size:14px;color:${t.textSecondary};margin-bottom:10px;">${escHtml(s.kpi1)} · ${escHtml(s.kpi2)}</div>
