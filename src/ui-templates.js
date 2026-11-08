@@ -598,10 +598,11 @@ function renderAnalysisResultHtml(res) {
             <div>
               <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px;">
                 <span class="badge-safe mono" style="font-size:0.68rem;padding:2px 8px;">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span>
+                <span class="badge-safe mono" style="font-size:0.68rem;padding:2px 8px;">Save $168/Bottle Dupe Arbitrage</span>
                 <span class="mono" style="font-size:0.7rem;color:var(--text-secondary);">30-Day Refund Guarantee</span>
               </div>
               <strong class="serif-display" style="font-size:1.08rem;color:var(--text-primary);font-weight:400;display:block;">Unlock 9:30 PM Steps 2&ndash;3, 4-Night Calendar &amp; 2nd Chemist Dupe ($0)</strong>
-              <span style="font-size:0.78rem;color:var(--text-secondary);display:block;margin-top:2px;"><strong style="color:var(--sage-safe);">&#10003; Free Dupe Proof #1:</strong> <a href="${escapeHtml(topSwap.directUrl)}" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)}</a> &middot; <span class="dl-locked-badge-c2" style="color:var(--text-primary);font-weight:600;">&#128274; Dupe #2 + Bedtime Buffer Sent Free ($0)</span></span>
+              <span style="font-size:0.78rem;color:var(--text-secondary);display:block;margin-top:2px;"><strong style="color:var(--sage-safe);">&#10003; Specimen #1 Dupe Proof:</strong> <a href="${escapeHtml(topSwap.directUrl)}" target="_blank" rel="sponsored noopener noreferrer" style="color:var(--rose-brand);text-decoration:underline;font-weight:600;" data-no-bag-inject="1">${escapeHtml(topSwap.swapLabel)} at ${escapeHtml(topSwap.retailer)}</a> &middot; <button type="button" class="mono" onclick="window.__dlSwitchResultStep(3)" style="background:none;border:none;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;padding:0;font-size:0.76rem;">Preview 9:16 Lock-Screen Card &rarr;</button></span>
             </div>
           </div>
           <form id="dl-results-inline-email-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, 'results_card')" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
