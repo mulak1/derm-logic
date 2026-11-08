@@ -114,9 +114,10 @@ function renderAtelierVanityDrawerHtml() {
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px;flex-wrap:wrap;">
           <span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Tap any bottle on your shelf (<span id="dl-tray-filled-label">5/5 Bottles</span>):</span>
           <div style="display:inline-flex;gap:5px;flex-wrap:wrap;">
-            <button type="button" class="mono" onclick="window.__dlDupeAllFiveVessels('dupe')" style="background:var(--sage-bg);color:var(--sage-safe);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Try Affordable Dupes ($86) &rarr;</button>
-            <button type="button" class="mono" onclick="window.__dlDupeAllFiveVessels('allergy')" style="background:var(--rose-pill-bg);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Screen 8 Allergens ($0) &rarr;</button>
-            <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:600;cursor:pointer;">2-Product pH Clash Matrix &rarr;</button>
+            <button type="button" id="dl-tray-preview-pass-btn" class="mono" onclick="window.__dlSetDossierTab('pass')" style="background:var(--rose-brand);color:var(--accent-ink);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Preview 9:16 Phone Card &rarr;</button>
+            <button type="button" class="mono" onclick="window.__dlDupeAllFiveVessels('dupe')" style="background:var(--sage-bg);color:var(--sage-safe);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Affordable Dupes ($86) &rarr;</button>
+            <button type="button" class="mono" onclick="window.__dlDupeAllFiveVessels('allergy')" style="background:var(--rose-pill-bg);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">8-Allergen Safe ($0) &rarr;</button>
+            <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:600;cursor:pointer;">pH Clash Matrix &rarr;</button>
           </div>
         </div>
         <div id="dl-vanity-visual-tray" class="dl-tray-lineup-grid"></div>
@@ -143,6 +144,7 @@ function renderAtelierVanityDrawerHtml() {
             <button type="button" class="dl-vanity-swatch-btn active mono" data-finish="velvet_satin" onclick="window.__dlSetFinish('velvet_satin', this)">Velvet Satin</button>
             <button type="button" class="dl-vanity-swatch-btn mono" data-finish="cloud_matte" onclick="window.__dlSetFinish('cloud_matte', this)">Soft Matte</button>
           </div>
+          <button type="button" id="dl-slots-to-pass-btn" class="mono" onclick="window.__dlSetDossierTab('pass')" style="width:100%;padding:7px 12px;border-radius:999px;background:var(--bg-surface);color:var(--rose-brand);border:none;font-size:0.74rem;font-weight:700;cursor:pointer;text-align:center;">Preview Your Calibrated 9:16 Lock-Screen Card &rarr;</button>
         </div>
       </div>
       <div id="dl-dossier-panel-clashes" style="display:none;flex-direction:column;gap:8px;"></div>
@@ -879,8 +881,8 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
     window.__dlCloseVanityDrawer = function() { var d = document.getElementById('dl-atelier-vanity-drawer'); if (d) d.style.display = 'none'; };
     window.__dlSelectVanitySlot = function(idx) { window.__dlVanityState.activeSlotIdx = idx; window.__dlVanityState.dossierTab = 'slots'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); };
     window.__dlPickSlotBottle = function(slotIdx, choiceIdx) { window.__dlVanityState.slotSelections[slotIdx] = choiceIdx; if (window.__dlVanityState.customSlotBottle) delete window.__dlVanityState.customSlotBottle[slotIdx]; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); window.__dlRefreshPageAddButtons(); };
-    window.__dlSetUndertone = function(undertone, stayOnPass) { window.__dlVanityState.undertone = undertone || 'neutral_ivory'; window.__dlVanityState.activeSlotIdx = 3; if (!stayOnPass && window.__dlVanityState.dossierTab !== 'pass') window.__dlVanityState.dossierTab = 'slots'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); };
-    window.__dlSetFinish = function(finish, stayOnPass) { window.__dlVanityState.finish = finish || 'velvet_satin'; window.__dlVanityState.activeSlotIdx = 3; if (!stayOnPass && window.__dlVanityState.dossierTab !== 'pass') window.__dlVanityState.dossierTab = 'slots'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); };
+    window.__dlSetUndertone = function(undertone, stayOnPass) { window.__dlVanityState.undertone = undertone || 'neutral_ivory'; window.__dlVanityState.activeSlotIdx = 3; if (stayOnPass !== true && window.__dlVanityState.dossierTab !== 'pass') window.__dlVanityState.dossierTab = 'slots'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); };
+    window.__dlSetFinish = function(finish, stayOnPass) { window.__dlVanityState.finish = finish || 'velvet_satin'; window.__dlVanityState.activeSlotIdx = 3; if (stayOnPass !== true && window.__dlVanityState.dossierTab !== 'pass') window.__dlVanityState.dossierTab = 'slots'; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); };
     window.__dlSetCustomShelfTitle = function(title) { window.__dlVanityState.customName = title || ''; saveVanityState(window.__dlVanityState); window.__dlRenderVanityDrawer(); };
     window.__dlCyclePassSlotBottle = function(sIdx) { var st = window.__dlVanityState, ch = (SLOT_OPTIONS[sIdx] && SLOT_OPTIONS[sIdx].choices) || []; if (!ch.length) return; if (st.customSlotBottle) delete st.customSlotBottle[sIdx]; st.slotSelections[sIdx] = ((st.slotSelections[sIdx] >= 0 ? st.slotSelections[sIdx] : 0) + 1) % ch.length; st.dossierTab = 'pass'; saveVanityState(st); window.__dlRenderVanityDrawer(); window.__dlRefreshPageAddButtons(); };
 
