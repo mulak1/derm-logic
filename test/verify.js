@@ -444,6 +444,11 @@ async function runVerification() {
     await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded' });
     const homeBodyText = await page.evaluate(() => document.body ? document.body.innerText : '');
     assert(!bannedJargonRegex.test(homeBodyText), `Banned robotic/textbook jargon found in visible home page text: ${homeBodyText.match(bannedJargonRegex)?.[0]}`);
+    assert.strictEqual(await page.locator('#allergyTriggerBar').count(), 1, 'Homepage checker must include #allergyTriggerBar for allergic reactions selection');
+    await page.click('#allergyTriggerBar button[data-allergy="salicylates"]');
+    await page.waitForTimeout(220);
+    const allergyAlertText = await page.locator('#allergyAlertCard').first().innerText();
+    assert(allergyAlertText.includes('Salicylates / BHA'), 'Selecting Salicylates / BHA allergy chip must flag Salicylic Acid in #allergyAlertCard');
     await desktopCtx.close();
 
     // Mobile Viewport (390x844) — Verify zero horizontal overflow & zero floating overlapping boxes

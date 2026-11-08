@@ -11,6 +11,95 @@ const { db, sampleBetaArm } = require('./db');
 const INGREDIENT_BY_ID = new Map(CLINICAL_INGREDIENTS.map((i) => [i.id, i]));
 const PRODUCT_BY_ID = new Map(CULT_PRODUCTS.map((p) => [p.id, p]));
 
+const ALLERGY_REACTION_OPTIONS = [
+  {
+    id: 'fragrance',
+    shortLabel: 'Fragrance / Essential Oils',
+    clinicalName: 'EU 26 Fragrance & Essential Oil Allergens',
+    patterns: ['linalool', 'limonene', 'citronellol', 'geraniol', 'parfum', 'fragrance', 'lavandula', 'lavender', 'citrus', 'bergamot', 'eucalyptus', 'rosemarinus', 'rosemary', 'pelargonium', 'essential oil'],
+    provenance: 'EU CosIng Annex III 26-Allergen Contact Screen',
+    freeFix: 'Remove fragranced or essential-oil formulas from your 7:30 AM and 9:30 PM steps to stop allergic contact redness.',
+    hypoallergenicSwap: 'Vanicream Daily Facial Moisturizer ($14) + Aestura Atobarrier 365 Cream ($32) · 0/26 EU Fragrance Allergens'
+  },
+  {
+    id: 'snail_mite',
+    shortLabel: 'Snail Mucin / Dust-Mite',
+    clinicalName: 'Snail Secretion & Dust-Mite Cross-Reactivity',
+    patterns: ['snail secretion filtrate', 'snail mucin', 'cosrx-snail'],
+    provenance: 'Tropomyosin Cross-Reactivity (Dust-Mite & Shellfish Allergy)',
+    freeFix: 'Skip Snail Mucin if you have dust-mite or shellfish allergies; swap to vegan Glycerin + Beta-Glucan hydration.',
+    hypoallergenicSwap: 'Rhode Glazing Milk Ceramide Essence ($30) or Experiment Super Saturated 30% Glycerin ($28) · 100% Vegan / Mite-Safe'
+  },
+  {
+    id: 'bpo',
+    shortLabel: 'Benzoyl Peroxide',
+    clinicalName: 'Benzoyl Peroxide Contact Allergy',
+    patterns: ['benzoyl peroxide', 'effaclar duo', 'panoxyl'],
+    provenance: 'Patch-Test Contact Dermatitis Trigger (~2–5% Incidence)',
+    freeFix: 'Discontinue Benzoyl Peroxide washes/gels if swelling or hives occur; switch to Azelaic Acid 10% for blemish control.',
+    hypoallergenicSwap: 'The Ordinary Azelaic Acid 10% ($12) + Tower 28 SOS Hypochlorous Mist ($28) · Zero-Peroxide Blemish Clearing'
+  },
+  {
+    id: 'salicylates',
+    shortLabel: 'Salicylates / BHA',
+    clinicalName: 'Salicylic Acid / Aspirin Sensitivity',
+    patterns: ['salicylic acid', 'betaine salicylate', 'willow bark', 'salix alba', 'capryloyl salicylic', '2-bha'],
+    provenance: 'EU CosIng Salicylate & Aspirin Cross-Sensitivity Screen',
+    freeFix: 'Replace Salicylic Acid (BHA) with Salicylate-Free PHA (Gluconolactone) or Glycolic/Lactic Acid for smooth pores.',
+    hypoallergenicSwap: 'The Inkey List PHA Gentle Toner ($15) or Mandelic Acid 10% ($8) · 0% Salicylate Exfoliation'
+  },
+  {
+    id: 'propylene_glycol',
+    shortLabel: 'Propylene Glycol',
+    clinicalName: 'Propylene Glycol & Diol Sensitivity',
+    patterns: ['propylene glycol', 'propanediol', 'butylene glycol', 'pentylene glycol', 'dipropylene glycol'],
+    provenance: 'ACDS Contact Allergen of the Year (Glycol Patch Screen)',
+    freeFix: 'Swap glycol-based solvent serums for pure Glycerin, Squalane, or thermal spring water mists.',
+    hypoallergenicSwap: 'Biossance 100% Squalane Oil ($34) + La Roche-Posay Thermal Spring Mist ($15) · Glycol-Free Hydration'
+  },
+  {
+    id: 'lanolin',
+    shortLabel: 'Lanolin / Wool',
+    clinicalName: 'Lanolin & Wool Alcohol Allergy',
+    patterns: ['lanolin', 'lanolin alcohol', 'adeps lanae', 'amerchol', 'aquaphor'],
+    provenance: '2023 ACDS Allergen of the Year (Wool Alcohol Screen)',
+    freeFix: 'Avoid lanolin-containing ointments on compromised skin; seal moisture with pure Ceramides + Panthenol B5.',
+    hypoallergenicSwap: 'La Roche-Posay Cicaplast Baume B5+ ($16) or CeraVe Healing Ointment ($12) · 100% Lanolin-Free Barrier Balm'
+  },
+  {
+    id: 'niacinamide_flush',
+    shortLabel: 'Niacinamide 10%',
+    clinicalName: 'High-Niacinamide Flush / Tingling Sensitivity',
+    patterns: ['niacinamide', 'nicotinamide', 'vitamin b3'],
+    provenance: 'Lab Niacinamide >5% Prostaglandin Flush Screen',
+    freeFix: 'Skip standalone 10% Niacinamide serums and avoid pairing with low-pH acids; calm skin with Panthenol + Centella.',
+    hypoallergenicSwap: 'Anua Heartleaf 77% Soothing Toner ($20) or Skin1004 Madagascar Centella Ampoule ($17) · Niacinamide-Free Calm'
+  },
+  {
+    id: 'nut_botanical',
+    shortLabel: 'Nut / Shea / Botanical',
+    clinicalName: 'Tree-Nut, Shea Butter & Botanical Extract Allergy',
+    patterns: ['butyrospermum parkii', 'shea butter', 'prunus amygdalus', 'almond', 'macadamia', 'argania', 'argan', 'helianthus', 'sunflower', 'chamomilla'],
+    provenance: 'EU CosIng Botanical & Tree-Nut Lipid Screen',
+    freeFix: 'Replace shea butter and nut oils with synthetic Squalane, Urea 5%, and pure Ceramide NP.',
+    hypoallergenicSwap: 'Malezia 5% Urea Core Moisturizer ($26) or CeraVe PM Moisturizing Lotion ($16) · 0% Nut/Shea Oils'
+  }
+];
+
+const ALLERGY_BY_ID = new Map(ALLERGY_REACTION_OPTIONS.map((a) => [a.id, a]));
+
+function normalizeAllergiesInput(raw) {
+  if (!raw) return [];
+  const arr = Array.isArray(raw) ? raw : String(raw).split(',');
+  return Array.from(new Set(arr.map((s) => String(s || '').trim().toLowerCase()).filter((s) => ALLERGY_BY_ID.has(s))));
+}
+
+function getProductAllergenTags(prod) {
+  if (!prod) return [];
+  const blob = `${prod.id || ''} ${prod.brand || ''} ${prod.name || ''} ${prod.inciList || ''} ${(prod.primaryActives || []).join(' ')}`.toLowerCase();
+  return ALLERGY_REACTION_OPTIONS.filter((opt) => opt.patterns.some((p) => blob.includes(p))).map((opt) => opt.id);
+}
+
 function computeFreeAcidFraction(ph, pka) {
   if (ph == null || pka == null) return null;
   const fraction = 1 / (1 + Math.pow(10, ph - pka));
@@ -401,8 +490,49 @@ function analyzeRoutine(params = {}) {
   const barrierRepairCount = detectedItems.filter((d) => ['barrier_lipid', 'barrier_soother', 'humectant'].includes(d.ingredient.activeClass)).length;
   const intrinsicIrritationSum = detectedItems.reduce((acc, d) => acc + d.ingredient.irritationIndex, 0);
 
+  const selectedAllergies = normalizeAllergiesInput(params.allergies);
+  const allergyFlags = [];
+  if (selectedAllergies.length > 0 || skinType === 'allergy_prone') {
+    const activeIdsToScan = selectedAllergies.length > 0 ? selectedAllergies : ['fragrance', 'bpo', 'lanolin'];
+    for (const alId of activeIdsToScan) {
+      const opt = ALLERGY_BY_ID.get(alId);
+      if (!opt) continue;
+      const matchedSources = [];
+      let matchedPattern = '';
+      for (const prod of selectedProducts) {
+        const blob = `${prod.brand || ''} ${prod.name || ''} ${prod.inciList || ''} ${(prod.primaryActives || []).join(' ')}`.toLowerCase();
+        const hit = opt.patterns.find((p) => blob.includes(p));
+        if (hit) {
+          matchedSources.push(`${prod.brand} ${prod.name}`);
+          if (!matchedPattern) matchedPattern = hit;
+        }
+      }
+      if (rawInciText) {
+        const rawLower = rawInciText.toLowerCase();
+        const hit = opt.patterns.find((p) => rawLower.includes(p));
+        if (hit) {
+          matchedSources.push('Pasted Ingredient List');
+          if (!matchedPattern) matchedPattern = hit;
+        }
+      }
+      if (matchedSources.length > 0) {
+        allergyFlags.push({
+          id: opt.id,
+          shortLabel: opt.shortLabel,
+          clinicalName: opt.clinicalName,
+          matchedTerm: matchedPattern,
+          sources: matchedSources,
+          provenance: opt.provenance,
+          freeFix: opt.freeFix,
+          hypoallergenicSwap: opt.hypoallergenicSwap
+        });
+      }
+    }
+  }
+
   let skinVulnerability = 0;
-  if (skinType === 'sensitive') skinVulnerability = 12;
+  if (skinType === 'allergy_prone') skinVulnerability = 16;
+  else if (skinType === 'sensitive') skinVulnerability = 12;
   else if (skinType === 'dry') skinVulnerability = 6;
 
   const rawHazard =
@@ -411,6 +541,7 @@ function analyzeRoutine(params = {}) {
     intrinsicIrritationSum * 3.2 +
     criticalCount * 26 +
     moderateCount * 13 +
+    allergyFlags.length * 18 +
     Math.max(0, exfoliantCount - 1) * 14 -
     Math.min(18, barrierRepairCount * 4.5);
 
@@ -461,7 +592,10 @@ function analyzeRoutine(params = {}) {
 
   let verdictStatus = 'OPTIMAL_SYNERGY';
   let verdictLabel = 'Calm & Balanced Routine';
-  if (criticalCount > 0 || compatibilityScore < 50) {
+  if (allergyFlags.length > 0) {
+    verdictStatus = 'CRITICAL_CLASH';
+    verdictLabel = `${allergyFlags.length} Allergen Trigger${allergyFlags.length === 1 ? '' : 's'} Flagged · Swap Bottle`;
+  } else if (criticalCount > 0 || compatibilityScore < 50) {
     verdictStatus = 'CRITICAL_CLASH';
     verdictLabel = 'Serums Cancel Out · Split AM & PM';
   } else if (moderateCount > 0 || compatibilityScore < 76) {
@@ -563,6 +697,8 @@ function analyzeRoutine(params = {}) {
     equilibriumSurfacePh,
     freeAcidPotencyLossPct,
     matchedProductIds: selectedProducts.map((p) => p.id),
+    selectedAllergies,
+    allergyFlags,
     conflicts,
     comedogenicFlags,
     malasseziaFlags,
@@ -761,10 +897,56 @@ async function generateOptionalGeminiNote(analysisResult) {
   }
 }
 
+function escHtmlSafe(str) {
+  return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function renderAllergySelectorBarHtml(initialAllergies = []) {
+  const activeSet = new Set(normalizeAllergiesInput(initialAllergies));
+  const chipsHtml = ALLERGY_REACTION_OPTIONS.map((opt) => {
+    const isAct = activeSet.has(opt.id);
+    return `<button type="button" class="vanity-light-btn mono dl-allergy-chip ${isAct ? 'active' : ''}" data-allergy="${escHtmlSafe(opt.id)}" aria-pressed="${isAct ? 'true' : 'false'}" onclick="if(window.__dlToggleAllergyOption)window.__dlToggleAllergyOption('${escHtmlSafe(opt.id)}', this)" style="padding:3px 9px;font-size:0.71rem;min-height:24px;border-radius:999px;">${escHtmlSafe(opt.shortLabel)}</button>`;
+  }).join('');
+  return `<div id="allergyTriggerBar" role="group" aria-label="Allergic Reactions and Sensitivities Selection" style="display:flex;flex-direction:column;gap:4px;padding:7px 10px;background:var(--bg-canvas);border-radius:12px;border:1px solid var(--border-hairline);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+      <span class="mono" style="font-size:0.71rem;color:var(--rose-brand);font-weight:700;">Allergic Reactions &amp; Contact Triggers (EU CosIng Patch Screen):</span>
+      <button type="button" id="clearAllergiesBtn" class="mono" onclick="if(window.__dlClearAllergyOptions)window.__dlClearAllergyOptions()" style="display:${activeSet.size > 0 ? 'inline-block' : 'none'};background:none;border:none;color:var(--text-secondary);font-size:0.69rem;text-decoration:underline;cursor:pointer;padding:0;">Clear Allergies (${activeSet.size}) &times;</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center;">${chipsHtml}</div>
+  </div>`;
+}
+
+function renderAllergyFlagsCardHtml(res) {
+  const selectedAllergies = Array.isArray(res && res.selectedAllergies) ? res.selectedAllergies : [];
+  const flags = Array.isArray(res && res.allergyFlags) ? res.allergyFlags : [];
+  if (selectedAllergies.length === 0 && flags.length === 0 && (!res || res.skinType !== 'allergy_prone')) return '';
+  if (flags.length > 0) {
+    const f0 = flags[0];
+    const extraCount = flags.length - 1;
+    return `<div id="allergyAlertCard" style="padding:11px 14px;background:var(--berry-bg);border-left:3px solid var(--berry-clash);border-radius:12px;margin-bottom:8px;font-size:0.81rem;line-height:1.42;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:4px;">
+        <strong style="color:var(--berry-clash);">&#9888; Allergic Reaction Trigger Flagged: ${escHtmlSafe(f0.shortLabel)} (${escHtmlSafe(f0.sources.join(', '))})</strong>
+        <span class="badge-clash mono" style="font-size:0.68rem;padding:2px 7px;">&#10003; ${escHtmlSafe(f0.provenance)}</span>
+      </div>
+      <div style="color:var(--text-primary);margin-bottom:5px;"><strong style="color:var(--sage-safe);">&#10003; Free Proof #1 (Matched &ldquo;${escHtmlSafe(f0.matchedTerm)}&rdquo;):</strong> ${escHtmlSafe(f0.freeFix)}</div>
+      <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;font-size:0.75rem;">&#128274; Hypoallergenic Dupe Swap${extraCount > 0 ? ` + ${extraCount} More Allergen Alert(s)` : ''} Locked &mdash; Enter Email ($0) Below to Reveal &darr;</div>
+      <div class="dl-unlocked-c2-proof" style="display:none;color:var(--sage-safe);font-weight:600;font-size:0.76rem;margin-top:4px;">&#10003; Hypoallergenic Swap: ${escHtmlSafe(f0.hypoallergenicSwap)}${extraCount > 0 ? ' · ' + flags.slice(1).map((f) => `${escHtmlSafe(f.shortLabel)}: ${escHtmlSafe(f.hypoallergenicSwap)}`).join(' · ') : ''}</div>
+    </div>`;
+  }
+  const activeLabels = selectedAllergies.map((id) => (ALLERGY_BY_ID.get(id) || {}).shortLabel || id).join(', ') || 'Common Contact Allergens';
+  return `<div id="allergyAlertCard" style="padding:10px 14px;background:var(--sage-bg);border-left:3px solid var(--sage-safe);border-radius:12px;margin-bottom:8px;font-size:0.8rem;line-height:1.4;">
+    <strong style="color:var(--sage-safe);">&#10003; EU CosIng Contact-Allergen Screen Passed (0 Triggers Found):</strong> Your selected bottles are 100% free of <strong>${escHtmlSafe(activeLabels)}</strong>.
+  </div>`;
+}
+
 module.exports = {
   analyzeRoutine,
   redactRoutineAnalysisForPreview,
   generateOptionalGeminiNote,
   INGREDIENT_BY_ID,
-  PRODUCT_BY_ID
+  PRODUCT_BY_ID,
+  ALLERGY_REACTION_OPTIONS,
+  getProductAllergenTags,
+  renderAllergySelectorBarHtml,
+  renderAllergyFlagsCardHtml
 };

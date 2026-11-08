@@ -105,7 +105,8 @@ app.get('/', (req, res) => {
   const initialAnalysis = analyzeRoutine({
     skinType,
     productIds: queryProductIds,
-    rawInciText
+    rawInciText,
+    allergies: req.query.allergies
   });
   const seoPages = getAllSeoPages();
   const html = renderHomePage({
@@ -421,8 +422,8 @@ app.get('/api/affiliate', (req, res) => {
 
 // 9. Core Deterministic Clinical INCI & Routine Compatibility API (POST /api/analyze-routine)
 app.post('/api/analyze-routine', async (req, res) => {
-  const { skinType, productIds, rawInciText, shelfName, climateMode, includeAiNote, renderHtml, unlocked } = req.body || {};
-  const rawResult = analyzeRoutine({ skinType, productIds, rawInciText });
+  const { skinType, productIds, rawInciText, shelfName, climateMode, allergies, includeAiNote, renderHtml, unlocked } = req.body || {};
+  const rawResult = analyzeRoutine({ skinType, productIds, rawInciText, allergies });
 
   if (includeAiNote) {
     rawResult.geminiClinicalNote = await generateOptionalGeminiNote(rawResult);

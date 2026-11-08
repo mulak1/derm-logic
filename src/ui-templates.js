@@ -15,6 +15,7 @@ const {
   ATELIER_VANITY_CLIENT_SCRIPT
 } = require('./atelier-vanity-bag');
 const { renderPersonaInteractiveWorkbenchAddons } = require('./celebrity-routines');
+const { getProductAllergenTags, renderAllergySelectorBarHtml, renderAllergyFlagsCardHtml } = require('./engine');
 function escapeHtml(str) {
   if (str == null) return '';
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -153,7 +154,7 @@ const SHARED_CSS = `
   .cookie-banner { width: 100%; background: var(--bg-oat); padding: 10px 0; display: none; }
   .cookie-banner-inner { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: nowrap; }
   @media (max-width: 768px) {
-    #cookieBanner.cookie-banner { position: fixed !important; left: 10px !important; right: 10px !important; bottom: 10px !important; width: auto !important; max-width: calc(100vw - 20px) !important; box-sizing: border-box !important; padding: 8px 12px !important; font-size: 11.5px !important; line-height: 1.3 !important; border-radius: 10px !important; z-index: 9999 !important; max-height: 54px !important; box-shadow: 0 8px 24px rgba(0,0,0,0.22); }
+    #cookieBanner.cookie-banner { position: relative !important; width: 100% !important; box-sizing: border-box !important; padding: 8px 12px !important; font-size: 11.5px !important; line-height: 1.3 !important; border-radius: 10px !important; z-index: 40 !important; max-height: 54px !important; }
     #cookieBanner .cookie-banner-inner { padding: 0 !important; gap: 8px !important; flex-wrap: nowrap !important; width: 100% !important; }
     #cookieBanner .cookie-banner-inner > div:first-child { font-size: 11.5px !important; line-height: 1.25 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; min-width: 0 !important; flex: 1 !important; }
     #cookieBanner button { padding: 5px 9px !important; font-size: 11.5px !important; min-height: 28px !important; white-space: nowrap !important; }
@@ -286,7 +287,8 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
     const roleTag = categoryLabelMap[prod.category] || 'Daily Skincare';
     const cleanProdName = shortNameMap[prod.id] || String(prod.name || '').replace(/\s*\([^)]*\)/g, '').replace(/[()]/g, '').replace(/\s+with\s+.*$/i, '');
     const searchBlob = (prod.brand + ' ' + prod.name + ' ' + (prod.category || '') + ' ' + (prod.inciList || '') + ' ' + (prod.summary || '')).toLowerCase();
-    return `<label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}" data-search="${escapeHtml(searchBlob)}" onmouseenter="if(window.__dlShowProdInfo)window.__dlShowProdInfo(this,'${escapeHtml(prod.id)}',event)" onmouseleave="if(window.__dlHideProdInfo)window.__dlHideProdInfo()"><input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" /><span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;"><span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px;"><span style="font-size:0.75rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.71rem;padding:1px 7px;border-radius:999px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;">${isChecked ? '✓ Selected' : '+ Select'}</span></span><strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:0.9rem;font-weight:400;line-height:1.2;">${escapeHtml(cleanProdName)}</strong><span class="mono" style="color:var(--rose-brand);font-size:0.75rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:auto;">${roleTag} &middot; $${prod.priceUsd}</span></span></label>`;
+    const allergenTags = getProductAllergenTags(prod).join(',');
+    return `<label class="prod-check-item ${isChecked ? 'selected' : ''}" data-prod-label="${escapeHtml(prod.id)}" data-tex-group="${texGroup}" data-allergens="${escapeHtml(allergenTags)}" data-search="${escapeHtml(searchBlob)}" onmouseenter="if(window.__dlShowProdInfo)window.__dlShowProdInfo(this,'${escapeHtml(prod.id)}',event)" onmouseleave="if(window.__dlHideProdInfo)window.__dlHideProdInfo()"><input type="checkbox" name="routineProduct" value="${escapeHtml(prod.id)}" ${isChecked ? 'checked' : ''} onchange="toggleProductChip(this)" /><span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;"><span style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px;"><span style="font-size:0.75rem;color:var(--text-secondary);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prod.brand)}</span><span class="mono" style="font-size:0.71rem;padding:1px 7px;border-radius:999px;background:${isChecked ? 'var(--rose-brand)' : 'var(--bg-oat)'};color:${isChecked ? 'var(--accent-ink)' : 'var(--rose-brand)'};font-weight:600;flex-shrink:0;">${isChecked ? '✓ Selected' : '+ Select'}</span></span><strong class="serif-display" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;color:var(--text-primary);font-size:0.9rem;font-weight:400;line-height:1.2;">${escapeHtml(cleanProdName)}</strong><span class="mono" style="color:var(--rose-brand);font-size:0.75rem;font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:auto;">${roleTag} &middot; $${prod.priceUsd}</span></span></label>`;
   }).join('') + `<div id="shelfEmptyState" style="display:none;grid-column:1/-1;padding:16px;background:var(--bg-canvas);font-size:0.86rem;color:var(--text-secondary);text-align:center;">Don't see that bottle in our ${products.length}-bottle catalog? <button type="button" class="btn-primary mono" style="padding:5px 12px;min-height:30px;font-size:0.78rem;margin-left:6px;" onclick="if(window.__dlAddCustomSearchBottle)window.__dlAddCustomSearchBottle()">+ Add Custom Bottle to Vanity Bag &rarr;</button><button type="button" class="btn-secondary mono" style="padding:5px 12px;min-height:30px;font-size:0.78rem;margin-left:6px;" onclick="const q=document.getElementById('productFilterInput').value;const ta=document.getElementById('rawInciTextarea');if(ta&&q){ta.value=q;runRoutineAnalysis();}">Check Ingredient List &rarr;</button></div>`;
   return `
     <div id="checker"></div>
@@ -303,11 +305,13 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
               <select id="skinTypeSelect" class="input-box" style="padding:8px 10px;font-size:16px;" aria-label="Your Skin Type" onchange="runRoutineAnalysis()">
                 <option value="combination" ${currentSkin === 'combination' ? 'selected' : ''}>Skin: Combination</option>
                 <option value="sensitive" ${currentSkin === 'sensitive' ? 'selected' : ''}>Skin: Sensitive</option>
+                <option value="allergy_prone" ${currentSkin === 'allergy_prone' ? 'selected' : ''}>Skin: Allergy-Prone / Reactive</option>
                 <option value="oily" ${currentSkin === 'oily' ? 'selected' : ''}>Skin: Oily / Blemish</option>
                 <option value="dry" ${currentSkin === 'dry' ? 'selected' : ''}>Skin: Dry</option>
                 <option value="normal" ${currentSkin === 'normal' ? 'selected' : ''}>Skin: Balanced</option>
               </select>
             </div>
+            ${renderAllergySelectorBarHtml(initialAnalysis && initialAnalysis.selectedAllergies)}
             <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:var(--bg-canvas);border-radius:14px;">
               <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">${presetButtonsHtml}</div>
               <div style="display:none;">
@@ -471,7 +475,8 @@ function renderAnalysisResultHtml(res) {
     : (pMatched.length > 0
       ? `<div id="pastedInciCard" style="padding:12px 14px;background:var(--sage-bg);border-left:3px solid var(--sage-safe);margin-bottom:10px;font-size:0.84rem;line-height:1.45;"><strong style="color:var(--sage-safe);display:block;margin-bottom:3px;">Pasted Ingredient Check: 100% Pore-Safe (0 Clogging Oils)</strong><div style="color:var(--text-primary);">Free Proof: <strong>${escapeHtml(pMatched[0].commonName)}</strong> (${pMatched[0].comedogenicity}/5 Pore-Safe)${pMatched.length > 1 ? ` <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:600;cursor:pointer;font-size:0.78rem;">· +${pMatched.length - 1} more matched active(s) locked — Enter Email ($0) to Reveal All &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;">, ${pMatched.slice(1).map((m) => `<strong>${escapeHtml(m.commonName)}</strong> (${m.comedogenicity}/5 Pore-Safe)`).join(', ')}</span>` : ''}.</div></div>`
       : `<div id="pastedInciCard" style="padding:12px 14px;background:var(--bg-oat);border-left:3px solid var(--honey-warn);margin-bottom:10px;font-size:0.84rem;line-height:1.45;"><strong style="color:var(--text-primary);display:block;margin-bottom:3px;">Pasted Ingredient Check (&ldquo;${escapeHtml(rawTxt.slice(0, 32))}&rdquo;): 0 Pore-Cloggers Flagged</strong><div style="color:var(--text-secondary);">No pore-clogging oils or waxes matched.</div></div>`));
-  const conflictsHtml = pastedBoxHtml + (res.conflicts.length === 0
+  const allergyCardHtml = renderAllergyFlagsCardHtml(res);
+  const conflictsHtml = allergyCardHtml + pastedBoxHtml + (res.conflicts.length === 0
     ? `<div style="padding:16px 18px;background:var(--sage-bg);color:var(--sage-safe);font-size:0.9rem;line-height:1.52;margin-bottom:10px;">
          <div class="serif-display" style="font-size:1.2rem;color:var(--sage-safe);margin-bottom:4px;">Pure Shelf Harmony · Every Bottle Works Together</div>
          <div>Your selected bottles layer smoothly with zero stinging, canceling out, or makeup pilling.</div>
@@ -561,7 +566,7 @@ function renderAnalysisResultHtml(res) {
         </div>
         <!-- Tab 1 (Default Active): Unmasked Primary Clash Proof + Spacious Side-by-Side Morning & Bedtime Order + 1 Calm Summary Card -->
         <div id="dl-res-step-2" style="display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;flex:1;"><span id="walletConflicts" style="display:none;"></span>
-          ${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}</div>` : pastedBoxHtml}
+          ${allergyCardHtml}${primaryConflicts.length > 0 ? `<div id="dl-primary-clash-proof" style="margin-bottom:2px;">${primaryConflicts.slice(0, 1).map(renderSingleConflictCard).join('')}</div>` : pastedBoxHtml}
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;min-width:0;flex:1;" id="appleWalletCardPreview">
             <div style="padding:16px;border-radius:18px;background:var(--bg-canvas);display:flex;flex-direction:column;justify-content:space-between;min-width:0;position:relative;overflow:hidden;">
               <div style="position:relative;z-index:1;min-width:0;">
@@ -757,8 +762,26 @@ const CLIENT_SCRIPT = `
     if (window.__dlSyncVanityFromCheckboxes) window.__dlSyncVanityFromCheckboxes();
     runRoutineAnalysis();
   }
+  window.__dlToggleAllergyOption = function(allergyId, btn) {
+    if (btn) {
+      const next = !btn.classList.contains('active');
+      btn.classList.toggle('active', next);
+      btn.setAttribute('aria-pressed', next ? 'true' : 'false');
+    }
+    const active = Array.from(document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip.active')).map((b) => b.getAttribute('data-allergy')).filter(Boolean);
+    const clr = document.getElementById('clearAllergiesBtn');
+    if (clr) { clr.style.display = active.length ? 'inline-block' : 'none'; clr.innerHTML = 'Clear Allergies (' + active.length + ') &times;'; }
+    runRoutineAnalysis();
+  };
+  window.__dlClearAllergyOptions = function() {
+    document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip.active').forEach((b) => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+    const clr = document.getElementById('clearAllergiesBtn');
+    if (clr) clr.style.display = 'none';
+    runRoutineAnalysis();
+  };
   async function runRoutineAnalysis(presetSlug, isExplicitClick) {
     const checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map((cb) => cb.value);
+    const allergies = Array.from(document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip.active')).map((b) => b.getAttribute('data-allergy')).filter(Boolean);
     const clrBtn = document.getElementById('topClearShelfBtn');
     if (clrBtn) { clrBtn.style.display = checked.length ? 'inline-block' : 'none'; clrBtn.innerHTML = 'Clear ' + checked.length + ' Selected &times;'; }
     const skinType = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
@@ -770,6 +793,7 @@ const CLIENT_SCRIPT = `
       if (presetSlug) u.searchParams.set('preset', presetSlug);
       u.searchParams.set('skin', skinType);
       if (checked.length) u.searchParams.set('products', checked.join(',')); else u.searchParams.delete('products');
+      if (allergies.length) u.searchParams.set('allergies', allergies.join(',')); else u.searchParams.delete('allergies');
       if (rawInciText.trim()) u.searchParams.set('inci', rawInciText.trim().slice(0, 160)); else u.searchParams.delete('inci');
       window.history.replaceState({}, '', u.pathname + u.search);
     } catch (_) {}
@@ -779,7 +803,7 @@ const CLIENT_SCRIPT = `
       const resp = await fetch('/api/analyze-routine', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ skinType, productIds: checked, rawInciText, shelfName, climateMode, renderHtml: true })
+        body: JSON.stringify({ skinType, productIds: checked, rawInciText, shelfName, climateMode, allergies, renderHtml: true })
       });
       const data = await resp.json();
       window.__DERMLOGIC_LAST_RESULT = data;

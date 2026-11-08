@@ -261,12 +261,14 @@ const ENDOWMENT_CLIENT_SCRIPT = `
   window.__dlSaveShelfState = function() {
     try {
       var checked = Array.from(document.querySelectorAll('input[name="routineProduct"]:checked')).map(function(cb) { return cb.value; });
+      var allergies = Array.from(document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip.active')).map(function(b) { return b.getAttribute('data-allergy'); }).filter(Boolean);
       var skinType = (document.getElementById('skinTypeSelect') || {}).value || 'combination';
       var rawInciText = (document.getElementById('rawInciTextarea') || {}).value || '';
       var shelfName = (document.getElementById('shelfNameInput') || {}).value || '';
       var state = {
         skinType: skinType,
         productIds: checked,
+        allergies: allergies,
         rawInciText: rawInciText,
         shelfName: shelfName,
         climateMode: window.__dlClimateMode || 'indoor_dry',
@@ -320,6 +322,13 @@ const ENDOWMENT_CLIENT_SCRIPT = `
         if (typeof saved.rawInciText === 'string') {
           var inciEl = document.getElementById('rawInciTextarea');
           if (inciEl) inciEl.value = saved.rawInciText;
+        }
+        if (Array.isArray(saved.allergies) && saved.allergies.length > 0) {
+          document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip').forEach(function(b) {
+            var on = saved.allergies.indexOf(b.getAttribute('data-allergy')) !== -1;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
         }
         if (Array.isArray(saved.productIds) && saved.productIds.length > 0) {
           var grid = document.getElementById('productSelectorGrid');
