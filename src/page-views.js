@@ -487,23 +487,23 @@ function renderDirectoryPage({ seoPages }) {
       <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
           <span class="${vVerdict === 'clash' ? 'badge-clash' : vVerdict === 'timer' ? 'badge-warn' : 'badge-safe'} mono">&#10003; ${escapeHtml(formatVerdictLabel(p.verdict))}</span>
-          <span class="mono" style="font-size:0.8rem;color:var(--text-secondary);">${timingLabel}</span>
+          <span class="mono" style="font-size:0.76rem;color:var(--text-secondary);">${timingLabel} &middot; 8-Allergen Checked</span>
         </div>
         <a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-size:1.34rem;font-weight:400;line-height:1.22;margin-bottom:8px;color:var(--text-primary);">${escapeHtml(cleanCardTitle)}</a>
         <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.56;margin-bottom:8px;">${escapeHtml(p.summary)}</p>
         <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.74rem;color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;">&#128274; Reveal 9:30 PM Buffer &amp; 2 Dupes ($0) &uarr;</div>
         <div class="dl-unlocked-c2-proof mono" style="display:none;font-size:0.76rem;color:var(--sage-safe);font-weight:600;">&#10003; 9:30 PM Rule: Buffer with 3:1:1 Ceramide Cream &middot; Wait 60s</div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border-hairline);gap:8px;flex-wrap:wrap;">
-        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:500;">Read Layering Guide &rarr;</a>
-        ${rightCta}
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border-hairline);gap:6px;flex-wrap:wrap;">
+        <a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;">Read Layering Guide &rarr;</a>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">${rightCta}<a href="/?products=${encodeURIComponent(prodId)}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono">&#10003; Screen 8 Allergens ($0) &rarr;</a></div>
       </div>
     </div>`;
   }).join('');
   const bodyHtml = `
     <section class="section-block" style="padding-top:40px;padding-bottom:56px;">
       <div class="container">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span><span class="badge-safe mono">30-Day Refund Guarantee</span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives</span><span class="badge-safe mono">8 Contact-Allergen Screens</span><span class="badge-safe mono">30-Day Refund Guarantee</span></div>
         <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Skincare Serum Layering Chart &amp; What Not to Mix (${seoPages.length} Guides)</h1>
         <p class="hero-sub" style="margin-bottom:24px;max-width:68ch;">Find out which serums belong in the morning, which belong at bedtime, how long to wait between layers, and which active combinations cancel on contact.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:28px;">
@@ -528,10 +528,11 @@ function renderDirectoryPage({ seoPages }) {
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;background:var(--bg-surface);margin-bottom:14px;" role="navigation" aria-label="Semantic Skincare Silo Hubs">
           <a href="/celebrity" class="affiliate-link-pill mono">Iconic Routines (14) &rarr;</a>
-          <a href="/concern" class="affiliate-link-pill mono">Skin Concerns (8) &rarr;</a>
+          <a href="/concern" class="affiliate-link-pill mono">Skin Concerns (9) &rarr;</a>
           <a href="/bottle" class="affiliate-link-pill mono">Cult Bottles (44) &rarr;</a>
           <a href="/ingredient" class="affiliate-link-pill mono">Active Ingredients (65) &rarr;</a>
           <a href="/brand" class="affiliate-link-pill mono">Skincare Brands (27) &rarr;</a>
+          <a href="/concern/allergic-contact-dermatitis-hypoallergenic-routine" class="affiliate-link-pill mono" style="border-color:var(--sage-border);color:var(--sage-safe);font-weight:600;">&#10003; Allergy-Safe Routine (EU CosIng) &rarr;</a>
         </div>
         <div id="dl-dir-top-email-bar" class="porcelain-vessel-core" style="background:var(--bg-surface);padding:12px 16px;margin-bottom:14px;border:1px solid var(--rose-pill-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
           <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:700;">&#10003; Free Verdict Proof Visible Below &middot; Enter Email ($0) to Reveal All 9:30 PM Buffer Rules &amp; 2 Dupes:</div>
@@ -682,7 +683,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
     const texCellHtml = idx <= 1
       ? textureOrder
       : `<span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="event.stopPropagation();if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.75rem;color:var(--text-secondary);font-weight:600;cursor:pointer;">${lockSvgInline}Reveal Step ($0) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;">${textureOrder}</span>`;
-    return `<tr class="dl-ing-row" data-ing-id="${escapeHtml(ing.id)}" style="cursor:pointer;transition:background 0.18s ease;" onclick="window.__dlClickIngredientRow('${escapeHtml(ing.id)}','${safeCommonJs}',this,event)"><td><a href="/ingredient/${escapeHtml(ing.id)}" onclick="event.stopPropagation();" style="color:var(--text-primary);font-weight:600;text-decoration:underline;text-decoration-color:var(--rose-pill-border);">${escapeHtml(ing.commonName)}</a><br/><span style="font-size:0.8125rem;color:var(--text-secondary);text-transform:capitalize;">${escapeHtml(String(ing.category || 'Targeted active').replace(/_/g, ' '))}</span><div style="margin-top:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><button type="button" class="mono dl-row-test-btn" style="padding:3px 10px;border-radius:999px;font-size:0.74rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;cursor:pointer;font-weight:600;" onclick="event.stopPropagation();window.__dlClickIngredientRow('${escapeHtml(ing.id)}','${safeCommonJs}',this.closest('tr'),event)">+ Test in My Shelf &uarr;</button></div></td><td>${poreClog}</td><td>${sensitivity}</td><td style="font-size:0.84rem;color:var(--text-primary);">${slotCellHtml}</td><td class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">${texCellHtml}</td><td style="font-size:0.81rem;color:var(--text-secondary);"><a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" onclick="event.stopPropagation();" class="mono" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">View Schedule ($1.99)</a></td></tr>`;
+    return `<tr class="dl-ing-row" data-ing-id="${escapeHtml(ing.id)}" style="cursor:pointer;transition:background 0.18s ease;" onclick="window.__dlClickIngredientRow('${escapeHtml(ing.id)}','${safeCommonJs}',this,event)"><td><a href="/ingredient/${escapeHtml(ing.id)}" onclick="event.stopPropagation();" style="color:var(--text-primary);font-weight:600;text-decoration:underline;text-decoration-color:var(--rose-pill-border);">${escapeHtml(ing.commonName)}</a><br/><span style="font-size:0.8125rem;color:var(--text-secondary);text-transform:capitalize;">${escapeHtml(String(ing.category || 'Targeted active').replace(/_/g, ' '))}</span><div style="margin-top:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><button type="button" class="mono dl-row-test-btn" style="padding:3px 10px;border-radius:999px;font-size:0.74rem;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;cursor:pointer;font-weight:600;" onclick="event.stopPropagation();window.__dlClickIngredientRow('${escapeHtml(ing.id)}','${safeCommonJs}',this.closest('tr'),event)">+ Test in My Shelf &uarr;</button><a href="/?inci=${encodeURIComponent(ing.inciName)}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;" onclick="event.stopPropagation();">&#10003; Screen 8 Allergens ($0) &rarr;</a></div></td><td>${poreClog}</td><td>${sensitivity}</td><td style="font-size:0.84rem;color:var(--text-primary);">${slotCellHtml}</td><td class="mono" style="font-size:0.8125rem;color:var(--text-secondary);">${texCellHtml}</td><td style="font-size:0.81rem;color:var(--text-secondary);"><a href="/buy/flash_pass?guide=${encodeURIComponent(page.slug)}" onclick="event.stopPropagation();" class="mono" style="color:var(--rose-brand);font-weight:500;text-decoration:underline;">View Schedule ($1.99)</a></td></tr>`;
   }).join('');
   const seoChemistrySpecsRows = comparedActives.map((ing, idx) => idx === 0
     ? `<tr><td><strong class="mono" style="font-size:0.8125rem;">${escapeHtml(ing.inciName)}</strong> <span class="badge-safe mono" style="padding:1px 6px;font-size:0.68rem;">Free Proof</span></td><td class="mono">pH ${ing.phMin}–${ing.phMax}</td><td class="mono">${Number(ing.phMin) < 4.0 ? 'Tangy / Active' : 'Gentle / Neutral'}</td><td class="mono">${Number(ing.molecularWeightDa) < 250 ? 'Water-Light' : 'Velvet / Cushion'}</td><td class="mono">${ing.comedogenicity}/5</td><td class="mono">${ing.malasseziaTrigger ? 'Watch' : 'Safe'}</td></tr>`
@@ -723,8 +724,12 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               <span class="${seoBadgeClass} mono" style="font-size:0.86rem;padding:4px 12px;">${page.compatibilityScore < 55 ? 'Active Clashes Detected · Space Apart' : 'Barrier Compatible · Layer Gently'}</span>
               <span class="mono" style="font-size:0.84rem;color:var(--text-secondary);font-weight:600;">Harmony Score: ${page.compatibilityScore}/100 &middot; pH Gap ${page.deltaPh}</span>
               <span class="badge-safe mono" style="font-size:0.74rem;padding:3px 9px;">&#10003; EU CosIng &amp; Lab pH Verified</span>
+              <span class="badge-safe mono" style="font-size:0.74rem;padding:3px 9px;">8 Contact-Allergen Screens</span>
             </div>
-            <a href="#analyzer" class="affiliate-link-pill mono" style="font-size:0.84rem;padding:6px 14px;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">Test With My Bottles Below &darr;</a>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a href="/?products=${encodeURIComponent((page.presetProducts || [primaryProdId]).join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="affiliate-link-pill mono" style="font-size:0.82rem;padding:6px 12px;">&#10003; Screen 8 Allergens ($0) &rarr;</a>
+              <a href="#analyzer" class="affiliate-link-pill mono" style="font-size:0.84rem;padding:6px 14px;border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">Test With My Bottles Below &darr;</a>
+            </div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
             <div style="padding:14px 16px;border-radius:14px;background:#FAF8F5;">
