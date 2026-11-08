@@ -162,7 +162,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Hydrating Snail & Peptide Essence', detail: 'Replenishes water content lost under hot stage lights.' },
       { step: '3. Breathable Ceramide PM Lotion', detail: 'Locks in moisture with a non-comedogenic niacinamide + ceramide night lotion.' }
     ],
-    clashWarning: 'Avoid applying heavy occlusive balms or high-strength Glycolic Acid right before stage or daytime makeup, as it causes foundation and cream blush to separate and pill.',
+    clashWarning: 'Avoid applying heavy occlusive balms or high-strength Glycolic Acid right before stage or daytime makeup, as it causes foundation and cream blush to separate and pill. EU CosIng Allergen Note: If you have a salicylate allergy, skip 2% BHA and keep Anua Heartleaf 77% + Niacinamide.',
     dupeSwap: {
       luxury: 'Luxury Makeup-Prep Serum ($85) + Designer Cream ($95)',
       gentleDupe: 'Anua Heartleaf 77% Toner ($20) + CeraVe PM Facial Moisturizing Lotion ($16)',
@@ -194,7 +194,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Adapalene / Retinoid (Buffered)', detail: 'Applies a pea-sized retinoid over a thin layer of moisturizer on alternate nights.' },
       { step: '3. Whipped Ceramide Barrier Cream', detail: 'Finishes with a rich 3:1:1 ceramide and marula/squalane barrier cream.' }
     ],
-    clashWarning: 'Never leave Benzoyl Peroxide on the skin at the same time as Tretinoin, Retinol, or Vitamin C; peroxide oxidizes and wipes out retinoid and Vitamin C potency on contact. Keep PanOxyl as a rinse-off morning wash.',
+    clashWarning: 'Never leave Benzoyl Peroxide on the skin at the same time as Tretinoin, Retinol, or Vitamin C; peroxide oxidizes and wipes out retinoid and Vitamin C potency on contact. Keep PanOxyl as a rinse-off morning wash. EU CosIng Allergen Note: If Benzoyl Peroxide triggers contact rashes or bleaching sensitivity, swap for 15% Azelaic Acid.',
     dupeSwap: {
       luxury: 'Drunk Elephant Lala Retro Cream ($64) + Luxury Blemish Serum ($72)',
       gentleDupe: 'PanOxyl 10% Wash ($12) + Differin Adapalene 0.1% ($16) + Aestura Atobarrier 365 ($32)',
@@ -290,7 +290,7 @@ const CELEBRITY_ROUTINES = [
       { step: '2. Calming Niacinamide & Tranexamic Brightening', detail: 'Evens skin tone gently without harsh hydroquinone or high-acid peels.' },
       { step: '3. Rich Dewy Barrier Cream', detail: 'Seals in moisture for overnight recovery.' }
     ],
-    clashWarning: 'If your dewy serum contains Lactic Acid (AHA), do not stack it with Retinol or Tretinoin in the same evening. Use Lactic Acid on Night 1 and Retinoids on Night 2.',
+    clashWarning: 'If your dewy serum contains Lactic Acid (AHA), do not stack it with Retinol or Tretinoin in the same evening. Use Lactic Acid on Night 1 and Retinoids on Night 2. EU CosIng Allergen Note: If you have a dust-mite allergy, swap COSRX Snail 96 Mucin for 100% Sugarcane Squalane + Ceramide Cream.',
     dupeSwap: {
       luxury: 'La Mer The Concentrate ($425) + Tatcha Dewy Skin Cream ($72)',
       gentleDupe: 'Sunday Riley Good Genes ($85) or COSRX Snail 96 ($25) + Aestura Atobarrier 365 ($32)',

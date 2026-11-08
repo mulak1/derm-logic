@@ -273,8 +273,8 @@ const LOCK_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" st
 function renderTopSubpageEmailBar(tagSlug) {
   return `<div id="dl-subpage-top-email-bar" class="porcelain-vessel-core" style="background:var(--bg-oat);padding:11px 14px;margin-bottom:14px;display:flex;flex-direction:column;gap:7px;border:1px solid var(--rose-pill-border);">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:0.78rem;">
-      <span class="mono" style="color:var(--rose-brand);font-weight:700;">&#10003; EU CosIng &amp; Lab pH Verified &middot; 7:30 AM Steps &amp; Top Bottles Free Proof &middot; Unlock 9:30 PM Order &amp; 2 Dupes ($0):</span>
-      <a href="/buy/flash_pass?guide=${encodeURIComponent(tagSlug)}" class="mono" style="color:var(--text-primary);font-weight:700;text-decoration:underline;font-size:0.74rem;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack (30-Day Guarantee) &rarr;</a>
+      <span class="mono" style="color:var(--rose-brand);font-weight:700;">&#10003; EU CosIng &amp; Lab pH Verified &middot; 8 Contact-Allergen Screens &middot; 7:30 AM Steps Free Proof &middot; Unlock 9:30 PM &amp; 2 Dupes ($0):</span>
+      <span style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;"><a href="/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" class="mono" style="color:var(--sage-safe);font-weight:700;text-decoration:underline;font-size:0.74rem;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="/buy/flash_pass?guide=${encodeURIComponent(tagSlug)}" class="mono" style="color:var(--text-primary);font-weight:700;text-decoration:underline;font-size:0.74rem;">Or get $1.99 Complete AM/PM Calendar &amp; Dupe Pack (30-Day Guarantee) &rarr;</a></span>
     </div>
     <form id="dl-inline-sample-unlock-form" class="dl-inline-ics-form" onsubmit="return window.__dlCaptureFreeIcsLead(event, '${escapeHtml(tagSlug)}')" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0;" data-no-bag-inject="1">
       <input type="email" id="dl-inline-sample-email" required class="input-box dl-inline-ics-email" placeholder="Enter email to unlock 9:30 PM order &amp; 2 free dupes ($0)..." aria-label="Enter email for 2 free dupes ($0)" style="flex:1 1 180px;min-width:0;padding:7px 12px;font-size:16px;border-radius:999px;background:var(--bg-surface);" />
@@ -288,7 +288,7 @@ function renderSiloNavStrip(activeSilo, skipTopBar) {
   const celebCount = getAllCelebrityRoutines().length;
   const silos = [
     { id: 'celebrity', href: '/celebrity', label: `Iconic Routines (${celebCount})` },
-    { id: 'concern', href: '/concern', label: 'Skin Concerns (8)' },
+    { id: 'concern', href: '/concern', label: 'Skin Concerns (9)' },
     { id: 'bottle', href: '/bottle', label: 'Cult Bottles (44)' },
     { id: 'ingredient', href: '/ingredient', label: 'Active Ingredients (65)' },
     { id: 'brand', href: '/brand', label: 'Skincare Brands (27)' },
@@ -345,6 +345,7 @@ function renderCelebrityIndexPage() {
           <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('acne|breakout|bha|oily|congest',this)" style="padding:6px 12px;font-size:0.78rem;">Breakout &amp; Acne-Prone</button>
           <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('dry|eczema|barrier|dehydrat',this)" style="padding:6px 12px;font-size:0.78rem;">Dry &amp; Barrier-Focused</button>
           <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('sensitive|rosacea|dermatitis|calm',this)" style="padding:6px 12px;font-size:0.78rem;">Sensitive &amp; Rosacea</button>
+          <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('allergy|eczema|sensitive|rosacea|hypochlorous',this)" style="padding:6px 12px;font-size:0.78rem;color:var(--sage-safe);">&#10003; Allergy &amp; Contact-Safe</button>
           <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('tretinoin|retinal|adapalene|vitamin c',this)" style="padding:6px 12px;font-size:0.78rem;">Vitamin C &amp; Retinoids</button>
         </div>
         <a href="/#analyzer" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;text-decoration:none;">Or Check My Own Bottles &rarr;</a>
@@ -489,7 +490,7 @@ function renderCelebrityDetailPage(celeb) {
             <h3 class="serif-display" style="font-size:1.32rem;margin:0 0 10px;">What Never to Mix on ${escapeHtml(celeb.name)}’s Shelf</h3>
             <div style="background:var(--bg-surface);border-left:3px solid var(--berry-clash);border-radius:10px;padding:12px 14px;margin-bottom:10px;"><p style="font-size:0.88rem;color:var(--text-primary);line-height:1.55;margin:0;">${escapeHtml(celeb.clashWarning)}</p></div>
           </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.76rem;color:var(--text-secondary);"><span class="mono">Wait 60s or Alternate Nights</span><a href="${preloadHref}" class="mono" style="color:var(--berry-clash);font-weight:600;text-decoration:none;">Test Shelf Harmony &rarr;</a></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:0.76rem;color:var(--text-secondary);"><span class="mono">Wait 60s or Alternate Nights</span><span style="display:inline-flex;gap:10px;align-items:center;"><a href="/?products=${encodeURIComponent(celeb.productIds.join(','))}&amp;skin=allergy&amp;allergies=fragrance,snail_mite,salicylates#analyzer" class="mono" style="color:var(--sage-safe);font-weight:700;text-decoration:none;">&#10003; Screen 8 Allergens ($0) &rarr;</a><a href="${preloadHref}" class="mono" style="color:var(--berry-clash);font-weight:600;text-decoration:none;">Test Shelf Harmony &rarr;</a></span></div>
         </div>
         <div class="porcelain-vessel-core" style="background:var(--sage-bg);padding:22px 24px;border:1px solid var(--sage-border);justify-content:space-between;">
           <div>
