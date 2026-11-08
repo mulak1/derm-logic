@@ -887,10 +887,10 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     if (btnEl) { btnEl.textContent = '✓ Dupes & 4 Swatches Unmasked!'; btnEl.style.background = 'var(--sage-safe)'; }
     if (statusEl) {
       statusEl.style.display = 'block';
-      statusEl.innerHTML = '✓ 2 Clinical Dupes + Top 4 Hex Swatches Unmasked &amp; Routine Saved for <strong>' + email.replace(/[<>&"']/g, '') + '</strong> &middot; <a href="/api/github-upgrade/skin-cycling.ics" download="dermlogic-4-night-skin-cycling.ics" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Download .ICS</a> &middot; <a href="/buy/flash_pass?email=' + encodeURIComponent(email) + '" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Get 300-DPI Apple Wallet Card + $240 Dupe List ($1.99) &rarr;</a>';
+      statusEl.innerHTML = '✓ EU CosIng &amp; Lab pH · 9:30 PM Schedule, Nights 2–4 &amp; 2 Chemist Dupes Unmasked for <strong>' + email.replace(/[<>&"']/g, '') + '</strong> &middot; <a href="/api/github-upgrade/skin-cycling.ics?unlocked=1&amp;email=' + encodeURIComponent(email) + '" download="dermlogic-4-night-skin-cycling.ics" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Download Full 4-Night .ICS</a> &middot; <a href="/buy/flash_pass?email=' + encodeURIComponent(email) + '" style="color:var(--rose-brand);text-decoration:underline;font-weight:700;">Get 300-DPI Apple Wallet Card + $240 Dupe List ($1.99 &middot; 30-Day Guarantee) &rarr;</a>';
     }
     fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'inline_sample_' + (sourceTag || 'web') }) }).catch(function() {});
-    try { var dlLink = document.createElement('a'); dlLink.href = '/api/github-upgrade/skin-cycling.ics'; dlLink.download = 'dermlogic-4-night-skin-cycling.ics'; dlLink.style.display = 'none'; document.body.appendChild(dlLink); dlLink.click(); setTimeout(function() { if (dlLink.parentNode) dlLink.parentNode.removeChild(dlLink); }, 600); } catch (_) {}
+    try { var dlLink = document.createElement('a'); dlLink.href = '/api/github-upgrade/skin-cycling.ics?unlocked=1&email=' + encodeURIComponent(email); dlLink.download = 'dermlogic-4-night-skin-cycling.ics'; dlLink.style.display = 'none'; document.body.appendChild(dlLink); dlLink.click(); setTimeout(function() { if (dlLink.parentNode) dlLink.parentNode.removeChild(dlLink); }, 600); } catch (_) {}
     return false;
   };
 `;
@@ -902,9 +902,13 @@ function renderEditorialPolicyPage({ renderBaseDocument }) {
     <div class="container">
       <div class="porcelain-vessel-core" style="padding:36px 40px;background:var(--bg-surface);gap:22px;">
         <div>
-          <span class="badge-safe mono" style="margin-bottom:10px;">Editorial Governance &amp; Publisher Transparency</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
+            <span class="badge-safe mono">Editorial Governance &amp; Publisher Transparency</span>
+            <span class="badge-safe mono">&#10003; EU CosIng &amp; Lab pH Verified &middot; 65 Actives &amp; 80 Cult Bottles</span>
+            <span class="affiliate-link-pill mono" style="border-color:var(--rose-brand);color:var(--rose-brand);font-weight:700;">30-Day Unconditional Refund Guarantee</span>
+          </div>
           <h1 class="hero-h1" style="font-size:clamp(2.2rem,3.6vw,3.2rem);margin-bottom:10px;max-width:none;">Editorial Policy, Formulation Methodology &amp; FTC Affiliate Disclosure</h1>
-          <p style="color:var(--text-secondary);font-size:0.94rem;max-width:none;">Last Reviewed: November 2, 2026 &middot; Editorial &amp; Support Desk: <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a> &middot; Publication Domain: <strong>https://www.dermlogic.io</strong></p>
+          <p style="color:var(--text-secondary);font-size:0.94rem;max-width:none;">Last Reviewed: November 2, 2026 &middot; Editorial &amp; Support Desk: <a href="mailto:concierge@dermlogic.io" style="color:var(--rose-brand);text-decoration:underline;">concierge@dermlogic.io</a> &middot; Publication Domain: <strong>https://www.dermlogic.io</strong> &middot; <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;cursor:pointer;">Save 9:30 PM Schedule &amp; 2 Dupes Free ($0 Email) &darr;</span></p>
         </div>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px;">
