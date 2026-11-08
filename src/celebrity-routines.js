@@ -694,15 +694,22 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
     }
   };
 
-  window.__dlDupeAllFiveVessels = function() {
-    var st = window.__dlVanityState;
-    if (!st) return;
-    st.slotSelections = [2, 3, 2, 1, 2];
-    st.customSlotBottle = {};
-    st.pouchSpfSealed = true;
-    if (window.__dlRenderVanityDrawer) window.__dlRenderVanityDrawer();
-    if (window.__dlSwitchShelfBudgetMode) window.__dlSwitchShelfBudgetMode('dupe');
-  };
+  if (!window.__dlDupeAllFiveVessels) {
+    window.__dlDupeAllFiveVessels = function() {
+      var st = window.__dlVanityState;
+      if (!st) return;
+      st.slotSelections = [0, 0, 0, 0, 4];
+      st.customSlotBottle = {
+        0: { id: 'prequel-hypochlorous-spray', label: 'Prequel Universal Skin Solution Mist ($18)', short: 'Prequel $18', ph: '4.8', tag: 'HOCl' },
+        1: { id: 'geek-gorgeous-c-glow', label: 'Geek & Gorgeous C-Glow 15% Vitamin C ($14)', short: 'G&G C-Glow $14', ph: '3.2', tag: '15%C' },
+        2: { id: 'illiyoon-ceramide-ato', label: 'ILLIYOON Ceramide Ato Concentrate Cream ($19)', short: 'ILLIYOON $19', ph: '5.5', tag: '3:1:1' },
+        4: { id: 'differin-adapalene-01', label: 'Differin Adapalene Gel 0.1% ($17)', short: 'Differin $17', ph: '5.5', tag: '0.1%' }
+      };
+      st.pouchSpfSealed = true;
+      if (window.__dlRenderVanityDrawer) window.__dlRenderVanityDrawer();
+      if (window.__dlSwitchShelfBudgetMode) window.__dlSwitchShelfBudgetMode('dupe');
+    };
+  }
 
   window.__dlActivate72HrBarrierReset = function(btnEl) {
     window.__dl72HrRescueActive = true;
