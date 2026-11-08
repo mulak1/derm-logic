@@ -682,7 +682,8 @@ const ENDOWMENT_CLIENT_SCRIPT = `
     var allergies = (res.allergyAlerts || []).map(function(a) { return '- **EU CosIng Allergen Flag (' + (a.label || '') + ')**: ' + (a.matchedIngredients || []).join(', ') + ' -> *Safe Swap*: ' + (a.safeAlternative || 'Hypoallergenic Barrier Cream'); }).join('\\n');
     var md = ['**[Routine Help] ' + shelfName + ' (' + skin + ' skin) - ✓ EU CosIng & Lab pH Verified via DermLogic**', '', '**Current Bottles (' + checked.length + '):** ' + (checked.join(', ') || 'Custom INCI Stack'), conflicts ? ('\\n**Active Clashes Spotted:**\\n' + conflicts) : '\\n**Verdict:** 0 Active Clashes (100% Barrier Safe)', allergies ? ('\\n**EU CosIng Contact-Allergen Screen:**\\n' + allergies) : '', '', '**Fixed AM / PM Order, 8-Allergen Screen & 4-Night Schedule:** https://www.dermlogic.io'].filter(Boolean).join('\\n');
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(md).catch(function(){});
-    if (btn) { var orig = btn.textContent; btn.textContent = 'Copied [Routine Help] Markdown!'; setTimeout(function() { btn.textContent = orig; }, 3000); }
+    if (btn) { var orig = btn.textContent; btn.textContent = '✓ Copied! Opening 9:16 Card...'; setTimeout(function() { btn.textContent = orig; }, 3000); }
+    if (window.__dlOpenSampleModal) window.__dlOpenSampleModal();
   };
 
   window.__dlIngProductMap = {
