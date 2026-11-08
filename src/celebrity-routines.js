@@ -511,6 +511,7 @@ function renderPersonaInteractiveWorkbenchAddons() {
           <button type="button" id="dl-btn-mode-luxury" class="vanity-light-btn active mono" style="padding:3px 7px;font-size:0.7rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('luxury', this)">Cult ($275)</button>
           <button type="button" id="dl-btn-mode-dupe" class="vanity-light-btn mono" style="padding:3px 7px;font-size:0.7rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('dupe', this)">Smart Dupes ($83)</button>
           <button type="button" id="dl-btn-mode-under35" class="vanity-light-btn mono" style="padding:3px 7px;font-size:0.7rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('under35', this)">Under $35</button>
+          <button type="button" id="dl-btn-mode-allergy" class="vanity-light-btn mono" style="padding:3px 7px;font-size:0.7rem;min-height:24px;border-radius:999px;" onclick="window.__dlSwitchShelfBudgetMode('allergy', this)">Allergy-Safe ($92)</button>
         </div>
       </div>
       <div id="dl-budget-dupe-banner" style="display:none;margin-top:6px;padding:7px 10px;border-radius:12px;background:var(--bg-surface);font-size:0.76rem;color:var(--text-primary);line-height:1.38;"></div>`,
@@ -638,9 +639,15 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
     window.__dlActiveBudgetMode = mode;
     var targetIds = mode === 'under35'
       ? ['to-glycolic-acid-7', 'cerave-pm-lotion']
-      : (mode === 'dupe'
-        ? ['cosrx-snail-96-mucin', 'timeless-20-vitamin-c', 'illiyoon-ceramide-ato', 'to-glycolic-acid-7']
-        : ['skinceuticals-ce-ferulic', 'to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005']);
+      : (mode === 'allergy'
+        ? ['anua-heartleaf-77-toner', 'aestura-atobarrier-365', 'lrp-cicaplast-baume-b5', 'eltamd-uv-clear-spf46']
+        : (mode === 'dupe'
+          ? ['cosrx-snail-96-mucin', 'timeless-20-vitamin-c', 'illiyoon-ceramide-ato', 'to-glycolic-acid-7']
+          : ['skinceuticals-ce-ferulic', 'to-glycolic-acid-7', 'paulas-choice-2-bha', 'rx-tretinoin-005']));
+    if (mode === 'allergy') {
+      var sel = document.getElementById('skinTypeSelect'); if (sel) sel.value = 'allergy_prone';
+      document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip').forEach(function(b) { var on = ['fragrance', 'snail_mite', 'salicylates'].indexOf(b.getAttribute('data-allergy')) !== -1; b.classList.toggle('active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    }
     window.__dlApplyCheckedIdsAndSync(targetIds);
     window.__dlSyncBudgetModeLinks();
     window.__dlBumpCustomizationCount(mode);
@@ -652,13 +659,17 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
     var luxBtn = document.getElementById('dl-btn-mode-luxury');
     var dupeBtn = document.getElementById('dl-btn-mode-dupe');
     var u35Btn = document.getElementById('dl-btn-mode-under35');
+    var algBtn = document.getElementById('dl-btn-mode-allergy');
     if (luxBtn) luxBtn.classList.toggle('active', mode === 'luxury');
     if (dupeBtn) dupeBtn.classList.toggle('active', mode === 'dupe');
     if (u35Btn) u35Btn.classList.toggle('active', mode === 'under35');
+    if (algBtn) algBtn.classList.toggle('active', mode === 'allergy');
     var banner = document.getElementById('dl-budget-dupe-banner');
     if (banner && window.__dlActiveBudgetMode) {
       banner.style.display = 'block';
-      if (mode === 'under35') {
+      if (mode === 'allergy') {
+        banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">&#10003; EU CosIng Allergen-Free Routine ($92 Total &middot; 0 Fragrance / 0 Snail Mucin / 0 Salicylates):</strong> <strong>Anua Heartleaf 77% ($23)</strong> + <strong>Aestura Atobarrier 365 ($32)</strong> + <strong>Cicaplast B5+ ($18)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=aestura-atobarrier-365&amp;partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $32 Aestura 365 &nearr;</a><button type="button" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" class="mono" style="background:none;border:none;padding:0;font-size:0.74rem;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;">&#128274; Email 9:30 PM Calm Schedule ($0) &uarr;</button></div></div>';
+      } else if (mode === 'under35') {
         banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">2-Step Drugstore Starter Routine ($30 Total &middot; Saves $245):</strong> <strong>The Ordinary Glycolic Acid 7% ($13)</strong> + <strong>CeraVe PM Moisturizing Lotion ($17)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=cerave-pm-lotion&amp;partner=ulta" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $17 CeraVe PM (Ulta) &nearr;</a><a href="/buy/flash_pass?source=under35_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'flash_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save $30 Routine Card ($1.99) &rarr;</a></div></div>';
       } else if (mode === 'dupe') {
         banner.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><div><strong style="color:var(--sage-safe);">Affordable Dupe Routine ($83 Total &middot; Saves $192):</strong> Swaps $182 SkinCeuticals for <strong>Timeless 20% Vitamin C ($26)</strong> + <strong>ILLIYOON Ceramide Cream ($19)</strong> + <strong>COSRX Snail Mucin ($25)</strong>.</div><div style="display:inline-flex;gap:6px;flex-wrap:wrap;"><a href="/api/affiliate?product=timeless-20-vitamin-c&amp;partner=amazon" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:4px 9px;font-size:0.73rem;" data-no-bag-inject="1">Shop $26 Vitamin C Dupe (Amazon) &nearr;</a><a href="/buy/flash_pass?source=dupe_blueprint" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'flash_pass\\');return false;}" class="mono" style="font-size:0.74rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;align-self:center;">Save Dupe Card ($1.99) &rarr;</a></div></div>';
@@ -799,8 +810,10 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
       }
     };
     var cfg = map[rxType] || map.sting;
-    if (rxType === 'allergy' && typeof window.__dlToggleAllergyOption === 'function') {
-      window.__dlSelectedAllergies = ['snail_mite', 'salicylates'];
+    if (rxType === 'allergy') {
+      window.__dlSelectedAllergies = ['fragrance', 'snail_mite', 'salicylates'];
+      var sel = document.getElementById('skinTypeSelect'); if (sel) sel.value = 'allergy_prone';
+      document.querySelectorAll('#allergyTriggerBar .dl-allergy-chip').forEach(function(b) { var on = window.__dlSelectedAllergies.indexOf(b.getAttribute('data-allergy')) !== -1; b.classList.toggle('active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
     }
     if (checkedNames.length < 2) window.__dlApplyCheckedIdsAndSync(cfg.ids);
     card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;"><div style="flex:1;min-width:210px;"><span class="badge-clash mono" style="font-size:0.68rem;padding:1px 7px;margin-bottom:4px;display:inline-block;">&#10003; EU CosIng Free Proof &middot; ' + cfg.zone + '</span><strong style="color:var(--rose-brand);display:block;margin-bottom:2px;">' + cfg.title + '</strong><span style="color:var(--text-secondary);">' + cfg.body + '</span></div><div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;"><a href="/api/affiliate?product=' + cfg.rescueProd + '&amp;partner=' + cfg.partner + '" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">' + cfg.rescueLabel + '</a><button type="button" onclick="if(window.__dlFocusSampleEmail){window.__dlFocusSampleEmail(this);}" class="mono" style="background:transparent;border:none;padding:0;font-size:0.73rem;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;">&#128274; Email 9:30 PM Calm Protocol &amp; Dupe #2 ($0) &uarr;</button><a href="/buy/flash_pass?source=reaction_triage" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'flash_pass\\');return false;}" class="mono" style="font-size:0.71rem;color:var(--text-secondary);font-weight:600;text-decoration:underline;">Or Get Complete 3-File Kit ($1.99) &rarr;</a></div></div>';

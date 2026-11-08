@@ -115,6 +115,7 @@ function renderAtelierVanityDrawerHtml() {
           <span class="mono" style="font-size:0.75rem;font-weight:500;color:var(--text-secondary);">Tap any bottle on your shelf (<span id="dl-tray-filled-label">5/5 Bottles</span>):</span>
           <div style="display:inline-flex;gap:5px;flex-wrap:wrap;">
             <button type="button" class="mono" onclick="window.__dlDupeAllFiveVessels()" style="background:var(--sage-bg);color:var(--sage-safe);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Try Affordable Dupes ($86) &rarr;</button>
+            <button type="button" class="mono" onclick="if(window.__dlSwitchShelfBudgetMode){window.__dlSwitchShelfBudgetMode('allergy');window.__dlCloseVanityDrawer();}" style="background:var(--rose-pill-bg);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:700;cursor:pointer;">Screen 8 Allergens ($0) &rarr;</button>
             <button type="button" class="mono" onclick="window.__dlInjectSampleClash()" style="background:var(--bg-surface);color:var(--rose-brand);border:none;border-radius:999px;padding:3px 9px;font-size:0.71rem;font-weight:600;cursor:pointer;">Test a Clash &rarr;</button>
           </div>
         </div>
