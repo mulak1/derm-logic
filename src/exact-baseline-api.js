@@ -73,18 +73,19 @@ const VERTICAL_CONFIGS = {
       { label: 'Routine Harmony Score', val: '20/100', sub: 'Ingredient Clash Found' },
       { label: 'Acid vs. Peptide Gap', val: '2.8 pH', sub: 'Separate into AM / PM' },
       { label: 'Absorption Order', val: '84% Pass', sub: 'Lightest to Richest' },
-      { label: 'Pore & Fungal Check', val: '1 Trigger', sub: 'Heavy Ester Found' }
+      { label: 'Allergy & Pore Check', val: '1 Trigger', sub: 'EU CosIng + Ester Check' }
     ],
     presetKpis: {
       'preset-tiktok-destroyer': ['20/100', '2.8 pH', '76% Pass', '1 Trigger'], 'TikTok 7-Active Stack': ['20/100', '2.8 pH', '76% Pass', '1 Trigger'],
       'preset-copper-vitc-trap': ['54/100', '2.6 pH', '88% Pass', '0 Triggers'], 'Vitamin C + Copper Peptides': ['54/100', '2.6 pH', '88% Pass', '0 Triggers'],
       'preset-acne-rx-bpo-tret': ['49/100', '1.9 pH', '91% Pass', '0 Triggers'], 'Tretinoin + Benzoyl Peroxide': ['49/100', '1.9 pH', '91% Pass', '0 Triggers'],
       'preset-fungal-safe-barrier': ['96/100', '0.6 pH', '94% Pass', '0 Triggers'], 'Fungal-Safe Barrier Care': ['96/100', '0.6 pH', '94% Pass', '0 Triggers'],
-      'preset-glass-skin': ['94/100', '0.8 pH', '89% Pass', '0 Triggers'], 'Glass Skin Hydration': ['94/100', '0.8 pH', '89% Pass', '0 Triggers']
+      'preset-glass-skin': ['94/100', '0.8 pH', '89% Pass', '0 Triggers'], 'Glass Skin Hydration': ['94/100', '0.8 pH', '89% Pass', '0 Triggers'],
+      'preset-allergy-safe': ['82/100', '1.2 pH', '95% Pass', '2 Allergens'], 'Allergy & Contact Rash Check': ['82/100', '1.2 pH', '95% Pass', '2 Allergens']
     },
     presets: [
       { key: 'TikTok 7-Active Stack', label: '7-Active' }, { key: 'Vitamin C + Copper Peptides', label: 'VitC + Cu' },
-      { key: 'Tretinoin + Benzoyl Peroxide', label: 'Tret + BPO' }, { key: 'Fungal-Safe Barrier Care', label: 'Fungal-Safe' }, { key: 'Glass Skin Hydration', label: 'Glass Skin' }
+      { key: 'Tretinoin + Benzoyl Peroxide', label: 'Tret + BPO' }, { key: 'Fungal-Safe Barrier Care', label: 'Fungal-Safe' }, { key: 'Glass Skin Hydration', label: 'Glass Skin' }, { key: 'Allergy & Contact Rash Check', label: 'Allergy-Safe' }
     ],
     coMarketingPills: [
       { key: 'sephora', label: 'pH Clash Risk', rowText: 'Routine Tip: Layering strong exfoliating acids (pH 3.2) right on top of gentle firming peptides (pH 6.0) weakens peptide firming power on contact.' },
@@ -99,19 +100,19 @@ const VERTICAL_CONFIGS = {
     ],
     githubRepo: {
       name: 'Verified Skincare Compatibility & EU CosIng Pore-Safety Database',
-      stars: '81 Cult Bottles + 170 Layering Guides', url: 'https://www.dermlogic.io/directory',
+      stars: '81 Cult Bottles + 385 Layering & Allergy Guides', url: 'https://www.dermlogic.io/directory',
       badge: 'Everyday AM/PM Routine & Wait-Time Planner',
       title: 'Everyday Morning & Night Serum Layering & Pore-Safety Planner',
-      summary: 'Checks how your serums layer together, flags pore-clogging ingredients, and builds a gentle 4-night skin-cycling schedule.'
+      summary: 'Checks how your serums layer together, screens 8 EU CosIng contact-allergen classes, flags pore-clogging esters, and builds a gentle 4-night skin-cycling schedule.'
     },
     deliverableFiles: [
       { file: 'am-pm-vanity-card-9x16.pdf', label: 'Phone Routine Card (PDF)', size: '48.2 KB', schema: 'Step-by-step Morning & Bedtime order tailored to your selected bottles with exact pH dry-down wait times', status: 'VALID' },
       { file: '4-night-skin-cycling.ics', label: '4-Night Calendar (.ICS)', size: '3.1 KB', schema: '1-click Apple & Google Calendar rotation separating your conflicting acids, retinoids, and peptides across 4 nights', status: 'VALID' },
-      { file: 'non-comedogenic-swaps.csv', label: 'Pore-Safe Swaps (.CSV)', size: '5.5 KB', schema: '1-to-1 non-comedogenic, fungal-safe product swaps that layer cleanly with your active serums without pilling', status: 'VALID' }
+      { file: 'non-comedogenic-swaps.csv', label: 'Allergy & Pore Swaps (.CSV)', size: '5.5 KB', schema: '1-to-1 hypoallergenic (8 EU CosIng classes), non-comedogenic, fungal-safe product swaps that layer cleanly without pilling', status: 'VALID' }
     ],
     remediationDiff: {
       beforeLine: 'Morning (7:30 AM): Gentle Rinse -> Antioxidant Serum (exact wait time locked in PDF) -> Barrier Moisturizer & SPF 50.',
-      afterLine: 'Bedtime (9:30 PM): Separates conflicting night actives onto alternating nights -> 3:1:1 Ceramide Barrier Cream.',
+      afterLine: 'Bedtime (9:30 PM): Separates conflicting night actives onto alternating nights + 8 EU CosIng allergen swaps -> 3:1:1 Ceramide Barrier Cream.',
       roiBadge: 'Tailored to Your Shelf · Protects Active Serums'
     }
   }
@@ -421,12 +422,12 @@ function attachExactBaselinePack(app, options = {}) {
     store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/skin-cycling.ics', isTest, isCrawler, meta: { export: 'ics_calendar' } });
     const isUnlocked = Boolean(req.query.unlocked === '1' || req.query.email || req.query.session_id || (req.headers.cookie || '').includes('eb_paid_unlocked'));
     const icsEvents = [
-      'BEGIN:VEVENT', `UID:${cfg.moduleId}-night1@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261015T210000Z', 'DTEND:20261015T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Night 1 (✓ Free Proof): Exfoliation & 60s Sink Timer Window`, `DESCRIPTION:✓ EU CosIng & Lab pH Verified · ${cfg.explainerText} (Wait 60s before barrier moisturizer): https://${cfg.domain}`, 'END:VEVENT',
+      'BEGIN:VEVENT', `UID:${cfg.moduleId}-night1@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261015T210000Z', 'DTEND:20261015T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Night 1 (✓ Free Proof): Exfoliation & 60s Sink Timer Window`, `DESCRIPTION:✓ EU CosIng & Lab pH Verified · 8 Contact-Allergen Screens · ${cfg.explainerText} (Wait 60s before barrier moisturizer): https://${cfg.domain}`, 'END:VEVENT',
       ...(isUnlocked ? [
-        'BEGIN:VEVENT', `UID:${cfg.moduleId}-night2@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261016T210000Z', 'DTEND:20261016T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Night 2: Retinoid / Secondary Active Window`, `DESCRIPTION:Pea-sized retinoid on dry skin + ceramide buffer: https://${cfg.domain}`, 'END:VEVENT',
+        'BEGIN:VEVENT', `UID:${cfg.moduleId}-night2@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261016T210000Z', 'DTEND:20261016T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Night 2: Retinoid / Secondary Active Window`, `DESCRIPTION:Pea-sized retinoid on dry skin + ceramide buffer (EU CosIng 8-Allergen Safe): https://${cfg.domain}`, 'END:VEVENT',
         'BEGIN:VEVENT', `UID:${cfg.moduleId}-night3@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261017T210000Z', 'DTEND:20261017T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Nights 3-4: Barrier Recovery & Peptide Cushion`, `DESCRIPTION:Zero acids or retinoids; hydrate + seal moisture barrier: https://${cfg.domain}`, 'END:VEVENT'
       ] : [
-        'BEGIN:VEVENT', `UID:${cfg.moduleId}-nights2-4-locked@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261016T210000Z', 'DTEND:20261016T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:[LOCKED] ${cfg.brandName} Nights 2-4: 9:30 PM Retinoid Sandwich & Ceramide Recovery ($0 Email Unlock)`, `DESCRIPTION:Unlock Nights 2-4 & 2 Chemist Dupes Free ($0 Email) at https://${cfg.domain}/#dl-footer-email-unlock-bar or get the $1.99 3-File Kit (30-Day Refund Guarantee) at https://${cfg.domain}/buy/flash_pass`, 'END:VEVENT'
+        'BEGIN:VEVENT', `UID:${cfg.moduleId}-nights2-4-locked@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261016T210000Z', 'DTEND:20261016T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:[LOCKED] ${cfg.brandName} Nights 2-4: 9:30 PM Retinoid Sandwich, 8-Allergen Swaps & Ceramide Recovery ($0 Email Unlock)`, `DESCRIPTION:Unlock Nights 2-4, 8-Allergen Swaps & 2 Chemist Dupes Free ($0 Email) at https://${cfg.domain}/#dl-footer-email-unlock-bar or get the $1.99 3-File Kit (30-Day Refund Guarantee) at https://${cfg.domain}/buy/flash_pass`, 'END:VEVENT'
       ])
     ];
     const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', `PRODID:-//${cfg.brandName}//NONSGML v2.0//EN`, 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', ...icsEvents, 'END:VCALENDAR'].join('\r\n');
@@ -466,7 +467,7 @@ function attachExactBaselinePack(app, options = {}) {
 
   app.get('/.well-known/mcp.json', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.json({ schema_version: '2026-10-15', name: cfg.brandName, domain: cfg.domain, description: `${cfg.brandName} Deterministic Audit & Telemetry MCP Server (${cfg.githubRepo.name})`, endpoints: { llms_txt: `https://${cfg.domain}/llms.txt`, llms_bundle: `https://${cfg.domain}/api/github-upgrade/llms-bundle.txt`, fuse_search: `https://${cfg.domain}/api/github-upgrade/fuse-search?q=`, unlock_preview: `https://${cfg.domain}/api/github-upgrade/unlock-preview`, deliverable_manifest: `https://${cfg.domain}/api/github-upgrade/deliverable-manifest`, roi_payback: `https://${cfg.domain}/api/github-upgrade/roi-payback`, endowment_customizer: `https://${cfg.domain}/api/github-upgrade/endowment-customizer`, rss_feed: `https://${cfg.domain}/feed.xml`, json_feed: `https://${cfg.domain}/feed.json`, csv_export: `https://${cfg.domain}/api/github-upgrade/export.csv`, sitemap: `https://${cfg.domain}/sitemap.xml`, github_upgrade_api: `https://${cfg.domain}/api/github-upgrade`, pst_telemetry: `https://${cfg.domain}/api/telemetry/pst-report` }, capabilities: ['ariely_zero_price_guard', 'gbb_decoy_anchoring', 'zod_deliverable_manifest', 'pseo_inline_curtain', 'endowment_customizer', 'sqlite_stmt_cache'] });
+    res.json({ schema_version: '2026-10-15', name: cfg.brandName, domain: cfg.domain, description: `${cfg.brandName} Deterministic Audit & Telemetry MCP Server (${cfg.githubRepo.name})`, endpoints: { llms_txt: `https://${cfg.domain}/llms.txt`, llms_bundle: `https://${cfg.domain}/api/github-upgrade/llms-bundle.txt`, allergy_screen: `https://${cfg.domain}/?skin=allergy&allergies=fragrance,snail_mite,salicylates`, allergy_hub: `https://${cfg.domain}/concern/allergic-contact-dermatitis-hypoallergenic-routine`, fuse_search: `https://${cfg.domain}/api/github-upgrade/fuse-search?q=`, unlock_preview: `https://${cfg.domain}/api/github-upgrade/unlock-preview`, deliverable_manifest: `https://${cfg.domain}/api/github-upgrade/deliverable-manifest`, roi_payback: `https://${cfg.domain}/api/github-upgrade/roi-payback`, endowment_customizer: `https://${cfg.domain}/api/github-upgrade/endowment-customizer`, rss_feed: `https://${cfg.domain}/feed.xml`, json_feed: `https://${cfg.domain}/feed.json`, csv_export: `https://${cfg.domain}/api/github-upgrade/export.csv`, sitemap: `https://${cfg.domain}/sitemap.xml`, github_upgrade_api: `https://${cfg.domain}/api/github-upgrade`, pst_telemetry: `https://${cfg.domain}/api/telemetry/pst-report` }, capabilities: ['ariely_zero_price_guard', 'gbb_decoy_anchoring', 'zod_deliverable_manifest', 'pseo_inline_curtain', 'endowment_customizer', 'sqlite_stmt_cache', 'eu_cosing_8_allergen_screen'] });
   });
 
   app.get('/api/github-upgrade', (req, res) => {
@@ -536,8 +537,8 @@ function attachExactBaselinePack(app, options = {}) {
   const buildBuyLinks = (email) => ({ micro_pass: `https://${cfg.domain}/buy/micro_pass?email=${encodeURIComponent(email)}`, flash_pass: `https://${cfg.domain}/buy/flash_pass?email=${encodeURIComponent(email)}`, complete_dossier: `https://${cfg.domain}/buy/complete_dossier?email=${encodeURIComponent(email)}`, pro_b2b: `https://${cfg.domain}/buy/pro_b2b?email=${encodeURIComponent(email)}` });
   async function sendOneClickLeadEmail(email, summaryText, isTest) {
     const links = buildBuyLinks(email), safeSum = escMailHtml(summaryText);
-    const textMail = `✓ EU CosIng & Lab pH Verified · 30-Day Refund Guarantee\n${summaryText}\n\n1-Click Direct Stripe Checkout Links (No Login Required · 30-Day Refund Guarantee):\n• $1.99 Complete 3-File Routine Kit (9:16 Phone Card + 4-Night Calendar + Dupes): ${links.flash_pass}\n• $${cfg.proPriceUsd} ${cfg.proLabel}: ${links.pro_b2b}\n`;
-    const htmlMail = `<div style="font-family:sans-serif;max-width:560px;color:#0F172A;"><div style="font-size:12px;font-weight:700;color:#285B44;margin-bottom:6px;">&#10003; EU CosIng &amp; Lab pH Verified · 65 Actives · 30-Day Refund Guarantee</div><h2>${escMailHtml(cfg.brandName)}: Morning &amp; Bedtime Routine Summary &amp; 1-Click Kit Links</h2><p>${safeSum}</p><p><strong>Instant 1-Click Stripe Checkout (Apple Pay / Link Ready · 30-Day Refund Guarantee):</strong></p><ul><li><a href="${links.flash_pass}"><strong>$1.99 Complete 3-File Routine Kit (9:16 Phone Card + 4-Night Calendar + Chemist Dupes) →</strong></a></li><li><a href="${links.pro_b2b}"><strong>$${cfg.proPriceUsd} ${escMailHtml(cfg.proLabel)} →</strong></a></li></ul></div>`;
+    const textMail = `✓ EU CosIng & Lab pH Verified · 8 Contact-Allergen Screens · 30-Day Refund Guarantee\n${summaryText}\n\n• Free 8-Category EU CosIng Allergen Screen ($0): https://${cfg.domain}/?skin=allergy&allergies=fragrance,snail_mite,salicylates\n\n1-Click Direct Stripe Checkout Links (No Login Required · 30-Day Refund Guarantee):\n• $1.99 Complete 3-File Routine Kit (9:16 Phone Card + 4-Night Calendar + Dupes): ${links.flash_pass}\n• $${cfg.proPriceUsd} ${cfg.proLabel}: ${links.pro_b2b}\n`;
+    const htmlMail = `<div style="font-family:sans-serif;max-width:560px;color:#0F172A;"><div style="font-size:12px;font-weight:700;color:#285B44;margin-bottom:6px;">&#10003; EU CosIng &amp; Lab pH Verified · 65 Actives · 8 Contact-Allergen Screens · 30-Day Refund Guarantee</div><h2>${escMailHtml(cfg.brandName)}: Morning &amp; Bedtime Routine Summary &amp; 1-Click Kit Links</h2><p>${safeSum}</p><p><a href="https://${cfg.domain}/?skin=allergy&amp;allergies=fragrance,snail_mite,salicylates" style="color:#285B44;font-weight:700;">&#10003; Open Free 8-Category EU CosIng Contact-Allergen Screen ($0) &rarr;</a></p><p><strong>Instant 1-Click Stripe Checkout (Apple Pay / Link Ready · 30-Day Refund Guarantee):</strong></p><ul><li><a href="${links.flash_pass}"><strong>$1.99 Complete 3-File Routine Kit (9:16 Phone Card + 4-Night Calendar + Chemist Dupes) →</strong></a></li><li><a href="${links.pro_b2b}"><strong>$${cfg.proPriceUsd} ${escMailHtml(cfg.proLabel)} →</strong></a></li></ul></div>`;
     const resendKey = process.env.RESEND_API_KEY || '';
     if (SENDGRID_API_KEY && SENDGRID_API_KEY.startsWith('SG.') && !isTest) {
       try {
