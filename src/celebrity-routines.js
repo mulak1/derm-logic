@@ -537,6 +537,10 @@ function renderPersonaInteractiveWorkbenchAddons() {
             <span><strong style="font-size:0.8rem;color:var(--text-primary);display:block;">Tight, Shiny &amp; Peeling</strong><span style="font-size:0.72rem;color:var(--text-secondary);">Too many acids or retinols at once</span></span>
             <span class="badge-safe mono" style="font-size:0.68rem;padding:2px 6px;flex-shrink:0;">Soothe &rarr;</span>
           </button>
+          <button type="button" class="preset-chip dl-reaction-btn" data-rx="allergy" onclick="window.__dlDiagnoseSkinReaction('allergy', this)" style="grid-column:1 / -1;text-align:left;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px;">
+            <span><strong style="font-size:0.8rem;color:var(--text-primary);display:block;">Allergic Itch, Hives or Contact Rash</strong><span style="font-size:0.72rem;color:var(--text-secondary);">Snail mucin (dust-mite), fragrance, salicylates, or propylene glycol</span></span>
+            <span class="badge-clash mono" style="font-size:0.68rem;padding:2px 6px;flex-shrink:0;">Screen Allergens &rarr;</span>
+          </button>
         </div>
         <div id="dl-reaction-autopsy-card" style="display:none;margin-top:8px;padding:11px 13px;border-radius:14px;background:var(--bg-surface);border-left:3px solid var(--rose-brand);font-size:0.8rem;line-height:1.45;"></div>
       </div>`,
@@ -783,11 +787,23 @@ const PERSONA_INTERACTIVE_CLIENT_JS = `
         rescueProd: 'illiyoon-ceramide-ato',
         rescueLabel: 'Comfort Dry Skin: ILLIYOON Ceramide Ato Cream ($19) →',
         partner: 'amazon'
+      },
+      allergy: {
+        ids: ['cosrx-snail-96-mucin', 'paulas-choice-2-bha', 'vanicream-daily-facial'],
+        zone: 'Eyelids, Neck &amp; Cheeks (EU CosIng Contact Screen)',
+        title: 'Why It Flared: Contact Trigger (Snail Mucin / Salicylate / Glycol)',
+        body: shelfPrefix + 'EU CosIng Annex III &amp; North American Contact Dermatitis screening flags dust-mite cross-reactive Snail Filtrate, Salicylates, or Propylene Glycol.',
+        rescueProd: 'vanicream-daily-facial',
+        rescueLabel: 'Hypoallergenic Swap: Vanicream Daily Facial ($14) →',
+        partner: 'amazon'
       }
     };
     var cfg = map[rxType] || map.sting;
+    if (rxType === 'allergy' && typeof window.__dlToggleAllergyOption === 'function') {
+      window.__dlSelectedAllergies = ['snail_mite', 'salicylates'];
+    }
     if (checkedNames.length < 2) window.__dlApplyCheckedIdsAndSync(cfg.ids);
-    card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;"><div style="flex:1;min-width:210px;"><span class="badge-clash mono" style="font-size:0.68rem;padding:1px 7px;margin-bottom:4px;display:inline-block;">' + cfg.zone + '</span><strong style="color:var(--rose-brand);display:block;margin-bottom:2px;">' + cfg.title + '</strong><span style="color:var(--text-secondary);">' + cfg.body + '</span></div><div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;"><a href="/api/affiliate?product=' + cfg.rescueProd + '&amp;partner=' + cfg.partner + '" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">' + cfg.rescueLabel + '</a><a href="/buy/flash_pass?source=reaction_triage" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'flash_pass\\');return false;}" class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;text-decoration:underline;">Save 3-Night Soothing Plan ($1.99) &rarr;</a></div></div>';
+    card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;"><div style="flex:1;min-width:210px;"><span class="badge-clash mono" style="font-size:0.68rem;padding:1px 7px;margin-bottom:4px;display:inline-block;">&#10003; EU CosIng Free Proof &middot; ' + cfg.zone + '</span><strong style="color:var(--rose-brand);display:block;margin-bottom:2px;">' + cfg.title + '</strong><span style="color:var(--text-secondary);">' + cfg.body + '</span></div><div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;"><a href="/api/affiliate?product=' + cfg.rescueProd + '&amp;partner=' + cfg.partner + '" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono" style="padding:5px 10px;font-size:0.74rem;white-space:nowrap;" data-no-bag-inject="1">' + cfg.rescueLabel + '</a><button type="button" onclick="if(window.__dlFocusSampleEmail){window.__dlFocusSampleEmail(this);}" class="mono" style="background:transparent;border:none;padding:0;font-size:0.73rem;color:var(--rose-brand);font-weight:700;text-decoration:underline;cursor:pointer;">&#128274; Email 9:30 PM Calm Protocol &amp; Dupe #2 ($0) &uarr;</button><a href="/buy/flash_pass?source=reaction_triage" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy(\\'flash_pass\\');return false;}" class="mono" style="font-size:0.71rem;color:var(--text-secondary);font-weight:600;text-decoration:underline;">Or Get Complete 3-File Kit ($1.99) &rarr;</a></div></div>';
     window.__dlBumpCustomizationCount(rxType);
     if (typeof runRoutineAnalysis === 'function') runRoutineAnalysis(null, true);
   };
