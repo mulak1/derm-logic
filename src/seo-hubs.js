@@ -229,27 +229,28 @@ function renderSiloNavStrip(activeSilo, skipTopBar) {
 function renderCelebrityIndexPage() {
   const celebs = getAllCelebrityRoutines();
   const latestDaily = celebs.filter((c) => c.isDailyRelease).slice(-1)[0] || celebs[celebs.length - 1];
-  const cards = celebs.map((c) => {
+  const cards = celebs.map((c, idx) => {
     const preloadHref = `/?products=${encodeURIComponent(c.productIds.join(','))}#analyzer`;
     const cBottles = c.productIds.map((id) => CULT_PRODUCTS.find((p) => p.id === id)).filter(Boolean);
     const freeBottlePills = cBottles.slice(0, 2).map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.74rem;padding:3px 8px;background:var(--bg-surface);border:1px solid var(--border-hairline);color:var(--text-primary);text-decoration:none;">&#10003; ${escapeHtml(b.brand)} ${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 20))}</a>`).join('');
     const lockedBottlePills = cBottles.slice(2).map((b) => `<a href="/bottle/${escapeHtml(b.id)}" class="mono" style="font-size:0.74rem;padding:3px 8px;background:var(--bg-surface);border:1px solid var(--border-hairline);color:var(--text-primary);text-decoration:none;">${escapeHtml(b.brand)} ${escapeHtml(b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 20))}</a>`).join('');
     const filterBlob = `${c.skinProfile} ${c.moniker} ${c.summary} ${cBottles.map((b) => b.name + ' ' + b.category).join(' ')}`.toLowerCase();
-    return `<div class="porcelain-vessel-core celeb-routine-card" data-celeb-filter="${escapeHtml(filterBlob)}" style="background:#FFFFFF;border:1px solid #EFEAE3;border-radius:18px;padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;box-shadow:0 4px 18px -4px rgba(28,25,23,0.04);">
+    const dupeLine = c.dupeSwap ? `<div class="mono" style="font-size:0.76rem;color:var(--sage-safe);background:var(--sage-bg);padding:6px 10px;border-radius:10px;margin-bottom:8px;font-weight:600;">&#10003; Dupe Arbitrage Proof: ${escapeHtml(c.dupeSwap.gentleDupe)} &middot; ${escapeHtml(c.dupeSwap.savingsNote)}</div>` : '';
+    return `<div class="porcelain-vessel-core celeb-routine-card ${idx >= 6 ? 'dl-more-hub-card' : ''}" data-celeb-filter="${escapeHtml(filterBlob)}" style="background:#FFFFFF;border:1px solid #EFEAE3;border-radius:18px;padding:20px 22px;display:${idx >= 6 ? 'none' : 'flex'};flex-direction:column;justify-content:space-between;gap:10px;box-shadow:0 4px 18px -4px rgba(28,25,23,0.04);">
       <div>
-        <div class="vessel-photo-frame" style="height:210px;margin-bottom:14px;overflow:hidden;border-radius:14px;"><img src="${escapeHtml(c.heroImg)}" alt="${escapeHtml(c.name)} skincare routine vanity shelf" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(c.imgPos || '50% 25%')};display:block;" /></div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-          <span class="badge-safe mono" style="font-size:0.78rem;padding:3px 10px;background:#EBF4F0;color:#1B4D3E;border:1px solid #C4DFD5;">&#10003; EU CosIng &middot; ${escapeHtml(c.skinProfile)}</span>
+          <span class="badge-safe mono" style="font-size:0.76rem;padding:3px 10px;">&#10003; EU CosIng &middot; ${escapeHtml(c.skinProfile)}</span>
           <span class="mono" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;">${c.amSteps.length} AM / ${c.pmSteps.length} PM Steps</span>
         </div>
-        <a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.45rem;color:var(--text-primary);margin-bottom:3px;line-height:1.24;">${escapeHtml(c.name)}</a>
-        <div class="serif-italic" style="font-size:0.96rem;color:var(--rose-brand);margin-bottom:8px;">${escapeHtml(c.moniker)}</div>
-        <p style="font-size:0.90rem;color:var(--text-secondary);line-height:1.56;margin-bottom:12px;">${escapeHtml(c.summary)}</p>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center;">${freeBottlePills}<span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.73rem;color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;">${LOCK_SVG}Reveal +${Math.max(1, cBottles.length - 2)} PM Bottles &amp; Dupe ($0) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;gap:6px;flex-wrap:wrap;">${lockedBottlePills}${c.dupeSwap && c.dupeSwap.savingsNote ? ` <span class="mono" style="font-size:0.73rem;color:var(--sage-safe);font-weight:600;">&#10003; ${escapeHtml(c.dupeSwap.savingsNote)}</span>` : ''}</span></div>
+        <a href="/celebrity/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.35rem;color:var(--text-primary);margin-bottom:2px;line-height:1.22;">${escapeHtml(c.name)}</a>
+        <div class="serif-italic" style="font-size:0.9rem;color:var(--rose-brand);margin-bottom:6px;">${escapeHtml(c.moniker)}</div>
+        <p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;margin-bottom:8px;">${escapeHtml(c.summary)}</p>
+        ${dupeLine}
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;align-items:center;">${freeBottlePills}<span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.73rem;color:var(--rose-brand);font-weight:700;cursor:pointer;text-decoration:underline;">${LOCK_SVG}Reveal +${Math.max(1, cBottles.length - 2)} PM Bottles &amp; Dupe ($0) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;gap:6px;flex-wrap:wrap;">${lockedBottlePills}</span></div>
         <div style="font-size:11.5px;color:var(--text-muted);line-height:1.38;">Source: <a href="${escapeHtml(c.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:underline;font-weight:500;">${escapeHtml(c.sourcePublication)} &rarr;</a> · Independent commentary</div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:1px solid #F2EDE6;">
-        <a href="/celebrity/${escapeHtml(c.slug)}" class="mono" style="font-size:0.84rem;color:var(--rose-brand);font-weight:600;text-decoration:none;">Inspect Full Shelf &rarr;</a>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:10px;border-top:1px solid #F2EDE6;">
+        <a href="/celebrity/${escapeHtml(c.slug)}" class="mono" style="font-size:0.82rem;color:var(--rose-brand);font-weight:600;text-decoration:none;">Inspect Full Shelf &rarr;</a>
         <a href="${preloadHref}" class="affiliate-link-pill mono" style="font-weight:600;">Load Shelf in Checker &rarr;</a>
       </div>
     </div>`;
@@ -258,17 +259,13 @@ function renderCelebrityIndexPage() {
   const bodyHtml = `<section class="section-block" style="padding-top:16px;">
     <div class="container">
       ${renderSiloNavStrip('celebrity')}
-      <h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.6rem);margin-bottom:12px;">Iconic Routines: Celebrity Bottles &amp; Morning/Night Layering</h1>
-      <p class="hero-sub" style="margin-bottom:16px;">Every serum, barrier cream, and SPF spotted in public vanity tours and beauty interviews, analyzed for pH harmony, morning vs. bedtime timing, and gentle drugstore dupes. <span class="badge-safe mono">&#10003; Free Proof #1 Cheaper Dupe: Geek &amp; Gorgeous / Illiyoon ($14–$18 · Fungal &amp; 8-Allergen Safe)</span> <a href="/#analyzer" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">2-Product pH Clash Matrix &rarr;</a></p>
-      <div class="porcelain-vessel-core" style="background:#FFFFFF;border:1px solid #EFEAE3;border-radius:14px;padding:16px 20px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 4px 14px -6px rgba(28,25,23,0.04);">
-        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
-          <span class="badge-safe mono">+1 New Routine Daily</span>
-          <span style="font-size:0.9rem;color:var(--text-primary);">Today’s Featured Drop: <a href="/celebrity/${escapeHtml(latestDaily.slug)}" style="color:var(--rose-brand);font-weight:600;text-decoration:underline;">${escapeHtml(latestDaily.name)} (${escapeHtml(latestDaily.moniker)})</a></span>
-          <span class="mono" style="font-size:0.76rem;color:var(--text-secondary);">· ${escapeHtml(latestDaily.skinProfile)}</span>
-        </div>
-        <a href="/celebrity/${escapeHtml(latestDaily.slug)}" class="affiliate-link-pill mono">View Today’s Shelf &rarr;</a>
+      <h1 class="hero-h1" style="font-size:clamp(2.1rem,3.6vw,3.1rem);margin-bottom:10px;">Iconic Routines: Celebrity Bottles &amp; Morning/Night Layering</h1>
+      <p class="hero-sub" style="margin-bottom:14px;">Every serum, barrier cream, and SPF spotted in public vanity tours and beauty interviews, analyzed for pH harmony, morning vs. bedtime timing, and gentle drugstore dupes. <span class="badge-safe mono">&#10003; Free Proof #1 Cheaper Dupe: Geek &amp; Gorgeous / Illiyoon ($14–$18 · Fungal &amp; 8-Allergen Safe)</span> <a href="/#analyzer" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">2-Product pH Clash Matrix &rarr;</a></p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:18px;">
+        <div style="border-radius:14px;overflow:hidden;height:155px;background:var(--bg-oat);"><img src="/public/banana_aesop_vanity_serums.jpg" alt="Sunlit travertine vanity shelf with unbranded amber and frosted dropper serums" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="eager" /></div>
+        <div style="border-radius:14px;overflow:hidden;height:155px;background:var(--bg-oat);"><img src="/public/banana_apothecary_shelf_ritual.jpg" alt="Architectural skincare shelf with ceramic barrier cream jars and apothecary bottles" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="eager" /></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:14px 18px;background:#FFFFFF;border:1px solid #EFEAE3;border-radius:14px;margin-bottom:24px;box-shadow:0 4px 14px -6px rgba(28,25,23,0.04);" role="group" aria-label="Filter Celebrity Routines by Skin Profile">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:12px 16px;background:#FFFFFF;border:1px solid #EFEAE3;border-radius:14px;margin-bottom:18px;" role="group" aria-label="Filter Celebrity Routines by Skin Profile">
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <button type="button" class="vanity-light-btn active mono celeb-filter-btn" onclick="window.__filterCelebShelves('all',this)" style="padding:6px 12px;font-size:0.78rem;">All Routines (${celebs.length})</button>
           <button type="button" class="vanity-light-btn mono celeb-filter-btn" onclick="window.__filterCelebShelves('acne|breakout|bha|oily|congest',this)" style="padding:6px 12px;font-size:0.78rem;">Breakout &amp; Acne-Prone</button>
@@ -279,10 +276,11 @@ function renderCelebrityIndexPage() {
         </div>
         <a href="/#analyzer" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;text-decoration:none;">Or Check My Own Bottles &rarr;</a>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-bottom:32px;">${cards}</div>
-      <div id="celebrity-index-editorial-disclosure" class="porcelain-vessel-core" style="background:#FFFFFF;border:1px solid #EFEAE3;border-radius:14px;padding:16px 20px;gap:6px;box-shadow:0 4px 14px -6px rgba(28,25,23,0.04);">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin-bottom:18px;">${cards}</div>
+      <div style="margin-bottom:20px;text-align:center;"><button type="button" class="btn-secondary mono" onclick="document.querySelectorAll('.dl-more-hub-card').forEach(function(el){el.style.display='flex';});this.style.display='none';">Show All ${celebs.length} Iconic Celebrity Shelves &amp; Dupe Breakdowns &rarr;</button></div>
+      <div id="celebrity-index-editorial-disclosure" class="porcelain-vessel-core" style="background:#FFFFFF;border:1px solid #EFEAE3;border-radius:14px;padding:14px 18px;gap:6px;">
         <div class="mono" style="font-size:11px;color:var(--rose-brand);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;">Editorial Independence, Non-Endorsement &amp; Source Attribution</div>
-        <p style="font-size:12px;color:var(--text-secondary);line-height:1.45;margin:0;"><strong>Public Information &amp; Non-Endorsement Notice:</strong> None of the individuals featured above have endorsed, verified, or sponsored DermLogic, this formulation analysis, or any third-party brands and chemist dupes compared here. Compiled strictly from public interviews (<em>Vogue Beauty Secrets</em>, <em>Harper’s Bazaar Go To Bed With Me</em>, <em>Allure</em>) with direct links to original sources. Photography is illustrative.</p>
+        <p style="font-size:12px;color:var(--text-secondary);line-height:1.45;margin:0;"><strong>Public Information &amp; Non-Endorsement Notice:</strong> None of the individuals featured above have endorsed, verified, or sponsored DermLogic, this formulation analysis, or any third-party brands and chemist dupes compared here. Compiled strictly from public interviews (<em>Vogue Beauty Secrets</em>, <em>Harper’s Bazaar Go To Bed With Me</em>, <em>Allure</em>) with direct links to original sources.</p>
       </div>
       <script>window.__filterCelebShelves=function(rxStr,btn){document.querySelectorAll('.celeb-filter-btn').forEach(function(b){b.classList.remove('active');});if(btn)btn.classList.add('active');var rx=rxStr==='all'?null:new RegExp(rxStr,'i');document.querySelectorAll('.celeb-routine-card').forEach(function(el){var hay=el.getAttribute('data-celeb-filter')||'';el.style.display=(!rx||rx.test(hay))?'flex':'none';});};</script>
     </div>
@@ -693,21 +691,19 @@ function renderBrandDetailPage(brandHub) {
 }
 
 function renderConcernIndexPage() {
-  const cards = CONCERN_HUBS.map((c) => {
+  const cards = CONCERN_HUBS.map((c, idx) => {
     const cBottles = c.productIds.map((id) => CULT_PRODUCTS.find((p) => p.id === id)).filter(Boolean);
     const freeBottleStr = cBottles.slice(0, 2).map((b) => `${b.brand} ${b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 20)}`).join(' · ');
     const lockedBottleStr = cBottles.slice(2).map((b) => `${b.brand} ${b.name.replace(/\s*\([^)]*\)/g, '').slice(0, 20)}`).join(' · ');
-    const cCelebs = (c.celebSlugs || []).map((s) => getAllCelebrityRoutines().find((ce) => ce.slug === s)).filter(Boolean);
-    return `<div class="porcelain-vessel-core" style="background:var(--bg-oat);padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
+    return `<div class="porcelain-vessel-core ${idx >= 6 ? 'dl-more-hub-card' : ''}" style="background:var(--bg-oat);padding:20px 22px;display:${idx >= 6 ? 'none' : 'flex'};flex-direction:column;justify-content:space-between;gap:10px;">
       <div>
-        <div class="vessel-photo-frame" style="height:195px;margin-bottom:12px;overflow:hidden;border-radius:12px;"><img src="${escapeHtml(c.heroImg || '/public/editorial-woman-morning.jpg')}" alt="${escapeHtml(c.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 28%;display:block;" /></div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
           <span class="badge-safe mono">&#10003; EU CosIng &middot; ${escapeHtml(c.badge)}</span>
           <span class="mono" style="font-size:0.74rem;color:var(--text-secondary);">3-Step Protocol &middot; ${c.productIds.length} Bottles &middot; 8-Allergen Checked</span>
         </div>
-        <a href="/concern/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.38rem;margin-bottom:6px;color:var(--text-primary);">${escapeHtml(c.title)}</a>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.54;margin-bottom:10px;">${escapeHtml(c.summary)}</p>
-        <div style="background:var(--berry-bg);border-left:2.5px solid var(--rose-brand);padding:8px 10px;font-size:0.8rem;line-height:1.45;margin-bottom:9px;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);font-size:0.72rem;text-transform:uppercase;">Avoid:</strong> ${escapeHtml(c.avoidNote)}</div>
+        <a href="/concern/${escapeHtml(c.slug)}" class="serif-display" style="display:block;font-size:1.32rem;margin-bottom:4px;color:var(--text-primary);">${escapeHtml(c.title)}</a>
+        <p style="font-size:0.86rem;color:var(--text-secondary);line-height:1.5;margin-bottom:8px;">${escapeHtml(c.summary)}</p>
+        <div style="background:var(--berry-bg);border-left:2.5px solid var(--rose-brand);padding:7px 10px;font-size:0.78rem;line-height:1.42;margin-bottom:8px;color:var(--text-primary);"><strong class="mono" style="color:var(--rose-brand);font-size:0.72rem;text-transform:uppercase;">Avoid:</strong> ${escapeHtml(c.avoidNote)}</div>
         <div style="background:var(--bg-surface);padding:7px 10px;font-size:0.78rem;color:var(--text-secondary);"><strong class="mono" style="color:var(--text-primary);font-size:0.72rem;">&#10003; Free Proof (Steps 1–2):</strong> ${escapeHtml(freeBottleStr)} <span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:700;font-size:0.73rem;cursor:pointer;text-decoration:underline;margin-left:4px;">${LOCK_SVG}Reveal 9:30 PM Bottle #3 &amp; Dupe ($0) &uarr;</span><span class="dl-unlocked-c2-proof" style="display:none;"> &middot; ${escapeHtml(lockedBottleStr)}</span></div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding-top:8px;border-top:1px solid var(--border-hairline);">
@@ -726,7 +722,7 @@ function renderConcernIndexPage() {
       { q: 'Should I fix a stinging skin barrier before resuming Vitamin C or Retinol?', a: 'Yes. If lukewarm water or moisturizer stings your cheeks, pause all Vitamin C, AHAs/BHAs, and retinoids and follow the 72-Hour Damaged Skin Barrier Reset first.' },
       { q: 'Why does my concealer or sunscreen pill over morning serums?', a: 'Pilling happens when thick polymers or silicones are layered over damp low-pH serums before they settle. Wait 60 full seconds after Vitamin C or hydrating serums before applying cream and SPF.' }
     ],
-    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('concern')}<h1 class="hero-h1" style="font-size:clamp(2.3rem,4vw,3.5rem);margin-bottom:12px;">Skin Concerns &amp; Step-by-Step Routine Protocols</h1><p class="hero-sub" style="margin-bottom:16px;">Targeted routines for real-life vanity emergencies, from concealer pilling at 7:30 AM to over-exfoliated barriers and pregnancy-safe swaps. <span class="badge-safe mono">&#10003; Free Proof #1 Cheaper Dupe: Vanicream / Illiyoon ($14–$18 · Fungal &amp; 8-Allergen Safe)</span> <a href="/#analyzer" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">2-Product pH Clash Matrix &rarr;</a></p><div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:14px 18px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><div style="font-size:0.88rem;color:var(--text-primary);"><span class="badge-clash mono" style="margin-right:8px;">Barrier Triage Rule</span><strong>Cheeks stinging or tight tonight?</strong> Start with the <a href="/concern/72-hour-damaged-skin-barrier-reset" style="color:var(--rose-brand);font-weight:600;text-decoration:underline;">72-Hour Damaged Skin Barrier Reset</a> before resuming morning Vitamin C or nighttime Retinoids.</div><a href="/#analyzer" class="affiliate-link-pill mono">Audit My Own Bottles &rarr;</a></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;">${cards}</div></div></section>`
+    bodyHtml: `<section class="section-block" style="padding-top:16px;"><div class="container">${renderSiloNavStrip('concern')}<h1 class="hero-h1" style="font-size:clamp(2.1rem,3.6vw,3.1rem);margin-bottom:10px;">Skin Concerns &amp; Step-by-Step Routine Protocols</h1><p class="hero-sub" style="margin-bottom:14px;">Targeted routines for real-life vanity emergencies, from concealer pilling at 7:30 AM to over-exfoliated barriers and pregnancy-safe swaps. <span class="badge-safe mono">&#10003; Free Proof #1 Cheaper Dupe: Vanicream / Illiyoon ($14–$18 · Fungal &amp; 8-Allergen Safe)</span> <a href="/#analyzer" class="mono" style="color:var(--rose-brand);font-weight:700;text-decoration:underline;">2-Product pH Clash Matrix &rarr;</a></p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:18px;"><div style="border-radius:14px;overflow:hidden;height:155px;background:var(--bg-oat);"><img src="/public/banana_ceramide_cream_macro.jpg" alt="Barrier ceramide cream swirl in ceramic dish" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="eager" /></div><div style="border-radius:14px;overflow:hidden;height:155px;background:var(--bg-oat);"><img src="/public/banana_clinical_lab_glassware.jpg" alt="Cosmetic chemistry lab bench with glass pipette and serum" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="eager" /></div></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;">${cards}</div><div style="margin-top:18px;text-align:center;"><button type="button" class="btn-secondary mono" onclick="document.querySelectorAll('.dl-more-hub-card').forEach(function(el){el.style.display='flex';});this.style.display='none';">Show All ${CONCERN_HUBS.length} Skin Concern Protocols &rarr;</button></div></div></section>`
   });
 }
 
