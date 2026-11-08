@@ -558,6 +558,8 @@ function renderDirectoryPage({ seoPages }) {
             <button type="button" class="mono" style="padding:3px 9px;background:var(--bg-surface);border:1px solid var(--border-hairline);cursor:pointer;" onclick="window.__dlQuickQuery('Glycolic')">Glycolic / BHA</button>
             <button type="button" class="mono" style="padding:3px 9px;background:var(--bg-surface);border:1px solid var(--border-hairline);cursor:pointer;" onclick="window.__dlQuickQuery('Niacinamide')">Niacinamide</button>
             <button type="button" class="mono" style="padding:3px 9px;background:var(--bg-surface);border:1px solid var(--border-hairline);cursor:pointer;" onclick="window.__dlQuickQuery('Azelaic')">Azelaic Acid</button>
+            <button type="button" class="mono" style="padding:3px 9px;background:var(--bg-surface);border:1px solid var(--border-hairline);cursor:pointer;" onclick="window.__dlQuickQuery('Snail')">Snail / Dust-Mite</button>
+            <a href="/?allergies=fragrance,snail_mite,salicylates#checker-workbench" class="mono" style="padding:3px 9px;background:var(--sage-bg);color:var(--sage-safe);border:1px solid var(--sage-border);text-decoration:none;font-weight:600;">&#10003; Screen 8 Allergens ($0) &rarr;</a>
             <button type="button" class="mono" style="padding:3px 9px;background:var(--rose-pill-bg);color:var(--rose-brand);border:1px solid var(--rose-pill-border);cursor:pointer;" onclick="window.__dlQuickQuery('')">Reset &times;</button>
           </div>
         </div>
@@ -801,7 +803,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               <div><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Active Potency Protected</div><div id="pseo-dl-waste-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--sage-safe);">100% Stable (Buffered)</div></div>
               <div><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Ideal Routine Spacing</div><div id="pseo-dl-buffer-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--text-primary);">${Number(page.compatibilityScore) < 55 ? 'Morning & Night Split' : 'Buffer Over Ceramides'}</div></div>
               <div><div class="mono" style="font-size:0.78rem;color:var(--text-secondary);">Skin Feel After Fix</div><div id="pseo-dl-harmony-out" class="mono" style="font-size:1.35rem;font-weight:500;color:var(--sage-safe);">Calm &amp; Balanced</div></div>
-              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><a id="pseo-dl-handoff-cta" href="/buy/flash_pass?source=pseo_inline_calc&amp;guide=${encodeURIComponent(page.slug)}&amp;skin_type=combination" class="btn-primary mono" style="padding:10px 16px;font-size:0.84rem;text-decoration:none;display:inline-block;">Save $1.99 Routine Card &rarr;</a></div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button type="button" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" class="btn-secondary mono" style="padding:9px 13px;font-size:0.8rem;color:var(--rose-brand);border-color:var(--rose-brand);font-weight:700;cursor:pointer;">${lockSvgInline}Email $0 Rules &amp; 2 Dupes &uarr;</button><a id="pseo-dl-handoff-cta" href="/buy/flash_pass?source=pseo_inline_calc&amp;guide=${encodeURIComponent(page.slug)}&amp;skin_type=combination" class="btn-primary mono" style="padding:10px 16px;font-size:0.84rem;text-decoration:none;display:inline-block;">Save $1.99 Routine Card &rarr;</a></div>
             </div>
             <div id="pseo-dl-protocol-note" style="font-size:0.88rem;color:var(--text-secondary);padding:10px 14px;background:var(--bg-surface);">
               <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="color:var(--rose-brand);font-weight:600;cursor:pointer;font-size:0.82rem;">${lockSvgInline}Tailored Morning &amp; Bedtime Buffering Protocol for ${escapeHtml(searchIntentSubject)} Locked — Enter Email Above ($0) to Reveal Free &uarr;</div>
@@ -832,7 +834,8 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
               };
               if (nEl && notes[profile]) nEl.innerHTML = notes[profile];
               var sel = document.getElementById('skinTypeSelect');
-              if (sel) { sel.value = profile; if (typeof window.runRoutineAnalysis === 'function') window.runRoutineAnalysis(); }
+              if (profile === 'allergy_prone') window.__dlSelectedAllergies = ['fragrance', 'snail_mite', 'salicylates'];
+              if (sel) { sel.value = profile === 'allergy_prone' ? 'allergy' : profile; if (typeof window.runRoutineAnalysis === 'function') window.runRoutineAnalysis(); }
               try {
                 fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'calculate', page_url: window.location.pathname, meta: { trigger: 'pseo_inline_skin_calc', profile: profile, spend: spend, wasted_usd: wasted, slug: '${escapeHtml(page.slug)}' } }) }).catch(function(){});
                 fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'view_paywall', page_url: window.location.pathname, meta: { trigger: 'pseo_inline_skin_verdict', profile: profile, wasted_usd: wasted, slug: '${escapeHtml(page.slug)}' } }) }).catch(function(){});
