@@ -353,7 +353,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
         <div class="porcelain-vessel-core" style="padding:12px 14px;background:var(--bg-surface);border-radius:14px;display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:0.8125rem;font-weight:600;color:var(--sage-safe);">&#10003; 7:30 AM Morning Glow &middot; 15% Vitamin C + SPF 50</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span style="font-size:0.8125rem;font-weight:600;color:var(--sage-safe);">&#10003; 7:30 AM Morning Glow &middot; 15% Vitamin C + SPF 50</span><button type="button" id="dl-ugc-card-am-btn" class="mono" onclick="if(window.__dlFlipPassSide)window.__dlFlipPassSide('am');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);border:none;font-size:0.68rem;font-weight:700;cursor:pointer;white-space:nowrap;">9:16 AM Card &rarr;</button></div>
           <div style="height:130px;border-radius:10px;overflow:hidden;background:var(--bg-oat);">
             <img src="/public/banana_aesop_vanity_serums.jpg" alt="Warm sunlit travertine bathroom vanity with unbranded amber and frosted glass dropper serums" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="lazy" />
           </div>
@@ -361,12 +361,12 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
             <p style="font-size:0.86rem;color:var(--text-primary);line-height:1.42;margin:0;">&ldquo;Separated my 15% Vitamin C from my night acids. Smooth, non-pilling barrier under SPF 50 all day.&rdquo;</p>
             <div class="mono" style="font-size:0.78rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;">
               <span>Maya K., Verified Routine</span>
-              <span style="color:var(--sage-safe);font-weight:600;">&#10003; 7:30 AM Free Proof</span>
+              <span role="button" tabindex="0" onclick="if(window.__dlFlipPassSide)window.__dlFlipPassSide('am');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="color:var(--sage-safe);font-weight:600;cursor:pointer;text-decoration:underline;">&#10003; 7:30 AM Free Proof &rarr;</span>
             </div>
           </div>
         </div>
         <div class="porcelain-vessel-core" style="padding:12px 14px;background:var(--bg-surface);border-radius:14px;display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:0.8125rem;font-weight:600;color:var(--rose-brand);">Bathroom Shelf &middot; C E Ferulic + Barrier Dupe</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span style="font-size:0.8125rem;font-weight:600;color:var(--rose-brand);">Bathroom Shelf &middot; C E Ferulic + Barrier Dupe</span><button type="button" id="dl-ugc-card-dupe-btn" class="mono" onclick="if(window.__dlDupeAllFiveVessels)window.__dlDupeAllFiveVessels('dupe');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;font-size:0.68rem;font-weight:700;cursor:pointer;white-space:nowrap;">$86 Dupe Card &rarr;</button></div>
           <div style="height:130px;border-radius:10px;overflow:hidden;background:var(--bg-oat);">
             <img src="/public/banana_apothecary_shelf_ritual.jpg" alt="Minimalist architectural oak and travertine apothecary shelf with unbranded skincare vessels" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="lazy" />
           </div>
@@ -380,7 +380,7 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
           </div>
         </div>
         <div class="porcelain-vessel-core" style="padding:12px 14px;background:var(--bg-surface);border-radius:14px;display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:0.8125rem;font-weight:600;color:var(--rose-brand);">Night Repair &middot; 3:1:1 Ceramide Cushion</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span style="font-size:0.8125rem;font-weight:600;color:var(--rose-brand);">Night Repair &middot; 3:1:1 Ceramide Cushion</span><button type="button" id="dl-ugc-card-pm-btn" class="mono" onclick="if(window.__dlFlipPassSide)window.__dlFlipPassSide('pm');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--rose-pill-bg);color:var(--rose-brand);border:none;font-size:0.68rem;font-weight:700;cursor:pointer;white-space:nowrap;">9:30 PM Card &rarr;</button></div>
           <div style="height:130px;border-radius:10px;overflow:hidden;background:var(--bg-oat);">
             <img src="/public/banana_ceramide_cream_macro.jpg" alt="Macro editorial shot of rich whipped ceramide barrier cream swirl and hyaluronic serum droplet" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" loading="lazy" />
           </div>
