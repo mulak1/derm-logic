@@ -196,10 +196,10 @@ function renderGrowthPageHtml(cfg, item, kind) {
 
   const isDerm = cfg.moduleId === 'derm_logic';
   const trsHtml = rows.map((r, idx) => {
-    const isGatedRow = isDerm && (idx === 1 || idx === 2);
+    const isGatedRow = isDerm && idx >= 2;
     const kpiHtml = isGatedRow
-      ? `<span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);else{var e=document.getElementById('eb-growth-row4-email');if(e)e.focus();}" style="color:${escXml(primaryCol)};font-weight:700;cursor:pointer;">Reveal Rule &amp; Dupe Free ($0) &darr;</span><span class="dl-unlocked-c2-proof" style="display:none;">${escXml(r.kpi)}</span>`
-      : escXml(r.kpi);
+      ? `<span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this);else{var e=document.getElementById('eb-growth-row4-email');if(e)e.focus();}" style="color:${escXml(primaryCol)};font-weight:700;cursor:pointer;">&#128274; Reveal 9:30 PM Rule &amp; Dupe ($0) &darr;</span><span class="dl-unlocked-c2-proof" style="display:none;">${escXml(r.kpi)}</span>`
+      : `&#10003; ${escXml(r.kpi)}`;
     return `<tr${idx === 3 ? ' id="eb-growth-row4-tr"' : ''}><th${idx === 0 ? ' id="eb-growth-r1-name"' : ''} scope="row" style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-weight:600;color:${escXml(t.textPrimary)};text-align:left;font-size:14px;">${escXml(r.name)}</th><td${idx === 0 ? ' id="eb-growth-r1-kpi"' : (idx === 1 ? ' id="eb-growth-r2-kpi"' : (idx === 3 ? ' id="eb-growth-row4-val"' : ''))} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-variant-numeric:tabular-nums;font-weight:600;color:${escXml(primaryCol)};font-size:14px;">${kpiHtml}</td><td style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};color:${escXml(t.textSecondary)};font-size:14px;">${escXml(r.action)}</td><td${idx === 3 ? ' id="eb-growth-row4-status"' : ''} style="padding:11px 14px;border-bottom:1px solid ${escXml(t.border)};font-size:13px;font-weight:600;color:${escXml(t.safeColor)};">${escXml(r.status)}</td></tr>`;
   }).join('');
   const headStyles = DL_UI && DL_UI.SHARED_CSS ? `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet"><style>${DL_UI.SHARED_CSS}</style>` : '<link rel="stylesheet" href="/styles.css" />';
@@ -215,7 +215,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
     <div id="dl-pseo-top-conversion-bar" class="porcelain-vessel-core" style="padding:14px 18px;background:var(--bg-oat);margin:14px 0 18px;display:flex;flex-direction:column;gap:10px;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
         <div>
-          <span class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">10-SECOND BATHROOM SINK X-RAY &middot; ${initialAnalysis.compatibilityScore}/100 HARMONY</span>
+          <span class="mono" style="font-size:0.73rem;color:var(--rose-brand);font-weight:600;display:block;margin-bottom:2px;">&#10003; EU COSING &amp; LAB PH VERIFIED &middot; ${initialAnalysis.compatibilityScore}/100 HARMONY &middot; 30-DAY GUARANTEE</span>
           <strong class="serif-display" style="font-size:1.18rem;color:var(--text-primary);font-weight:400;">What happens on your skin &amp; the exact $0 timing fix:</strong>
         </div>
       </div>
@@ -225,13 +225,12 @@ function renderGrowthPageHtml(cfg, item, kind) {
           <div style="font-size:0.82rem;color:var(--text-primary);line-height:1.4;">Layering incompatible actives in the same routine shifts skin balance and cancels active potency on contact, causing stinging or pilling.</div>
         </div>
         <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
-          <div class="mono" style="font-size:0.71rem;color:var(--sage-safe);font-weight:600;margin-bottom:3px;">02 &middot; MORNING TIMING &amp; $14 DUPE SWAP</div>
-          <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;line-height:1.38;cursor:pointer;">Enter Email Below ($0) to Reveal Morning Rule &amp; 2 Chemist Dupes &darr;</div>
-          <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.82rem;color:var(--text-primary);line-height:1.4;">Apply water-light serums first on clean skin, give 60 seconds to absorb, and seal with broad-spectrum SPF 50.</div>
+          <div class="mono" style="font-size:0.71rem;color:var(--sage-safe);font-weight:600;margin-bottom:3px;">&#10003; 02 &middot; 7:30 AM MORNING STEP &amp; DUPE #1 (FREE PROOF)</div>
+          <div style="font-size:0.82rem;color:var(--text-primary);line-height:1.4;">Apply water-light serums first on clean skin, give 60 seconds to absorb, and seal with broad-spectrum SPF 50.</div>
         </div>
         <div style="padding:10px 12px;border-radius:14px;background:var(--bg-surface);">
-          <div class="mono" style="font-size:0.71rem;color:var(--honey-warn);font-weight:600;margin-bottom:3px;">03 &middot; BEDTIME RECOVERY SCHEDULE</div>
-          <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.8rem;color:var(--text-primary);font-weight:600;line-height:1.38;cursor:pointer;">Included in $0 Email AM/PM Calendar Transport &darr;</div>
+          <div class="mono" style="font-size:0.71rem;color:var(--honey-warn);font-weight:600;margin-bottom:3px;">&#128274; 03 &middot; 9:30 PM BEDTIME RECOVERY &amp; DUPE #2 ($0)</div>
+          <div role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;line-height:1.38;cursor:pointer;">Enter Email Below ($0) to Reveal 9:30 PM Night Schedule &amp; Dupe #2 &darr;</div>
           <div class="dl-unlocked-c2-proof" style="display:none;font-size:0.82rem;color:var(--text-primary);line-height:1.4;">Alternate exfoliating acids and retinoids/peptides across nights, then cushion with a 3:1:1 ceramide barrier cream.</div>
         </div>
       </div>
