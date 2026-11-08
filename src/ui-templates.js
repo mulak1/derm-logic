@@ -429,7 +429,7 @@ function renderSingleConflictCard(c, idx = 0) {
   return `<div class="conflict-card ${escapeHtml(c.severity)}" data-no-bag-inject="1" style="padding:11px 13px;margin-bottom:7px;border-radius:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap;">
         <strong class="serif-display" style="font-size:1rem;font-weight:500;color:var(--text-primary);">${escapeHtml(nameA)} + ${escapeHtml(nameB)}</strong>
-        <span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono" style="padding:2px 8px;font-size:0.71rem;">${badgeLabel}</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;"><span class="${isCritical ? 'badge-clash' : 'badge-warn'} mono" style="padding:2px 8px;font-size:0.71rem;">${badgeLabel}</span><button type="button" class="mono dl-clash-card-pass-btn" onclick="if(window.__dlAutoFixClashes)window.__dlAutoFixClashes();if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);border:1px solid var(--sage-border);font-size:0.68rem;font-weight:700;cursor:pointer;white-space:nowrap;">&#10003; Fix &amp; 9:16 Card &rarr;</button></span>
       </div>
       ${bodyBlock}
     </div>`;
