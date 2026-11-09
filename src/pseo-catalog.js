@@ -321,6 +321,8 @@ const PAIR_SEO_SEEDS = [
   {
     slug: 'azelaic-acid-and-vitamin-c-am-stack',
     title: 'Azelaic Acid and Vitamin C in the Morning: Hyperpigmentation & Rosacea Layering',
+    customTitle: 'Azelaic Acid and Vitamin C Together: Morning Layering Order & 60s Wait Rule',
+    customMetaDescription: 'Yes, you can layer Azelaic Acid (pH 4.9) and Vitamin C (pH 3.2) together for dark spots and redness: apply watery Vitamin C first, wait 60s to dry, then smooth on 10%–15% Azelaic Acid.',
     category: 'Active Pair Matrix',
     activeA: 'l-ascorbic-acid', activeB: 'azelaic-acid',
     verdict: 'SAFE_WITH_WAIT',
@@ -381,6 +383,8 @@ const PAIR_SEO_SEEDS = [
   {
     slug: 'hydroquinone-and-benzoyl-peroxide-staining',
     title: 'Hydroquinone and Benzoyl Peroxide Conflict: Epidermal Staining & Oxidation',
+    customTitle: 'Benzoyl Peroxide and Hydroquinone Together: Why Skin Stains Orange & AM/PM Split',
+    customMetaDescription: 'Never mix Benzoyl Peroxide and Hydroquinone in the same step: peroxide oxidizes hydroquinone into dark orange/brown quinone staining on contact. Use BPO wash in AM and Hydroquinone at night.',
     category: 'Active Pair Matrix',
     activeA: 'hydroquinone', activeB: 'benzoyl-peroxide',
     verdict: 'CRITICAL_CLASH',
@@ -441,6 +445,8 @@ const PAIR_SEO_SEEDS = [
   {
     slug: 'salicylic-acid-and-benzoyl-peroxide-acne-clash',
     title: 'Salicylic Acid (BHA) and Benzoyl Peroxide Together: Erythema & Peeling Risk',
+    customTitle: 'Benzoyl Peroxide and Salicylic Acid Together: Safe AM/PM Acne Layering Order',
+    customMetaDescription: 'Can you use Benzoyl Peroxide and Salicylic Acid (2% BHA) together? Layering both leave-on treatments strips barrier lipids and causes peeling. Use BPO in the AM and 2% BHA on alternate nights.',
     category: 'Active Pair Matrix',
     activeA: 'salicylic-acid', activeB: 'benzoyl-peroxide',
     verdict: 'CRITICAL_CLASH',
@@ -546,6 +552,8 @@ const PAIR_SEO_SEEDS = [
   {
     slug: 'tranexamic-acid-and-tretinoin-melasma-protocol',
     title: 'How to Use Tranexamic Acid and Tretinoin Together: Safe Melasma Layering Order',
+    customTitle: 'How to Use Tranexamic Acid and Tretinoin Together: Melasma & Night Layering Order',
+    customMetaDescription: 'How to use Tranexamic Acid (pH 5.6) and Tretinoin 0.05% (pH 5.8) together for melasma without stinging: apply watery Tranexamic Acid first, wait 10 minutes to dry, then buffer Tretinoin over ceramides.',
     category: 'Active Pair Matrix',
     activeA: 'tranexamic-acid', activeB: 'tretinoin',
     verdict: 'SAFE_SYNERGY',
@@ -705,6 +713,8 @@ const PRODUCT_SEO_SEEDS = [
     slug: 'aestura-atobarrier-365-cream-inci-and-retinoid-pairing',
     productId: 'aestura-atobarrier-365',
     title: 'AESTURA Atobarrier 365 Cream INCI List, pH 5.5 & Tretinoin Sandwich Guide',
+    customTitle: 'Aestura Atobarrier 365 With Tretinoin & Retinol: 15-Minute Sandwich Method Guide',
+    customMetaDescription: 'How to layer Aestura Atobarrier 365 Cream with Tretinoin 0.05% or Retinol using the 2-layer Ceramide Sandwich Method to stop retinoid peeling, dryness, and perioral flaking.',
     conflictHighlights: '100% compatible with all actives; gold-standard Korean hospital barrier cream for buffering Rx Tretinoin and repairing acid-damaged skin moisture barriers.',
     companionProductIds: ['rx-tretinoin-005', 'finacea-15-azelaic', 'anua-heartleaf-77-toner']
   },
@@ -726,6 +736,8 @@ const PRODUCT_SEO_SEEDS = [
     slug: 'beauty-of-joseon-relief-sun-spf50-inci-compatibility',
     productId: 'boj-relief-sun-spf50',
     title: 'Beauty of Joseon Relief Sun SPF50+ INCI List, pH & Pore-Clogging Check',
+    customTitle: 'Beauty of Joseon Relief Sun SPF50+ INCI List, pH 6.0 & Pore-Safety Analysis',
+    customMetaDescription: 'Full Beauty of Joseon Relief Sun: Rice + Probiotics SPF50+ PA++++ INCI list breakdown: 4 photostable UV filters, 2% Niacinamide, Monascus/Rice Ferment fungal-acne check, and AM Vitamin C layering.',
     conflictHighlights: 'Uses photostable Uvinul A Plus + Uvinul T 150 filters with Niacinamide. Note: contains Monascus/Rice Ferment (monitor if prone to Malassezia folliculitis).',
     companionProductIds: ['skinceuticals-ce-ferulic', 'anua-heartleaf-77-toner', 'dieux-instant-angel']
   }
@@ -875,9 +887,9 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
   const combinatorialPairs = buildCombinatorialPairSeeds(ingredientsMap, seenPairKeys, seenSlugs, cleanIngName);
 
   for (const item of [...initialPairs, ...combinatorialPairs]) {
-    const ingA = ingredientsMap.get(item.activeA), ingB = ingredientsMap.get(item.activeB), plain = toPlainConsumerPair(item, ingA, ingB), baseSummary = plain.summary, comparisonIngredients = [ingA, ingB].filter(Boolean);
+    const ingA = ingredientsMap.get(item.activeA), ingB = ingredientsMap.get(item.activeB), plain = toPlainConsumerPair(item, ingA, ingB), baseSummary = item.customMetaDescription || plain.summary, comparisonIngredients = [ingA, ingB].filter(Boolean);
     pages.push({
-      slug: item.slug, pageType: 'active_pair', title: cleanHumanTitle(item.title), metaDescription: formatMetaDescription(baseSummary, 155), category: 'Active Pairing Guide',
+      slug: item.slug, pageType: 'active_pair', title: item.customTitle || cleanHumanTitle(item.title), customTitle: item.customTitle || null, metaDescription: item.customMetaDescription ? formatMetaDescription(item.customMetaDescription, 158) : formatMetaDescription(baseSummary, 155), category: 'Active Pairing Guide',
       verdict: item.verdict, compatibilityScore: item.compatibilityScore, deltaPh: item.deltaPh, conflictType: plain.conflictType, summary: plain.summary,
       labConflictType: item.conflictType, labSummary: item.summary, amRule: item.amRule, pmRule: item.pmRule, waitTimeMinutes: item.waitTimeMinutes,
       ingredientA: ingA || null, ingredientB: ingB || null, comparisonIngredients, product: null, presetProducts: item.presetProducts,
@@ -891,7 +903,7 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
   const coveredProductIds = new Set(), initialProductSeeds = [], autoProductSeeds = [];
   for (const item of [...PRODUCT_SEO_SEEDS, ...EXPANDED_PRODUCT_SEEDS]) {
     if (seenSlugs.has(item.slug)) continue;
-    if (item.productId && coveredProductIds.has(item.productId) && !item.slug.includes('skinoren')) continue;
+    if (item.productId && coveredProductIds.has(item.productId) && !item.slug.includes('skinoren') && !item.slug.includes('aestura-atobarrier-365-cream-inci')) continue;
     seenSlugs.add(item.slug); if (item.productId) coveredProductIds.add(item.productId); initialProductSeeds.push(item);
   }
   for (const [prodId, prod] of productsMap.entries()) {
@@ -911,7 +923,7 @@ function buildSeoPagesCatalog(ingredientsMap, productsMap) {
       if (comparisonIngredients.length >= 4) break;
     }
     pages.push({
-      slug: item.slug, pageType: 'product_teardown', title: sanitizeBannedTerms(cleanHumanTitle(item.title)), metaDescription: sanitizeBannedTerms(formatMetaDescription(`${plainProd.summary}`, 155)), category: 'Cult Bottle Guide',
+      slug: item.slug, pageType: 'product_teardown', title: item.customTitle || sanitizeBannedTerms(cleanHumanTitle(item.title)), customTitle: item.customTitle || null, metaDescription: item.customMetaDescription ? formatMetaDescription(item.customMetaDescription, 158) : sanitizeBannedTerms(formatMetaDescription(`${plainProd.summary}`, 155)), category: 'Cult Bottle Guide',
       verdict: prod && prod.ph <= 3.8 ? 'LOW_PH_ACTIVE' : 'CLINICAL_TEARDOWN', compatibilityScore: prod && prod.ph <= 3.8 ? 64 : 86, deltaPh: prod ? Number(Math.abs(5.5 - prod.ph).toFixed(1)) : 0.5,
       conflictType: sanitizeBannedTerms(plainProd.conflictType), summary: sanitizeBannedTerms(plainProd.summary), labConflictType: sanitizeBannedTerms(item.conflictHighlights), labSummary: sanitizeBannedTerms(prod ? prod.summary : item.conflictHighlights),
       amRule: prod && prod.category.includes('Retinoid') ? 'Use at night only: sunlight breaks down retinoids. Always wear SPF 30 to 50+ the next morning.' : 'Safe for morning use when topped with broad-spectrum SPF 30 to 50+ and kept separate from clashing strong acids.',

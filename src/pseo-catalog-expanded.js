@@ -610,6 +610,8 @@ const EXPANDED_PRODUCT_SEEDS = [
   {
     slug: 'aestura-atobarrier-365-cream-inci-and-ph-analysis',
     title: 'Aestura Atobarrier 365 Cream Bottle Guide: Ceramide Tretinoin Sandwich Routine',
+    customTitle: 'Aestura Atobarrier 365 Cream INCI List, pH 5.5 & 3:1:1 Ceramide Breakdown',
+    customMetaDescription: 'Complete Aestura Atobarrier 365 Cream INCI list and pH 5.5 analysis: DermaON 3:1:1 Ceramide NP, Cholesterol, Squalane, Panthenol, 0/8 EU contact allergens, and pore-clogging check.',
     productId: 'aestura-atobarrier-365',
     brand: 'Aestura',
     name: 'Atobarrier 365 Cream',

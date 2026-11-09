@@ -158,6 +158,22 @@ async function runVerification() {
       assert.strictEqual(foundDs, true, `Route ${dsRoute} must emit valid Dataset JSON-LD`);
       assert.strictEqual(foundBc, true, `Route ${dsRoute} must emit valid BreadcrumbList JSON-LD`);
     }
+    // Verify Overmind GSC Striking-Distance /seo/* queries & cannibalization differentiation
+    for (const [sdSlug, expectedToken] of [
+      ['tranexamic-acid-and-tretinoin-melasma-protocol', 'Tranexamic Acid and Tretinoin Together'],
+      ['beauty-of-joseon-relief-sun-spf50-inci-compatibility', 'Beauty of Joseon Relief Sun SPF50+ INCI'],
+      ['aestura-atobarrier-365-cream-inci-and-ph-analysis', 'Aestura Atobarrier 365 Cream INCI List'],
+      ['aestura-atobarrier-365-cream-inci-and-retinoid-pairing', 'Aestura Atobarrier 365 With Tretinoin & Retinol'],
+      ['hydroquinone-and-benzoyl-peroxide-staining', 'Benzoyl Peroxide and Hydroquinone Together'],
+      ['salicylic-acid-and-benzoyl-peroxide-acne-clash', 'Benzoyl Peroxide and Salicylic Acid Together'],
+      ['azelaic-acid-and-vitamin-c-am-stack', 'Azelaic Acid and Vitamin C Together']
+    ]) {
+      const sdRes = await fetch(`${BASE_URL}/seo/${sdSlug}`, { redirect: 'manual' });
+      assert.strictEqual(sdRes.status, 200, `Striking-distance route /seo/${sdSlug} must return 200 OK`);
+      const sdHtml = await sdRes.text();
+      assert(sdHtml.includes(expectedToken), `Striking-distance route /seo/${sdSlug} must include "${expectedToken}" in title/H1`);
+      assert(sdHtml.includes('1-Click Pre-Load in Routine Analyzer'), `Striking-distance route /seo/${sdSlug} must include 1-click Routine Analyzer pre-hydration link`);
+    }
     console.log(`3b. Verified ${glowIndexRoutes.length} GlowIndex 8-Pillar routes (200 OK), Dataset JSON-LD compliance, 301 B-vs-A canonicalization, and .md content negotiation.`);
 
     // Verify Affiliate JSON response

@@ -633,7 +633,7 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
           <span class="${seoBadgeClass} mono">Morning &amp; Night Pairing Check · ${page.compatibilityScore}/100 Harmony</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap;" data-no-bag-inject="1">
             <button type="button" id="dl-seo-hero-dupe-card-btn" class="affiliate-link-pill mono" onclick="if(window.__dlQuickLoadShelfPreset)window.__dlQuickLoadShelfPreset('dupe_86');if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="background:var(--sage-bg);color:var(--sage-safe);border-color:var(--sage-border);font-weight:700;cursor:pointer;">&#10003; $86 Dupe 9:16 Card &rarr;</button><button type="button" id="dl-seo-hero-copy-btn" class="affiliate-link-pill mono" onclick="if(window.__dlCopyShareableShelfLink)window.__dlCopyShareableShelfLink(this);" style="font-weight:700;cursor:pointer;">&#128279; Copy Shelf Link</button>
-            <a href="#analyzer" class="affiliate-link-pill mono" style="border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">Test With My Shelf Below &darr;</a>
+            <a href="/?products=${encodeURIComponent((page.presetProducts || [primaryProdId]).join(','))}&amp;q=${encodeURIComponent(page.slug)}#analyzer" class="affiliate-link-pill mono" style="border-color:var(--rose-brand);color:var(--rose-brand);font-weight:600;">1-Click Pre-Load in Routine Analyzer &rarr;</a>
             <a href="/api/affiliate?product=${escapeHtml(primaryProdId)}&partner=dermstore" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ${escapeHtml(primaryProdObj.brand)} ${escapeHtml(primaryProdObj.name)} &rarr;</a>
             <a href="/api/affiliate?product=${escapeHtml(secondaryProdId)}&partner=sephora" target="_blank" rel="sponsored noopener noreferrer" class="affiliate-link-pill mono">Shop ${escapeHtml(secondaryProdObj.brand)} ${escapeHtml(secondaryProdObj.name)} &rarr;</a>
           </div>
@@ -799,9 +799,9 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         </div></details>
       </div>
     </section>`;
-  const seoWaitTag = Number(page.waitMinutes) > 0 ? `Wait ${page.waitMinutes}m or Split AM/PM` : 'Layering Order & pH Guide';
-  const seoTitleClean = `${page.title} (${seoWaitTag} · ΔpH ${page.deltaPh || '1.4'}) | DermLogic`;
-  const seoDescClean = `Can you layer ${searchIntentSubject}? Harmony ${page.compatibilityScore || 92}/100 (ΔpH ${page.deltaPh || '1.4'}, ${seoWaitTag}): ${page.metaDescription || cleanSummaryFirstSentence}`.slice(0, 158);
+  const seoWaitTag = Number(page.waitTimeMinutes || page.waitMinutes) > 0 ? `Wait ${page.waitTimeMinutes || page.waitMinutes}m or Split AM/PM` : 'Layering Order & pH Guide';
+  const seoTitleClean = page.customTitle ? `${page.customTitle} | DermLogic` : `${page.title} (${seoWaitTag} · ΔpH ${page.deltaPh || '1.4'}) | DermLogic`;
+  const seoDescClean = page.customTitle ? String(page.metaDescription || cleanSummaryFirstSentence).slice(0, 158) : `Can you layer ${searchIntentSubject}? Harmony ${page.compatibilityScore || 92}/100 (ΔpH ${page.deltaPh || '1.4'}, ${seoWaitTag}): ${page.metaDescription || cleanSummaryFirstSentence}`.slice(0, 158);
   return renderBaseDocument({ title: seoTitleClean, description: seoDescClean, canonicalPath: `/seo/${page.slug}`, ogSlug: page.slug, jsonLdObjects: jsonLd, hideNav: false, bodyHtml });
 }
 function renderLegalPage({ type }) {
