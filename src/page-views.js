@@ -175,7 +175,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     <section class="hero-section" style="padding-top:10px;padding-bottom:10px;">
       <div class="container">
         <div style="max-width:740px;margin:2px auto 10px;text-align:center;">
-          <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Cosmetic Chemist Routine Analyzer &middot; ${products.length} Cult Formulas &middot; &#10003; Free Proof #1 Dupe: Geek &amp; Gorgeous ($14 vs. $182)</div>
+          <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Cosmetic Chemist Routine Analyzer &middot; ${products.length} Cult Formulas</div>
           <h1 class="hero-h1" style="font-size:clamp(1.75rem,2.8vw,2.35rem);line-height:1.14;margin:0 0 6px;max-width:none;">Is your skincare shelf secretly canceling itself out?</h1>
           <p class="hero-sub" style="font-size:0.95rem;color:var(--text-secondary);line-height:1.45;margin:0 auto;max-width:62ch;">Select your bottles below to check for pH clashes, avoid inactive combinations, and see your clean morning and bedtime schedule.</p>
         </div>
