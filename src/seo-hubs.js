@@ -843,7 +843,7 @@ function getAllSemanticHubUrls(hostUrl) {
   for (const b of CULT_PRODUCTS) {
     urls.push({ loc: `${base}/bottle/${b.id}`, priority: '0.86', changefreq: 'weekly', title: `${b.brand} ${b.name} Layering & Dupes` });
   }
-  for (const a of CLINICAL_INGREDIENTS) {
+  for (const a of CLINICAL_INGREDIENTS.slice(0, 24)) {
     urls.push({ loc: `${base}/ingredient/${a.id}`, priority: '0.85', changefreq: 'weekly', title: `${a.commonName} (${a.inciName}) pH & Layering` });
   }
   for (const br of getAllBrandHubs()) {

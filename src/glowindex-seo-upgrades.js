@@ -208,6 +208,13 @@ function resolveComparisonSlug(rawSlug) {
   const parts = clean.split('-vs-');
   if (parts.length === 2) {
     const [leftRaw, rightRaw] = parts;
+    const exactIngA = CLINICAL_INGREDIENTS.find((i) => i.id === leftRaw);
+    const exactIngB = CLINICAL_INGREDIENTS.find((i) => i.id === rightRaw);
+    if (exactIngA && exactIngB && exactIngA.id !== exactIngB.id) {
+      const sorted = [exactIngA, exactIngB].sort((x, y) => x.id.localeCompare(y.id));
+      const canonicalSlug = `${sorted[0].id}-vs-${sorted[1].id}`;
+      return { kind: 'ingredient', entityA: sorted[0], entityB: sorted[1], canonicalSlug, needsRedirect: clean !== canonicalSlug };
+    }
     const prodA = findProductFuzzy(leftRaw);
     const prodB = findProductFuzzy(rightRaw);
     if (prodA && prodB && prodA.id !== prodB.id) {
@@ -941,11 +948,11 @@ function attachGlowIndexSeoUpgrades(app) {
 
   app.get('/sitemap-core.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset([`${HOST_URL}/`, `${HOST_URL}/directory`, `${HOST_URL}/compare`, `${HOST_URL}/scenario`, `${HOST_URL}/leaderboard`, `${HOST_URL}/lp`, ...B2B_STUDIO_FORMULAS.map((f) => `${HOST_URL}/studio/formulas/${f.slug}`), ...B2B_PLAYBOOKS.map((p) => `${HOST_URL}/studio/playbooks/${p.slug}`), ...KIOSK_VERTICALS.map((k) => `${HOST_URL}/kiosk/${k.slug}`), ...B2B_CLIENT_DELIVERABLES.map((c) => `${HOST_URL}/client/${c.slug}`)])));
   app.get('/sitemap-seo-guides.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset((typeof buildSeoPagesCatalog === 'function' ? buildSeoPagesCatalog() : [...(PAIR_SEO_SEEDS || []), ...(PRODUCT_SEO_SEEDS || [])]).map((s) => `${HOST_URL}/seo/${s.slug}`))));
-  app.get('/sitemap-comparisons.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(ALL_COMPARE_SLUGS.map((slug) => `${HOST_URL}/compare/${slug}`))));
-  app.get('/sitemap-bottles-actives.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set([`${HOST_URL}/bottle`, ...CLINICAL_PRODUCTS.map((p) => `${HOST_URL}/bottle/${p.id}`), `${HOST_URL}/ingredient`, ...CLINICAL_INGREDIENTS.map((i) => `${HOST_URL}/ingredient/${i.id}`), ...CLINICAL_INGREDIENTS.flatMap((i) => INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/ingredient/${i.id}/${sc.slug}`)), `${HOST_URL}/brand`, ...(typeof getAllBrandHubs === 'function' ? getAllBrandHubs() : []).map((b) => `${HOST_URL}/brand/${b.slug}`)])))));
+  app.get('/sitemap-comparisons.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(ALL_COMPARE_SLUGS.slice(0, 40).map((slug) => `${HOST_URL}/compare/${slug}`))));
+  app.get('/sitemap-bottles-actives.xml', (req, res) => res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set([`${HOST_URL}/bottle`, ...CLINICAL_PRODUCTS.map((p) => `${HOST_URL}/bottle/${p.id}`), `${HOST_URL}/ingredient`, ...CLINICAL_INGREDIENTS.map((i) => `${HOST_URL}/ingredient/${i.id}`), `${HOST_URL}/brand`, ...(typeof getAllBrandHubs === 'function' ? getAllBrandHubs() : []).map((b) => `${HOST_URL}/brand/${b.slug}`)])))));
   app.get('/sitemap-celebrities-concerns.xml', (req, res) => {
     const concernList = Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : [];
-    const urls = [`${HOST_URL}/celebrity`, ...CELEBRITY_ROUTINES.map((c) => `${HOST_URL}/celebrity/${c.slug}`), `${HOST_URL}/concern`, ...concernList.flatMap((c) => [`${HOST_URL}/concern/${c.slug}`, ...INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/concern/${c.slug}/${sc.slug}`)]), `${HOST_URL}/scenario`, ...SCENARIO_GUIDES.flatMap((s) => [`${HOST_URL}/scenario/${s.slug}`, ...INGREDIENT_SUBCATEGORIES.map((sc) => `${HOST_URL}/scenario/${s.slug}/${sc.slug}`)])];
+    const urls = [`${HOST_URL}/celebrity`, ...CELEBRITY_ROUTINES.map((c) => `${HOST_URL}/celebrity/${c.slug}`), `${HOST_URL}/concern`, ...concernList.map((c) => `${HOST_URL}/concern/${c.slug}`), `${HOST_URL}/scenario`, ...SCENARIO_GUIDES.map((s) => `${HOST_URL}/scenario/${s.slug}`)];
     return res.status(200).type('application/xml; charset=utf-8').send(wrapUrlset(Array.from(new Set(urls))));
   });
   app.post('/api/analytics/event', (req, res) => res.status(200).json({ ok: true }));
@@ -980,15 +987,12 @@ function attachGlowIndexSeoUpgrades(app) {
   });
 }
 function getAllGlowIndexExtraUrls(hostUrl) {
-  const base = String(hostUrl || HOST_URL).replace(/\/$/, ''), concernList = Array.isArray(CONCERN_HUBS) ? CONCERN_HUBS : [];
+  const base = String(hostUrl || HOST_URL).replace(/\/$/, '');
   return [
     { loc: `${base}/compare`, priority: '0.92', changefreq: 'weekly', title: 'Head-to-Head Cult Bottle & Active Comparisons' },
     { loc: `${base}/scenario`, priority: '0.90', changefreq: 'weekly', title: 'Life-Event & Skin-Barrier Scenario Protocols' },
-    ...ALL_COMPARE_SLUGS.map((slug) => ({ loc: `${base}/compare/${slug}`, priority: '0.88', changefreq: 'weekly', title: `${slug.replace(/-vs-/g, ' vs. ').replace(/-/g, ' ')} Comparison Matrix` })),
-    ...SCENARIO_GUIDES.map((s) => ({ loc: `${base}/scenario/${s.slug}`, priority: '0.88', changefreq: 'weekly', title: s.title })),
-    ...concernList.flatMap((c) => INGREDIENT_SUBCATEGORIES.map((sc) => ({ loc: `${base}/concern/${c.slug}/${sc.slug}`, priority: '0.86', changefreq: 'weekly', title: `${c.title}: Best ${sc.label}` }))),
-    ...SCENARIO_GUIDES.flatMap((s) => INGREDIENT_SUBCATEGORIES.map((sc) => ({ loc: `${base}/scenario/${s.slug}/${sc.slug}`, priority: '0.86', changefreq: 'weekly', title: `${s.title}: Best ${sc.label}` }))),
-    ...CLINICAL_INGREDIENTS.flatMap((i) => INGREDIENT_SUBCATEGORIES.map((sc) => ({ loc: `${base}/ingredient/${i.id}/${sc.slug}`, priority: '0.85', changefreq: 'weekly', title: `${i.commonName} ${sc.label} Matrix` })))
+    ...ALL_COMPARE_SLUGS.slice(0, 16).map((slug) => ({ loc: `${base}/compare/${slug}`, priority: '0.88', changefreq: 'weekly', title: `${slug.replace(/-vs-/g, ' vs. ').replace(/-/g, ' ')} Comparison Matrix` })),
+    ...SCENARIO_GUIDES.map((s) => ({ loc: `${base}/scenario/${s.slug}`, priority: '0.88', changefreq: 'weekly', title: s.title }))
   ];
 }
 module.exports = { attachGlowIndexSeoUpgrades, resolveComparisonSlug, computeComparisonTelemetry, computeHendersonHasselbalch, getAllGlowIndexExtraUrls };
