@@ -137,8 +137,8 @@ const SHARED_CSS = `
   .viscosity-seq-item { padding: 16px 18px; background: var(--bg-canvas); border: 1px solid var(--border-hairline); border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 12px; }
   .wait-timer-btn { padding: 8px 14px; background: var(--bg-oat); border: 1px solid var(--border-hairline); border-radius: 999px; color: var(--text-primary); font-size: 0.84rem; font-weight: 600; cursor: pointer; white-space: nowrap; font-variant-numeric: tabular-nums; width: 100%; text-align: center; }
   .wait-timer-btn:hover, .wait-timer-btn.running { background: var(--rose-brand); color: var(--accent-ink); }
-  .section-block { padding: 28px 0; }
-  .section-block-alt { padding: 28px 0; background: var(--bg-oat); }
+  .section-block { padding: 24px 0; }
+  .section-block-alt { padding: 24px 0; background: var(--bg-oat); }
   .bento-grid-3 { display: grid; grid-template-columns: 1.2fr 0.9fr 0.9fr; gap: 20px; margin-top: 24px; }
   .bento-cell { background: var(--bg-surface); padding: 24px; border-radius: 16px; border: 1px solid var(--border-hairline); }
   .table-wrap { overflow-x: auto; background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: 14px; }
