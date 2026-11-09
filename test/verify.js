@@ -135,20 +135,28 @@ async function runVerification() {
     const mdAcceptRes = await fetch(`${BASE_URL}/compare/copper-tripeptide-1-vs-l-ascorbic-acid`, { headers: { Accept: 'text/markdown' } });
     assert.strictEqual(mdAcceptRes.status, 200);
     assert(String(mdAcceptRes.headers.get('content-type')).includes('text/markdown'), 'Accept: text/markdown must return text/markdown');
-    // Verify Google Search Console Dataset JSON-LD compliance (description >= 50 chars + creator present) across /, /seo/*, /compare/*, /bottle/*
-    for (const dsRoute of ['/', '/seo/the-ordinary-glycolic-acid-7-toner-conflicts', '/compare/copper-tripeptide-1-vs-l-ascorbic-acid', '/bottle/skinceuticals-ce-ferulic']) {
+    // Verify Google Search Console Dataset & BreadcrumbList JSON-LD compliance across all core & sitemap route families
+    for (const dsRoute of ['/', '/leaderboard', '/directory', '/editorial-policy', '/lp', '/dossier/sample', '/tools/inci-ph-conflict-and-neutralization-calculator', '/compare/retinol-vs-tretinoin-irritation-and-ph-matrix', '/scan/VitC-AM-Peptides-PM', '/seo/the-ordinary-glycolic-acid-7-toner-conflicts', '/compare/copper-tripeptide-1-vs-l-ascorbic-acid', '/bottle/skinceuticals-ce-ferulic', '/ingredient/l-ascorbic-acid', '/concern/rosacea-perioral-dermatitis-calm-routine', '/celebrity/hailey-bieber', '/brand/skinceuticals', '/scenario/post-microneedling-recovery']) {
       const dsHtml = await (await fetch(`${BASE_URL}${dsRoute}`)).text();
       const ldMatches = [...dsHtml.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+      let foundDs = false, foundBc = false;
       for (const m of ldMatches) {
         const parsed = JSON.parse(m[1]);
         const items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed['@graph']) ? parsed['@graph'] : [parsed]);
         for (const item of items) {
           if (item && item['@type'] === 'Dataset') {
+            foundDs = true;
+            assert(typeof item.name === 'string' && item.name.length >= 10 && !/\(\/[a-z]/i.test(item.name), `Dataset on ${dsRoute} must have descriptive title name (${item.name})`);
             assert(typeof item.description === 'string' && item.description.length >= 50, `Dataset on ${dsRoute} missing description >= 50 chars`);
             assert(item.creator && (item.creator.name || item.creator['@id']), `Dataset on ${dsRoute} missing creator`);
+            assert.strictEqual(item.isAccessibleForFree, true, `Dataset on ${dsRoute} must be accessibleForFree`);
+            assert(item.license && item.license.includes('creativecommons.org'), `Dataset on ${dsRoute} missing license`);
           }
+          if (item && item['@type'] === 'BreadcrumbList') foundBc = true;
         }
       }
+      assert.strictEqual(foundDs, true, `Route ${dsRoute} must emit valid Dataset JSON-LD`);
+      assert.strictEqual(foundBc, true, `Route ${dsRoute} must emit valid BreadcrumbList JSON-LD`);
     }
     console.log(`3b. Verified ${glowIndexRoutes.length} GlowIndex 8-Pillar routes (200 OK), Dataset JSON-LD compliance, 301 B-vs-A canonicalization, and .md content negotiation.`);
 

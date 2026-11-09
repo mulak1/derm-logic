@@ -830,7 +830,7 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
   // 2. Build unjs/unhead discovery tags + google/schema-dts & AgriciDaniel/claude-seo Unified @graph JSON-LD
   const entries = Array.isArray(cfg._cachedSeoCatalog) ? cfg._cachedSeoCatalog : [];
   const gCfg = getGrowthConfig(cfg.moduleId);
-  const slugName = cleanPath.replace(/^\/(seo|tools|compare)\//, '');
+  const slugName = cleanPath.replace(/^\/(seo|tools|compare|scan|report)\//, '');
   const currentEntry = entries.find((e) => e.slug === slugName) || [...gCfg.tools, ...gCfg.comparisons].find((x) => x.slug === slugName);
   const unesc = (s) => String(s || '').replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&middot;/g, '·').replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').trim();
   const titleTagM = out.match(/<title>([^<]+)<\/title>/i);
@@ -838,40 +838,45 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
   const pageTitle = currentEntry ? `${currentEntry.title} | ${cfg.brandName}` : (titleTagM ? unesc(titleTagM[1]) : `${cfg.brandName}: ${cfg.explainerText.slice(0, 70)}`);
   const rawDesc = (currentEntry && currentEntry.summary) ? unesc(currentEntry.summary) : (metaDescM ? unesc(metaDescM[1]) : unesc(cfg.explainerText));
   const pageDesc = rawDesc && rawDesc.length >= 60 ? rawDesc : `${rawDesc || cfg.brandName} — Verified 2026 cosmetic chemistry, formulation pH window, and active ingredient compatibility dataset by ${cfg.brandName}.`;
+  const hasBreadcrumb = /"@type"\s*:\s*"BreadcrumbList"/.test(out);
+  const hasDataset = /"@type"\s*:\s*"Dataset"/.test(out);
   const schemaGraph = {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'Organization', '@id': `${hostUrl}/#organization`, name: cfg.brandName, url: hostUrl, logo: `${hostUrl}/favicon.svg`, sameAs: [`${hostUrl}/llms.txt`, `${hostUrl}/llms-full.txt`, `${hostUrl}/feed.xml`] },
       { '@type': 'WebSite', '@id': `${hostUrl}/#website`, url: hostUrl, name: cfg.brandName, publisher: { '@id': `${hostUrl}/#organization` }, inLanguage: 'en-US' },
       { '@type': 'WebPage', '@id': `${canonicalUrl}#webpage`, url: canonicalUrl, name: pageTitle, description: pageDesc, isPartOf: { '@id': `${hostUrl}/#website` }, speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '.pseo-lead', '#eb-prism-proof-preview', 'main p'] } },
-      {
+      ...(!hasBreadcrumb ? [{
         '@type': 'BreadcrumbList',
         '@id': `${canonicalUrl}#breadcrumb`,
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: cfg.brandName, item: `${hostUrl}/` },
           { '@type': 'ListItem', position: 2, name: 'Benchmark Directory', item: `${hostUrl}/directory` },
-          ...(slugName ? [{ '@type': 'ListItem', position: 3, name: currentEntry ? currentEntry.title : slugName, item: canonicalUrl }] : [])
+          ...(slugName && cleanPath !== '/directory' ? [{ '@type': 'ListItem', position: 3, name: currentEntry ? currentEntry.title : pageTitle.replace(/\s*\|\s*DermLogic.*$/i, ''), item: canonicalUrl }] : [])
         ]
-      },
-      {
+      }] : []),
+      ...(!hasDataset ? [{
         '@type': 'Dataset',
         '@id': `${canonicalUrl}#dataset`,
-        name: `${pageTitle}: Verified 2026 Dataset`,
+        name: `${pageTitle.replace(/\s*\|\s*DermLogic.*$/i, '')}: Verified 2026 Dataset`,
         description: pageDesc,
         url: canonicalUrl,
         identifier: canonicalUrl,
-        creator: { '@type': 'Organization', '@id': `${hostUrl}/#organization`, name: cfg.brandName, url: hostUrl },
+        creator: { '@type': 'Organization', '@id': `${hostUrl}/#organization`, name: cfg.brandName, url: hostUrl, logo: `${hostUrl}/favicon.svg` },
+        publisher: { '@type': 'Organization', '@id': `${hostUrl}/#organization`, name: cfg.brandName, url: hostUrl },
         includedInDataCatalog: { '@type': 'DataCatalog', name: `${cfg.brandName} Formulation & Compatibility Catalog`, url: `${hostUrl}/directory` },
         isAccessibleForFree: true,
+        temporalCoverage: '2025/2026',
         license: 'https://creativecommons.org/licenses/by/4.0/',
         keywords: ['skincare ingredient compatibility', 'morning and night serum layering order', 'skincare active pairing guide', 'EU CosIng allergic reaction skincare checker', 'hypoallergenic contact dermatitis routine', cfg.brandName],
         measurementTechnique: 'Formulation pH Comfort Window, Active Serum Pairing Compatibility, Texture Weight Layering Order, EU CosIng Pore-Safety & 8-Category Allergic Contact-Dermatitis Screening',
         variableMeasured: cfg.kpis.map((k) => k.label),
         distribution: [
           { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: `${hostUrl}/api/github-upgrade/export.csv` },
+          { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${hostUrl}/okf/index.json` },
           { '@type': 'DataDownload', encodingFormat: 'text/markdown', contentUrl: `${hostUrl}${mdTwinPath}` }
         ]
-      },
+      }] : []),
       { '@type': 'ItemList', '@id': `${canonicalUrl}#itemlist`, name: `${cfg.brandName} Top Verified Benchmarks`, itemListElement: entries.slice(0, 10).map((e, idx) => ({ '@type': 'ListItem', position: idx + 1, name: e.title, url: `${hostUrl}/seo/${e.slug}` })) }
     ]
   };

@@ -730,35 +730,33 @@ function attachGlowIndexSeoUpgrades(app) {
         }
 
         const unescMeta = (s) => String(s || '').replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&middot;/g, '·').replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').trim();
-        const metaDescMatch = out.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i);
+        const titleTagMatch = out.match(/<title>([^<]+)<\/title>/i), metaDescMatch = out.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i);
+        const cleanPageTitle = (titleTagMatch && titleTagMatch[1] ? unescMeta(titleTagMatch[1]).replace(/\s*\|\s*DermLogic.*$/i, '').trim() : '') || 'DermLogic Cosmetic Chemistry & pH Compatibility Matrix';
         const rawMetaDesc = metaDescMatch && metaDescMatch[1] ? unescMeta(metaDescMatch[1]) : '';
-        const dsDesc = rawMetaDesc.length >= 60
-          ? rawMetaDesc
-          : `${rawMetaDesc ? `${rawMetaDesc} — ` : ''}First-principles cosmetic chemistry dataset for ${req.path} on DermLogic: formulation pH windows, Henderson-Hasselbalch pKa dissociation, Rule-of-500 Dalton barrier penetration, and EU CosIng comedogenicity ratings.`;
-        const dsCreator = { '@type': 'Organization', name: 'DermLogic Cosmetic Chemistry Atelier', url: HOST_URL };
+        const dsDesc = rawMetaDesc.length >= 60 ? rawMetaDesc : `${rawMetaDesc ? `${rawMetaDesc} — ` : ''}First-principles cosmetic chemistry dataset for ${cleanPageTitle} on DermLogic: formulation pH windows, Henderson-Hasselbalch pKa dissociation, Rule-of-500 Dalton barrier penetration, and EU CosIng 8-allergen safety.`;
+        const dsCreator = { '@type': 'Organization', '@id': `${HOST_URL}/#organization`, name: 'DermLogic Cosmetic Chemistry Atelier', url: HOST_URL, logo: `${HOST_URL}/favicon.svg` };
         out = out.replace(/<script([^>]*type=["']application\/ld\+json["'][^>]*)>([\s\S]*?)<\/script>/gi, (full, attrs, jsonRaw) => {
           if (!jsonRaw.includes('"Dataset"')) return full;
           try {
-            const parsed = JSON.parse(jsonRaw);
-            const patchNode = (node) => {
+            const parsed = JSON.parse(jsonRaw), patchNode = (node) => {
               if (!node || typeof node !== 'object') return;
               if (Array.isArray(node)) { node.forEach(patchNode); return; }
               if (node['@type'] === 'Dataset' || (Array.isArray(node['@type']) && node['@type'].includes('Dataset'))) {
-                const curDesc = unescMeta(node.description || '');
-                node.description = curDesc.length >= 60 ? curDesc : dsDesc;
+                const curDesc = unescMeta(node.description || ''); node.description = curDesc.length >= 60 ? curDesc : dsDesc;
                 if (!node.creator || !node.creator['@type'] || !node.creator.name) node.creator = dsCreator;
                 if (!node.license) node.license = 'https://creativecommons.org/licenses/by/4.0/';
                 if (node.isAccessibleForFree === undefined) node.isAccessibleForFree = true;
               }
               if (Array.isArray(node['@graph'])) node['@graph'].forEach(patchNode);
             };
-            patchNode(parsed);
-            return `<script${attrs}>${JSON.stringify(parsed)}</script>`;
+            patchNode(parsed); return `<script${attrs}>${JSON.stringify(parsed)}</script>`;
           } catch (_) { return full; }
         });
-        if (!out.includes('"measurementTechnique"')) {
-          const extraGraph = `<script id="gi-enriched-dataset-schema" type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'Dataset', '@id': `${HOST_URL}${req.path}#deterministic-chemistry-dataset`, name: `DermLogic Cosmetic Chemistry & pH Compatibility Dataset (${req.path})`, description: dsDesc, url: `${HOST_URL}${req.path}`, creator: dsCreator, isAccessibleForFree: true, measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Skin Barrier Diffusion & EU CosIng Comedogenicity Assay', citation: ['PubMed PMID: 11207686 (Pinnell et al., L-Ascorbic Acid Percutaneous Absorption)', 'JCAD Retinoid & Benzoyl Peroxide Oxidation Kinetics', 'EU CosIng Cosmetic Ingredient Database'], license: 'https://creativecommons.org/licenses/by/4.0/', distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${HOST_URL}/okf/index.json` }] }] })}</script>`;
-          if (out.includes('</head>')) out = out.replace('</head>', `${extraGraph}\n</head>`);
+        if (res.statusCode !== 404 && !out.includes('"measurementTechnique"')) {
+          const cleanReqP = req.path === '/' ? '' : req.path.replace(/\.md$/i, ''), canUrl = `${HOST_URL}${cleanReqP || '/'}`, mdTwinUrl = `${HOST_URL}${cleanReqP ? `${cleanReqP}.md` : '/index.md'}`;
+          const graphNodes = [{ '@type': 'Dataset', '@id': `${canUrl}#dataset`, name: `${cleanPageTitle}: Verified 2026 Dataset`, description: dsDesc, url: canUrl, identifier: canUrl, creator: dsCreator, publisher: dsCreator, includedInDataCatalog: { '@type': 'DataCatalog', name: 'DermLogic Formulation & Compatibility Catalog', url: `${HOST_URL}/directory` }, isAccessibleForFree: true, temporalCoverage: '2025/2026', keywords: ['skincare ingredient compatibility', 'morning and night serum layering order', 'skincare active pairing guide', 'EU CosIng allergic reaction skincare checker', 'DermLogic'], measurementTechnique: 'Henderson-Hasselbalch pKa Free-Acid Dissociation, ΔpH Ionization Differential, Rule-of-500 Dalton Skin Barrier Diffusion & EU CosIng Comedogenicity Assay', variableMeasured: ['Routine Harmony Score', 'Acid vs. Peptide pH Gap', 'Absorption Layering Order', 'EU CosIng 8-Allergen & Pore Check'], citation: ['PubMed PMID: 11207686 (Pinnell et al., L-Ascorbic Acid Percutaneous Absorption)', 'JCAD Retinoid & Benzoyl Peroxide Oxidation Kinetics', 'EU CosIng Cosmetic Ingredient Database'], license: 'https://creativecommons.org/licenses/by/4.0/', distribution: [{ '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: `${HOST_URL}/api/github-upgrade/export.csv` }, { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${HOST_URL}/okf/index.json` }, { '@type': 'DataDownload', encodingFormat: 'text/markdown', contentUrl: mdTwinUrl }] }];
+          if (!/"@type"\s*:\s*"BreadcrumbList"/.test(out)) graphNodes.push({ '@type': 'BreadcrumbList', '@id': `${canUrl}#breadcrumb`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'DermLogic', item: `${HOST_URL}/` }, { '@type': 'ListItem', position: 2, name: 'Benchmark Directory', item: `${HOST_URL}/directory` }, ...(cleanReqP && cleanReqP !== '/directory' ? [{ '@type': 'ListItem', position: 3, name: cleanPageTitle, item: canUrl }] : [])] });
+          if (out.includes('</head>')) out = out.replace('</head>', `<script id="gi-enriched-dataset-schema" type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graphNodes })}</script>\n</head>`);
         }
 
         if (!out.includes('id="gi-glow-session-script"') && out.includes('</body>')) {
