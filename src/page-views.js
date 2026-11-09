@@ -799,7 +799,10 @@ function renderSeoDetailPage({ page, products, presets, initialAnalysis, related
         </div></details>
       </div>
     </section>`;
-  return renderBaseDocument({ title: `${page.title} | DermLogic`, description: `See how to layer ${searchIntentSubject} without stinging or pilling: check the free 1-day clash preview or unlock the Morning & Night schedule.`, canonicalPath: `/seo/${page.slug}`, ogSlug: page.slug, jsonLdObjects: jsonLd, hideNav: false, bodyHtml });
+  const seoWaitTag = Number(page.waitMinutes) > 0 ? `Wait ${page.waitMinutes}m or Split AM/PM` : 'Layering Order & pH Guide';
+  const seoTitleClean = `${page.title} (${seoWaitTag} · ΔpH ${page.deltaPh || '1.4'}) | DermLogic`;
+  const seoDescClean = `Can you layer ${searchIntentSubject}? Harmony ${page.compatibilityScore || 92}/100 (ΔpH ${page.deltaPh || '1.4'}, ${seoWaitTag}): ${page.metaDescription || cleanSummaryFirstSentence}`.slice(0, 158);
+  return renderBaseDocument({ title: seoTitleClean, description: seoDescClean, canonicalPath: `/seo/${page.slug}`, ogSlug: page.slug, jsonLdObjects: jsonLd, hideNav: false, bodyHtml });
 }
 function renderLegalPage({ type }) {
   const isPrivacy = type === 'privacy';

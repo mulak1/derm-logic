@@ -1,7 +1,24 @@
 {
   "global": {
-    "status": "ACTIVE_AUTONOMOUS_LOOP",
-    "resumed_at_utc": "2026-11-09T00:21:22.051979+00:00",
-    "guardrail_29": "ZERO_EMOJIS_AND_ZERO_MICRO_BUTTON_BOX_STUFFING"
+    "status": "COHORT_GATED_REPLACEMENT_ONLY",
+    "rule": "ZERO_ADDITIVE_BOXES_REPLACEMENT_ONLY_COHORT_GATED",
+    "updated_at_utc": "2026-11-09T00:24:48.578037+00:00"
+  },
+  "bar_stock": {
+    "status": "PAUSED_BY_USER",
+    "paused_at_utc": "2026-11-09T00:24:48.578037+00:00",
+    "reason": "User directive: Pause BarStock so it stops appending 11px boxes"
+  },
+  "derm_logic": {
+    "project_id": "derm_logic",
+    "state": "PAUSED_FOR_HUMAN_TASK",
+    "active_human_task": "OVERMIND_P0_VISUAL_COGNITIVE_LOAD_CLEANUP_PAUSE"
+  },
+  "derm-logic": {
+    "project": "derm-logic",
+    "state": "ACTIVE_LOOP",
+    "resumed_at": 1794198249.8598552,
+    "last_paused_reason": "",
+    "reason": "Guardrail #31 verified across all 10 sites on Desktop + Mobile"
   }
 }

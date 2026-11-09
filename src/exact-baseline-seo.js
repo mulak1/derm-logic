@@ -367,14 +367,15 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
       { loc: `${hostUrl}/dossier/sample`, priority: '0.8', changefreq: 'weekly' },
       ...growthUrls
     ] : [];
-    const seoUrls = entries.map((e) => ({
+    const curatedEntries = includeStatic ? entries.slice(0, 75) : entries;
+    const seoUrls = curatedEntries.map((e) => ({
       loc: `${hostUrl}/seo/${escXml(e.slug)}`,
       priority: '0.85',
       changefreq: 'weekly',
       img: `${hostUrl}/api/og?slug=${encodeURIComponent(e.slug)}`,
       title: e.title
     }));
-    const all = [...staticUrls, ...seoUrls];
+    const all = Array.from(new Map([...staticUrls, ...seoUrls].map((u) => [u.loc, u])).values());
     const body = all.map((u) => {
       const imgBlock = u.img
         ? `\n    <image:image>\n      <image:loc>${escXml(u.img)}</image:loc>\n      <image:title>${escXml(u.title || cfg.brandName)}</image:title>\n    </image:image>`
@@ -849,6 +850,7 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
       ...(!hasBreadcrumb ? [{
         '@type': 'BreadcrumbList',
         '@id': `${canonicalUrl}#breadcrumb`,
+        name: `${pageTitle} Breadcrumbs`,
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: cfg.brandName, item: `${hostUrl}/` },
           { '@type': 'ListItem', position: 2, name: 'Benchmark Directory', item: `${hostUrl}/directory` },

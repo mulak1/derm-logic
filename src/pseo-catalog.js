@@ -545,7 +545,7 @@ const PAIR_SEO_SEEDS = [
   },
   {
     slug: 'tranexamic-acid-and-tretinoin-melasma-protocol',
-    title: 'Tranexamic Acid and Tretinoin Together: Clinical Melasma & PIH Layering Guide',
+    title: 'How to Use Tranexamic Acid and Tretinoin Together: Safe Melasma Layering Order',
     category: 'Active Pair Matrix',
     activeA: 'tranexamic-acid', activeB: 'tretinoin',
     verdict: 'SAFE_SYNERGY',
@@ -704,7 +704,7 @@ const PRODUCT_SEO_SEEDS = [
   {
     slug: 'aestura-atobarrier-365-cream-inci-and-retinoid-pairing',
     productId: 'aestura-atobarrier-365',
-    title: 'AESTURA Atobarrier 365 Cream INCI Breakdown: DermaON Ceramide-Cholesterol-Fatty Acid Ratio',
+    title: 'AESTURA Atobarrier 365 Cream INCI List, pH 5.5 & Tretinoin Sandwich Guide',
     conflictHighlights: '100% compatible with all actives; gold-standard Korean hospital barrier cream for buffering Rx Tretinoin and repairing acid-damaged skin moisture barriers.',
     companionProductIds: ['rx-tretinoin-005', 'finacea-15-azelaic', 'anua-heartleaf-77-toner']
   },
@@ -725,7 +725,7 @@ const PRODUCT_SEO_SEEDS = [
   {
     slug: 'beauty-of-joseon-relief-sun-spf50-inci-compatibility',
     productId: 'boj-relief-sun-spf50',
-    title: 'Beauty of Joseon Relief Sun SPF50+ PA++++ INCI Teardown: UV Filters, Niacinamide & Ferments',
+    title: 'Beauty of Joseon Relief Sun SPF50+ INCI List, pH & Pore-Clogging Check',
     conflictHighlights: 'Uses photostable Uvinul A Plus + Uvinul T 150 filters with Niacinamide. Note: contains Monascus/Rice Ferment (monitor if prone to Malassezia folliculitis).',
     companionProductIds: ['skinceuticals-ce-ferulic', 'anua-heartleaf-77-toner', 'dieux-instant-angel']
   }

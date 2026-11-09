@@ -840,13 +840,13 @@ function getAllSemanticHubUrls(hostUrl) {
   for (const c of getAllCelebrityRoutines()) {
     urls.push({ loc: `${base}/celebrity/${c.slug}`, priority: '0.90', changefreq: 'weekly', title: `${c.name} Skincare Routine & Bottles (${c.moniker})` });
   }
-  for (const b of CULT_PRODUCTS) {
+  for (const b of CULT_PRODUCTS.slice(0, 28)) {
     urls.push({ loc: `${base}/bottle/${b.id}`, priority: '0.86', changefreq: 'weekly', title: `${b.brand} ${b.name} Layering & Dupes` });
   }
   for (const a of CLINICAL_INGREDIENTS.slice(0, 24)) {
     urls.push({ loc: `${base}/ingredient/${a.id}`, priority: '0.85', changefreq: 'weekly', title: `${a.commonName} (${a.inciName}) pH & Layering` });
   }
-  for (const br of getAllBrandHubs()) {
+  for (const br of getAllBrandHubs().slice(0, 20)) {
     urls.push({ loc: `${base}/brand/${br.slug}`, priority: '0.84', changefreq: 'weekly', title: `${br.name} Skincare Bottles & pH Guide` });
   }
   for (const cn of CONCERN_HUBS) {

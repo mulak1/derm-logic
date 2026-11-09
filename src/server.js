@@ -262,10 +262,12 @@ app.get('/design-previews', (req, res) => {
 });
 
 app.get('/privacy', (req, res) => {
+  res.setHeader('X-Robots-Tag', 'noindex, follow');
   res.status(200).type('html').send(renderLegalPage({ type: 'privacy' }));
 });
 
 app.get('/terms', (req, res) => {
+  res.setHeader('X-Robots-Tag', 'noindex, follow');
   res.status(200).type('html').send(renderLegalPage({ type: 'terms' }));
 });
 
@@ -383,6 +385,7 @@ ${seoBlocks}
 
 // 7. Dynamic SVG OpenGraph Card (/api/og)
 app.get('/api/og', (req, res) => {
+  res.setHeader('X-Robots-Tag', 'noindex');
   const slug = req.query.slug || 'home';
   const row = db.prepare('SELECT payload_json FROM seo_pages WHERE slug = ?').get(slug);
   if (row) {
