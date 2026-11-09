@@ -318,13 +318,19 @@ function renderInteractiveCheckerWidget({ products, presets, initialAnalysis, in
                 <option value="normal" ${currentSkin === 'normal' ? 'selected' : ''}>Skin: Balanced</option>
               </select>
             </div>
-            ${renderAllergySelectorBarHtml(initialAnalysis && initialAnalysis.selectedAllergies)}
-            <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:var(--bg-canvas);border-radius:14px;">
-              <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">${presetButtonsHtml}</div>
-              <div style="display:none;">
-                <textarea id="rawInciTextarea">${escapeHtml(initialRawInci || '')}</textarea>
-                <button type="button" id="analyzeBtn" onclick="runRoutineAnalysis(null, true)">Check</button>
+            <details id="dl-optional-allergy-presets-drawer" style="padding:8px 12px;background:var(--bg-canvas);border:1px solid var(--border-hairline);border-radius:12px;">
+              <summary class="mono" style="cursor:pointer;font-size:0.8125rem;font-weight:700;color:var(--text-primary);display:flex;justify-content:space-between;align-items:center;list-style:none;">
+                <span>+ Filter by EU Allergens (8 Triggers) &amp; Routine Presets</span>
+                <span style="color:var(--rose-brand);font-size:0.8125rem;">Expand &darr;</span>
+              </summary>
+              <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+                ${renderAllergySelectorBarHtml(initialAnalysis && initialAnalysis.selectedAllergies)}
+                <div class="preset-row" id="presetButtonsRow" style="margin-bottom:0;">${presetButtonsHtml}</div>
               </div>
+            </details>
+            <div style="display:none;">
+              <textarea id="rawInciTextarea">${escapeHtml(initialRawInci || '')}</textarea>
+              <button type="button" id="analyzeBtn" onclick="runRoutineAnalysis(null, true)">Check</button>
             </div>
             <div id="textureFilterTabs" role="group" aria-label="Filter Bathroom Shelf by Vanity Bag Step">
               <button type="button" data-tex="all" class="vanity-light-btn active mono" aria-pressed="true" onclick="filterShelfByTexture('all', this)">All (${products.length})</button>

@@ -33,7 +33,20 @@ function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdO
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   ${jsonLdScripts}
   <script>try{if(localStorage.getItem('dermlogic_vanity_theme')==='night')document.documentElement.setAttribute('data-theme','night');}catch(_){}</script>
-  <style>${SHARED_CSS}</style>
+  <style>${SHARED_CSS}
+    details:not([open]) > *:not(summary) { display: none !important; }
+    #dl-growth-top-dupe-btn, #dl-growth-top-copy-btn, #dl-growth-wb-copy-btn, #dl-growth-row4-copy-btn,
+    #dl-step1-dupe-card-btn, #dl-step1-copy-btn, #dl-res-header-dupe-btn, #dl-res-header-copy-btn,
+    #dl-floating-vanity-dock, .dl-ing-row-pass-btn, .dl-ing-row-copy-btn, .dl-pair-card-pass-btn,
+    .dl-pair-card-copy-btn, #dl-matrix-dupe-card-btn, #dl-matrix-copy-btn, #dl-footer-dupe-pass-btn,
+    #dl-footer-copy-btn, #dl-top-dupe-proof-pill, #dl-drawer-top-copy-btn, .dl-slot-copy-link-btn,
+    #dl-wait-timer-pass-btn, #dl-wait-timer-dupe-btn, #dl-wait-timer-copy-btn {
+      display: none !important;
+    }
+    .mono, .badge-safe, .badge-warn, .badge-clash, .affiliate-link-pill, button, th, td {
+      font-size: max(0.8125rem, 13px) !important;
+    }
+  </style>
 </head>
 <body>
   ${renderHeader(hideNav)}
@@ -43,7 +56,7 @@ function renderBaseDocument({ title, description, canonicalPath, ogSlug, jsonLdO
   ${renderFooter()}
   <script>${CLIENT_SCRIPT}</script>
 </body>
-</html>`;
+</html>`.replace(/&#10003;|&check;|✓|&#128279;|🔗|&#128274;|🔒/g, '');
 }
 function formatVerdictLabel(verdict) {
   const v = String(verdict || '');

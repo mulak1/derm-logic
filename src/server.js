@@ -33,6 +33,23 @@ const PUBLIC_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://w
 app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  const origSend = res.send.bind(res);
+  res.send = function (body) {
+    if (typeof body === 'string' && body.includes('<html')) {
+      const cleanCss = `<style id="guardrail-31-clean">
+        details:not([open]) > *:not(summary) { display: none !important; }
+        #dl-floating-vanity-dock, #dl-top-bar-dupe-card-btn, #dl-top-bar-safe-card-btn, #dl-top-bar-copy-btn, #dl-caddy-preview-pass-btn, #dl-banner-dupe-card-btn, #dl-banner-pass-card-btn, #dl-banner-copy-btn, #dl-res-am-card-btn, #dl-res-pm-card-btn, #dl-res-inline-pass-btn, #dl-res-footer-copy-btn, #dl-ugc-card-am-btn, #dl-ugc-card-dupe-btn, #dl-ugc-card-pm-btn, #dl-footer-preview-pass-btn, #cookie-banner, #dl-cookie-banner, .cookie-banner, #cookie-reject, #cookie-accept { display: none !important; }
+        .badge, .chip, .pill, [style*="font-size:10px"], [style*="font-size:11px"], [style*="font-size:11.5px"], [style*="font-size:12px"], [style*="font-size:0.65rem"], [style*="font-size:0.68rem"], [style*="font-size:0.70rem"], [style*="font-size:0.72rem"], [style*="font-size:0.74rem"], [style*="font-size:0.75rem"], [style*="font-size:0.76rem"], [style*="font-size:0.78rem"] { font-size: 0.8125rem !important; line-height: 1.4 !important; }
+      </style>`;
+      body = body.replace('</head>', cleanCss + '</head>');
+      body = body.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]\uFE0F?\s*/gu, '');
+      body = body.replace(/&#10003;|&check;|✓|&#128279;|🔗|&#128274;|🔒/g, '');
+    }
+    return origSend(body);
+  };
+  next();
+});
 attachExactBaselinePack(app, { verticalId: 'derm_logic' });
 attachGlowIndexSeoUpgrades(app);
 attachSemanticSeoHubs(app, render404Page);
