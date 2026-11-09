@@ -465,12 +465,13 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
         if (!byGroup[grp]) byGroup[grp] = [];
         byGroup[grp].push({ id: el.value, title: stTitle });
       });
+      var POUCH_SHORT = { 'to-glycolic-acid-7': 'Glycolic 7%', 'skinceuticals-ce-ferulic': 'C E Ferulic', 'paulas-choice-2-bha': '2% BHA', 'rx-tretinoin-005': 'Tret 0.05%', 'aestura-atobarrier-365': 'Aestura 365', 'boj-relief-sun-spf50': 'Joseon SPF', 'lrp-cicaplast-baume-b5': 'Cicaplast', 'to-buffet-copper-peptides': 'Copper 1%', 'lrp-effaclar-duo-bpo': 'Effaclar BPO', 'panoxyl-10-bpo-wash': 'PanOxyl 10%', 'tower28-sos-spray': 'SOS Mist', 'cosrx-snail-96-mucin': 'Snail 96', 'cerave-pm-lotion': 'CeraVe PM', 'eltamd-uv-clear-spf46': 'EltaMD SPF', 'rhode-glazing-milk': 'Glazing Milk', 'vanicream-daily-facial-moisturizer': 'Vanicream', 'differin-adapalene-01': 'Differin', 'illiyoon-ceramide-ato': 'Illiyoon', 'geek-gorgeous-c-glow': 'C-Glow 15%' };
       var cardMap = [
-        { cardId: 'dl-pouch-card-0', nameId: 'dl-pouch-slot-name-0', subId: 'dl-pouch-slot-sub-0', slotIdx: 0, grp: 'prep', emptyName: '+ Add Prep', emptySub: 'Step 01' },
-        { cardId: 'dl-pouch-card-1', nameId: 'dl-pouch-slot-name-1', subId: 'dl-pouch-slot-sub-1', slotIdx: 1, grp: 'serum', emptyName: '+ Add Serum', emptySub: 'Step 02' },
-        { cardId: 'dl-pouch-card-2', nameId: 'dl-pouch-slot-name-2', subId: 'dl-pouch-slot-sub-2', slotIdx: 2, grp: 'cream', emptyName: '+ Add Cream', emptySub: 'Stops Sting' },
-        { cardId: 'dl-pouch-card-3', nameId: 'dl-pouch-slot-name-3', subId: 'dl-pouch-slot-sub-3', slotIdx: 4, grp: 'pm', emptyName: '+ Add Night', emptySub: 'Step 04' },
-        { cardId: 'dl-empty-bottle-slot', nameId: 'dl-pouch-slot-name-4', subId: 'dl-pouch-slot-sub-4', slotIdx: 3, grp: 'spf', emptyName: '+ Add SPF 50', emptySub: 'Daily Shield', isSpf: true }
+        { cardId: 'dl-pouch-card-0', nameId: 'dl-pouch-slot-name-0', subId: 'dl-pouch-slot-sub-0', slotIdx: 0, grp: 'prep', emptyName: '+ Prep', emptySub: 'Step 01' },
+        { cardId: 'dl-pouch-card-1', nameId: 'dl-pouch-slot-name-1', subId: 'dl-pouch-slot-sub-1', slotIdx: 1, grp: 'serum', emptyName: '+ Serum', emptySub: 'Step 02' },
+        { cardId: 'dl-pouch-card-2', nameId: 'dl-pouch-slot-name-2', subId: 'dl-pouch-slot-sub-2', slotIdx: 2, grp: 'cream', emptyName: '+ Cream', emptySub: 'Stops Sting' },
+        { cardId: 'dl-pouch-card-3', nameId: 'dl-pouch-slot-name-3', subId: 'dl-pouch-slot-sub-3', slotIdx: 4, grp: 'pm', emptyName: '+ Night', emptySub: 'Step 04' },
+        { cardId: 'dl-empty-bottle-slot', nameId: 'dl-pouch-slot-name-4', subId: 'dl-pouch-slot-sub-4', slotIdx: 3, grp: 'spf', emptyName: '+ SPF 50', emptySub: 'Daily Shield', isSpf: true }
       ];
       var pouchFilled = 0;
       var missingNames = [];
@@ -481,7 +482,7 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           if (grpItems.length > 0) {
             var item0 = grpItems[0];
             var rawNm = item0.title || (PROD_INFO[item0.id] && PROD_INFO[item0.id].name) || item0.id;
-            var shortBase = rawNm.replace(/^(The Ordinary|La Roche-Posay|Paula's Choice|Beauty of Joseon|SkinCeuticals|Rx Generic|Rx Dermatology)\s+/i, '').replace(/\s+(Vitamin C Serum|Toner|Liquid Exfoliant|Night Cream|Moisturizing Lotion|Concentrate Cream)$/i, '').split(' ').slice(0, 3).join(' ').slice(0, 14);
+            var shortBase = POUCH_SHORT[item0.id] || rawNm.replace(/^(The Ordinary|La Roche-Posay|Paula's Choice|Beauty of Joseon|SkinCeuticals|Rx Generic|Rx Dermatology)\s+/i, '').replace(/\s+(Vitamin C Serum|Vit C|Toner|Liquid Exfoliant|Night Cream|Cream|Moisturizing Lotion|Concentrate Cream|Serum|Essence)$/i, '').split(' ').slice(0, 2).join(' ').slice(0, 11);
             b = { id: item0.id, short: shortBase, extraCount: grpItems.length - 1 };
           }
         } else {
@@ -501,12 +502,12 @@ const ATELIER_VANITY_CLIENT_SCRIPT = `
           cardEl.onmouseleave = window.__dlHideProdInfo;
         }
         if (nmEl) { nmEl.textContent = isFilled && b ? b.short : m.emptyName; nmEl.style.color = isFilled ? 'var(--text-pouch-card, var(--text-primary))' : 'var(--rose-brand)'; }
-        if (sbEl) { sbEl.textContent = isFilled ? (b.extraCount > 0 ? ('+' + b.extraCount + ' more in step') : 'On Shelf') : m.emptySub; sbEl.style.color = isFilled ? 'var(--sub-pouch-card, var(--sage-safe))' : 'var(--text-secondary)'; }
+        if (sbEl) { sbEl.textContent = isFilled ? (b.extraCount > 0 ? ('+' + b.extraCount + ' more') : 'On Shelf') : m.emptySub; sbEl.style.color = isFilled ? 'var(--sub-pouch-card, var(--sage-safe))' : 'var(--text-secondary)'; }
       });
       var stLbl = document.getElementById('dl-pouch-status-label');
       var pctTxt = document.getElementById('dl-pouch-pct-text');
       var prog = document.getElementById('dl-pouch-progress-fill');
-      if (stLbl) stLbl.textContent = pouchFilled + ' of 5 Routine Steps Covered';
+      if (stLbl) stLbl.textContent = pouchFilled + '/5 Covered';
       if (pctTxt) pctTxt.textContent = pouchFilled === 5 ? 'All 5 Steps Covered' : ('Missing: ' + missingNames.slice(0, 2).join(' & '));
       if (prog) prog.style.width = (pouchFilled * 20) + '%';
       return pouchFilled;
