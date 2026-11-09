@@ -78,7 +78,7 @@ const SHARED_CSS = `
   .affiliate-link-pill:hover { background: var(--rose-pill-bg); color: var(--rose-brand); border-color: var(--rose-pill-border); }
   .affiliate-micro-link { display: inline-block; margin-top: 4px; font-size: 0.84rem; font-weight: 500; color: var(--sage-safe); text-decoration: underline; text-underline-offset: 3px; }
   /* Hero & Editorial Layout */
-  .hero-section { padding: 16px 0 24px; }
+  .hero-section { padding: 14px 0 16px; }
   .editorial-top-banner { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 20px; align-items: stretch; margin-bottom: 14px; }
   .hero-copy-col { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; }
   .hero-photo-col { min-width: 0; display: flex; flex-direction: column; }
