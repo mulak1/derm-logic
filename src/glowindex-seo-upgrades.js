@@ -664,10 +664,10 @@ function attachGlowIndexSeoUpgrades(app) {
       if (typeof body === 'string' && (String(res.getHeader('Content-Type') || '').includes('text/html') || body.trim().startsWith('<!DOCTYPE html>'))) {
         let out = body;
         if (out.includes('href="/directory"') && !out.includes('id="gi-nav-quickjump"')) {
-          const dropdownHtml = `<style>@media(max-width:1180px){#gi-nav-quickjump{display:none!important;}}</style><div id="gi-nav-quickjump" style="position:relative;display:inline-block;flex-shrink:0;white-space:nowrap;">
+          const dropdownHtml = `<style>@media(min-width:641px) and (max-width:1180px){#gi-nav-quickjump{display:none!important;}}@media(max-width:640px){#gi-nav-quickjump summary{font-size:0.69rem!important;font-weight:600!important;padding:3px 6px!important;border-radius:999px!important;color:var(--text-primary)!important;}}</style><div id="gi-nav-quickjump" style="position:relative;display:inline-block;flex-shrink:0;white-space:nowrap;">
             <details style="position:relative;display:inline-block;">
-              <summary class="mono" style="list-style:none;cursor:pointer;font-size:0.78rem;color:var(--text-secondary);padding:4px 8px;border:1px solid var(--border-hairline);background:var(--bg-oat);white-space:nowrap;">Explore Guides &#9662;</summary>
-              <div style="position:absolute;top:calc(100% + 6px);left:0;min-width:230px;background:var(--bg-surface);border:none;border-radius:16px;padding:10px;z-index:999;display:flex;flex-direction:column;gap:6px;box-shadow:0 10px 24px rgba(58,31,39,0.12);">
+              <summary class="mono" style="list-style:none;cursor:pointer;font-size:0.78rem;color:var(--text-secondary);padding:4px 8px;border:1px solid var(--border-hairline);border-radius:999px;background:var(--bg-oat);white-space:nowrap;"><span class="hide-mobile">Explore Guides </span>More &#9662;</summary>
+              <div style="position:absolute;top:calc(100% + 6px);right:0;min-width:220px;max-width:calc(100vw - 28px);background:var(--bg-surface);border:1px solid var(--border-hairline);border-radius:16px;padding:10px;z-index:999;display:flex;flex-direction:column;gap:6px;box-shadow:0 10px 24px rgba(58,31,39,0.12);">
                 <a href="/directory" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">All 318+ Layering Guides</a>
                 <a href="/concern/allergic-contact-dermatitis-hypoallergenic-routine" class="mono" style="font-size:0.76rem;color:var(--sage-safe);font-weight:600;text-decoration:none;">&#10003; Allergic &amp; Contact Rash Screen</a>
                 <a href="/compare" class="mono" style="font-size:0.76rem;color:var(--text-primary);text-decoration:none;">Bottle vs. Bottle Dupe Showdowns</a>

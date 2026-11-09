@@ -482,9 +482,13 @@ async function runVerification() {
       return {
         scrollWidth,
         innerWidth,
-        floatingFixedCount: floatingFixed.length
+        floatingFixedCount: floatingFixed.length,
+        mobileNavVisible: Boolean(document.querySelector('.site-header .nav-links') && document.querySelector('.site-header .nav-links').offsetHeight > 0),
+        mobileNavLinksVisibleCount: Array.from(document.querySelectorAll('.site-header .nav-links > a')).filter((a) => a.offsetWidth > 0 && a.offsetHeight > 0).length
       };
     });
+    assert.strictEqual(mobileLayoutCheck.mobileNavVisible, true, 'Mobile .site-header .nav-links must be visible on 390x844');
+    assert(mobileLayoutCheck.mobileNavLinksVisibleCount >= 5, `Expected >=5 visible mobile nav links on 390x844, got ${mobileLayoutCheck.mobileNavLinksVisibleCount}`);
     assert(
       mobileLayoutCheck.scrollWidth <= mobileLayoutCheck.innerWidth,
       `Mobile horizontal overflow detected: scrollWidth=${mobileLayoutCheck.scrollWidth} > innerWidth=${mobileLayoutCheck.innerWidth}`
