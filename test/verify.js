@@ -284,6 +284,9 @@ async function runVerification() {
     assert.strictEqual(restoredState.stored, 'day', 'Daylight Gallery must persist dermlogic_vanity_theme=day in localStorage');
 
     // Click Preset 2 ("Copper Peptides + Vitamin C Oxidation Trap")
+    if (await page.locator('#dl-optional-allergy-presets-drawer:not([open]) > summary').count()) {
+      await page.click('#dl-optional-allergy-presets-drawer > summary');
+    }
     await page.click('button[data-preset-id="copper-vitc-oxidation"]');
     await page.waitForTimeout(400);
 
@@ -445,6 +448,9 @@ async function runVerification() {
     const homeBodyText = await page.evaluate(() => document.body ? document.body.innerText : '');
     assert(!bannedJargonRegex.test(homeBodyText), `Banned robotic/textbook jargon found in visible home page text: ${homeBodyText.match(bannedJargonRegex)?.[0]}`);
     assert.strictEqual(await page.locator('#allergyTriggerBar').count(), 1, 'Homepage checker must include #allergyTriggerBar for allergic reactions selection');
+    if (await page.locator('#dl-optional-allergy-presets-drawer:not([open]) > summary').count()) {
+      await page.click('#dl-optional-allergy-presets-drawer > summary');
+    }
     await page.click('#allergyTriggerBar button[data-allergy="salicylates"]');
     await page.waitForTimeout(220);
     const allergyAlertText = await page.locator('#allergyAlertCard').first().innerText();

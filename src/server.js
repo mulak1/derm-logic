@@ -44,7 +44,7 @@ app.use((req, res, next) => {
       </style>`;
       body = body.replace('</head>', cleanCss + '</head>');
       body = body.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]\uFE0F?\s*/gu, '');
-      body = body.replace(/&#10003;|&check;|✓|&#128279;|🔗|&#128274;|🔒/g, '');
+      body = body.replace(/(?:&#10003;|&check;|✓|&#128279;|🔗|&#128274;|🔒)\s*(?:&middot;|·)?\s*/g, '');
     }
     return origSend(body);
   };
