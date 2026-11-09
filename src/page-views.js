@@ -159,9 +159,9 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
     return `<div class="porcelain-vessel-core" style="background:var(--bg-surface);padding:14px 16px;justify-content:space-between;gap:8px;border:1px solid var(--border-hairline);border-radius:14px;"><div><div style="height:155px;border-radius:10px;overflow:hidden;margin-bottom:8px;background:var(--bg-oat);"><img src="${pairPortraits[idx]}" alt="${escapeHtml(p.title)}" loading="eager" style="width:100%;height:155px;object-fit:cover;object-position:center 30%;display:block;" /></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;"><span class="mono" style="font-size:0.78rem;color:var(--text-secondary);font-weight:600;">Pairing Guide</span><span class="${p.compatibilityScore < 55 ? 'badge-clash' : p.compatibilityScore < 75 ? 'badge-warn' : 'badge-safe'} mono">${escapeHtml(verdictLbl)}</span></div><a href="/seo/${escapeHtml(p.slug)}" class="serif-display" style="display:block;font-weight:400;font-size:1.12rem;line-height:1.22;color:var(--text-primary);margin-bottom:4px;">${escapeHtml(p.title)}</a><p style="color:var(--text-secondary);font-size:0.84rem;line-height:1.42;margin:0;">${escapeHtml(String(p.summary || '').slice(0, 88))}...</p></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border-hairline);flex-wrap:wrap;gap:6px;"><a href="/seo/${escapeHtml(p.slug)}" class="mono" style="font-size:0.8rem;color:var(--rose-brand);font-weight:600;text-decoration:none;">&#10003; 7:30 AM Free Proof &rarr;</a><button type="button" class="mono dl-pair-card-pass-btn" onclick="if(window.__dlOpenSampleModal)window.__dlOpenSampleModal();" style="padding:2px 8px;border-radius:999px;background:var(--sage-bg);color:var(--sage-safe);border:1px solid var(--sage-border);font-size:0.72rem;font-weight:700;cursor:pointer;">9:16 Card &rarr;</button><button type="button" class="mono dl-pair-card-copy-btn" onclick="if(window.__dlCopyShareableShelfLink)window.__dlCopyShareableShelfLink(this);" style="padding:2px 8px;border-radius:999px;background:var(--bg-surface);color:var(--text-primary);border:1px solid var(--border-hairline);font-size:0.72rem;font-weight:700;cursor:pointer;">&#128279; Copy Link</button><span role="button" tabindex="0" class="dl-locked-spec-badge dl-locked-badge-c2 mono" onclick="if(window.__dlFocusSampleEmail)window.__dlFocusSampleEmail(this)" style="font-size:0.76rem;color:var(--rose-brand);font-weight:600;cursor:pointer;">&#128274; 9:30 PM &amp; Dupe #2 ($0)</span></div></div>`;
   }).join('');
   const bodyHtml = `
-    <section class="hero-section" style="padding-top:14px;padding-bottom:16px;">
+    <section class="hero-section" style="padding-top:10px;padding-bottom:10px;">
       <div class="container">
-        <div style="max-width:740px;margin:2px auto 12px;text-align:center;">
+        <div style="max-width:740px;margin:2px auto 10px;text-align:center;">
           <div class="mono" style="font-size:0.78rem;color:var(--rose-brand);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Cosmetic Chemist Routine Analyzer &middot; ${products.length} Cult Formulas &middot; &#10003; Free Proof #1 Dupe: Geek &amp; Gorgeous ($14 vs. $182)</div>
           <h1 class="hero-h1" style="font-size:clamp(1.75rem,2.8vw,2.35rem);line-height:1.14;margin:0 0 6px;max-width:none;">Is your skincare shelf secretly canceling itself out?</h1>
           <p class="hero-sub" style="font-size:0.95rem;color:var(--text-secondary);line-height:1.45;margin:0 auto;max-width:62ch;">Select your bottles below to check for pH clashes, avoid inactive combinations, and see your clean morning and bedtime schedule.</p>
@@ -176,7 +176,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
         })}
       </div>
     </section>
-    <section class="section-block" id="actives-matrix" style="padding:16px 0;">
+    <section class="section-block" id="actives-matrix" style="padding:12px 0;">
       <div id="inci-table"></div>
       <div class="container">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px;align-items:center;margin-bottom:12px;">
@@ -206,7 +206,7 @@ function renderHomePage({ products, ingredients, presets, initialAnalysis, initi
         </div>
       </div>
     </section>
-    <section class="section-block-alt" style="padding:16px 0 20px;">
+    <section class="section-block-alt" style="padding:12px 0 14px;">
       <div class="container">
         <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
           <div>
