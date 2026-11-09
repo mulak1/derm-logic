@@ -104,11 +104,11 @@ function buildLlmsTxtContent(cfg, seoEntries) {
     `- [Public Hall of Fame (A+) & Wall of Shame Leaderboard](${host}/leaderboard) ([.md](${host}/leaderboard.md)): Ranked public entity scorecards with CNN visual/acoustic sensor readouts.`,
     ...loadPublicScanLedger(cfg).slice(0, 12).map((s, idx) => idx <= 1
       ? `- [✓ Free Specimen #${idx + 1} · ${s.target}: Grade ${s.grade} (${s.score}/100)](${host}/scan/${encodeURIComponent(s.target)}) ([.md](${host}/scan/${encodeURIComponent(s.target)}.md)): ${s.kpi1} • ${s.cnnReadout}`
-      : `- [🔒 $0 Email Holdback #${idx + 1} · ${s.target}: Grade ${s.grade} (${s.score}/100)](${host}/scan/${encodeURIComponent(s.target)}) ([.md](${host}/scan/${encodeURIComponent(s.target)}.md)): ${s.kpi1} • Unlock 9:30 PM Slot & Dupe #2 ($0 Email)`),
+      : `- [$0 Email Holdback #${idx + 1} · ${s.target}: Grade ${s.grade} (${s.score}/100)](${host}/scan/${encodeURIComponent(s.target)}) ([.md](${host}/scan/${encodeURIComponent(s.target)}.md)): ${s.kpi1} • Unlock 9:30 PM Slot & Dupe #2 ($0 Email)`),
     '',
     '## Interactive Micro-Tools & Head-to-Head Comparisons (/tools/:slug & /compare/:slug)',
     ...getGrowthConfig(cfg.moduleId).tools.map((t) => `- [✓ 7:30 AM Free Proof · ${t.title}](${host}/tools/${t.slug}) ([.md](${host}/tools/${t.slug}.md)): ${t.summary}`),
-    ...getGrowthConfig(cfg.moduleId).comparisons.map((c) => `- [✓ Slot A Free · 🔒 9:30 PM Slot B ($0 Email) · ${c.title}](${host}/compare/${c.slug}) ([.md](${host}/compare/${c.slug}.md)): ${c.summary}`),
+    ...getGrowthConfig(cfg.moduleId).comparisons.map((c) => `- [✓ Slot A Free · 9:30 PM Slot B ($0 Email) · ${c.title}](${host}/compare/${c.slug}) ([.md](${host}/compare/${c.slug}.md)): ${c.summary}`),
     '',
     '## Verified Scenario Presets & Headline KPIs',
     ...cfg.presets.map((p) => {
@@ -120,7 +120,7 @@ function buildLlmsTxtContent(cfg, seoEntries) {
     `## All ${seoEntries.length} Indexed Programmatic SEO Benchmarks & Playbooks (/seo/:slug & .md Twins)`,
     ...seoEntries.map((item, idx) => idx <= 4
       ? `- [✓ Free Proof #${idx + 1}] [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${item.summary}`
-      : `- [✓ 7:30 AM Free · 🔒 9:30 PM & Dupe #2 ($0 Email)] [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${String(item.summary || '').split(/(?<=[.!?])\s+/)[0]}`),
+      : `- [✓ 7:30 AM Free · 9:30 PM & Dupe #2 ($0 Email)] [${item.title}](${host}/seo/${item.slug}) ([Markdown Twin](${host}/seo/${item.slug}.md)): ${String(item.summary || '').split(/(?<=[.!?])\s+/)[0]}`),
     ...(cfg.moduleId === 'derm_logic' ? [
       '',
       '## Semantic Skincare Hubs: Celebrity Shelves, Concerns, Cult Bottles, Ingredients & Brands',
@@ -172,7 +172,7 @@ function buildLlmsFullTxtContent(cfg, seoEntries) {
     '',
     `## 3. Complete ${seoEntries.length}-Page Programmatic Benchmark Encyclopedia (7:30 AM Free Proof · 9:30 PM $0 Email Holdback)`,
     ...seoEntries.map((item, idx) => [
-      `### ${idx + 1}. ${item.title} [${idx <= 4 ? '✓ Full Specimen Free Proof' : '✓ 7:30 AM Free · 🔒 9:30 PM & Dupe #2 ($0 Email)'}]`,
+      `### ${idx + 1}. ${item.title} [${idx <= 4 ? '✓ Full Specimen Free Proof' : '✓ 7:30 AM Free · 9:30 PM & Dupe #2 ($0 Email)'}]`,
       `- **Canonical URL**: ${host}/seo/${item.slug}`,
       `- **Clean Markdown Twin**: ${host}/seo/${item.slug}.md`,
       `- **Provenance**: ✓ EU CosIng & Lab pH Verified · 30-Day Refund Guarantee`,

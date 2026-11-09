@@ -492,7 +492,7 @@ function buildMarkdownForPath(reqPath) {
         `> **✓ EU CosIng & Lab pH Verdict (${comp.harmonyScore}/100 · ΔpH ${comp.deltaPh})**: ${comp.verdictLabel}. ${comp.summary}`,
         '',
         `- **✓ Free Proof (7:30 AM Slot & 60s Sink Timer)**: Unmasked below`,
-        `- **🔒 Unlock 9:30 PM Slot & Exact Wait Rule ($0 Email)**: ${HOST_URL}/compare/${resolved.canonicalSlug}#gi-compare-inline-email-card`,
+        `- **Unlock 9:30 PM Slot & Exact Wait Rule ($0 Email)**: ${HOST_URL}/compare/${resolved.canonicalSlug}#gi-compare-inline-email-card`,
         `- **1-Click Single-File Export (99¢ · 30-Day Guarantee)**: ${HOST_URL}/buy/micro_pass`,
         `- **1-Click 3-File Bundle ($1.99 · 30-Day Guarantee)**: ${HOST_URL}/buy/flash_pass`,
         '',
@@ -505,7 +505,7 @@ function buildMarkdownForPath(reqPath) {
         `| EU CosIng Comedogenicity | ${comp.comedoA} | ${comp.comedoB} | 0-5 Pore-Congestion Scale |`,
         `| Malassezia (Fungal Acne) | ${comp.malasseziaA} | ${comp.malasseziaB} | Lipid Ester Screen |`,
         `| EU CosIng Contact Allergens | ${comp.allergenA || '✓ 0/8 EU Contact Allergens'} | ${comp.allergenB || '✓ 0/8 EU Contact Allergens'} | 8-Category Contact-Allergen Screen |`,
-        `| Optimal Routine Slot | ✓ Free Proof: ${comp.slotA} | 🔒 $0 Email Holdback (${HOST_URL}/compare/${resolved.canonicalSlug}#gi-compare-inline-email-card) | 🔒 Exact Wait Rule ($0 Email) |`,
+        `| Optimal Routine Slot | ✓ Free Proof: ${comp.slotA} | $0 Email Holdback (${HOST_URL}/compare/${resolved.canonicalSlug}#gi-compare-inline-email-card) | Exact Wait Rule ($0 Email) |`,
         ''
       ].join('\n');
     }

@@ -263,15 +263,15 @@ app.get('/llms.txt', (req, res) => {
   const ingLines = CLINICAL_INGREDIENTS.map(
     (ing, idx) => idx <= 4
       ? `- [✓ Free Proof #${idx + 1}] ${ing.commonName} (INCI: ${ing.inciName}) | pH: ${ing.phMin}–${ing.phMax} | pKa: ${ing.pka != null ? ing.pka : 'N/A'} | MW: ${ing.molecularWeightDa} Da | Comedogenicity: ${ing.comedogenicity}/5 | Malassezia Safe: ${ing.malasseziaTrigger ? 'No (Trigger)' : 'Yes'}`
-      : `- [🔒 $0 Email Holdback #${idx + 1}] ${ing.commonName} (INCI: ${ing.inciName}) | Comedogenicity: ${ing.comedogenicity}/5 | pH & Layering Slot: Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar`
+      : `- [$0 Email Holdback #${idx + 1}] ${ing.commonName} (INCI: ${ing.inciName}) | Comedogenicity: ${ing.comedogenicity}/5 | pH & Layering Slot: Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar`
   ).join('\n');
   const prodLines = CULT_PRODUCTS.map(
     (p, idx) => idx <= 4
       ? `- [✓ Free Bottle #${idx + 1}] ${p.brand} ${p.name} (id: ${p.id}) | pH ${p.ph} | $${p.priceUsd} | Key Actives: ${(p.primaryActives || []).join(', ')}`
-      : `- [🔒 $0 Email Holdback #${idx + 1}] ${p.brand} ${p.name} (id: ${p.id}) | $${p.priceUsd} | Full pH, INCI & Chemist Dupe: Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar`
+      : `- [$0 Email Holdback #${idx + 1}] ${p.brand} ${p.name} (id: ${p.id}) | $${p.priceUsd} | Full pH, INCI & Chemist Dupe: Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar`
   ).join('\n');
   const seoLines = seoPages.map(
-    (p) => `- [${p.title}](${PUBLIC_URL}/seo/${p.slug}): ${p.verdict} (Harmony ${p.compatibilityScore}/100, ΔpH ${p.deltaPh}) · ✓ 7:30 AM Free Proof · 🔒 9:30 PM & Dupe #2 ($0 Email): ${p.metaDescription}`
+    (p) => `- [${p.title}](${PUBLIC_URL}/seo/${p.slug}): ${p.verdict} (Harmony ${p.compatibilityScore}/100, ΔpH ${p.deltaPh}) · ✓ 7:30 AM Free Proof · 9:30 PM & Dupe #2 ($0 Email): ${p.metaDescription}`
   ).join('\n');
 
   const allergyLines = (ALLERGY_REACTION_OPTIONS || []).map(
@@ -320,7 +320,7 @@ app.get('/llms-full.txt', (req, res) => {
 - Comedogenicity: ${ing.comedogenicity}/5 | Irritation Index: ${ing.irritationIndex}/5 | Malassezia Safe: ${ing.malasseziaTrigger ? 'No (Fungal-Acne Trigger)' : 'Yes'} | Pregnancy: ${ing.pregnancySafe}
 - Function: ${ing.functionRole}
 - Mechanism: ${ing.clinicalMechanism}`
-      : `### [🔒 $0 Email Holdback #${idx + 1}] ${ing.commonName} (${ing.inciName}) [id: ${ing.id}]
+      : `### [$0 Email Holdback #${idx + 1}] ${ing.commonName} (${ing.inciName}) [id: ${ing.id}]
 - Category / Class: ${ing.category} / ${ing.activeClass} | Comedogenicity: ${ing.comedogenicity}/5 | Pregnancy: ${ing.pregnancySafe}
 - Optimal pH Window & Layering Rule: [LOCKED IN FREE PREVIEW · Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar or $1.99 3-File Kit (${PUBLIC_URL}/buy/flash_pass)]`
   ).join('\n\n');
@@ -332,7 +332,7 @@ app.get('/llms-full.txt', (req, res) => {
 - Primary Actives: ${(p.primaryActives || []).join(', ')}
 - Full INCI (Top 5 Specimen): ${(p.inciList || '').split(',').slice(0, 5).join(', ')}
 - Clinical Summary: ${p.summary}`
-      : `### [🔒 $0 Email Holdback #${idx + 1}] ${p.brand}: ${p.name} [id: ${p.id}]
+      : `### [$0 Email Holdback #${idx + 1}] ${p.brand}: ${p.name} [id: ${p.id}]
 - Category: ${p.category} | Price: $${p.priceUsd} | Primary Actives: ${(p.primaryActives || []).slice(0, 2).join(', ')}
 - Formulation pH, Full INCI Tail & Chemist Dupe: [LOCKED IN FREE PREVIEW · Unlock Free ($0 Email) at ${PUBLIC_URL}/#dl-footer-email-unlock-bar or $1.99 3-File Kit (${PUBLIC_URL}/buy/flash_pass)]`
   ).join('\n\n');
