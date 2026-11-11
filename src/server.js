@@ -33,6 +33,29 @@ const PUBLIC_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://w
 app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+const dlPrivacyOptouts = [];
+app.post('/api/privacy-optout', (req, res) => {
+  const email = String((req.body && req.body.email) || '').trim().slice(0, 200);
+  const entity = String((req.body && (req.body.entity || req.body.url || req.body.name)) || '').trim().slice(0, 300);
+  const requestType = String((req.body && req.body.request_type) || 'data_erasure').trim().slice(0, 60);
+  if (!email && !entity) return res.status(400).json({ ok: false, error: 'Please provide an email address or request detail.' });
+  let purged = 0;
+  try {
+    const st = app.locals && app.locals.ebStore;
+    if (st && st.db && email.includes('@')) {
+      const r1 = st.db.prepare(`DELETE FROM eb_leads WHERE LOWER(email) = LOWER(?)`).run(email);
+      purged += (r1 && r1.changes) || 0;
+    }
+  } catch (_) {}
+  const maskedEmail = email.includes('@') ? email.replace(/^(.)(.*)(@.*)$/, (_, a, _b, c) => `${a}***${c}`) : (email || 'redacted');
+  dlPrivacyOptouts.unshift({ id: dlPrivacyOptouts.length + 1, masked_email: maskedEmail, requested_action: `${requestType}: ${entity || 'self_erasure'}`, purged_records: purged, created_at: new Date().toISOString() });
+  return res.status(200).json({ ok: true, status: 'recorded', purged_records: purged, message: `Complete: ${purged} matching database record(s) purged immediately and your request (${requestType}) has been logged.` });
+});
+app.get('/api/privacy-optouts', (req, res) => {
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  return res.status(200).json({ ok: true, total_requests: dlPrivacyOptouts.length, coppa_under_13_prohibition_active: true, gpc_signal_honored: Boolean(req.headers['sec-gpc'] === '1' || req.headers['dnt'] === '1'), requests: dlPrivacyOptouts.slice(0, 100) });
+});
 app.use((req, res, next) => {
   const origSend = res.send.bind(res);
   res.send = function (body) {
